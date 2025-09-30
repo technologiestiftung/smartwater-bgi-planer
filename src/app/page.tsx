@@ -3,8 +3,8 @@ import Image from "next/image";
 import logo from "@/logos/smartwater-bgi-planer-logo.svg";
 import favicon from "@/logos/Favicon.svg";
 import example from "../resources/example.json";
-import PhosphorIcon from "@/icons/PhosphorIcon";
 import Button from "@/components/Button";
+import Icon from "@/components/Icon";
 
 export default function Styleguide() {
   const colors = [
@@ -105,7 +105,7 @@ export default function Styleguide() {
             <div className="flex flex-col flex-wrap mt-4 gap-6">
               {example.map((icon, index) => (
                 <div key={index} className="flex items-center gap-6">
-                  <PhosphorIcon id={icon.icon} />
+                  <Icon id={icon.icon} />
                   <h3 className="text-primary font-medium">{icon.name}</h3>
                 </div>
               ))}
@@ -114,7 +114,7 @@ export default function Styleguide() {
               {example.map((icon, index) => (
                 <div key={index} className="flex items-center gap-6">
                   <div className="bg-primary rounded-full p-4">
-                    <PhosphorIcon id={icon.icon} color="white" />
+                    <Icon id={icon.icon} color="white" />
                   </div>
                   <h3 className="text-primary font-medium">{icon.name}</h3>
                 </div>

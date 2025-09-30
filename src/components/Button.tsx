@@ -1,7 +1,7 @@
 "use client";
-import PhosphorIcon from "@/icons/PhosphorIcon";
 import { ButtonProps } from "@/types/app";
 import { FC } from "react";
+import Icon from "./Icon";
 
 const Button: FC<ButtonProps> = ({
   text,
@@ -27,7 +27,7 @@ const Button: FC<ButtonProps> = ({
         disabled={isDisabled}
         className={`flex gap-4 items-center py-2 px-4 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 transition-colors ${getStyling()}`}
       >
-        <PhosphorIcon
+        <Icon
           id={iconID}
           size={24}
           color={

@@ -1,6 +1,6 @@
 "use client";
 import colors from "@/lib/colors/colors";
-import { PhosphorIconProps } from "@/types/app";
+import { IconProps } from "@/types/app";
 import {
   CloudRainIcon as CloudRain,
   ThermometerHotIcon as ThermometerHot,
@@ -11,7 +11,7 @@ import {
 } from "@phosphor-icons/react";
 import { FC } from "react";
 
-const PhosphorIcon: FC<PhosphorIconProps> = ({
+const Icon: FC<IconProps> = ({
   id,
   size = 56,
   color = "primary",
@@ -73,7 +73,7 @@ const PhosphorIcon: FC<PhosphorIconProps> = ({
         mirrored={mirrored}
       />
     );
-  return <p className="text-red">No Phosphor Icon was found: {id}</p>;
+  return <p className="text-red">No Icon was found: {id}</p>;
 };
 
-export default PhosphorIcon;
+export default Icon;
