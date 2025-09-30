@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Starkregen",
+    "icon": "cloud-rain"
+  },
+  {
+    "name": "Hitze",
+    "icon": "thermometer-hot"
+  },
+  {
+    "name": "Versiegelung",
+    "icon": "road-horizon"
+  },
+  {
+    "name": "Wasserhaushalt",
+    "icon": "drop"
+  },
+  {
+    "name": "Gewässerschutz",
+    "icon": "fish"
+  }
+]
