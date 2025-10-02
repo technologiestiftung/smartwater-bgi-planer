@@ -16,7 +16,6 @@ interface IconProps {
   id: Icon | string;
   className?: string;
   weight?: IconWeight;
-  mirrored?: boolean;
 }
 
 export type { AppStoreState, IconProps };

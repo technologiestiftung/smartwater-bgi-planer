@@ -1,5 +1,4 @@
 "use client";
-import { cn } from "@/lib/utils";
 import { IconProps } from "@/types/app";
 import {
   CloudRainIcon as CloudRain,
@@ -11,17 +10,10 @@ import {
 } from "@phosphor-icons/react";
 import { FC } from "react";
 
-const Icon: FC<IconProps> = ({
-  id,
-  className,
-  weight = "regular",
-  mirrored = false,
-}) => {
+const Icon: FC<IconProps> = ({ id, className, weight = "regular" }) => {
   const iconProps = {
     weight,
-    mirrored,
-    size: "1em",
-    className: cn("", className),
+    className,
   };
   if (id === "cloud-rain") return <CloudRain {...iconProps} />;
   if (id === "thermometer-hot") return <ThermometerHot {...iconProps} />;
