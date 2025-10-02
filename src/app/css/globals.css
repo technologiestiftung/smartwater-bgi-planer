@@ -119,4 +119,30 @@
   body {
     font-family: var(--font-arthouse-owned);
   }
+  /* Remove default body spacing */
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+
+  /* Remove default headline and paragraph spacing */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    margin: 0;
+  }
+
+  /* Optional: reset lists */
+  ul,
+  ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
 }

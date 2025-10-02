@@ -3,8 +3,8 @@ import Image from "next/image";
 import logo from "@/logos/smartwater-bgi-planer-logo.svg";
 import favicon from "@/logos/Favicon.svg";
 import example from "../resources/example.json";
-import Button from "@/components/Button";
 import Icon from "@/components/Icon";
+import { Button } from "@/components/ui/app-button";
 
 export default function Styleguide() {
   const colors = [
@@ -105,7 +105,7 @@ export default function Styleguide() {
             <div className="flex flex-col flex-wrap mt-4 gap-6">
               {example.map((icon, index) => (
                 <div key={index} className="flex items-center gap-6">
-                  <Icon id={icon.icon} />
+                  <Icon id={icon.icon} className="text-primary text-2xl" />
                   <h3 className="text-primary font-medium">{icon.name}</h3>
                 </div>
               ))}
@@ -113,8 +113,8 @@ export default function Styleguide() {
             <div className="flex flex-col flex-wrap mt-4 gap-6">
               {example.map((icon, index) => (
                 <div key={index} className="flex items-center gap-6">
-                  <div className="bg-primary rounded-full p-4">
-                    <Icon id={icon.icon} color="white" />
+                  <div className="bg-primary rounded-full p-3">
+                    <Icon id={icon.icon} className="text-white text-2xl" />
                   </div>
                   <h3 className="text-primary font-medium">{icon.name}</h3>
                 </div>
@@ -126,16 +126,18 @@ export default function Styleguide() {
         <div className="flex flex-col gap-4">
           <h2 className="text-primary">Buttons</h2>
           <Button
-            text="Bearbeiten"
+            text="Fischen gehen"
+            icon="fish"
             onClick={() => window.alert("Primary Button!")}
           />
           <Button text="Bearbeiten" />
           <Button
-            text="Sekundär"
-            type="secondary"
+            text="Regen machen"
+            variant={"secondary"}
+            icon="cloud-rain"
             onClick={() => window.alert("Secondary Button!")}
           />
-          <Button text="Sekundär" type="secondary" />
+          <Button text="Bearbeiten" variant={"secondary"} />
         </div>
         <hr className="my-8 border-t-2 border-black" />
       </div>

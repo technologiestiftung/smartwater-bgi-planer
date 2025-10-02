@@ -1,4 +1,6 @@
-import { MouseEventHandler } from "react";
+interface AppStoreState {
+  welcome: string;
+}
 
 type Icon =
   | "cloud-rain"
@@ -10,24 +12,11 @@ type Icon =
 
 type IconWeight = "thin" | "light" | "regular" | "bold" | "fill" | "duotone";
 
-interface AppStoreState {
-  welcome: string;
-}
-
 interface IconProps {
   id: Icon | string;
-  size?: number | string;
-  color?: string;
+  className?: string;
   weight?: IconWeight;
   mirrored?: boolean;
 }
 
-interface ButtonProps {
-  text: string;
-  type?: "primary" | "secondary";
-  onClick?: MouseEventHandler<HTMLButtonElement>;
-  disabled?: boolean;
-  iconID?: Icon | string;
-}
-
-export type { AppStoreState, IconProps, ButtonProps };
+export type { AppStoreState, IconProps };

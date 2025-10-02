@@ -1,5 +1,5 @@
 "use client";
-import colors from "@/lib/colors/colors";
+import { cn } from "@/lib/utils";
 import { IconProps } from "@/types/app";
 import {
   CloudRainIcon as CloudRain,
@@ -13,66 +13,22 @@ import { FC } from "react";
 
 const Icon: FC<IconProps> = ({
   id,
-  size = 56,
-  color = "primary",
+  className,
   weight = "regular",
   mirrored = false,
 }) => {
-  const resolvedColor = colors[color] ?? color;
-  if (id === "cloud-rain")
-    return (
-      <CloudRain
-        size={size}
-        color={resolvedColor}
-        weight={weight}
-        mirrored={mirrored}
-      />
-    );
-  if (id === "thermometer-hot")
-    return (
-      <ThermometerHot
-        size={size}
-        color={resolvedColor}
-        weight={weight}
-        mirrored={mirrored}
-      />
-    );
-  if (id === "road-horizon")
-    return (
-      <RoadHorizon
-        size={size}
-        color={resolvedColor}
-        weight={weight}
-        mirrored={mirrored}
-      />
-    );
-  if (id === "drop")
-    return (
-      <Drop
-        size={size}
-        color={resolvedColor}
-        weight={weight}
-        mirrored={mirrored}
-      />
-    );
-  if (id === "fish")
-    return (
-      <Fish
-        size={size}
-        color={resolvedColor}
-        weight={weight}
-        mirrored={mirrored}
-      />
-    );
-  if (id === "note-pencil")
-    return (
-      <NotePencil
-        size={size}
-        color={resolvedColor}
-        weight={weight}
-        mirrored={mirrored}
-      />
-    );
+  const iconProps = {
+    weight,
+    mirrored,
+    size: "1em",
+    className: cn("", className),
+  };
+  if (id === "cloud-rain") return <CloudRain {...iconProps} />;
+  if (id === "thermometer-hot") return <ThermometerHot {...iconProps} />;
+  if (id === "road-horizon") return <RoadHorizon {...iconProps} />;
+  if (id === "drop") return <Drop {...iconProps} />;
+  if (id === "fish") return <Fish {...iconProps} />;
+  if (id === "note-pencil") return <NotePencil {...iconProps} />;
   return <p className="text-red">No Icon was found: {id}</p>;
 };
 

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./css/globals.css";
-import "./css/reset.css";
 import localFont from "next/font/local";
 
 const arthouseOwned = localFont({
