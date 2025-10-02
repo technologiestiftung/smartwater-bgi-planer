@@ -165,13 +165,71 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tbody>
     <tr>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/LuiseBrandenburger"><img src="https://avatars.githubusercontent.com/u/61413319?v=4?s=64" width="64px;" alt="Luise Brandenburger"/><br /><sub><b>Luise Brandenburger</b></sub></a><br /><a href="https://github.com/technologiestiftung/smartwater-bgi-planer/commits?author=LuiseBrandenburger" title="Code">💻</a> <a href="#design-LuiseBrandenburger" title="Design">🎨</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/JonathanHaudenschild"><img src="https://avatars.githubusercontent.com/u/15103380?v=4?s=64" width="64px;" alt="Jonathan Haudenschild"/><br /><sub><b>Jonathan Haudenschild</b></sub></a><br /><a href="https://github.com/technologiestiftung/smartwater-bgi-planer/commits?author=JonathanHaudenschild" title="Code">💻</a> <a href="#infra-JonathanHaudenschild" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/technologiestiftung/smartwater-bgi-planer/commits?author=JonathanHaudenschild" title="Documentation">📖</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/guadiromero"><img src="https://avatars.githubusercontent.com/u/32439356?v=4" width="64px;" alt="Guadalupe Romero"/><br /><sub><b>Guadalupe Romero</b></sub></a><br /><a href="https://github.com/technologiestiftung/smartwater-bgi-planer/commits?author=guadiromero" title="Code">💻</a> <a href="#infra-JonathanHaudenschild" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/technologiestiftung/smartwater-bgi-planer/commits?author=guadiromero" title="Documentation">📖</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/JS-TSB"><img src="https://avatars.githubusercontent.com/u/185074060?v=4" width="64px;" alt="Jakob Sawal"/><br /><sub><b>Jakob Sawal</b></sub></a><br /><a href="https://github.com/technologiestiftung/smartwater-bgi-planer/commits?author=JS-TSB" title="Code">💻</a> <a href="#infra-JonathanHaudenschild" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/technologiestiftung/smartwater-bgi-planer/commits?author=JS-TSB" title="Documentation">📖</a></td>
+      <td align="center" valign="top">
+        <a href="https://github.com/LuiseBrandenburger">
+          <img src="https://avatars.githubusercontent.com/u/61413319?v=4?s=64" width="64px;" alt="Luise Brandenburger"/>
+          <br />
+          <sub text-decoration="none">
+            <b>Luise Brandenburger</b>
+          </sub>
+        </a>
+        <br />
+       <a href="https://github.com/technologiestiftung/smartwater-bgi-planer/commits?author=LuiseBrandenburger" title="Code">💻</a> 
+        <a href="https://github.com/technologiestiftung/smartwater-bgi-planer/commits?author=LuiseBrandenburger&path=docs" title="Documentation">📖</a>
+        <a title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> 
+        <a href="https://github.com/technologiestiftung/smartwater-bgi-planer/pulls?q=is%3Apr+reviewed-by%3ALuiseBrandenburger" title="Reviewed Pull Requests">👀</a>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://github.com/JonathanHaudenschild">
+          <img src="https://avatars.githubusercontent.com/u/15103380?v=4?s=64" width="64px;" alt="Jonathan Haudenschild"/>
+          <br />
+          <sub text-decoration="none">
+            <b>Jonathan Haudenschild</b>
+          </sub>
+        </a>
+        <br />
+        <a href="https://github.com/technologiestiftung/smartwater-bgi-planer/commits?author=JonathanHaudenschild" title="Code">💻</a> 
+        <a href="https://github.com/technologiestiftung/smartwater-bgi-planer/commits?author=JonathanHaudenschild&path=docs" title="Documentation">📖</a>
+        <a title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> 
+        <a href="https://github.com/technologiestiftung/smartwater-bgi-planer/pulls?q=is%3Apr+reviewed-by%3AJonathanHaudenschild" title="Reviewed Pull Requests">👀</a>
+      </td>
+      <!--  -->
+      <!--  -->
+      <!--  -->
+      <!--  -->
+      <!--  -->
+      <!--  -->
+      <td align="center" valign="top">
+        <a href="https://github.com/guadiromero">
+          <img src="https://avatars.githubusercontent.com/u/32439356?v=4" width="64px;" alt="Guadalupe Romero"/>
+          <br />
+          <sub text-decoration="none">
+            <b>Guadalupe Romero</b>
+          </sub>
+        </a>
+        <br />
+        <a href="https://github.com/technologiestiftung/smartwater-bgi-planer/commits?author=guadiromero" title="Code">💻</a> 
+        <a href="https://github.com/technologiestiftung/smartwater-bgi-planer/commits?author=guadiromero&path=docs" title="Documentation">📖</a>
+        <a title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> 
+        <a href="https://github.com/technologiestiftung/smartwater-bgi-planer/pulls?q=is%3Apr+reviewed-by%3Aguadiromero" title="Reviewed Pull Requests">👀</a>
+      </td>
+      <td align="center" valign="top">
+        <a href="https://github.com/JS-TSB">
+        <img src="https://avatars.githubusercontent.com/u/185074060?v=4" width="64px;" alt="Jakob Sawal"/>
+        <br />
+        <sub text-decoration="none">
+          <b>Jakob Sawal</b>
+        </sub>
+      </a>
+      <br />
+      <a title="Design">🎨</a> 
+      <a href="https://github.com/technologiestiftung/smartwater-bgi-planer/commits?author=JS-TSB" title="Code">💻</a> 
+      <a href="https://github.com/technologiestiftung/smartwater-bgi-planer/pulls?q=is%3Apr+reviewed-by%3AJS-TSB" title="Reviewed Pull Requests">👀</a>
     </tr>
   </tbody>
 </table>
+
+<!-- <a href="#design-LuiseBrandenburger" title="Design">🎨</a> -->
 
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
