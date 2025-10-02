@@ -142,14 +142,11 @@ The application supports different environment configurations:
 
 **Build-time Variables** (must start with `NEXT_PUBLIC_`):
 
-- `NEXT_PUBLIC_SUPABASE_URL`
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-- `NEXT_PUBLIC_MAPTILER_API_KEY`
-- `NEXT_PUBLIC_MAP_BOUNDING_BOX`
+- `NEXT_PUBLIC_XXXXX`
 
 **Runtime Variables** (server-side only):
 
-- `SUPABASE_SERVICE_ROLE_KEY` (if needed for server actions)
+- `XXXXXX` (if needed for server actions)
 
 ## Contributing
 
