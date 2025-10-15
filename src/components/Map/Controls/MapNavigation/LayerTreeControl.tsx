@@ -62,7 +62,7 @@ const LayerTreeControl: FC = () => {
 	return (
 		<div className="relative">
 			<Button
-				variant="map-icon"
+				variant="map-control"
 				size="icon-only"
 				onClick={handleLayerTreeOpen}
 				className={`relative w-12 h-12 p-0 bg-neutral-80 overflow-hidden cursor-pointer`}

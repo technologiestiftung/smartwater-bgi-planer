@@ -51,7 +51,7 @@ const ZoomControl: FC<ZoomControlProps> = ({
 	return (
 		<div className="hidden md:flex flex-col gap-2" data-testid="zoom-controls">
 			<Button
-				variant="map-icon"
+				variant="map-control"
 				size="icon-only"
 				onClick={handleZoomIn}
 				className="cursor-pointer"
@@ -60,7 +60,7 @@ const ZoomControl: FC<ZoomControlProps> = ({
 				{zoomInIcon}
 			</Button>
 			<Button
-				variant="map-icon"
+				variant="map-control"
 				size="icon-only"
 				onClick={handleZoomOut}
 				className="cursor-pointer"
