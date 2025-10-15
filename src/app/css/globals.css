@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./map.css";
 
 :root {
 	/* Brand colors */
