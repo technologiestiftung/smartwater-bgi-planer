@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { cn } from "@/lib/utils";
-import Icon from "@/components/Icon";
+import Icon from "@/components/Icon/Icon";
 import type { VariantProps } from "class-variance-authority";
 import { buttonVariants, ShadButton } from "@/components/ui/button";
 
