@@ -7,6 +7,7 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "eslint",
+		"prepare": "husky",
 		"format": "prettier --check './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
 		"format:fix": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
 	},
