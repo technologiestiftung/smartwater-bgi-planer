@@ -14,8 +14,7 @@ if (appConfig?.namedProjections?.length) {
 	appConfig.namedProjections.forEach(([name, def]) => {
 		proj4.defs(name, def);
 	});
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	register(proj4 as unknown as any);
+	register(proj4);
 }
 
 interface OlMapProps {
