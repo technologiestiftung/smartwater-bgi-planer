@@ -4,6 +4,7 @@
 import mapConfig from "@/config/config.json";
 import layerConfig from "@/config/layerConfig.json";
 import services from "@/config/resources/services.json";
+import { initializeProjections } from "@/lib/utils/ol/mapUtils";
 import { useLayersStore } from "@/store/layers";
 import {
 	LayerConfigItem,
@@ -14,6 +15,8 @@ import { useMapStore } from "@/store/map";
 import { MapConfig } from "@/store/map/types";
 import { LayerStatus } from "@/types/shared";
 import { FC, useEffect } from "react";
+
+initializeProjections();
 
 function flattenLayerElements(
 	elements: (LayerElement | LayerFolder)[],

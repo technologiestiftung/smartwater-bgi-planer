@@ -1,21 +1,11 @@
 "use client";
 
-import appConfig from "@/config/config";
 import { useMapStore } from "@/store/map";
 import Map from "ol/Map";
 import View from "ol/View";
 import { transform } from "ol/proj";
-import { register } from "ol/proj/proj4";
-import proj4 from "proj4";
 import React, { FC, useEffect, useRef } from "react";
 import "../../../../node_modules/ol/ol.css";
-
-if (appConfig?.namedProjections?.length) {
-	appConfig.namedProjections.forEach(([name, def]) => {
-		proj4.defs(name, def);
-	});
-	register(proj4);
-}
 
 interface OlMapProps {
 	children?: React.ReactNode;

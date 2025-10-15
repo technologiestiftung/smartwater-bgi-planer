@@ -1,3 +1,18 @@
+import appConfig from "@/config/config";
+import { register } from "ol/proj/proj4";
+import proj4 from "proj4";
+
+export function initializeProjections() {
+	if (proj4.defs("EPSG:25833")) return;
+
+	if (appConfig?.namedProjections?.length) {
+		appConfig.namedProjections.forEach(([name, def]) => {
+			proj4.defs(name, def);
+		});
+	}
+	register(proj4);
+}
+
 export function getEpsgFromCrs(crs: string) {
 	// Handle different CRS notation formats for EPSG codes
 	const epsgMatch =
