@@ -1,148 +1,148 @@
 @import "tailwindcss";
 
 :root {
-  /* Brand colors */
-  --color-primary: #0c4c38;
-  --color-secondary: #449c76;
-  --color-accent: #40b5ff;
-  --color-light: #c8ecd9;
+	/* Brand colors */
+	--color-primary: #0c4c38;
+	--color-secondary: #449c76;
+	--color-accent: #40b5ff;
+	--color-light: #c8ecd9;
 
-  /* Signal Colors */
-  --color-red: #f61b36;
-  --color-orange: #ff8625;
-  --color-yellow: #f8ed44;
-  --color-green: #49de80;
+	/* Signal Colors */
+	--color-red: #f61b36;
+	--color-orange: #ff8625;
+	--color-yellow: #f8ed44;
+	--color-green: #49de80;
 
-  /* White & Dark */
-  --color-white: #ffffff;
-  --color-lighter: #f1f1f1;
-  --color-mid: #e5e5e5;
-  --color-mid-darker: #b3b3b3;
-  --color-dark: #444444;
-  --color-black: #0a0a0a;
+	/* White & Dark */
+	--color-white: #ffffff;
+	--color-lighter: #f1f1f1;
+	--color-mid: #e5e5e5;
+	--color-mid-darker: #b3b3b3;
+	--color-dark: #444444;
+	--color-black: #0a0a0a;
 }
 
 @theme {
-  --color-primary: var(--color-primary);
-  --color-secondary: var(--color-secondary);
-  --color-accent: var(--color-accent);
-  --color-light: var(--color-light);
-  --color-red: var(--color-red);
-  --color-orange: var(--color-orange);
-  --color-yellow: var(--color-yellow);
-  --color-green: var(--color-green);
-  --color-white: var(--color-white);
-  --color-lighter: var(--color-lighter);
-  --color-mid: var(--color-mid);
-  --color-mid-darker: var(--color-mid-darker);
-  --color-dark: var(--color-dark);
-  --color-black: var(--color-black);
+	--color-primary: var(--color-primary);
+	--color-secondary: var(--color-secondary);
+	--color-accent: var(--color-accent);
+	--color-light: var(--color-light);
+	--color-red: var(--color-red);
+	--color-orange: var(--color-orange);
+	--color-yellow: var(--color-yellow);
+	--color-green: var(--color-green);
+	--color-white: var(--color-white);
+	--color-lighter: var(--color-lighter);
+	--color-mid: var(--color-mid);
+	--color-mid-darker: var(--color-mid-darker);
+	--color-dark: var(--color-dark);
+	--color-black: var(--color-black);
 }
 @layer components {
-  /* Headings */
-  h1 {
-    font-weight: 700;
-    font-size: 3rem; /* 48px */
-    line-height: 3.5rem; /* 56px */
-  }
+	/* Headings */
+	h1 {
+		font-weight: 700;
+		font-size: 3rem; /* 48px */
+		line-height: 3.5rem; /* 56px */
+	}
 
-  h2 {
-    font-weight: 700;
-    font-size: 2.25rem; /* 36px */
-    line-height: 2.75rem; /* 44px */
-  }
+	h2 {
+		font-weight: 700;
+		font-size: 2.25rem; /* 36px */
+		line-height: 2.75rem; /* 44px */
+	}
 
-  h3 {
-    font-weight: 700;
-    font-size: 1.5rem; /* 24px */
-    line-height: 2rem; /* 32px */
-  }
+	h3 {
+		font-weight: 700;
+		font-size: 1.5rem; /* 24px */
+		line-height: 2rem; /* 32px */
+	}
 
-  h4 {
-    font-weight: 700;
-    font-size: 1.125rem; /* 18px */
-    line-height: 1.75rem; /* 28px */
-  }
+	h4 {
+		font-weight: 700;
+		font-size: 1.125rem; /* 18px */
+		line-height: 1.75rem; /* 28px */
+	}
 
-  /* Body text */
-  p {
-    font-weight: 500;
-    font-size: 1rem; /* 16px */
-    line-height: 1.5rem; /* 24px */
-  }
+	/* Body text */
+	p {
+		font-weight: 500;
+		font-size: 1rem; /* 16px */
+		line-height: 1.5rem; /* 24px */
+	}
 
-  p.italic {
-    font-weight: 500;
-    font-style: italic;
-    font-size: 1rem; /* 16px */
-    line-height: 1.5rem; /* 24px */
-  }
+	p.italic {
+		font-weight: 500;
+		font-style: italic;
+		font-size: 1rem; /* 16px */
+		line-height: 1.5rem; /* 24px */
+	}
 
-  p.bold {
-    font-weight: 700;
-    font-size: 1rem; /* 16px */
-    line-height: 1.5rem; /* 24px */
-  }
+	p.bold {
+		font-weight: 700;
+		font-size: 1rem; /* 16px */
+		line-height: 1.5rem; /* 24px */
+	}
 
-  /* Links */
-  a,
-  .link {
-    font-weight: 700;
-    font-size: 1rem; /* 16px */
-    line-height: 1.5rem; /* 24px */
-    text-decoration: underline;
-    cursor: pointer;
-  }
+	/* Links */
+	a,
+	.link {
+		font-weight: 700;
+		font-size: 1rem; /* 16px */
+		line-height: 1.5rem; /* 24px */
+		text-decoration: underline;
+		cursor: pointer;
+	}
 
-  /* Captions */
-  .caption {
-    font-weight: 500;
-    font-size: 0.875rem; /* 14px */
-    line-height: 1.25rem; /* 20px */
-  }
+	/* Captions */
+	.caption {
+		font-weight: 500;
+		font-size: 0.875rem; /* 14px */
+		line-height: 1.25rem; /* 20px */
+	}
 
-  .caption-italic {
-    font-weight: 500;
-    font-style: italic;
-    font-size: 0.875rem; /* 14px */
-    line-height: 1.25rem; /* 20px */
-  }
+	.caption-italic {
+		font-weight: 500;
+		font-style: italic;
+		font-size: 0.875rem; /* 14px */
+		line-height: 1.25rem; /* 20px */
+	}
 
-  .caption-small {
-    font-weight: 700;
-    font-size: 0.75rem; /* 12px */
-    line-height: auto; /* Auto */
-  }
+	.caption-small {
+		font-weight: 700;
+		font-size: 0.75rem; /* 12px */
+		line-height: auto; /* Auto */
+	}
 }
 
 @layer base {
-  body {
-    font-family: var(--font-arthouse-owned);
-  }
-  /* Remove default body spacing */
-  html,
-  body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-  }
+	body {
+		font-family: var(--font-arthouse-owned);
+	}
+	/* Remove default body spacing */
+	html,
+	body {
+		margin: 0;
+		padding: 0;
+		height: 100%;
+	}
 
-  /* Remove default headline and paragraph spacing */
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  p {
-    margin: 0;
-  }
+	/* Remove default headline and paragraph spacing */
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6,
+	p {
+		margin: 0;
+	}
 
-  /* Optional: reset lists */
-  ul,
-  ol {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
+	/* Optional: reset lists */
+	ul,
+	ol {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
 }
