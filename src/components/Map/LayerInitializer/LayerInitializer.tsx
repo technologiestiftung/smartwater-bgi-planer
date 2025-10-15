@@ -1,7 +1,7 @@
 "use client";
 
-import { applyStyleToLayer } from "@/components/Map/MapStyles";
-import { getEpsgFromCrs } from "@/lib/utils/mapUtils";
+import { getEpsgFromCrs } from "@/lib/utils/ol/mapUtils";
+import { applyStyleToLayer } from "@/lib/utils/ol/layerStyles";
 import { useLayersStore } from "@/store/layers";
 import { LayerService, ManagedLayer } from "@/store/layers/types";
 import { useMapStore } from "@/store/map";
