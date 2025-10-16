@@ -69,7 +69,6 @@ const DrawProjectBoundaryButton: FC = () => {
 				});
 				planningLayer.set("id", LAYER_IDS.PROJECT_BTF_PLANNING);
 				map.addLayer(planningLayer);
-				console.log("Created 'project_btf_planning' layer.");
 			} else {
 				planningSource = planningLayer.getSource()!;
 			}
@@ -92,12 +91,6 @@ const DrawProjectBoundaryButton: FC = () => {
 					planningSource.addFeature(rabimoFeature.clone());
 				}
 			});
-
-			console.log(
-				`Added ${
-					planningSource.getFeatures().length
-				} features to planning layer.`,
-			);
 		},
 		[map],
 	);
@@ -123,6 +116,7 @@ const DrawProjectBoundaryButton: FC = () => {
 		modifyRef.current.on("modifyend", () => {
 			performIntersection();
 		});
+
 		map!.addInteraction(modifyRef.current);
 		setMode("modify");
 	}, [map, removeInteractions, performIntersection]);
@@ -130,10 +124,14 @@ const DrawProjectBoundaryButton: FC = () => {
 	const startDrawMode = useCallback(() => {
 		const projectBoundaryLayer = getLayerById(map, LAYER_IDS.PROJECT_BOUNDARY);
 		const source = projectBoundaryLayer?.getSource();
+
+		const planningLayer = getLayerById(map, LAYER_IDS.PROJECT_BTF_PLANNING);
+		const planningSource = planningLayer?.getSource();
 		if (!source) return;
 
 		removeInteractions();
-		source.clear(); // Clear any existing boundary
+		source.clear();
+		planningSource?.clear();
 
 		drawRef.current = new Draw({ source, type: "Polygon" });
 		drawRef.current.on("drawend", (event) => {
@@ -141,8 +139,9 @@ const DrawProjectBoundaryButton: FC = () => {
 			console.log("GeoJSON:", geojson);
 
 			performIntersection(event.feature);
-			setMode("drawn"); // Trigger transition to modify mode
+			setMode("drawn");
 		});
+
 		map!.addInteraction(drawRef.current);
 		setMode("draw");
 	}, [map, removeInteractions, performIntersection]);
