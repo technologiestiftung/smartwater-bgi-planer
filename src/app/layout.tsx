@@ -1,3 +1,4 @@
+import MapInitializer from "@/components/Map/MapInitializer/MapInitializer";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./css/globals.css";
@@ -41,7 +42,10 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="de">
-			<body className={arthouseOwned.variable}>{children}</body>
+			<body className={arthouseOwned.variable}>
+				<MapInitializer />
+				{children}
+			</body>
 		</html>
 	);
 }
