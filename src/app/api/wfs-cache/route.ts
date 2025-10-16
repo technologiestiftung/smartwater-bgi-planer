@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { FeatureCollection } from "geojson";
 import { NextRequest, NextResponse } from "next/server";
 
-const wfsCache = new Map<string, { data: any; timestamp: number }>();
-const CACHE_TTL = 5 * 60 * 1000; // 5 minutes for WFS (more dynamic data)
+const wfsCache = new Map<string, FeatureCollection>();
 
 export async function GET(request: NextRequest) {
 	const searchParams = request.nextUrl.searchParams;
@@ -23,8 +22,8 @@ export async function GET(request: NextRequest) {
 	const cacheKey = `${service}:${typename}:${bbox}:${dataProjection}:${featureProjection}`;
 	const cached = wfsCache.get(cacheKey);
 
-	if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
-		return NextResponse.json(cached.data);
+	if (cached) {
+		return NextResponse.json(cached);
 	}
 
 	try {
@@ -36,7 +35,7 @@ export async function GET(request: NextRequest) {
 		}
 
 		const data = await response.json();
-		wfsCache.set(cacheKey, { data, timestamp: Date.now() });
+		wfsCache.set(cacheKey, data);
 
 		return NextResponse.json(data);
 	} catch (error) {

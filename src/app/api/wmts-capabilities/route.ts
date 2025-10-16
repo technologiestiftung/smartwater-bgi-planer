@@ -1,9 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from "next/server";
 
-// In-memory cache (use Redis in production)
-const capabilitiesCache = new Map<string, { data: any; timestamp: number }>();
-const CACHE_TTL = 60 * 60 * 1000; // 1 hour
+interface WMTSCapabilitiesData {
+	xml: string;
+}
+
+const capabilitiesCache = new Map<string, WMTSCapabilitiesData>();
 
 export async function GET(request: NextRequest) {
 	const searchParams = request.nextUrl.searchParams;
@@ -16,10 +17,9 @@ export async function GET(request: NextRequest) {
 		);
 	}
 
-	// Check cache first
 	const cached = capabilitiesCache.get(url);
-	if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
-		return NextResponse.json(cached.data);
+	if (cached) {
+		return NextResponse.json(cached);
 	}
 
 	try {
@@ -31,9 +31,8 @@ export async function GET(request: NextRequest) {
 
 		const text = await response.text();
 
-		// Cache the raw XML text (parsing still happens client-side for OpenLayers)
 		const cacheData = { xml: text };
-		capabilitiesCache.set(url, { data: cacheData, timestamp: Date.now() });
+		capabilitiesCache.set(url, cacheData);
 
 		return NextResponse.json(cacheData);
 	} catch (error) {
