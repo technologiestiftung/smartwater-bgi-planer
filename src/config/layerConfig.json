@@ -19,7 +19,7 @@
 		"id": "module_1_question_1",
 		"name": "Fließgeschwindigkeit",
 		"description": "Bewertung der allgemeinen Fließgeschwindigkeit bei Starkregenereignissen.",
-		"drawLayerId": "need_flooding_hotspots",
+		"drawLayerId": "need_flooding_hotspots_q1",
 		"visibleLayerIds": [
 			"ua_srhk:da_fr_aussergewoehnlich",
 			"ua_srhk:db_fliessgeschw_aussergew_kostra",
@@ -30,7 +30,7 @@
 		"id": "module_1_question_2",
 		"name": "Wasserstand",
 		"description": "Messung und Analyse der Wasserstände bei Überflutungen.",
-		"drawLayerId": "need_flooding_hotspots",
+		"drawLayerId": "need_flooding_hotspots_q2",
 		"visibleLayerIds": [
 			"ua_srhk:dc_wasserstand_aussergew_kostra",
 			"ua_srgk:cb_wasserstand_aussergewoehnlich"
@@ -40,14 +40,14 @@
 		"id": "module_1_question_3",
 		"name": "Feuerwehreinsätze",
 		"description": "Übersicht über vergangene Feuerwehreinsätze im Zusammenhang mit Starkregen.",
-		"drawLayerId": "need_flooding_hotspots",
+		"drawLayerId": "need_flooding_hotspots_q3",
 		"visibleLayerIds": ["ua_srhk:g_srhk_feuerwehreinsaetze"]
 	},
 	{
 		"id": "module_1_question_4",
 		"name": "Hitzebelastung am Tag",
 		"description": "Bewertung der thermischen Belastung während des Tages.",
-		"drawLayerId": "need_temperature_hotspots",
+		"drawLayerId": "need_temperature_hotspots_q1",
 		"visibleLayerIds": [
 			"ua_klimabewertung_2022:cc_ua_phk_bioklim_str_tag_2022",
 			"ua_klimabewertung_2022:cb_ua_phk_bioklim_siedl_tag_2022",
@@ -59,7 +59,7 @@
 		"id": "module_1_question_5",
 		"name": "Hitzebelastung in der Nacht",
 		"description": "Bewertung der thermischen Entlastung in der Nacht.",
-		"drawLayerId": "need_temperature_hotspots",
+		"drawLayerId": "need_temperature_hotspots_q2",
 		"visibleLayerIds": [
 			"ua_klimabewertung_2022:dc_ua_phk_bioklim_siedl_nacht_2022",
 			"ua_klimabewertung_2022:dd_ua_phk_bioklim_str_nacht_2022",
@@ -70,14 +70,14 @@
 		"id": "module_1_question_6",
 		"name": "Vulnerable Bereiche",
 		"description": "Identifizierung von Gebieten mit erhöhter Empfindlichkeit gegenüber Hitze.",
-		"drawLayerId": "need_temperature_hotspots",
+		"drawLayerId": "need_temperature_hotspots_q3",
 		"visibleLayerIds": ["ua_klimabewertung_2022:eb_ua_phk_vul_geb_demog_2022"]
 	},
 	{
 		"id": "module_1_question_7",
 		"name": "Luftaustausch: Kaltluftbahnen",
 		"description": "Erkennung und Bewertung von Kaltluftbahnen für die Ventilation.",
-		"drawLayerId": "need_temperature_hotspots",
+		"drawLayerId": "need_temperature_hotspots_q4",
 		"visibleLayerIds": [
 			"ua_klimaanalyse_2022:wfs:tk_kak_leitbahnkorridor_2022",
 			"ua_klimaanalyse_2022:ta_kak_luftaustausch_2022"
@@ -87,7 +87,7 @@
 		"id": "module_1_question_8",
 		"name": "Luftaustausch: Leitbahnkorridore",
 		"description": "Erkennung und Bewertung von Leitbahnkorridoren für den Luftaustausch.",
-		"drawLayerId": "need_temperature_hotspots",
+		"drawLayerId": "need_temperature_hotspots_q5",
 		"visibleLayerIds": [
 			"ua_klimaanalyse_2022:ta_kak_luftaustausch_2022",
 			"ua_klimaanalyse_2022:wfs:tk_kak_leitbahnkorridor_2022"
@@ -97,7 +97,7 @@
 		"id": "module_1_question_9",
 		"name": "Kaltluft",
 		"description": "Bewertung der Kaltluftströme und -verteilung im Planungsgebiet.",
-		"drawLayerId": "need_temperature_hotspots",
+		"drawLayerId": "need_temperature_hotspots_q6",
 		"visibleLayerIds": [
 			"ua_klimaanalyse_2022:td_kak_kaltlufteinwirkbereich_siedlungsfl_2022",
 			"ua_klimaanalyse_2022:tj_kak_gruen_kvs_hoch_2022",
@@ -109,42 +109,42 @@
 		"id": "module_1_question_10",
 		"name": "Versiegelung der Blockteilflächen",
 		"description": "Detaillierte Analyse des Versiegelungsgrades auf Blockebene.",
-		"drawLayerId": "need_impermeability_hotspots",
+		"drawLayerId": "need_impermeability_hotspots_q1",
 		"visibleLayerIds": ["bgi-planer:versiegelung_2021"]
 	},
 	{
 		"id": "module_1_question_11",
 		"name": "Grünvolumenzahl",
 		"description": "Bewertung des Grünvolumens im Verhältnis zur versiegelten Fläche.",
-		"drawLayerId": "need_impermeability_hotspots",
+		"drawLayerId": "need_impermeability_hotspots_q2",
 		"visibleLayerIds": ["bgi-planer:a_gruenvol2020"]
 	},
 	{
 		"id": "module_1_question_12",
 		"name": "Kleinteilige Versiegelung",
 		"description": "Erfassung und Bewertung von kleinteiligen versiegelten Flächen.",
-		"drawLayerId": "need_impermeability_hotspots",
+		"drawLayerId": "need_impermeability_hotspots_q3",
 		"visibleLayerIds": ["alkis_gebaeude:gebaeude"]
 	},
 	{
 		"id": "module_1_question_13",
 		"name": "Komponenten des Wasserhaushalts",
 		"description": "Detaillierte Untersuchung der einzelnen Komponenten des Wasserhaushalts.",
-		"drawLayerId": "need_waterbalance_hotspots",
+		"drawLayerId": "need_waterbalance_hotspots_q1",
 		"visibleLayerIds": ["ua_wasserhaushalt_2022:f_deltaw_2022"]
 	},
 	{
 		"id": "module_1_question_14",
 		"name": "Art der Kanalisation",
 		"description": "Erfassung und Bewertung der verschiedenen Arten von Kanalisationssystemen.",
-		"drawLayerId": "need_groundwater_hotspots",
+		"drawLayerId": "need_groundwater_hotspots_q1",
 		"visibleLayerIds": ["ua_kanalisation_2022:sp02_09kanalisation2022"]
 	},
 	{
 		"id": "module_1_question_15",
 		"name": "Abkopplung vom erstaufnehmenden Gewässer",
 		"description": "Bewertung des Grades der Abkopplung von Oberflächengewässern.",
-		"drawLayerId": "need_groundwater_hotspots",
+		"drawLayerId": "need_groundwater_hotspots_q2",
 		"visibleLayerIds": [
 			"bgi-planer:HA4_Kleingewaesser_trocken_pkt",
 			" ua_kanalisation_2022:sp02_09kanalisation2022_2"
@@ -154,7 +154,7 @@
 		"id": "module_1_question_16",
 		"name": "Kleingewässer mit Wasserbedarf",
 		"description": "Identifizierung und Bewertung von Kleingewässern, die zusätzliche Wasserversorgung benötigen.",
-		"drawLayerId": "need_groundwater_hotspots",
+		"drawLayerId": "need_groundwater_hotspots_q3",
 		"visibleLayerIds": [
 			"bgi-planer:HA4_Kleingewaesser_trocken_pkt",
 			"bgi-planer:HA4_Kleingewaesser_trocken_topoEZG_pl"
