@@ -3,73 +3,83 @@
 import { Button } from "@/components/ui/button";
 import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";
-import GeoJSON from "ol/format/GeoJSON.js";
 import Draw from "ol/interaction/Draw.js";
 import VectorLayer from "ol/layer/Vector.js";
 import { Vector as VectorSource } from "ol/source.js";
-import { FC, useEffect, useRef } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 
 interface DrawButtonProps {
-	layerId: string;
 	geometryType?: "Point" | "LineString" | "Polygon" | "Circle";
 }
 
-const DrawButton: FC<DrawButtonProps> = ({
-	layerId,
-	geometryType = "Polygon",
-}) => {
+const DrawButton: FC<DrawButtonProps> = ({ geometryType = "Polygon" }) => {
 	const map = useMapStore((state) => state.map);
+	const drawLayerId = useLayersStore((state) => state.drawLayerId);
 	const setLayerVisibility = useLayersStore(
 		(state) => state.setLayerVisibility,
 	);
 
 	const drawRef = useRef<Draw | null>(null);
+	const [isDrawing, setIsDrawing] = useState(false);
 
 	useEffect(() => {
-		if (!map || !layerId) return;
+		if (!map || !drawLayerId) return;
 
-		setLayerVisibility(layerId, true);
-	}, [layerId, map, setLayerVisibility]);
+		setLayerVisibility(drawLayerId, true);
+	}, [map, drawLayerId, setLayerVisibility]);
+
+	useEffect(() => {
+		if (!map || !drawLayerId) return;
+
+		if (drawRef.current) {
+			map.removeInteraction(drawRef.current);
+			drawRef.current = null;
+			setIsDrawing(false);
+		}
+
+		return () => {
+			if (drawRef.current) {
+				map.removeInteraction(drawRef.current);
+				drawRef.current = null;
+				setIsDrawing(false);
+			}
+		};
+	}, [map, drawLayerId]);
 
 	const toggleDraw = () => {
 		if (!map) return;
 
-		// Remove existing draw interaction
 		if (drawRef.current) {
 			map.removeInteraction(drawRef.current);
 			drawRef.current = null;
+			setIsDrawing(false);
 			return;
 		}
 
-		// Find the layer by ID
 		const layer = map
 			.getAllLayers()
-			.find((l) => l.get("id") === layerId) as VectorLayer<VectorSource>;
+			.find((l) => l.get("id") === drawLayerId) as VectorLayer<VectorSource>;
 
 		if (!layer || !(layer.getSource() instanceof VectorSource)) {
 			console.error("Layer not found or is not a vector layer");
 			return;
 		}
 
-		// Add draw interaction
+		const layerStyle = layer.getStyle();
+
 		drawRef.current = new Draw({
 			source: layer.getSource()!,
 			type: geometryType,
-		});
-
-		drawRef.current.on("drawend", (event) => {
-			const feature = event.feature;
-			console.log("Feature drawn:", feature);
-			const geojson = new GeoJSON().writeFeatureObject(event.feature);
-			console.log("GeoJSON:", geojson);
+			...(layerStyle && { style: layerStyle }),
 		});
 
 		map.addInteraction(drawRef.current);
+		setIsDrawing(true);
 	};
 
 	return (
 		<Button onClick={toggleDraw}>
-			{drawRef.current ? "Stop Zeichnen" : "Zeichnen"}
+			{isDrawing ? "Stop Zeichnen" : "Zeichnen"}
 		</Button>
 	);
 };
