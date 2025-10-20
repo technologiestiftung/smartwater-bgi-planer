@@ -65,12 +65,9 @@ const DrawButton: FC<DrawButtonProps> = ({ geometryType = "Polygon" }) => {
 			return;
 		}
 
-		const layerStyle = layer.getStyle();
-
 		drawRef.current = new Draw({
 			source: layer.getSource()!,
 			type: geometryType,
-			...(layerStyle && { style: layerStyle }),
 		});
 
 		map.addInteraction(drawRef.current);
