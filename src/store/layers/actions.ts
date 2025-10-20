@@ -95,6 +95,7 @@ export const createApplyConfigLayers =
 			// Fallback: just turn on the requested layers without turning off others
 			set(() => ({
 				drawLayerId: layerConfigItem.drawLayerId,
+				layerConfigId: layerConfigItem.id,
 			}));
 
 			const newLayersMap = new Map(currentMapLayers);
@@ -112,6 +113,7 @@ export const createApplyConfigLayers =
 
 		set(() => ({
 			drawLayerId: layerConfigItem.drawLayerId,
+			layerConfigId: layerConfigItem.id,
 		}));
 
 		const thememapsFolderElements = mapConfig.layerConfig.subjectlayer.elements;
