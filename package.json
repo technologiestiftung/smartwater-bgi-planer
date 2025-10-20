@@ -34,7 +34,7 @@
 		"@eslint/eslintrc": "^3",
 		"@tailwindcss/postcss": "^4",
 		"@types/geojson": "^7946.0.16",
-		"@types/node": "^20",
+		"@types/node": "^22.0.0",
 		"@types/react": "^19",
 		"@types/react-dom": "^19",
 		"eslint": "^9",
