@@ -16,6 +16,7 @@ const initialState: LayersState = {
 	flattenedLayerElements: [],
 	layerConfig: [],
 	drawLayerId: null,
+	layerConfigId: null,
 };
 
 export const useLayersStore = create<LayersState & LayersActions>(
@@ -37,5 +38,6 @@ export const useLayersStore = create<LayersState & LayersActions>(
 			() => useMapStore.getState().config,
 		),
 		setDrawLayer: (layerId) => set({ drawLayerId: layerId }),
+		setLayerConfigId: (layerId) => set({ layerConfigId: layerId }),
 	}),
 );

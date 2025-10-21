@@ -237,23 +237,67 @@
 							"visibility": true
 						},
 						{
-							"id": "need_flooding_hotspots",
+							"id": "need_flooding_hotspots_q1",
 							"visibility": false
 						},
 						{
-							"id": "need_temperature_hotspots",
+							"id": "need_flooding_hotspots_q2",
 							"visibility": false
 						},
 						{
-							"id": "need_impermeability_hotspots",
+							"id": "need_flooding_hotspots_q3",
 							"visibility": false
 						},
 						{
-							"id": "need_waterbalance_hotspots",
+							"id": "need_temperature_hotspots_q1",
 							"visibility": false
 						},
 						{
-							"id": "need_groundwater_hotspots",
+							"id": "need_temperature_hotspots_q2",
+							"visibility": false
+						},
+						{
+							"id": "need_temperature_hotspots_q3",
+							"visibility": false
+						},
+						{
+							"id": "need_temperature_hotspots_q4",
+							"visibility": false
+						},
+						{
+							"id": "need_temperature_hotspots_q5",
+							"visibility": false
+						},
+						{
+							"id": "need_temperature_hotspots_q6",
+							"visibility": false
+						},
+						{
+							"id": "need_impermeability_hotspots_q1",
+							"visibility": false
+						},
+						{
+							"id": "need_impermeability_hotspots_q2",
+							"visibility": false
+						},
+						{
+							"id": "need_impermeability_hotspots_q3",
+							"visibility": false
+						},
+						{
+							"id": "need_waterbalance_hotspots_q1",
+							"visibility": false
+						},
+						{
+							"id": "need_groundwater_hotspots_q1",
+							"visibility": false
+						},
+						{
+							"id": "need_groundwater_hotspots_q2",
+							"visibility": false
+						},
+						{
+							"id": "need_groundwater_hotspots_q3",
 							"visibility": false
 						},
 						{

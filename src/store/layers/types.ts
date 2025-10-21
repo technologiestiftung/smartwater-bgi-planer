@@ -102,6 +102,7 @@ export interface LayersState {
 	flattenedLayerElements: LayerElement[];
 	layerConfig: LayerConfigItem[];
 	drawLayerId: string | null;
+	layerConfigId: string | null;
 }
 
 export interface LayersActions {
@@ -119,4 +120,5 @@ export interface LayersActions {
 	setLayerConfig: (config: LayerConfigItem[]) => void;
 	applyConfigLayers: (visibleLayerIds: string) => void;
 	setDrawLayer: (layerId: string) => void;
+	setLayerConfigId: (layerConfigId: string) => void;
 }

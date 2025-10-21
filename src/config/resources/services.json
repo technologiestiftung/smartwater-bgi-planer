@@ -139,7 +139,31 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "hotspots"
+		"styleId": "floodingHotspots"
+	},
+	{
+		"id": "need_flooding_hotspots_q1",
+		"name": "Starkregen Hotspot Q1",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "floodingHotspots"
+	},
+	{
+		"id": "need_flooding_hotspots_q2",
+		"name": "Starkregen Hotspot Q2",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "floodingHotspots"
+	},
+	{
+		"id": "need_flooding_hotspots_q3",
+		"name": "Starkregen Hotspot Q3",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "floodingHotspots"
 	},
 	{
 		"id": "need_temperature_hotspots",
@@ -147,7 +171,55 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "hotspots"
+		"styleId": "temperatureHotspots"
+	},
+	{
+		"id": "need_temperature_hotspots_q1",
+		"name": "Hitze Hotspot Q1",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "temperatureHotspots"
+	},
+	{
+		"id": "need_temperature_hotspots_q2",
+		"name": "Hitze Hotspot Q2",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "temperatureHotspots"
+	},
+	{
+		"id": "need_temperature_hotspots_q3",
+		"name": "Hitze Hotspot Q3",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "temperatureHotspots"
+	},
+	{
+		"id": "need_temperature_hotspots_q4",
+		"name": "Hitze Hotspot Q4",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "temperatureHotspots"
+	},
+	{
+		"id": "need_temperature_hotspots_q5",
+		"name": "Hitze Hotspot Q5",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "temperatureHotspots"
+	},
+	{
+		"id": "need_temperature_hotspots_q6",
+		"name": "Hitze Hotspot Q6",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "temperatureHotspots"
 	},
 	{
 		"id": "need_impermeability_hotspots",
@@ -155,7 +227,31 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "hotspots"
+		"styleId": "impermeabilityHotspots"
+	},
+	{
+		"id": "need_impermeability_hotspots_q1",
+		"name": "Versiegelung Hotspots Q1",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "impermeabilityHotspots"
+	},
+	{
+		"id": "need_impermeability_hotspots_q2",
+		"name": "Versiegelung Hotspots Q2",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "impermeabilityHotspots"
+	},
+	{
+		"id": "need_impermeability_hotspots_q3",
+		"name": "Versiegelung Hotspots Q3",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "impermeabilityHotspots"
 	},
 	{
 		"id": "need_groundwater_hotspots",
@@ -163,7 +259,31 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "hotspots"
+		"styleId": "groundwaterHotspots"
+	},
+	{
+		"id": "need_groundwater_hotspots_q1",
+		"name": "Gewässerschutz Hotspots Q1",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "groundwaterHotspots"
+	},
+	{
+		"id": "need_groundwater_hotspots_q2",
+		"name": "Gewässerschutz Hotspots Q2",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "groundwaterHotspots"
+	},
+	{
+		"id": "need_groundwater_hotspots_q3",
+		"name": "Gewässerschutz Hotspots Q3",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "groundwaterHotspots"
 	},
 	{
 		"id": "need_waterbalance_hotspots",
@@ -171,49 +291,63 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "hotspots"
+		"styleId": "waterbalanceHotspots"
+	},
+	{
+		"id": "need_waterbalance_hotspots_q1",
+		"name": "Wasserhaushalt Hotspots Q1",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "waterbalanceHotspots"
 	},
 	{
 		"id": "feasibility_seepage",
 		"name": "Versickerung Machbarkeit",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
-		"gfiAttributes": "showAll"
+		"gfiAttributes": "showAll",
+		"styleId": "feasibilityLayers"
 	},
 	{
 		"id": "feasibility_permeability",
 		"name": "Entsiegelung Machbarkeit",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
-		"gfiAttributes": "showAll"
+		"gfiAttributes": "showAll",
+		"styleId": "feasibilityLayers"
 	},
 	{
 		"id": "feasibility_greening",
 		"name": "Bepflanzung/Begrünung Machbarkeit",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
-		"gfiAttributes": "showAll"
+		"gfiAttributes": "showAll",
+		"styleId": "feasibilityLayers"
 	},
 	{
 		"id": "feasibility_building_greening",
 		"name": "Gebäudebegrünung Machbarkeit",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
-		"gfiAttributes": "showAll"
+		"gfiAttributes": "showAll",
+		"styleId": "feasibilityLayers"
 	},
 	{
 		"id": "feasibility_retention",
 		"name": "Speicherung Machbarkeit",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
-		"gfiAttributes": "showAll"
+		"gfiAttributes": "showAll",
+		"styleId": "feasibilityLayers"
 	},
 	{
 		"id": "module2_notes",
 		"name": "Notizen",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
-		"gfiAttributes": "showAll"
+		"gfiAttributes": "showAll",
+		"styleId": "module2Notes"
 	},
 	{
 		"id": "measures_seepage",
@@ -221,49 +355,55 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "measuresSeepage"
+		"styleId": "measuresLayers"
 	},
 	{
 		"id": "measures_permeability",
 		"name": "Maßnahmen - Entsiegelung",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
-		"gfiAttributes": "showAll"
+		"gfiAttributes": "showAll",
+		"styleId": "measuresLayers"
 	},
 	{
 		"id": "measures_greening",
 		"name": "Maßnahmen - Bepflanzung",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
-		"gfiAttributes": "showAll"
+		"gfiAttributes": "showAll",
+		"styleId": "measuresLayers"
 	},
 	{
 		"id": "measures_building_greening",
 		"name": "Maßnahmen - Gebäudebegrünung",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
-		"gfiAttributes": "showAll"
+		"gfiAttributes": "showAll",
+		"styleId": "measuresLayers"
 	},
 	{
 		"id": "measures_retention",
 		"name": "Maßnahmen - Speicherung",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
-		"gfiAttributes": "showAll"
+		"gfiAttributes": "showAll",
+		"styleId": "measuresLayers"
 	},
 	{
 		"id": "measures_connected_areas",
 		"name": "Angeschlossene Flächen",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
-		"gfiAttributes": "showAll"
+		"gfiAttributes": "showAll",
+		"styleId": "measuresLayers"
 	},
 	{
 		"id": "module3_notes",
 		"name": "Notizen",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
-		"gfiAttributes": "showAll"
+		"gfiAttributes": "showAll",
+		"styleId": "module3Notes"
 	},
 	{
 		"id": "THEME MAPS"

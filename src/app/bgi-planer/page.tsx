@@ -12,7 +12,7 @@ export default function Home() {
 		<div className="items-center flex-1 justify-items-center h-full relative w-full flex">
 			<div className="absolute bottom-4 right-40 z-50 flex gap-2">
 				<DrawMeasureButton layerId="measures_seepage" />
-				<DrawButton layerId="project_boundary" />
+				<DrawButton />
 				<BlockAreaSelector />
 				<DrawProjectBoundaryButton />
 			</div>
