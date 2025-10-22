@@ -2,10 +2,10 @@
 
 import dynamic from "next/dynamic";
 import { FC } from "react";
+import BaselayerSwitch from "./BaselayerSwitch/BaselayerSwitch";
 import { MapControls } from "./Controls";
 import MapNavigationControls from "./Controls/MapNavigation/MapNavigationControls";
 import LayerInitializer from "./LayerInitializer/LayerInitializer";
-import LayerTree from "./LayerTree/LayerTree";
 
 const LazyOlMap = dynamic(() => import("./OlMap/OlMap"), {
 	ssr: false,
@@ -17,7 +17,7 @@ const Map: FC = () => {
 		<div className="Map-root w-full h-full">
 			<LazyOlMap>
 				<LayerInitializer />
-				<LayerTree />
+				<BaselayerSwitch />
 				<MapControls>
 					<MapNavigationControls />
 				</MapControls>

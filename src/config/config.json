@@ -72,6 +72,10 @@
 				{
 					"id": "basemap_raster_grau",
 					"visibility": true
+				},
+				{
+					"id": "hintergrund_orthophoto",
+					"visibility": false
 				}
 			]
 		},
