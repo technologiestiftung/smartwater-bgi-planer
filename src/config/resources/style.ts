@@ -33,8 +33,8 @@ const styleList = [
 			{
 				style: {
 					polygonStrokeWidth: 2,
-					polygonStrokeColor: [255, 20, 20, 2],
-					polygonFillColor: [255, 20, 20, 0.5],
+					polygonStrokeColor: [0, 0, 0, 0.3],
+					polygonFillColor: [0, 0, 0, 0],
 				},
 			},
 		],
@@ -144,6 +144,7 @@ const styleList = [
 					pointStrokeColor: [255, 255, 255, 1],
 					pointStrokeWidth: 2,
 					pointRadius: 14,
+					iconScale: 0.8,
 					icon: "/icons/note.svg",
 				},
 			},

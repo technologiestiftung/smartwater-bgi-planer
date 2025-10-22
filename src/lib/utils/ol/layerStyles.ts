@@ -12,6 +12,7 @@ interface StyleConfig {
 	pointStrokeColor?: number[];
 	pointStrokeWidth?: number;
 	icon?: string;
+	iconScale?: number;
 }
 
 export const getStyleConfig = (styleId: string): StyleConfig | null => {
@@ -25,7 +26,7 @@ export const createOLStyle = (styleConfig: StyleConfig): Style | Style[] => {
 	if (styleConfig.icon) {
 		imageStyle = new Icon({
 			src: styleConfig.icon,
-			scale: 1,
+			scale: styleConfig.iconScale || 1,
 			anchor: [0.5, 0.5],
 			anchorXUnits: "fraction",
 			anchorYUnits: "fraction",
