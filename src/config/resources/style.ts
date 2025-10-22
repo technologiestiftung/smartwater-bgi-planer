@@ -140,9 +140,11 @@ const styleList = [
 		rules: [
 			{
 				style: {
-					pointFillColor: [255, 165, 0, 0.8],
-					pointStrokeColor: [255, 140, 0, 1],
+					pointFillColor: [255, 255, 255, 1],
+					pointStrokeColor: [255, 255, 255, 1],
 					pointStrokeWidth: 2,
+					pointRadius: 14,
+					icon: "/icons/note.svg",
 				},
 			},
 		],
