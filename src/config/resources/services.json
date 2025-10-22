@@ -45,7 +45,7 @@
 		"optionsFromCapabilities": true,
 		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Namensnennung - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/by-2-0 abrufbar. Der Quellenvermerk gemäß (2) der Lizenz lautet \"Geoportal Berlin / [Titel des Datensatzes]\"",
 		"preview": {
-			"src": "/preview-img/satelite-basemap.png"
+			"src": "/preview-img/basemap-satelite.png"
 		}
 	},
 	{
