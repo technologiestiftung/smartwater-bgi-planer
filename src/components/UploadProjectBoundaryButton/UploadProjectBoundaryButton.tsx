@@ -9,14 +9,13 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
+import { ensureVectorLayer } from "@/lib/helper/layerHelpers";
 import { getLayerById } from "@/lib/helper/mapHelpers";
 import { useMapStore } from "@/store/map";
 import { LAYER_IDS } from "@/types/shared";
 import { Feature } from "ol";
 import { intersects } from "ol/extent";
 import GeoJSON from "ol/format/GeoJSON";
-import VectorLayer from "ol/layer/Vector";
-import { Vector as VectorSource } from "ol/source";
 import { FC, useCallback, useRef, useState } from "react";
 
 const UploadProjectBoundaryButton: FC = () => {
@@ -26,28 +25,6 @@ const UploadProjectBoundaryButton: FC = () => {
 	const [error, setError] = useState<string | null>(null);
 	const fileInputRef = useRef<HTMLInputElement>(null);
 
-	const ensureVectorLayer = useCallback(
-		(layerId: string): VectorLayer<VectorSource> => {
-			if (!map) throw new Error("Map object is not available.");
-
-			let layer = getLayerById(map, layerId) as
-				| VectorLayer<VectorSource>
-				| undefined;
-
-			if (!layer) {
-				const source = new VectorSource();
-				layer = new VectorLayer({ source });
-				layer.set("id", layerId);
-				map.addLayer(layer);
-			} else {
-				layer.setVisible(true);
-			}
-
-			return layer;
-		},
-		[map],
-	);
-
 	const performIntersection = useCallback(() => {
 		if (!map) return;
 
@@ -55,7 +32,10 @@ const UploadProjectBoundaryButton: FC = () => {
 		const boundaryFeatures =
 			projectBoundaryLayer?.getSource()?.getFeatures() || [];
 
-		const planningLayer = ensureVectorLayer(LAYER_IDS.PROJECT_BTF_PLANNING);
+		const planningLayer = ensureVectorLayer(
+			map,
+			LAYER_IDS.PROJECT_BTF_PLANNING,
+		);
 		const planningSource = planningLayer.getSource()!;
 		planningSource.clear();
 
@@ -93,13 +73,13 @@ const UploadProjectBoundaryButton: FC = () => {
 				}
 			}
 		});
-	}, [map, ensureVectorLayer]);
+	}, [map]);
 
 	const addProjectBoundaryFeaturesToMap = useCallback(
 		(features: Feature[]) => {
 			if (!map) return;
 
-			const boundaryLayer = ensureVectorLayer(LAYER_IDS.PROJECT_BOUNDARY);
+			const boundaryLayer = ensureVectorLayer(map, LAYER_IDS.PROJECT_BOUNDARY);
 			const boundarySource = boundaryLayer.getSource()!;
 
 			boundarySource.clear();
@@ -112,7 +92,7 @@ const UploadProjectBoundaryButton: FC = () => {
 				map.getView().fit(extent, { padding: [50, 50, 50, 50], duration: 500 });
 			}
 		},
-		[map, performIntersection, ensureVectorLayer],
+		[map, performIntersection],
 	);
 
 	const handleGeoJSONUpload = useCallback(
