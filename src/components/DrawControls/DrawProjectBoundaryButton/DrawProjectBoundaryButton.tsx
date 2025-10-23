@@ -4,96 +4,78 @@ import { Button } from "@/components/ui/button";
 import { getLayerById } from "@/lib/helper/mapHelpers";
 import { useMapStore } from "@/store/map";
 import { LAYER_IDS } from "@/types/shared";
-import { Feature } from "ol";
 import { intersects } from "ol/extent";
 import GeoJSON from "ol/format/GeoJSON.js";
 import Draw from "ol/interaction/Draw.js";
 import Modify from "ol/interaction/Modify.js";
 import VectorLayer from "ol/layer/Vector.js";
 import { Vector as VectorSource } from "ol/source.js";
-import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
 
 const DrawProjectBoundaryButton: FC = () => {
 	const map = useMapStore((state) => state.map);
 	const drawRef = useRef<Draw | null>(null);
 	const modifyRef = useRef<Modify | null>(null);
-	const [mode, setMode] = useState<"none" | "draw" | "modify" | "drawn">(
-		"none",
-	);
+	const [mode, setMode] = useState<"idle" | "drawing" | "modifying">("idle");
 
-	const getBoundaryFeature = useCallback(() => {
-		const layer = getLayerById(map, LAYER_IDS.PROJECT_BOUNDARY);
-		return layer?.getSource()?.getFeatures()[0];
-	}, [map]);
+	const performIntersection = useCallback(() => {
+		if (!map) return;
 
-	const boundaryExists = useMemo(
-		() => !!getBoundaryFeature(),
-		[getBoundaryFeature],
-	);
+		const projectBoundaryLayer = getLayerById(map, LAYER_IDS.PROJECT_BOUNDARY);
+		if (!projectBoundaryLayer?.getSource()) {
+			console.error("Project Boundary Layer not found.");
+			return;
+		}
 
-	const performIntersection = useCallback(
-		(featureToUse?: Feature) => {
-			if (!map) return;
+		const projectBoundarySource = projectBoundaryLayer.getSource()!;
+		const boundaryFeatures = projectBoundarySource.getFeatures();
 
-			const projectBoundaryLayer = getLayerById(
-				map,
-				LAYER_IDS.PROJECT_BOUNDARY,
-			);
-			if (!projectBoundaryLayer?.getSource()) {
-				console.error("Project Boundary Layer not found.");
-				return;
-			}
+		if (boundaryFeatures.length === 0) {
+			getLayerById(map, LAYER_IDS.PROJECT_BTF_PLANNING)?.getSource()?.clear();
+			return;
+		}
 
-			const projectBoundarySource = projectBoundaryLayer.getSource()!;
-			const currentBoundaryFeature =
-				featureToUse || projectBoundarySource.getFeatures()[0];
+		const rabimoLayer = getLayerById(map, LAYER_IDS.RABIMO_INPUT_2025);
+		if (!rabimoLayer?.getSource()) {
+			console.warn("Rabimo Input Layer not found.");
+			return;
+		}
 
-			if (!currentBoundaryFeature) {
-				getLayerById(map, "project_btf_planning")?.getSource()?.clear();
-				return;
-			}
+		let planningLayer = getLayerById(map, LAYER_IDS.PROJECT_BTF_PLANNING);
+		let planningSource: VectorSource;
 
-			const rabimoLayer = getLayerById(map, LAYER_IDS.RABIMO_INPUT_2025);
-			if (!rabimoLayer?.getSource()) {
-				console.warn("Rabimo Input Layer not found.");
-				return;
-			}
+		if (!planningLayer) {
+			planningSource = new VectorSource();
+			planningLayer = new VectorLayer({
+				source: planningSource,
+			});
+			planningLayer.set("id", LAYER_IDS.PROJECT_BTF_PLANNING);
+			map.addLayer(planningLayer);
+		} else {
+			planningSource = planningLayer.getSource()!;
+		}
 
-			let planningLayer = getLayerById(map, LAYER_IDS.PROJECT_BTF_PLANNING);
-			let planningSource: VectorSource;
+		planningSource.clear();
 
-			if (!planningLayer) {
-				planningSource = new VectorSource();
-				planningLayer = new VectorLayer({
-					source: planningSource,
-				});
-				planningLayer.set("id", LAYER_IDS.PROJECT_BTF_PLANNING);
-				map.addLayer(planningLayer);
-			} else {
-				planningSource = planningLayer.getSource()!;
-			}
+		rabimoLayer.getSource()!.forEachFeature((rabimoFeature) => {
+			const rabimoGeometry = rabimoFeature.getGeometry();
+			if (!rabimoGeometry) return;
 
-			planningSource.clear();
+			const intersectsAny = boundaryFeatures.some((boundaryFeature) => {
+				const drawnGeometry = boundaryFeature.getGeometry();
+				if (!drawnGeometry) return false;
 
-			const drawnGeometry = currentBoundaryFeature.getGeometry();
-			if (!drawnGeometry) {
-				console.error("Boundary feature has no geometry.");
-				return;
-			}
-
-			rabimoLayer.getSource()!.forEachFeature((rabimoFeature) => {
-				const rabimoGeometry = rabimoFeature.getGeometry();
-				if (
-					rabimoGeometry &&
+				return (
 					intersects(drawnGeometry.getExtent(), rabimoGeometry.getExtent()) &&
 					drawnGeometry.intersectsExtent(rabimoGeometry.getExtent())
-				) {
-					planningSource.addFeature(rabimoFeature.clone());
-				}
+				);
 			});
-		},
-		[map],
-	);
+
+			if (intersectsAny) {
+				planningSource.addFeature(rabimoFeature.clone());
+			}
+		});
+	}, [map]);
 
 	const removeInteractions = useCallback(() => {
 		if (drawRef.current) {
@@ -112,85 +94,62 @@ const DrawProjectBoundaryButton: FC = () => {
 		if (!source) return;
 
 		removeInteractions();
+		performIntersection();
+
 		modifyRef.current = new Modify({ source });
 		modifyRef.current.on("modifyend", () => {
 			performIntersection();
 		});
 
 		map!.addInteraction(modifyRef.current);
-		setMode("modify");
+		setMode("modifying");
 	}, [map, removeInteractions, performIntersection]);
 
 	const startDrawMode = useCallback(() => {
 		const projectBoundaryLayer = getLayerById(map, LAYER_IDS.PROJECT_BOUNDARY);
 		const source = projectBoundaryLayer?.getSource();
-
-		const planningLayer = getLayerById(map, LAYER_IDS.PROJECT_BTF_PLANNING);
-		const planningSource = planningLayer?.getSource();
 		if (!source) return;
 
 		removeInteractions();
-		source.clear();
-		planningSource?.clear();
 
 		drawRef.current = new Draw({ source, type: "Polygon" });
 		drawRef.current.on("drawend", (event) => {
 			const geojson = new GeoJSON().writeFeatureObject(event.feature);
 			console.log("GeoJSON:", geojson);
 
-			performIntersection(event.feature);
-			setMode("drawn");
+			performIntersection();
+
+			setTimeout(() => {
+				startModifyMode();
+			}, 50);
 		});
 
 		map!.addInteraction(drawRef.current);
-		setMode("draw");
-	}, [map, removeInteractions, performIntersection]);
+		setMode("drawing");
+	}, [map, removeInteractions, performIntersection, startModifyMode]);
 
-	const toggleInteraction = useCallback(() => {
+	const handleButtonClick = useCallback(() => {
 		if (!map) return;
 
-		if (mode === "none") {
-			if (boundaryExists) {
-				startModifyMode();
-			} else {
-				startDrawMode();
-			}
+		if (mode === "idle") {
+			startDrawMode();
 		} else {
 			removeInteractions();
-			setMode("none");
+			setMode("idle");
 		}
-	}, [
-		map,
-		mode,
-		boundaryExists,
-		startModifyMode,
-		startDrawMode,
-		removeInteractions,
-	]);
+	}, [map, mode, startDrawMode, removeInteractions]);
 
 	useEffect(() => {
-		if (!map) return;
-
-		if (getBoundaryFeature()) {
-			performIntersection();
-		}
-
 		return removeInteractions;
-	}, [map, getBoundaryFeature, performIntersection, removeInteractions]);
-
-	useEffect(() => {
-		if (mode === "drawn") {
-			startModifyMode();
-		}
-	}, [mode, startModifyMode]);
+	}, [removeInteractions]);
 
 	const getButtonText = () => {
-		if (mode === "draw") return "Stop Drawing";
-		if (mode === "modify") return "Stop Modifying";
-		return boundaryExists ? "Modify Project Boundary" : "Draw Project Boundary";
+		if (mode === "drawing") return "Cancel Drawing";
+		if (mode === "modifying") return "Finish Modifying";
+		return "Draw Project Boundary";
 	};
 
-	return <Button onClick={toggleInteraction}>{getButtonText()}</Button>;
+	return <Button onClick={handleButtonClick}>{getButtonText()}</Button>;
 };
 
 export default DrawProjectBoundaryButton;
