@@ -3,7 +3,6 @@
 import dynamic from "next/dynamic";
 import { FC } from "react";
 import BaselayerSwitch from "./BaselayerSwitch/BaselayerSwitch";
-import { MapControls } from "./Controls";
 import MapNavigationControls from "./Controls/MapNavigation/MapNavigationControls";
 import LayerInitializer from "./LayerInitializer/LayerInitializer";
 
@@ -18,9 +17,7 @@ const Map: FC = () => {
 			<LazyOlMap>
 				<LayerInitializer />
 				<BaselayerSwitch />
-				<MapControls>
-					<MapNavigationControls />
-				</MapControls>
+				<MapNavigationControls />
 			</LazyOlMap>
 		</div>
 	);
