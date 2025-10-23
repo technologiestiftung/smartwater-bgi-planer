@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -95,14 +96,11 @@ const UploadProjectBoundaryButton: FC = () => {
 		[map, performIntersection],
 	);
 
-	const handleGeoJSONUpload = useCallback(
-		async (file: File) => {
+	const handleGeoJSONData = useCallback(
+		async (geojson: any) => {
 			if (!map) return;
 
-			const text = await file.text();
-			const geojson = JSON.parse(text);
 			const format = new GeoJSON();
-
 			const crsMatch = geojson.crs?.properties?.name?.match(/EPSG[:\s]+(\d+)/i);
 			const sourceProjection = crsMatch ? `EPSG:${crsMatch[1]}` : "EPSG:4326";
 			const mapProjection = map.getView().getProjection().getCode();
@@ -126,11 +124,33 @@ const UploadProjectBoundaryButton: FC = () => {
 			setError(null);
 
 			try {
-				if (!file.name.toLowerCase().match(/\.(geojson|json)$/)) {
-					throw new Error("Please upload a GeoJSON file (.geojson or .json).");
+				const lowerName = file.name.toLowerCase();
+
+				if (lowerName.endsWith(".zip")) {
+					const formData = new FormData();
+					formData.append("file", file);
+
+					const res = await fetch("/api/convert", {
+						method: "POST",
+						body: formData,
+					});
+
+					if (!res.ok) throw new Error("Failed to convert shapefile");
+					const geojson = await res.json();
+					await handleGeoJSONData(geojson);
+				} else if (
+					lowerName.endsWith(".geojson") ||
+					lowerName.endsWith(".json")
+				) {
+					const text = await file.text();
+					const geojson = JSON.parse(text);
+					await handleGeoJSONData(geojson);
+				} else {
+					throw new Error(
+						"Unsupported file type. Upload a .geojson, .json, or zipped shapefile (.zip).",
+					);
 				}
 
-				await handleGeoJSONUpload(file);
 				setDialogOpen(false);
 				if (fileInputRef.current) fileInputRef.current.value = "";
 			} catch (err) {
@@ -139,7 +159,7 @@ const UploadProjectBoundaryButton: FC = () => {
 				setUploading(false);
 			}
 		},
-		[handleGeoJSONUpload],
+		[handleGeoJSONData],
 	);
 
 	return (
@@ -151,8 +171,8 @@ const UploadProjectBoundaryButton: FC = () => {
 				<DialogHeader>
 					<DialogTitle>Upload Project Boundary</DialogTitle>
 					<DialogDescription>
-						Upload a GeoJSON file to define the project boundary. The projection
-						will be automatically converted to match the map (EPSG:25833).
+						Upload a GeoJSON or zipped Shapefile to define the project boundary.
+						Only features in EPSG:25833 or EPSG:4326 will be displayed.
 					</DialogDescription>
 				</DialogHeader>
 				<div className="space-y-4">
@@ -160,7 +180,7 @@ const UploadProjectBoundaryButton: FC = () => {
 						<input
 							ref={fileInputRef}
 							type="file"
-							accept=".geojson,.json"
+							accept=".geojson,.json,.zip"
 							onChange={handleFileChange}
 							className="hidden"
 						/>
@@ -172,7 +192,8 @@ const UploadProjectBoundaryButton: FC = () => {
 							{uploading ? "Uploading..." : "Choose File"}
 						</Button>
 						<p className="text-xs text-muted-foreground">
-							Supported formats: GeoJSON (.geojson, .json)
+							Supported formats: GeoJSON (.geojson, .json) or Shapefile (.zip)
+							in EPSG:25833 or EPSG:4326
 						</p>
 					</div>
 					{error && (
