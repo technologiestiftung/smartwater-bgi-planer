@@ -8,7 +8,7 @@ const initialState: ModalsState = {
 
 export const useModalsStore = create<ModalsState & ModalsActions>()(
 	persist(
-		(set, get) => ({
+		(set) => ({
 			...initialState,
 			openModal: (id: string) => {
 				set((state) => {
@@ -31,9 +31,6 @@ export const useModalsStore = create<ModalsState & ModalsActions>()(
 						m.id === id ? { ...m, isOpen: false } : m,
 					),
 				}));
-			},
-			isModalOpen: (id: string) => {
-				return get().modals.some((modal) => modal.id === id && modal.isOpen);
 			},
 		}),
 		{

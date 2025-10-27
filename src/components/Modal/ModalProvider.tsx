@@ -7,11 +7,15 @@ export function PageModalProvider({ children }: { children: React.ReactNode }) {
 }
 
 export function usePageModal(id: string) {
-	const { openModal, closeModal, isModalOpen } = useModalsStore();
+	const openModal = useModalsStore((state) => state.openModal);
+	const closeModal = useModalsStore((state) => state.closeModal);
+	const isOpen = useModalsStore(
+		(state) => state.modals.find((m) => m.id === id)?.isOpen ?? false,
+	);
 
 	return {
 		open: () => openModal(id),
 		close: () => closeModal(id),
-		isOpen: isModalOpen(id),
+		isOpen,
 	};
 }

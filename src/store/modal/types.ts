@@ -10,5 +10,4 @@ export interface ModalsState {
 export interface ModalsActions {
 	openModal: (id: string) => void;
 	closeModal: (id: string) => void;
-	isModalOpen: (id: string) => boolean;
 }
