@@ -24,7 +24,7 @@ interface PageModalProps {
 	customBackdrop?: React.ReactNode;
 }
 
-export function PageModal({
+export function Modal({
 	open,
 	onOpenChange,
 	title,

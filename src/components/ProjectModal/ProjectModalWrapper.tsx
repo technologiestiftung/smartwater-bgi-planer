@@ -2,8 +2,8 @@
 import ProjectModal, {
 	ProjectFormData,
 } from "@/components/ProjectModal/ProjectModal";
-import { PageModal } from "@/components/PageModal";
-import { usePageModal } from "@/components/PageModal/PageModalProvider";
+import { PageModal } from "@/components/Modal";
+import { usePageModal } from "@/components/Modal/ModalProvider";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { TrashIcon, FloppyDiskBackIcon } from "@phosphor-icons/react";

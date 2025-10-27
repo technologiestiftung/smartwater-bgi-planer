@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./css/globals.css";
 import Background from "@/images/background.svg";
-import { PageModalProvider } from "@/components/PageModal/PageModalProvider";
+import { PageModalProvider } from "@/components/Modal/ModalProvider";
 
 const arthouseOwned = localFont({
 	src: [

@@ -1,7 +1,7 @@
 "use client";
 import MenuModal from "@/components/MenuModal/MenuModal";
-import { PageModal } from "@/components/PageModal";
-import { usePageModal } from "@/components/PageModal/PageModalProvider";
+import { PageModal } from "@/components/Modal";
+import { usePageModal } from "@/components/Modal/ModalProvider";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
