@@ -1,171 +1,110 @@
 "use client";
-import {
-	Field,
-	FieldDescription,
-	FieldGroup,
-	FieldLabel,
-	FieldSet,
-} from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "../ui/button";
-import { PenNibIcon, PolygonIcon, UploadIcon } from "@phosphor-icons/react";
+import ProjectModalContent, {
+	ProjectFormData,
+} from "@/components/ProjectModal/ProjectModalContent";
+import { PageModal } from "@/components/Modal";
+import { usePageModal } from "@/components/Modal/ModalProvider";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { TrashIcon, FloppyDiskBackIcon } from "@phosphor-icons/react";
+import Background from "@/images/background.svg";
 import { useState, useEffect } from "react";
 
-export interface ProjectFormData {
-	name: string;
-	description: string;
-	useCase: string;
-}
-
-interface ProjectModalProps {
-	mode?: "new" | "edit";
+interface ProjectModalWrapperProps {
+	mode: "new" | "edit";
 	projectId?: string;
-	onFormChange?: (data: ProjectFormData) => void;
-	initialData?: ProjectFormData;
 }
 
-export default function ProjectModal({
-	onFormChange,
-	initialData,
-}: ProjectModalProps) {
+const MODAL_ID = "project-modal";
+
+export default function ProjectModalWrapper({
+	mode,
+	projectId,
+}: ProjectModalWrapperProps) {
+	const router = useRouter();
+	const { open, close, isOpen } = usePageModal(MODAL_ID);
 	const [formData, setFormData] = useState<ProjectFormData>({
-		name: initialData?.name || "",
-		description: initialData?.description || "",
-		useCase: initialData?.useCase || "individual",
+		name: "",
+		description: "",
+		useCase: "individual",
 	});
+	const [isSaving, setIsSaving] = useState(false);
 
 	useEffect(() => {
-		if (onFormChange) {
-			onFormChange(formData);
-		}
-	}, [formData, onFormChange]);
+		open();
+	}, [open]);
 
-	const handleFieldChange = (field: keyof ProjectFormData, value: string) => {
-		setFormData((prev) => ({ ...prev, [field]: value }));
+	const handleClose = () => {
+		close();
+		if (window.history.length > 1) {
+			router.back();
+		} else {
+			router.push("/");
+		}
 	};
+
+	const handleSave = async () => {
+		if (!formData.name.trim()) {
+			alert("Bitte geben Sie einen Projektnamen ein.");
+			return;
+		}
+
+		setIsSaving(true);
+
+		try {
+			if (mode === "new") {
+				const projectId = Date.now().toString();
+
+				window.location.href = `/${projectId}`;
+			}
+		} catch (error) {
+			console.error("Error saving project:", error);
+			alert("Fehler beim Speichern des Projekts.");
+		} finally {
+			setIsSaving(false);
+		}
+	};
+
+	const title = mode === "new" ? "Neues Projekt" : "Projektinformationen";
+	const description =
+		mode === "new"
+			? "Erstellen Sie ein neues Projekt mit Namen, Beschreibung und Anwendungsfall"
+			: "Bearbeiten Sie die Projektinformationen";
+
+	const footer = (
+		<div className="flex gap-2">
+			<Button variant="outline" onClick={handleClose} disabled={isSaving}>
+				<TrashIcon className="mr-2" />
+				Änderungen Verwerfen
+			</Button>
+			<Button onClick={handleSave} disabled={isSaving}>
+				<FloppyDiskBackIcon className="mr-2" />
+				{isSaving ? "Speichern..." : "Änderungen Speichern"}
+			</Button>
+		</div>
+	);
+
+	const customBackdrop = (
+		<div className="bg-primary absolute -z-99 flex h-full w-full items-center justify-center overflow-hidden">
+			<Background className="min-h-full min-w-full flex-shrink-0" />
+		</div>
+	);
+
 	return (
-		<FieldSet>
-			<FieldGroup>
-				<Field orientation="horizontal">
-					<FieldLabel htmlFor="name" className="min-w-48">
-						Projektname
-					</FieldLabel>
-					<Input
-						id="name"
-						autoComplete="off"
-						required
-						placeholder="Evil Rabbit"
-						value={formData.name}
-						onChange={(e) => handleFieldChange("name", e.target.value)}
-					/>
-				</Field>
-				<Field orientation="horizontal">
-					<FieldLabel htmlFor="description" className="min-w-48">
-						Projektbeschreibung
-					</FieldLabel>
-					<Textarea
-						id="description"
-						className="min-h-60"
-						placeholder="Projektbeschreibung eingeben..."
-						rows={8}
-						value={formData.description}
-						onChange={(e) => handleFieldChange("description", e.target.value)}
-					/>
-				</Field>
-				<Field orientation="horizontal">
-					<FieldLabel htmlFor="useCase" className="max-w-48">
-						Anwendungsfall
-					</FieldLabel>
-					<RadioGroup
-						id="useCase"
-						required
-						aria-label="Anwendungsfall"
-						value={formData.useCase}
-						onValueChange={(value) => handleFieldChange("useCase", value)}
-					>
-						<div className="flex items-center gap-3">
-							<RadioGroupItem value="individual" id="r1" />
-							<p>individuelles Gebiet</p>
-						</div>
-						<div className="flex items-center gap-3">
-							<RadioGroupItem value="quarter" id="r2" />
-							<p>Quartier</p>
-						</div>
-						<div className="flex items-center gap-3">
-							<RadioGroupItem value="property" id="r3" />
-							<p>Grundstück</p>
-						</div>
-						<div className="flex items-center gap-3">
-							<RadioGroupItem value="public-spaces" id="r4" />
-							<p>Straßen, Wege, Plätze / Grün- und Freiflächen</p>
-						</div>
-					</RadioGroup>
-				</Field>
-				<Field>
-					<FieldLabel htmlFor="additionalNotes" className="min-w-48">
-						Untersuchungsgebiet
-					</FieldLabel>
-					<FieldDescription>
-						Zeichnen Sie hier die Außengrenze des Projektes.
-					</FieldDescription>
-					<div className="border-input bg-muted mt-2 h-60 w-full rounded-md border" />
-					<div className="mt-2 flex justify-end gap-2">
-						<Button>
-							<PolygonIcon />
-							Fläche zeichnen
-						</Button>
-						<Button>
-							<UploadIcon />
-							Shapefile hochladen
-						</Button>
-					</div>
-				</Field>
-				<Field>
-					<FieldLabel htmlFor="additionalNotes" className="min-w-48">
-						Neubauten & Versiegelte Flächen
-					</FieldLabel>
-					<FieldDescription>
-						Markieren oder laden Sie Flächen hoch, die neue Gebäude oder
-						versiegelte Oberflächen darstellen. Sie können die Flächen direkt in
-						der Karte einzeichnen oder Shapefiles hochladen. Diese Informationen
-						werden für die weitere Analyse Ihres Projekts berücksichtigt.{" "}
-					</FieldDescription>
-					<div className="border-input bg-muted mt-2 h-60 w-full rounded-md border" />
-					<div className="mt-2 flex justify-end gap-2">
-						<Button>
-							<PolygonIcon />
-							Fläche zeichnen
-						</Button>
-						<Button>
-							<PenNibIcon />
-							Bearbeiten
-						</Button>
-						<Button>
-							<UploadIcon />
-							Shapefile hochladen
-						</Button>
-					</div>
-				</Field>
-				<Field className="mt-4">
-					<FieldDescription>
-						Laden Sie hier eigene Karten hoch. Diese können als
-						Referenzinformation für die Beantwortung der Checkfragen dienen.
-						Sollten Ihnen, zum Beispiel, Karten über Altlasten, unterirdische
-						Leitungen, oder geplante Bauvorhaben zur Verfügung stehen, sie
-						können hier hochgeladen werden und jederzeit in der Bearbeitung des
-						Projektes ein- und ausgeblendet werden. GeoTIFF Dateien und WMS
-						Dienste werden unterstützt. Bearbeiten
-					</FieldDescription>
-					<div className="mt-2 flex justify-end gap-2">
-						<Button>
-							<UploadIcon />
-							Weitere Karten hochladen
-						</Button>
-					</div>
-				</Field>
-			</FieldGroup>
-		</FieldSet>
+		<PageModal
+			open={isOpen}
+			onOpenChange={(open) => !open && handleClose()}
+			title={title}
+			description={description}
+			footer={footer}
+			customBackdrop={customBackdrop}
+		>
+			<ProjectModalContent
+				mode={mode}
+				projectId={projectId}
+				onFormChange={setFormData}
+				initialData={formData}
+			/>
+		</PageModal>
 	);
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import ProjectModalWrapper from "@/components/ProjectModal/ProjectModalWrapper";
+import ProjectModal from "@/components/ProjectModal/ProjectModal";
 import { useEffect } from "react";
 
 export default function NewProjectPage() {
@@ -8,5 +8,5 @@ export default function NewProjectPage() {
 		console.log("NewProjectPage mounted");
 	}, []);
 
-	return <ProjectModalWrapper mode="new" />;
+	return <ProjectModal mode="new" />;
 }

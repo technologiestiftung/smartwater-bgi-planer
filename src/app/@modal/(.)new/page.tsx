@@ -1,7 +1,7 @@
 "use client";
 
-import ProjectModalWrapper from "@/components/ProjectModal/ProjectModalWrapper";
+import ProjectModal from "@/components/ProjectModal/ProjectModal";
 
 export default function NewProjectModalPage() {
-	return <ProjectModalWrapper mode="new" />;
+	return <ProjectModal mode="new" />;
 }
