@@ -42,6 +42,8 @@
 	--color-popover-foreground: var(--black);
 	--color-primary: var(--primary);
 	--color-primary-foreground: var(--white);
+	--color-light: var(--light);
+	--color-lighter: var(--lighter);
 	--color-secondary: var(--secondary);
 	--color-secondary-foreground: var(--black);
 	--color-muted: var(--neutral-mid);
