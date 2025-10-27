@@ -52,9 +52,13 @@ export function usePageModal(id: string) {
 
 	const { openModal, closeModal, isModalOpen } = context;
 
+	const open = useCallback(() => openModal(id), [openModal, id]);
+	const close = useCallback(() => closeModal(id), [closeModal, id]);
+	const isOpen = isModalOpen(id);
+
 	return {
-		open: () => openModal(id),
-		close: () => closeModal(id),
-		isOpen: isModalOpen(id),
+		open,
+		close,
+		isOpen,
 	};
 }
