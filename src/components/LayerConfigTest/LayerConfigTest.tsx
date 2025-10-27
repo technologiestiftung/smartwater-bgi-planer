@@ -13,8 +13,8 @@ const LayerConfigTest: FC = () => {
 	};
 
 	return (
-		<div className="LayerConfigText-root bg-white max-w-72 h-[600px] overflow-scroll p-4 shadow-lg rounded-lg">
-			<h1 className="text-xl font-bold mb-4">Module Layer Control</h1>
+		<div className="LayerConfigText-root h-[600px] max-w-72 overflow-scroll rounded-lg bg-white p-4 shadow-lg">
+			<h1 className="mb-4 text-xl font-bold">Module Layer Control</h1>
 			{layerConfig.length === 0 ? (
 				<p className="text-gray-600">Loading module configurations...</p>
 			) : (
@@ -22,7 +22,7 @@ const LayerConfigTest: FC = () => {
 					{layerConfig.map((configItem: LayerConfigItem) => (
 						<div
 							key={configItem.id}
-							className="flex flex-col border p-3 rounded-md bg-gray-50 hover:bg-gray-100 cursor-pointer"
+							className="flex cursor-pointer flex-col rounded-md border bg-gray-50 p-3 hover:bg-gray-100"
 							onClick={() => handleModuleClick(configItem.id)}
 						>
 							<h2 className="text-lg font-semibold">{configItem.name}</h2>
@@ -31,7 +31,7 @@ const LayerConfigTest: FC = () => {
 									{configItem.description}
 								</p>
 							)}
-							<span className="text-xs text-blue-500 mt-1">
+							<span className="mt-1 text-xs text-blue-500">
 								Click to apply layers
 							</span>
 						</div>

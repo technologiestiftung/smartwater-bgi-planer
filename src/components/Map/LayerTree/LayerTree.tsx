@@ -38,10 +38,10 @@ const LayerItem: FC<{ layer: ManagedLayer }> = ({ layer }) => {
 	const serviceName = layer.config?.service?.name ?? "Unnamed Layer";
 
 	return (
-		<div className="flex items-center justify-between p-3 border-b">
+		<div className="flex items-center justify-between border-b p-3">
 			<label
 				htmlFor={layer.id}
-				className="flex items-center space-x-3 flex-1 cursor-pointer"
+				className="flex flex-1 cursor-pointer items-center space-x-3"
 			>
 				<span
 					className={`font-medium ${layer.visibility ? "text-blue-600" : ""}`}
@@ -54,7 +54,7 @@ const LayerItem: FC<{ layer: ManagedLayer }> = ({ layer }) => {
 				type="checkbox"
 				checked={layer.visibility}
 				onChange={handleVisibilityChange}
-				className="w-5 h-5"
+				className="h-5 w-5"
 				disabled={layer.status === "error"}
 			/>
 		</div>
@@ -65,8 +65,8 @@ const LayerTree: FC = () => {
 	const { subjectLayers } = useLayerData();
 
 	return (
-		<div className="fixed top-4 right-4 w-80 max-w-sm bg-white border rounded-lg shadow-lg z-50">
-			<div className="p-4 border-b">
+		<div className="fixed top-4 right-4 z-48 w-80 max-w-sm rounded-lg border bg-white shadow-lg">
+			<div className="border-b p-4">
 				<h2 className="text-lg font-semibold">Layer Tree</h2>
 			</div>
 			<div className="max-h-96 overflow-y-auto">

@@ -48,13 +48,13 @@ const LayerTreeControl: FC = () => {
 					alt={topVisibleLayer.config.service.name || "Layer preview"}
 					width={64}
 					height={64}
-					className="w-full h-full object-cover"
+					className="h-full w-full object-cover"
 				/>
 			);
 		}
 		return (
-			<div className="w-full h-full bg-gradient-to-br from-purple-200 to-purple-300 flex items-center justify-center">
-				<div className="w-6 h-6 border-2 border-purple-400 rounded-full opacity-50"></div>
+			<div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-purple-200 to-purple-300">
+				<div className="h-6 w-6 rounded-full border-2 border-purple-400 opacity-50"></div>
 			</div>
 		);
 	};
@@ -65,9 +65,9 @@ const LayerTreeControl: FC = () => {
 				variant="map-control"
 				size="icon-only"
 				onClick={handleLayerTreeOpen}
-				className={`relative w-12 h-12 p-0 bg-neutral-80 overflow-hidden cursor-pointer`}
+				className={`bg-neutral-80 relative h-12 w-12 cursor-pointer overflow-hidden p-0`}
 			>
-				<div className="w-full h-full flex items-center justify-center">
+				<div className="flex h-full w-full items-center justify-center">
 					{visibleCount === 0 && (
 						<ContextMapIcon className="[&>path]:fill-popover" />
 					)}
@@ -78,7 +78,7 @@ const LayerTreeControl: FC = () => {
 			{visibleCount > 0 && (
 				<Badge
 					variant="default"
-					className="absolute -top-2 -right-2 w-6 h-6 p-0 rounded-full text-xs font-bold"
+					className="absolute -top-2 -right-2 h-6 w-6 rounded-full p-0 text-xs font-bold"
 				>
 					{visibleCount}
 				</Badge>

@@ -9,15 +9,15 @@ import Map from "@/components/Map/Map";
 
 export default function Home() {
 	return (
-		<div className="items-center flex-1 justify-items-center h-full relative w-full flex">
-			<div className="absolute bottom-4 right-40 z-50 flex gap-2">
+		<div className="relative flex h-full w-full flex-1 items-center justify-items-center">
+			<div className="absolute right-40 bottom-4 z-47 flex gap-2">
 				<DrawMeasureButton layerId="measures_seepage" />
 				<DrawButton />
 				<BlockAreaSelector />
 				<DrawProjectBoundaryButton />
 			</div>
 
-			<div className="absolute top-4 left-4 z-50">
+			<div className="absolute top-4 left-4 z-47">
 				<LayerConfigTest />
 			</div>
 
