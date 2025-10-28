@@ -2,10 +2,11 @@
 
 import dynamic from "next/dynamic";
 import { FC } from "react";
-import { MapControls } from "./Controls";
+import NoteCard from "../NoteCard/NoteCard";
+import BaselayerSwitch from "./BaselayerSwitch/BaselayerSwitch";
+import ClickControl from "./Controls/ClickControl";
 import MapNavigationControls from "./Controls/MapNavigation/MapNavigationControls";
 import LayerInitializer from "./LayerInitializer/LayerInitializer";
-import LayerTree from "./LayerTree/LayerTree";
 
 const LazyOlMap = dynamic(() => import("./OlMap/OlMap"), {
 	ssr: false,
@@ -17,10 +18,11 @@ const Map: FC = () => {
 		<div className="Map-root h-full w-full">
 			<LazyOlMap>
 				<LayerInitializer />
-				<LayerTree />
-				<MapControls>
-					<MapNavigationControls />
-				</MapControls>
+				<BaselayerSwitch />
+				<MapNavigationControls />
+				<ClickControl layerId="module1_notes">
+					<NoteCard />
+				</ClickControl>
 			</LazyOlMap>
 		</div>
 	);

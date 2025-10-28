@@ -72,6 +72,10 @@
 				{
 					"id": "basemap_raster_grau",
 					"visibility": true
+				},
+				{
+					"id": "hintergrund_orthophoto",
+					"visibility": false
 				}
 			]
 		},
@@ -225,16 +229,20 @@
 					"type": "folder",
 					"elements": [
 						{
+							"id": "project_btf_planning",
+							"visibility": true
+						},
+						{
+							"id": "project_boundary",
+							"visibility": true
+						},
+						{
 							"id": "project_new_development",
 							"visibility": false
 						},
 						{
 							"id": "project_custom_maps",
 							"visibility": false
-						},
-						{
-							"id": "module1_notes",
-							"visibility": true
 						},
 						{
 							"id": "need_flooding_hotspots_q1",
@@ -321,10 +329,6 @@
 							"visibility": false
 						},
 						{
-							"id": "module2_notes",
-							"visibility": false
-						},
-						{
 							"id": "measures_seepage",
 							"visibility": true
 						},
@@ -349,16 +353,16 @@
 							"visibility": false
 						},
 						{
-							"id": "module3_notes",
+							"id": "module1_notes",
+							"visibility": true
+						},
+						{
+							"id": "module2_notes",
 							"visibility": false
 						},
 						{
-							"id": "project_btf_planning",
-							"visibility": true
-						},
-						{
-							"id": "project_boundary",
-							"visibility": true
+							"id": "module3_notes",
+							"visibility": false
 						}
 					]
 				}

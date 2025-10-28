@@ -1,4 +1,8 @@
 import { LayerElementBase, LayerFolder } from "@/store/layers/types";
+import VectorLayer from "ol/layer/Vector";
+import type Map from "ol/Map";
+import { Vector as VectorSource } from "ol/source";
+import { getLayerById } from "./mapHelpers";
 
 export type LayerTreeElement = LayerElementBase | LayerFolder;
 
@@ -27,3 +31,23 @@ export function getLayerIdsInFolder(
 	});
 	return foundIds;
 }
+
+export const ensureVectorLayer = (
+	map: Map,
+	layerId: string,
+): VectorLayer<VectorSource> => {
+	let layer = getLayerById(map, layerId) as
+		| VectorLayer<VectorSource>
+		| undefined;
+
+	if (!layer) {
+		const source = new VectorSource();
+		layer = new VectorLayer({ source });
+		layer.set("id", layerId);
+		map.addLayer(layer);
+	} else {
+		layer.setVisible(true);
+	}
+
+	return layer;
+};

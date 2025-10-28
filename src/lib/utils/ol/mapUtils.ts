@@ -1,12 +1,12 @@
-import appConfig from "@/config/config";
+import Config from "@/config/config";
 import { register } from "ol/proj/proj4";
 import proj4 from "proj4";
 
 export function initializeProjections() {
 	if (proj4.defs("EPSG:25833")) return;
 
-	if (appConfig?.namedProjections?.length) {
-		appConfig.namedProjections.forEach(([name, def]) => {
+	if (Config?.namedProjections?.length) {
+		Config.namedProjections.forEach(([name, def]) => {
 			proj4.defs(name, def);
 		});
 	}

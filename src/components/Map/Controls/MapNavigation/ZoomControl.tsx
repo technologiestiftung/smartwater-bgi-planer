@@ -2,18 +2,10 @@
 
 import { Button } from "@/components/ui/button";
 import { useMapStore } from "@/store/map";
-import { MinusIcon, PlusIcon } from "lucide-react";
-import { FC, ReactNode, useCallback, useEffect } from "react";
+import Image from "next/image";
+import { FC, useCallback, useEffect } from "react";
 
-interface ZoomControlProps {
-	zoomInIcon?: ReactNode;
-	zoomOutIcon?: ReactNode;
-}
-
-const ZoomControl: FC<ZoomControlProps> = ({
-	zoomInIcon = <PlusIcon />,
-	zoomOutIcon = <MinusIcon />,
-}) => {
+const ZoomControl: FC = () => {
 	const map = useMapStore((state) => state.map);
 
 	const handleZoomIn = useCallback(() => {
@@ -49,24 +41,25 @@ const ZoomControl: FC<ZoomControlProps> = ({
 	if (!map) return null;
 
 	return (
-		<div className="hidden flex-col gap-2 md:flex" data-testid="zoom-controls">
+		<div className="ZoomControl-root hidden flex-col items-center justify-center gap-2 rounded-[2px] bg-white p-2 shadow-[0_0_8px_0_rgba(0,0,0,0.24)] md:flex">
 			<Button
-				variant="map-control"
-				size="icon-only"
+				variant="map-zoom"
+				size={null}
 				onClick={handleZoomIn}
 				className="cursor-pointer"
-				data-testid="zoom-in-button"
 			>
-				{zoomInIcon}
+				<Image src="/icons/plus.svg" alt="Zoom in" width={24} height={24} />
 			</Button>
+			<div className="h-px w-full px-1">
+				<div className="h-full w-full bg-gray-300" />
+			</div>
 			<Button
-				variant="map-control"
-				size="icon-only"
+				variant="map-zoom"
+				size={null}
 				onClick={handleZoomOut}
 				className="cursor-pointer"
-				data-testid="zoom-out-button"
 			>
-				{zoomOutIcon}
+				<Image src="/icons/minus.svg" alt="Zoom out" width={24} height={24} />
 			</Button>
 		</div>
 	);

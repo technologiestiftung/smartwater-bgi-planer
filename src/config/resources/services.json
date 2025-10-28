@@ -22,7 +22,31 @@
 				"csw_url": "https://gdk.gdi-de.org/gdi-de/srv/ger/csw",
 				"show_doc_url": "https://gdz.bkg.bund.de/index.php/default/wmts-basemapde-webraster-wmts-basemapde-webraster.html#"
 			}
-		]
+		],
+		"preview": {
+			"src": "/preview-img/basemap-grau.png"
+		}
+	},
+	{
+		"id": "hintergrund_orthophoto",
+		"name": "Digitale Orthophotos 2024",
+		"url": "https://gdi.berlin.de/services/wmts/truedop_2024",
+		"capabilitiesUrl": "https://gdi.berlin.de/services/wmts/truedop_2024?request=getcapabilities&service=WMTS&version=1.0.0",
+		"typ": "WMTS",
+		"layers": "truedop_2024",
+		"tileMatrixSet": "GDIBE:25833",
+		"datasets": [
+			{
+				"md_id": "aff8a8a5-2b48-44e8-949b-ea5f7d382a4f",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/f8e73787-217b-3242-8aa5-80dedf9f05cf",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"optionsFromCapabilities": true,
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Namensnennung - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/by-2-0 abrufbar. Der Quellenvermerk gemäß (2) der Lizenz lautet \"Geoportal Berlin / [Titel des Datensatzes]\"",
+		"preview": {
+			"src": "/preview-img/basemap-satelite.png"
+		}
 	},
 	{
 		"id": "GEOSERVER THEMEMAPS"

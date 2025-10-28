@@ -20,12 +20,12 @@ const BlockAreaSelector: FC = () => {
 
 	const toggleRabimoInputVisibility = useCallback(
 		(visible: boolean) => {
-			const rabimoLayer = getLayerById(map, "rabimo_input_2025");
-			if (rabimoLayer) {
-				rabimoLayer.setVisible(visible);
+			const inputLayer = getLayerById(map, "project_btf_planning");
+			if (inputLayer) {
+				inputLayer.setVisible(visible);
 			} else {
 				console.warn(
-					"[BlockAreaSelector] 'rabimo_input_2025' layer not found.",
+					"[BlockAreaSelector] 'project_btf_planning' layer not found.",
 				);
 			}
 		},
@@ -40,7 +40,7 @@ const BlockAreaSelector: FC = () => {
 	useEffect(() => {
 		if (!map || !drawLayerId) return;
 
-		const rabimoInputLayer = getLayerById(map, "rabimo_input_2025");
+		const inputLayer = getLayerById(map, "project_btf_planning");
 		const drawLayer = getLayerById(map, drawLayerId);
 
 		if (!drawLayer || !(drawLayer.getSource() instanceof VectorSource)) {
@@ -58,18 +58,18 @@ const BlockAreaSelector: FC = () => {
 
 		const handleFeatureRemove = (event: CollectionEvent<Feature>) => {
 			const originalFeature = event.element;
-			const featuresToRemove = drawSource.getFeatures().filter(
-				(f) => f.get("code") === originalFeature.get("code"), // or whatever unique property exists
-			);
+			const featuresToRemove = drawSource
+				.getFeatures()
+				.filter((f) => f.get("code") === originalFeature.get("code"));
 			featuresToRemove.forEach((f) => drawSource.removeFeature(f));
 		};
 
-		if (isActive && rabimoInputLayer) {
+		if (isActive && inputLayer) {
 			toggleRabimoInputVisibility(true);
 			drawLayer.setVisible(true);
 
 			const select = new Select({
-				layers: [rabimoInputLayer],
+				layers: [inputLayer],
 				condition: click,
 				addCondition: click,
 				removeCondition: click,

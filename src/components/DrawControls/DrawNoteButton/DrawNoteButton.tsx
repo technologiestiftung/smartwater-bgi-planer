@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -6,8 +7,9 @@ import { useMapStore } from "@/store/map";
 import GeoJSON from "ol/format/GeoJSON.js";
 import Draw from "ol/interaction/Draw.js";
 import VectorLayer from "ol/layer/Vector.js";
+import MapBrowserEvent from "ol/MapBrowserEvent.js";
 import { Vector as VectorSource } from "ol/source.js";
-import { FC, useEffect, useRef } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 
 interface DrawNoteButtonProps {
 	layerId: string;
@@ -20,25 +22,34 @@ const DrawNoteButton: FC<DrawNoteButtonProps> = ({ layerId }) => {
 	);
 
 	const drawRef = useRef<Draw | null>(null);
+	const [isDrawing, setIsDrawing] = useState(false);
 
 	useEffect(() => {
 		if (!map || !layerId) return;
-		console.log("[DrawButton] layerId::", layerId);
 
 		setLayerVisibility(layerId, true);
 	}, [layerId, map, setLayerVisibility]);
 
+	useEffect(() => {
+		return () => {
+			if (map && drawRef.current) {
+				map.removeInteraction(drawRef.current);
+				drawRef.current = null;
+				setIsDrawing(false);
+			}
+		};
+	}, [map]);
+
 	const toggleDraw = () => {
 		if (!map) return;
 
-		// Remove existing draw interaction
 		if (drawRef.current) {
 			map.removeInteraction(drawRef.current);
 			drawRef.current = null;
+			setIsDrawing(false);
 			return;
 		}
 
-		// Find the layer by ID
 		const layer = map
 			.getAllLayers()
 			.find((l) => l.get("id") === layerId) as VectorLayer<VectorSource>;
@@ -48,34 +59,42 @@ const DrawNoteButton: FC<DrawNoteButtonProps> = ({ layerId }) => {
 			return;
 		}
 
-		// Add draw interaction
 		drawRef.current = new Draw({
 			source: layer.getSource()!,
 			type: "Point",
 		});
 
 		drawRef.current.on("drawend", (event) => {
-			const feature = event.feature;
-			// Feature is automatically added to the source
-			// You can access it here if needed:
-			console.log("Feature drawn:", feature);
-			console.log("Geometry:", feature.getGeometry());
-		});
-
-		drawRef.current.on("drawend", (event) => {
 			const geojson = new GeoJSON().writeFeatureObject(event.feature);
 			console.log("GeoJSON:", geojson);
 
-			// Send to backend, save to state, etc.
+			setTimeout(() => {
+				const geometry = event.feature.getGeometry();
+				if (geometry && geometry.getType() === "Point") {
+					const coordinate = (geometry as any).getCoordinates();
+					const pixel = map.getPixelFromCoordinate(coordinate);
+
+					const clickEvent = new MapBrowserEvent("click", map, {
+						type: "click",
+						target: map.getViewport(),
+						clientX: pixel[0],
+						clientY: pixel[1],
+					} as any);
+
+					clickEvent.pixel = pixel;
+					clickEvent.coordinate = coordinate;
+
+					map.dispatchEvent(clickEvent);
+				}
+			}, 100);
 		});
 
 		map.addInteraction(drawRef.current);
+		setIsDrawing(true);
 	};
 
 	return (
-		<Button onClick={toggleDraw}>
-			{drawRef.current ? "Stop Drawing" : "Notiz"}
-		</Button>
+		<Button onClick={toggleDraw}>{isDrawing ? "Stop Drawing" : "Notiz"}</Button>
 	);
 };
 

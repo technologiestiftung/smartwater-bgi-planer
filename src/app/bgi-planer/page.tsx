@@ -2,10 +2,12 @@ import BlockAreaSelector from "@/components/BlockAreaSelector/BlockAreaSelector"
 import {
 	DrawButton,
 	DrawMeasureButton,
+	DrawNoteButton,
 	DrawProjectBoundaryButton,
 } from "@/components/DrawControls";
 import LayerConfigTest from "@/components/LayerConfigTest/LayerConfigTest";
 import Map from "@/components/Map/Map";
+import UploadProjectBoundaryButton from "@/components/UploadProjectBoundaryButton/UploadProjectBoundaryButton";
 
 export default function Home() {
 	return (
@@ -15,6 +17,8 @@ export default function Home() {
 				<DrawButton />
 				<BlockAreaSelector />
 				<DrawProjectBoundaryButton />
+				<DrawNoteButton layerId="module1_notes" />
+				<UploadProjectBoundaryButton />
 			</div>
 
 			<div className="absolute top-4 left-4 z-47">
