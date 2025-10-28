@@ -4,7 +4,7 @@ import { useLayersStore } from "@/store/layers";
 import Image from "next/image";
 import { FC, useMemo } from "react";
 
-const BaselayerSwitch: FC = ({}) => {
+const BaselayerSwitch: FC = () => {
 	const layersMap = useLayersStore((state) => state.layers);
 	const setLayerVisibility = useLayersStore(
 		(state) => state.setLayerVisibility,

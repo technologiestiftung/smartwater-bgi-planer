@@ -10,7 +10,7 @@ const FullScreenControl: FC = () => {
 	useEffect(() => {
 		if (!map) return;
 
-		const fullScreenControl = new FullScreen({});
+		const fullScreenControl = new FullScreen();
 		map.addControl(fullScreenControl);
 
 		return () => {

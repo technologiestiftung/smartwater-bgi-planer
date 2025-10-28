@@ -5,7 +5,7 @@ import { useMapStore } from "@/store/map";
 import Image from "next/image";
 import { FC, useCallback, useEffect } from "react";
 
-const ZoomControl: FC = ({}) => {
+const ZoomControl: FC = () => {
 	const map = useMapStore((state) => state.map);
 
 	const handleZoomIn = useCallback(() => {
