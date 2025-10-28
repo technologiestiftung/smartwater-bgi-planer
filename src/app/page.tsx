@@ -61,28 +61,28 @@ export default function Home() {
 					</div>
 					<div className="flex justify-between font-bold underline underline-offset-4">
 						<a
-							href="https://smartwater-project.de/"
+							href="https://www.technologiestiftung-berlin.de/impressum/"
 							target="_blank"
 							rel="noopener noreferrer"
 						>
 							Impressum
 						</a>
 						<a
-							href="https://smartwater-project.de/datenschutz/"
+							href="https://www.technologiestiftung-berlin.de/datenschutz/"
 							target="_blank"
 							rel="noopener noreferrer"
 						>
 							Datenschutz
 						</a>
 						<a
-							href="https://smartwater-project.de/datenschutz/"
+							href="https://gemeinsamdigital.berlin.de/de/smart-water/projektpartnerinnen-smartwater/"
 							target="_blank"
 							rel="noopener noreferrer"
 						>
 							Projektpartner:innen
 						</a>
 						<a
-							href="https://smartwater-project.de/datenschutz/"
+							href="https://github.com/technologiestiftung/smartwater-bgi-planer"
 							target="_blank"
 							rel="noopener noreferrer"
 						>
