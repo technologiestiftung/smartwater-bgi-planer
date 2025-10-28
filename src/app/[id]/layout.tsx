@@ -1,5 +1,5 @@
 import Map from "@/components/Map/Map";
-import { MenuToggleButton } from "@/components/MenuToggleButton";
+import { MenuToggleButton } from "@/components/MenuToggleButton/MenuToggleButton";
 
 interface ProjectLayoutProps {
 	children: React.ReactNode;
