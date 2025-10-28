@@ -14,6 +14,11 @@ export interface UploadedFile {
 	id: string;
 }
 
+export interface InvalidFile {
+	name: string;
+	reason: string;
+}
+
 export interface FileUploadZoneProps {
 	accept?: string;
 	onFilesChange?: (files: File[]) => void;

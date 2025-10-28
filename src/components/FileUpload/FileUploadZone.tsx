@@ -4,7 +4,7 @@ import { useCallback, useState } from "react";
 import { TrashIcon } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { FileUploadZoneProps, UploadedFile } from "@/types";
+import { FileUploadZoneProps, InvalidFile, UploadedFile } from "@/types";
 
 export function FileUploadZone({
 	accept = ".zip,.json",
@@ -13,24 +13,59 @@ export function FileUploadZone({
 }: FileUploadZoneProps) {
 	const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
 	const [isDragging, setIsDragging] = useState(false);
+	const [invalidFiles, setInvalidFiles] = useState<InvalidFile[]>([]);
+
+	const validateFileType = useCallback(
+		(file: File): boolean => {
+			const acceptedExtensions = accept.split(",").map((ext) => ext.trim());
+			const fileExtension = `.${file.name.split(".").pop()?.toLowerCase()}`;
+			return acceptedExtensions.includes(fileExtension);
+		},
+		[accept],
+	);
 
 	const handleFiles = useCallback(
 		(files: FileList | null) => {
 			if (!files || files.length === 0) return;
 
 			const fileArray = Array.from(files);
-			const newUploadedFiles = fileArray.map((file) => ({
-				file,
-				id: `${file.name}-${Date.now()}-${Math.random()}`,
-			}));
+			const validFiles: File[] = [];
+			const invalid: InvalidFile[] = [];
 
-			setUploadedFiles((prev) => [...prev, ...newUploadedFiles]);
+			fileArray.forEach((file) => {
+				if (!validateFileType(file)) {
+					invalid.push({
+						name: file.name,
+						reason: `Diese Datei ist nicht kompatibel mit BGI Planer. Bitte wählen Sie ein .zip oder .json Datei, der von BGI Planer erstellt wurde.`,
+					});
+				} else {
+					validFiles.push(file);
+				}
+			});
 
-			if (onFilesChange) {
-				onFilesChange([...uploadedFiles.map((uf) => uf.file), ...fileArray]);
+			setInvalidFiles(invalid);
+
+			if (validFiles.length > 0) {
+				const newUploadedFiles = validFiles.map((file) => ({
+					file,
+					id: `${file.name}-${Date.now()}-${Math.random()}`,
+				}));
+
+				setUploadedFiles((prev) => [...prev, ...newUploadedFiles]);
+
+				if (onFilesChange) {
+					onFilesChange([...uploadedFiles.map((uf) => uf.file), ...validFiles]);
+				}
+			}
+
+			// Clear invalid files after 5 seconds
+			if (invalid.length > 0) {
+				setTimeout(() => {
+					setInvalidFiles([]);
+				}, 5000);
 			}
 		},
-		[onFilesChange, uploadedFiles],
+		[onFilesChange, uploadedFiles, validateFileType],
 	);
 
 	const handleDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
@@ -146,6 +181,21 @@ export function FileUploadZone({
 							>
 								<TrashIcon className="size-6" />
 							</Button>
+						</div>
+					))}
+				</div>
+			)}
+
+			{invalidFiles.length > 0 && (
+				<div className="bg-destructive/10 border-destructive flex flex-col gap-2 border border-2 border-dashed p-4 text-center">
+					{invalidFiles.map((invalidFile, index) => (
+						<div key={index} className="flex items-start justify-center gap-3">
+							<div className="flex flex-col gap-1">
+								<p className="text-destructive font-bold">{invalidFile.name}</p>
+								<p className="text-destructive/80 text-sm">
+									{invalidFile.reason}
+								</p>
+							</div>
 						</div>
 					))}
 				</div>
