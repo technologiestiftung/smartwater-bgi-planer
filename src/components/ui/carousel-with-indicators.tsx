@@ -73,7 +73,7 @@ export function CarouselWithIndicators({
 					<button
 						key={index}
 						onClick={() => api?.scrollTo(index)}
-						className={`size-3 rounded-full transition-all ${
+						className={`size-3 cursor-pointer rounded-full transition-all ${
 							index === current
 								? "bg-background"
 								: "border-background hover:bg-background/75 border"
