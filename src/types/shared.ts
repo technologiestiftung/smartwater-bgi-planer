@@ -8,3 +8,14 @@ export const LAYER_IDS = {
 } as const;
 
 export type LayerId = (typeof LAYER_IDS)[keyof typeof LAYER_IDS];
+
+export interface UploadedFile {
+	file: File;
+	id: string;
+}
+
+export interface FileUploadZoneProps {
+	accept?: string;
+	onFilesChange?: (files: File[]) => void;
+	className?: string;
+}

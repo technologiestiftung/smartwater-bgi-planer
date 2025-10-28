@@ -11,8 +11,13 @@ import {
 } from "@phosphor-icons/react";
 import { CarouselWithIndicators } from "@/components/ui/carousel-with-indicators";
 import Link from "next/link";
+import { FileUploadZone } from "@/components/FileUpload/FileUploadZone";
+import { useState } from "react";
 
 export default function Home() {
+	const [showUploadAlert, setShowUploadAlert] = useState(false);
+	const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+
 	return (
 		<div className="relativ bg-background grid h-full w-full md:grid-cols-2">
 			<div className="flex h-full flex-col justify-between p-18">
@@ -21,6 +26,13 @@ export default function Home() {
 				</div>
 				<div className="Welcome-root flex flex-col gap-6">
 					<h1 className="">Herzlich willkommen beim BGI Planer</h1>
+					{showUploadAlert && (
+						<FileUploadZone
+							onFilesChange={(files: File[]) =>
+								console.log("Files uploaded:", files)
+							}
+						/>
+					)}
 					<div className="flex flex-wrap items-center justify-between gap-2 md:gap-8">
 						<Button asChild className="flex-grow">
 							<Link href="/new">
@@ -28,9 +40,13 @@ export default function Home() {
 								<p>Projekt anlegen</p>
 							</Link>
 						</Button>
-						<Button variant="outline" className="flex-grow">
+						<Button
+							variant="outline"
+							className="flex-grow"
+							onClick={() => setShowUploadAlert(!showUploadAlert)}
+						>
 							<UploadIcon className="mr-2" />
-							<p>Projekt hochladen</p>
+							<p>Dateien importieren</p>
 						</Button>
 					</div>
 				</div>
