@@ -36,7 +36,7 @@ export function FileUploadZone({
 				if (!validateFileType(file)) {
 					invalid.push({
 						name: file.name,
-						reason: `Diese Datei ist nicht kompatibel mit BGI Planer. Bitte wählen Sie ein .zip oder .json Datei, der von BGI Planer erstellt wurde.`,
+						reason: `Diese Datei ist nicht kompatibel mit BGI Planer. Bitte wählen Sie eine .zip- oder .json-Datei, die von BGI Planer erstellt wurde.`,
 					});
 				} else {
 					validFiles.push(file);
@@ -187,7 +187,7 @@ export function FileUploadZone({
 			)}
 
 			{invalidFiles.length > 0 && (
-				<div className="bg-destructive/10 border-destructive flex flex-col gap-2 border border-2 border-dashed p-4 text-center">
+				<div className="bg-destructive/10 border-destructive flex flex-col gap-2 border-2 border-dashed p-4 text-center">
 					{invalidFiles.map((invalidFile, index) => (
 						<div key={index} className="flex items-start justify-center gap-3">
 							<div className="flex flex-col gap-1">

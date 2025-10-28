@@ -21,7 +21,6 @@ export default function MenuModalWrapper({ projectId }: MenuModalWrapperProps) {
 
 	const handleClose = () => {
 		close();
-		// Try to go back first, if that doesn't work, go to home
 		if (window.history.length > 1) {
 			router.back();
 		} else {
