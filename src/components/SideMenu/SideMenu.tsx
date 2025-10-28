@@ -29,8 +29,9 @@ function SideMenuInner({
 	bodyClassName = "p-6",
 }: Omit<SideMenuProps, "open" | "onOpenChange" | "side" | "description">) {
 	return (
-		<Sidebar collapsible="offcanvas" className="border-r">
-			<SidebarHeader className="p-0">
+		<Sidebar collapsible="offcanvas">
+			<SidebarHeader className="flex flex-row">
+				<div className="w-20" />
 				<SideMenuHeader title={title} />
 			</SidebarHeader>
 			<SidebarContent className={cn("overflow-y-auto", bodyClassName)}>

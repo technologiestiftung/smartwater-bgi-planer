@@ -11,7 +11,7 @@ export function SideMenuHeader({ title, className }: SideMenuHeaderProps) {
 	return (
 		<div
 			className={cn(
-				"SideMenuHeader-root border-muted relative flex h-[3.5rem] flex-shrink-0 items-center px-6",
+				"SideMenuHeader-root border-muted relative flex h-[3.5rem] flex-shrink-0 items-center",
 				className,
 			)}
 		>
