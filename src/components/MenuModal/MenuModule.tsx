@@ -18,7 +18,7 @@ const MenuModule: FC<MenuModuleProps> = ({
 	const showFooter = additionalInfo && buttonBottom;
 
 	return (
-		<div className="MenuModule-root border-muted flex flex-col border px-6 py-4">
+		<div className="MenuModule-root border-muted flex flex-col border p-6">
 			<div className="mb-4 flex gap-4">
 				<div className="flex flex-grow flex-col">
 					<h4 className="text-primary font-bold">{title}</h4>

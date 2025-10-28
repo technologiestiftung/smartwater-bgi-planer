@@ -121,9 +121,6 @@
 	/* Links */
 	a,
 	.link {
-		font-weight: 700;
-		font-size: 1rem; /* 16px */
-		line-height: 1.5rem; /* 24px */
 		cursor: pointer;
 	}
 
