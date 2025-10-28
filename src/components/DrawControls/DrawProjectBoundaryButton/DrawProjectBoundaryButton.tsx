@@ -88,23 +88,6 @@ const DrawProjectBoundaryButton: FC = () => {
 		}
 	}, [map]);
 
-	const startModifyMode = useCallback(() => {
-		const projectBoundaryLayer = getLayerById(map, LAYER_IDS.PROJECT_BOUNDARY);
-		const source = projectBoundaryLayer?.getSource();
-		if (!source) return;
-
-		removeInteractions();
-		performIntersection();
-
-		modifyRef.current = new Modify({ source });
-		modifyRef.current.on("modifyend", () => {
-			performIntersection();
-		});
-
-		map!.addInteraction(modifyRef.current);
-		setMode("modifying");
-	}, [map, removeInteractions, performIntersection]);
-
 	const startDrawMode = useCallback(() => {
 		const projectBoundaryLayer = getLayerById(map, LAYER_IDS.PROJECT_BOUNDARY);
 		const source = projectBoundaryLayer?.getSource();
@@ -113,20 +96,41 @@ const DrawProjectBoundaryButton: FC = () => {
 		removeInteractions();
 
 		drawRef.current = new Draw({ source, type: "Polygon" });
+
+		const handleFeatureAdded = () => {
+			source.un("addfeature", handleFeatureAdded);
+			if (!map) return;
+
+			if (drawRef.current) {
+				map.removeInteraction(drawRef.current);
+				drawRef.current = null;
+			}
+			if (modifyRef.current) {
+				map.removeInteraction(modifyRef.current);
+				modifyRef.current = null;
+			}
+
+			performIntersection();
+
+			modifyRef.current = new Modify({ source });
+			modifyRef.current.on("modifyend", () => {
+				performIntersection();
+			});
+
+			map.addInteraction(modifyRef.current);
+			setMode("modifying");
+		};
+
 		drawRef.current.on("drawend", (event) => {
 			const geojson = new GeoJSON().writeFeatureObject(event.feature);
 			console.log("GeoJSON:", geojson);
 
-			performIntersection();
-
-			setTimeout(() => {
-				startModifyMode();
-			}, 50);
+			source.on("addfeature", handleFeatureAdded);
 		});
 
 		map!.addInteraction(drawRef.current);
 		setMode("drawing");
-	}, [map, removeInteractions, performIntersection, startModifyMode]);
+	}, [map, removeInteractions, performIntersection]);
 
 	const handleButtonClick = useCallback(() => {
 		if (!map) return;
