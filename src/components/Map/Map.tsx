@@ -2,7 +2,9 @@
 
 import dynamic from "next/dynamic";
 import { FC } from "react";
+import NoteCard from "../NoteCard/NoteCard";
 import BaselayerSwitch from "./BaselayerSwitch/BaselayerSwitch";
+import ClickControl from "./Controls/ClickControl";
 import MapNavigationControls from "./Controls/MapNavigation/MapNavigationControls";
 import LayerInitializer from "./LayerInitializer/LayerInitializer";
 
@@ -18,6 +20,9 @@ const Map: FC = () => {
 				<LayerInitializer />
 				<BaselayerSwitch />
 				<MapNavigationControls />
+				<ClickControl layerId="module1_notes">
+					<NoteCard />
+				</ClickControl>
 			</LazyOlMap>
 		</div>
 	);

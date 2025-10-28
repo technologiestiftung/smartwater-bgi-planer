@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -6,6 +7,7 @@ import { useMapStore } from "@/store/map";
 import GeoJSON from "ol/format/GeoJSON.js";
 import Draw from "ol/interaction/Draw.js";
 import VectorLayer from "ol/layer/Vector.js";
+import MapBrowserEvent from "ol/MapBrowserEvent.js";
 import { Vector as VectorSource } from "ol/source.js";
 import { FC, useEffect, useRef, useState } from "react";
 
@@ -66,7 +68,25 @@ const DrawNoteButton: FC<DrawNoteButtonProps> = ({ layerId }) => {
 			const geojson = new GeoJSON().writeFeatureObject(event.feature);
 			console.log("GeoJSON:", geojson);
 
-			// open modal or overlay to add note text
+			setTimeout(() => {
+				const geometry = event.feature.getGeometry();
+				if (geometry && geometry.getType() === "Point") {
+					const coordinate = (geometry as any).getCoordinates();
+					const pixel = map.getPixelFromCoordinate(coordinate);
+
+					const clickEvent = new MapBrowserEvent("click", map, {
+						type: "click",
+						target: map.getViewport(),
+						clientX: pixel[0],
+						clientY: pixel[1],
+					} as any);
+
+					clickEvent.pixel = pixel;
+					clickEvent.coordinate = coordinate;
+
+					map.dispatchEvent(clickEvent);
+				}
+			}, 100);
 		});
 
 		map.addInteraction(drawRef.current);
