@@ -41,7 +41,7 @@ const ZoomControl: FC = () => {
 	if (!map) return null;
 
 	return (
-		<div className="ZoomControl-root hidden md:flex flex-col bg-white rounded-[2px] p-2 gap-2 items-center justify-center shadow-[0_0_8px_0_rgba(0,0,0,0.24)]">
+		<div className="ZoomControl-root hidden flex-col items-center justify-center gap-2 rounded-[2px] bg-white p-2 shadow-[0_0_8px_0_rgba(0,0,0,0.24)] md:flex">
 			<Button
 				variant="map-zoom"
 				size={null}
@@ -50,8 +50,8 @@ const ZoomControl: FC = () => {
 			>
 				<Image src="/icons/plus.svg" alt="Zoom in" width={24} height={24} />
 			</Button>
-			<div className="h-px px-1 w-full">
-				<div className="h-full bg-gray-300 w-full" />
+			<div className="h-px w-full px-1">
+				<div className="h-full w-full bg-gray-300" />
 			</div>
 			<Button
 				variant="map-zoom"

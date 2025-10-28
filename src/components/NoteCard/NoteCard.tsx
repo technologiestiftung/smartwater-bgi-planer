@@ -62,11 +62,11 @@ const NoteCard: FC<NoteCardProps> = ({ layerId, features, onClose }) => {
 	if (!featureProperties) return null;
 
 	return (
-		<div className="NoteCard-root bg-white rounded-lg shadow-lg w-[400px]">
-			<div className="flex items-center justify-between p-4 border-b">
-				<h3 className="font-semibold text-lg">Notiz einfügen</h3>
+		<div className="NoteCard-root w-[400px] rounded-lg bg-white shadow-lg">
+			<div className="flex items-center justify-between border-b p-4">
+				<h3 className="text-lg font-semibold">Notiz einfügen</h3>
 				<button
-					className="w-8 h-8 rounded-full bg-teal-600 text-white flex items-center justify-center hover:bg-teal-700"
+					className="flex h-8 w-8 items-center justify-center rounded-full bg-teal-600 text-white hover:bg-teal-700"
 					onClick={onClose}
 				>
 					X
@@ -83,7 +83,7 @@ const NoteCard: FC<NoteCardProps> = ({ layerId, features, onClose }) => {
 				<div className="flex gap-2">
 					<Button
 						onClick={handleSave}
-						className="flex-1 bg-teal-800 hover:bg-teal-900 text-white"
+						className="flex-1 bg-teal-800 text-white hover:bg-teal-900"
 					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"

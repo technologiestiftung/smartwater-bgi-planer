@@ -40,7 +40,7 @@ const BaselayerSwitch: FC = () => {
 		<div className="fixed bottom-6 left-6 z-40">
 			<button
 				onClick={handleToggleBaselayer}
-				className="group relative overflow-hidden rounded-sm border-4 bg-white border-white"
+				className="group relative overflow-hidden rounded-sm border-4 border-white bg-white"
 				aria-label={`Switch from ${layerName} to alternate base layer`}
 			>
 				{previewSrc && (
@@ -50,10 +50,10 @@ const BaselayerSwitch: FC = () => {
 						width={48}
 						height={48}
 						loading={inactiveBaseLayer.visibility ? "eager" : "lazy"}
-						className="h-12 w-12 object-cover rounded-sm overflow-hidden"
+						className="h-12 w-12 overflow-hidden rounded-sm object-cover"
 					/>
 				)}
-				<div className="absolute bottom-0 left-0 right-0 px-2 py-0 bg-black/30 flex gap-1 items-center">
+				<div className="absolute right-0 bottom-0 left-0 flex items-center gap-1 bg-black/30 px-2 py-0">
 					<Image
 						src="/icons/layers.svg"
 						alt="Layers"
@@ -61,7 +61,7 @@ const BaselayerSwitch: FC = () => {
 						height={8}
 						className="flex-shrink-0"
 					/>
-					<p className="text-[8px] text-white truncate">{layerName}</p>
+					<p className="truncate text-[8px] text-white">{layerName}</p>
 				</div>
 			</button>
 		</div>

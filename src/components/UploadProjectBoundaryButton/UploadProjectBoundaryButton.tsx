@@ -191,13 +191,13 @@ const UploadProjectBoundaryButton: FC = () => {
 						>
 							{uploading ? "Uploading..." : "Choose File"}
 						</Button>
-						<p className="text-xs text-muted-foreground">
+						<p className="text-muted-foreground text-xs">
 							Supported formats: GeoJSON (.geojson, .json) or Shapefile (.zip)
 							in EPSG:25833 or EPSG:4326
 						</p>
 					</div>
 					{error && (
-						<div className="rounded-md bg-destructive/10 p-3 text-sm text-destructive">
+						<div className="bg-destructive/10 text-destructive rounded-md p-3 text-sm">
 							{error}
 						</div>
 					)}
