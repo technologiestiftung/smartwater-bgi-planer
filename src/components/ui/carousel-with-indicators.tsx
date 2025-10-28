@@ -40,15 +40,19 @@ export function CarouselWithIndicators({
 
 	return (
 		<div className="flex flex-col gap-6">
-			{slides[current]?.title && (
-				<div className="mt-12 flex flex-col gap-2 text-left text-white">
-					<h2>{slides[current].title}</h2>
-					{slides[current].description && <p>{slides[current].description}</p>}
-				</div>
-			)}
-			<div className="flex flex-1 items-center justify-center">
-				<Carousel setApi={setApi}>
-					<CarouselContent className="h-60 w-96">
+			<div className="mt-12 flex h-32 flex-col gap-2 text-left text-white">
+				{slides[current]?.title && (
+					<>
+						<h2>{slides[current].title}</h2>
+						{slides[current].description && (
+							<p>{slides[current].description}</p>
+						)}
+					</>
+				)}
+			</div>
+			<div className="flex h-[26.25vw] flex-1 items-center justify-center">
+				<Carousel setApi={setApi} opts={{ loop: true }}>
+					<CarouselContent className="aspect-[4/3] w-[35vw]">
 						{slides.map((slide, index) => (
 							<CarouselItem key={index} className="relative">
 								<Image
