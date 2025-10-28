@@ -1,10 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { useMapStore } from "@/store/map";
 import { FC, useEffect, useState } from "react";
 
 interface NoteCardProps {
+	layerId?: string;
 	features?: any;
+	onClose?: () => void;
 }
 
 const getFeatureData = (feature: any) => {
@@ -17,9 +20,10 @@ const getFeatureData = (feature: any) => {
 	return properties;
 };
 
-const NoteCard: FC<NoteCardProps> = ({ features }) => {
+const NoteCard: FC<NoteCardProps> = ({ layerId, features, onClose }) => {
 	const [featureProperties, setFeatureProperties] = useState<any>(null);
 	const [note, setNote] = useState("");
+	const map = useMapStore((state) => state.map);
 
 	useEffect(() => {
 		if (!features) {
@@ -37,7 +41,22 @@ const NoteCard: FC<NoteCardProps> = ({ features }) => {
 		if (!features) return;
 
 		features.set("note", note);
-		console.log("Note saved:", note);
+		onClose?.();
+	};
+
+	const handleDelete = () => {
+		if (!features || !map || !layerId) return;
+
+		const layer = map.getAllLayers().find((l) => l.get("id") === layerId);
+
+		if (layer && layer.getSource()) {
+			const source = (layer as any).getSource();
+			source?.removeFeature(features);
+			setFeatureProperties(null);
+			setNote("");
+
+			onClose?.();
+		}
 	};
 
 	if (!featureProperties) return null;
@@ -46,22 +65,11 @@ const NoteCard: FC<NoteCardProps> = ({ features }) => {
 		<div className="NoteCard-root bg-white rounded-lg shadow-lg w-[400px]">
 			<div className="flex items-center justify-between p-4 border-b">
 				<h3 className="font-semibold text-lg">Notiz einfügen</h3>
-				<button className="w-8 h-8 rounded-full bg-teal-600 text-white flex items-center justify-center hover:bg-teal-700">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="16"
-						height="16"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						strokeWidth="2"
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					>
-						<circle cx="12" cy="12" r="10" />
-						<line x1="15" y1="9" x2="9" y2="15" />
-						<line x1="9" y1="9" x2="15" y2="15" />
-					</svg>
+				<button
+					className="w-8 h-8 rounded-full bg-teal-600 text-white flex items-center justify-center hover:bg-teal-700"
+					onClick={onClose}
+				>
+					X
 				</button>
 			</div>
 			<div className="p-4">
@@ -96,6 +104,7 @@ const NoteCard: FC<NoteCardProps> = ({ features }) => {
 					<Button
 						variant="outline"
 						className="flex-1 border-2 border-gray-300 hover:bg-gray-50"
+						onClick={handleDelete}
 					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"

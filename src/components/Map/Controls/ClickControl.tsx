@@ -177,6 +177,10 @@ const ClickControl: FC<ClickControlProps> = ({
 		return () => observer.disconnect();
 	}, []);
 
+	const handleCloseOverlay = useCallback(() => {
+		setFeatures(undefined);
+	}, []);
+
 	return (
 		<div
 			className="ClickControl-root"
@@ -189,6 +193,8 @@ const ClickControl: FC<ClickControlProps> = ({
 				children &&
 				cloneElement(children as React.ReactElement<any>, {
 					features,
+					layerId,
+					onClose: handleCloseOverlay,
 				})}
 		</div>
 	);
