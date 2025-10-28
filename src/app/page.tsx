@@ -37,7 +37,7 @@ export default function Home() {
 				<div className="Footer-root flex flex-col gap-4">
 					<div className="flex flex-col gap-2 text-left">
 						<p className="font-bold">Ein Teil des Projektes</p>
-						<SmartWaterLogo />
+						<SmartWaterLogo className="w-52" />
 					</div>
 					<div className="flex flex-col gap-2 text-left">
 						<p className="font-bold">Gefördert im Rahmen von</p>
