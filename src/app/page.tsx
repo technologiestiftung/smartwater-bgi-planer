@@ -43,7 +43,7 @@ export default function Home() {
 						<p className="font-bold">Gefördert im Rahmen von</p>
 						<Funding className="w-full" />
 					</div>
-					<div className="flex justify-between text-sm underline underline-offset-4">
+					<div className="flex justify-between font-bold underline underline-offset-4">
 						<a
 							href="https://smartwater-project.de/"
 							target="_blank"

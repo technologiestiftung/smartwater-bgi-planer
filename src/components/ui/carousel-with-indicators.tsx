@@ -60,8 +60,8 @@ export function CarouselWithIndicators({
 							</CarouselItem>
 						))}
 					</CarouselContent>
-					<CarouselPrevious />
-					<CarouselNext />
+					<CarouselPrevious variant="ghost" />
+					<CarouselNext variant="ghost" />
 				</Carousel>
 			</div>
 			<div className="flex items-center justify-center gap-4">
