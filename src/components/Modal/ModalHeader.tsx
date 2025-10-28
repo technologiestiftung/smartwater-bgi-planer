@@ -20,7 +20,7 @@ export function ModalHeader({ title, className }: ModalHeaderProps) {
 			<div className="flex-grow">
 				<h4 className="text-primary">{title}</h4>
 			</div>
-			<DialogClose className="bg-secondary absolute top-0 right-0 flex size-[3.5rem] items-center justify-center">
+			<DialogClose className="bg-secondary absolute top-0 right-0 flex size-[3.5rem] cursor-pointer items-center justify-center">
 				<XCircleIcon className="size-6 text-white" />
 			</DialogClose>
 		</div>

@@ -16,7 +16,6 @@ import { useState } from "react";
 
 export default function Home() {
 	const [showUploadAlert, setShowUploadAlert] = useState(false);
-	const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
 
 	return (
 		<div className="relativ bg-background grid h-full w-full md:grid-cols-2">
