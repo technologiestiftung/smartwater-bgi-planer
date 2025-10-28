@@ -12,7 +12,7 @@ const MapNavigationControls: FC<MapNavigationControlsProps> = ({
 	onGeolocate,
 }) => {
 	return (
-		<div className={`absolute bottom-10 right-4 flex flex-col gap-2 z-10`}>
+		<div className={`absolute right-4 bottom-10 z-10 flex flex-col gap-2`}>
 			<div className="relative">
 				<GeolocationControl onGeolocate={onGeolocate} />
 			</div>
