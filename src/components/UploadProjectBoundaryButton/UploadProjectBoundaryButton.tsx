@@ -2,29 +2,25 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-	Dialog,
-	DialogContent,
-	DialogDescription,
-	DialogHeader,
-	DialogTitle,
-	DialogTrigger,
-} from "@/components/ui/dialog";
 import { ensureVectorLayer } from "@/lib/helper/layerHelpers";
 import { getLayerById } from "@/lib/helper/mapHelpers";
 import { useMapStore } from "@/store/map";
 import { LAYER_IDS } from "@/types/shared";
+import { UploadIcon } from "@phosphor-icons/react";
 import { Feature } from "ol";
 import { intersects } from "ol/extent";
 import GeoJSON from "ol/format/GeoJSON";
-import { FC, useCallback, useRef, useState } from "react";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
 
 const UploadProjectBoundaryButton: FC = () => {
 	const map = useMapStore((state) => state.map);
-	const [dialogOpen, setDialogOpen] = useState(false);
 	const [uploading, setUploading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 	const fileInputRef = useRef<HTMLInputElement>(null);
+
+	useEffect(() => {
+		console.log("[UploadProjectBoundaryButton] error::", error);
+	}, [error]);
 
 	const performIntersection = useCallback(() => {
 		if (!map) return;
@@ -151,7 +147,6 @@ const UploadProjectBoundaryButton: FC = () => {
 					);
 				}
 
-				setDialogOpen(false);
 				if (fileInputRef.current) fileInputRef.current.value = "";
 			} catch (err) {
 				setError(err instanceof Error ? err.message : "Failed to upload file");
@@ -163,47 +158,22 @@ const UploadProjectBoundaryButton: FC = () => {
 	);
 
 	return (
-		<Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-			<DialogTrigger asChild>
-				<Button>Upload Project Boundary</Button>
-			</DialogTrigger>
-			<DialogContent>
-				<DialogHeader>
-					<DialogTitle>Upload Project Boundary</DialogTitle>
-					<DialogDescription>
-						Upload a GeoJSON or zipped Shapefile to define the project boundary.
-						Only features in EPSG:25833 or EPSG:4326 will be displayed.
-					</DialogDescription>
-				</DialogHeader>
-				<div className="space-y-4">
-					<div className="flex flex-col gap-2">
-						<input
-							ref={fileInputRef}
-							type="file"
-							accept=".geojson,.json,.zip"
-							onChange={handleFileChange}
-							className="hidden"
-						/>
-						<Button
-							onClick={() => fileInputRef.current?.click()}
-							disabled={uploading}
-							className="w-full"
-						>
-							{uploading ? "Uploading..." : "Choose File"}
-						</Button>
-						<p className="text-muted-foreground text-xs">
-							Supported formats: GeoJSON (.geojson, .json) or Shapefile (.zip)
-							in EPSG:25833 or EPSG:4326
-						</p>
-					</div>
-					{error && (
-						<div className="bg-destructive/10 text-destructive rounded-md p-3 text-sm">
-							{error}
-						</div>
-					)}
-				</div>
-			</DialogContent>
-		</Dialog>
+		<div className="flex flex-col gap-2">
+			<input
+				ref={fileInputRef}
+				type="file"
+				accept=".geojson,.json,.zip"
+				onChange={handleFileChange}
+				className="hidden"
+			/>
+			<Button
+				onClick={() => fileInputRef.current?.click()}
+				disabled={uploading}
+			>
+				<UploadIcon />
+				{uploading ? "Datei Läd..." : "Datei hochladen"}
+			</Button>
+		</div>
 	);
 };
 

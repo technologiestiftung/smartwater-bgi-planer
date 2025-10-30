@@ -10,7 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
-import { PenNibIcon, PolygonIcon, UploadIcon } from "@phosphor-icons/react";
+import { UploadIcon } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 
 export interface ProjectFormData {
@@ -102,51 +102,6 @@ export default function ProjectModalContent({
 							<p>Straßen, Wege, Plätze / Grün- und Freiflächen</p>
 						</div>
 					</RadioGroup>
-				</Field>
-				<Field>
-					<FieldLabel htmlFor="additionalNotes" className="min-w-48">
-						Untersuchungsgebiet
-					</FieldLabel>
-					<FieldDescription>
-						Zeichnen Sie hier die Außengrenze des Projektes.
-					</FieldDescription>
-					<div className="border-input bg-muted mt-2 h-60 w-full rounded-md border" />
-					<div className="mt-2 flex justify-end gap-2">
-						<Button>
-							<PolygonIcon />
-							Fläche zeichnen
-						</Button>
-						<Button>
-							<UploadIcon />
-							Shapefile hochladen
-						</Button>
-					</div>
-				</Field>
-				<Field>
-					<FieldLabel htmlFor="additionalNotes" className="min-w-48">
-						Neubauten & Versiegelte Flächen
-					</FieldLabel>
-					<FieldDescription>
-						Markieren oder laden Sie Flächen hoch, die neue Gebäude oder
-						versiegelte Oberflächen darstellen. Sie können die Flächen direkt in
-						der Karte einzeichnen oder Shapefiles hochladen. Diese Informationen
-						werden für die weitere Analyse Ihres Projekts berücksichtigt.{" "}
-					</FieldDescription>
-					<div className="border-input bg-muted mt-2 h-60 w-full rounded-md border" />
-					<div className="mt-2 flex justify-end gap-2">
-						<Button>
-							<PolygonIcon />
-							Fläche zeichnen
-						</Button>
-						<Button>
-							<PenNibIcon />
-							Bearbeiten
-						</Button>
-						<Button>
-							<UploadIcon />
-							Shapefile hochladen
-						</Button>
-					</div>
 				</Field>
 				<Field className="mt-4">
 					<FieldDescription>
