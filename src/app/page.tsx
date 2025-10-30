@@ -33,7 +33,7 @@ export default function Home() {
 						/>
 					)}
 					<div className="flex flex-wrap items-center justify-between gap-2 md:gap-8">
-						<Button asChild className="flex-grow">
+						<Button asChild className="grow">
 							<Link href="/new">
 								<PlusSquareIcon className="mr-2" />
 								<p>Projekt anlegen</p>
@@ -41,7 +41,7 @@ export default function Home() {
 						</Button>
 						<Button
 							variant="outline"
-							className="flex-grow"
+							className="grow"
 							onClick={() => setShowUploadAlert(!showUploadAlert)}
 						>
 							<UploadIcon className="mr-2" />
@@ -92,7 +92,7 @@ export default function Home() {
 				</div>
 			</div>
 			<div className="bg-primary flex items-center justify-center rounded-l-[3.125rem] p-2.5">
-				<div className="flex max-w-[28.5rem] flex-col items-center justify-between gap-8">
+				<div className="flex max-w-114 flex-col items-center justify-between gap-8">
 					<CarouselWithIndicators
 						slides={[
 							{

@@ -13,6 +13,7 @@ interface OlMapProps {
 const OlMap: FC<OlMapProps> = ({ children }) => {
 	const setMap = useMapStore((state) => state.populateMap);
 	const destroyMap = useMapStore((state) => state.removeMap);
+	const setMapError = useMapStore((state) => state.setMapError);
 	const config = useMapStore((state) => state.config);
 	const mapId = useRef<HTMLDivElement>(null);
 
@@ -58,8 +59,9 @@ const OlMap: FC<OlMapProps> = ({ children }) => {
 			};
 		} catch (error) {
 			console.error("[OlMap] Error initializing map:", error);
+			setMapError(true, "Fehler beim Initialisieren der Karte");
 		}
-	}, [config, destroyMap, setMap]);
+	}, [config, destroyMap, setMap, setMapError]);
 
 	return (
 		<div ref={mapId} className="map h-full w-full bg-slate-300">
