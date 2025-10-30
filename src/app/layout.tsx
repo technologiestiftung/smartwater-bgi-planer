@@ -1,9 +1,10 @@
+import LayerInitializer from "@/components/Map/LayerInitializer/LayerInitializer";
 import MapInitializer from "@/components/Map/MapInitializer/MapInitializer";
+import { PageModalProvider } from "@/components/Modal/ModalProvider";
+import Background from "@/images/background.svg";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./css/globals.css";
-import Background from "@/images/background.svg";
-import { PageModalProvider } from "@/components/Modal/ModalProvider";
 
 const arthouseOwned = localFont({
 	src: [
@@ -61,6 +62,7 @@ export default function RootLayout({
 					<div className="relative h-full w-full">
 						<div className="absolute h-full w-full">
 							<MapInitializer />
+							<LayerInitializer />
 							{children}
 							{modal}
 						</div>
