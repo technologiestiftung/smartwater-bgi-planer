@@ -72,7 +72,12 @@ export const createSetLayerVisibility =
 	};
 
 export const createApplyConfigLayers =
-	(set: SetState, get: GetState, getMapConfig: () => MapConfig | null) =>
+	(
+		set: SetState,
+		get: GetState,
+		getMapConfig: () => MapConfig | null,
+		getMapReady: () => boolean,
+	) =>
 	(visibleLayerIds: string) => {
 		const state = get();
 		const currentMapLayers = state.layers;
@@ -82,6 +87,12 @@ export const createApplyConfigLayers =
 
 		if (!layerConfigItem) {
 			console.warn(`Layer config item with id ${visibleLayerIds} not found`);
+			return;
+		}
+
+		const isMapReady = getMapReady();
+
+		if (!isMapReady) {
 			return;
 		}
 

@@ -1,7 +1,7 @@
 "use client";
 
-import { getEpsgFromCrs } from "@/lib/utils/ol/mapUtils";
 import { applyStyleToLayer } from "@/lib/utils/ol/layerStyles";
+import { getEpsgFromCrs } from "@/lib/utils/ol/mapUtils";
 import { useLayersStore } from "@/store/layers";
 import { LayerService, ManagedLayer } from "@/store/layers/types";
 import { useMapStore } from "@/store/map";
@@ -33,6 +33,7 @@ interface LayerCreationResult {
 const LayerInitializer: FC = () => {
 	const config = useMapStore((state) => state.config);
 	const map = useMapStore((state) => state.map);
+	const setMapReady = useMapStore((state) => state.setMapReady);
 	const setLayersInStore = useLayersStore((state) => state.setLayers);
 	const flattenedLayerElements = useLayersStore(
 		(state) => state.flattenedLayerElements,
@@ -451,14 +452,22 @@ const LayerInitializer: FC = () => {
 		// Update store with the new ManagedLayers Map
 		setLayersInStore(newManagedLayersMap);
 
+		const hasLoadedBaseLayers = Array.from(newManagedLayersMap.values()).some(
+			(layer) => layer.layerType === "base" && layer.status === "loaded",
+		);
+		if (hasLoadedBaseLayers) {
+			setMapReady(true);
+		}
+
 		return () => {
-			// Cleanup: remove layers from map
+			// Cleanup: remove layers from map and reset ready state
 			newManagedLayersMap.forEach((managedLayer) => {
 				if (managedLayer.olLayer) {
 					map.removeLayer(managedLayer.olLayer);
 				}
 			});
 			setLayersInStore(new Map());
+			setMapReady(false);
 		};
 	}, [
 		config,
@@ -467,6 +476,7 @@ const LayerInitializer: FC = () => {
 		flattenedLayerElements,
 		createLayer,
 		setLayersInStore,
+		setMapReady,
 	]);
 
 	return null;

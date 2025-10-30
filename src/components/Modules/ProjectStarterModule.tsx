@@ -3,23 +3,23 @@
 import { SideMenu } from "@/components/SideMenu";
 import { Button } from "@/components/ui/button";
 import {
-	VerticalStepper,
-	StepIndicator,
-	StepContent,
-	StepContainer,
-	useVerticalStepper,
 	StepConfig,
+	StepContainer,
+	StepContent,
+	StepIndicator,
+	useVerticalStepper,
+	VerticalStepper,
 } from "@/components/VerticalStepper";
+import { useMapReady } from "@/hooks/use-map-ready";
+import { useLayersStore } from "@/store/layers";
 import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
-	CloudRainIcon,
-	DropIcon,
-	FishIcon,
+	BlueprintIcon,
 	ListChecksIcon,
-	RoadHorizonIcon,
-	ThermometerHotIcon,
+	MapPinAreaIcon,
 } from "@phosphor-icons/react";
+import { useEffect } from "react";
 
 interface ProjectStarterModuleProps {
 	open: boolean;
@@ -29,40 +29,34 @@ interface ProjectStarterModuleProps {
 
 const steps: StepConfig[] = [
 	{
-		id: "heavyRain",
-		icon: <CloudRainIcon />,
-		title: "Starkregen",
+		id: "projectBoundary",
+		icon: <MapPinAreaIcon />,
+		title: "Projektgebiet anlegen",
 		description: "xxx",
 	},
 	{
-		id: "heat",
-		icon: <ThermometerHotIcon />,
-		title: "Hitze",
-		description: "xxx",
-	},
-	{
-		id: "sealing",
-		icon: <RoadHorizonIcon />,
-		title: "Versiegelung",
-		description: "xxx",
-	},
-	{
-		id: "waterProtection",
-		icon: <FishIcon />,
-		title: "Gewässerschutz",
-		description: "xxx",
-	},
-	{
-		id: "waterBalance",
-		icon: <DropIcon />,
-		title: "Wasserhaushalt",
+		id: "newDevelopment",
+		icon: <BlueprintIcon />,
+		title: "Neubauten und Versiegelte Flächen anlegen",
 		description: "xxx",
 	},
 ];
 
 function StepperFooter({ onClose }: { onClose: () => void }) {
-	const { previousStep, nextStep, canGoPrevious, canGoNext } =
+	const { previousStep, nextStep, canGoPrevious, canGoNext, currentStepId } =
 		useVerticalStepper();
+	const applyConfigLayers = useLayersStore((state) => state.applyConfigLayers);
+	const isMapReady = useMapReady();
+
+	useEffect(() => {
+		if (!isMapReady) return;
+
+		if (currentStepId === "projectBoundary") {
+			applyConfigLayers("start_view_project_boundary");
+		} else if (currentStepId === "newDevelopment") {
+			applyConfigLayers("start_view_project_new_development");
+		}
+	}, [currentStepId, applyConfigLayers, isMapReady]);
 
 	return (
 		<div className="border-muted flex h-full w-full border-t">
@@ -94,47 +88,28 @@ export default function ProjectStarterModule({
 		<SideMenu
 			open={open}
 			onOpenChange={onOpenChange}
-			title="ProjectStarter"
-			description="Legen Sie Ihr Untersuchungsgebiet an"
+			title="Projekt anlegen"
+			description="Untersuchungsgebiet anlegen"
 			footer={null}
 			bodyClassName="p-0"
 		>
-			<VerticalStepper steps={steps} initialStepId="heat">
+			<VerticalStepper steps={steps} initialStepId="projectBoundary">
 				<div className="flex h-full w-full flex-col">
 					<div className="flex flex-grow">
 						<StepIndicator className="w-20" />
 						<StepContainer>
-							<StepContent stepId="heat">
+							<StepContent stepId="projectBoundary">
 								<div className="space-y-4">
-									<h3 className="text-primary">Hitze</h3>
+									<h3 className="text-primary">Untersuchtungsgebiet</h3>
 									<p className="text-muted-foreground underline"></p>
 								</div>
 							</StepContent>
 
-							<StepContent stepId="heavyRain">
+							<StepContent stepId="newDevelopment">
 								<div className="space-y-4">
-									<h3 className="text-primary">Starkregen</h3>
-									<p className="text-muted-foreground"></p>
-								</div>
-							</StepContent>
-
-							<StepContent stepId="sealing">
-								<div className="space-y-4">
-									<h3 className="text-primary">Versickerung</h3>
-									<p className="text-muted-foreground"></p>
-								</div>
-							</StepContent>
-
-							<StepContent stepId="waterProtection">
-								<div className="space-y-4">
-									<h3 className="text-primary">Wasserschutz</h3>
-									<p className="text-muted-foreground"></p>
-								</div>
-							</StepContent>
-
-							<StepContent stepId="waterBalance">
-								<div className="space-y-4">
-									<h3 className="text-primary">Wasserhaushalt</h3>
+									<h3 className="text-primary">
+										Neubauten und Versiegelte Flächen
+									</h3>
 									<p className="text-muted-foreground"></p>
 								</div>
 							</StepContent>
