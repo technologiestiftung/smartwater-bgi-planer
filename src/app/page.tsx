@@ -1,17 +1,17 @@
 "use client";
 
+import { FileUploadZone } from "@/components/FileUpload/FileUploadZone";
+import { Button } from "@/components/ui/button";
+import { CarouselWithIndicators } from "@/components/ui/carousel-with-indicators";
+import Funding from "@/logos/Funding.svg";
 import SWLogo from "@/logos/SWLogo.svg";
 import SmartWaterLogo from "@/logos/SmartWater-Logo.svg";
-import { Button } from "@/components/ui/button";
-import Funding from "@/logos/Funding.svg";
 import {
+	GithubLogoIcon,
 	PlusSquareIcon,
 	UploadIcon,
-	GithubLogoIcon,
 } from "@phosphor-icons/react";
-import { CarouselWithIndicators } from "@/components/ui/carousel-with-indicators";
 import Link from "next/link";
-import { FileUploadZone } from "@/components/FileUpload/FileUploadZone";
 import { useState } from "react";
 
 export default function Home() {
