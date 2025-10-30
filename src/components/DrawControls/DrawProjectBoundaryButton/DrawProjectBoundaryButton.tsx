@@ -155,7 +155,7 @@ const DrawProjectBoundaryButton: FC = () => {
 	};
 
 	return (
-		<Button onClick={handleButtonClick}>
+		<Button variant="outline" onClick={handleButtonClick}>
 			<PolygonIcon />
 			{getButtonText()}
 		</Button>

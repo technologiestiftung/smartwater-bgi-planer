@@ -167,6 +167,7 @@ const UploadProjectBoundaryButton: FC = () => {
 				className="hidden"
 			/>
 			<Button
+				variant="outline"
 				onClick={() => fileInputRef.current?.click()}
 				disabled={uploading}
 			>
