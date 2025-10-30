@@ -140,7 +140,8 @@
 		"name": "Neubauten & Versiegelte Flächen",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
-		"gfiAttributes": "showAll"
+		"gfiAttributes": "showAll",
+		"styleId": "projectBoundary"
 	},
 	{
 		"id": "project_custom_maps",

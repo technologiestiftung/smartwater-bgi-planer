@@ -1,6 +1,13 @@
 "use client";
 
-import { createContext, useContext, useState, useCallback } from "react";
+import { useUiStore } from "@/store/ui";
+import {
+	createContext,
+	useCallback,
+	useContext,
+	useEffect,
+	useState,
+} from "react";
 
 export interface StepConfig {
 	id: string;
@@ -39,8 +46,17 @@ export function VerticalStepperProvider({
 	const [currentStepId, setCurrentStepId] = useState(
 		initialStepId || steps[0]?.id,
 	);
+	const setCurrentStepIdInStore = useUiStore((state) => state.setCurrentStepId);
 
 	const currentStepIndex = steps.findIndex((step) => step.id === currentStepId);
+
+	useEffect(() => {
+		setCurrentStepIdInStore(currentStepId);
+
+		return () => {
+			setCurrentStepIdInStore(null);
+		};
+	}, [currentStepId, setCurrentStepIdInStore]);
 
 	const goToStep = useCallback((stepId: string) => {
 		setCurrentStepId(stepId);
