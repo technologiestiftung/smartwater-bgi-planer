@@ -38,15 +38,24 @@ function flattenLayerElements(
 
 const MapInitializer: FC = () => {
 	const setConfig = useMapStore((state) => state.setConfig);
+	const config = useMapStore((state) => state.config);
 	const setFlattenedLayerElements = useLayersStore(
 		(state) => state.setFlattenedLayerElements,
 	);
 	const setLayerConfig = useLayersStore((state) => state.setLayerConfig);
 
 	useEffect(() => {
+		// Prüfe ob bereits initialisiert
+		if (config) {
+			console.log("[MapInitializer] Already initialized, skipping...");
+			return;
+		}
+
 		const servicesMap = new Map(
 			services.map((service) => [service.id, service]),
 		);
+
+		console.log("[MapInitializer] Map Initialized::");
 
 		const enrichAndTransformElements = (
 			elements: any[],
@@ -98,7 +107,7 @@ const MapInitializer: FC = () => {
 		setConfig(fullyEnrichedConfig);
 		setLayerConfig(layerConfig as LayerConfigItem[]);
 		setFlattenedLayerElements(allBaseAndSubjectLayers);
-	}, [setConfig, setFlattenedLayerElements, setLayerConfig]);
+	}, [config, setConfig, setFlattenedLayerElements, setLayerConfig]);
 
 	return null;
 };

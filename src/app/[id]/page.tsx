@@ -8,5 +8,5 @@ interface ProjectPageProps {
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
 	const { id } = await params;
-	redirect(`/${id}/handlungsbedarfe`);
+	redirect(`/${id}/project-starter`);
 }

@@ -53,7 +53,7 @@ export default function ProjectModalWrapper({
 		try {
 			if (mode === "new") {
 				const projectId = Date.now().toString();
-				router.push(`/${projectId}`);
+				router.push(`/${projectId}/project-starter`);
 			}
 		} catch (error) {
 			console.error("Error saving project:", error);
