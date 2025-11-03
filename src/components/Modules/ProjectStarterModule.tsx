@@ -206,7 +206,7 @@ export default function ProjectStarterModule({
 		>
 			<VerticalStepper steps={steps} initialStepId="projectBoundary">
 				<div className="flex h-full w-full flex-col">
-					<div className="flex grow">
+					<div className="flex h-full grow pb-4">
 						<StepIndicator className="w-20" />
 						<StepContainer>
 							<StepContent stepId="projectBoundary">

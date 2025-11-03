@@ -101,7 +101,7 @@ export default function HandlungsbedarfeModule({
 		>
 			<VerticalStepper steps={steps} initialStepId="heat">
 				<div className="flex h-full w-full flex-col">
-					<div className="flex flex-grow">
+					<div className="flex flex-grow pb-4">
 						<StepIndicator className="w-20" />
 						<StepContainer>
 							<StepContent stepId="heat">
