@@ -38,7 +38,7 @@ const ClickControl: FC<ClickControlProps> = ({
 }) => {
 	const map = useMapStore((state) => state.map);
 	const overlayRef = useRef<HTMLDivElement>(null);
-	const overlaySizeRef = useRef({ width: 0, height: 0 });
+	const overlaySizeRef = useRef({ width: 400, height: 300 });
 
 	const [features, setFeatures] = useState<any>();
 	const [cardPosition, setCardPosition] =
