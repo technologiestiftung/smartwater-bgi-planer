@@ -435,7 +435,6 @@ const LayerInitializer: FC = () => {
 					`[LayerInitializer] Failed to create layer ${layerConfig.id}:`,
 					error,
 				);
-				// Even if creation failed, we might want to track it in the store with an error status
 				newManagedLayersMap.set(layerConfig.id, {
 					id: layerConfig.id,
 					config: layerConfig,
