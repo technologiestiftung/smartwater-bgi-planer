@@ -38,7 +38,6 @@ function flattenLayerElements(
 
 const MapInitializer: FC = () => {
 	const setConfig = useMapStore((state) => state.setConfig);
-	const config = useMapStore((state) => state.config);
 	const setFlattenedLayerElements = useLayersStore(
 		(state) => state.setFlattenedLayerElements,
 	);
@@ -99,7 +98,7 @@ const MapInitializer: FC = () => {
 		setConfig(fullyEnrichedConfig);
 		setLayerConfig(layerConfig as LayerConfigItem[]);
 		setFlattenedLayerElements(allBaseAndSubjectLayers);
-	}, [config, setConfig, setFlattenedLayerElements, setLayerConfig]);
+	}, [setConfig, setFlattenedLayerElements, setLayerConfig]);
 
 	return null;
 };
