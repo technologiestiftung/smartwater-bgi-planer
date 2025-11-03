@@ -37,7 +37,7 @@ const BaselayerSwitch: FC = () => {
 	const layerName = inactiveBaseLayer.config?.service?.name || "Base Layer";
 
 	return (
-		<div className="fixed bottom-6 left-6 z-40">
+		<div>
 			<button
 				onClick={handleToggleBaselayer}
 				className="group relative h-14 w-14 overflow-hidden rounded-sm border-4 border-white bg-white"
@@ -58,7 +58,7 @@ const BaselayerSwitch: FC = () => {
 						alt="Layers"
 						width={8}
 						height={8}
-						className="flex-shrink-0"
+						className="shrink-0"
 					/>
 					<p className="truncate text-[8px] text-white">{layerName}</p>
 				</div>

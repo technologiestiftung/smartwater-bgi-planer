@@ -26,7 +26,7 @@ export default function DrawControlsContainer({}: DrawControlsContainerProps) {
 		// Different controls based on the current step
 		if (currentStepId === "projectBoundary") {
 			return (
-				<div className="absolute right-40 bottom-4 z-48 flex gap-2">
+				<div className="absolute right-4 bottom-4 z-48 flex gap-2">
 					<DrawProjectBoundaryButton />
 					<UploadProjectBoundaryButton />
 				</div>
