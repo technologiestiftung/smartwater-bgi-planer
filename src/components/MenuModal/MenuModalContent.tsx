@@ -25,7 +25,7 @@ export default function MenuModalContent({ projectId }: MenuModalProps) {
 					title="Projektname v1.55 final final"
 					description="Dies ist eine Teaser der Projektbeschreibung. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
 					sideElements={
-						<div className="flex flex-col gap-2">
+						<div className="flex flex-col items-end gap-2">
 							<Button asChild>
 								<Link href={`/${projectId}/edit`}>
 									<InfoIcon className="mr-2" />
@@ -34,7 +34,11 @@ export default function MenuModalContent({ projectId }: MenuModalProps) {
 							</Button>
 							<Button>
 								<DownloadIcon className="mr-2" />
-								Download
+								Untersuchungsgebiet/Neubauten
+							</Button>
+							<Button>
+								<DownloadIcon className="mr-2" />
+								Download und speichern
 							</Button>
 						</div>
 					}
