@@ -16,6 +16,7 @@ import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
 	BlueprintIcon,
+	CheckIcon,
 	ListChecksIcon,
 	MapPinAreaIcon,
 } from "@phosphor-icons/react";
@@ -95,13 +96,33 @@ export default function ProjectStarterModule({
 		>
 			<VerticalStepper steps={steps} initialStepId="projectBoundary">
 				<div className="flex h-full w-full flex-col">
-					<div className="flex flex-grow">
+					<div className="flex grow">
 						<StepIndicator className="w-20" />
 						<StepContainer>
 							<StepContent stepId="projectBoundary">
 								<div className="space-y-4">
 									<h3 className="text-primary">Untersuchtungsgebiet</h3>
-									<p className="text-muted-foreground underline"></p>
+									<p className="text-muted-foreground">
+										Das Untersuchungsgebiet soll das ganzen Gebiet umfassen, wo
+										Änderungen im Rahmen des aktuellen Projektes eingeführt
+										werden können. Sie können diese entweder freihand zeichnen
+										oder eine Shapefile oder GeoJSON Datei hochladen.
+									</p>
+									<p>
+										Die Blockteilflächen werden automatisch auch selektiert, die
+										mit der Projektgrenze überschneiden. Diese sind für die
+										Effektbewertung relevant, denn manche Simulationen nur
+										anhand von ganzen Blockteilflächen durchgeführt werden
+										können.
+									</p>
+
+									<div className="flex gap-2">
+										<Button>
+											<CheckIcon />
+											Bestätigen
+										</Button>
+										<p>0 m2</p>
+									</div>
 								</div>
 							</StepContent>
 
@@ -115,7 +136,7 @@ export default function ProjectStarterModule({
 							</StepContent>
 						</StepContainer>
 					</div>
-					<div className="flex-shrink-0">
+					<div className="shrink-0">
 						<StepperFooter onClose={() => onOpenChange(false)} />
 					</div>
 				</div>
