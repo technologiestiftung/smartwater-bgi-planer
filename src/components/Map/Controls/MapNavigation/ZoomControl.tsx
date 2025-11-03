@@ -42,21 +42,13 @@ const ZoomControl: FC = () => {
 
 	return (
 		<div className="ZoomControl-root bg-background hidden w-12 flex-col items-center justify-center gap-2 rounded-xs p-2 shadow-md md:flex">
-			<Button
-				variant="map-zoom"
-				size="icon-sm"
-				onClick={handleZoomIn}
-			>
+			<Button variant="map-zoom" size="icon-sm" onClick={handleZoomIn}>
 				<Image src="/icons/plus.svg" alt="Zoom in" width={24} height={24} />
 			</Button>
 			<div className="h-px w-full px-1">
 				<div className="h-full w-full bg-gray-300" />
 			</div>
-			<Button
-				variant="map-zoom"
-				size="icon-sm"
-				onClick={handleZoomOut}
-			>
+			<Button variant="map-zoom" size="icon-sm" onClick={handleZoomOut}>
 				<Image src="/icons/minus.svg" alt="Zoom out" width={24} height={24} />
 			</Button>
 		</div>

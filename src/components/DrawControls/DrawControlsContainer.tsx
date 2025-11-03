@@ -3,7 +3,6 @@
 import BlockAreaSelector from "@/components/BlockAreaSelector/BlockAreaSelector";
 import {
 	DrawButton,
-	DrawMeasureButton,
 	DrawNoteButton,
 	DrawProjectBoundaryButton,
 } from "@/components/DrawControls";
@@ -38,8 +37,8 @@ export default function DrawControlsContainer({}: DrawControlsContainerProps) {
 	} else if (isHandlungsbedarfe) {
 		controls = (
 			<>
-				<DrawMeasureButton layerId="handlungsbedarfe_measures" />
-				<DrawNoteButton layerId="handlungsbedarfe_notes" />
+				<DrawNoteButton layerId="module1_notes" />
+				<DrawButton />
 				<BlockAreaSelector />
 			</>
 		);

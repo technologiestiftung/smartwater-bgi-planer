@@ -61,7 +61,7 @@ function StepperFooter({ onClose }: { onClose: () => void }) {
 
 	return (
 		<div className="border-muted flex h-full w-full border-t">
-			<div className="bg-secondary flex w-[4.5rem] items-center justify-center">
+			<div className="bg-secondary flex w-18 items-center justify-center">
 				<ListChecksIcon className="h-6 w-6 text-white" />
 			</div>
 			<div className="flex w-full items-center justify-between p-2">
