@@ -41,7 +41,6 @@ export default function DrawControlsContainer({}: DrawControlsContainerProps) {
 			);
 		}
 
-		// Fallback for ProjectStarter (when no step is active yet)
 		return (
 			<div className="absolute right-40 bottom-4 z-48 flex gap-2">
 				<DrawProjectBoundaryButton />
@@ -60,14 +59,5 @@ export default function DrawControlsContainer({}: DrawControlsContainerProps) {
 		);
 	}
 
-	return (
-		<div className="absolute right-40 bottom-4 z-1000 flex gap-2">
-			<DrawMeasureButton layerId="measures_seepage" />
-			<DrawButton />
-			<BlockAreaSelector />
-			<DrawProjectBoundaryButton />
-			<DrawNoteButton layerId="module1_notes" />
-			<UploadProjectBoundaryButton />
-		</div>
-	);
+	return null;
 }
