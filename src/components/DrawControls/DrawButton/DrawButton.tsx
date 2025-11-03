@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";
+import { PolygonIcon } from "@phosphor-icons/react";
 import Draw from "ol/interaction/Draw.js";
 import VectorLayer from "ol/layer/Vector.js";
 import { Vector as VectorSource } from "ol/source.js";
@@ -75,7 +76,8 @@ const DrawButton: FC<DrawButtonProps> = ({ geometryType = "Polygon" }) => {
 	};
 
 	return (
-		<Button onClick={toggleDraw}>
+		<Button variant="outline" onClick={toggleDraw}>
+			<PolygonIcon />
 			{isDrawing ? "Stop Zeichnen" : "Zeichnen"}
 		</Button>
 	);

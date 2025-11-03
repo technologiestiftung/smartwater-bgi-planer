@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { getLayerById } from "@/lib/helper/mapHelpers";
 import { useMapStore } from "@/store/map";
 import { LAYER_IDS } from "@/types/shared";
+import { PolygonIcon } from "@phosphor-icons/react";
 import { intersects } from "ol/extent";
 import GeoJSON from "ol/format/GeoJSON.js";
 import Draw from "ol/interaction/Draw.js";
@@ -148,12 +149,17 @@ const DrawProjectBoundaryButton: FC = () => {
 	}, [removeInteractions]);
 
 	const getButtonText = () => {
-		if (mode === "drawing") return "Cancel Drawing";
-		if (mode === "modifying") return "Finish Modifying";
-		return "Draw Project Boundary";
+		if (mode === "drawing") return "Stop zeichnen";
+		if (mode === "modifying") return "Stop bearbeiten";
+		return "Fläche zeichnen";
 	};
 
-	return <Button onClick={handleButtonClick}>{getButtonText()}</Button>;
+	return (
+		<Button variant="outline" onClick={handleButtonClick}>
+			<PolygonIcon />
+			{getButtonText()}
+		</Button>
+	);
 };
 
 export default DrawProjectBoundaryButton;

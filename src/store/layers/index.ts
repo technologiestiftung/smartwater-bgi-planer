@@ -36,6 +36,7 @@ export const useLayersStore = create<LayersState & LayersActions>(
 			set,
 			get,
 			() => useMapStore.getState().config,
+			() => useMapStore.getState().isReady,
 		),
 		setDrawLayer: (layerId) => set({ drawLayerId: layerId }),
 		setLayerConfigId: (layerId) => set({ layerConfigId: layerId }),

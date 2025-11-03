@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { getLayerById } from "@/lib/helper/mapHelpers";
 import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";
+import { CursorClickIcon } from "@phosphor-icons/react";
 import { Feature } from "ol";
 import { CollectionEvent } from "ol/Collection";
 import { click } from "ol/events/condition.js";
@@ -100,8 +101,9 @@ const BlockAreaSelector: FC = () => {
 
 	return (
 		<div className="BlockAreaSelector-root">
-			<Button onClick={toggleSelectionMode}>
-				{isActive ? "Stop BTF Selection" : "BTF selektieren"}
+			<Button variant="outline" onClick={toggleSelectionMode}>
+				<CursorClickIcon />
+				{isActive ? "Stop BTF selektieren" : "BTF selektieren"}
 			</Button>
 		</div>
 	);

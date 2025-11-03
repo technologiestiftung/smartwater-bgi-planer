@@ -1,5 +1,6 @@
 // Re-export all draw controls for clean imports
 export { default as DrawButton } from "./DrawButton/DrawButton";
+export { default as DrawControlsContainer } from "./DrawControlsContainer";
 export { default as DrawMeasureButton } from "./DrawMeasureButton/DrawMeasureButton";
 export { default as DrawNoteButton } from "./DrawNoteButton/DrawNoteButton";
 export { default as DrawProjectBoundaryButton } from "./DrawProjectBoundaryButton/DrawProjectBoundaryButton";

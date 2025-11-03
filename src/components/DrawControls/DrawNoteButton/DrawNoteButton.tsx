@@ -4,6 +4,7 @@
 import { Button } from "@/components/ui/button";
 import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";
+import { NoteIcon } from "@phosphor-icons/react";
 import GeoJSON from "ol/format/GeoJSON.js";
 import Draw from "ol/interaction/Draw.js";
 import VectorLayer from "ol/layer/Vector.js";
@@ -94,7 +95,10 @@ const DrawNoteButton: FC<DrawNoteButtonProps> = ({ layerId }) => {
 	};
 
 	return (
-		<Button onClick={toggleDraw}>{isDrawing ? "Stop Drawing" : "Notiz"}</Button>
+		<Button variant="outline" onClick={toggleDraw}>
+			<NoteIcon />
+			{isDrawing ? "Stop Drawing" : "Notiz"}
+		</Button>
 	);
 };
 

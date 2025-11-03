@@ -1,12 +1,11 @@
 "use client";
 
+import BaselayerSwitch from "@/components/Map/BaselayerSwitch/BaselayerSwitch";
+import ClickControl from "@/components/Map/Controls/ClickControl";
+import MapNavigationControls from "@/components/Map/Controls/MapNavigation/MapNavigationControls";
+import NoteCard from "@/components/NoteCard/NoteCard";
 import dynamic from "next/dynamic";
 import { FC } from "react";
-import NoteCard from "../NoteCard/NoteCard";
-import BaselayerSwitch from "./BaselayerSwitch/BaselayerSwitch";
-import ClickControl from "./Controls/ClickControl";
-import MapNavigationControls from "./Controls/MapNavigation/MapNavigationControls";
-import LayerInitializer from "./LayerInitializer/LayerInitializer";
 
 const LazyOlMap = dynamic(() => import("./OlMap/OlMap"), {
 	ssr: false,
@@ -15,9 +14,8 @@ const LazyOlMap = dynamic(() => import("./OlMap/OlMap"), {
 
 const Map: FC = () => {
 	return (
-		<div className="Map-root h-full w-full">
+		<div className="Map-root relative h-full w-full">
 			<LazyOlMap>
-				<LayerInitializer />
 				<BaselayerSwitch />
 				<MapNavigationControls />
 				<ClickControl layerId="module1_notes">

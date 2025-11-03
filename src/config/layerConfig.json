@@ -13,7 +13,7 @@
 		"id": "start_view_project_new_development",
 		"name": "Neubauten und Versiegelte Flächen anlegen",
 		"drawLayerId": "project_new_development",
-		"visibleLayerIds": []
+		"visibleLayerIds": ["project_new_development"]
 	},
 	{
 		"id": "module_1_question_1",

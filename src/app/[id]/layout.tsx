@@ -1,3 +1,4 @@
+import { DrawControlsContainer } from "@/components/DrawControls";
 import Map from "@/components/Map/Map";
 import { MenuToggleButton } from "@/components/MenuToggleButton/MenuToggleButton";
 
@@ -16,6 +17,7 @@ export default async function ProjectLayout({
 	return (
 		<div className="relative h-full w-full">
 			<Map />
+			<DrawControlsContainer projectId={id} />
 			<MenuToggleButton projectId={id} />
 			{children}
 		</div>

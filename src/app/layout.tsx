@@ -1,9 +1,9 @@
+import LayerInitializer from "@/components/Map/LayerInitializer/LayerInitializer";
 import MapInitializer from "@/components/Map/MapInitializer/MapInitializer";
+import Background from "@/images/background.svg";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./css/globals.css";
-import Background from "@/images/background.svg";
-import { PageModalProvider } from "@/components/Modal/ModalProvider";
 
 const arthouseOwned = localFont({
 	src: [
@@ -57,18 +57,17 @@ export default function RootLayout({
 	return (
 		<html lang="de">
 			<body className={arthouseOwned.variable}>
-				<PageModalProvider>
-					<div className="relative h-full w-full">
-						<div className="absolute h-full w-full">
-							<MapInitializer />
-							{children}
-							{modal}
-						</div>
-						<div className="bg-primary absolute -z-99 flex h-full w-full items-center justify-center overflow-hidden">
-							<Background className="min-h-full min-w-full flex-shrink-0" />
-						</div>
+				<div className="relative h-full w-full">
+					<div className="absolute h-full w-full">
+						<MapInitializer />
+						<LayerInitializer />
+						{children}
+						{modal}
 					</div>
-				</PageModalProvider>
+					<div className="bg-primary absolute -z-99 flex h-full w-full items-center justify-center overflow-hidden">
+						<Background className="min-h-full min-w-full shrink-0" />
+					</div>
+				</div>
 			</body>
 		</html>
 	);

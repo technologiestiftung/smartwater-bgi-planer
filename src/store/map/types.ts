@@ -40,6 +40,9 @@ export interface MapConfig {
 export interface MapState {
 	config: MapConfig | null;
 	map: OLMap | null;
+	isReady: boolean;
+	hasError: boolean;
+	errorMessage: string | null;
 	userLocation: {
 		coordinates: [number, number] | null;
 		accuracy?: number;
@@ -50,6 +53,8 @@ export interface MapActions {
 	setConfig: (config: MapConfig) => void;
 	populateMap: (map: OLMap) => void;
 	removeMap: () => void;
+	setMapReady: (ready: boolean) => void;
+	setMapError: (hasError: boolean, errorMessage?: string) => void;
 	setUserLocation: (location: {
 		coordinates: [number, number] | null;
 		accuracy?: number;

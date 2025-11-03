@@ -1,46 +1,45 @@
 "use client";
+import { PageModal } from "@/components/Modal";
 import ProjectModalContent, {
 	ProjectFormData,
 } from "@/components/ProjectModal/ProjectModalContent";
-import { PageModal } from "@/components/Modal";
-import { usePageModal } from "@/components/Modal/ModalProvider";
-import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { TrashIcon, FloppyDiskBackIcon } from "@phosphor-icons/react";
 import Background from "@/images/background.svg";
-import { useState, useEffect } from "react";
+import { FloppyDiskBackIcon, TrashIcon } from "@phosphor-icons/react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 interface ProjectModalWrapperProps {
 	mode: "new" | "edit";
 	projectId?: string;
 }
 
-const MODAL_ID = "project-modal";
-
 export default function ProjectModalWrapper({
 	mode,
 	projectId,
 }: ProjectModalWrapperProps) {
 	const router = useRouter();
-	const { open, close, isOpen } = usePageModal(MODAL_ID);
+	const pathname = usePathname();
 	const [formData, setFormData] = useState<ProjectFormData>({
 		name: "",
 		description: "",
 		useCase: "individual",
 	});
 	const [isSaving, setIsSaving] = useState(false);
+	const [isOpen, setIsOpen] = useState(true);
 
 	useEffect(() => {
-		open();
-	}, [open]);
+		const shouldCloseModal =
+			(mode === "new" && !pathname.includes("/new")) ||
+			(mode === "edit" && !pathname.includes("/edit"));
+
+		if (shouldCloseModal) {
+			setIsOpen(false);
+		}
+	}, [pathname, mode]);
 
 	const handleClose = () => {
-		close();
-		if (window.history.length > 1) {
-			router.back();
-		} else {
-			router.push("/");
-		}
+		router.back();
 	};
 
 	const handleSave = async () => {
@@ -54,8 +53,7 @@ export default function ProjectModalWrapper({
 		try {
 			if (mode === "new") {
 				const projectId = Date.now().toString();
-
-				window.location.href = `/${projectId}`;
+				router.push(`/${projectId}/project-starter`);
 			}
 		} catch (error) {
 			console.error("Error saving project:", error);

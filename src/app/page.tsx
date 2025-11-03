@@ -1,17 +1,17 @@
 "use client";
 
+import { FileUploadZone } from "@/components/FileUpload/FileUploadZone";
+import { Button } from "@/components/ui/button";
+import { CarouselWithIndicators } from "@/components/ui/carousel-with-indicators";
+import Funding from "@/logos/Funding.svg";
 import SWLogo from "@/logos/SWLogo.svg";
 import SmartWaterLogo from "@/logos/SmartWater-Logo.svg";
-import { Button } from "@/components/ui/button";
-import Funding from "@/logos/Funding.svg";
 import {
+	GithubLogoIcon,
 	PlusSquareIcon,
 	UploadIcon,
-	GithubLogoIcon,
 } from "@phosphor-icons/react";
-import { CarouselWithIndicators } from "@/components/ui/carousel-with-indicators";
 import Link from "next/link";
-import { FileUploadZone } from "@/components/FileUpload/FileUploadZone";
 import { useState } from "react";
 
 export default function Home() {
@@ -33,7 +33,7 @@ export default function Home() {
 						/>
 					)}
 					<div className="flex flex-wrap items-center justify-between gap-2 md:gap-8">
-						<Button asChild className="flex-grow">
+						<Button asChild className="grow">
 							<Link href="/new">
 								<PlusSquareIcon className="mr-2" />
 								<p>Projekt anlegen</p>
@@ -41,7 +41,7 @@ export default function Home() {
 						</Button>
 						<Button
 							variant="outline"
-							className="flex-grow"
+							className="grow"
 							onClick={() => setShowUploadAlert(!showUploadAlert)}
 						>
 							<UploadIcon className="mr-2" />
@@ -92,7 +92,7 @@ export default function Home() {
 				</div>
 			</div>
 			<div className="bg-primary flex items-center justify-center rounded-l-[3.125rem] p-2.5">
-				<div className="flex max-w-[28.5rem] flex-col items-center justify-between gap-8">
+				<div className="flex max-w-114 flex-col items-center justify-between gap-8">
 					<CarouselWithIndicators
 						slides={[
 							{

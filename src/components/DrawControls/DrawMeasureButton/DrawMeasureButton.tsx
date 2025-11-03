@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";
+import { PolygonIcon } from "@phosphor-icons/react";
 import { EventsKey } from "ol/events";
 import { LineString, Polygon } from "ol/geom.js";
 import Draw from "ol/interaction/Draw.js";
@@ -137,8 +138,9 @@ const DrawMeasureButton: FC<DrawProps> = ({
 	};
 
 	return (
-		<Button onClick={toggleDraw}>
-			{drawRef.current ? "Stop Drawing" : "Draw Measure"}
+		<Button variant="outline" onClick={toggleDraw}>
+			<PolygonIcon />
+			{drawRef.current ? "Stop Drawing" : "Maßnahme zeichnen"}
 		</Button>
 	);
 };
