@@ -96,25 +96,39 @@ export default function Home() {
 					<CarouselWithIndicators
 						slides={[
 							{
-								src: "/images/placeholder.png",
-								alt: "Intro Slide 1",
-								title: "Einführung",
+								src: "/images/intro_module_0.png",
+								alt: "Projekt",
+								title: "Projekt",
 								description:
-									"Starten Sie doch zunächst mit einer kleinen Einführung, damit Sie sehen was man mit diesem Webtool erreichen und bearbeiten kann.",
+									"Legen Sie zunächst fest, um was für ein Projekt es sich handelt und wo dieses stattfinden soll.",
 							},
 							{
-								src: "/images/placeholder.png",
-								alt: "Intro Slide 2",
-								title: "Funktionen",
+								src: "/images/intro_module_1.png",
+								alt: "Handlungsbedarfe",
+								title: "Handlungsbedarfe",
 								description:
-									"Entdecken Sie die verschiedenen Module und Werkzeuge für Ihre Projektplanung.",
+									"Im ersten Modul werden Fragen zum Projektgebiet gestellt. Anhand Ihrer Antworten werden Prioritäten für verschiedene Handlungsbedarfe abgeleitet und Hotspots für jeden Handlungsbedarf identifiziert.",
 							},
 							{
-								src: "/images/placeholder.png",
-								alt: "Intro Slide 3",
-								title: "Los geht's",
+								src: "/images/intro_module_2.png",
+								alt: "Machbarkeit von Maßnahmen",
+								title: "Machbarkeit von Maßnahmen",
 								description:
-									"Erstellen Sie Ihr erstes Projekt und beginnen Sie mit der Planung Ihrer blau-grünen Maßnahmen.",
+									"Im zweiten Modul können Sie Bereiche identifizieren, in denen die optimalen Maßnahmen für Ihre Handlungsbedarfe tatsächlich umgesetzt werden können. Im dritten Modul können Sie, basierend auf den zuvor abgeleiteten",
+							},
+							{
+								src: "/images/intro_module_3.png",
+								alt: "Maßnahmenplanung",
+								title: "Maßnahmenplanung",
+								description:
+									"Im dritten Modul können Sie, basierend auf den zuvor abgeleiteten Handlungsbedarfen und Machbarkeitsbereichen, Maßnahmen in Ihrem Projektgebiet grob planen.",
+							},
+							{
+								src: "/images/intro_effektbewertung.png",
+								alt: "Effektbewertung",
+								title: "Effektbewertung",
+								description:
+									"Anschließend können die Auswirkungen Ihrer geplanten Maßnahmen auf Wasserhaushalt, Gewässerschutz, Stadtklima und Überflutungsgefährdung simuliert und bewertet werden.",
 							},
 						]}
 					/>
