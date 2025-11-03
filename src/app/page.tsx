@@ -3,7 +3,7 @@
 import { FileUploadZone } from "@/components/FileUpload/FileUploadZone";
 import { Button } from "@/components/ui/button";
 import { CarouselWithIndicators } from "@/components/ui/carousel-with-indicators";
-import Funding from "@/logos/Funding.svg";
+import Funding from "@/logos/gdb_logo.svg";
 import SWLogo from "@/logos/SWLogo.svg";
 import SmartWaterLogo from "@/logos/SmartWater-Logo.svg";
 import {
