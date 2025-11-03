@@ -12,18 +12,25 @@ import {
 	ArrowCircleRightIcon,
 } from "@phosphor-icons/react";
 import Link from "next/link";
+import { useProjectsStore } from "@/store/projects";
 
 interface MenuModalProps {
 	projectId: string;
 }
 
 export default function MenuModalContent({ projectId }: MenuModalProps) {
+	const { getProject } = useProjectsStore();
+	const project = getProject(projectId);
+
+	const name = project?.name || "Unbenanntes Projekt";
+	const description = project?.description || "Keine Beschreibung vorhanden.";
+
 	return (
 		<>
 			<div className="flex flex-col gap-4">
 				<MenuModule
-					title="Projektname v1.55 final final"
-					description="Dies ist eine Teaser der Projektbeschreibung. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+					title={name || "Unbenanntes Projekt"}
+					description={description || "Keine Beschreibung vorhanden."}
 					sideElements={
 						<div className="flex flex-col items-end gap-2">
 							<Button asChild>

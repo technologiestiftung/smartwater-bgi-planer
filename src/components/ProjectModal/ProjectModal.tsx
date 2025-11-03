@@ -6,8 +6,10 @@ import ProjectModalContent, {
 import { Button } from "@/components/ui/button";
 import Background from "@/images/background.svg";
 import { FloppyDiskBackIcon, TrashIcon } from "@phosphor-icons/react";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useProjectsStore } from "@/store/projects";
+import { UseCase } from "@/store/projects/types";
 
 interface ProjectModalWrapperProps {
 	mode: "new" | "edit";
@@ -19,24 +21,31 @@ export default function ProjectModalWrapper({
 	projectId,
 }: ProjectModalWrapperProps) {
 	const router = useRouter();
-	const pathname = usePathname();
+	const { createProject, updateProject, getProject } = useProjectsStore();
+
+	const existingProject =
+		mode === "edit" && projectId ? getProject(projectId) : undefined;
+
 	const [formData, setFormData] = useState<ProjectFormData>({
-		name: "",
-		description: "",
-		useCase: "individual",
+		name: existingProject?.name || "",
+		description: existingProject?.description || "",
+		useCase: existingProject?.useCase || UseCase.Individual,
 	});
 	const [isSaving, setIsSaving] = useState(false);
 	const [isOpen, setIsOpen] = useState(true);
 
 	useEffect(() => {
-		const shouldCloseModal =
-			(mode === "new" && !pathname.includes("/new")) ||
-			(mode === "edit" && !pathname.includes("/edit"));
-
-		if (shouldCloseModal) {
-			setIsOpen(false);
+		if (mode === "edit" && projectId) {
+			const project = getProject(projectId);
+			if (project) {
+				setFormData({
+					name: project.name,
+					description: project.description,
+					useCase: project.useCase,
+				});
+			}
 		}
-	}, [pathname, mode]);
+	}, [mode, projectId, getProject]);
 
 	const handleClose = () => {
 		router.back();
@@ -52,8 +61,48 @@ export default function ProjectModalWrapper({
 
 		try {
 			if (mode === "new") {
-				const projectId = Date.now().toString();
-				router.push(`/${projectId}/project-starter`);
+				const slug = formData.name
+					.toLowerCase()
+					.trim()
+					.replace(/[^\w\s-]/g, "")
+					.replace(/\s+/g, "-")
+					.replace(/-+/g, "-");
+
+				const now = new Date();
+				const dateStr = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, "0")}${String(now.getDate()).padStart(2, "0")}`;
+
+				// Find the next available counter for today
+				const { getAllProjects } = useProjectsStore.getState();
+				const allProjects = getAllProjects();
+				const todayProjects = allProjects.filter((p) =>
+					p.id.startsWith(dateStr),
+				);
+				const counter = todayProjects.length + 1;
+				const counterStr = String(counter).padStart(2, "0");
+
+				const newProjectId = `${dateStr}_${slug}_${counterStr}`;
+
+				createProject({
+					id: newProjectId,
+					name: formData.name,
+					description: formData.description,
+					useCase: formData.useCase,
+					files: [],
+					attachments: [],
+				});
+
+				// Navigate to the new project (URL becomes source of truth)
+				router.push(`/${newProjectId}`);
+			} else if (projectId) {
+				// Update existing project
+				updateProject(projectId, {
+					name: formData.name,
+					description: formData.description,
+					useCase: formData.useCase,
+				});
+
+				// In edit mode, just close the modal
+				handleClose();
 			}
 		} catch (error) {
 			console.error("Error saving project:", error);
