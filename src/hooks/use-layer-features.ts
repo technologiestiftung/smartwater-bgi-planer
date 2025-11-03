@@ -2,13 +2,15 @@ import { getLayerById } from "@/lib/helper/mapHelpers";
 import { useMapStore } from "@/store/map";
 import VectorSource from "ol/source/Vector";
 import { useEffect, useState } from "react";
+import { useMapReady } from "./use-map-ready";
 
 export function useLayerFeatures(layerId: string) {
 	const map = useMapStore((state) => state.map);
+	const isMapReady = useMapReady();
 	const [hasFeatures, setHasFeatures] = useState(false);
 
 	useEffect(() => {
-		if (!map) return;
+		if (!map || !layerId || !isMapReady) return;
 
 		const layer = getLayerById(map, layerId);
 		if (!layer) return;
@@ -30,7 +32,7 @@ export function useLayerFeatures(layerId: string) {
 			source.un("removefeature", checkFeatures);
 			source.un("clear", checkFeatures);
 		};
-	}, [map, layerId]);
+	}, [map, layerId, isMapReady]);
 
 	return { hasFeatures };
 }

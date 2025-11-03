@@ -4,13 +4,15 @@ import { Polygon } from "ol/geom";
 import VectorSource from "ol/source/Vector";
 import { getArea } from "ol/sphere";
 import { useEffect, useState } from "react";
+import { useMapReady } from "./use-map-ready";
 
 export function useLayerArea(layerId: string) {
 	const map = useMapStore((state) => state.map);
+	const isMapReady = useMapReady();
 	const [formattedArea, setFormattedArea] = useState("0 m²");
 
 	useEffect(() => {
-		if (!map) return;
+		if (!map || !layerId || !isMapReady) return;
 
 		const layer = getLayerById(map, layerId);
 		if (!layer) return;
@@ -44,7 +46,7 @@ export function useLayerArea(layerId: string) {
 			source.un("removefeature", calculateArea);
 			source.un("changefeature", calculateArea);
 		};
-	}, [map, layerId]);
+	}, [map, layerId, isMapReady]);
 
 	return { formattedArea };
 }
