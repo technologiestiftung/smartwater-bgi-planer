@@ -22,42 +22,32 @@ export default function DrawControlsContainer({}: DrawControlsContainerProps) {
 	const isProjectStarter = pathname.includes("/project-starter");
 	const isHandlungsbedarfe = pathname.includes("/handlungsbedarfe");
 
+	let controls: React.ReactNode = null;
+
 	if (isProjectStarter) {
-		// Different controls based on the current step
-		if (currentStepId === "projectBoundary") {
-			return (
-				<div className="absolute right-4 bottom-4 z-48 flex gap-2">
+		if (currentStepId === "newDevelopment") {
+			controls = <DrawButton />;
+		} else {
+			controls = (
+				<>
 					<DrawProjectBoundaryButton />
 					<UploadProjectBoundaryButton />
-				</div>
+				</>
 			);
 		}
-
-		if (currentStepId === "newDevelopment") {
-			return (
-				<div className="absolute right-40 bottom-4 z-48 flex gap-2">
-					<DrawButton />
-				</div>
-			);
-		}
-
-		return (
-			<div className="absolute right-40 bottom-4 z-48 flex gap-2">
-				<DrawProjectBoundaryButton />
-				<UploadProjectBoundaryButton />
-			</div>
-		);
-	}
-
-	if (isHandlungsbedarfe) {
-		return (
-			<div className="absolute right-40 bottom-4 z-48 flex gap-2">
+	} else if (isHandlungsbedarfe) {
+		controls = (
+			<>
 				<DrawMeasureButton layerId="handlungsbedarfe_measures" />
 				<DrawNoteButton layerId="handlungsbedarfe_notes" />
 				<BlockAreaSelector />
-			</div>
+			</>
 		);
 	}
 
-	return null;
+	if (!controls) return null;
+
+	return (
+		<div className="absolute right-4 bottom-4 z-48 flex gap-2">{controls}</div>
+	);
 }
