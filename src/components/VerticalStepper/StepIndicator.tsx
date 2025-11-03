@@ -57,7 +57,7 @@ export function StepIndicator({ className }: StepIndicatorProps) {
 								className={cn(
 									"w-1",
 									isPast ? "bg-light" : "bg-muted",
-									isActive ? "bg-primary grow" : "h-3",
+									isActive ? "bg-primary grow" : "h-6",
 								)}
 							/>
 						)}
