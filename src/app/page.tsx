@@ -114,7 +114,7 @@ export default function Home() {
 								alt: "Machbarkeit von Maßnahmen",
 								title: "Machbarkeit von Maßnahmen",
 								description:
-									"Im zweiten Modul können Sie Bereiche identifizieren, in denen die optimalen Maßnahmen für Ihre Handlungsbedarfe tatsächlich umgesetzt werden können. Im dritten Modul können Sie, basierend auf den zuvor abgeleiteten",
+									"Im zweiten Modul können Sie Bereiche identifizieren, in denen die optimalen Maßnahmen für Ihre Handlungsbedarfe tatsächlich umgesetzt werden können.",
 							},
 							{
 								src: "/images/intro_module_3.png",

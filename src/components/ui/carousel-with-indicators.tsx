@@ -40,7 +40,7 @@ export function CarouselWithIndicators({
 
 	return (
 		<div className="flex flex-col gap-6">
-			<div className="mt-12 flex h-48 flex-col justify-end gap-2 text-left text-white">
+			<div className="mt-12 flex min-h-48 flex-col justify-end gap-2 text-left text-white">
 				{slides[current]?.title && (
 					<>
 						<h2>{slides[current].title}</h2>
