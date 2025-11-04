@@ -24,7 +24,7 @@ export default function ProjectModalWrapper({
 	const { createProject, updateProject, getProject } = useProjectsStore();
 
 	const existingProject =
-		mode === "edit" && projectId ? getProject(projectId) : undefined;
+		mode === "edit" && projectId ? getProject() : undefined;
 
 	const [formData, setFormData] = useState<ProjectFormData>({
 		name: existingProject?.name || "",
@@ -36,7 +36,7 @@ export default function ProjectModalWrapper({
 
 	useEffect(() => {
 		if (mode === "edit" && projectId) {
-			const project = getProject(projectId);
+			const project = getProject();
 			if (project) {
 				setFormData({
 					name: project.name,
@@ -48,6 +48,7 @@ export default function ProjectModalWrapper({
 	}, [mode, projectId, getProject]);
 
 	const handleClose = () => {
+		setIsOpen(false);
 		router.back();
 	};
 
@@ -71,16 +72,7 @@ export default function ProjectModalWrapper({
 				const now = new Date();
 				const dateStr = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, "0")}${String(now.getDate()).padStart(2, "0")}`;
 
-				// Find the next available counter for today
-				const { getAllProjects } = useProjectsStore.getState();
-				const allProjects = getAllProjects();
-				const todayProjects = allProjects.filter((p) =>
-					p.id.startsWith(dateStr),
-				);
-				const counter = todayProjects.length + 1;
-				const counterStr = String(counter).padStart(2, "0");
-
-				const newProjectId = `${dateStr}_${slug}_${counterStr}`;
+				const newProjectId = `${dateStr}_${slug}`;
 
 				createProject({
 					id: newProjectId,
@@ -91,17 +83,16 @@ export default function ProjectModalWrapper({
 					attachments: [],
 				});
 
-				// Navigate to the new project (URL becomes source of truth)
-				router.push(`/${newProjectId}`);
+				setIsOpen(false);
+				requestAnimationFrame(() => {
+					router.push(`/${newProjectId}`);
+				});
 			} else if (projectId) {
-				// Update existing project
-				updateProject(projectId, {
+				updateProject({
 					name: formData.name,
 					description: formData.description,
 					useCase: formData.useCase,
 				});
-
-				// In edit mode, just close the modal
 				handleClose();
 			}
 		} catch (error) {
@@ -140,7 +131,7 @@ export default function ProjectModalWrapper({
 	return (
 		<PageModal
 			open={isOpen}
-			onOpenChange={(open) => !open && handleClose()}
+			onOpenChange={() => handleClose()}
 			title={title}
 			description={description}
 			footer={footer}

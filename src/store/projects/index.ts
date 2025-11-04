@@ -1,34 +1,32 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { ProjectsState, ProjectsActions } from "./types";
-import { indexedDBStorage } from "./storage";
+import { hybridStorage } from "./storage";
 import {
 	createCreateProject,
 	createUpdateProject,
 	createDeleteProject,
 	createGetProject,
-	createGetAllProjects,
 } from "./actions";
 
 const initialState: ProjectsState = {
-	projects: [],
-	_hasHydrated: false,
+	project: null,
+	hasHydrated: false,
 };
 
 export const useProjectsStore = create<ProjectsState & ProjectsActions>()(
 	persist(
 		(set, get) => ({
 			...initialState,
-			createProject: createCreateProject(set, get),
-			updateProject: createUpdateProject(set),
+			createProject: createCreateProject(set),
+			updateProject: createUpdateProject(set, get),
 			deleteProject: createDeleteProject(set),
 			getProject: createGetProject(get),
-			getAllProjects: createGetAllProjects(get),
-			setHasHydrated: (state) => set({ _hasHydrated: state }),
+			setHasHydrated: (state) => set({ hasHydrated: state }),
 		}),
 		{
 			name: "projects-storage",
-			storage: indexedDBStorage,
+			storage: hybridStorage,
 			onRehydrateStorage: () => (state) => {
 				state?.setHasHydrated(true);
 			},

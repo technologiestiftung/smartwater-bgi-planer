@@ -1,5 +1,4 @@
 import { Project, ProjectsState } from "./types";
-import { PROJECT_MODE } from "./config";
 
 type SetState = (fn: (state: ProjectsState) => Partial<ProjectsState>) => void;
 type GetState = () => ProjectsState;
@@ -13,45 +12,34 @@ export const createCreateProject = (set: SetState) => {
 			updatedAt: now,
 		};
 
-		set((state) => ({
-			projects:
-				PROJECT_MODE === "single"
-					? [newProject]
-					: [...state.projects, newProject],
-		}));
+		set(() => ({ project: newProject }));
 	};
 };
 
-export const createUpdateProject = (set: SetState) => {
-	return (id: string, updates: Partial<Project>) => {
-		set((state) => ({
-			projects: state.projects.map((project) =>
-				project.id === id
-					? { ...project, ...updates, updatedAt: Date.now() }
-					: project,
-			),
+export const createUpdateProject = (set: SetState, get: GetState) => {
+	return (updates: Partial<Project>) => {
+		const state = get();
+		if (!state.project) return;
+
+		set(() => ({
+			project: {
+				...state.project,
+				...updates,
+				updatedAt: Date.now(),
+			} as Project,
 		}));
 	};
 };
 
 export const createDeleteProject = (set: SetState) => {
-	return (id: string) => {
-		set((state) => ({
-			projects: state.projects.filter((project) => project.id !== id),
-		}));
+	return () => {
+		set(() => ({ project: null }));
 	};
 };
 
 export const createGetProject = (get: GetState) => {
-	return (id: string) => {
-		const state = get();
-		return state.projects.find((project) => project.id === id);
-	};
-};
-
-export const createGetAllProjects = (get: GetState) => {
 	return () => {
 		const state = get();
-		return state.projects;
+		return state.project;
 	};
 };

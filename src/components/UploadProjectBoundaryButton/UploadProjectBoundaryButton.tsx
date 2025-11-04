@@ -6,6 +6,7 @@ import { ensureVectorLayer } from "@/lib/helper/layerHelpers";
 import { getLayerById } from "@/lib/helper/mapHelpers";
 import { convertShapefile } from "@/lib/serverActions/convertShapefile";
 import { useMapStore } from "@/store/map";
+import { useProjectsStore } from "@/store/projects";
 import { LAYER_IDS } from "@/types/shared";
 import { UploadIcon } from "@phosphor-icons/react";
 import { Feature } from "ol";
@@ -15,6 +16,7 @@ import { FC, useCallback, useEffect, useRef, useState } from "react";
 
 const UploadProjectBoundaryButton: FC = () => {
 	const map = useMapStore((state) => state.map);
+	const updateProject = useProjectsStore((state) => state.updateProject);
 	const [uploading, setUploading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 	const fileInputRef = useRef<HTMLInputElement>(null);
@@ -141,6 +143,10 @@ const UploadProjectBoundaryButton: FC = () => {
 						"Unsupported file type. Upload a .geojson, .json, or zipped shapefile (.zip).",
 					);
 				}
+				updateProject({
+					boundaryFile: file,
+					boundaryFileName: file.name,
+				});
 
 				if (fileInputRef.current) fileInputRef.current.value = "";
 			} catch (err) {
@@ -149,7 +155,7 @@ const UploadProjectBoundaryButton: FC = () => {
 				setUploading(false);
 			}
 		},
-		[handleGeoJSONData],
+		[handleGeoJSONData, updateProject],
 	);
 
 	return (

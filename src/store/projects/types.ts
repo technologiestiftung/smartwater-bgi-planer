@@ -1,6 +1,3 @@
-// Project mode type
-export type ProjectMode = "multi" | "single";
-
 export enum UseCase {
 	Individual = "Individual area",
 	District = "District",
@@ -15,20 +12,21 @@ export interface Project {
 	useCase: UseCase;
 	files?: File[];
 	attachments?: Blob[];
+	boundaryFile?: Blob;
+	boundaryFileName?: string;
 	createdAt: number;
 	updatedAt: number;
 }
 
 export interface ProjectsState {
-	projects: Project[];
-	_hasHydrated: boolean;
+	project: Project | null;
+	hasHydrated: boolean;
 }
 
 export interface ProjectsActions {
 	createProject: (project: Omit<Project, "createdAt" | "updatedAt">) => void;
-	updateProject: (id: string, updates: Partial<Project>) => void;
-	deleteProject: (id: string) => void;
-	getProject: (id: string) => Project | undefined;
-	getAllProjects: () => Project[];
+	updateProject: (updates: Partial<Project>) => void;
+	deleteProject: () => void;
+	getProject: () => Project | null;
 	setHasHydrated: (state: boolean) => void;
 }
