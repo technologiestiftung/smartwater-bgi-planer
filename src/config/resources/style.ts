@@ -20,9 +20,20 @@ const styleList = [
 		rules: [
 			{
 				style: {
+					polygonStrokeWidth: 3,
+					polygonStrokeColor: [12, 76, 56, 1],
+				},
+			},
+		],
+	},
+	{
+		styleId: "newDevelopment",
+		rules: [
+			{
+				style: {
 					polygonStrokeWidth: 2,
-					polygonStrokeColor: [84, 255, 255, 1],
-					polygonFillColor: [84, 255, 255, 0.5],
+					polygonStrokeColor: [64, 181, 255, 1],
+					polygonFillColor: [64, 181, 255, 0.2],
 				},
 			},
 		],
@@ -33,8 +44,8 @@ const styleList = [
 			{
 				style: {
 					polygonStrokeWidth: 2,
-					polygonStrokeColor: [0, 0, 0, 0.3],
-					polygonFillColor: [0, 0, 0, 0],
+					polygonStrokeColor: [12, 76, 56, 0.4],
+					polygonFillColor: [12, 76, 56, 0.2],
 				},
 			},
 		],

@@ -141,7 +141,7 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "projectBoundary"
+		"styleId": "newDevelopment"
 	},
 	{
 		"id": "project_custom_maps",
