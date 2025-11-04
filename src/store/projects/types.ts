@@ -10,10 +10,6 @@ export interface Project {
 	name: string;
 	description: string;
 	useCase: UseCase;
-	files?: File[];
-	attachments?: Blob[];
-	boundaryFile?: Blob;
-	boundaryFileName?: string;
 	createdAt: number;
 	updatedAt: number;
 }

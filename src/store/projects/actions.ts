@@ -1,4 +1,5 @@
 import { Project, ProjectsState } from "./types";
+import { useFilesStore } from "../files";
 
 type SetState = (fn: (state: ProjectsState) => Partial<ProjectsState>) => void;
 type GetState = () => ProjectsState;
@@ -31,9 +32,14 @@ export const createUpdateProject = (set: SetState, get: GetState) => {
 	};
 };
 
-export const createDeleteProject = (set: SetState) => {
-	return () => {
+export const createDeleteProject = (set: SetState, get: GetState) => {
+	return async () => {
+		const state = get();
+		const projectId = state.project?.id;
 		set(() => ({ project: null }));
+		if (projectId) {
+			await useFilesStore.getState().deleteProjectFiles(projectId);
+		}
 	};
 };
 
