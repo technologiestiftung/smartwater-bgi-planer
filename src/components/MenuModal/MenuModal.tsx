@@ -18,6 +18,8 @@ export default function MenuModalWrapper({ projectId }: MenuModalWrapperProps) {
 
 		if (shouldCloseModal) {
 			setIsOpen(false);
+		} else {
+			setIsOpen(true);
 		}
 	}, [pathname]);
 

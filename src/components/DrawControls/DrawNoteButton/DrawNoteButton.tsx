@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";
 import { NoteIcon } from "@phosphor-icons/react";
-import GeoJSON from "ol/format/GeoJSON.js";
 import Draw from "ol/interaction/Draw.js";
 import VectorLayer from "ol/layer/Vector.js";
 import MapBrowserEvent from "ol/MapBrowserEvent.js";
@@ -66,28 +65,25 @@ const DrawNoteButton: FC<DrawNoteButtonProps> = ({ layerId }) => {
 		});
 
 		drawRef.current.on("drawend", (event) => {
-			const geojson = new GeoJSON().writeFeatureObject(event.feature);
-			console.log("GeoJSON:", geojson);
+			const geometry = event.feature.getGeometry();
+			if (geometry && geometry.getType() === "Point") {
+				const coordinate = (geometry as any).getCoordinates();
+				const pixel = map.getPixelFromCoordinate(coordinate);
 
-			setTimeout(() => {
-				const geometry = event.feature.getGeometry();
-				if (geometry && geometry.getType() === "Point") {
-					const coordinate = (geometry as any).getCoordinates();
-					const pixel = map.getPixelFromCoordinate(coordinate);
+				const clickEvent = new MapBrowserEvent("click", map, {
+					type: "click",
+					target: map.getViewport(),
+					clientX: pixel[0],
+					clientY: pixel[1],
+				} as any);
 
-					const clickEvent = new MapBrowserEvent("click", map, {
-						type: "click",
-						target: map.getViewport(),
-						clientX: pixel[0],
-						clientY: pixel[1],
-					} as any);
+				clickEvent.pixel = pixel;
+				clickEvent.coordinate = coordinate;
 
-					clickEvent.pixel = pixel;
-					clickEvent.coordinate = coordinate;
-
+				requestAnimationFrame(() => {
 					map.dispatchEvent(clickEvent);
-				}
-			}, 100);
+				});
+			}
 		});
 
 		map.addInteraction(drawRef.current);

@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useMapStore } from "@/store/map";
+import { CheckIcon, TrashIcon, XCircleIcon } from "@phosphor-icons/react";
 import { FC, useEffect, useState } from "react";
 
 interface NoteCardProps {
@@ -62,65 +63,33 @@ const NoteCard: FC<NoteCardProps> = ({ layerId, features, onClose }) => {
 	if (!featureProperties) return null;
 
 	return (
-		<div className="NoteCard-root w-[400px] rounded-lg bg-white shadow-lg">
-			<div className="flex items-center justify-between border-b p-4">
-				<h3 className="text-lg font-semibold">Notiz einfügen</h3>
-				<button
-					className="flex h-8 w-8 items-center justify-center rounded-full bg-teal-600 text-white hover:bg-teal-700"
-					onClick={onClose}
-				>
-					X
-				</button>
+		<div className="NoteCard-root bg-background w-[325px] shadow-lg">
+			<div className="border-muted flex h-8 w-full items-center justify-between border-b pl-2">
+				<h3 className="text-sm font-semibold">Notiz einfügen</h3>
+				<div className="bg-secondary h-8 w-8 text-white">
+					<button
+						className="flex h-full w-full items-center justify-center"
+						onClick={onClose}
+					>
+						<XCircleIcon />
+					</button>
+				</div>
 			</div>
-			<div className="p-4">
+			<div className="p-2">
 				<Textarea
 					value={note}
 					onChange={(e) => setNote(e.target.value)}
 					placeholder="This building will be under Denkmalschutz next year ..."
-					className="mb-4 min-h-[120px] resize-none border-gray-200"
+					className="mb-4 min-h-[120px] resize-none"
 					rows={5}
 				/>
-				<div className="flex gap-2">
-					<Button
-						onClick={handleSave}
-						className="flex-1 bg-teal-800 text-white hover:bg-teal-900"
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="16"
-							height="16"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							strokeWidth="2"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							className="mr-2"
-						>
-							<polyline points="20 6 9 17 4 12" />
-						</svg>
+				<div className="flex w-full gap-2">
+					<Button className="flex-1" onClick={handleSave}>
+						<CheckIcon />
 						Speichern
 					</Button>
-					<Button
-						variant="outline"
-						className="flex-1 border-2 border-gray-300 hover:bg-gray-50"
-						onClick={handleDelete}
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="16"
-							height="16"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							strokeWidth="2"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							className="mr-2"
-						>
-							<polyline points="3 6 5 6 21 6" />
-							<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-						</svg>
+					<Button className="flex-1" variant="outline" onClick={handleDelete}>
+						<TrashIcon />
 						Löschen
 					</Button>
 				</div>

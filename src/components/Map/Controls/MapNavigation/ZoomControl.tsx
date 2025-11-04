@@ -41,24 +41,14 @@ const ZoomControl: FC = () => {
 	if (!map) return null;
 
 	return (
-		<div className="ZoomControl-root hidden flex-col items-center justify-center gap-2 rounded-[2px] bg-white p-2 shadow-[0_0_8px_0_rgba(0,0,0,0.24)] md:flex">
-			<Button
-				variant="map-zoom"
-				size={null}
-				onClick={handleZoomIn}
-				className="cursor-pointer"
-			>
+		<div className="ZoomControl-root bg-background hidden w-12 flex-col items-center justify-center gap-2 rounded-xs p-2 shadow-md md:flex">
+			<Button variant="map-zoom" size="icon-sm" onClick={handleZoomIn}>
 				<Image src="/icons/plus.svg" alt="Zoom in" width={24} height={24} />
 			</Button>
 			<div className="h-px w-full px-1">
 				<div className="h-full w-full bg-gray-300" />
 			</div>
-			<Button
-				variant="map-zoom"
-				size={null}
-				onClick={handleZoomOut}
-				className="cursor-pointer"
-			>
+			<Button variant="map-zoom" size="icon-sm" onClick={handleZoomOut}>
 				<Image src="/icons/minus.svg" alt="Zoom out" width={24} height={24} />
 			</Button>
 		</div>

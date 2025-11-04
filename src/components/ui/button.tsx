@@ -20,7 +20,7 @@ const buttonVariants = cva(
 				ghost:
 					"hover:text-muted hover:[&_svg]:text-muted-darker hover:text-foreground dark:hover:bg-primary/50 disabled:text-muted-darker",
 				link: "text-primary underline-offset-4 hover:underline",
-				"map-control": "shadow-md bg-white hover:bg-accent [&_svg]:size-6",
+				"map-control": "shadow-md bg-background [&_svg]:size-6",
 				"map-zoom":
 					"shadow-none rounded-none p-0 px-1 w-auto [&_svg]:size-8 [&_img]:w-6 [&_img]:h-6",
 			},
@@ -29,7 +29,7 @@ const buttonVariants = cva(
 				sm: "h-8 rounded-xs gap-1.5 px-3 has-[>svg]:px-2.5",
 				lg: "h-10 rounded-xs px-6 has-[>svg]:px-4",
 				icon: "size-9",
-				"icon-only": "h-12 w-12",
+				"icon-only": "h-12 w-12 rounded-xs",
 				"icon-sm": "size-8",
 				"icon-lg": "size-10",
 			},

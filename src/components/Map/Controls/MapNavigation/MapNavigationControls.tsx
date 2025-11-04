@@ -1,5 +1,6 @@
 "use client";
 
+import BaselayerSwitch from "@/components/Map/BaselayerSwitch/BaselayerSwitch";
 import GeolocationControl from "@/components/Map/Controls/MapNavigation/GeolocationControl";
 import ZoomControl from "@/components/Map/Controls/MapNavigation/ZoomControl";
 import { FC } from "react";
@@ -12,9 +13,10 @@ const MapNavigationControls: FC<MapNavigationControlsProps> = ({
 	onGeolocate,
 }) => {
 	return (
-		<div className={`absolute right-4 bottom-10 z-10 flex flex-col gap-2`}>
+		<div className={`absolute bottom-6 left-4 z-10 flex flex-col gap-2`}>
 			<GeolocationControl onGeolocate={onGeolocate} />
 			<ZoomControl />
+			<BaselayerSwitch />
 		</div>
 	);
 };

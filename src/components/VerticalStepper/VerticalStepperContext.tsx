@@ -14,6 +14,7 @@ export interface StepConfig {
 	icon: React.ReactNode;
 	title: string;
 	description?: string;
+	canProceed?: () => boolean;
 }
 
 interface VerticalStepperContextValue {
@@ -26,6 +27,7 @@ interface VerticalStepperContextValue {
 	canGoPrevious: boolean;
 	currentStepIndex: number;
 	totalSteps: number;
+	setStepValidation: (stepId: string, canProceed: () => boolean) => void;
 }
 
 const VerticalStepperContext = createContext<
@@ -46,9 +48,13 @@ export function VerticalStepperProvider({
 	const [currentStepId, setCurrentStepId] = useState(
 		initialStepId || steps[0]?.id,
 	);
+	const [stepValidations, setStepValidations] = useState<
+		Map<string, () => boolean>
+	>(new Map());
 	const setCurrentStepIdInStore = useUiStore((state) => state.setCurrentStepId);
 
 	const currentStepIndex = steps.findIndex((step) => step.id === currentStepId);
+	const currentStep = steps[currentStepIndex];
 
 	useEffect(() => {
 		setCurrentStepIdInStore(currentStepId);
@@ -58,16 +64,38 @@ export function VerticalStepperProvider({
 		};
 	}, [currentStepId, setCurrentStepIdInStore]);
 
+	const setStepValidation = useCallback(
+		(stepId: string, canProceed: () => boolean) => {
+			setStepValidations((prev) => {
+				const next = new Map(prev);
+				next.set(stepId, canProceed);
+				return next;
+			});
+		},
+		[],
+	);
+
+	const canCurrentStepProceed = useCallback(() => {
+		const validationFn = stepValidations.get(currentStepId);
+		if (validationFn) {
+			return validationFn();
+		}
+		if (currentStep?.canProceed) {
+			return currentStep.canProceed();
+		}
+		return true;
+	}, [currentStepId, currentStep, stepValidations]);
+
 	const goToStep = useCallback((stepId: string) => {
 		setCurrentStepId(stepId);
 	}, []);
 
 	const nextStep = useCallback(() => {
 		const currentIndex = steps.findIndex((step) => step.id === currentStepId);
-		if (currentIndex < steps.length - 1) {
+		if (currentIndex < steps.length - 1 && canCurrentStepProceed()) {
 			setCurrentStepId(steps[currentIndex + 1].id);
 		}
-	}, [steps, currentStepId]);
+	}, [steps, currentStepId, canCurrentStepProceed]);
 
 	const previousStep = useCallback(() => {
 		const currentIndex = steps.findIndex((step) => step.id === currentStepId);
@@ -76,7 +104,8 @@ export function VerticalStepperProvider({
 		}
 	}, [steps, currentStepId]);
 
-	const canGoNext = currentStepIndex < steps.length - 1;
+	const canGoNext =
+		currentStepIndex < steps.length - 1 && canCurrentStepProceed();
 	const canGoPrevious = currentStepIndex > 0;
 
 	return (
@@ -91,6 +120,7 @@ export function VerticalStepperProvider({
 				canGoPrevious,
 				currentStepIndex,
 				totalSteps: steps.length,
+				setStepValidation,
 			}}
 		>
 			{children}

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMapStore } from "@/store/map";
-import Overlay from "ol/Overlay.js";
+import Overlay, { Options } from "ol/Overlay.js";
 import {
 	cloneElement,
 	FC,
@@ -10,10 +10,16 @@ import {
 	useState,
 } from "react";
 
+interface ClickControlChildProps {
+	features: any;
+	layerId: string;
+	onClose: () => void;
+}
+
 interface ClickControlProps {
 	layerId: string;
-	overlayOptions?: any;
-	children: React.ReactElement;
+	overlayOptions?: Options;
+	children: React.ReactElement<Partial<ClickControlChildProps>>;
 	minZoomForClick?: number;
 }
 
@@ -38,25 +44,12 @@ const ClickControl: FC<ClickControlProps> = ({
 }) => {
 	const map = useMapStore((state) => state.map);
 	const overlayRef = useRef<HTMLDivElement>(null);
+	const overlayInstanceRef = useRef<Overlay | null>(null);
 	const overlaySizeRef = useRef({ width: 0, height: 0 });
 
 	const [features, setFeatures] = useState<any>();
 	const [cardPosition, setCardPosition] =
 		useState<OverlayPositioning>("bottom-left");
-	const [overlayReady, setOverlayReady] = useState(false);
-
-	const hideOverlay = useCallback((overlay: Overlay) => {
-		overlay.setPosition(undefined);
-		setFeatures(undefined);
-	}, []);
-
-	const showOverlay = useCallback(
-		(overlay: Overlay, coordinate: any, feature: any) => {
-			overlay.setPosition(coordinate);
-			setFeatures(feature);
-		},
-		[],
-	);
 
 	const calculatePositioning = useCallback(
 		(pixel: [number, number]): OverlayPositioning => {
@@ -83,37 +76,54 @@ const ClickControl: FC<ClickControlProps> = ({
 		[map, cardPosition],
 	);
 
-	const updateOverlaySize = useCallback(() => {
-		if (!overlayRef.current) return;
-
-		requestAnimationFrame(() => {
-			const rect = overlayRef.current?.getBoundingClientRect();
-			if (rect) {
-				overlaySizeRef.current = { width: rect.width, height: rect.height };
-				setOverlayReady(true);
-			}
-		});
+	const handleCloseOverlay = useCallback(() => {
+		if (overlayInstanceRef.current) {
+			overlayInstanceRef.current.setPosition(undefined);
+		}
+		setFeatures(undefined);
 	}, []);
 
+	// Update overlay positioning when cardPosition changes
+	useEffect(() => {
+		if (overlayInstanceRef.current) {
+			overlayInstanceRef.current.setPositioning(cardPosition);
+			overlayInstanceRef.current.setOffset(POSITION_OFFSETS[cardPosition]);
+		}
+	}, [cardPosition]);
+
+	// Track overlay size with ResizeObserver
+	useEffect(() => {
+		if (!overlayRef.current) return;
+
+		const observer = new ResizeObserver((entries) => {
+			for (const entry of entries) {
+				const { width, height } = entry.contentRect;
+				overlaySizeRef.current = { width, height };
+			}
+		});
+
+		observer.observe(overlayRef.current);
+		return () => observer.disconnect();
+	}, []);
+
+	// Main map click handler
 	useEffect(() => {
 		if (!map || !overlayRef.current) return;
 
-		const cardOffset = POSITION_OFFSETS[cardPosition];
 		const overlay = new Overlay({
 			element: overlayRef.current,
 			id: "ClickControl-root",
 			positioning: cardPosition,
-			offset: cardOffset,
+			offset: POSITION_OFFSETS[cardPosition],
 			...overlayOptions,
 		});
 
+		overlayInstanceRef.current = overlay;
 		map.addOverlay(overlay);
 
 		const handleClick = (evt: any) => {
-			const zoom = Math.max(0, map.getView().getZoom() ?? 0);
-			if (zoom < minZoomForClick) {
-				return;
-			}
+			const zoom = map.getView().getZoom() ?? 0;
+			if (zoom < minZoomForClick) return;
 
 			const pixel = evt.pixel;
 			const coordinate = evt.coordinate;
@@ -124,10 +134,10 @@ const ClickControl: FC<ClickControlProps> = ({
 				setCardPosition(newPositioning);
 			}
 
-			map.forEachFeatureAtPixel(pixel, function (feature, layer) {
-				if (layer && layer.get("id") === layerId) {
+			map.forEachFeatureAtPixel(pixel, (feature, layer) => {
+				if (layer?.get("id") === layerId) {
 					const clusteredFeatures = feature.get("features");
-					const isCluster = clusteredFeatures && clusteredFeatures.length > 1;
+					const isCluster = clusteredFeatures?.length > 1;
 
 					if (!isCluster) {
 						matchedFeature = feature;
@@ -137,9 +147,11 @@ const ClickControl: FC<ClickControlProps> = ({
 			});
 
 			if (matchedFeature) {
-				showOverlay(overlay, coordinate, matchedFeature);
+				overlay.setPosition(coordinate);
+				setFeatures(matchedFeature);
 			} else {
-				hideOverlay(overlay);
+				overlay.setPosition(undefined);
+				setFeatures(undefined);
 			}
 		};
 
@@ -148,6 +160,7 @@ const ClickControl: FC<ClickControlProps> = ({
 		return () => {
 			map.un("click", handleClick);
 			map.removeOverlay(overlay);
+			overlayInstanceRef.current = null;
 		};
 	}, [
 		map,
@@ -156,42 +169,12 @@ const ClickControl: FC<ClickControlProps> = ({
 		cardPosition,
 		calculatePositioning,
 		minZoomForClick,
-		hideOverlay,
-		showOverlay,
 	]);
 
-	useEffect(updateOverlaySize, [features, updateOverlaySize]);
-
-	useEffect(() => {
-		const observer = new ResizeObserver((entries) => {
-			for (const entry of entries) {
-				const { width, height } = entry.contentRect;
-				overlaySizeRef.current = { width, height };
-			}
-		});
-
-		if (overlayRef.current) {
-			observer.observe(overlayRef.current);
-		}
-
-		return () => observer.disconnect();
-	}, []);
-
-	const handleCloseOverlay = useCallback(() => {
-		setFeatures(undefined);
-	}, []);
-
 	return (
-		<div
-			className="ClickControl-root"
-			ref={overlayRef}
-			style={{
-				visibility: overlayReady ? "visible" : "hidden",
-			}}
-		>
+		<div className="ClickControl-root" ref={overlayRef}>
 			{features &&
-				children &&
-				cloneElement(children as React.ReactElement<any>, {
+				cloneElement(children, {
 					features,
 					layerId,
 					onClose: handleCloseOverlay,

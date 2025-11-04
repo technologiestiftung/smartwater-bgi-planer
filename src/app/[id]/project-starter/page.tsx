@@ -16,11 +16,16 @@ export default function ProjectStarterPage({
 	const router = useRouter();
 	const { id } = use(params);
 
+	const handleComplete = () => {
+		router.push(`/${id}/menu`);
+	};
+
 	return (
 		<ProjectStarterModule
 			open={true}
 			onOpenChange={(open) => !open && router.back()}
 			projectId={id}
+			onComplete={handleComplete}
 		/>
 	);
 }

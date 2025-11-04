@@ -10,22 +10,26 @@ import {
 	useVerticalStepper,
 	VerticalStepper,
 } from "@/components/VerticalStepper";
+import { useLayerArea } from "@/hooks/use-layer-area";
+import { useLayerFeatures } from "@/hooks/use-layer-features";
 import { useMapReady } from "@/hooks/use-map-ready";
 import { useLayersStore } from "@/store/layers";
+import { LAYER_IDS } from "@/types/shared";
 import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
 	BlueprintIcon,
-	CheckIcon,
 	ListChecksIcon,
 	MapPinAreaIcon,
 } from "@phosphor-icons/react";
 import { useEffect } from "react";
+import ConfirmButton from "../ConfirmButton/ConfirmButton";
 
 interface ProjectStarterModuleProps {
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
 	projectId: string;
+	onComplete?: () => void;
 }
 
 const steps: StepConfig[] = [
@@ -43,9 +47,22 @@ const steps: StepConfig[] = [
 	},
 ];
 
-function StepperFooter({ onClose }: { onClose: () => void }) {
-	const { previousStep, nextStep, canGoPrevious, canGoNext, currentStepId } =
-		useVerticalStepper();
+function StepperFooter({
+	onClose,
+	onComplete,
+}: {
+	onClose: () => void;
+	onComplete?: () => void;
+}) {
+	const {
+		previousStep,
+		nextStep,
+		canGoPrevious,
+		canGoNext,
+		currentStepId,
+		currentStepIndex,
+		totalSteps,
+	} = useVerticalStepper();
 	const applyConfigLayers = useLayersStore((state) => state.applyConfigLayers);
 	const isMapReady = useMapReady();
 
@@ -59,9 +76,19 @@ function StepperFooter({ onClose }: { onClose: () => void }) {
 		}
 	}, [currentStepId, applyConfigLayers, isMapReady]);
 
+	const isLastStep = currentStepIndex === totalSteps - 1;
+
+	const handleSkip = () => {
+		if (isLastStep) {
+			onComplete?.();
+		} else {
+			nextStep();
+		}
+	};
+
 	return (
 		<div className="border-muted flex h-full w-full border-t">
-			<div className="bg-secondary flex w-[4.5rem] items-center justify-center">
+			<div className="bg-secondary flex w-18 items-center justify-center">
 				<ListChecksIcon className="h-6 w-6 text-white" />
 			</div>
 			<div className="flex w-full items-center justify-between p-2">
@@ -72,7 +99,11 @@ function StepperFooter({ onClose }: { onClose: () => void }) {
 					<ArrowLeftIcon />
 					{canGoPrevious ? "Zurück" : "Schließen"}
 				</Button>
-				<Button variant="ghost" onClick={nextStep} disabled={!canGoNext}>
+				<Button
+					variant="ghost"
+					onClick={handleSkip}
+					disabled={!isLastStep && !canGoNext}
+				>
 					Überspringen
 					<ArrowRightIcon />
 				</Button>
@@ -81,9 +112,88 @@ function StepperFooter({ onClose }: { onClose: () => void }) {
 	);
 }
 
+function ProjectBoundaryStep() {
+	const { hasFeatures } = useLayerFeatures(LAYER_IDS.PROJECT_BOUNDARY);
+	const { formattedArea } = useLayerArea(LAYER_IDS.PROJECT_BOUNDARY);
+	const { setStepValidation } = useVerticalStepper();
+
+	useEffect(() => {
+		setStepValidation("projectBoundary", () => hasFeatures);
+	}, [hasFeatures, setStepValidation]);
+
+	const handleConfirm = (): boolean => {
+		if (!hasFeatures) {
+			alert("Bitte zeichnen Sie zuerst ein Projektgebiet ein.");
+			return false;
+		}
+		return true;
+	};
+
+	return (
+		<div className="space-y-4">
+			<h3 className="text-primary">Untersuchungsgebiet</h3>
+			<p className="text-muted-foreground">
+				Das Untersuchungsgebiet soll das ganze Gebiet umfassen, wo Änderungen im
+				Rahmen des aktuellen Projektes eingeführt werden können. Sie können
+				diese entweder freihand zeichnen oder eine Shapefile oder GeoJSON Datei
+				hochladen.
+			</p>
+			<p>
+				Die Blockteilflächen werden automatisch auch selektiert, die mit der
+				Projektgrenze überschneiden. Diese sind für die Effektbewertung
+				relevant, denn manche Simulationen können nur anhand von ganzen
+				Blockteilflächen durchgeführt werden.
+			</p>
+
+			<div className="mt-8">
+				<ConfirmButton
+					onConfirm={handleConfirm}
+					validate={() => hasFeatures}
+					displayText={formattedArea}
+				/>
+			</div>
+		</div>
+	);
+}
+
+function NewDevelopmentStep({ onComplete }: { onComplete?: () => void }) {
+	const { formattedArea } = useLayerArea("project_new_development");
+
+	const handleConfirm = (): boolean => {
+		onComplete?.();
+		return true;
+	};
+
+	return (
+		<div className="space-y-4">
+			<h3 className="text-primary">Neubauten und versiegelte Flächen</h3>
+			<h4>
+				Neubauten und versiegelte Flächen Welche Bauwerke werden schon geplant?
+			</h4>
+			<p className="text-muted-foreground">
+				Falls Ihr Projekt Bauvorhaben umfasst, die noch nicht auf der Karte zu
+				sehen sind, können Sie diese jetzt einzeichnen.
+			</p>
+			<p>
+				Auch wenn die Planung noch nicht komplett festgelegt ist, können Sie
+				Platzhalter einzeichnen, die den Ausmaß der geplanten Gebauten grob
+				entsprechen. Diese sind für Simulationen relevant, weil die Gesamtmengen
+				von versiegelten und unversiegelten Flächen wichtige Basiswerte sind.
+			</p>
+
+			<ConfirmButton
+				onConfirm={handleConfirm}
+				buttonText="Bestätigen"
+				displayText={formattedArea}
+			/>
+		</div>
+	);
+}
+
 export default function ProjectStarterModule({
 	open,
 	onOpenChange,
+	onComplete,
 }: ProjectStarterModuleProps) {
 	return (
 		<SideMenu
@@ -100,44 +210,19 @@ export default function ProjectStarterModule({
 						<StepIndicator className="w-20" />
 						<StepContainer>
 							<StepContent stepId="projectBoundary">
-								<div className="space-y-4">
-									<h3 className="text-primary">Untersuchtungsgebiet</h3>
-									<p className="text-muted-foreground">
-										Das Untersuchungsgebiet soll das ganzen Gebiet umfassen, wo
-										Änderungen im Rahmen des aktuellen Projektes eingeführt
-										werden können. Sie können diese entweder freihand zeichnen
-										oder eine Shapefile oder GeoJSON Datei hochladen.
-									</p>
-									<p>
-										Die Blockteilflächen werden automatisch auch selektiert, die
-										mit der Projektgrenze überschneiden. Diese sind für die
-										Effektbewertung relevant, denn manche Simulationen nur
-										anhand von ganzen Blockteilflächen durchgeführt werden
-										können.
-									</p>
-
-									<div className="flex gap-2">
-										<Button>
-											<CheckIcon />
-											Bestätigen
-										</Button>
-										<p>0 m2</p>
-									</div>
-								</div>
+								<ProjectBoundaryStep />
 							</StepContent>
 
 							<StepContent stepId="newDevelopment">
-								<div className="space-y-4">
-									<h3 className="text-primary">
-										Neubauten und Versiegelte Flächen
-									</h3>
-									<p className="text-muted-foreground"></p>
-								</div>
+								<NewDevelopmentStep onComplete={onComplete} />
 							</StepContent>
 						</StepContainer>
 					</div>
 					<div className="shrink-0">
-						<StepperFooter onClose={() => onOpenChange(false)} />
+						<StepperFooter
+							onClose={() => onOpenChange(false)}
+							onComplete={onComplete}
+						/>
 					</div>
 				</div>
 			</VerticalStepper>

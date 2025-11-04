@@ -1,6 +1,5 @@
 "use client";
 
-import BaselayerSwitch from "@/components/Map/BaselayerSwitch/BaselayerSwitch";
 import ClickControl from "@/components/Map/Controls/ClickControl";
 import MapNavigationControls from "@/components/Map/Controls/MapNavigation/MapNavigationControls";
 import NoteCard from "@/components/NoteCard/NoteCard";
@@ -16,7 +15,6 @@ const Map: FC = () => {
 	return (
 		<div className="Map-root relative h-full w-full">
 			<LazyOlMap>
-				<BaselayerSwitch />
 				<MapNavigationControls />
 				<ClickControl layerId="module1_notes">
 					<NoteCard />
