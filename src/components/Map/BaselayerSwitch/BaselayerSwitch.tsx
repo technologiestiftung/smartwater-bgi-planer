@@ -40,7 +40,7 @@ const BaselayerSwitch: FC = () => {
 		<div>
 			<button
 				onClick={handleToggleBaselayer}
-				className="group relative h-14 w-14 overflow-hidden rounded-sm border-4 border-white bg-white"
+				className="group border-background bg-background relative h-14 w-14 cursor-pointer overflow-hidden rounded-sm border-4"
 				aria-label={`Switch from ${layerName} to alternate base layer`}
 			>
 				{previewSrc && (
