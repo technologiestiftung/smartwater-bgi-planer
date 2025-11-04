@@ -6,7 +6,6 @@ import { useMapStore } from "@/store/map";
 import { LAYER_IDS } from "@/types/shared";
 import { PolygonIcon } from "@phosphor-icons/react";
 import { intersects } from "ol/extent";
-import GeoJSON from "ol/format/GeoJSON.js";
 import Draw from "ol/interaction/Draw.js";
 import Modify from "ol/interaction/Modify.js";
 import VectorLayer from "ol/layer/Vector.js";
@@ -123,9 +122,6 @@ const DrawProjectBoundaryButton: FC = () => {
 		};
 
 		drawRef.current.on("drawend", (event) => {
-			const geojson = new GeoJSON().writeFeatureObject(event.feature);
-			console.log("GeoJSON:", geojson);
-
 			source.on("addfeature", handleFeatureAdded);
 		});
 
