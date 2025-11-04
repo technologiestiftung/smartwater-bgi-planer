@@ -26,15 +26,14 @@ export default function ProjectGuard({
 
 		const project = getProject();
 
-		if (!project) {
+		if (project) {
+			if (project.id !== projectId) {
+				console.log(`Redirecting to current project: ${project.id}`);
+				router.replace(`/${project.id}`);
+			}
+		} else {
 			console.warn("No project found, redirecting to /");
 			router.replace("/");
-			return;
-		}
-
-		if (project.id !== projectId) {
-			console.log(`Redirecting to current project: ${project.id}`);
-			router.replace(`/${project.id}`);
 		}
 	}, [mounted, _hasHydrated, projectId, getProject, router]);
 
