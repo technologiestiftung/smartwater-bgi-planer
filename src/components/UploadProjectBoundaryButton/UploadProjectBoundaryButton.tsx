@@ -4,6 +4,7 @@
 import { Button } from "@/components/ui/button";
 import { ensureVectorLayer } from "@/lib/helper/layerHelpers";
 import { getLayerById } from "@/lib/helper/mapHelpers";
+import { convertShapefile } from "@/lib/serverActions/convertShapefile";
 import { useMapStore } from "@/store/map";
 import { LAYER_IDS } from "@/types/shared";
 import { UploadIcon } from "@phosphor-icons/react";
@@ -126,13 +127,7 @@ const UploadProjectBoundaryButton: FC = () => {
 					const formData = new FormData();
 					formData.append("file", file);
 
-					const res = await fetch("/api/convert", {
-						method: "POST",
-						body: formData,
-					});
-
-					if (!res.ok) throw new Error("Failed to convert shapefile");
-					const geojson = await res.json();
+					const geojson = await convertShapefile(formData);
 					await handleGeoJSONData(geojson);
 				} else if (
 					lowerName.endsWith(".geojson") ||
