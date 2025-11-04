@@ -64,7 +64,7 @@ const NoteCard: FC<NoteCardProps> = ({ layerId, features, onClose }) => {
 
 	return (
 		<div className="NoteCard-root bg-background w-[325px] shadow-lg">
-			<div className="flex h-8 w-full items-center justify-between border-b border-neutral-200 pl-2">
+			<div className="border-muted flex h-8 w-full items-center justify-between border-b pl-2">
 				<h3 className="text-sm font-semibold">Notiz einfügen</h3>
 				<div className="bg-secondary h-8 w-8 text-white">
 					<button
@@ -80,7 +80,7 @@ const NoteCard: FC<NoteCardProps> = ({ layerId, features, onClose }) => {
 					value={note}
 					onChange={(e) => setNote(e.target.value)}
 					placeholder="This building will be under Denkmalschutz next year ..."
-					className="mb-4 min-h-[120px] resize-none shadow-xs"
+					className="mb-4 min-h-[120px] resize-none"
 					rows={5}
 				/>
 				<div className="flex w-full gap-2">
