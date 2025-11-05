@@ -14,6 +14,7 @@ import { useLayerArea } from "@/hooks/use-layer-area";
 import { useLayerFeatures } from "@/hooks/use-layer-features";
 import { useMapReady } from "@/hooks/use-map-ready";
 import { useLayersStore } from "@/store/layers";
+import { useUiStore } from "@/store/ui";
 import { LAYER_IDS } from "@/types/shared";
 import {
 	ArrowLeftIcon,
@@ -22,7 +23,7 @@ import {
 	ListChecksIcon,
 	MapPinAreaIcon,
 } from "@phosphor-icons/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ConfirmButton from "../ConfirmButton/ConfirmButton";
 
 interface ProjectStarterModuleProps {
@@ -116,6 +117,8 @@ function ProjectBoundaryStep() {
 	const { hasFeatures } = useLayerFeatures(LAYER_IDS.PROJECT_BOUNDARY);
 	const { formattedArea } = useLayerArea(LAYER_IDS.PROJECT_BOUNDARY);
 	const { setStepValidation } = useVerticalStepper();
+	const { uploadError, uploadSuccess, clearUploadStatus } = useUiStore();
+	const [mapError, setMapError] = useState("");
 
 	useEffect(() => {
 		setStepValidation("projectBoundary", () => hasFeatures);
@@ -123,9 +126,13 @@ function ProjectBoundaryStep() {
 
 	const handleConfirm = (): boolean => {
 		if (!hasFeatures) {
-			alert("Bitte zeichnen Sie zuerst ein Projektgebiet ein.");
+			setMapError("Bitte zeichnen Sie zuerst ein Projektgebiet ein.");
 			return false;
 		}
+		if (uploadError) {
+			return false;
+		}
+		clearUploadStatus();
 		return true;
 	};
 
@@ -148,10 +155,26 @@ function ProjectBoundaryStep() {
 			<div className="mt-8">
 				<ConfirmButton
 					onConfirm={handleConfirm}
-					validate={() => hasFeatures}
+					validate={() => hasFeatures && !uploadError}
 					displayText={formattedArea}
 				/>
 			</div>
+
+			{uploadError && (
+				<div className="text-red mt-4 rounded-sm border border-dashed bg-red-50 p-2 text-sm">
+					{uploadError}
+				</div>
+			)}
+			{mapError && (
+				<div className="border-primary text-red mt-4 rounded-sm border border-dashed bg-red-50 p-2 text-sm">
+					{mapError}
+				</div>
+			)}
+			{uploadSuccess && (
+				<div className="border-primary bg-light mt-4 rounded-sm border border-dashed p-2 text-sm">
+					{uploadSuccess}
+				</div>
+			)}
 		</div>
 	);
 }
@@ -195,6 +218,14 @@ export default function ProjectStarterModule({
 	onOpenChange,
 	onComplete,
 }: ProjectStarterModuleProps) {
+	const { clearUploadStatus } = useUiStore();
+
+	useEffect(() => {
+		return () => {
+			clearUploadStatus();
+		};
+	}, [clearUploadStatus]);
+
 	return (
 		<SideMenu
 			open={open}
