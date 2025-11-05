@@ -27,6 +27,7 @@ import {
 	TrashIcon,
 } from "@phosphor-icons/react";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import AddWMSButton from "../AddWMSButton/AddWMSButton";
 import ConfirmButton from "../ConfirmButton/ConfirmButton";
 import UploadVectorLayersButton from "../UploadVectorLayersButton/UploadVectorLayersButton";
 
@@ -228,8 +229,10 @@ function AdditionalMapsStep() {
 	const map = useMapStore((state) => state.map);
 
 	const uploadedLayers = useMemo(() => {
-		return Array.from(layers.values()).filter((layer) =>
-			layer.id.startsWith("uploaded_"),
+		return Array.from(layers.values()).filter(
+			(layer) =>
+				layer.id.startsWith("uploaded_") ||
+				layer.id.startsWith("uploaded_wms_"),
 		);
 	}, [layers]);
 
@@ -263,8 +266,9 @@ function AdditionalMapsStep() {
 				Dateien oder als WMS verlinken.
 			</p>
 
-			<div className="flex">
+			<div className="flex w-full gap-2">
 				<UploadVectorLayersButton />
+				<AddWMSButton />
 			</div>
 
 			{uploadedLayers.length > 0 && (
