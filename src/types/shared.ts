@@ -24,3 +24,22 @@ export interface FileUploadZoneProps {
 	onFilesChange?: (files: File[]) => void;
 	className?: string;
 }
+
+export interface AddressFeature {
+	type: "Feature";
+	properties: {
+		name: string;
+		street?: string;
+		city?: string;
+		district?: string;
+		postcode?: string;
+		osm_type?: string;
+		osm_id?: number;
+		type?: string;
+	};
+	geometry: {
+		type: "Point";
+		coordinates: [number, number];
+	};
+	bbox?: [number, number, number, number];
+}
