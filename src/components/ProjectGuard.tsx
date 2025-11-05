@@ -28,7 +28,6 @@ export default function ProjectGuard({
 
 		if (project) {
 			if (project.id !== projectId) {
-				console.log(`Redirecting to current project: ${project.id}`);
 				router.replace(`/${project.id}`);
 			}
 		} else {

@@ -96,7 +96,6 @@ export default function ProjectModalWrapper({
 		if (confirmed) {
 			try {
 				await deleteProject();
-				console.log("Projekt und zugehörige Dateien gelöscht");
 				setIsOpen(false);
 				router.push("/");
 			} catch (error) {
