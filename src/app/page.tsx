@@ -12,10 +12,23 @@ import {
 	UploadIcon,
 } from "@phosphor-icons/react";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useProjectsStore } from "@/store/projects";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
 	const [showUploadAlert, setShowUploadAlert] = useState(false);
+	const router = useRouter();
+	const { getProject, hasHydrated } = useProjectsStore();
+
+	useEffect(() => {
+		if (!hasHydrated) return;
+
+		const project = getProject();
+		if (project) {
+			router.replace(`/${project.id}`);
+		}
+	}, [hasHydrated, getProject, router]);
 
 	return (
 		<div className="relativ bg-background grid h-full w-full md:grid-cols-2">

@@ -11,12 +11,13 @@ import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
 import { UploadIcon } from "@phosphor-icons/react";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import { UseCase } from "@/store/projects/types";
 
 export interface ProjectFormData {
 	name: string;
 	description: string;
-	useCase: string;
+	useCase: UseCase;
 }
 
 interface ProjectModalProps {
@@ -33,7 +34,7 @@ export default function ProjectModalContent({
 	const [formData, setFormData] = useState<ProjectFormData>({
 		name: initialData?.name || "",
 		description: initialData?.description || "",
-		useCase: initialData?.useCase || "individual",
+		useCase: initialData?.useCase || UseCase.Individual,
 	});
 
 	useEffect(() => {
@@ -42,7 +43,10 @@ export default function ProjectModalContent({
 		}
 	}, [formData, onFormChange]);
 
-	const handleFieldChange = (field: keyof ProjectFormData, value: string) => {
+	const handleFieldChange = (
+		field: keyof ProjectFormData,
+		value: string | UseCase,
+	) => {
 		setFormData((prev) => ({ ...prev, [field]: value }));
 	};
 	return (
@@ -83,22 +87,24 @@ export default function ProjectModalContent({
 						required
 						aria-label="Anwendungsfall"
 						value={formData.useCase}
-						onValueChange={(value) => handleFieldChange("useCase", value)}
+						onValueChange={(value) =>
+							handleFieldChange("useCase", value as UseCase)
+						}
 					>
 						<div className="flex items-center gap-3">
-							<RadioGroupItem value="individual" id="r1" />
+							<RadioGroupItem value={UseCase.Individual} id="r1" />
 							<p>individuelles Gebiet</p>
 						</div>
 						<div className="flex items-center gap-3">
-							<RadioGroupItem value="quarter" id="r2" />
+							<RadioGroupItem value={UseCase.District} id="r2" />
 							<p>Quartier</p>
 						</div>
 						<div className="flex items-center gap-3">
-							<RadioGroupItem value="property" id="r3" />
+							<RadioGroupItem value={UseCase.Property} id="r3" />
 							<p>Grundstück</p>
 						</div>
 						<div className="flex items-center gap-3">
-							<RadioGroupItem value="public-spaces" id="r4" />
+							<RadioGroupItem value={UseCase.PublicSpace} id="r4" />
 							<p>Straßen, Wege, Plätze / Grün- und Freiflächen</p>
 						</div>
 					</RadioGroup>

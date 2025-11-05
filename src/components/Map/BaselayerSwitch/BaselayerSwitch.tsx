@@ -48,6 +48,7 @@ const BaselayerSwitch: FC = () => {
 						src={previewSrc}
 						alt={layerName}
 						fill
+						sizes="48px"
 						loading={inactiveBaseLayer.visibility ? "eager" : "lazy"}
 						className="h-12 w-12 overflow-hidden rounded-sm object-cover"
 					/>
