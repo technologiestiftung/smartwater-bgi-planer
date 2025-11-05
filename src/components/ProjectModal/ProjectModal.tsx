@@ -36,14 +36,14 @@ export default function ProjectModalWrapper({
 		content: (
 			<div className="border-destructive bg-destructive/10 m-4 flex flex-col items-center gap-4 rounded-xs border-2 border-dashed p-4 text-center">
 				<p className="max-w-sm">
-					Wollen Sie das aktuelles Projekt <b>endgültig löschen?</b>
+					Wollen Sie das aktuelle Projekt <b>endgültig löschen?</b>
 				</p>
 				<p className="max-w-sm">
 					Sollten Sie später weiter arbeiten wollen, klicken Sie bitte “Download
 					und speichern”.
 				</p>
 				<p className="max-w-sm">
-					Klicken Sie auf “Löschen” um einen neuen Projekt anfangen zu können.
+					Klicken Sie auf “Löschen” um ein neues Projekt anfangen zu können.
 				</p>
 			</div>
 		),
