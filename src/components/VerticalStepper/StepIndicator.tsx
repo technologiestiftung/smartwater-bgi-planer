@@ -12,14 +12,20 @@ export function StepIndicator({ className }: StepIndicatorProps) {
 		useVerticalStepper();
 
 	return (
-		<div className={cn("flex flex-col items-center py-4", className)}>
+		<div className={cn("flex h-full flex-col items-center", className)}>
 			{steps.map((step, index) => {
 				const isActive = step.id === currentStepId;
 				const isPast = index < currentStepIndex;
 				const isLast = index === steps.length - 1;
 
 				return (
-					<div key={step.id} className="flex flex-col items-center">
+					<div
+						key={step.id}
+						className={cn(
+							"flex origin-top flex-col items-center transition-all duration-500",
+							isActive ? "grow" : "grow-0",
+						)}
+					>
 						<button
 							onClick={() => goToStep(step.id)}
 							className={cn(
@@ -49,9 +55,9 @@ export function StepIndicator({ className }: StepIndicatorProps) {
 						{!isLast && (
 							<div
 								className={cn(
-									"w-1 origin-top transition-all duration-500",
+									"w-1",
 									isPast ? "bg-light" : "bg-muted",
-									isActive ? "bg-primary h-54" : "h-3",
+									isActive ? "bg-primary grow" : "h-6",
 								)}
 							/>
 						)}

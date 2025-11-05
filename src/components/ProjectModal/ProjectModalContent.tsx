@@ -56,7 +56,7 @@ export default function ProjectModalContent({
 						id="name"
 						autoComplete="off"
 						required
-						placeholder="Evil Rabbit"
+						placeholder="Projektname eingeben..."
 						value={formData.name}
 						onChange={(e) => handleFieldChange("name", e.target.value)}
 					/>
