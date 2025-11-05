@@ -14,6 +14,7 @@ import { useLayerArea } from "@/hooks/use-layer-area";
 import { useLayerFeatures } from "@/hooks/use-layer-features";
 import { useMapReady } from "@/hooks/use-map-ready";
 import { useLayersStore } from "@/store/layers";
+import { useMapStore } from "@/store/map";
 import { useUiStore } from "@/store/ui";
 import { LAYER_IDS } from "@/types/shared";
 import {
@@ -22,9 +23,12 @@ import {
 	BlueprintIcon,
 	ListChecksIcon,
 	MapPinAreaIcon,
+	ShovelIcon,
+	TrashIcon,
 } from "@phosphor-icons/react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import ConfirmButton from "../ConfirmButton/ConfirmButton";
+import UploadVectorLayersButton from "../UploadVectorLayersButton/UploadVectorLayersButton";
 
 interface ProjectStarterModuleProps {
 	open: boolean;
@@ -42,8 +46,14 @@ const steps: StepConfig[] = [
 	},
 	{
 		id: "newDevelopment",
-		icon: <BlueprintIcon />,
+		icon: <ShovelIcon />,
 		title: "Neubauten und Versiegelte Flächen anlegen",
+		description: "xxx",
+	},
+	{
+		id: "additionalMaps",
+		icon: <BlueprintIcon />,
+		title: "Zusatzkarten",
 		description: "xxx",
 	},
 ];
@@ -179,11 +189,10 @@ function ProjectBoundaryStep() {
 	);
 }
 
-function NewDevelopmentStep({ onComplete }: { onComplete?: () => void }) {
+function NewDevelopmentStep() {
 	const { formattedArea } = useLayerArea("project_new_development");
 
 	const handleConfirm = (): boolean => {
-		onComplete?.();
 		return true;
 	};
 
@@ -209,6 +218,83 @@ function NewDevelopmentStep({ onComplete }: { onComplete?: () => void }) {
 				buttonText="Bestätigen"
 				displayText={formattedArea}
 			/>
+		</div>
+	);
+}
+
+function AdditionalMapsStep() {
+	const { uploadError, clearUploadStatus } = useUiStore();
+	const { layers, removeLayer } = useLayersStore();
+	const map = useMapStore((state) => state.map);
+
+	const uploadedLayers = useMemo(() => {
+		return Array.from(layers.values()).filter((layer) =>
+			layer.id.startsWith("uploaded_"),
+		);
+	}, [layers]);
+
+	const deleteLayer = useCallback(
+		(layerId: string) => {
+			if (!map) return;
+
+			const layers = map.getLayers().getArray();
+			const layerToRemove = layers.find((layer) => layer.get("id") === layerId);
+
+			if (layerToRemove) {
+				map.removeLayer(layerToRemove);
+			}
+
+			removeLayer(layerId);
+		},
+		[map, removeLayer],
+	);
+
+	useEffect(() => {
+		clearUploadStatus();
+	}, [clearUploadStatus]);
+
+	return (
+		<div className="space-y-4">
+			<h3 className="text-primary">Zusatzkarten</h3>
+			<h4>Welche andere Information haben Sie?</h4>
+			<p className="text-muted-foreground">
+				Falls Sie weitere Karten über das Untersuchungsgebiet zur Verfügung
+				haben, die nicht im GeoPortal sind, können Sie diese gerne hier als
+				Dateien oder als WMS verlinken.
+			</p>
+
+			<div className="flex">
+				<UploadVectorLayersButton />
+			</div>
+
+			{uploadedLayers.length > 0 && (
+				<div className="space-y-2">
+					<div className="flex flex-col gap-0">
+						{uploadedLayers.map((layer) => (
+							<div key={layer.id} className="flex items-center justify-between">
+								<div className="flex flex-col">
+									<span className="text-sm font-medium">
+										{layer.config.name}
+									</span>
+								</div>
+								<button
+									onClick={() => deleteLayer(layer.id)}
+									className="text-primary flex h-8 w-8 cursor-pointer items-center justify-center"
+									title="Layer löschen"
+								>
+									<TrashIcon size={16} />
+								</button>
+							</div>
+						))}
+					</div>
+				</div>
+			)}
+
+			{uploadError && (
+				<div className="text-red mt-4 rounded-sm border border-dashed bg-red-50 p-2 text-sm">
+					{uploadError}
+				</div>
+			)}
 		</div>
 	);
 }
@@ -245,7 +331,11 @@ export default function ProjectStarterModule({
 							</StepContent>
 
 							<StepContent stepId="newDevelopment">
-								<NewDevelopmentStep onComplete={onComplete} />
+								<NewDevelopmentStep />
+							</StepContent>
+
+							<StepContent stepId="additionalMaps">
+								<AdditionalMapsStep />
 							</StepContent>
 						</StepContainer>
 					</div>
