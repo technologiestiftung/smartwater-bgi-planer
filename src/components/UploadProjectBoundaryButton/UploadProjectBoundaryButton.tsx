@@ -6,6 +6,8 @@ import { ensureVectorLayer } from "@/lib/helper/layerHelpers";
 import { getLayerById } from "@/lib/helper/mapHelpers";
 import { convertShapefile } from "@/lib/serverActions/convertShapefile";
 import { useMapStore } from "@/store/map";
+import { useProjectsStore } from "@/store/projects";
+import { useFilesStore } from "@/store/files";
 import { LAYER_IDS } from "@/types/shared";
 import { UploadIcon } from "@phosphor-icons/react";
 import { Feature } from "ol";
@@ -15,6 +17,8 @@ import { FC, useCallback, useEffect, useRef, useState } from "react";
 
 const UploadProjectBoundaryButton: FC = () => {
 	const map = useMapStore((state) => state.map);
+	const getProject = useProjectsStore((state) => state.getProject);
+	const addFile = useFilesStore((state) => state.addFile);
 	const [uploading, setUploading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 	const fileInputRef = useRef<HTMLInputElement>(null);
@@ -142,6 +146,12 @@ const UploadProjectBoundaryButton: FC = () => {
 					);
 				}
 
+				// Store the file in the files store
+				const project = getProject();
+				if (project) {
+					await addFile(project.id, LAYER_IDS.PROJECT_BOUNDARY, file);
+				}
+
 				if (fileInputRef.current) fileInputRef.current.value = "";
 			} catch (err) {
 				setError(err instanceof Error ? err.message : "Failed to upload file");
@@ -149,7 +159,7 @@ const UploadProjectBoundaryButton: FC = () => {
 				setUploading(false);
 			}
 		},
-		[handleGeoJSONData],
+		[handleGeoJSONData, getProject, addFile],
 	);
 
 	return (

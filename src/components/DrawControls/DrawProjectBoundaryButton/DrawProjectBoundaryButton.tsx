@@ -121,7 +121,7 @@ const DrawProjectBoundaryButton: FC = () => {
 			setMode("modifying");
 		};
 
-		drawRef.current.on("drawend", (event) => {
+		drawRef.current.on("drawend", () => {
 			source.on("addfeature", handleFeatureAdded);
 		});
 

@@ -59,6 +59,8 @@ export function CarouselWithIndicators({
 									src={slide.src}
 									alt={slide.alt}
 									fill
+									sizes="30vw"
+									priority={index === 0}
 									className="object-cover"
 								/>
 							</CarouselItem>
