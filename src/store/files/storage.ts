@@ -10,6 +10,12 @@ const DB_VERSION = 1;
  */
 const openDB = (): Promise<IDBDatabase> => {
 	return new Promise((resolve, reject) => {
+		// Check if we're in a browser environment
+		if (typeof window === "undefined" || typeof indexedDB === "undefined") {
+			reject(new Error("IndexedDB not available"));
+			return;
+		}
+
 		const request = indexedDB.open(DB_NAME, DB_VERSION);
 
 		request.onerror = () => reject(request.error);
@@ -153,6 +159,13 @@ export const getProjectFileKeys = async (
 export const filesStorage = {
 	getItem: async (name: string): Promise<StorageValue<FilesStore> | null> => {
 		try {
+			if (
+				typeof window === "undefined" ||
+				typeof localStorage === "undefined"
+			) {
+				return null;
+			}
+
 			const localData = localStorage.getItem(name);
 			if (!localData) return null;
 
@@ -197,6 +210,13 @@ export const filesStorage = {
 		value: StorageValue<FilesStore>,
 	): Promise<void> => {
 		try {
+			if (
+				typeof window === "undefined" ||
+				typeof localStorage === "undefined"
+			) {
+				return;
+			}
+
 			// Store file blobs in IndexedDB
 			const files = value.state.files;
 			if (files instanceof Map) {
@@ -243,6 +263,13 @@ export const filesStorage = {
 
 	removeItem: async (name: string): Promise<void> => {
 		try {
+			if (
+				typeof window === "undefined" ||
+				typeof localStorage === "undefined"
+			) {
+				return;
+			}
+
 			localStorage.removeItem(name);
 
 			// Clear all files from IndexedDB
