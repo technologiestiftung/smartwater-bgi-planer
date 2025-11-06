@@ -143,13 +143,13 @@ const UploadVectorLayersButton: FC = () => {
 			if (!file) return;
 
 			setUploading(true);
+			setUploadError(null);
+			setUploadSuccess(null);
 			clearUploadStatus();
 
 			try {
 				await processFile(file);
-				setUploadSuccess(
-					`${file.name} erfolgreich als neue Ebene hinzugefügt.`,
-				);
+				setUploadSuccess(`${file.name} erfolgreich importiert.`);
 				if (fileInputRef.current) fileInputRef.current.value = "";
 			} catch (err) {
 				console.error(err instanceof Error && err.message);

@@ -224,7 +224,7 @@ function NewDevelopmentStep() {
 }
 
 function AdditionalMapsStep() {
-	const { uploadError, clearUploadStatus } = useUiStore();
+	const { uploadError, uploadSuccess, clearUploadStatus } = useUiStore();
 	const { layers, removeLayer } = useLayersStore();
 	const map = useMapStore((state) => state.map);
 
@@ -298,6 +298,11 @@ function AdditionalMapsStep() {
 				</div>
 			)}
 
+			{uploadSuccess && (
+				<div className="border-primary bg-light mt-4 rounded-sm border border-dashed p-2 text-sm">
+					{uploadSuccess}
+				</div>
+			)}
 			{uploadError && (
 				<div className="text-red mt-4 rounded-sm border border-dashed bg-red-50 p-2 text-sm">
 					{uploadError}
