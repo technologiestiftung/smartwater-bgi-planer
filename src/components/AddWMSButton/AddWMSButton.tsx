@@ -1,5 +1,6 @@
 "use client";
 
+import { ModalHeader } from "@/components/Modal";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -18,7 +19,6 @@ import { LinkIcon } from "@phosphor-icons/react";
 import TileLayer from "ol/layer/Tile";
 import TileWMS from "ol/source/TileWMS";
 import { FC, useCallback, useEffect, useState } from "react";
-import { ModalHeader } from "../Modal";
 
 interface WMSLayer {
 	name: string;

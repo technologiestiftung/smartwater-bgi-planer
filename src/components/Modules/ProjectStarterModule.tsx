@@ -1,7 +1,10 @@
 "use client";
 
+import AddWMSButton from "@/components/AddWMSButton/AddWMSButton";
+import ConfirmButton from "@/components/ConfirmButton/ConfirmButton";
 import { SideMenu } from "@/components/SideMenu";
 import { Button } from "@/components/ui/button";
+import UploadVectorLayersButton from "@/components/UploadVectorLayersButton/UploadVectorLayersButton";
 import {
 	StepConfig,
 	StepContainer,
@@ -27,9 +30,6 @@ import {
 	TrashIcon,
 } from "@phosphor-icons/react";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import AddWMSButton from "../AddWMSButton/AddWMSButton";
-import ConfirmButton from "../ConfirmButton/ConfirmButton";
-import UploadVectorLayersButton from "../UploadVectorLayersButton/UploadVectorLayersButton";
 
 interface ProjectStarterModuleProps {
 	open: boolean;
