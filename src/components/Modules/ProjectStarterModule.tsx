@@ -248,8 +248,9 @@ function AdditionalMapsStep() {
 			}
 
 			removeLayer(layerId);
+			clearUploadStatus();
 		},
-		[map, removeLayer],
+		[map, removeLayer, clearUploadStatus],
 	);
 
 	useEffect(() => {
@@ -266,15 +267,14 @@ function AdditionalMapsStep() {
 				Dateien oder als WMS verlinken.
 			</p>
 
-			<div className="flex w-full gap-2">
+			<div className="flex w-full gap-2 py-4">
 				<UploadVectorLayersButton />
 				<AddWMSButton />
 			</div>
 
 			{uploadedLayers.length > 0 && (
 				<div className="space-y-2">
-					<h4 className="mt-4 text-sm font-medium">Hinzugefügte Layer</h4>
-					<div className="max-h-48 space-y-1 overflow-y-auto">
+					<div className="max-h-56 space-y-1 overflow-y-auto">
 						{uploadedLayers.map((layer) => (
 							<div
 								key={layer.id}
