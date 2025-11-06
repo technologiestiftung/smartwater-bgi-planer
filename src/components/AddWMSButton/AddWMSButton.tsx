@@ -4,12 +4,12 @@ import { Button } from "@/components/ui/button";
 import {
 	Dialog,
 	DialogContent,
-	DialogDescription,
 	DialogFooter,
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
+import { validateWMSUrl } from "@/lib/helper/layerHelpers";
 import { useLayersStore } from "@/store/layers";
 import { ManagedLayer } from "@/store/layers/types";
 import { useMapStore } from "@/store/map";
@@ -18,6 +18,7 @@ import { LinkIcon } from "@phosphor-icons/react";
 import TileLayer from "ol/layer/Tile";
 import TileWMS from "ol/source/TileWMS";
 import { FC, useCallback, useEffect, useState } from "react";
+import { ModalHeader } from "../Modal";
 
 interface WMSLayer {
 	name: string;
@@ -26,8 +27,8 @@ interface WMSLayer {
 }
 
 const WMS_VERSION = "1.3.0";
-const FETCH_DEBOUNCE_MS = 500;
-const MIN_URL_LENGTH = 10;
+const FETCH_DEBOUNCE_MS = 1000;
+const VALIDATION_DEBOUNCE_MS = 500;
 
 const generateLayerId = () =>
 	`uploaded_wms_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
@@ -130,15 +131,24 @@ const AddWMSButton: FC = () => {
 	const [selectedLayers, setSelectedLayers] = useState<Set<string>>(new Set());
 	const [isLoading, setIsLoading] = useState(false);
 	const [isFetchingLayers, setIsFetchingLayers] = useState(false);
+	const [validationError, setValidationError] = useState<string>("");
 
 	const fetchWMSLayers = useCallback(async () => {
 		if (!wmsUrl) return;
 
 		setIsFetchingLayers(true);
 		setAvailableLayers([]);
+		setValidationError("");
 		clearUploadStatus();
 
 		try {
+			const validation = await validateWMSUrl(wmsUrl);
+
+			if (!validation.isValid) {
+				setValidationError(validation.error || "Ungültiger WMS Service");
+				return;
+			}
+
 			const url = buildCapabilitiesUrl(wmsUrl);
 			const response = await fetch(url.toString());
 
@@ -150,7 +160,7 @@ const AddWMSButton: FC = () => {
 			const layers = parseCapabilities(xmlText);
 
 			if (layers.length === 0) {
-				setUploadError(
+				setValidationError(
 					"Keine Layer im WMS Service gefunden oder Service nicht erreichbar.",
 				);
 				return;
@@ -159,20 +169,13 @@ const AddWMSButton: FC = () => {
 			setAvailableLayers(layers);
 		} catch (error) {
 			console.error("Error fetching WMS capabilities:", error);
-
-			if (error instanceof TypeError && error.message.includes("URL")) {
-				setUploadError(
-					"Ungültige URL. Bitte geben Sie eine vollständige URL ein.",
-				);
-			} else {
-				setUploadError(
-					"WMS Service nicht erreichbar. Überprüfen Sie die URL und CORS-Einstellungen.",
-				);
-			}
+			setValidationError(
+				"Fehler beim Laden der WMS Layer. Versuchen Sie es erneut.",
+			);
 		} finally {
 			setIsFetchingLayers(false);
 		}
-	}, [wmsUrl, clearUploadStatus, setUploadError]);
+	}, [wmsUrl, clearUploadStatus]);
 
 	const addWMSLayerToMap = useCallback(
 		(url: string, layerName: string, layerTitle: string) => {
@@ -188,11 +191,6 @@ const AddWMSButton: FC = () => {
 	);
 
 	const handleAddLayers = useCallback(async () => {
-		if (selectedLayers.size === 0) {
-			setUploadError("Bitte wählen Sie mindestens einen Layer aus.");
-			return;
-		}
-
 		setIsLoading(true);
 		clearUploadStatus();
 
@@ -209,7 +207,6 @@ const AddWMSButton: FC = () => {
 				`${layersToAdd.length} WMS Layer erfolgreich hinzugefügt.`,
 			);
 
-			// Reset form
 			setWmsUrl("");
 			setAvailableLayers([]);
 			setSelectedLayers(new Set());
@@ -248,20 +245,35 @@ const AddWMSButton: FC = () => {
 		setWmsUrl("");
 		setAvailableLayers([]);
 		setSelectedLayers(new Set());
+		setValidationError("");
 		setIsOpen(false);
 		clearUploadStatus();
 	}, [clearUploadStatus]);
 
 	useEffect(() => {
-		if (wmsUrl.length <= MIN_URL_LENGTH) return;
-
-		try {
-			new URL(wmsUrl);
-			const timeoutId = setTimeout(fetchWMSLayers, FETCH_DEBOUNCE_MS);
-			return () => clearTimeout(timeoutId);
-		} catch {
-			// Invalid URL, don't fetch
+		if (!wmsUrl) {
+			setValidationError("");
+			setAvailableLayers([]);
+			return;
 		}
+
+		const validationTimeoutId = setTimeout(() => {
+			try {
+				new URL(wmsUrl);
+				setValidationError("");
+				const fetchTimeoutId = setTimeout(
+					fetchWMSLayers,
+					FETCH_DEBOUNCE_MS - VALIDATION_DEBOUNCE_MS,
+				);
+				return () => clearTimeout(fetchTimeoutId);
+			} catch {
+				setValidationError(
+					"Ungültige URL. Bitte geben Sie eine gültige URL ein.",
+				);
+			}
+		}, VALIDATION_DEBOUNCE_MS);
+
+		return () => clearTimeout(validationTimeoutId);
 	}, [wmsUrl, fetchWMSLayers]);
 
 	return (
@@ -272,16 +284,14 @@ const AddWMSButton: FC = () => {
 					WMS einbinden
 				</Button>
 			</DialogTrigger>
-			<DialogContent className="max-w-2xl">
+			<DialogContent className="max-w-2xl p-0" showCloseButton={false}>
 				<DialogHeader>
-					<DialogTitle>WMS einbinden</DialogTitle>
-					<DialogDescription>
-						Geben Sie eine WMS URL ein um verfügbare Layer zu laden und
-						auszuwählen.
-					</DialogDescription>
+					<DialogTitle>
+						<ModalHeader title="WMS einbinden" />
+					</DialogTitle>
 				</DialogHeader>
 
-				<div className="space-y-4">
+				<div className="mt-4 p-4">
 					<div>
 						<label htmlFor="wms-url" className="mb-2 block text-sm font-medium">
 							WMS URL
@@ -294,6 +304,11 @@ const AddWMSButton: FC = () => {
 							placeholder="https://gdi.berlin.de/services/wms/ua_wasserhaushalt_2022"
 							className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
 						/>
+						{validationError && (
+							<div className="text-red mt-2 rounded-sm border border-dashed bg-red-50 p-2 text-sm">
+								{validationError}
+							</div>
+						)}
 					</div>
 
 					{isFetchingLayers && (
@@ -302,31 +317,33 @@ const AddWMSButton: FC = () => {
 						</div>
 					)}
 
-					{availableLayers.length > 0 && (
+					{availableLayers.length > 0 && !validationError && (
 						<div>
-							<h4 className="mb-3 font-medium">Layerauswahl</h4>
-							<div className="max-h-60 space-y-2 overflow-y-auto rounded-md border p-3">
-								{availableLayers.map((layer, id) => (
-									<label
-										key={layer.name + id}
-										className="flex cursor-pointer items-start gap-3 rounded p-2 hover:bg-gray-50"
-									>
-										<input
-											type="checkbox"
-											checked={selectedLayers.has(layer.name)}
-											onChange={() => handleLayerToggle(layer.name)}
-											className="mt-1 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-										/>
-										<div className="min-w-0 flex-1">
-											<div className="text-sm font-medium">{layer.title}</div>
-											{layer.abstract && (
-												<div className="mt-1 text-xs text-gray-500">
-													{layer.abstract}
-												</div>
-											)}
-										</div>
-									</label>
-								))}
+							<h4 className="my-3 font-medium">Layerauswahl</h4>
+							<div className="max-h-60 overflow-hidden rounded-sm border">
+								<div className="max-h-60 space-y-2 overflow-y-auto p-3">
+									{availableLayers.map((layer, id) => (
+										<label
+											key={layer.name + id}
+											className="flex cursor-pointer items-start gap-3 rounded-sm p-2 hover:bg-gray-50"
+										>
+											<input
+												type="checkbox"
+												checked={selectedLayers.has(layer.name)}
+												onChange={() => handleLayerToggle(layer.name)}
+												className="accent-primary focus:ring-primary mt-1 h-4 w-4 rounded border-gray-300"
+											/>
+											<div className="min-w-0 flex-1">
+												<div className="text-sm font-medium">{layer.title}</div>
+												{layer.abstract && (
+													<div className="mt-1 text-xs text-gray-500">
+														{layer.abstract}
+													</div>
+												)}
+											</div>
+										</label>
+									))}
+								</div>
 							</div>
 							{selectedLayers.size > 0 && (
 								<p className="mt-2 text-sm text-gray-600">
@@ -337,16 +354,18 @@ const AddWMSButton: FC = () => {
 					)}
 				</div>
 
-				<DialogFooter className="mt-4">
+				<DialogFooter className="mt-4 p-4">
 					<Button variant="outline" onClick={handleCancel} disabled={isLoading}>
 						Abbrechen
 					</Button>
 					<Button
 						variant="default"
 						onClick={handleAddLayers}
-						disabled={isLoading || selectedLayers.size === 0}
+						disabled={
+							isLoading || selectedLayers.size === 0 || !!validationError
+						}
 					>
-						{isLoading ? "Hinzufügen..." : "Layers hinzufügen"}
+						{isLoading ? "Hinzufügen..." : "Layer hinzufügen"}
 					</Button>
 				</DialogFooter>
 			</DialogContent>

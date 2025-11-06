@@ -273,9 +273,13 @@ function AdditionalMapsStep() {
 
 			{uploadedLayers.length > 0 && (
 				<div className="space-y-2">
-					<div className="flex flex-col gap-0">
+					<h4 className="mt-4 text-sm font-medium">Hinzugefügte Layer</h4>
+					<div className="max-h-48 space-y-1 overflow-y-auto">
 						{uploadedLayers.map((layer) => (
-							<div key={layer.id} className="flex items-center justify-between">
+							<div
+								key={layer.id}
+								className="flex items-center justify-between rounded-sm"
+							>
 								<div className="flex flex-col">
 									<span className="text-sm font-medium">
 										{layer.config.name}
@@ -283,7 +287,7 @@ function AdditionalMapsStep() {
 								</div>
 								<button
 									onClick={() => deleteLayer(layer.id)}
-									className="text-primary flex h-8 w-8 cursor-pointer items-center justify-center"
+									className="text-primary flex h-8 w-8 cursor-pointer items-center justify-center rounded-sm"
 									title="Layer löschen"
 								>
 									<TrashIcon size={16} />

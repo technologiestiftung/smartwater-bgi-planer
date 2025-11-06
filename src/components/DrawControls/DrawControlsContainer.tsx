@@ -26,7 +26,7 @@ export default function DrawControlsContainer({}: DrawControlsContainerProps) {
 	if (isProjectStarter) {
 		if (currentStepId === "newDevelopment") {
 			controls = <DrawButton />;
-		} else {
+		} else if (currentStepId === "projectBoundary") {
 			controls = (
 				<>
 					<DrawProjectBoundaryButton />

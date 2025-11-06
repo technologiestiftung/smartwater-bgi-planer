@@ -6,6 +6,32 @@ import { getLayerById } from "./mapHelpers";
 
 export type LayerTreeElement = LayerElementBase | LayerFolder;
 
+export interface WMSValidationResult {
+	isValid: boolean;
+	error?: string;
+	hasLayers?: boolean;
+}
+
+export const validateWMSUrl = (url: string): WMSValidationResult => {
+	try {
+		const parsedUrl = new URL(url);
+
+		const urlString = parsedUrl.toString().toLowerCase();
+		const hasWmsIndicator =
+			urlString.includes("wms") ||
+			urlString.includes("service=wms") ||
+			parsedUrl.searchParams.get("service")?.toLowerCase() === "wms";
+
+		if (!hasWmsIndicator) {
+			return { isValid: false, error: "URL scheint kein WMS Service zu sein" };
+		}
+
+		return { isValid: true };
+	} catch {
+		return { isValid: false, error: "Ungültige URL" };
+	}
+};
+
 export function getLayerIdsInFolder(
 	folderElements: LayerTreeElement[],
 	folderName: string,
