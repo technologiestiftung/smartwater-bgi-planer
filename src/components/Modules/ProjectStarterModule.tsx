@@ -76,6 +76,8 @@ function StepperFooter({
 		totalSteps,
 	} = useVerticalStepper();
 	const applyConfigLayers = useLayersStore((state) => state.applyConfigLayers);
+	const { clearUploadStatus } = useUiStore();
+
 	const isMapReady = useMapReady();
 
 	useEffect(() => {
@@ -92,6 +94,7 @@ function StepperFooter({
 
 	const handleSkip = () => {
 		if (isLastStep) {
+			clearUploadStatus();
 			onComplete?.();
 		} else {
 			nextStep();
