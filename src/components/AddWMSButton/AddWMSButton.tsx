@@ -69,11 +69,24 @@ const parseCapabilities = (xmlText: string): WMSLayer[] => {
 };
 
 const buildCapabilitiesUrl = (baseUrl: string): URL => {
-	const url = new URL(baseUrl);
+	const url = new URL(baseUrl.trim());
+	url.searchParams.delete("service");
+	url.searchParams.delete("SERVICE");
+	url.searchParams.delete("request");
+	url.searchParams.delete("REQUEST");
+	url.searchParams.delete("version");
+	url.searchParams.delete("VERSION");
+
 	url.searchParams.set("service", "WMS");
 	url.searchParams.set("request", "GetCapabilities");
 	url.searchParams.set("version", WMS_VERSION);
 	return url;
+};
+
+const getBaseUrl = (urlString: string): string => {
+	const url = new URL(urlString.trim());
+	url.search = "";
+	return url.toString();
 };
 
 const createWMSLayer = (
@@ -199,8 +212,10 @@ const AddWMSButton: FC = () => {
 				selectedLayers.has(layer.name),
 			);
 
+			const baseUrl = getBaseUrl(wmsUrl);
+
 			layersToAdd.forEach((layer) => {
-				addWMSLayerToMap(wmsUrl, layer.name, layer.title);
+				addWMSLayerToMap(baseUrl, layer.name, layer.title);
 			});
 
 			setUploadSuccess(
@@ -300,7 +315,7 @@ const AddWMSButton: FC = () => {
 							id="wms-url"
 							type="url"
 							value={wmsUrl}
-							onChange={(e) => setWmsUrl(e.target.value)}
+							onChange={(e) => setWmsUrl(e.target.value.trim())}
 							placeholder="https://gdi.berlin.de/services/wms/ua_wasserhaushalt_2022"
 							className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
 						/>
