@@ -1,7 +1,8 @@
 "use client";
 
 import { useLayersStore } from "@/store/layers";
-import { PlusIcon } from "@phosphor-icons/react";
+import { StackIcon } from "@phosphor-icons/react";
+import Image from "next/image";
 import { FC, useEffect, useMemo, useRef, useState } from "react";
 
 interface AdditionalLayerTreeProps {}
@@ -44,11 +45,6 @@ const AdditionalLayerTree: FC<AdditionalLayerTreeProps> = ({}) => {
 		setLayerVisibility(layerId, !currentVisibility);
 	};
 
-	const truncateLayerName = (name: string, maxLength: number = 8) => {
-		if (name.length <= maxLength) return name;
-		return name.substring(0, maxLength) + "...";
-	};
-
 	const handleMoreButtonClick = () => {
 		if (viewState === "collapsed") {
 			setViewState("open");
@@ -63,22 +59,26 @@ const AdditionalLayerTree: FC<AdditionalLayerTreeProps> = ({}) => {
 		if (viewState === "collapsed") {
 			return {
 				cols: 1,
-				visibleLayers: [],
+				rows: 1,
+				visibleLayers: uploadedLayers.slice(0, 1),
 				showMoreButton: layerCount > 1,
 			};
 		}
 
 		if (viewState === "open") {
+			const maxVisible = 8;
 			return {
 				cols: 3,
-				visibleLayers: uploadedLayers.slice(0, 8),
-				showMoreButton: layerCount > 9,
+				rows: 3,
+				visibleLayers: uploadedLayers.slice(0, maxVisible),
+				showMoreButton: layerCount > maxVisible,
 			};
 		}
-		const cols = Math.ceil(layerCount / 3);
 
+		const rows = Math.ceil(layerCount / 3);
 		return {
-			cols,
+			cols: 3,
+			rows,
 			visibleLayers: uploadedLayers,
 			showMoreButton: false,
 		};
@@ -89,72 +89,56 @@ const AdditionalLayerTree: FC<AdditionalLayerTreeProps> = ({}) => {
 	const { cols, visibleLayers, showMoreButton } = getGridConfig();
 
 	return (
-		<div
-			ref={containerRef}
-			className="AdditionalLayerTree-root bg-background rounded-sm border p-2"
-		>
-			{viewState === "collapsed" ? (
-				showMoreButton && (
-					<div
-						className="relative h-16 w-16 cursor-pointer overflow-hidden rounded-sm border-2 border-gray-400 bg-gray-50 transition-all hover:border-gray-600 hover:bg-gray-100"
+		<div ref={containerRef} className="bg-background rounded-sm p-1 shadow-sm">
+			<div
+				className="grid gap-2"
+				style={{
+					gridTemplateColumns: `repeat(${cols}, 48px)`,
+				}}
+			>
+				{visibleLayers.map((layer) => {
+					const displayName =
+						layer.config?.name || layer.id.replace(/^uploaded_(?:wms_)?/, "");
+
+					return (
+						<button
+							key={layer.id}
+							className={`relative h-12 w-12 overflow-hidden rounded-sm transition-all ${
+								layer.visibility && "border-accent border"
+							}`}
+							onClick={() => handleLayerToggle(layer.id, layer.visibility)}
+							title={displayName}
+						>
+							<div className="flex h-full items-center justify-center">
+								<Image
+									src="/preview-img/basemap-grau.png"
+									alt={displayName}
+									width={48}
+									height={48}
+									className="h-full w-full object-cover"
+								/>
+							</div>
+							<div className="absolute inset-x-0 bottom-0 truncate bg-black/70 px-1 py-0.5 text-[10px] text-white">
+								{displayName}
+							</div>
+						</button>
+					);
+				})}
+
+				{showMoreButton && (
+					<button
+						className="relative h-12 w-12 rounded border-2 border-dashed border-gray-300 bg-gray-50 transition-all hover:border-gray-400 hover:bg-gray-100"
 						onClick={handleMoreButtonClick}
 					>
-						<div className="flex h-full w-full items-center justify-center">
-							<PlusIcon className="h-4 w-4 text-gray-400" />
+						<div className="flex h-full flex-col items-center justify-center">
+							<StackIcon className="h-5 w-5 text-gray-400" weight="duotone" />
+							<span className="mt-0.5 text-xs text-gray-500">
+								+{uploadedLayers.length - visibleLayers.length}
+							</span>
 						</div>
-						<div className="bg-opacity-70 absolute right-0 bottom-0 left-0 bg-black p-1 text-center text-xs text-white">
-							{uploadedLayers.length} layers
-						</div>
-					</div>
-				)
-			) : (
-				<div
-					className="grid gap-2 transition-all duration-300"
-					style={{
-						gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
-						maxHeight: viewState === "extended" ? "12rem" : "auto",
-					}}
-				>
-					{visibleLayers.map((layer) => {
-						const displayName =
-							layer.config?.name || layer.id.replace(/^uploaded_(?:wms_)?/, "");
-						return (
-							<div
-								key={layer.id}
-								className={`relative h-16 w-16 cursor-pointer overflow-hidden rounded-sm border-2 transition-all ${
-									layer.visibility
-										? "border-blue-500 bg-blue-50"
-										: "border-gray-300 bg-gray-100"
-								}`}
-								onClick={() => handleLayerToggle(layer.id, layer.visibility)}
-							>
-								<div className="flex h-full w-full items-center justify-center bg-linear-to-br from-gray-200 to-gray-300">
-									<div
-										className={`h-8 w-8 rounded ${layer.visibility ? "bg-blue-400" : "bg-gray-400"}`}
-									/>
-								</div>
-								<div className="bg-opacity-70 absolute right-0 bottom-0 left-0 bg-black p-1 text-center text-xs text-white">
-									{truncateLayerName(displayName)}
-								</div>
-							</div>
-						);
-					})}
-
-					{showMoreButton && (
-						<div
-							className="relative h-16 w-16 cursor-pointer overflow-hidden rounded-sm border-2 border-dashed border-gray-400 bg-gray-50 transition-all hover:border-gray-600 hover:bg-gray-100"
-							onClick={handleMoreButtonClick}
-						>
-							<div className="flex h-full w-full items-center justify-center">
-								<div className="text-2xl font-bold text-gray-400">+</div>
-							</div>
-							<div className="bg-opacity-70 absolute right-0 bottom-0 left-0 bg-black p-1 text-center text-xs text-white">
-								{uploadedLayers.length - visibleLayers.length} more
-							</div>
-						</div>
-					)}
-				</div>
-			)}
+					</button>
+				)}
+			</div>
 		</div>
 	);
 };
