@@ -24,6 +24,7 @@ interface WMSLayer {
 	name: string;
 	title: string;
 	abstract?: string;
+	previewUrl?: string;
 }
 
 const WMS_VERSION = "1.3.0";
@@ -33,7 +34,22 @@ const VALIDATION_DEBOUNCE_MS = 500;
 const generateLayerId = () =>
 	`uploaded_wms_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
 
-const parseCapabilities = (xmlText: string): WMSLayer[] => {
+const generatePreviewUrl = (baseUrl: string, layerName: string): string => {
+	const url = new URL(baseUrl);
+	url.searchParams.set("SERVICE", "WMS");
+	url.searchParams.set("VERSION", WMS_VERSION);
+	url.searchParams.set("REQUEST", "GetMap");
+	url.searchParams.set("LAYERS", layerName);
+	url.searchParams.set("STYLES", "");
+	url.searchParams.set("CRS", "EPSG:25833");
+	url.searchParams.set("BBOX", "388000,5818000,392000,5821000");
+	url.searchParams.set("WIDTH", "600");
+	url.searchParams.set("HEIGHT", "600");
+	url.searchParams.set("FORMAT", "image/png");
+	return url.toString();
+};
+
+const parseCapabilities = (xmlText: string, baseUrl: string): WMSLayer[] => {
 	try {
 		const parser = new DOMParser();
 		const xmlDoc = parser.parseFromString(xmlText, "text/xml");
@@ -57,6 +73,7 @@ const parseCapabilities = (xmlText: string): WMSLayer[] => {
 					name: nameEl.textContent,
 					title: titleEl.textContent,
 					abstract: abstractEl?.textContent,
+					previewUrl: generatePreviewUrl(baseUrl, nameEl.textContent),
 				});
 			}
 		});
@@ -94,6 +111,7 @@ const createWMSLayer = (
 	layerName: string,
 	layerTitle: string,
 	layerId: string,
+	previewUrl?: string,
 ) => {
 	const wmsSource = new TileWMS({
 		url,
@@ -108,6 +126,9 @@ const createWMSLayer = (
 	const wmsLayer = new TileLayer({ source: wmsSource });
 	wmsLayer.set("name", layerTitle);
 	wmsLayer.set("id", layerId);
+	if (previewUrl) {
+		wmsLayer.set("previewUrl", previewUrl);
+	}
 
 	return wmsLayer;
 };
@@ -162,6 +183,7 @@ const AddWMSButton: FC = () => {
 				return;
 			}
 
+			const baseUrl = getBaseUrl(wmsUrl);
 			const url = buildCapabilitiesUrl(wmsUrl);
 			const response = await fetch(url.toString());
 
@@ -170,7 +192,7 @@ const AddWMSButton: FC = () => {
 			}
 
 			const xmlText = await response.text();
-			const layers = parseCapabilities(xmlText);
+			const layers = parseCapabilities(xmlText, baseUrl);
 
 			if (layers.length === 0) {
 				setValidationError(
@@ -191,11 +213,22 @@ const AddWMSButton: FC = () => {
 	}, [wmsUrl, clearUploadStatus]);
 
 	const addWMSLayerToMap = useCallback(
-		(url: string, layerName: string, layerTitle: string) => {
+		(
+			url: string,
+			layerName: string,
+			layerTitle: string,
+			previewUrl?: string,
+		) => {
 			if (!map) return;
 
 			const layerId = generateLayerId();
-			const wmsLayer = createWMSLayer(url, layerName, layerTitle, layerId);
+			const wmsLayer = createWMSLayer(
+				url,
+				layerName,
+				layerTitle,
+				layerId,
+				previewUrl,
+			);
 
 			map.addLayer(wmsLayer);
 			addLayer(createManagedLayer(layerId, layerTitle, wmsLayer));
@@ -215,7 +248,7 @@ const AddWMSButton: FC = () => {
 			const baseUrl = getBaseUrl(wmsUrl);
 
 			layersToAdd.forEach((layer) => {
-				addWMSLayerToMap(baseUrl, layer.name, layer.title);
+				addWMSLayerToMap(baseUrl, layer.name, layer.title, layer.previewUrl);
 			});
 
 			setUploadSuccess(

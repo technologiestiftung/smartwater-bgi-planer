@@ -91,7 +91,7 @@ const AdditionalLayerTree: FC<AdditionalLayerTreeProps> = ({}) => {
 	return (
 		<div ref={containerRef} className="bg-background rounded-sm p-1 shadow-sm">
 			<div
-				className="grid gap-2"
+				className="grid gap-1"
 				style={{
 					gridTemplateColumns: `repeat(${cols}, 48px)`,
 				}}
@@ -103,22 +103,25 @@ const AdditionalLayerTree: FC<AdditionalLayerTreeProps> = ({}) => {
 					return (
 						<button
 							key={layer.id}
-							className={`relative h-12 w-12 overflow-hidden rounded-sm transition-all ${
-								layer.visibility && "border-accent border"
+							className={`relative h-12 w-12 cursor-pointer overflow-hidden rounded-sm border transition-all ${
+								layer.visibility ? "border-accent" : "border-background"
 							}`}
 							onClick={() => handleLayerToggle(layer.id, layer.visibility)}
 							title={displayName}
 						>
 							<div className="flex h-full items-center justify-center">
 								<Image
-									src="/preview-img/basemap-grau.png"
+									src={
+										layer.olLayer?.get("previewUrl") ||
+										"/preview-img/basemap-grau.png"
+									}
 									alt={displayName}
 									width={48}
 									height={48}
 									className="h-full w-full object-cover"
 								/>
 							</div>
-							<div className="absolute inset-x-0 bottom-0 truncate bg-black/70 px-1 py-0.5 text-[10px] text-white">
+							<div className="absolute inset-x-0 bottom-0 truncate bg-black/30 px-2 py-1 text-[8px] text-white">
 								{displayName}
 							</div>
 						</button>
