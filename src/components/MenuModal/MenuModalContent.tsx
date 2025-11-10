@@ -3,13 +3,13 @@
 import MenuModule from "@/components/MenuModal/MenuModule";
 import { Button } from "@/components/ui/button";
 import {
-	BookOpenTextIcon,
-	ListMagnifyingGlassIcon,
-	ShovelIcon,
-	PencilRulerIcon,
-	InfoIcon,
-	DownloadIcon,
 	ArrowCircleRightIcon,
+	BookOpenTextIcon,
+	DownloadIcon,
+	InfoIcon,
+	ListMagnifyingGlassIcon,
+	PencilRulerIcon,
+	ShovelIcon,
 } from "@phosphor-icons/react";
 import Link from "next/link";
 import { useProjectsStore } from "@/store/projects";
@@ -40,8 +40,10 @@ export default function MenuModalContent({ projectId }: MenuModalProps) {
 								</Link>
 							</Button>
 							<Button>
-								<DownloadIcon className="mr-2" />
-								Untersuchungsgebiet/Neubauten
+								<Link href={`/${projectId}/project-starter`}>
+									<DownloadIcon className="mr-2" />
+									Untersuchungsgebiet/Neubauten
+								</Link>
 							</Button>
 							<Button>
 								<DownloadIcon className="mr-2" />

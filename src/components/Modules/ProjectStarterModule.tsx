@@ -1,7 +1,10 @@
 "use client";
 
+import AddWMSButton from "@/components/AddWMSButton/AddWMSButton";
+import ConfirmButton from "@/components/ConfirmButton/ConfirmButton";
 import { SideMenu } from "@/components/SideMenu";
 import { Button } from "@/components/ui/button";
+import UploadVectorLayersButton from "@/components/UploadVectorLayersButton/UploadVectorLayersButton";
 import {
 	StepConfig,
 	StepContainer,
@@ -14,6 +17,8 @@ import { useLayerArea } from "@/hooks/use-layer-area";
 import { useLayerFeatures } from "@/hooks/use-layer-features";
 import { useMapReady } from "@/hooks/use-map-ready";
 import { useLayersStore } from "@/store/layers";
+import { useMapStore } from "@/store/map";
+import { useUiStore } from "@/store/ui";
 import { LAYER_IDS } from "@/types/shared";
 import {
 	ArrowLeftIcon,
@@ -21,9 +26,10 @@ import {
 	BlueprintIcon,
 	ListChecksIcon,
 	MapPinAreaIcon,
+	ShovelIcon,
+	TrashIcon,
 } from "@phosphor-icons/react";
-import { useEffect } from "react";
-import ConfirmButton from "../ConfirmButton/ConfirmButton";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 interface ProjectStarterModuleProps {
 	open: boolean;
@@ -41,8 +47,14 @@ const steps: StepConfig[] = [
 	},
 	{
 		id: "newDevelopment",
-		icon: <BlueprintIcon />,
+		icon: <ShovelIcon />,
 		title: "Neubauten und Versiegelte Flächen anlegen",
+		description: "xxx",
+	},
+	{
+		id: "additionalMaps",
+		icon: <BlueprintIcon />,
+		title: "Zusatzkarten",
 		description: "xxx",
 	},
 ];
@@ -64,6 +76,8 @@ function StepperFooter({
 		totalSteps,
 	} = useVerticalStepper();
 	const applyConfigLayers = useLayersStore((state) => state.applyConfigLayers);
+	const { clearUploadStatus } = useUiStore();
+
 	const isMapReady = useMapReady();
 
 	useEffect(() => {
@@ -80,6 +94,7 @@ function StepperFooter({
 
 	const handleSkip = () => {
 		if (isLastStep) {
+			clearUploadStatus();
 			onComplete?.();
 		} else {
 			nextStep();
@@ -116,6 +131,8 @@ function ProjectBoundaryStep() {
 	const { hasFeatures } = useLayerFeatures(LAYER_IDS.PROJECT_BOUNDARY);
 	const { formattedArea } = useLayerArea(LAYER_IDS.PROJECT_BOUNDARY);
 	const { setStepValidation } = useVerticalStepper();
+	const { uploadError, uploadSuccess, clearUploadStatus } = useUiStore();
+	const [mapError, setMapError] = useState("");
 
 	useEffect(() => {
 		setStepValidation("projectBoundary", () => hasFeatures);
@@ -123,9 +140,13 @@ function ProjectBoundaryStep() {
 
 	const handleConfirm = (): boolean => {
 		if (!hasFeatures) {
-			alert("Bitte zeichnen Sie zuerst ein Projektgebiet ein.");
+			setMapError("Bitte zeichnen Sie zuerst ein Projektgebiet ein.");
 			return false;
 		}
+		if (uploadError) {
+			return false;
+		}
+		clearUploadStatus();
 		return true;
 	};
 
@@ -148,19 +169,34 @@ function ProjectBoundaryStep() {
 			<div className="mt-8">
 				<ConfirmButton
 					onConfirm={handleConfirm}
-					validate={() => hasFeatures}
+					validate={() => hasFeatures && !uploadError}
 					displayText={formattedArea}
 				/>
 			</div>
+
+			{uploadError && (
+				<div className="text-red mt-4 rounded-sm border border-dashed bg-red-50 p-2 text-sm">
+					{uploadError}
+				</div>
+			)}
+			{mapError && (
+				<div className="border-primary text-red mt-4 rounded-sm border border-dashed bg-red-50 p-2 text-sm">
+					{mapError}
+				</div>
+			)}
+			{uploadSuccess && (
+				<div className="border-primary bg-light mt-4 rounded-sm border border-dashed p-2 text-sm">
+					{uploadSuccess}
+				</div>
+			)}
 		</div>
 	);
 }
 
-function NewDevelopmentStep({ onComplete }: { onComplete?: () => void }) {
+function NewDevelopmentStep() {
 	const { formattedArea } = useLayerArea("project_new_development");
 
 	const handleConfirm = (): boolean => {
-		onComplete?.();
 		return true;
 	};
 
@@ -190,11 +226,108 @@ function NewDevelopmentStep({ onComplete }: { onComplete?: () => void }) {
 	);
 }
 
+function AdditionalMapsStep() {
+	const { uploadError, uploadSuccess, clearUploadStatus } = useUiStore();
+	const { layers, removeLayer } = useLayersStore();
+	const map = useMapStore((state) => state.map);
+
+	const uploadedLayers = useMemo(() => {
+		return Array.from(layers.values()).filter(
+			(layer) =>
+				layer.id.startsWith("uploaded_") ||
+				layer.id.startsWith("uploaded_wms_"),
+		);
+	}, [layers]);
+
+	const deleteLayer = useCallback(
+		(layerId: string) => {
+			if (!map) return;
+
+			const layers = map.getLayers().getArray();
+			const layerToRemove = layers.find((layer) => layer.get("id") === layerId);
+
+			if (layerToRemove) {
+				map.removeLayer(layerToRemove);
+			}
+
+			removeLayer(layerId);
+			clearUploadStatus();
+		},
+		[map, removeLayer, clearUploadStatus],
+	);
+
+	useEffect(() => {
+		clearUploadStatus();
+	}, [clearUploadStatus]);
+
+	return (
+		<div className="space-y-4">
+			<h3 className="text-primary">Zusatzkarten</h3>
+			<h4>Welche andere Information haben Sie?</h4>
+			<p className="text-muted-foreground">
+				Falls Sie weitere Karten über das Untersuchungsgebiet zur Verfügung
+				haben, die nicht im GeoPortal sind, können Sie diese gerne hier als
+				Dateien oder als WMS verlinken.
+			</p>
+
+			<div className="flex w-full gap-2 py-4">
+				<UploadVectorLayersButton />
+				<AddWMSButton />
+			</div>
+
+			{uploadedLayers.length > 0 && (
+				<div className="space-y-2">
+					<div className="max-h-56 space-y-1 overflow-y-auto">
+						{uploadedLayers.map((layer) => (
+							<div
+								key={layer.id}
+								className="flex items-center justify-between rounded-sm"
+							>
+								<div className="flex flex-col">
+									<span className="text-sm font-medium">
+										{layer.config.name}
+									</span>
+								</div>
+								<button
+									onClick={() => deleteLayer(layer.id)}
+									className="text-primary flex h-8 w-8 cursor-pointer items-center justify-center rounded-sm"
+									title="Layer löschen"
+								>
+									<TrashIcon size={16} />
+								</button>
+							</div>
+						))}
+					</div>
+				</div>
+			)}
+
+			{uploadSuccess && (
+				<div className="border-primary bg-light mt-4 rounded-sm border border-dashed p-2 text-sm">
+					{uploadSuccess}
+				</div>
+			)}
+			{uploadError && (
+				<div className="text-red mt-4 rounded-sm border border-dashed bg-red-50 p-2 text-sm">
+					{uploadError}
+				</div>
+			)}
+		</div>
+	);
+}
+
 export default function ProjectStarterModule({
 	open,
 	onOpenChange,
 	onComplete,
 }: ProjectStarterModuleProps) {
+	const { clearUploadStatus } = useUiStore();
+
+	useEffect(() => {
+		return () => {
+			clearUploadStatus();
+		};
+	}, [clearUploadStatus]);
+
 	return (
 		<SideMenu
 			open={open}
@@ -214,7 +347,11 @@ export default function ProjectStarterModule({
 							</StepContent>
 
 							<StepContent stepId="newDevelopment">
-								<NewDevelopmentStep onComplete={onComplete} />
+								<NewDevelopmentStep />
+							</StepContent>
+
+							<StepContent stepId="additionalMaps">
+								<AdditionalMapsStep />
 							</StepContent>
 						</StepContainer>
 					</div>

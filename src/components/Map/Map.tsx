@@ -16,7 +16,7 @@ const Map: FC = () => {
 		<div className="Map-root relative h-full w-full">
 			<LazyOlMap>
 				<MapNavigationControls />
-				<ClickControl layerId="module1_notes">
+				<ClickControl layerId="module1_notes" minZoomForClick={0}>
 					<NoteCard />
 				</ClickControl>
 			</LazyOlMap>

@@ -5,27 +5,24 @@ import { Button } from "@/components/ui/button";
 import { ensureVectorLayer } from "@/lib/helper/layerHelpers";
 import { getLayerById } from "@/lib/helper/mapHelpers";
 import { convertShapefile } from "@/lib/serverActions/convertShapefile";
+import { useFilesStore } from "@/store/files";
 import { useMapStore } from "@/store/map";
 import { useProjectsStore } from "@/store/projects";
-import { useFilesStore } from "@/store/files";
+import { useUiStore } from "@/store/ui";
 import { LAYER_IDS } from "@/types/shared";
 import { UploadIcon } from "@phosphor-icons/react";
 import { Feature } from "ol";
 import { intersects } from "ol/extent";
 import GeoJSON from "ol/format/GeoJSON";
-import { FC, useCallback, useEffect, useRef, useState } from "react";
+import { FC, useCallback, useRef, useState } from "react";
 
 const UploadProjectBoundaryButton: FC = () => {
 	const map = useMapStore((state) => state.map);
 	const getProject = useProjectsStore((state) => state.getProject);
 	const addFile = useFilesStore((state) => state.addFile);
 	const [uploading, setUploading] = useState(false);
-	const [error, setError] = useState<string | null>(null);
 	const fileInputRef = useRef<HTMLInputElement>(null);
-
-	useEffect(() => {
-		console.log("[UploadProjectBoundaryButton] error::", error);
-	}, [error]);
+	const { setUploadError, setUploadSuccess, clearUploadStatus } = useUiStore();
 
 	const performIntersection = useCallback(() => {
 		if (!map) return;
@@ -122,7 +119,9 @@ const UploadProjectBoundaryButton: FC = () => {
 			if (!file) return;
 
 			setUploading(true);
-			setError(null);
+			setUploadError(null);
+			setUploadSuccess(null);
+			clearUploadStatus();
 
 			try {
 				const lowerName = file.name.toLowerCase();
@@ -152,14 +151,26 @@ const UploadProjectBoundaryButton: FC = () => {
 					await addFile(project.id, LAYER_IDS.PROJECT_BOUNDARY, file);
 				}
 
+				setUploadSuccess(`${file.name} erfolgreich importiert.`);
 				if (fileInputRef.current) fileInputRef.current.value = "";
 			} catch (err) {
-				setError(err instanceof Error ? err.message : "Failed to upload file");
+				console.error(err instanceof Error && err.message);
+
+				setUploadError(
+					`${file.name} konnte nicht importiert werden. Laden sie eine GeoJSON oder Shapefile Datei in EPSG:25833 oder EPSG:4326 Koordinatensystem hoch.`,
+				);
 			} finally {
 				setUploading(false);
 			}
 		},
-		[handleGeoJSONData, getProject, addFile],
+		[
+			handleGeoJSONData,
+			getProject,
+			addFile,
+			setUploadError,
+			setUploadSuccess,
+			clearUploadStatus,
+		],
 	);
 
 	return (
