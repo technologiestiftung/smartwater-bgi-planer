@@ -6,7 +6,8 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"lint": "eslint",
+		"lint": "eslint --quiet",
+		"lint:all": "eslint",
 		"prepare": "husky",
 		"format": "prettier --check './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
 		"format:fix": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
@@ -37,7 +38,6 @@
 	"devDependencies": {
 		"@commitlint/cli": "^20.1.0",
 		"@commitlint/config-conventional": "^20.0.0",
-		"@eslint/eslintrc": "^3",
 		"@svgr/webpack": "^8.1.0",
 		"@tailwindcss/postcss": "^4",
 		"@types/geojson": "^7946.0.16",
@@ -46,7 +46,7 @@
 		"@types/react-dom": "^19",
 		"@types/shpjs": "^3.4.7",
 		"eslint": "^9",
-		"eslint-config-next": "16.0.1",
+		"eslint-config-next": "^16.0.1",
 		"husky": "^9.1.7",
 		"prettier": "^3.6.2",
 		"prettier-plugin-tailwindcss": "^0.7.1",

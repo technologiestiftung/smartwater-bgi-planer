@@ -16,7 +16,7 @@ import { unByKey } from "ol/Observable.js";
 import Overlay from "ol/Overlay.js";
 import { Vector as VectorSource } from "ol/source.js";
 import { getArea, getLength } from "ol/sphere.js";
-import { FC, useEffect, useRef } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 
 interface DrawProps {
 	layerId: string;
@@ -31,6 +31,8 @@ const DrawMeasureButton: FC<DrawProps> = ({
 	const drawRef = useRef<Draw | null>(null);
 	const overlayRef = useRef<Overlay | null>(null);
 	const listenerRef = useRef<EventsKey | null>(null);
+	const [isDrawing, setIsDrawing] = useState(false);
+
 	const setLayerVisibility = useLayersStore(
 		(state) => state.setLayerVisibility,
 	);
@@ -54,6 +56,7 @@ const DrawMeasureButton: FC<DrawProps> = ({
 				unByKey(listenerRef.current);
 			}
 			drawRef.current = null;
+			setIsDrawing(false);
 			return;
 		}
 
@@ -125,12 +128,13 @@ const DrawMeasureButton: FC<DrawProps> = ({
 		});
 
 		map.addInteraction(drawRef.current);
+		setIsDrawing(true);
 	};
 
 	return (
 		<Button variant="outline" onClick={toggleDraw}>
 			<PolygonIcon />
-			{drawRef.current ? "Stop Drawing" : "Maßnahme zeichnen"}
+			{isDrawing ? "Stop Drawing" : "Maßnahme zeichnen"}
 		</Button>
 	);
 };

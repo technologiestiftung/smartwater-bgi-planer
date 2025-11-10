@@ -1,14 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMapStore } from "@/store/map";
 import Overlay, { Options } from "ol/Overlay.js";
-import {
-	cloneElement,
-	FC,
-	useCallback,
-	useEffect,
-	useRef,
-	useState,
-} from "react";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
 
 interface ClickControlChildProps {
 	features: any;
@@ -173,12 +165,14 @@ const ClickControl: FC<ClickControlProps> = ({
 
 	return (
 		<div className="ClickControl-root" ref={overlayRef}>
-			{features &&
-				cloneElement(children, {
-					features,
-					layerId,
-					onClose: handleCloseOverlay,
-				})}
+			{features ? (
+				<children.type
+					{...children.props}
+					features={features}
+					layerId={layerId}
+					onClose={handleCloseOverlay}
+				/>
+			) : null}
 		</div>
 	);
 };

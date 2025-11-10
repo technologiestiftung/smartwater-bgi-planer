@@ -11,10 +11,7 @@ export const useVectorUpload = () => {
 	const [uploading, setUploading] = useState(false);
 
 	const parseGeoJSON = useCallback(
-		(
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			geojson: any,
-		): Feature[] => {
+		(geojson: any): Feature[] => {
 			if (!map) return [];
 
 			const format = new GeoJSON();
@@ -46,11 +43,11 @@ export const useVectorUpload = () => {
 				const text = await file.text();
 				const geojson = JSON.parse(text);
 				return parseGeoJSON(geojson);
-			} else {
-				throw new Error(
-					"Unsupported file type. Upload a .geojson, .json, or zipped shapefile (.zip).",
-				);
 			}
+
+			throw new Error(
+				"Unsupported file type. Upload a .geojson, .json, or zipped shapefile (.zip).",
+			);
 		},
 		[parseGeoJSON],
 	);

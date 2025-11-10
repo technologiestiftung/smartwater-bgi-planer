@@ -159,6 +159,8 @@ export function AddressSearch() {
 				setIsOpen(false);
 				setSelectedIndex(-1);
 				break;
+			default:
+				break;
 		}
 	};
 

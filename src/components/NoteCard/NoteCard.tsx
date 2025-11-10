@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useMapStore } from "@/store/map";
@@ -28,14 +27,20 @@ const NoteCard: FC<NoteCardProps> = ({ layerId, features, onClose }) => {
 
 	useEffect(() => {
 		if (!features) {
-			setFeatureProperties(null);
-			setNote("");
+			const resetNote = () => {
+				setFeatureProperties(null);
+				setNote("");
+			};
+			resetNote();
 			return;
 		}
 
-		const props = getFeatureData(features);
-		setFeatureProperties(props);
-		setNote(features.get("note") || "");
+		const setNoteData = () => {
+			const props = getFeatureData(features);
+			setFeatureProperties(props);
+			setNote(features.get("note") || "");
+		};
+		setNoteData();
 	}, [features]);
 
 	const handleSave = () => {

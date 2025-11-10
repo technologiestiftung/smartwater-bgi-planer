@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import mapConfig from "@/config/config.json";
@@ -58,14 +57,13 @@ const MapInitializer: FC = () => {
 						type: "folder",
 						elements: enrichAndTransformElements(item.elements || []),
 					} as LayerFolder;
-				} else {
-					return {
-						...item,
-						status: "initial" as LayerStatus,
-						service: servicesMap.get(item.id),
-						visibility: item.visibility !== undefined ? item.visibility : false,
-					} as LayerElement;
 				}
+				return {
+					...item,
+					status: "initial" as LayerStatus,
+					service: servicesMap.get(item.id),
+					visibility: item.visibility !== undefined ? item.visibility : false,
+				} as LayerElement;
 			});
 
 		const rawMapConfig = structuredClone(mapConfig);

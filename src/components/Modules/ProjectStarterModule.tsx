@@ -243,8 +243,10 @@ function AdditionalMapsStep() {
 		(layerId: string) => {
 			if (!map) return;
 
-			const layers = map.getLayers().getArray();
-			const layerToRemove = layers.find((layer) => layer.get("id") === layerId);
+			const _layers = map.getLayers().getArray();
+			const layerToRemove = _layers.find(
+				(layer) => layer.get("id") === layerId,
+			);
 
 			if (layerToRemove) {
 				map.removeLayer(layerToRemove);

@@ -90,6 +90,7 @@ function SidebarProvider({
 
 	// Helper to toggle the sidebar.
 	const toggleSidebar = React.useCallback(() => {
+		// eslint-disable-next-line no-shadow
 		return isMobile ? setOpenMobile((open) => !open) : setOpen((open) => !open);
 	}, [isMobile, setOpen, setOpenMobile]);
 
@@ -527,6 +528,7 @@ function SidebarMenuButton({
 	}
 
 	if (typeof tooltip === "string") {
+		// eslint-disable-next-line no-param-reassign
 		tooltip = {
 			children: tooltip,
 		};
@@ -608,6 +610,7 @@ function SidebarMenuSkeleton({
 }) {
 	// Random width between 50 to 90%.
 	const width = React.useMemo(() => {
+		// eslint-disable-next-line react-hooks/purity
 		return `${Math.floor(Math.random() * 40) + 50}%`;
 	}, []);
 

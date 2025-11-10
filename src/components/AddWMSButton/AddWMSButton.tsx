@@ -274,7 +274,6 @@ const AddWMSButton: FC = () => {
 
 		const validationTimeoutId = setTimeout(() => {
 			try {
-				new URL(wmsUrl);
 				setValidationError("");
 				const fetchTimeoutId = setTimeout(
 					fetchWMSLayers,

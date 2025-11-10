@@ -32,18 +32,17 @@ const DrawButton: FC<DrawButtonProps> = ({ geometryType = "Polygon" }) => {
 	useEffect(() => {
 		if (!map || !drawLayerId) return;
 
-		if (drawRef.current) {
-			map.removeInteraction(drawRef.current);
-			drawRef.current = null;
-			setIsDrawing(false);
-		}
-
-		return () => {
+		const removeDrawInteraction = () => {
 			if (drawRef.current) {
 				map.removeInteraction(drawRef.current);
 				drawRef.current = null;
 				setIsDrawing(false);
 			}
+		};
+		removeDrawInteraction();
+
+		return () => {
+			removeDrawInteraction();
 		};
 	}, [map, drawLayerId]);
 
