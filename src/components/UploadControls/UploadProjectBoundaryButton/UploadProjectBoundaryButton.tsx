@@ -79,6 +79,7 @@ const UploadProjectBoundaryButton: FC = () => {
 
 			boundarySource.clear();
 			boundarySource.addFeatures(features);
+			boundarySource.changed();
 
 			performIntersection();
 
