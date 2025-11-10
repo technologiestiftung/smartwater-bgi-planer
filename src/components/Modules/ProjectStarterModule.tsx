@@ -4,7 +4,7 @@ import AddWMSButton from "@/components/AddWMSButton/AddWMSButton";
 import ConfirmButton from "@/components/ConfirmButton/ConfirmButton";
 import { SideMenu } from "@/components/SideMenu";
 import { Button } from "@/components/ui/button";
-import UploadVectorLayersButton from "@/components/UploadVectorLayersButton/UploadVectorLayersButton";
+import UploadVectorLayersButton from "@/components/UploadControls/UploadVectorLayersButton/UploadVectorLayersButton";
 import {
 	StepConfig,
 	StepContainer,

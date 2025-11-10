@@ -1,5 +1,9 @@
 "use client";
 
+import {
+	formatArea,
+	formatLength,
+} from "@/components/DrawControls/shared/drawHelpers";
 import { Button } from "@/components/ui/button";
 import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";
@@ -36,20 +40,6 @@ const DrawMeasureButton: FC<DrawProps> = ({
 
 		setLayerVisibility(layerId, true);
 	}, [layerId, map, setLayerVisibility]);
-
-	const formatArea = (polygon: Polygon) => {
-		const area = getArea(polygon);
-		return area > 10000
-			? Math.round((area / 1000000) * 100) / 100 + " km²"
-			: Math.round(area * 100) / 100 + " m²";
-	};
-
-	const formatLength = (line: LineString) => {
-		const length = getLength(line);
-		return length > 100
-			? Math.round((length / 1000) * 100) / 100 + " km"
-			: Math.round(length * 100) / 100 + " m";
-	};
 
 	const toggleDraw = () => {
 		if (!map) return;
