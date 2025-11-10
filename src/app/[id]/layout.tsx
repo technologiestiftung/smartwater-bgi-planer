@@ -1,3 +1,4 @@
+import { AddressSearch } from "@/components/AddressSearch/AddressSearch";
 import { DrawControlsContainer } from "@/components/DrawControls";
 import Map from "@/components/Map/Map";
 import { MenuToggleButton } from "@/components/MenuToggleButton/MenuToggleButton";
@@ -23,6 +24,7 @@ export default async function ProjectLayout({
 					<Map />
 					<DrawControlsContainer projectId={id} />
 					<MenuToggleButton projectId={id} />
+					<AddressSearch />
 				</div>
 			</div>
 		</ProjectGuard>
