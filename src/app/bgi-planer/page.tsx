@@ -7,7 +7,7 @@ import {
 } from "@/components/DrawControls";
 import LayerConfigTest from "@/components/LayerConfigTest/LayerConfigTest";
 import Map from "@/components/Map/Map";
-import UploadProjectBoundaryButton from "@/components/UploadProjectBoundaryButton/UploadProjectBoundaryButton";
+import UploadProjectBoundaryButton from "@/components/UploadControls/UploadProjectBoundaryButton/UploadProjectBoundaryButton";
 
 export default function Home() {
 	return (

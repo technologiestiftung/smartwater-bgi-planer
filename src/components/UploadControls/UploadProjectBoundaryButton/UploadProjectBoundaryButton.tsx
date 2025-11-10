@@ -1,28 +1,24 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { useVectorUpload } from "@/components/UploadControls/hooks/useVectorUpload";
 import { ensureVectorLayer } from "@/lib/helper/layerHelpers";
 import { getLayerById } from "@/lib/helper/mapHelpers";
-import { convertShapefile } from "@/lib/serverActions/convertShapefile";
 import { useFilesStore } from "@/store/files";
 import { useMapStore } from "@/store/map";
 import { useProjectsStore } from "@/store/projects";
-import { useUiStore } from "@/store/ui";
 import { LAYER_IDS } from "@/types/shared";
 import { UploadIcon } from "@phosphor-icons/react";
 import { Feature } from "ol";
 import { intersects } from "ol/extent";
-import GeoJSON from "ol/format/GeoJSON";
-import { FC, useCallback, useRef, useState } from "react";
+import { FC, useCallback, useRef } from "react";
 
 const UploadProjectBoundaryButton: FC = () => {
 	const map = useMapStore((state) => state.map);
 	const getProject = useProjectsStore((state) => state.getProject);
 	const addFile = useFilesStore((state) => state.addFile);
-	const [uploading, setUploading] = useState(false);
 	const fileInputRef = useRef<HTMLInputElement>(null);
-	const { setUploadError, setUploadSuccess, clearUploadStatus } = useUiStore();
+	const { uploading, handleUpload } = useVectorUpload();
 
 	const performIntersection = useCallback(() => {
 		if (!map) return;
@@ -94,84 +90,23 @@ const UploadProjectBoundaryButton: FC = () => {
 		[map, performIntersection],
 	);
 
-	const handleGeoJSONData = useCallback(
-		async (geojson: any) => {
-			if (!map) return;
+	const handleFileChange = async (
+		event: React.ChangeEvent<HTMLInputElement>,
+	) => {
+		const file = event.target.files?.[0];
+		if (!file) return;
 
-			const format = new GeoJSON();
-			const crsMatch = geojson.crs?.properties?.name?.match(/EPSG[:\s]+(\d+)/i);
-			const sourceProjection = crsMatch ? `EPSG:${crsMatch[1]}` : "EPSG:4326";
-			const mapProjection = map.getView().getProjection().getCode();
-
-			const features = format.readFeatures(geojson, {
-				dataProjection: sourceProjection,
-				featureProjection: mapProjection,
-			});
-
+		await handleUpload(file, async (features, uploadedFile) => {
 			addProjectBoundaryFeaturesToMap(features);
-		},
-		[map, addProjectBoundaryFeaturesToMap],
-	);
 
-	const handleFileChange = useCallback(
-		async (event: React.ChangeEvent<HTMLInputElement>) => {
-			const file = event.target.files?.[0];
-			if (!file) return;
-
-			setUploading(true);
-			setUploadError(null);
-			setUploadSuccess(null);
-			clearUploadStatus();
-
-			try {
-				const lowerName = file.name.toLowerCase();
-
-				if (lowerName.endsWith(".zip")) {
-					const formData = new FormData();
-					formData.append("file", file);
-
-					const geojson = await convertShapefile(formData);
-					await handleGeoJSONData(geojson);
-				} else if (
-					lowerName.endsWith(".geojson") ||
-					lowerName.endsWith(".json")
-				) {
-					const text = await file.text();
-					const geojson = JSON.parse(text);
-					await handleGeoJSONData(geojson);
-				} else {
-					throw new Error(
-						"Unsupported file type. Upload a .geojson, .json, or zipped shapefile (.zip).",
-					);
-				}
-
-				// Store the file in the files store
-				const project = getProject();
-				if (project) {
-					await addFile(project.id, LAYER_IDS.PROJECT_BOUNDARY, file);
-				}
-
-				setUploadSuccess(`${file.name} erfolgreich importiert.`);
-				if (fileInputRef.current) fileInputRef.current.value = "";
-			} catch (err) {
-				console.error(err instanceof Error && err.message);
-
-				setUploadError(
-					`${file.name} konnte nicht importiert werden. Laden sie eine GeoJSON oder Shapefile Datei in EPSG:25833 oder EPSG:4326 Koordinatensystem hoch.`,
-				);
-			} finally {
-				setUploading(false);
+			const project = getProject();
+			if (project) {
+				await addFile(project.id, LAYER_IDS.PROJECT_BOUNDARY, uploadedFile);
 			}
-		},
-		[
-			handleGeoJSONData,
-			getProject,
-			addFile,
-			setUploadError,
-			setUploadSuccess,
-			clearUploadStatus,
-		],
-	);
+		});
+
+		if (fileInputRef.current) fileInputRef.current.value = "";
+	};
 
 	return (
 		<div className="flex flex-col gap-2">

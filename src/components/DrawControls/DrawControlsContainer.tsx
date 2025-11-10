@@ -6,7 +6,7 @@ import {
 	DrawNoteButton,
 	DrawProjectBoundaryButton,
 } from "@/components/DrawControls";
-import UploadProjectBoundaryButton from "@/components/UploadProjectBoundaryButton/UploadProjectBoundaryButton";
+import UploadProjectBoundaryButton from "@/components/UploadControls/UploadProjectBoundaryButton/UploadProjectBoundaryButton";
 import { useUiStore } from "@/store/ui";
 import { usePathname } from "next/navigation";
 

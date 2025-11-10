@@ -3,12 +3,12 @@
 import { SideMenu } from "@/components/SideMenu";
 import { Button } from "@/components/ui/button";
 import {
-	VerticalStepper,
-	StepIndicator,
-	StepContent,
-	StepContainer,
-	useVerticalStepper,
 	StepConfig,
+	StepContainer,
+	StepContent,
+	StepIndicator,
+	useVerticalStepper,
+	VerticalStepper,
 } from "@/components/VerticalStepper";
 import {
 	ArrowLeftIcon,
@@ -66,7 +66,7 @@ function StepperFooter({ onClose }: { onClose: () => void }) {
 
 	return (
 		<div className="border-muted flex h-full w-full border-t">
-			<div className="bg-secondary flex w-[4.5rem] items-center justify-center">
+			<div className="bg-secondary flex w-18 items-center justify-center">
 				<ListChecksIcon className="h-6 w-6 text-white" />
 			</div>
 			<div className="flex w-full items-center justify-between p-2">
@@ -99,9 +99,9 @@ export default function HandlungsbedarfeModule({
 			footer={null}
 			bodyClassName="p-0"
 		>
-			<VerticalStepper steps={steps} initialStepId="heat">
+			<VerticalStepper steps={steps} initialStepId="heavyRain">
 				<div className="flex h-full w-full flex-col">
-					<div className="flex flex-grow pb-4">
+					<div className="flex grow pb-4">
 						<StepIndicator className="w-20" />
 						<StepContainer>
 							<StepContent stepId="heat">
@@ -140,7 +140,7 @@ export default function HandlungsbedarfeModule({
 							</StepContent>
 						</StepContainer>
 					</div>
-					<div className="flex-shrink-0">
+					<div className="shrink-0">
 						<StepperFooter onClose={() => onOpenChange(false)} />
 					</div>
 				</div>
