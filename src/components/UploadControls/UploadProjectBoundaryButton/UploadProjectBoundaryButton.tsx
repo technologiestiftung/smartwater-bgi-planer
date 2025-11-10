@@ -123,7 +123,7 @@ const UploadProjectBoundaryButton: FC = () => {
 				disabled={uploading}
 			>
 				<UploadIcon />
-				{uploading ? "Datei Läd..." : "Datei hochladen"}
+				{uploading ? "Datei lädt..." : "Datei hochladen"}
 			</Button>
 		</div>
 	);

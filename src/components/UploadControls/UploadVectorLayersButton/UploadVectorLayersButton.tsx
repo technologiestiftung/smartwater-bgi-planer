@@ -6,7 +6,7 @@ import { useLayersStore } from "@/store/layers";
 import { ManagedLayer } from "@/store/layers/types";
 import { useMapStore } from "@/store/map";
 import { UploadIcon } from "@phosphor-icons/react";
-import { Feature, Map } from "ol";
+import { Feature } from "ol";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
 import { Fill, Stroke, Style } from "ol/style";
@@ -114,7 +114,7 @@ const UploadVectorLayersButton: FC = () => {
 				disabled={uploading}
 			>
 				<UploadIcon />
-				{uploading ? "Datei Läd..." : "Datei hochladen"}
+				{uploading ? "Datei lädt..." : "Datei hochladen"}
 			</Button>
 		</div>
 	);

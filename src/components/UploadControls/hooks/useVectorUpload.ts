@@ -70,7 +70,7 @@ export const useVectorUpload = () => {
 				await onSuccess(features, file);
 				setUploadSuccess(`${file.name} erfolgreich importiert.`);
 			} catch (err) {
-				console.error(err instanceof Error && err.message);
+				console.error(err instanceof Error ? err.message : err);
 				setUploadError(
 					`${file.name} konnte nicht importiert werden. Laden sie eine GeoJSON oder Shapefile Datei in EPSG:25833 oder EPSG:4326 Koordinatensystem hoch.`,
 				);
