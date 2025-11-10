@@ -1,7 +1,7 @@
 "use client";
 
-import BlockAreaSelector from "@/components/BlockAreaSelector/BlockAreaSelector";
 import {
+	BlockAreaSelector,
 	DrawButton,
 	DrawNoteButton,
 	DrawProjectBoundaryButton,

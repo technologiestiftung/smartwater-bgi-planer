@@ -1,10 +1,10 @@
 "use client";
 
 import ClickControl from "@/components/Map/Controls/ClickControl";
-import MapNavigationControls from "@/components/Map/Controls/MapNavigation/MapNavigationControls";
 import NoteCard from "@/components/NoteCard/NoteCard";
 import dynamic from "next/dynamic";
 import { FC } from "react";
+import { MapNavigationContainer } from "./Controls";
 
 const LazyOlMap = dynamic(() => import("./OlMap/OlMap"), {
 	ssr: false,
@@ -15,7 +15,7 @@ const Map: FC = () => {
 	return (
 		<div className="Map-root relative h-full w-full">
 			<LazyOlMap>
-				<MapNavigationControls />
+				<MapNavigationContainer />
 				<ClickControl layerId="module1_notes" minZoomForClick={0}>
 					<NoteCard />
 				</ClickControl>

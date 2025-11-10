@@ -5,11 +5,11 @@ import GeolocationControl from "@/components/Map/Controls/MapNavigation/Geolocat
 import ZoomControl from "@/components/Map/Controls/MapNavigation/ZoomControl";
 import { FC } from "react";
 
-interface MapNavigationControlsProps {
+interface MapNavigationContainerProps {
 	onGeolocate?: () => void;
 }
 
-const MapNavigationControls: FC<MapNavigationControlsProps> = ({
+const MapNavigationContainer: FC<MapNavigationContainerProps> = ({
 	onGeolocate,
 }) => {
 	return (
@@ -20,4 +20,4 @@ const MapNavigationControls: FC<MapNavigationControlsProps> = ({
 		</div>
 	);
 };
-export default MapNavigationControls;
+export default MapNavigationContainer;
