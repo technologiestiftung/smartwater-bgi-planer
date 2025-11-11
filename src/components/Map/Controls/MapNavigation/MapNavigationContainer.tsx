@@ -1,6 +1,6 @@
 "use client";
 
-import AdditionalLayerTree from "@/components/Map/AdditinalLayerTree/AdditionalLayerTree";
+import AdditionalLayerTree from "@/components/Map/AdditionalLayerTree/AdditionalLayerTree";
 import BaselayerSwitch from "@/components/Map/BaselayerSwitch/BaselayerSwitch";
 import GeolocationControl from "@/components/Map/Controls/MapNavigation/GeolocationControl";
 import ZoomControl from "@/components/Map/Controls/MapNavigation/ZoomControl";
