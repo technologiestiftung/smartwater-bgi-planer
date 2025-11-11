@@ -101,9 +101,7 @@ const AdditionalLayerTree: FC = ({}) => {
 					return (
 						<button
 							key={layer.id}
-							className={`relative h-12 w-12 cursor-pointer overflow-hidden rounded-sm border transition-all ${
-								layer.visibility ? "border-accent" : "border-background"
-							}`}
+							className="relative h-12 w-12 cursor-pointer overflow-hidden rounded-sm transition-all"
 							onClick={() => handleLayerToggle(layer.id, layer.visibility)}
 							title={displayName}
 						>
@@ -113,12 +111,16 @@ const AdditionalLayerTree: FC = ({}) => {
 										layer.olLayer?.get("previewUrl") ||
 										"/preview-img/basemap-grau.png"
 									}
+									loading="lazy"
 									alt={displayName}
 									width={48}
 									height={48}
 									className="h-full w-full object-cover"
 								/>
 							</div>
+							{layer.visibility && (
+								<div className="border-accent pointer-events-none absolute inset-0 rounded-sm border" />
+							)}
 							<div className="absolute inset-x-0 bottom-0 truncate bg-black/30 px-2 py-1 text-[8px] text-white">
 								{displayName}
 							</div>
