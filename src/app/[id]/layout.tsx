@@ -2,7 +2,7 @@ import { AddressSearch } from "@/components/AddressSearch/AddressSearch";
 import { DrawControlsContainer } from "@/components/DrawControls";
 import Map from "@/components/Map/Map";
 import { MenuToggleButton } from "@/components/MenuToggleButton/MenuToggleButton";
-import ProjectGuard from "@/components/ProjectGuard";
+import ProjectGuard from "@/components/ProjectGuard/ProjectGuard";
 
 interface ProjectLayoutProps {
 	children: React.ReactNode;
