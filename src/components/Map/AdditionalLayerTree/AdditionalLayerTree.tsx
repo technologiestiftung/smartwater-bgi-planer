@@ -5,9 +5,7 @@ import { StackIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import { FC, useEffect, useMemo, useRef, useState } from "react";
 
-interface AdditionalLayerTreeProps {}
-
-const AdditionalLayerTree: FC<AdditionalLayerTreeProps> = ({}) => {
+const AdditionalLayerTree: FC = ({}) => {
 	const { layers, setLayerVisibility } = useLayersStore();
 	const [viewState, setViewState] = useState<"collapsed" | "open" | "extended">(
 		"collapsed",
