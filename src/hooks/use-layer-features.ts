@@ -1,4 +1,4 @@
-import { getLayerById } from "@/lib/helper/mapHelpers";
+import { getLayerById } from "@/lib/helpers/ol/map";
 import { useMapStore } from "@/store/map";
 import VectorSource from "ol/source/Vector";
 import { useEffect, useState } from "react";

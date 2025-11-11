@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { getLayerById } from "@/lib/helper/mapHelpers";
+import { getLayerById } from "@/lib/helpers/ol/map";
 import { useMapStore } from "@/store/map";
 import { LAYER_IDS } from "@/types/shared";
 import { PolygonIcon } from "@phosphor-icons/react";

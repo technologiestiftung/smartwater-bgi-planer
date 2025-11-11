@@ -1,19 +1,19 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
+import { sanitizeAddressInput } from "@/lib/helpers/sanitizer";
 import { searchAddresses } from "@/lib/serverActions/searchAddresses";
 import { useMapStore } from "@/store";
-import { transform } from "ol/proj";
-import { boundingExtent } from "ol/extent";
-import { useState, useRef, useCallback, useEffect } from "react";
+import { AddressFeature } from "@/types";
 import {
 	ArrowRightIcon,
 	MagnifyingGlassIcon,
 	XCircleIcon,
 } from "@phosphor-icons/react";
-import { AddressFeature } from "@/types";
-import { sanitizeAddressInput } from "@/lib/utils/sanitizerUtils";
 import { usePathname } from "next/navigation";
+import { boundingExtent } from "ol/extent";
+import { transform } from "ol/proj";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const ANIMATION_DURATION = 1000;
 

@@ -10,7 +10,13 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import { validateWMSUrl } from "@/lib/helper/layerHelpers";
+import { generateLayerId } from "@/lib/helpers/file";
+import {
+	buildCapabilitiesUrl,
+	generatePreviewUrl,
+	getBaseUrl,
+	validateWMSUrl,
+} from "@/lib/helpers/ol/layer";
 import { useLayersStore } from "@/store/layers";
 import { ManagedLayer } from "@/store/layers/types";
 import { useMapStore } from "@/store/map";
@@ -30,24 +36,6 @@ interface WMSLayer {
 const WMS_VERSION = "1.3.0";
 const FETCH_DEBOUNCE_MS = 1000;
 const VALIDATION_DEBOUNCE_MS = 500;
-
-const generateLayerId = () =>
-	`uploaded_wms_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
-
-const generatePreviewUrl = (baseUrl: string, layerName: string): string => {
-	const url = new URL(baseUrl);
-	url.searchParams.set("SERVICE", "WMS");
-	url.searchParams.set("VERSION", WMS_VERSION);
-	url.searchParams.set("REQUEST", "GetMap");
-	url.searchParams.set("LAYERS", layerName);
-	url.searchParams.set("STYLES", "");
-	url.searchParams.set("CRS", "EPSG:25833");
-	url.searchParams.set("BBOX", "388000,5818000,392000,5821000");
-	url.searchParams.set("WIDTH", "600");
-	url.searchParams.set("HEIGHT", "600");
-	url.searchParams.set("FORMAT", "image/png");
-	return url.toString();
-};
 
 const parseCapabilities = (xmlText: string, baseUrl: string): WMSLayer[] => {
 	try {
@@ -73,7 +61,11 @@ const parseCapabilities = (xmlText: string, baseUrl: string): WMSLayer[] => {
 					name: nameEl.textContent,
 					title: titleEl.textContent,
 					abstract: abstractEl?.textContent,
-					previewUrl: generatePreviewUrl(baseUrl, nameEl.textContent),
+					previewUrl: generatePreviewUrl(
+						baseUrl,
+						nameEl.textContent,
+						WMS_VERSION,
+					),
 				});
 			}
 		});
@@ -83,27 +75,6 @@ const parseCapabilities = (xmlText: string, baseUrl: string): WMSLayer[] => {
 		console.error("Error parsing WMS capabilities:", error);
 		return [];
 	}
-};
-
-const buildCapabilitiesUrl = (baseUrl: string): URL => {
-	const url = new URL(baseUrl.trim());
-	url.searchParams.delete("service");
-	url.searchParams.delete("SERVICE");
-	url.searchParams.delete("request");
-	url.searchParams.delete("REQUEST");
-	url.searchParams.delete("version");
-	url.searchParams.delete("VERSION");
-
-	url.searchParams.set("service", "WMS");
-	url.searchParams.set("request", "GetCapabilities");
-	url.searchParams.set("version", WMS_VERSION);
-	return url;
-};
-
-const getBaseUrl = (urlString: string): string => {
-	const url = new URL(urlString.trim());
-	url.search = "";
-	return url.toString();
 };
 
 const createWMSLayer = (
@@ -184,7 +155,7 @@ const AddWMSButton: FC = () => {
 			}
 
 			const baseUrl = getBaseUrl(wmsUrl);
-			const url = buildCapabilitiesUrl(wmsUrl);
+			const url = buildCapabilitiesUrl(wmsUrl, WMS_VERSION);
 			const response = await fetch(url.toString());
 
 			if (!response.ok) {
@@ -221,7 +192,7 @@ const AddWMSButton: FC = () => {
 		) => {
 			if (!map) return;
 
-			const layerId = generateLayerId();
+			const layerId = generateLayerId("uploaded_wms_");
 			const wmsLayer = createWMSLayer(
 				url,
 				layerName,

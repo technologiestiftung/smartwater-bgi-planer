@@ -2,8 +2,8 @@
 
 import { Button } from "@/components/ui/button";
 import { useVectorUpload } from "@/components/UploadControls/hooks/useVectorUpload";
-import { ensureVectorLayer } from "@/lib/helper/layerHelpers";
-import { getLayerById } from "@/lib/helper/mapHelpers";
+import { ensureVectorLayer } from "@/lib/helpers/ol/layer";
+import { fitMapToExtent, getLayerById } from "@/lib/helpers/ol/map";
 import { useFilesStore } from "@/store/files";
 import { useMapStore } from "@/store/map";
 import { useProjectsStore } from "@/store/projects";
@@ -80,13 +80,8 @@ const UploadProjectBoundaryButton: FC = () => {
 			boundarySource.clear();
 			boundarySource.addFeatures(features);
 			boundarySource.changed();
-
 			performIntersection();
-
-			const extent = boundarySource.getExtent();
-			if (extent?.every((val) => isFinite(val))) {
-				map.getView().fit(extent, { padding: [50, 50, 50, 50], duration: 500 });
-			}
+			fitMapToExtent(map, boundaryLayer);
 		},
 		[map, performIntersection],
 	);
