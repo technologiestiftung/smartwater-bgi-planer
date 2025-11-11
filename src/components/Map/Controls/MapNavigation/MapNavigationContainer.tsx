@@ -14,7 +14,7 @@ const MapNavigationContainer: FC<MapNavigationContainerProps> = ({
 	onGeolocate,
 }) => {
 	return (
-		<div className={`absolute bottom-6 left-4 z-10 flex gap-2`}>
+		<div className="absolute bottom-6 left-4 z-10 flex items-end gap-2">
 			<div className="flex flex-col gap-2">
 				<GeolocationControl onGeolocate={onGeolocate} />
 				<ZoomControl />

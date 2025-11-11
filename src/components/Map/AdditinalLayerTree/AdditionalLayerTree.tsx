@@ -89,9 +89,9 @@ const AdditionalLayerTree: FC<AdditionalLayerTreeProps> = ({}) => {
 	const { cols, visibleLayers, showMoreButton } = getGridConfig();
 
 	return (
-		<div ref={containerRef} className="bg-background rounded-sm p-1 shadow-sm">
+		<div ref={containerRef} className="flex items-end">
 			<div
-				className="grid gap-1"
+				className="bg-background grid h-fit w-fit gap-1 rounded-sm p-1 shadow-sm"
 				style={{
 					gridTemplateColumns: `repeat(${cols}, 48px)`,
 				}}
