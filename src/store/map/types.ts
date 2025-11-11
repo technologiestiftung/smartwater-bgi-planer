@@ -1,7 +1,6 @@
 import { LayerConfig } from "@/store/layers/types";
 import OLMap from "ol/Map";
 
-// Map-specific configuration types
 export interface MapViewOptions {
 	resolution: number;
 	scale: number;
@@ -47,6 +46,8 @@ export interface MapState {
 		coordinates: [number, number] | null;
 		accuracy?: number;
 	};
+	hasHydrated: boolean;
+	isInitializing: boolean;
 }
 
 export interface MapActions {
@@ -59,4 +60,6 @@ export interface MapActions {
 		coordinates: [number, number] | null;
 		accuracy?: number;
 	}) => void;
+	setHasHydrated: (state: boolean) => void;
+	setIsInitializing: (state: boolean) => void;
 }
