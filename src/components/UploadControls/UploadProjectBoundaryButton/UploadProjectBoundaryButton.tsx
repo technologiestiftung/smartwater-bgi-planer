@@ -100,7 +100,11 @@ const UploadProjectBoundaryButton: FC = () => {
 
 			const project = getProject();
 			if (project) {
-				await addFile(project.id, LAYER_IDS.PROJECT_BOUNDARY, uploadedFile);
+				await addFile({
+					projectId: project.id,
+					layerId: LAYER_IDS.PROJECT_BOUNDARY,
+					file: uploadedFile,
+				});
 			}
 		});
 
