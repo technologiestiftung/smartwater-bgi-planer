@@ -108,4 +108,3 @@ export const getLayerIdsFromFolder = (folderName: string): string[] => {
 export const isDrawLayer = (layerId: string): boolean => {
 	return getLayerIdsFromFolder("Draw Layers").includes(layerId);
 };
-
