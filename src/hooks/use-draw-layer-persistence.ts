@@ -36,6 +36,7 @@ export const useDrawLayerPersistence = (
 ) => {
 	const { debounceDelay = 1000, autoSave = true, autoRestore = true } = options;
 	const map = useMapStore((state) => state.map);
+	const mapReady = useMapStore((state) => state.isReady);
 	const getProject = useProjectsStore((state) => state.getProject);
 	const { addFile, getFile, deleteFile } = useFilesStore();
 
@@ -101,7 +102,7 @@ export const useDrawLayerPersistence = (
 	);
 
 	const restoreDrawLayers = useCallback(async () => {
-		if (!map || !autoRestore) return;
+		if (!map || !mapReady || !autoRestore) return;
 
 		const project = getProject();
 		if (!project) {
@@ -125,7 +126,7 @@ export const useDrawLayerPersistence = (
 				);
 			}
 		}
-	}, [map, autoRestore, getProject, getFile]);
+	}, [map, mapReady, autoRestore, getProject, getFile]);
 
 	const saveAllDrawLayers = useCallback(async () => {
 		if (!map) return;
@@ -139,7 +140,7 @@ export const useDrawLayerPersistence = (
 	}, [map, saveDrawLayer]);
 
 	const setupAutoSave = useCallback(() => {
-		if (!map || !autoSave) return;
+		if (!map || !mapReady || !autoSave) return;
 
 		Object.values(layerListenersRef.current).forEach((cleanup) => cleanup());
 		layerListenersRef.current = {};
@@ -171,7 +172,7 @@ export const useDrawLayerPersistence = (
 				source.un("changefeature", handleFeatureChange);
 			};
 		});
-	}, [map, autoSave, saveDrawLayerDebounced]);
+	}, [map, mapReady, autoSave, saveDrawLayerDebounced]);
 
 	useEffect(() => {
 		setupAutoSave();
