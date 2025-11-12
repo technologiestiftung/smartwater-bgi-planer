@@ -30,23 +30,25 @@ export const useLayerPersistence = (
 	const { layers } = useLayersStore();
 
 	const uploadedLayers = useMemo(() => {
-		return Array.from(layers.values()).filter(
-			(layer) =>
-				layer.id.startsWith("uploaded_") ||
-				layer.id.startsWith("uploaded_wms_"),
+		return Array.from(layers.values()).filter((layer) =>
+			layer.id.startsWith("uploaded_"),
 		);
 	}, [layers]);
 
-	useEffect(() => {
-		console.log("[use-layer-persistence] uploadedLayers::", uploadedLayers);
+	const getUploadedLayerIds = useCallback(() => {
+		return uploadedLayers.map((layer) => layer.id);
 	}, [uploadedLayers]);
+
+	const getDrawLayerIds = useCallback(() => {
+		return getLayerIdsFromFolder("Draw Layers");
+	}, []);
 
 	const debounceTimersRef = useRef<
 		Record<string, ReturnType<typeof setTimeout>>
 	>({});
 	const layerListenersRef = useRef<Record<string, () => void>>({});
 
-	const saveDrawLayer = useCallback(
+	const saveLayer = useCallback(
 		async (layerId: string) => {
 			if (!map) return;
 
@@ -63,7 +65,7 @@ export const useLayerPersistence = (
 				}
 			} catch (error) {
 				console.error(
-					`[useDrawLayerPersistence] Error saving layer ${layerId}:`,
+					`[useLayerPersistence] Error saving layer ${layerId}:`,
 					error,
 				);
 			}
@@ -71,55 +73,86 @@ export const useLayerPersistence = (
 		[map, getProject, addFile, getFile, deleteFile],
 	);
 
-	const saveDrawLayerDebounced = useCallback(
+	useEffect(() => {
+		if (!uploadedLayers.length) return;
+
+		uploadedLayers.forEach((layer) => {
+			if (autoSave) {
+				saveLayer(layer.id);
+			}
+		});
+	}, [uploadedLayers, autoSave, saveLayer]);
+
+	const saveLayerDebounced = useCallback(
 		(layerId: string) => {
 			if (!autoSave) return;
 
 			clearTimeout(debounceTimersRef.current[layerId]);
 
 			debounceTimersRef.current[layerId] = setTimeout(() => {
-				saveDrawLayer(layerId);
+				saveLayer(layerId);
 				delete debounceTimersRef.current[layerId];
 			}, debounceDelay);
 		},
-		[autoSave, debounceDelay, saveDrawLayer],
+		[autoSave, debounceDelay, saveLayer],
 	);
 
-	const restoreDrawLayers = useCallback(async () => {
-		if (!map || !mapReady || !autoRestore) return;
+	const restoreLayers = useCallback(
+		async (layerIds: string[]) => {
+			if (!map || !mapReady || !autoRestore) return;
 
-		const project = getProject();
-		if (!project) return;
+			const project = getProject();
+			if (!project) return;
 
-		const drawLayerIds = getLayerIdsFromFolder("Draw Layers");
-
-		await Promise.all(
-			drawLayerIds.map(async (layerId) => {
-				try {
-					const layerFile = getFile(project.id, layerId);
-					if (layerFile) {
-						await importLayerFromGeoJSON(map, layerId, layerFile.file);
+			await Promise.all(
+				layerIds.map(async (layerId) => {
+					try {
+						const layerFile = getFile(project.id, layerId);
+						if (layerFile) {
+							await importLayerFromGeoJSON(map, layerId, layerFile.file);
+						}
+					} catch (error) {
+						console.error(
+							`[useLayerPersistence] Error restoring layer ${layerId}:`,
+							error,
+						);
 					}
-				} catch (error) {
-					console.error(
-						`[useDrawLayerPersistence] Error restoring layer ${layerId}:`,
-						error,
-					);
-				}
-			}),
-		);
-	}, [map, mapReady, autoRestore, getProject, getFile]);
+				}),
+			);
+		},
+		[map, mapReady, autoRestore, getProject, getFile],
+	);
 
-	const saveAllDrawLayers = useCallback(async () => {
-		if (!map) return;
+	const saveAllLayers = useCallback(
+		async (layerIds: string[]) => {
+			if (!map) return;
 
-		const drawLayerIds = getLayerIdsFromFolder("Draw Layers");
-		await Promise.all(
-			drawLayerIds
-				.filter((layerId) => layerHasFeatures(map, layerId))
-				.map((layerId) => saveDrawLayer(layerId)),
-		);
-	}, [map, saveDrawLayer]);
+			await Promise.all(
+				layerIds
+					.filter((layerId) => layerHasFeatures(map, layerId))
+					.map((layerId) => saveLayer(layerId)),
+			);
+		},
+		[map, saveLayer],
+	);
+
+	const createLayerActions = useCallback(
+		(getLayerIds: () => string[]) => ({
+			restore: () => restoreLayers(getLayerIds()),
+			saveAll: () => saveAllLayers(getLayerIds()),
+		}),
+		[restoreLayers, saveAllLayers],
+	);
+
+	const uploadedActions = useMemo(
+		() => createLayerActions(getUploadedLayerIds),
+		[createLayerActions, getUploadedLayerIds],
+	);
+
+	const drawActions = useMemo(
+		() => createLayerActions(getDrawLayerIds),
+		[createLayerActions, getDrawLayerIds],
+	);
 
 	const setupAutoSave = useCallback(() => {
 		if (!map || !mapReady || !autoSave) return;
@@ -127,7 +160,7 @@ export const useLayerPersistence = (
 		Object.values(layerListenersRef.current).forEach((cleanup) => cleanup());
 		layerListenersRef.current = {};
 
-		getLayerIdsFromFolder("Draw Layers").forEach((layerId) => {
+		getDrawLayerIds().forEach((layerId) => {
 			const layer = getLayerById(
 				map,
 				layerId,
@@ -135,7 +168,7 @@ export const useLayerPersistence = (
 			const source = layer?.getSource();
 			if (!source) return;
 
-			const handleFeatureChange = () => saveDrawLayerDebounced(layerId);
+			const handleFeatureChange = () => saveLayerDebounced(layerId);
 
 			source.on("addfeature", handleFeatureChange);
 			source.on("removefeature", handleFeatureChange);
@@ -147,7 +180,7 @@ export const useLayerPersistence = (
 				source.un("changefeature", handleFeatureChange);
 			};
 		});
-	}, [map, mapReady, autoSave, saveDrawLayerDebounced]);
+	}, [map, mapReady, autoSave, saveLayerDebounced, getDrawLayerIds]);
 
 	useEffect(() => {
 		setupAutoSave();
@@ -156,9 +189,10 @@ export const useLayerPersistence = (
 	useEffect(() => {
 		const project = getProject();
 		if (project) {
-			restoreDrawLayers();
+			drawActions.restore();
+			uploadedActions.restore();
 		}
-	}, [getProject, restoreDrawLayers]);
+	}, [getProject, drawActions, uploadedActions]);
 
 	useEffect(() => {
 		const currentTimers = debounceTimersRef.current;
@@ -171,9 +205,11 @@ export const useLayerPersistence = (
 	}, []);
 
 	return {
-		saveDrawLayer,
-		saveAllDrawLayers,
-		restoreDrawLayers,
+		saveLayer,
+		saveAllDrawLayers: drawActions.saveAll,
+		restoreDrawLayers: drawActions.restore,
 		setupAutoSave,
+		saveAllUploadedLayers: uploadedActions.saveAll,
+		restoreUploadedLayers: uploadedActions.restore,
 	};
 };

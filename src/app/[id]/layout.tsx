@@ -1,6 +1,6 @@
 import { AddressSearch } from "@/components/AddressSearch/AddressSearch";
 import { DrawControlsContainer } from "@/components/DrawControls";
-import LayerManager from "@/components/LayerManager/LayerManager";
+import LayerManager from "@/components/Map/LayerManager/LayerManager";
 import Map from "@/components/Map/Map";
 import { MenuToggleButton } from "@/components/MenuToggleButton/MenuToggleButton";
 import ProjectGuard from "@/components/ProjectGuard/ProjectGuard";
