@@ -30,7 +30,6 @@ interface UseDrawLayerPersistenceOptions {
  *   saveDrawLayerDebounced - Saves a draw layer with debouncing to avoid excessive saves
  *   restoreDrawLayers - Restores all draw layers from IndexedDB for the current project
  *   setupAutoSave - Sets up auto-save listeners for all draw layers
- *   restoreDrawLayers - Restores all draw layers from IndexedDB for the current project
  */
 export const useDrawLayerPersistence = (
 	options: UseDrawLayerPersistenceOptions = {},
@@ -89,12 +88,10 @@ export const useDrawLayerPersistence = (
 		(layerId: string) => {
 			if (!autoSave) return;
 
-			// Clear existing timer for this layer
 			if (debounceTimersRef.current[layerId]) {
 				clearTimeout(debounceTimersRef.current[layerId]);
 			}
 
-			// Set new timer
 			debounceTimersRef.current[layerId] = setTimeout(() => {
 				saveDrawLayer(layerId);
 				delete debounceTimersRef.current[layerId];
@@ -113,23 +110,13 @@ export const useDrawLayerPersistence = (
 			);
 			return;
 		}
-
 		const drawLayerIds = getAllDrawLayerIds();
-		let restoredCount = 0;
 
 		for (const layerId of drawLayerIds) {
 			try {
 				const layerFile = getFile(project.id, layerId);
-
 				if (layerFile) {
-					const success = await importDrawLayerFromGeoJSON(
-						map,
-						layerId,
-						layerFile.file,
-					);
-					if (success) {
-						restoredCount++;
-					}
+					await importDrawLayerFromGeoJSON(map, layerId, layerFile.file);
 				}
 			} catch (error) {
 				console.error(
@@ -137,12 +124,6 @@ export const useDrawLayerPersistence = (
 					error,
 				);
 			}
-		}
-
-		if (restoredCount > 0) {
-			console.log(
-				`[useDrawLayerPersistence] Restored ${restoredCount} draw layers for project ${project.id}`,
-			);
 		}
 	}, [map, autoRestore, getProject, getFile]);
 
@@ -190,10 +171,6 @@ export const useDrawLayerPersistence = (
 				source.un("changefeature", handleFeatureChange);
 			};
 		});
-
-		console.log(
-			`[useDrawLayerPersistence] Auto-save enabled for ${drawLayerIds.length} draw layers`,
-		);
 	}, [map, autoSave, saveDrawLayerDebounced]);
 
 	useEffect(() => {

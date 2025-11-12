@@ -23,6 +23,7 @@ export interface LayerElement extends LayerElementBase {
 	visibility: boolean;
 	status: LayerStatus;
 	service?: LayerService;
+	zIndex?: number;
 }
 
 export interface ManagedLayer {

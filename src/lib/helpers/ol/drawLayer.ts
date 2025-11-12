@@ -1,6 +1,6 @@
 import { getLayerIdsInFolder } from "@/lib/helpers/ol/layer";
 import { getLayerById } from "@/lib/helpers/ol/map";
-import { useLayersStore } from "@/store/layers";
+import { useMapStore } from "@/store/map";
 import GeoJSON from "ol/format/GeoJSON";
 import VectorLayer from "ol/layer/Vector";
 import type Map from "ol/Map";
@@ -42,7 +42,7 @@ export const exportDrawLayerAsGeoJSON = (
 	try {
 		const geojsonObject = format.writeFeaturesObject(features, {
 			featureProjection: mapProjection,
-			dataProjection: "EPSG:4326", // Standard GeoJSON projection
+			dataProjection: "EPSG:4326",
 		});
 
 		const geojsonString = JSON.stringify(geojsonObject, null, 2);
@@ -79,19 +79,20 @@ export const importDrawLayerFromGeoJSON = async (
 		const mapProjection = map.getView().getProjection().getCode();
 
 		const features = format.readFeatures(geojsonObject, {
-			dataProjection: "EPSG:4326", // GeoJSON standard projection
+			dataProjection: "EPSG:4326",
 			featureProjection: mapProjection,
 		});
 
-		// Get or create the layer
-		let layer = getLayerById(map, layerId) as VectorLayer<VectorSource> | null;
+		const layer = getLayerById(
+			map,
+			layerId,
+		) as VectorLayer<VectorSource> | null;
 
 		if (!layer) {
-			// Create layer if it doesn't exist
-			const source = new VectorSource();
-			layer = new VectorLayer({ source });
-			layer.set("id", layerId);
-			map.addLayer(layer);
+			console.warn(
+				`[importDrawLayerFromGeoJSON] Layer ${layerId} not found. Layer should be initialized by LayerInitializer first.`,
+			);
+			return false;
 		}
 
 		const source = layer.getSource();
@@ -102,13 +103,8 @@ export const importDrawLayerFromGeoJSON = async (
 			return false;
 		}
 
-		// Clear existing features and add imported ones
 		source.clear();
 		source.addFeatures(features);
-
-		console.log(
-			`[importDrawLayerFromGeoJSON] Successfully imported ${features.length} features to layer ${layerId}`,
-		);
 		return true;
 	} catch (error) {
 		console.error(
@@ -141,38 +137,29 @@ export const drawLayerHasFeatures = (map: Map, layerId: string): boolean => {
 };
 
 /**
- * Returns the number of features in the draw layer.
- * @param {map} Map
- * @param {layerId} string
- * @return {number}
- * **/
-export const getDrawLayerFeatureCount = (map: Map, layerId: string): number => {
-	const layer = getLayerById(map, layerId) as VectorLayer<VectorSource> | null;
-
-	if (!layer) {
-		return 0;
-	}
-
-	const source = layer.getSource();
-	if (!source) {
-		return 0;
-	}
-
-	return source.getFeatures().length;
-};
-
-/**
- * Return an array of all draw layer IDs from the given set of flattened layer elements.
+ * Returns an array of draw layer ids.
+ * @returns {string[]} - Returns an array of draw layer ids.
+ * @throws {Error} - If an error occurs while getting draw layer IDs.
  */
 export const getAllDrawLayerIds = (): string[] => {
-	const { flattenedLayerElements } = useLayersStore.getState();
+	try {
+		const { config } = useMapStore.getState();
 
-	const drawLayerIdsSet = getLayerIdsInFolder(
-		flattenedLayerElements,
-		"Draw Layers",
-	);
-
-	return Array.from(drawLayerIdsSet);
+		if (config?.layerConfig?.subjectlayer?.elements) {
+			const drawLayerIdsSet = getLayerIdsInFolder(
+				config.layerConfig.subjectlayer.elements,
+				"Draw Layers",
+			);
+			const result = Array.from(drawLayerIdsSet);
+			if (result.length > 0) {
+				return result;
+			}
+		}
+	} catch (error) {
+		console.error("[getAllDrawLayerIds] Error getting draw layer IDs:", error);
+		return [];
+	}
+	return [];
 };
 
 /**

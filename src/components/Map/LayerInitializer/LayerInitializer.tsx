@@ -410,7 +410,8 @@ const LayerInitializer: FC = () => {
 				);
 				const layerType: "base" | "subject" = isBaseLayer ? "base" : "subject";
 
-				const zIndex = (layerType === "base" ? 0 : 100) + index; // Keep zIndex logic
+				const zIndex = index;
+
 				olLayer.setZIndex(zIndex);
 				olLayer.setVisible(layerConfig.visibility);
 				olLayer.setOpacity(1);
