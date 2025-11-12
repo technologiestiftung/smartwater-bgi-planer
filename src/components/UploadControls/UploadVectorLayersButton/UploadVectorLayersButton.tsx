@@ -3,8 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { useVectorUpload } from "@/components/UploadControls/hooks/useVectorUpload";
 import { generateLayerId, getFileName } from "@/lib/helpers/file";
-import { createVectorLayer } from "@/lib/helpers/ol/layer";
-import { fitMapToExtent } from "@/lib/helpers/ol/map";
+import { createVectorLayer, fitMapToExtent } from "@/lib/helpers/ol";
 import { useLayersStore } from "@/store/layers";
 import { ManagedLayer } from "@/store/layers/types";
 import { useMapStore } from "@/store/map";

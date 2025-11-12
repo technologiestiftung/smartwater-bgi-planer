@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { getLayerById } from "@/lib/helpers/ol/map";
+import { getLayerById } from "@/lib/helpers/ol";
 import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";
 import { CursorClickIcon } from "@phosphor-icons/react";

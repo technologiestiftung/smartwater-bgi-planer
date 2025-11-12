@@ -1,4 +1,4 @@
-import { getLayerIdsInFolder } from "@/lib/helpers/ol/layer";
+import { getLayerIdsInFolder } from "@/lib/helpers/ol";
 import { LayersState, ManagedLayer } from "@/store/layers/types";
 import { MapConfig } from "@/store/map/types";
 import { LayerStatus } from "@/types/shared";

@@ -6,19 +6,6 @@ import VectorSource from "ol/source/Vector";
 import proj4 from "proj4";
 
 /**
- * Retrieves the id of a layer from a map.
- * @param map The map to find the layer in.
- * @param id The id of the layer to find.
- * @return {string | null} The id of the layer if found, or null if not found.
- */
-export const getLayerById = (map: Map | null, id: string) => {
-	if (!map) return null;
-	return map.getAllLayers().find((l) => l.get("id") === id) as
-		| VectorLayer<VectorSource>
-		| undefined;
-};
-
-/**
  * Fits the map to the extent of a vector layer.
  * @param map The map to fit.
  * @param vectorLayer The vector layer to fit.

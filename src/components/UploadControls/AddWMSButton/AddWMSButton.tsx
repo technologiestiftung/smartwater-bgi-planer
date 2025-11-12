@@ -16,7 +16,7 @@ import {
 	generatePreviewUrl,
 	getBaseUrl,
 	validateWMSUrl,
-} from "@/lib/helpers/ol/layer";
+} from "@/lib/helpers/ol";
 import { useLayersStore } from "@/store/layers";
 import { ManagedLayer } from "@/store/layers/types";
 import { useMapStore } from "@/store/map";

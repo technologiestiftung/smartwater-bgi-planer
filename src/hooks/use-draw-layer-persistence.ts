@@ -1,10 +1,10 @@
 import {
-	drawLayerHasFeatures,
-	exportDrawLayerAsGeoJSON,
+	exportLayerAsGeoJSON,
 	getAllDrawLayerIds,
-	importDrawLayerFromGeoJSON,
-} from "@/lib/helpers/ol/drawLayer";
-import { getLayerById } from "@/lib/helpers/ol/map";
+	getLayerById,
+	importLayerFromGeoJSON,
+	layerHasFeatures,
+} from "@/lib/helpers/ol";
 import { useFilesStore } from "@/store/files";
 import { useMapStore } from "@/store/map";
 import { useProjectsStore } from "@/store/projects";
@@ -40,7 +40,7 @@ export const useDrawLayerPersistence = (
 			if (!project) return;
 
 			try {
-				const geoJsonFile = exportDrawLayerAsGeoJSON(map, layerId);
+				const geoJsonFile = exportLayerAsGeoJSON(map, layerId);
 
 				if (geoJsonFile) {
 					await addFile(project.id, layerId, geoJsonFile);
@@ -84,7 +84,7 @@ export const useDrawLayerPersistence = (
 				try {
 					const layerFile = getFile(project.id, layerId);
 					if (layerFile) {
-						await importDrawLayerFromGeoJSON(map, layerId, layerFile.file);
+						await importLayerFromGeoJSON(map, layerId, layerFile.file);
 					}
 				} catch (error) {
 					console.error(
@@ -102,7 +102,7 @@ export const useDrawLayerPersistence = (
 		const drawLayerIds = getAllDrawLayerIds();
 		await Promise.all(
 			drawLayerIds
-				.filter((layerId) => drawLayerHasFeatures(map, layerId))
+				.filter((layerId) => layerHasFeatures(map, layerId))
 				.map((layerId) => saveDrawLayer(layerId)),
 		);
 	}, [map, saveDrawLayer]);

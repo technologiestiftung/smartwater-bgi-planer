@@ -1,4 +1,4 @@
-import { getLayerById } from "@/lib/helpers/ol/map";
+import { getLayerById } from "@/lib/helpers/ol";
 import { useMapStore } from "@/store/map";
 import { Polygon } from "ol/geom";
 import VectorSource from "ol/source/Vector";

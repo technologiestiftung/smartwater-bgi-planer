@@ -2,8 +2,11 @@
 
 import { Button } from "@/components/ui/button";
 import { useVectorUpload } from "@/components/UploadControls/hooks/useVectorUpload";
-import { ensureVectorLayer } from "@/lib/helpers/ol/layer";
-import { fitMapToExtent, getLayerById } from "@/lib/helpers/ol/map";
+import {
+	ensureVectorLayer,
+	fitMapToExtent,
+	getLayerById,
+} from "@/lib/helpers/ol";
 import { useFilesStore } from "@/store/files";
 import { useMapStore } from "@/store/map";
 import { useProjectsStore } from "@/store/projects";
