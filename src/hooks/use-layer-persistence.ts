@@ -1,31 +1,45 @@
 import {
 	exportLayerAsGeoJSON,
-	getAllDrawLayerIds,
 	getLayerById,
+	getLayerIdsFromFolder,
 	importLayerFromGeoJSON,
 	layerHasFeatures,
 } from "@/lib/helpers/ol";
+import { useLayersStore } from "@/store";
 import { useFilesStore } from "@/store/files";
 import { useMapStore } from "@/store/map";
 import { useProjectsStore } from "@/store/projects";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 
-interface UseDrawLayerPersistenceOptions {
+interface UseLayerPersistenceOptions {
 	debounceDelay?: number;
 	autoSave?: boolean;
 	autoRestore?: boolean;
 }
 
-export const useDrawLayerPersistence = (
-	options: UseDrawLayerPersistenceOptions = {},
+export const useLayerPersistence = (
+	options: UseLayerPersistenceOptions = {},
 ) => {
 	const { debounceDelay = 1000, autoSave = true, autoRestore = true } = options;
 	const map = useMapStore((state) => state.map);
 	const mapReady = useMapStore((state) => state.isReady);
 	const getProject = useProjectsStore((state) => state.getProject);
 	const { addFile, getFile, deleteFile } = useFilesStore();
+	const { layers } = useLayersStore();
+
+	const uploadedLayers = useMemo(() => {
+		return Array.from(layers.values()).filter(
+			(layer) =>
+				layer.id.startsWith("uploaded_") ||
+				layer.id.startsWith("uploaded_wms_"),
+		);
+	}, [layers]);
+
+	useEffect(() => {
+		console.log("[use-layer-persistence] uploadedLayers::", uploadedLayers);
+	}, [uploadedLayers]);
 
 	const debounceTimersRef = useRef<
 		Record<string, ReturnType<typeof setTimeout>>
@@ -77,7 +91,7 @@ export const useDrawLayerPersistence = (
 		const project = getProject();
 		if (!project) return;
 
-		const drawLayerIds = getAllDrawLayerIds();
+		const drawLayerIds = getLayerIdsFromFolder("Draw Layers");
 
 		await Promise.all(
 			drawLayerIds.map(async (layerId) => {
@@ -99,7 +113,7 @@ export const useDrawLayerPersistence = (
 	const saveAllDrawLayers = useCallback(async () => {
 		if (!map) return;
 
-		const drawLayerIds = getAllDrawLayerIds();
+		const drawLayerIds = getLayerIdsFromFolder("Draw Layers");
 		await Promise.all(
 			drawLayerIds
 				.filter((layerId) => layerHasFeatures(map, layerId))
@@ -113,7 +127,7 @@ export const useDrawLayerPersistence = (
 		Object.values(layerListenersRef.current).forEach((cleanup) => cleanup());
 		layerListenersRef.current = {};
 
-		getAllDrawLayerIds().forEach((layerId) => {
+		getLayerIdsFromFolder("Draw Layers").forEach((layerId) => {
 			const layer = getLayerById(
 				map,
 				layerId,

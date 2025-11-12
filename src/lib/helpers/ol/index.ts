@@ -1,4 +1,3 @@
-export * from "./drawLayer";
 export * from "./geojson";
 export * from "./layer";
 export * from "./map";

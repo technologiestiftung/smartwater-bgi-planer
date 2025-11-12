@@ -1,5 +1,6 @@
 import { getFileName } from "@/lib/helpers/file";
 import { LayerElementBase, LayerFolder } from "@/store/layers/types";
+import { useMapStore } from "@/store/map";
 import { Feature } from "ol";
 import VectorLayer from "ol/layer/Vector";
 import type Map from "ol/Map";
@@ -89,3 +90,22 @@ export const createVectorLayer = (
 
 	return vectorLayer;
 };
+
+export const getLayerIdsFromFolder = (folderName: string): string[] => {
+	try {
+		const { config } = useMapStore.getState();
+		const elements = config?.layerConfig?.subjectlayer?.elements;
+
+		if (elements) {
+			return Array.from(getLayerIdsInFolder(elements, folderName));
+		}
+	} catch (error) {
+		console.error("[getAllDrawLayerIds] Error getting draw layer IDs:", error);
+	}
+	return [];
+};
+
+export const isDrawLayer = (layerId: string): boolean => {
+	return getLayerIdsFromFolder("Draw Layers").includes(layerId);
+};
+

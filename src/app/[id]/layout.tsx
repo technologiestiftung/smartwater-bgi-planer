@@ -1,6 +1,6 @@
 import { AddressSearch } from "@/components/AddressSearch/AddressSearch";
 import { DrawControlsContainer } from "@/components/DrawControls";
-import DrawLayerManager from "@/components/DrawLayerManager/DrawLayerManager";
+import LayerManager from "@/components/LayerManager/LayerManager";
 import Map from "@/components/Map/Map";
 import { MenuToggleButton } from "@/components/MenuToggleButton/MenuToggleButton";
 import ProjectGuard from "@/components/ProjectGuard/ProjectGuard";
@@ -28,7 +28,7 @@ export default async function ProjectLayout({
 					<AddressSearch />
 				</div>
 			</div>
-			<DrawLayerManager />
+			<LayerManager />
 		</ProjectGuard>
 	);
 }

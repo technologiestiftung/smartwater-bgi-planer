@@ -1,16 +1,16 @@
 "use client";
 
-import { useDrawLayerPersistence } from "@/hooks/use-draw-layer-persistence";
+import { useLayerPersistence } from "@/hooks/use-layer-persistence";
 import { useMapReady } from "@/hooks/use-map-ready";
 import { useProjectsStore } from "@/store/projects";
 import { FC, useEffect } from "react";
 
-const DrawLayerManager: FC = () => {
+const LayerManager: FC = () => {
 	const isMapReady = useMapReady();
 	const getProject = useProjectsStore((state) => state.getProject);
 
 	const { saveAllDrawLayers, restoreDrawLayers, setupAutoSave } =
-		useDrawLayerPersistence({
+		useLayerPersistence({
 			debounceDelay: 1000,
 			autoSave: true,
 			autoRestore: true,
@@ -45,4 +45,4 @@ const DrawLayerManager: FC = () => {
 	return null;
 };
 
-export default DrawLayerManager;
+export default LayerManager;
