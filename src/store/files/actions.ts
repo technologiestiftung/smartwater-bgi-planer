@@ -8,7 +8,13 @@ import { createFileKey, FilesState, FilesStore, LayerFile } from "./types";
 
 export const createAddFile =
 	(set: StoreApi<FilesStore>["setState"]) =>
-	async (projectId: string, layerId: string, file: File): Promise<void> => {
+	async (params: {
+		projectId: string;
+		layerId: string;
+		file: File;
+		displayFileName?: string;
+	}): Promise<void> => {
+		const { projectId, layerId, file, displayFileName } = params;
 		const key = createFileKey(projectId, layerId);
 		await storeFileBlob(projectId, layerId, file);
 		set((state: FilesState) => {
@@ -18,6 +24,7 @@ export const createAddFile =
 				layerId,
 				file,
 				uploadedAt: Date.now(),
+				displayFileName,
 			});
 			return { files: newFiles };
 		});

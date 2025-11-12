@@ -1,5 +1,9 @@
 import { getFileName } from "@/lib/helpers/file";
-import { LayerElementBase, LayerFolder } from "@/store/layers/types";
+import {
+	LayerElementBase,
+	LayerFolder,
+	ManagedLayer,
+} from "@/store/layers/types";
 import { useMapStore } from "@/store/map";
 import { Feature } from "ol";
 import VectorLayer from "ol/layer/Vector";
@@ -108,3 +112,24 @@ export const getLayerIdsFromFolder = (folderName: string): string[] => {
 export const isDrawLayer = (layerId: string): boolean => {
 	return getLayerIdsFromFolder("Draw Layers").includes(layerId);
 };
+
+export const createManagedLayer = (
+	layerId: string,
+	fileName: string,
+	olLayer: VectorLayer<VectorSource>,
+): ManagedLayer => ({
+	id: layerId,
+	config: {
+		id: layerId,
+		name: getFileName(fileName),
+		visibility: true,
+		status: "loaded",
+		elements: [],
+	},
+	olLayer,
+	status: "loaded",
+	visibility: true,
+	opacity: 1,
+	zIndex: 999,
+	layerType: "subject",
+});

@@ -3,6 +3,7 @@ export interface LayerFile {
 	layerId: string;
 	file: File;
 	uploadedAt: number;
+	displayFileName?: string;
 }
 
 export interface FilesState {
@@ -11,7 +12,12 @@ export interface FilesState {
 }
 
 export interface FilesActions {
-	addFile: (projectId: string, layerId: string, file: File) => Promise<void>;
+	addFile: (params: {
+		projectId: string;
+		layerId: string;
+		file: File;
+		displayFileName?: string;
+	}) => Promise<void>;
 	getFile: (projectId: string, layerId: string) => LayerFile | null;
 	deleteFile: (projectId: string, layerId: string) => Promise<void>;
 	deleteProjectFiles: (projectId: string) => Promise<void>;

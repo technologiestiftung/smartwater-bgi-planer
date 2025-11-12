@@ -1,4 +1,7 @@
 import {
+	createManagedLayer,
+	createVectorLayer,
+	DEFAULT_STYLE,
 	exportLayerAsGeoJSON,
 	getLayerById,
 	getLayerIdsFromFolder,
@@ -9,9 +12,11 @@ import { useLayersStore } from "@/store";
 import { useFilesStore } from "@/store/files";
 import { useMapStore } from "@/store/map";
 import { useProjectsStore } from "@/store/projects";
+import { Map } from "ol";
+import GeoJSON from "ol/format/GeoJSON";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 interface UseLayerPersistenceOptions {
 	debounceDelay?: number;
@@ -26,27 +31,14 @@ export const useLayerPersistence = (
 	const map = useMapStore((state) => state.map);
 	const mapReady = useMapStore((state) => state.isReady);
 	const getProject = useProjectsStore((state) => state.getProject);
-	const { addFile, getFile, deleteFile } = useFilesStore();
-	const { layers } = useLayersStore();
-
-	const uploadedLayers = useMemo(() => {
-		return Array.from(layers.values()).filter((layer) =>
-			layer.id.startsWith("uploaded_"),
-		);
-	}, [layers]);
-
-	const getUploadedLayerIds = useCallback(() => {
-		return uploadedLayers.map((layer) => layer.id);
-	}, [uploadedLayers]);
-
-	const getDrawLayerIds = useCallback(() => {
-		return getLayerIdsFromFolder("Draw Layers");
-	}, []);
+	const { addFile, getFile, deleteFile, getAllProjectFiles } = useFilesStore();
+	const { layers, addLayer } = useLayersStore();
 
 	const debounceTimersRef = useRef<
 		Record<string, ReturnType<typeof setTimeout>>
 	>({});
 	const layerListenersRef = useRef<Record<string, () => void>>({});
+	const hasRestoredRef = useRef(false);
 
 	const saveLayer = useCallback(
 		async (layerId: string) => {
@@ -59,7 +51,11 @@ export const useLayerPersistence = (
 				const geoJsonFile = exportLayerAsGeoJSON(map, layerId);
 
 				if (geoJsonFile) {
-					await addFile(project.id, layerId, geoJsonFile);
+					await addFile({
+						projectId: project.id,
+						layerId,
+						file: geoJsonFile,
+					});
 				} else if (getFile(project.id, layerId)) {
 					await deleteFile(project.id, layerId);
 				}
@@ -72,16 +68,6 @@ export const useLayerPersistence = (
 		},
 		[map, getProject, addFile, getFile, deleteFile],
 	);
-
-	useEffect(() => {
-		if (!uploadedLayers.length) return;
-
-		uploadedLayers.forEach((layer) => {
-			if (autoSave) {
-				saveLayer(layer.id);
-			}
-		});
-	}, [uploadedLayers, autoSave, saveLayer]);
 
 	const saveLayerDebounced = useCallback(
 		(layerId: string) => {
@@ -97,8 +83,51 @@ export const useLayerPersistence = (
 		[autoSave, debounceDelay, saveLayer],
 	);
 
+	const restoreUploadedLayer = useCallback(
+		async (
+			mapInstance: Map,
+			layerId: string,
+			layerFile: { file: File; displayFileName?: string },
+		): Promise<void> => {
+			try {
+				const geojsonText = await layerFile.file.text();
+				const geojsonObject = JSON.parse(geojsonText);
+
+				const format = new GeoJSON();
+				const features = format.readFeatures(geojsonObject, {
+					dataProjection: "EPSG:4326",
+					featureProjection: mapInstance.getView().getProjection().getCode(),
+				});
+
+				// Use the stored original filename as display name
+				const displayName =
+					layerFile.displayFileName ||
+					layerFile.file.name.replace(/\.(geojson|json)$/i, "");
+
+				console.log("[use-layer-persistence] displayName::", displayName);
+
+				const vectorLayer = createVectorLayer(
+					features,
+					displayName,
+					layerId,
+					DEFAULT_STYLE,
+				);
+
+				mapInstance.addLayer(vectorLayer);
+				addLayer(createManagedLayer(layerId, displayName, vectorLayer));
+			} catch (error) {
+				console.error(
+					`[restoreUploadedLayer] Error restoring layer ${layerId}:`,
+					error,
+				);
+				throw error;
+			}
+		},
+		[addLayer],
+	);
+
 	const restoreLayers = useCallback(
-		async (layerIds: string[]) => {
+		async (layerIds: string[], type: "draw" | "uploaded") => {
 			if (!map || !mapReady || !autoRestore) return;
 
 			const project = getProject();
@@ -109,7 +138,14 @@ export const useLayerPersistence = (
 					try {
 						const layerFile = getFile(project.id, layerId);
 						if (layerFile) {
-							await importLayerFromGeoJSON(map, layerId, layerFile.file);
+							if (type === "uploaded") {
+								await restoreUploadedLayer(map, layerId, {
+									file: layerFile.file,
+									displayFileName: layerFile.displayFileName,
+								});
+							} else {
+								await importLayerFromGeoJSON(map, layerId, layerFile.file);
+							}
 						}
 					} catch (error) {
 						console.error(
@@ -120,7 +156,7 @@ export const useLayerPersistence = (
 				}),
 			);
 		},
-		[map, mapReady, autoRestore, getProject, getFile],
+		[map, mapReady, autoRestore, getProject, getFile, restoreUploadedLayer],
 	);
 
 	const saveAllLayers = useCallback(
@@ -136,23 +172,34 @@ export const useLayerPersistence = (
 		[map, saveLayer],
 	);
 
-	const createLayerActions = useCallback(
-		(getLayerIds: () => string[]) => ({
-			restore: () => restoreLayers(getLayerIds()),
-			saveAll: () => saveAllLayers(getLayerIds()),
-		}),
-		[restoreLayers, saveAllLayers],
-	);
+	const restoreDrawLayers = useCallback(async () => {
+		const drawLayerIds = getLayerIdsFromFolder("Draw Layers");
+		await restoreLayers(drawLayerIds, "draw");
+	}, [restoreLayers]);
 
-	const uploadedActions = useMemo(
-		() => createLayerActions(getUploadedLayerIds),
-		[createLayerActions, getUploadedLayerIds],
-	);
+	const restoreUploadedLayers = useCallback(async () => {
+		const project = getProject();
+		if (!project) return;
 
-	const drawActions = useMemo(
-		() => createLayerActions(getDrawLayerIds),
-		[createLayerActions, getDrawLayerIds],
-	);
+		const allProjectFiles = getAllProjectFiles(project.id);
+		const uploadedLayerIds = allProjectFiles
+			.filter((file) => file.layerId.startsWith("uploaded_"))
+			.map((file) => file.layerId);
+
+		await restoreLayers(uploadedLayerIds, "uploaded");
+	}, [getProject, getAllProjectFiles, restoreLayers]);
+
+	const saveAllDrawLayers = useCallback(async () => {
+		const drawLayerIds = getLayerIdsFromFolder("Draw Layers");
+		await saveAllLayers(drawLayerIds);
+	}, [saveAllLayers]);
+
+	const saveAllUploadedLayers = useCallback(async () => {
+		const uploadedLayerIds = Array.from(layers.values())
+			.filter((layer) => layer.id.startsWith("uploaded_"))
+			.map((layer) => layer.id);
+		await saveAllLayers(uploadedLayerIds);
+	}, [layers, saveAllLayers]);
 
 	const setupAutoSave = useCallback(() => {
 		if (!map || !mapReady || !autoSave) return;
@@ -160,7 +207,8 @@ export const useLayerPersistence = (
 		Object.values(layerListenersRef.current).forEach((cleanup) => cleanup());
 		layerListenersRef.current = {};
 
-		getDrawLayerIds().forEach((layerId) => {
+		const drawLayerIds = getLayerIdsFromFolder("Draw Layers");
+		drawLayerIds.forEach((layerId) => {
 			const layer = getLayerById(
 				map,
 				layerId,
@@ -180,20 +228,49 @@ export const useLayerPersistence = (
 				source.un("changefeature", handleFeatureChange);
 			};
 		});
-	}, [map, mapReady, autoSave, saveLayerDebounced, getDrawLayerIds]);
+	}, [map, mapReady, autoSave, saveLayerDebounced]);
 
+	// Auto-save setup
 	useEffect(() => {
 		setupAutoSave();
 	}, [setupAutoSave]);
 
+	// One-time restore on mount
 	useEffect(() => {
-		const project = getProject();
-		if (project) {
-			drawActions.restore();
-			uploadedActions.restore();
-		}
-	}, [getProject, drawActions, uploadedActions]);
+		if (!map || !mapReady || !autoRestore) return;
 
+		const project = getProject();
+		if (!project || hasRestoredRef.current) return;
+
+		hasRestoredRef.current = true;
+
+		(async () => {
+			await restoreDrawLayers();
+			await restoreUploadedLayers();
+		})();
+	}, [
+		map,
+		mapReady,
+		autoRestore,
+		getProject,
+		restoreDrawLayers,
+		restoreUploadedLayers,
+	]);
+
+	// Auto-save uploaded layers when they change
+	useEffect(() => {
+		const uploadedLayersList = Array.from(layers.values()).filter((layer) =>
+			layer.id.startsWith("uploaded_"),
+		);
+
+		if (!uploadedLayersList.length || !autoSave) return;
+
+		uploadedLayersList.forEach((layer) => {
+			saveLayer(layer.id);
+		});
+	}, [layers, autoSave, saveLayer]);
+
+	// Cleanup
 	useEffect(() => {
 		const currentTimers = debounceTimersRef.current;
 		const currentListeners = layerListenersRef.current;
@@ -206,10 +283,10 @@ export const useLayerPersistence = (
 
 	return {
 		saveLayer,
-		saveAllDrawLayers: drawActions.saveAll,
-		restoreDrawLayers: drawActions.restore,
+		saveAllDrawLayers,
+		restoreDrawLayers,
 		setupAutoSave,
-		saveAllUploadedLayers: uploadedActions.saveAll,
-		restoreUploadedLayers: uploadedActions.restore,
+		saveAllUploadedLayers,
+		restoreUploadedLayers,
 	};
 };
