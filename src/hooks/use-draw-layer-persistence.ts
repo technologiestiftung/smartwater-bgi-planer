@@ -18,19 +18,6 @@ interface UseDrawLayerPersistenceOptions {
 	autoRestore?: boolean;
 }
 
-/**
- * Hook for managing draw layers persistence in IndexedDB.
- *
- * @param options - Options for managing draw layer persistence
- * @property debounceDelay - Debounce delay for saving draw layers (default 1000ms)
- * @property autoSave - Enables auto-saving draw layers when map changes (default true)
- * @property autoRestore - Enables auto-restoring draw layers when project changes (default true)
- * @returns - An object containing the following methods:
- *   saveDrawLayer - Saves a single draw layer to IndexedDB
- *   saveDrawLayerDebounced - Saves a draw layer with debouncing to avoid excessive saves
- *   restoreDrawLayers - Restores all draw layers from IndexedDB for the current project
- *   setupAutoSave - Sets up auto-save listeners for all draw layers
- */
 export const useDrawLayerPersistence = (
 	options: UseDrawLayerPersistenceOptions = {},
 ) => {
@@ -40,7 +27,6 @@ export const useDrawLayerPersistence = (
 	const getProject = useProjectsStore((state) => state.getProject);
 	const { addFile, getFile, deleteFile } = useFilesStore();
 
-	// Refs for debouncing and cleanup
 	const debounceTimersRef = useRef<
 		Record<string, ReturnType<typeof setTimeout>>
 	>({});
@@ -51,29 +37,15 @@ export const useDrawLayerPersistence = (
 			if (!map) return;
 
 			const project = getProject();
-			if (!project) {
-				console.warn(
-					`[useDrawLayerPersistence] No active project for saving layer ${layerId}`,
-				);
-				return;
-			}
+			if (!project) return;
 
 			try {
 				const geoJsonFile = exportDrawLayerAsGeoJSON(map, layerId);
 
 				if (geoJsonFile) {
 					await addFile(project.id, layerId, geoJsonFile);
-					console.log(
-						`[useDrawLayerPersistence] Saved layer ${layerId} with ${geoJsonFile.size} bytes`,
-					);
-				} else {
-					const existingFile = getFile(project.id, layerId);
-					if (existingFile) {
-						await deleteFile(project.id, layerId);
-						console.log(
-							`[useDrawLayerPersistence] Removed empty layer file for ${layerId}`,
-						);
-					}
+				} else if (getFile(project.id, layerId)) {
+					await deleteFile(project.id, layerId);
 				}
 			} catch (error) {
 				console.error(
@@ -89,9 +61,7 @@ export const useDrawLayerPersistence = (
 		(layerId: string) => {
 			if (!autoSave) return;
 
-			if (debounceTimersRef.current[layerId]) {
-				clearTimeout(debounceTimersRef.current[layerId]);
-			}
+			clearTimeout(debounceTimersRef.current[layerId]);
 
 			debounceTimersRef.current[layerId] = setTimeout(() => {
 				saveDrawLayer(layerId);
@@ -105,38 +75,36 @@ export const useDrawLayerPersistence = (
 		if (!map || !mapReady || !autoRestore) return;
 
 		const project = getProject();
-		if (!project) {
-			console.warn(
-				"[useDrawLayerPersistence] No active project for restoration",
-			);
-			return;
-		}
+		if (!project) return;
+
 		const drawLayerIds = getAllDrawLayerIds();
 
-		for (const layerId of drawLayerIds) {
-			try {
-				const layerFile = getFile(project.id, layerId);
-				if (layerFile) {
-					await importDrawLayerFromGeoJSON(map, layerId, layerFile.file);
+		await Promise.all(
+			drawLayerIds.map(async (layerId) => {
+				try {
+					const layerFile = getFile(project.id, layerId);
+					if (layerFile) {
+						await importDrawLayerFromGeoJSON(map, layerId, layerFile.file);
+					}
+				} catch (error) {
+					console.error(
+						`[useDrawLayerPersistence] Error restoring layer ${layerId}:`,
+						error,
+					);
 				}
-			} catch (error) {
-				console.error(
-					`[useDrawLayerPersistence] Error restoring layer ${layerId}:`,
-					error,
-				);
-			}
-		}
+			}),
+		);
 	}, [map, mapReady, autoRestore, getProject, getFile]);
 
 	const saveAllDrawLayers = useCallback(async () => {
 		if (!map) return;
 
 		const drawLayerIds = getAllDrawLayerIds();
-		const savePromises = drawLayerIds
-			.filter((layerId) => drawLayerHasFeatures(map, layerId))
-			.map((layerId) => saveDrawLayer(layerId));
-
-		await Promise.all(savePromises);
+		await Promise.all(
+			drawLayerIds
+				.filter((layerId) => drawLayerHasFeatures(map, layerId))
+				.map((layerId) => saveDrawLayer(layerId)),
+		);
 	}, [map, saveDrawLayer]);
 
 	const setupAutoSave = useCallback(() => {
@@ -145,27 +113,20 @@ export const useDrawLayerPersistence = (
 		Object.values(layerListenersRef.current).forEach((cleanup) => cleanup());
 		layerListenersRef.current = {};
 
-		const drawLayerIds = getAllDrawLayerIds();
-
-		drawLayerIds.forEach((layerId) => {
+		getAllDrawLayerIds().forEach((layerId) => {
 			const layer = getLayerById(
 				map,
 				layerId,
 			) as VectorLayer<VectorSource> | null;
-
-			if (!layer) return;
-
-			const source = layer.getSource();
+			const source = layer?.getSource();
 			if (!source) return;
 
 			const handleFeatureChange = () => saveDrawLayerDebounced(layerId);
 
-			// Listen to all feature events
 			source.on("addfeature", handleFeatureChange);
 			source.on("removefeature", handleFeatureChange);
 			source.on("changefeature", handleFeatureChange);
 
-			// Store cleanup function
 			layerListenersRef.current[layerId] = () => {
 				source.un("addfeature", handleFeatureChange);
 				source.un("removefeature", handleFeatureChange);

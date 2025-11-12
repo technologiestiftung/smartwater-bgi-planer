@@ -6,47 +6,50 @@ import VectorLayer from "ol/layer/Vector";
 import type Map from "ol/Map";
 import VectorSource from "ol/source/Vector";
 
+const format = new GeoJSON();
+
+const getVectorLayer = (map: Map, layerId: string) => {
+	return getLayerById(map, layerId) as VectorLayer<VectorSource> | null;
+};
+
+const getLayerSource = (layer: VectorLayer<VectorSource> | null) => {
+	return layer?.getSource() ?? null;
+};
+
 /**
- * Exports a draw layer as a GeoJSON file.
- * @param {map} Map
- * @param {layerId} string
- * @return {File | null} The file containing the layer data.
- * @throws {Error} if the layer could not be exported.
+ * Exports a function that exports a layer as a GeoJSON file.
+ * @param {map} The map containing the layer to export.
+ * @param {layerId} The ID of the layer to export.
+ * @return {File | null} The exported GeoJSON file.
  */
 export const exportDrawLayerAsGeoJSON = (
 	map: Map,
 	layerId: string,
 ): File | null => {
-	const layer = getLayerById(map, layerId) as VectorLayer<VectorSource> | null;
-
+	const layer = getVectorLayer(map, layerId);
 	if (!layer) {
 		console.warn(`[exportDrawLayerAsGeoJSON] Layer ${layerId} not found`);
 		return null;
 	}
 
-	const source = layer.getSource();
+	const source = getLayerSource(layer);
 	if (!source) {
 		console.warn(`[exportDrawLayerAsGeoJSON] Layer ${layerId} has no source`);
 		return null;
 	}
 
 	const features = source.getFeatures();
-
-	if (features.length === 0) {
-		return null;
-	}
-
-	const format = new GeoJSON();
-	const mapProjection = map.getView().getProjection().getCode();
+	if (features.length === 0) return null;
 
 	try {
 		const geojsonObject = format.writeFeaturesObject(features, {
-			featureProjection: mapProjection,
+			featureProjection: map.getView().getProjection().getCode(),
 			dataProjection: "EPSG:4326",
 		});
 
-		const geojsonString = JSON.stringify(geojsonObject, null, 2);
-		const blob = new Blob([geojsonString], { type: "application/json" });
+		const blob = new Blob([JSON.stringify(geojsonObject, null, 2)], {
+			type: "application/json",
+		});
 
 		return new File([blob], `${layerId}.geojson`, { type: "application/json" });
 	} catch (error) {
@@ -59,12 +62,11 @@ export const exportDrawLayerAsGeoJSON = (
 };
 
 /**
- * This function imports a draw layer from a GeoJSON file into a Map.
- * @param {map} Map
- * @param {layerId} string
- * @param {file} File
- * @returns Promise<boolean>
- * @throws Error if the layer could not be imported.
+ * Import a layer from a GeoJSON file.
+ * @param {map} The map which the layer belongs to.
+ * @param {layerId} The id of the layer.
+ * @param {file} The GeoJSON file to import.
+ * @returns {Promise<boolean} A promise which resolves when the layer is imported successfully.
  */
 export const importDrawLayerFromGeoJSON = async (
 	map: Map,
@@ -72,22 +74,13 @@ export const importDrawLayerFromGeoJSON = async (
 	file: File,
 ): Promise<boolean> => {
 	try {
-		const geojsonText = await file.text();
-		const geojsonObject = JSON.parse(geojsonText);
-
-		const format = new GeoJSON();
-		const mapProjection = map.getView().getProjection().getCode();
-
+		const geojsonObject = JSON.parse(await file.text());
 		const features = format.readFeatures(geojsonObject, {
 			dataProjection: "EPSG:4326",
-			featureProjection: mapProjection,
+			featureProjection: map.getView().getProjection().getCode(),
 		});
 
-		const layer = getLayerById(
-			map,
-			layerId,
-		) as VectorLayer<VectorSource> | null;
-
+		const layer = getVectorLayer(map, layerId);
 		if (!layer) {
 			console.warn(
 				`[importDrawLayerFromGeoJSON] Layer ${layerId} not found. Layer should be initialized by LayerInitializer first.`,
@@ -95,7 +88,7 @@ export const importDrawLayerFromGeoJSON = async (
 			return false;
 		}
 
-		const source = layer.getSource();
+		const source = getLayerSource(layer);
 		if (!source) {
 			console.error(
 				`[importDrawLayerFromGeoJSON] Layer ${layerId} has no source`,
@@ -116,58 +109,35 @@ export const importDrawLayerFromGeoJSON = async (
 };
 
 /**
- * Returns true if the layer has features, otherwise false.
+ * drawLayerHasFeatures returns true if the layer has features, otherwise false.
  * @param {map} Map
  * @param {layerId} string
  * @return {boolean}
- * **/
+ */
 export const drawLayerHasFeatures = (map: Map, layerId: string): boolean => {
-	const layer = getLayerById(map, layerId) as VectorLayer<VectorSource> | null;
-
-	if (!layer) {
-		return false;
-	}
-
-	const source = layer.getSource();
-	if (!source) {
-		return false;
-	}
-
-	return source.getFeatures().length > 0;
+	const layer = getVectorLayer(map, layerId);
+	const source = getLayerSource(layer);
+	return source ? source.getFeatures().length > 0 : false;
 };
 
 /**
- * Returns an array of draw layer ids.
- * @returns {string[]} - Returns an array of draw layer ids.
- * @throws {Error} - If an error occurs while getting draw layer IDs.
+ * Returns an array of all draw layer IDs in the current project.
+ * @return {string[]} An array of draw layer IDs.
  */
 export const getAllDrawLayerIds = (): string[] => {
 	try {
 		const { config } = useMapStore.getState();
+		const elements = config?.layerConfig?.subjectlayer?.elements;
 
-		if (config?.layerConfig?.subjectlayer?.elements) {
-			const drawLayerIdsSet = getLayerIdsInFolder(
-				config.layerConfig.subjectlayer.elements,
-				"Draw Layers",
-			);
-			const result = Array.from(drawLayerIdsSet);
-			if (result.length > 0) {
-				return result;
-			}
+		if (elements) {
+			return Array.from(getLayerIdsInFolder(elements, "Draw Layers"));
 		}
 	} catch (error) {
 		console.error("[getAllDrawLayerIds] Error getting draw layer IDs:", error);
-		return [];
 	}
 	return [];
 };
 
-/**
- * Checks if a given layerId is a draw layer.
- * @param layerId - The id of the layer to check.
- * @returns {boolean} - True if the layer is a draw layer, false otherwise.
- */
 export const isDrawLayer = (layerId: string): boolean => {
-	const drawLayerIds = getAllDrawLayerIds();
-	return drawLayerIds.includes(layerId);
+	return getAllDrawLayerIds().includes(layerId);
 };
