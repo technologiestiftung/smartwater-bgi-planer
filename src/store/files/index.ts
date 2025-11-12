@@ -1,14 +1,17 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { FilesStore, FilesState } from "./types";
-import { filesStorage } from "./storage";
 import {
+	createAddDrawLayerFile,
 	createAddFile,
-	createGetFile,
+	createDeleteDrawLayerFiles,
 	createDeleteFile,
 	createDeleteProjectFiles,
 	createGetAllProjectFiles,
+	createGetDrawLayerFiles,
+	createGetFile,
 } from "./actions";
+import { filesStorage } from "./storage";
+import { FilesState, FilesStore } from "./types";
 
 const initialState: FilesState = {
 	files: new Map(),
@@ -24,6 +27,9 @@ export const useFilesStore = create<FilesStore>()(
 			deleteFile: createDeleteFile(set),
 			deleteProjectFiles: createDeleteProjectFiles(set),
 			getAllProjectFiles: createGetAllProjectFiles(get),
+			getDrawLayerFiles: createGetDrawLayerFiles(get),
+			deleteDrawLayerFiles: createDeleteDrawLayerFiles(set),
+			addDrawLayerFile: createAddDrawLayerFile(set),
 			setHasHydrated: (state) => set({ hasHydrated: state }),
 		}),
 		{
@@ -37,5 +43,5 @@ export const useFilesStore = create<FilesStore>()(
 );
 
 // Re-export types and utilities
-export * from "./types";
 export * from "./storage";
+export * from "./types";

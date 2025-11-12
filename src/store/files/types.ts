@@ -17,6 +17,16 @@ export interface FilesActions {
 	deleteProjectFiles: (projectId: string) => Promise<void>;
 	getAllProjectFiles: (projectId: string) => LayerFile[];
 	setHasHydrated: (state: boolean) => void;
+	getDrawLayerFiles: (projectId: string, drawLayerIds: string[]) => LayerFile[];
+	deleteDrawLayerFiles: (
+		projectId: string,
+		drawLayerIds: string[],
+	) => Promise<void>;
+	addDrawLayerFile: (
+		projectId: string,
+		layerId: string,
+		geoJsonContent: string,
+	) => Promise<void>;
 }
 
 export type FilesStore = FilesState & FilesActions;
