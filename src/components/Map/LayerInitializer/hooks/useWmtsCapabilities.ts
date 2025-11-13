@@ -1,3 +1,5 @@
+import { LayerElement } from "@/store/layers/types";
+import { MapConfig } from "@/store/map/types";
 import WMTSCapabilities from "ol/format/WMTSCapabilities";
 import { useEffect, useState } from "react";
 
@@ -6,8 +8,8 @@ interface WMTSCapabilitiesMap {
 }
 
 export const useWmtsCapabilities = (
-	config: any,
-	flattenedLayerElements: any[],
+	config: MapConfig | null,
+	flattenedLayerElements: LayerElement[],
 ) => {
 	const [wmtsCapabilities, setWmtsCapabilities] = useState<WMTSCapabilitiesMap>(
 		{},
