@@ -258,6 +258,7 @@ export const useLayerPersistence = (
 	]);
 
 	// Auto-save uploaded layers when they change
+	// we might don't need this, since uploaded layers should not change
 	useEffect(() => {
 		const uploadedLayersList = Array.from(layers.values()).filter((layer) =>
 			layer.id.startsWith("uploaded_"),

@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayerPersistence } from "@/hooks/use-layer-persistence";
+import { useLayerPersistence } from "@/components/Map/LayerManager/hooks/useLayerPersistence";
 import { useMapReady } from "@/hooks/use-map-ready";
 import { FC, useEffect } from "react";
 
