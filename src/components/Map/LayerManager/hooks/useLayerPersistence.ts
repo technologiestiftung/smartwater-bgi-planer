@@ -1,10 +1,13 @@
 import { createLayerByType } from "@/components/Map/LayerInitializer/shared/layerFactory";
 import {
 	createManagedLayer,
+	createManagedLayerFromConfig,
 	createVectorLayer,
 	DEFAULT_STYLE,
 	ensureVectorLayer,
 	exportLayerAsGeoJSON,
+	generatePreviewUrl,
+	getBaseUrl,
 	getLayerById,
 	getLayerIdsFromFolder,
 	importLayerFromGeoJSON,
@@ -43,7 +46,6 @@ export const useLayerPersistence = (
 	const layerListenersRef = useRef<Record<string, () => void>>({});
 	const hasRestoredRef = useRef(false);
 
-	// Save WMS layer configuration
 	const saveWmsLayer = useCallback(
 		async (layerId: string, project: any) => {
 			if (!map) return;
@@ -55,6 +57,8 @@ export const useLayerPersistence = (
 			if (!(source instanceof TileWMS)) return;
 
 			const wmsParams = source.getParams();
+			const previewUrl = wmsLayer.get("previewUrl");
+
 			const serviceConfig: LayerService = {
 				id: layerId,
 				name: wmsLayer.get("title") || "WMS Layer",
@@ -66,6 +70,7 @@ export const useLayerPersistence = (
 				transparent: wmsParams.TRANSPARENT !== false,
 				singleTile: false,
 				crs: wmsParams.CRS || wmsParams.SRS,
+				...(previewUrl && { preview: { src: previewUrl } }),
 			};
 
 			await addFile({
@@ -131,14 +136,44 @@ export const useLayerPersistence = (
 		[autoSave, debounceDelay, saveLayer],
 	);
 
+	// Setup WMS layer properties
+	const setupWmsLayerProperties = useCallback(
+		(params: {
+			olLayer: any;
+			layerId: string;
+			serviceConfig: LayerService;
+			displayFileName?: string;
+		}) => {
+			const { olLayer, layerId, serviceConfig } = params;
+
+			const baseUrl = getBaseUrl(serviceConfig.url || "");
+			const previewUrl =
+				serviceConfig.preview?.src ||
+				generatePreviewUrl(
+					baseUrl,
+					serviceConfig.layers || "",
+					serviceConfig.version || "1.3.0",
+				);
+
+			olLayer.set("id", layerId);
+			olLayer.set("name", serviceConfig.name);
+			if (previewUrl) {
+				olLayer.set("previewUrl", previewUrl);
+			}
+		},
+		[],
+	);
+
 	// Restore WMS layer from config
 	const restoreWmsLayer = useCallback(
-		async (
-			mapInstance: Map,
-			layerId: string,
-			serviceConfig: LayerService,
-			displayFileName?: string,
-		) => {
+		async (params: {
+			mapInstance: Map;
+			layerId: string;
+			serviceConfig: LayerService;
+			displayFileName?: string;
+		}) => {
+			const { mapInstance, layerId, serviceConfig, displayFileName } = params;
+
 			const {
 				layer: olLayer,
 				status,
@@ -152,41 +187,37 @@ export const useLayerPersistence = (
 				throw new Error(`Failed to create WMS layer: ${error}`);
 			}
 
-			olLayer.set("id", layerId);
-			olLayer.set("title", displayFileName || serviceConfig.name);
+			setupWmsLayerProperties({
+				olLayer,
+				layerId,
+				serviceConfig,
+				displayFileName,
+			});
 			mapInstance.addLayer(olLayer);
 
-			const managedLayer = {
-				id: layerId,
-				config: {
-					id: layerId,
-					name: displayFileName || serviceConfig.name,
-					visibility: true,
-					status: "loaded" as const,
-					elements: [],
-					service: serviceConfig,
-				},
+			const managedLayer = createManagedLayerFromConfig({
+				layerId,
+				name: displayFileName || serviceConfig.name,
 				olLayer,
-				status: "loaded" as const,
-				visibility: true,
-				opacity: 1,
-				zIndex: 999,
-				layerType: "subject" as const,
-			};
-
+				zIndex: 998,
+				layerType: "subject",
+				service: serviceConfig,
+			});
 			addLayer(managedLayer);
 		},
-		[addLayer],
+		[addLayer, setupWmsLayerProperties],
 	);
 
 	// Restore vector layer from GeoJSON
 	const restoreVectorLayer = useCallback(
-		async (
-			mapInstance: Map,
-			layerId: string,
-			geojsonText: string,
-			displayFileName?: string,
-		) => {
+		async (params: {
+			mapInstance: Map;
+			layerId: string;
+			geojsonText: string;
+			displayFileName?: string;
+		}) => {
+			const { mapInstance, layerId, geojsonText, displayFileName } = params;
+
 			const geojsonObject = JSON.parse(geojsonText);
 			const format = new GeoJSON();
 			const features = format.readFeatures(geojsonObject, {
@@ -196,12 +227,12 @@ export const useLayerPersistence = (
 
 			const displayName =
 				displayFileName || layerId.replace(/\.(geojson|json)$/i, "");
-			const vectorLayer = createVectorLayer(
+			const vectorLayer = createVectorLayer({
 				features,
-				displayName,
+				fileName: displayName,
 				layerId,
-				DEFAULT_STYLE,
-			);
+				style: DEFAULT_STYLE,
+			});
 
 			mapInstance.addLayer(vectorLayer);
 			addLayer(createManagedLayer(layerId, displayName, vectorLayer));
@@ -226,19 +257,19 @@ export const useLayerPersistence = (
 
 				if (layerId.includes("uploaded_wms_")) {
 					const serviceConfig: LayerService = JSON.parse(fileContent);
-					await restoreWmsLayer(
+					await restoreWmsLayer({
 						mapInstance,
 						layerId,
 						serviceConfig,
-						layerFile.displayFileName,
-					);
+						displayFileName: layerFile.displayFileName,
+					});
 				} else {
-					await restoreVectorLayer(
+					await restoreVectorLayer({
 						mapInstance,
 						layerId,
-						fileContent,
-						layerFile.displayFileName,
-					);
+						geojsonText: fileContent,
+						displayFileName: layerFile.displayFileName,
+					});
 				}
 			} catch (error) {
 				console.error(

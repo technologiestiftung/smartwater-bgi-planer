@@ -2,6 +2,7 @@ import { getFileName } from "@/lib/helpers/file";
 import {
 	LayerElementBase,
 	LayerFolder,
+	LayerService,
 	ManagedLayer,
 } from "@/store/layers/types";
 import { useMapStore } from "@/store/map";
@@ -78,12 +79,13 @@ export const getLayerById = (map: Map | null, id: string) => {
 		| undefined;
 };
 
-export const createVectorLayer = (
-	features: Feature[],
-	fileName: string,
-	layerId: string,
-	style: Style,
-) => {
+export const createVectorLayer = (params: {
+	features: Feature[];
+	fileName: string;
+	layerId: string;
+	style: Style;
+}) => {
+	const { features, fileName, layerId, style } = params;
 	const vectorLayer = new VectorLayer({
 		source: new VectorSource({ features }),
 		style: style,
@@ -133,3 +135,39 @@ export const createManagedLayer = (
 	zIndex: 999,
 	layerType: "subject",
 });
+
+export const createManagedLayerFromConfig = (params: {
+	layerId: string;
+	name: string;
+	olLayer: any;
+	zIndex?: number;
+	layerType?: "base" | "subject";
+	service?: LayerService;
+}): ManagedLayer => {
+	const {
+		layerId,
+		name,
+		olLayer,
+		zIndex = 999,
+		layerType = "subject",
+		service,
+	} = params;
+
+	return {
+		id: layerId,
+		config: {
+			id: layerId,
+			name,
+			visibility: true,
+			status: "loaded",
+			elements: [],
+			...(service && { service }),
+		},
+		olLayer,
+		status: "loaded",
+		visibility: true,
+		opacity: 1,
+		zIndex,
+		layerType,
+	};
+};

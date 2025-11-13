@@ -26,12 +26,12 @@ const UploadVectorLayersButton: FC = () => {
 			if (!map) return;
 
 			const layerId = generateLayerId();
-			const vectorLayer = createVectorLayer(
+			const vectorLayer = createVectorLayer({
 				features,
 				fileName,
 				layerId,
-				DEFAULT_STYLE,
-			);
+				style: DEFAULT_STYLE,
+			});
 
 			map.addLayer(vectorLayer);
 			addLayer(createManagedLayer(layerId, fileName, vectorLayer));

@@ -13,12 +13,12 @@ import {
 import { generateLayerId } from "@/lib/helpers/file";
 import {
 	buildCapabilitiesUrl,
+	createManagedLayerFromConfig,
 	generatePreviewUrl,
 	getBaseUrl,
 	validateWMSUrl,
 } from "@/lib/helpers/ol";
 import { useLayersStore } from "@/store/layers";
-import { ManagedLayer } from "@/store/layers/types";
 import { useMapStore } from "@/store/map";
 import { useUiStore } from "@/store/ui";
 import { LinkIcon } from "@phosphor-icons/react";
@@ -77,13 +77,15 @@ const parseCapabilities = (xmlText: string, baseUrl: string): WMSLayer[] => {
 	}
 };
 
-const createWMSLayer = (
-	url: string,
-	layerName: string,
-	layerTitle: string,
-	layerId: string,
-	previewUrl?: string,
-) => {
+const createWMSLayer = (params: {
+	url: string;
+	layerName: string;
+	layerTitle: string;
+	layerId: string;
+	previewUrl?: string;
+}) => {
+	const { url, layerName, layerTitle, layerId, previewUrl } = params;
+
 	const wmsSource = new TileWMS({
 		url,
 		params: {
@@ -103,27 +105,6 @@ const createWMSLayer = (
 
 	return wmsLayer;
 };
-
-const createManagedLayer = (
-	layerId: string,
-	layerTitle: string,
-	olLayer: TileLayer<TileWMS>,
-): ManagedLayer => ({
-	id: layerId,
-	config: {
-		id: layerId,
-		name: layerTitle,
-		visibility: true,
-		status: "loaded",
-		elements: [],
-	},
-	olLayer,
-	status: "loaded",
-	visibility: true,
-	opacity: 1,
-	zIndex: 998,
-	layerType: "subject",
-});
 
 const AddWMSButton: FC = () => {
 	const map = useMapStore((state) => state.map);
@@ -184,25 +165,34 @@ const AddWMSButton: FC = () => {
 	}, [wmsUrl, clearUploadStatus]);
 
 	const addWMSLayerToMap = useCallback(
-		(
-			url: string,
-			layerName: string,
-			layerTitle: string,
-			previewUrl?: string,
-		) => {
+		(params: {
+			url: string;
+			layerName: string;
+			layerTitle: string;
+			previewUrl?: string;
+		}) => {
 			if (!map) return;
 
+			const { url, layerName, layerTitle, previewUrl } = params;
 			const layerId = generateLayerId("uploaded_wms_");
-			const wmsLayer = createWMSLayer(
+
+			const wmsLayer = createWMSLayer({
 				url,
 				layerName,
 				layerTitle,
 				layerId,
 				previewUrl,
-			);
+			});
 
 			map.addLayer(wmsLayer);
-			addLayer(createManagedLayer(layerId, layerTitle, wmsLayer));
+			addLayer(
+				createManagedLayerFromConfig({
+					layerId,
+					name: layerTitle,
+					olLayer: wmsLayer,
+					zIndex: 998,
+				}),
+			);
 		},
 		[map, addLayer],
 	);
@@ -219,7 +209,12 @@ const AddWMSButton: FC = () => {
 			const baseUrl = getBaseUrl(wmsUrl);
 
 			layersToAdd.forEach((layer) => {
-				addWMSLayerToMap(baseUrl, layer.name, layer.title, layer.previewUrl);
+				addWMSLayerToMap({
+					url: baseUrl,
+					layerName: layer.name,
+					layerTitle: layer.title,
+					previewUrl: layer.previewUrl,
+				});
 			});
 
 			setUploadSuccess(
