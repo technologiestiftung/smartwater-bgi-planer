@@ -7,9 +7,7 @@ import {
 	fitMapToExtent,
 	getLayerById,
 } from "@/lib/helpers/ol";
-import { useFilesStore } from "@/store/files";
 import { useMapStore } from "@/store/map";
-import { useProjectsStore } from "@/store/projects";
 import { LAYER_IDS } from "@/types/shared";
 import { UploadIcon } from "@phosphor-icons/react";
 import { Feature } from "ol";
@@ -18,8 +16,6 @@ import { FC, useCallback, useRef } from "react";
 
 const UploadProjectBoundaryButton: FC = () => {
 	const map = useMapStore((state) => state.map);
-	const getProject = useProjectsStore((state) => state.getProject);
-	const addFile = useFilesStore((state) => state.addFile);
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const { uploading, handleUpload } = useVectorUpload();
 
@@ -95,17 +91,8 @@ const UploadProjectBoundaryButton: FC = () => {
 		const file = event.target.files?.[0];
 		if (!file) return;
 
-		await handleUpload(file, async (features, uploadedFile) => {
+		await handleUpload(file, async (features) => {
 			addProjectBoundaryFeaturesToMap(features);
-
-			const project = getProject();
-			if (project) {
-				await addFile({
-					projectId: project.id,
-					layerId: LAYER_IDS.PROJECT_BOUNDARY,
-					file: uploadedFile,
-				});
-			}
 		});
 
 		if (fileInputRef.current) fileInputRef.current.value = "";
