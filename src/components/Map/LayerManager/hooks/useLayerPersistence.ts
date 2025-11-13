@@ -43,6 +43,7 @@ export const useLayerPersistence = (
 	const layerListenersRef = useRef<Record<string, () => void>>({});
 	const hasRestoredRef = useRef(false);
 
+	// Save WMS layer configuration
 	const saveWmsLayer = useCallback(
 		async (layerId: string, project: any) => {
 			if (!map) return;
@@ -54,14 +55,11 @@ export const useLayerPersistence = (
 			if (!(source instanceof TileWMS)) return;
 
 			const wmsParams = source.getParams();
-			const sourceUrl = source.getUrls()?.[0];
-
-			// Create a complete LayerService configuration for WMS
 			const serviceConfig: LayerService = {
 				id: layerId,
 				name: wmsLayer.get("title") || "WMS Layer",
 				typ: "WMS",
-				url: sourceUrl,
+				url: source.getUrls()?.[0],
 				layers: wmsParams.LAYERS,
 				format: wmsParams.FORMAT || "image/png",
 				version: wmsParams.VERSION || "1.3.0",
@@ -84,6 +82,7 @@ export const useLayerPersistence = (
 		[map, addFile],
 	);
 
+	// Save a single layer
 	const saveLayer = useCallback(
 		async (layerId: string) => {
 			if (!map) return;
@@ -118,12 +117,12 @@ export const useLayerPersistence = (
 		[map, getProject, saveWmsLayer, addFile, getFile, deleteFile],
 	);
 
+	// Debounced save
 	const saveLayerDebounced = useCallback(
 		(layerId: string) => {
 			if (!autoSave) return;
 
 			clearTimeout(debounceTimersRef.current[layerId]);
-
 			debounceTimersRef.current[layerId] = setTimeout(() => {
 				saveLayer(layerId);
 				delete debounceTimersRef.current[layerId];
@@ -132,102 +131,115 @@ export const useLayerPersistence = (
 		[autoSave, debounceDelay, saveLayer],
 	);
 
+	// Restore WMS layer from config
+	const restoreWmsLayer = useCallback(
+		async (
+			mapInstance: Map,
+			layerId: string,
+			serviceConfig: LayerService,
+			displayFileName?: string,
+		) => {
+			const {
+				layer: olLayer,
+				status,
+				error,
+			} = createLayerByType(serviceConfig, {
+				wmtsCapabilities: {},
+				config: null,
+			});
+
+			if (!olLayer || status !== "loaded") {
+				throw new Error(`Failed to create WMS layer: ${error}`);
+			}
+
+			olLayer.set("id", layerId);
+			olLayer.set("title", displayFileName || serviceConfig.name);
+			mapInstance.addLayer(olLayer);
+
+			const managedLayer = {
+				id: layerId,
+				config: {
+					id: layerId,
+					name: displayFileName || serviceConfig.name,
+					visibility: true,
+					status: "loaded" as const,
+					elements: [],
+					service: serviceConfig,
+				},
+				olLayer,
+				status: "loaded" as const,
+				visibility: true,
+				opacity: 1,
+				zIndex: 999,
+				layerType: "subject" as const,
+			};
+
+			addLayer(managedLayer);
+		},
+		[addLayer],
+	);
+
+	// Restore vector layer from GeoJSON
+	const restoreVectorLayer = useCallback(
+		async (
+			mapInstance: Map,
+			layerId: string,
+			geojsonText: string,
+			displayFileName?: string,
+		) => {
+			const geojsonObject = JSON.parse(geojsonText);
+			const format = new GeoJSON();
+			const features = format.readFeatures(geojsonObject, {
+				dataProjection: "EPSG:4326",
+				featureProjection: mapInstance.getView().getProjection().getCode(),
+			});
+
+			const displayName =
+				displayFileName || layerId.replace(/\.(geojson|json)$/i, "");
+			const vectorLayer = createVectorLayer(
+				features,
+				displayName,
+				layerId,
+				DEFAULT_STYLE,
+			);
+
+			mapInstance.addLayer(vectorLayer);
+			addLayer(createManagedLayer(layerId, displayName, vectorLayer));
+		},
+		[addLayer],
+	);
+
+	// Restore uploaded layer (WMS or Vector)
 	const restoreUploadedLayer = useCallback(
 		async (
 			mapInstance: Map,
 			layerId: string,
 			layerFile: { file: File; displayFileName?: string },
 		): Promise<void> => {
-			// Check if layer already exists
 			if (getLayerById(mapInstance, layerId)) {
 				console.log(`Layer ${layerId} already exists, skipping restore`);
 				return;
 			}
 
-			if (layerId.includes("uploaded_wms_")) {
-				try {
-					const serviceConfigText = await layerFile.file.text();
-					const serviceConfig: LayerService = JSON.parse(serviceConfigText);
-
-					const {
-						layer: olLayer,
-						status,
-						error,
-					} = createLayerByType(serviceConfig, {
-						wmtsCapabilities: {},
-						config: null,
-					});
-
-					if (olLayer && status === "loaded") {
-						olLayer.set("id", layerId);
-						olLayer.set(
-							"title",
-							layerFile.displayFileName || serviceConfig.name,
-						);
-
-						mapInstance.addLayer(olLayer);
-
-						// Create managed layer for the layer store
-						const managedLayer = {
-							id: layerId,
-							config: {
-								id: layerId,
-								name: layerFile.displayFileName || serviceConfig.name,
-								visibility: true,
-								status: "loaded" as const,
-								elements: [],
-								service: serviceConfig,
-							},
-							olLayer,
-							status: "loaded" as const,
-							visibility: true,
-							opacity: 1,
-							zIndex: 999,
-							layerType: "subject" as const,
-						};
-
-						addLayer(managedLayer);
-
-						console.log(
-							"[useLayerPersistence] Successfully restored WMS layer:",
-							managedLayer,
-						);
-					} else {
-						throw new Error(`Failed to create WMS layer: ${error}`);
-					}
-				} catch (error) {
-					console.error(
-						`[restoreUploadedLayer] Error restoring WMS layer ${layerId}:`,
-						error,
-					);
-					throw error;
-				}
-				return;
-			}
-
 			try {
-				const geojsonText = await layerFile.file.text();
-				const geojsonObject = JSON.parse(geojsonText);
+				const fileContent = await layerFile.file.text();
 
-				const format = new GeoJSON();
-				const features = format.readFeatures(geojsonObject, {
-					dataProjection: "EPSG:4326",
-					featureProjection: mapInstance.getView().getProjection().getCode(),
-				});
-
-				const displayName =
-					layerFile.displayFileName ||
-					layerFile.file.name.replace(/\.(geojson|json)$/i, "");
-
-				const vectorLayer = createVectorLayer(
-					features,
-					displayName,
-					layerId,
-					DEFAULT_STYLE,
-				);
-
-				mapInstance.addLayer(vectorLayer);
-				addLayer(createManagedLayer(layerId, displayName, vectorLayer));
+				if (layerId.includes("uploaded_wms_")) {
+					const serviceConfig: LayerService = JSON.parse(fileContent);
+					await restoreWmsLayer(
+						mapInstance,
+						layerId,
+						serviceConfig,
+						layerFile.displayFileName,
+					);
+				} else {
+					await restoreVectorLayer(
+						mapInstance,
+						layerId,
+						fileContent,
+						layerFile.displayFileName,
+					);
+				}
 			} catch (error) {
 				console.error(
 					`[restoreUploadedLayer] Error restoring layer ${layerId}:`,
@@ -236,9 +248,10 @@ export const useLayerPersistence = (
 				throw error;
 			}
 		},
-		[addLayer],
+		[restoreWmsLayer, restoreVectorLayer],
 	);
 
+	// Generic restore layers function
 	const restoreLayers = useCallback(
 		async (layerIds: string[], type: "draw" | "uploaded") => {
 			if (!map || !mapReady || !autoRestore) return;
@@ -250,17 +263,16 @@ export const useLayerPersistence = (
 				layerIds.map(async (layerId) => {
 					try {
 						const layerFile = getFile(project.id, layerId);
-						if (layerFile) {
-							if (type === "uploaded") {
-								await restoreUploadedLayer(map, layerId, {
-									file: layerFile.file,
-									displayFileName: layerFile.displayFileName,
-								});
-							} else {
-								// For draw layers, ensure the layer exists before importing
-								ensureVectorLayer(map, layerId);
-								await importLayerFromGeoJSON(map, layerId, layerFile.file);
-							}
+						if (!layerFile) return;
+
+						if (type === "uploaded") {
+							await restoreUploadedLayer(map, layerId, {
+								file: layerFile.file,
+								displayFileName: layerFile.displayFileName,
+							});
+						} else {
+							ensureVectorLayer(map, layerId);
+							await importLayerFromGeoJSON(map, layerId, layerFile.file);
 						}
 					} catch (error) {
 						console.error(
@@ -274,6 +286,7 @@ export const useLayerPersistence = (
 		[map, mapReady, autoRestore, getProject, getFile, restoreUploadedLayer],
 	);
 
+	// Save multiple layers
 	const saveAllLayers = useCallback(
 		async (layerIds: string[]) => {
 			if (!map) return;
@@ -287,6 +300,7 @@ export const useLayerPersistence = (
 		[map, saveLayer],
 	);
 
+	// Specific restore/save functions
 	const restoreDrawLayers = useCallback(async () => {
 		const drawLayerIds = getLayerIdsFromFolder("Draw Layers");
 		await restoreLayers(drawLayerIds, "draw");
@@ -296,8 +310,7 @@ export const useLayerPersistence = (
 		const project = getProject();
 		if (!project) return;
 
-		const allProjectFiles = getAllProjectFiles(project.id);
-		const uploadedLayerIds = allProjectFiles
+		const uploadedLayerIds = getAllProjectFiles(project.id)
 			.filter((file) => file.layerId.startsWith("uploaded_"))
 			.map((file) => file.layerId);
 
@@ -316,9 +329,11 @@ export const useLayerPersistence = (
 		await saveAllLayers(uploadedLayerIds);
 	}, [layers, saveAllLayers]);
 
+	// Setup auto-save listeners for draw layers
 	const setupAutoSave = useCallback(() => {
 		if (!map || !mapReady || !autoSave) return;
 
+		// Cleanup existing listeners
 		Object.values(layerListenersRef.current).forEach((cleanup) => cleanup());
 		layerListenersRef.current = {};
 
@@ -352,10 +367,10 @@ export const useLayerPersistence = (
 
 	// One-time restore on mount
 	useEffect(() => {
-		if (!map || !mapReady || !autoRestore) return;
+		if (!map || !mapReady || !autoRestore || hasRestoredRef.current) return;
 
 		const project = getProject();
-		if (!project || hasRestoredRef.current) return;
+		if (!project) return;
 
 		(async () => {
 			await restoreDrawLayers();
@@ -371,7 +386,7 @@ export const useLayerPersistence = (
 		restoreUploadedLayers,
 	]);
 
-	// Cleanup
+	// Cleanup timers and listeners
 	useEffect(() => {
 		const currentTimers = debounceTimersRef.current;
 		const currentListeners = layerListenersRef.current;
