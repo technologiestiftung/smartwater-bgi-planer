@@ -47,6 +47,10 @@ export const useLayerPersistence = (
 			const project = getProject();
 			if (!project) return;
 
+			if (layerId.includes("wms") || layerId.includes("wmts")) {
+				return;
+			}
+
 			try {
 				const geoJsonFile = exportLayerAsGeoJSON(map, layerId);
 
@@ -183,7 +187,10 @@ export const useLayerPersistence = (
 
 		const allProjectFiles = getAllProjectFiles(project.id);
 		const uploadedLayerIds = allProjectFiles
-			.filter((file) => file.layerId.startsWith("uploaded_"))
+			.filter(
+				(file) =>
+					file.layerId.startsWith("uploaded_") && !file.layerId.includes("wms"),
+			)
 			.map((file) => file.layerId);
 
 		await restoreLayers(uploadedLayerIds, "uploaded");
@@ -196,7 +203,10 @@ export const useLayerPersistence = (
 
 	const saveAllUploadedLayers = useCallback(async () => {
 		const uploadedLayerIds = Array.from(layers.values())
-			.filter((layer) => layer.id.startsWith("uploaded_"))
+			.filter(
+				(layer) =>
+					layer.id.startsWith("uploaded_") && !layer.id.includes("wms"),
+			)
 			.map((layer) => layer.id);
 		await saveAllLayers(uploadedLayerIds);
 	}, [layers, saveAllLayers]);
@@ -260,8 +270,8 @@ export const useLayerPersistence = (
 	// Auto-save uploaded layers when they change
 	// we might don't need this, since uploaded layers should not change
 	useEffect(() => {
-		const uploadedLayersList = Array.from(layers.values()).filter((layer) =>
-			layer.id.startsWith("uploaded_"),
+		const uploadedLayersList = Array.from(layers.values()).filter(
+			(layer) => layer.id.startsWith("uploaded_") && !layer.id.includes("wms"),
 		);
 
 		if (!uploadedLayersList.length || !autoSave) return;
