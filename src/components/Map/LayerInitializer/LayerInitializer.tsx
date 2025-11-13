@@ -1,9 +1,5 @@
 "use client";
 
-import {
-	categorizeLayerErrors,
-	getErrorMessage,
-} from "@/components/Map/LayerInitializer/shared/errorHandling";
 import { createLayerByType } from "@/components/Map/LayerInitializer/shared/layerFactory";
 import { useLayersStore } from "@/store/layers";
 import { LayerService, ManagedLayer } from "@/store/layers/types";
@@ -21,8 +17,10 @@ const LayerInitializer: FC = () => {
 		(state) => state.flattenedLayerElements,
 	);
 
-	const { capabilities: wmtsCapabilities, loaded: capabilitiesLoaded } =
-		useWmtsCapabilities(flattenedLayerElements, config);
+	const { wmtsCapabilities, capabilitiesLoaded } = useWmtsCapabilities(
+		config,
+		flattenedLayerElements,
+	);
 
 	const createLayer = useCallback(
 		(serviceConfig: LayerService) => {
@@ -34,124 +32,119 @@ const LayerInitializer: FC = () => {
 		[wmtsCapabilities, config],
 	);
 
-	const initializeLayers = useCallback(() => {
+	useEffect(() => {
 		if (
 			!config ||
 			!map ||
 			!capabilitiesLoaded ||
 			flattenedLayerElements.length === 0
 		) {
-			return null;
+			return;
 		}
 
-		const newManagedLayersMap = new Map();
+		const newManagedLayersMap = new Map<string, ManagedLayer>();
 
 		flattenedLayerElements.forEach((layerConfig, index) => {
-			if (!layerConfig.service) {
+			const { service: serviceConfig } = layerConfig;
+
+			if (!serviceConfig) {
 				console.warn(
 					`[LayerInitializer] Layer ${layerConfig.id} has no service config. Skipping.`,
 				);
 				return;
 			}
 
-			const {
-				layer: olLayer,
-				status,
-				error,
-			} = createLayer(layerConfig.service);
-
-			const isBaseLayer = config?.layerConfig?.baselayer?.elements?.some(
-				(baseLayerElement: any) => baseLayerElement.id === layerConfig.id,
-			);
-
-			const zIndex = index;
-
-			const managedLayer: ManagedLayer = {
-				id: layerConfig.id,
-				config: layerConfig,
-				olLayer,
-				status,
-				visibility: layerConfig.visibility ?? false,
-				opacity: 1,
-				zIndex: zIndex,
-				layerType: isBaseLayer ? "base" : "subject",
-				error,
-			};
-
-			newManagedLayersMap.set(layerConfig.id, managedLayer);
+			const { layer: olLayer, status, error } = createLayer(serviceConfig);
 
 			if (olLayer) {
-				// Set all the OpenLayers layer properties
-				olLayer.setZIndex(managedLayer.zIndex);
-				olLayer.setVisible(managedLayer.visibility);
-				olLayer.setOpacity(managedLayer.opacity);
+				const isBaseLayer = config.layerConfig.baselayer.elements.some(
+					(baseEl) => baseEl.id === layerConfig.id,
+				);
+				const layerType: "base" | "subject" = isBaseLayer ? "base" : "subject";
+
+				const zIndex = index;
+
+				olLayer.setZIndex(zIndex);
+				olLayer.setVisible(layerConfig.visibility);
+				olLayer.setOpacity(1);
 				olLayer.set("id", layerConfig.id);
+
+				const managedLayer: ManagedLayer = {
+					id: layerConfig.id,
+					config: layerConfig,
+					olLayer: olLayer,
+					status: status,
+					visibility: layerConfig.visibility,
+					opacity: 1,
+					zIndex: zIndex,
+					layerType: layerType,
+					error: error,
+				};
+
+				newManagedLayersMap.set(layerConfig.id, managedLayer);
 				map.addLayer(olLayer);
+			} else {
+				console.error(
+					`[LayerInitializer] Failed to create layer ${layerConfig.id}:`,
+					error,
+				);
+				newManagedLayersMap.set(layerConfig.id, {
+					id: layerConfig.id,
+					config: layerConfig,
+					olLayer: null,
+					status: "error",
+					visibility: layerConfig.visibility,
+					opacity: 1,
+					zIndex: 0,
+					layerType: "subject",
+					error: error || "Layer creation failed",
+				});
 			}
 		});
 
-		return newManagedLayersMap;
-	}, [config, map, capabilitiesLoaded, flattenedLayerElements, createLayer]);
+		setLayersInStore(newManagedLayersMap);
 
-	const handleMapStatus = useCallback(
-		(managedLayers: Map<string, ManagedLayer>) => {
-			const criticalLayerIds: string[] = ["rabimo_input_2025"];
-			const errors = categorizeLayerErrors(managedLayers, criticalLayerIds);
+		const baseLayers = Array.from(newManagedLayersMap.values()).filter(
+			(layer) => layer.layerType === "base",
+		);
+		const hasAnyLoadedBaseLayers = baseLayers.some(
+			(layer) => layer.status === "loaded",
+		);
+		const hasBasemapErrors = baseLayers.some(
+			(layer) => layer.status === "error",
+		);
 
-			const baseLayers = Array.from(managedLayers.values()).filter(
-				(layer) => layer.layerType === "base",
+		if (baseLayers.length > 0 && !hasAnyLoadedBaseLayers && hasBasemapErrors) {
+			const firstError = baseLayers.find((layer) => layer.error)?.error;
+			setMapError(
+				true,
+				firstError || "Hintergrundkarte konnte nicht geladen werden",
 			);
-			const hasAnyLoadedBaseLayers = baseLayers.some(
-				(layer) => layer.status === "loaded",
-			);
-
-			if (
-				(baseLayers.length > 0 &&
-					!hasAnyLoadedBaseLayers &&
-					errors.hasBaseLayerError) ||
-				errors.critical.length > 0
-			) {
-				const errorMessage = getErrorMessage(
-					errors,
-					baseLayers,
-					hasAnyLoadedBaseLayers,
-				);
-				setMapError(true, errorMessage);
-				setMapReady(false);
-			} else if (hasAnyLoadedBaseLayers) {
-				setMapError(false);
-				setMapReady(true);
-
-				if (errors.nonCritical.length > 0) {
-					console.warn(
-						`[LayerInitializer] Some non-critical layers failed to load: ${errors.nonCritical.join(", ")}`,
-					);
-				}
-			}
-		},
-		[setMapError, setMapReady],
-	);
-
-	useEffect(() => {
-		const managedLayers = initializeLayers();
-
-		if (managedLayers) {
-			setLayersInStore(managedLayers);
-			handleMapStatus(managedLayers);
+			setMapReady(false);
+		} else if (hasAnyLoadedBaseLayers) {
+			setMapError(false);
+			setMapReady(true);
 		}
 
 		return () => {
-			if (managedLayers) {
-				managedLayers.forEach((managedLayer) => {
-					if (managedLayer.olLayer) {
-						map?.removeLayer(managedLayer.olLayer);
-					}
-				});
-			}
+			newManagedLayersMap.forEach((managedLayer) => {
+				if (managedLayer.olLayer) {
+					map.removeLayer(managedLayer.olLayer);
+				}
+			});
 			setLayersInStore(new Map());
 			setMapReady(false);
 		};
-	}, [initializeLayers, setLayersInStore, handleMapStatus, map, setMapReady]);
+	}, [
+		config,
+		map,
+		capabilitiesLoaded,
+		flattenedLayerElements,
+		createLayer,
+		setLayersInStore,
+		setMapReady,
+		setMapError,
+	]);
 
 	return null;
 };

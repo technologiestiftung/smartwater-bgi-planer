@@ -6,11 +6,13 @@ interface WMTSCapabilitiesMap {
 }
 
 export const useWmtsCapabilities = (
-	flattenedLayerElements: any[],
 	config: any,
+	flattenedLayerElements: any[],
 ) => {
-	const [capabilities, setCapabilities] = useState<WMTSCapabilitiesMap>({});
-	const [loaded, setLoaded] = useState(false);
+	const [wmtsCapabilities, setWmtsCapabilities] = useState<WMTSCapabilitiesMap>(
+		{},
+	);
+	const [capabilitiesLoaded, setCapabilitiesLoaded] = useState(false);
 
 	useEffect(() => {
 		if (!config || flattenedLayerElements.length === 0) return;
@@ -30,7 +32,7 @@ export const useWmtsCapabilities = (
 			] as string[];
 
 			if (uniqueCapabilitiesUrls.length === 0) {
-				setLoaded(true);
+				setCapabilitiesLoaded(true);
 				return;
 			}
 
@@ -56,19 +58,19 @@ export const useWmtsCapabilities = (
 					return acc;
 				}, {} as WMTSCapabilitiesMap);
 
-				setCapabilities(capabilitiesMap);
+				setWmtsCapabilities(capabilitiesMap);
 			} catch (error) {
 				console.error(
-					"[useWmtsCapabilities] Error loading WMTS capabilities:",
+					"[LayerInitializer] Error loading WMTS capabilities:",
 					error,
 				);
 			} finally {
-				setLoaded(true);
+				setCapabilitiesLoaded(true);
 			}
 		};
 
 		loadAllWmtsCapabilities();
 	}, [config, flattenedLayerElements]);
 
-	return { capabilities, loaded };
+	return { wmtsCapabilities, capabilitiesLoaded };
 };

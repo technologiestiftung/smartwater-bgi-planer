@@ -1,5 +1,5 @@
 import { applyStyleToLayer, getEpsgFromCrs } from "@/lib/helpers/ol";
-import { LayerService } from "@/store/layers/types";
+import { LayerService, ManagedLayer } from "@/store/layers/types";
 import { applyStyle } from "ol-mapbox-style";
 import GeoJSON from "ol/format/GeoJSON";
 import { Layer } from "ol/layer";
@@ -17,9 +17,9 @@ interface WMTSCapabilitiesMap {
 	[url: string]: object;
 }
 
-export interface LayerCreationResult {
+interface LayerCreationResult {
 	layer: Layer | null;
-	status: "loaded" | "error";
+	status: ManagedLayer["status"];
 	error?: string;
 }
 
@@ -195,9 +195,11 @@ const createVectorTileLayer = (
 
 		const layer = new VectorTileLayer({ declutter: true });
 
-		serviceConfig.vtStyles.forEach((style) => {
-			applyStyle(layer, style.url);
-		});
+		if (serviceConfig.vtStyles.length > 0) {
+			serviceConfig.vtStyles.forEach((style) => {
+				applyStyle(layer, style.url);
+			});
+		}
 
 		return {
 			layer,
@@ -265,25 +267,22 @@ export const createLayerByType = (
 	serviceConfig: LayerService,
 	helpers: LayerCreationHelpers,
 ): LayerCreationResult => {
-	const creators: Record<
-		string,
-		(config: LayerService, helpers: LayerCreationHelpers) => LayerCreationResult
-	> = {
-		WMTS: createWMTSLayer,
-		WMS: createWMSLayer,
-		WFS: createWFSLayer,
-		VectorTile: createVectorTileLayer,
-		GEOJSON: createGeoJSONLayer,
-	};
-
-	const creator = creators[serviceConfig.typ];
-	if (!creator) {
-		return {
-			layer: null,
-			status: "error",
-			error: `Unknown layer type: ${serviceConfig.typ}`,
-		};
+	switch (serviceConfig.typ) {
+		case "WMTS":
+			return createWMTSLayer(serviceConfig, helpers);
+		case "WMS":
+			return createWMSLayer(serviceConfig);
+		case "WFS":
+			return createWFSLayer(serviceConfig, helpers);
+		case "VectorTile":
+			return createVectorTileLayer(serviceConfig);
+		case "GEOJSON":
+			return createGeoJSONLayer(serviceConfig, helpers);
+		default:
+			return {
+				layer: null,
+				status: "error",
+				error: `Unknown layer type: ${serviceConfig.typ}`,
+			};
 	}
-
-	return creator(serviceConfig, helpers);
 };
