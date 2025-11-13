@@ -39,7 +39,7 @@ export default function MenuModalContent({ projectId }: MenuModalProps) {
 									Projektinformationen
 								</Link>
 							</Button>
-							<Button>
+							<Button asChild>
 								<Link href={`/${projectId}/project-starter`}>
 									<DownloadIcon className="mr-2" />
 									Untersuchungsgebiet/Neubauten
