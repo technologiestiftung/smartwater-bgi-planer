@@ -1,6 +1,6 @@
 import { getLayerById } from "@/lib/helpers/ol";
 import { useMapStore } from "@/store/map";
-import { Polygon } from "ol/geom";
+import { MultiPolygon, Polygon } from "ol/geom";
 import VectorSource from "ol/source/Vector";
 import { getArea } from "ol/sphere";
 import { useEffect, useState } from "react";
@@ -22,18 +22,29 @@ export function useLayerArea(layerId: string) {
 
 		const calculateArea = () => {
 			let area = 0;
-			source.getFeatures().forEach((feature) => {
+			const features = source.getFeatures();
+			
+			features.forEach((feature, index) => {
 				const geometry = feature.getGeometry();
 				if (geometry instanceof Polygon) {
-					area += getArea(geometry);
+					const featureArea = getArea(geometry);
+					area += featureArea;
+				} else if (geometry instanceof MultiPolygon) {
+					const featureArea = getArea(geometry);
+					area += featureArea;
+				} else {
+					console.warn(
+						`[useLayerArea] ${layerId} - Feature ${index} is not a Polygon/MultiPolygon (type: ${geometry?.getType()}), skipping`,
+					);
 				}
 			});
 
-			setFormattedArea(
+			const formattedAreaValue =
 				area > 10000
 					? `${Math.round((area / 1000000) * 100) / 100} km²`
-					: `${Math.round(area * 100) / 100} m²`,
-			);
+					: `${Math.round(area * 100) / 100} m²`;
+
+			setFormattedArea(formattedAreaValue);
 		};
 
 		calculateArea();

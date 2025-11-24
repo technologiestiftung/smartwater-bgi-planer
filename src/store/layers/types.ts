@@ -94,8 +94,12 @@ export interface LayerConfigItem {
 	id: string;
 	name: string;
 	description?: string;
+	question?: string;
 	drawLayerId: string;
 	visibleLayerIds: string[];
+	canDrawPolygons?: boolean;
+	canDrawBTF?: boolean;
+	legendSrc?: string;
 }
 
 export interface LayersState {

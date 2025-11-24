@@ -14,6 +14,7 @@ export interface StepConfig {
 	icon: React.ReactNode;
 	title: string;
 	description?: string;
+	questions?: string[];
 	canProceed?: () => boolean;
 }
 

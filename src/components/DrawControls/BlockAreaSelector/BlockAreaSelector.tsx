@@ -54,7 +54,9 @@ const BlockAreaSelector: FC = () => {
 		const drawSource = drawLayer.getSource()!;
 
 		const handleFeatureAdd = (event: CollectionEvent<Feature>) => {
-			drawSource.addFeature(event.element.clone());
+			const clonedFeature = event.element.clone();
+			drawSource.addFeature(clonedFeature);
+			drawSource.changed();
 		};
 
 		const handleFeatureRemove = (event: CollectionEvent<Feature>) => {
@@ -63,6 +65,8 @@ const BlockAreaSelector: FC = () => {
 				.getFeatures()
 				.filter((f) => f.get("code") === originalFeature.get("code"));
 			featuresToRemove.forEach((f) => drawSource.removeFeature(f));
+
+			drawSource.changed();
 		};
 
 		if (isActive && inputLayer) {

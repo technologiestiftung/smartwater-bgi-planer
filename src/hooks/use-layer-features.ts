@@ -19,7 +19,8 @@ export function useLayerFeatures(layerId: string) {
 		if (!source) return;
 
 		const checkFeatures = () => {
-			setHasFeatures(source.getFeatures().length > 0);
+			const featureCount = source.getFeatures().length;
+			setHasFeatures(featureCount > 0);
 		};
 
 		checkFeatures();
