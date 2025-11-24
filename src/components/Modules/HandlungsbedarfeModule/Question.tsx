@@ -45,7 +45,7 @@ const Question: FC<QuestionProps> = ({
 
 	return (
 		<div className="flex h-full flex-col">
-			<div className="grow mt-4">
+			<div className="mt-4 grow">
 				{questionConfig && (
 					<div>
 						<h4 className="text-primary mb-2 text-lg font-semibold">
