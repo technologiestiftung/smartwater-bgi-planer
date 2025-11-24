@@ -1,6 +1,6 @@
 "use client";
 
-import HandlungsbedarfeModule from "@/components/Modules/HandlungsbedarfeModule";
+import HandlungsbedarfeModule from "@/components/Modules/HandlungsbedarfeModule/HandlungsbedarfeModule";
 import { useRouter } from "next/navigation";
 import { use } from "react";
 

@@ -16,6 +16,18 @@
 		"visibleLayerIds": ["project_new_development"]
 	},
 	{
+		"id": "starter_question",
+		"name": "Starkregen",
+		"question": "Durch Überflutungen in Folge von Starkregen kann es zu Gefährdungen von Lebewesen, Gebäuden, Infrastruktur und weiteren Sachwerten kommen.",
+		"description": "(Um dem vorzubeugen, können bestimmte Bereiche des Quartiers von einer Bebauung oder einer vulnerablen Nutzung freigehalten bzw. Maßnahmen zur Überflutungsvorsorge implementiert werden.)",
+		"drawLayerId": "",
+		"canDrawPolygons": false,
+		"canDrawBTF": false,
+		"canDrawNotes": false,
+		"visibleLayerIds": ["project_boundary", "project_new_development"],
+		"legendSrc": ""
+	},
+	{
 		"id": "heavy_rain_flow_velocity",
 		"name": "Fließgeschwindigkeit",
 		"question": "Wo gibt es Bereiche in denen Fließgeschwindigkeiten über 0,5 m/s auftreten und dadurch eine Gefährdung bestehen könnte?",
@@ -23,6 +35,7 @@
 		"drawLayerId": "need_flooding_hotspots_q1",
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
+		"canDrawNotes": true,
 		"visibleLayerIds": [
 			"ua_srhk:da_fr_aussergewoehnlich",
 			"ua_srhk:db_fliessgeschw_aussergew_kostra",
@@ -34,10 +47,11 @@
 		"id": "heavy_rain_water_level",
 		"name": "Wasserstand",
 		"question": "Wo gibt es Bereiche, in denen ein Wasserstand von über 30 cm auftritt und damit eine Gefährdung für Menschen oder von Infrastruktur sowie Sachwerten ausgehen könnte? (Zum Beispiel, Bereiche mit hohen Wasserständen unmittelbar an den Gebäuden.)",
-		"description": "Die Karte enthält Aussagen zum Wasserstand für ein außergewöhnliches Starkregenereignis, welches rein statistisch alle 100 Jahre vorkommt. Relevant sind dabei Bereiche, wo ein Wasserstand von über 30 cm auftritt. Bei höheren Fließgeschwindigkeiten, können bereits Wasserstände ab 10 cm relevant sein. /n Für die Überflutungsvorsorge ist es zudem wichtig, ob es Bereiche mit hohen Wasserständen unmittelbar an den Gebäuden gibt.",
+		"description": "Die Karte enthält Aussagen zum Wasserstand für ein außergewöhnliches Starkregenereignis, welches rein statistisch alle 100 Jahre vorkommt. Relevant sind dabei Bereiche, wo ein Wasserstand von über 30 cm auftritt. Bei höheren Fließgeschwindigkeiten, können bereits Wasserstände ab 10 cm relevant sein. \n Für die Überflutungsvorsorge ist es zudem wichtig, ob es Bereiche mit hohen Wasserständen unmittelbar an den Gebäuden gibt.",
 		"drawLayerId": "need_flooding_hotspots_q2",
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
+		"canDrawNotes": true,
 		"visibleLayerIds": [
 			"ua_srhk:dc_wasserstand_aussergew_kostra",
 			"ua_srgk:cb_wasserstand_aussergewoehnlich"
@@ -52,6 +66,7 @@
 		"drawLayerId": "need_flooding_hotspots_q3",
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
+		"canDrawNotes": true,
 		"visibleLayerIds": ["ua_srhk:g_srhk_feuerwehreinsaetze"],
 		"legendSrc": "/legends/placeholder.svg"
 	},
@@ -63,6 +78,7 @@
 		"drawLayerId": "need_temperature_hotspots_q1",
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
+		"canDrawNotes": true,
 		"visibleLayerIds": [
 			"ua_klimabewertung_2022:cc_ua_phk_bioklim_str_tag_2022",
 			"ua_klimabewertung_2022:cb_ua_phk_bioklim_siedl_tag_2022",
@@ -79,6 +95,7 @@
 		"drawLayerId": "need_temperature_hotspots_q2",
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
+		"canDrawNotes": true,
 		"visibleLayerIds": [
 			"ua_klimabewertung_2022:dc_ua_phk_bioklim_siedl_nacht_2022",
 			"ua_klimabewertung_2022:dd_ua_phk_bioklim_str_nacht_2022",
@@ -94,6 +111,7 @@
 		"drawLayerId": "need_temperature_hotspots_q3",
 		"canDrawPolygons": false,
 		"canDrawBTF": true,
+		"canDrawNotes": true,
 		"visibleLayerIds": ["ua_klimabewertung_2022:eb_ua_phk_vul_geb_demog_2022"],
 		"legendSrc": "/legends/placeholder.svg"
 	},
@@ -105,6 +123,7 @@
 		"drawLayerId": "need_temperature_hotspots_q4",
 		"canDrawPolygons": true,
 		"canDrawBTF": false,
+		"canDrawNotes": true,
 		"visibleLayerIds": [
 			"ua_klimaanalyse_2022:wfs:tk_kak_leitbahnkorridor_2022",
 			"ua_klimaanalyse_2022:ta_kak_luftaustausch_2022"
@@ -119,6 +138,7 @@
 		"drawLayerId": "need_temperature_hotspots_q5",
 		"canDrawPolygons": false,
 		"canDrawBTF": true,
+		"canDrawNotes": true,
 		"visibleLayerIds": [
 			"ua_klimaanalyse_2022:ta_kak_luftaustausch_2022",
 			"ua_klimaanalyse_2022:wfs:tk_kak_leitbahnkorridor_2022"
@@ -133,6 +153,7 @@
 		"drawLayerId": "need_temperature_hotspots_q6",
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
+		"canDrawNotes": true,
 		"visibleLayerIds": [
 			"ua_klimaanalyse_2022:td_kak_kaltlufteinwirkbereich_siedlungsfl_2022",
 			"ua_klimaanalyse_2022:tj_kak_gruen_kvs_hoch_2022",
@@ -149,6 +170,7 @@
 		"drawLayerId": "need_impermeability_hotspots_q1",
 		"canDrawPolygons": false,
 		"canDrawBTF": true,
+		"canDrawNotes": true,
 		"visibleLayerIds": ["bgi-planer:versiegelung_2021"],
 		"legendSrc": "/legends/placeholder.svg"
 	},
@@ -160,6 +182,7 @@
 		"drawLayerId": "need_impermeability_hotspots_q2",
 		"canDrawPolygons": false,
 		"canDrawBTF": true,
+		"canDrawNotes": true,
 		"visibleLayerIds": ["bgi-planer:a_gruenvol2020"],
 		"legendSrc": "/legends/placeholder.svg"
 	},
@@ -167,10 +190,11 @@
 		"id": "sealing_small_scale_high",
 		"name": "Kleinteilige Versiegelung",
 		"question": "Wo liegen Bereiche mit einem Versiegelungsgrad von 70 % oder höher? (Notieren Sie mögliche Veränderungen im Luftbild).",
-		"description": "Die Karte zeigt den Grad der Versiegelung (in einem Raster 10 m x 10 m) an. Darüber liegen die Gebäude und Bauwerke aus dem ALKIS. Diese Überlagerung ermöglicht die Identifizierung von stark versiegelten unbebauten Bereichen./n Wichtig ist es, die Versiegelungskarte mit einem aktuellen Luftbild abzugleichen und Veränderungen zu notieren, insbesondere hinsichtlich der Schattenflächen.",
+		"description": "Die Karte zeigt den Grad der Versiegelung (in einem Raster 10 m x 10 m) an. Darüber liegen die Gebäude und Bauwerke aus dem ALKIS. Diese Überlagerung ermöglicht die Identifizierung von stark versiegelten unbebauten Bereichen. \n Wichtig ist es, die Versiegelungskarte mit einem aktuellen Luftbild abzugleichen und Veränderungen zu notieren, insbesondere hinsichtlich der Schattenflächen.",
 		"drawLayerId": "need_impermeability_hotspots_q3",
 		"canDrawPolygons": true,
 		"canDrawBTF": false,
+		"canDrawNotes": true,
 		"visibleLayerIds": ["alkis_gebaeude:gebaeude"],
 		"legendSrc": "/legends/placeholder.svg"
 	},
@@ -182,6 +206,7 @@
 		"drawLayerId": "need_waterbalance_hotspots_q1",
 		"canDrawPolygons": false,
 		"canDrawBTF": true,
+		"canDrawNotes": true,
 		"visibleLayerIds": ["ua_wasserhaushalt_2022:f_deltaw_2022"],
 		"legendSrc": "/legends/placeholder.svg"
 	},
@@ -193,6 +218,7 @@
 		"drawLayerId": "need_groundwater_hotspots_q1",
 		"canDrawPolygons": false,
 		"canDrawBTF": true,
+		"canDrawNotes": true,
 		"visibleLayerIds": ["ua_kanalisation_2022:sp02_09kanalisation2022"],
 		"legendSrc": "/legends/placeholder.svg"
 	},
@@ -204,6 +230,7 @@
 		"drawLayerId": "need_groundwater_hotspots_q2",
 		"canDrawPolygons": false,
 		"canDrawBTF": true,
+		"canDrawNotes": true,
 		"visibleLayerIds": [
 			"bgi-planer:HA4_Kleingewaesser_trocken_pkt",
 			" ua_kanalisation_2022:sp02_09kanalisation2022_2"
@@ -218,6 +245,7 @@
 		"drawLayerId": "need_groundwater_hotspots_q3",
 		"canDrawPolygons": false,
 		"canDrawBTF": true,
+		"canDrawNotes": true,
 		"visibleLayerIds": [
 			"bgi-planer:HA4_Kleingewaesser_trocken_pkt",
 			"bgi-planer:HA4_Kleingewaesser_trocken_topoEZG_pl"

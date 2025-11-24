@@ -23,7 +23,7 @@ export function useLayerArea(layerId: string) {
 		const calculateArea = () => {
 			let area = 0;
 			const features = source.getFeatures();
-			
+
 			features.forEach((feature, index) => {
 				const geometry = feature.getGeometry();
 				if (geometry instanceof Polygon) {

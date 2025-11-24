@@ -7,7 +7,7 @@ interface StepContainerProps {
 
 export function StepContainer({ children, className }: StepContainerProps) {
 	return (
-		<div className={cn("flex-1 overflow-y-auto p-2", className)}>
+		<div className={cn("flex-1 overflow-y-auto p-2 pr-6", className)}>
 			{children}
 		</div>
 	);

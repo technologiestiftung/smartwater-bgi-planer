@@ -99,6 +99,7 @@ export interface LayerConfigItem {
 	visibleLayerIds: string[];
 	canDrawPolygons?: boolean;
 	canDrawBTF?: boolean;
+	canDrawNotes?: boolean;
 	legendSrc?: string;
 }
 
