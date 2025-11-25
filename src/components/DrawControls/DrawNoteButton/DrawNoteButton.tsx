@@ -1,15 +1,15 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Button } from "@/components/ui/button";
 import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";
+import { useUiStore } from "@/store/ui";
 import { NoteIcon } from "@phosphor-icons/react";
 import Draw from "ol/interaction/Draw.js";
 import VectorLayer from "ol/layer/Vector.js";
 import MapBrowserEvent from "ol/MapBrowserEvent.js";
 import { Vector as VectorSource } from "ol/source.js";
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useRef } from "react";
 
 interface DrawNoteButtonProps {
 	layerId: string;
@@ -20,9 +20,10 @@ const DrawNoteButton: FC<DrawNoteButtonProps> = ({ layerId }) => {
 	const setLayerVisibility = useLayersStore(
 		(state) => state.setLayerVisibility,
 	);
+	const isDrawing = useUiStore((state) => state.isDrawingNote);
+	const setIsDrawing = useUiStore((state) => state.setIsDrawingNote);
 
 	const drawRef = useRef<Draw | null>(null);
-	const [isDrawing, setIsDrawing] = useState(false);
 
 	useEffect(() => {
 		if (!map || !layerId) return;
@@ -35,10 +36,16 @@ const DrawNoteButton: FC<DrawNoteButtonProps> = ({ layerId }) => {
 			if (map && drawRef.current) {
 				map.removeInteraction(drawRef.current);
 				drawRef.current = null;
-				setIsDrawing(false);
 			}
 		};
 	}, [map]);
+
+	useEffect(() => {
+		if (!isDrawing && drawRef.current && map) {
+			map.removeInteraction(drawRef.current);
+			drawRef.current = null;
+		}
+	}, [isDrawing, map]);
 
 	const toggleDraw = () => {
 		if (!map) return;

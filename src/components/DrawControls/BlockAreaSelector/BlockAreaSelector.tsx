@@ -4,20 +4,22 @@ import { Button } from "@/components/ui/button";
 import { getLayerById } from "@/lib/helpers/ol";
 import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";
+import { useUiStore } from "@/store/ui";
 import { CursorClickIcon } from "@phosphor-icons/react";
 import { Feature } from "ol";
 import { CollectionEvent } from "ol/Collection";
 import { click } from "ol/events/condition.js";
 import Select from "ol/interaction/Select.js";
 import { Vector as VectorSource } from "ol/source.js";
-import { FC, useCallback, useEffect, useRef, useState } from "react";
+import { FC, useCallback, useEffect, useRef } from "react";
 
 const BlockAreaSelector: FC = () => {
 	const map = useMapStore((state) => state.map);
 	const drawLayerId = useLayersStore((state) => state.drawLayerId);
+	const isActive = useUiStore((state) => state.isBlockAreaSelecting);
+	const setIsActive = useUiStore((state) => state.setIsBlockAreaSelecting);
 
 	const selectInteractionRef = useRef<Select | null>(null);
-	const [isActive, setIsActive] = useState(false);
 
 	const toggleRabimoInputVisibility = useCallback(
 		(visible: boolean) => {
@@ -35,8 +37,8 @@ const BlockAreaSelector: FC = () => {
 
 	const toggleSelectionMode = useCallback(() => {
 		if (!map) return;
-		setIsActive((prev) => !prev);
-	}, [map]);
+		setIsActive(!isActive);
+	}, [map, isActive, setIsActive]);
 
 	useEffect(() => {
 		if (!map || !drawLayerId) return;
@@ -102,6 +104,14 @@ const BlockAreaSelector: FC = () => {
 			toggleRabimoInputVisibility(false);
 		};
 	}, [map, isActive, toggleRabimoInputVisibility, drawLayerId]);
+
+	useEffect(() => {
+		if (!isActive && selectInteractionRef.current && map) {
+			map.removeInteraction(selectInteractionRef.current);
+			selectInteractionRef.current = null;
+			toggleRabimoInputVisibility(false);
+		}
+	}, [isActive, map, toggleRabimoInputVisibility]);
 
 	return (
 		<div className="BlockAreaSelector-root">

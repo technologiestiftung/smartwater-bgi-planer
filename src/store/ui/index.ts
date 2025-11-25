@@ -7,6 +7,9 @@ const initialState: UiState = {
 	currentStepId: null,
 	uploadError: null,
 	uploadSuccess: null,
+	isDrawing: false,
+	isBlockAreaSelecting: false,
+	isDrawingNote: false,
 };
 
 export const useUiStore = create<UiState & UiActions>((set) => ({
@@ -18,4 +21,14 @@ export const useUiStore = create<UiState & UiActions>((set) => ({
 	setUploadSuccess: (success) =>
 		set({ uploadSuccess: success, uploadError: null }),
 	clearUploadStatus: () => set({ uploadError: null, uploadSuccess: null }),
+	setIsDrawing: (isDrawing) => set({ isDrawing }),
+	setIsBlockAreaSelecting: (isSelecting) =>
+		set({ isBlockAreaSelecting: isSelecting }),
+	setIsDrawingNote: (isDrawing) => set({ isDrawingNote: isDrawing }),
+	resetDrawInteractions: () =>
+		set({
+			isDrawing: false,
+			isBlockAreaSelecting: false,
+			isDrawingNote: false,
+		}),
 }));

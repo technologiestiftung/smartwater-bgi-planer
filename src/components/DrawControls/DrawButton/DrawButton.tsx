@@ -3,11 +3,12 @@
 import { Button } from "@/components/ui/button";
 import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";
+import { useUiStore } from "@/store/ui";
 import { PolygonIcon } from "@phosphor-icons/react";
 import Draw from "ol/interaction/Draw.js";
 import VectorLayer from "ol/layer/Vector.js";
 import { Vector as VectorSource } from "ol/source.js";
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useRef } from "react";
 
 interface DrawButtonProps {
 	geometryType?: "Point" | "LineString" | "Polygon" | "Circle";
@@ -19,9 +20,10 @@ const DrawButton: FC<DrawButtonProps> = ({ geometryType = "Polygon" }) => {
 	const setLayerVisibility = useLayersStore(
 		(state) => state.setLayerVisibility,
 	);
+	const isDrawing = useUiStore((state) => state.isDrawing);
+	const setIsDrawing = useUiStore((state) => state.setIsDrawing);
 
 	const drawRef = useRef<Draw | null>(null);
-	const [isDrawing, setIsDrawing] = useState(false);
 
 	useEffect(() => {
 		if (!map || !drawLayerId) return;
@@ -36,7 +38,6 @@ const DrawButton: FC<DrawButtonProps> = ({ geometryType = "Polygon" }) => {
 			if (drawRef.current) {
 				map.removeInteraction(drawRef.current);
 				drawRef.current = null;
-				setIsDrawing(false);
 			}
 		};
 		removeDrawInteraction();
@@ -45,6 +46,13 @@ const DrawButton: FC<DrawButtonProps> = ({ geometryType = "Polygon" }) => {
 			removeDrawInteraction();
 		};
 	}, [map, drawLayerId]);
+
+	useEffect(() => {
+		if (!isDrawing && drawRef.current && map) {
+			map.removeInteraction(drawRef.current);
+			drawRef.current = null;
+		}
+	}, [isDrawing, map]);
 
 	const toggleDraw = () => {
 		if (!map) return;
