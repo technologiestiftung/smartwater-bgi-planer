@@ -1,9 +1,11 @@
 import { QuestionBadge } from "@/components/Modules/HandlungsbedarfeModule/QuestionBadge";
 import { steps } from "@/components/Modules/HandlungsbedarfeModule/constants";
 import { Button } from "@/components/ui/button";
+import { useMapReady } from "@/hooks/use-map-ready";
 import { useAnswersStore } from "@/store/answers";
-import { EyeSlashIcon, XIcon } from "@phosphor-icons/react";
-import { useCallback, useState } from "react";
+import { useLayersStore } from "@/store/layers";
+import { EyeIcon, EyeSlashIcon, XIcon } from "@phosphor-icons/react";
+import { useCallback, useEffect } from "react";
 
 interface SynthesisViewProps {
 	onBackToQuestions: () => void;
@@ -11,20 +13,71 @@ interface SynthesisViewProps {
 
 export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 	const answers = useAnswersStore((state) => state.answers);
-	// TODO: Implement layer visibility toggle once drawLayers state exists
-	const [visibleLayers, setVisibleLayers] = useState<Set<string>>(new Set());
+	const layerConfig = useLayersStore((state) => state.layerConfig);
+	const layers = useLayersStore((state) => state.layers);
+	const setLayerVisibility = useLayersStore(
+		(state) => state.setLayerVisibility,
+	);
+	const applyConfigLayers = useLayersStore((state) => state.applyConfigLayers);
+	const isMapReady = useMapReady();
 
-	const handleToggleLayer = useCallback((questionId: string) => {
-		setVisibleLayers((prev) => {
-			const newSet = new Set(prev);
-			if (newSet.has(questionId)) {
-				newSet.delete(questionId);
-			} else {
-				newSet.add(questionId);
-			}
-			return newSet;
-		});
-	}, []);
+	useEffect(() => {
+		if (!isMapReady) return;
+
+		applyConfigLayers("synthesis_view");
+	}, [applyConfigLayers, isMapReady]);
+
+	const handleToggleLayer = useCallback(
+		(questionId: string) => {
+			const questionConfig = layerConfig.find(
+				(config) => config.id === questionId,
+			);
+			if (!questionConfig?.drawLayerId) return;
+
+			const layer = layers.get(questionConfig.drawLayerId);
+			const isCurrentlyVisible = layer?.visibility ?? false;
+
+			setLayerVisibility(questionConfig.drawLayerId, !isCurrentlyVisible);
+		},
+		[layerConfig, layers, setLayerVisibility],
+	);
+
+	const handleToggleStepLayers = useCallback(
+		(stepQuestions: string[]) => {
+			// Get all layers for this step
+			const stepLayers = stepQuestions
+				.map((questionId) => {
+					const questionConfig = layerConfig.find(
+						(config) => config.id === questionId,
+					);
+					return questionConfig?.drawLayerId
+						? {
+								drawLayerId: questionConfig.drawLayerId,
+								layer: layers.get(questionConfig.drawLayerId),
+							}
+						: null;
+				})
+				.filter(
+					(
+						item,
+					): item is {
+						drawLayerId: string;
+						layer: NonNullable<ReturnType<typeof layers.get>>;
+					} => item !== null && item.layer !== undefined,
+				);
+
+			const anyVisible = stepLayers.some((item) => item.layer.visibility);
+
+			stepLayers.forEach((item) => {
+				setLayerVisibility(item.drawLayerId, !anyVisible);
+			});
+		},
+		[layerConfig, layers, setLayerVisibility],
+	);
+
+	useEffect(() => {
+		console.log("[SynthesisView] answers::", answers);
+	}, [answers]);
 
 	return (
 		<div className="flex h-full w-full flex-col">
@@ -38,19 +91,51 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 
 				{steps.map((step) => {
 					const sectionQuestions = step.questions || [];
+					const anyLayerVisible = sectionQuestions.some((questionId) => {
+						const questionConfig = layerConfig.find(
+							(config) => config.id === questionId,
+						);
+						const layer = questionConfig?.drawLayerId
+							? layers.get(questionConfig.drawLayerId)
+							: null;
+						return layer?.visibility ?? false;
+					});
+
 					return (
 						<div key={step.id} className="my-6">
 							<div className="mb-3 flex items-center gap-2">
-								{step.icon}
+								<div className="bg-red rounded-full p-1 text-white">
+									{step.icon}
+								</div>
 								<h3 className="text-primary text-lg font-medium">
 									{step.title}
 								</h3>
-								<EyeSlashIcon className="ml-auto h-5 w-5 text-gray-400" />
+								<button
+									onClick={() => handleToggleStepLayers(sectionQuestions)}
+									className="transition-opacity hover:opacity-70"
+									aria-label={
+										anyLayerVisible
+											? "Alle Layer ausblenden"
+											: "Alle Layer einblenden"
+									}
+								>
+									{anyLayerVisible ? (
+										<EyeIcon className="h-5 w-5" />
+									) : (
+										<EyeSlashIcon className="h-5 w-5" />
+									)}
+								</button>
 							</div>
 							<div className="flex flex-wrap gap-2">
 								{sectionQuestions.map((questionId) => {
 									const answer = answers[questionId];
-									const isVisible = visibleLayers.has(questionId);
+									const questionConfig = layerConfig.find(
+										(config) => config.id === questionId,
+									);
+									const layer = questionConfig?.drawLayerId
+										? layers.get(questionConfig.drawLayerId)
+										: null;
+									const isVisible = layer?.visibility ?? false;
 									return (
 										<QuestionBadge
 											key={questionId}

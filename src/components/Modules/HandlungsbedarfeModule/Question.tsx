@@ -1,10 +1,12 @@
 "use client";
 
 import ConfirmButton from "@/components/ConfirmButton/ConfirmButton";
+import { Button } from "@/components/ui/button";
 import { useLayerArea } from "@/hooks/use-layer-area";
 import { useLayerFeatures } from "@/hooks/use-layer-features";
 import { useLayersStore } from "@/store/layers";
 import { LayerConfigItem } from "@/store/layers/types";
+import { PlayIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import { FC, useEffect } from "react";
 
@@ -19,7 +21,6 @@ const Question: FC<QuestionProps> = ({
 	questionConfig,
 	onAnswer,
 	onSkip: _onSkip,
-	showButtons = true,
 }) => {
 	const applyConfigLayers = useLayersStore((state) => state.applyConfigLayers);
 	const { hasFeatures } = useLayerFeatures(questionConfig.drawLayerId);
@@ -62,16 +63,20 @@ const Question: FC<QuestionProps> = ({
 					</div>
 				)}
 
-				{showButtons && (
-					<div className="pt-4">
+				<div className="pt-4">
+					{questionConfig.id === "starter_question" ? (
+						<Button onClick={handleConfirm}>
+							<PlayIcon />
+							Checkfragen starten
+						</Button>
+					) : (
 						<ConfirmButton
 							onConfirm={handleConfirm}
-							validate={() => hasFeatures}
 							displayText={formattedArea}
 							autoAdvanceStep={false}
 						/>
-					</div>
-				)}
+					)}
+				</div>
 			</div>
 
 			{questionConfig.legendSrc && (

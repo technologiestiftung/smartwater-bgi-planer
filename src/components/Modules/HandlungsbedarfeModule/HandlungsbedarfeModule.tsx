@@ -17,6 +17,7 @@ import {
 } from "@/components/VerticalStepper";
 import { useMapReady } from "@/hooks/use-map-ready";
 import { useLayersStore } from "@/store/layers";
+import { useUiStore } from "@/store/ui";
 import { useCallback, useEffect, useState } from "react";
 
 interface HandlungsbedarfeModuleProps {
@@ -32,6 +33,9 @@ export default function HandlungsbedarfeModule({
 	const { questionIndices, setQuestionIndex } = useSectionQuestionState();
 	const layerConfig = useLayersStore((state) => state.layerConfig);
 	const applyConfigLayers = useLayersStore((state) => state.applyConfigLayers);
+	const resetDrawInteractions = useUiStore(
+		(state) => state.resetDrawInteractions,
+	);
 	const isMapReady = useMapReady();
 	const [isSynthesisMode, setIsSynthesisMode] = useState(false);
 	const [stepperKey, setStepperKey] = useState(0);
@@ -49,16 +53,21 @@ export default function HandlungsbedarfeModule({
 		}
 	}, [open, layerConfig.length, applyConfigLayers, isMapReady]);
 
+	useEffect(() => {
+		resetDrawInteractions();
+	}, [questionIndices, resetDrawInteractions]);
+
 	const handleBackToQuestions = useCallback(() => {
 		setQuestionIndex("heavyRain", 0);
 		setIsSynthesisMode(false);
 		setStepperKey((prev) => prev + 1);
+		resetDrawInteractions();
 
 		const firstQuestionId = steps[0]?.questions?.[0];
 		if (firstQuestionId) {
 			applyConfigLayers(firstQuestionId);
 		}
-	}, [setQuestionIndex, applyConfigLayers]);
+	}, [setQuestionIndex, applyConfigLayers, resetDrawInteractions]);
 
 	const handleShowSynthesis = useCallback(() => {
 		setIsSynthesisMode(true);

@@ -28,6 +28,16 @@
 		"legendSrc": ""
 	},
 	{
+		"id": "synthesis_view",
+		"name": "Synthese",
+		"drawLayerId": "",
+		"canDrawPolygons": false,
+		"canDrawBTF": false,
+		"canDrawNotes": false,
+		"visibleLayerIds": ["project_boundary", "project_new_development"],
+		"legendSrc": ""
+	},
+	{
 		"id": "heavy_rain_flow_velocity",
 		"name": "Fließgeschwindigkeit",
 		"question": "Wo gibt es Bereiche in denen Fließgeschwindigkeiten über 0,5 m/s auftreten und dadurch eine Gefährdung bestehen könnte?",

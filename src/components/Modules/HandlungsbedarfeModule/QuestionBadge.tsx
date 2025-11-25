@@ -19,28 +19,39 @@ export function QuestionBadge({
 
 	if (!questionConfig) return null;
 
-	const getBackgroundColor = () => {
-		if (answer === true) return "bg-green-500";
-		if (answer === false) return "bg-red-500";
-		return "bg-gray-400";
-	};
+	console.log("[QuestionBadge] answer::", answer);
 
-	const getTextColor = () => {
-		if (answer === null) return "text-gray-600";
-		return "text-white";
+	const getBackgroundColor = () => {
+		if (answer === null || answer === undefined) return "bg-neutral";
+		if (answer === true) return "bg-green";
+		if (answer === false) return "bg-red";
+		return "bg-neutral-light";
 	};
 
 	return (
 		<button
 			onClick={onToggle}
-			className={`${getBackgroundColor()} ${getTextColor()} flex items-center gap-2 rounded px-3 py-1 text-sm font-medium transition-all hover:opacity-80`}
+			className={`bg-neutral-light flex items-center gap-2 overflow-hidden rounded-sm text-sm font-medium transition-all hover:opacity-80`}
 		>
-			<span>{questionConfig.name}</span>
-			{isVisible ? (
-				<EyeIcon className="h-4 w-4" />
-			) : (
-				<EyeSlashIcon className="h-4 w-4" />
+			{answer !== undefined && (
+				<div
+					className={`${getBackgroundColor()} flex items-center justify-center overflow-hidden p-1 text-white`}
+				>
+					{answer && (
+						<div>
+							{isVisible ? (
+								<EyeIcon className="h-4 w-4" />
+							) : (
+								<EyeSlashIcon className="h-4 w-4" />
+							)}
+						</div>
+					)}
+					{!answer && <div className="h-4 w-4" />}
+				</div>
 			)}
+			<span className={`${answer === undefined && "pl-2"} pr-2`}>
+				{questionConfig.name}
+			</span>
 		</button>
 	);
 }
