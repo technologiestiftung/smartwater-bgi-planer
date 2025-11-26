@@ -22,6 +22,9 @@ const DrawNoteButton: FC<DrawNoteButtonProps> = ({ layerId }) => {
 	);
 	const isDrawing = useUiStore((state) => state.isDrawingNote);
 	const setIsDrawing = useUiStore((state) => state.setIsDrawingNote);
+	const resetDrawInteractions = useUiStore(
+		(state) => state.resetDrawInteractions,
+	);
 
 	const drawRef = useRef<Draw | null>(null);
 
@@ -56,6 +59,8 @@ const DrawNoteButton: FC<DrawNoteButtonProps> = ({ layerId }) => {
 			setIsDrawing(false);
 			return;
 		}
+
+		resetDrawInteractions();
 
 		const layer = map
 			.getAllLayers()

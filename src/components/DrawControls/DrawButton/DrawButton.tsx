@@ -22,6 +22,9 @@ const DrawButton: FC<DrawButtonProps> = ({ geometryType = "Polygon" }) => {
 	);
 	const isDrawing = useUiStore((state) => state.isDrawing);
 	const setIsDrawing = useUiStore((state) => state.setIsDrawing);
+	const resetDrawInteractions = useUiStore(
+		(state) => state.resetDrawInteractions,
+	);
 
 	const drawRef = useRef<Draw | null>(null);
 
@@ -63,6 +66,8 @@ const DrawButton: FC<DrawButtonProps> = ({ geometryType = "Polygon" }) => {
 			setIsDrawing(false);
 			return;
 		}
+
+		resetDrawInteractions();
 
 		const layer = map
 			.getAllLayers()

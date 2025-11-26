@@ -18,6 +18,9 @@ const BlockAreaSelector: FC = () => {
 	const drawLayerId = useLayersStore((state) => state.drawLayerId);
 	const isActive = useUiStore((state) => state.isBlockAreaSelecting);
 	const setIsActive = useUiStore((state) => state.setIsBlockAreaSelecting);
+	const resetDrawInteractions = useUiStore(
+		(state) => state.resetDrawInteractions,
+	);
 
 	const selectInteractionRef = useRef<Select | null>(null);
 
@@ -37,8 +40,11 @@ const BlockAreaSelector: FC = () => {
 
 	const toggleSelectionMode = useCallback(() => {
 		if (!map) return;
+		if (!isActive) {
+			resetDrawInteractions();
+		}
 		setIsActive(!isActive);
-	}, [map, isActive, setIsActive]);
+	}, [map, isActive, setIsActive, resetDrawInteractions]);
 
 	useEffect(() => {
 		if (!map || !drawLayerId) return;
