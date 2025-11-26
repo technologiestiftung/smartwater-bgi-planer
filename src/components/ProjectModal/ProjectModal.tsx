@@ -184,7 +184,7 @@ export default function ProjectModalWrapper({
 
 	const customBackdrop = (
 		<div className="bg-primary absolute -z-99 flex h-full w-full items-center justify-center overflow-hidden">
-			<Background className="min-h-full min-w-full flex-shrink-0" />
+			<Background className="min-h-full min-w-full shrink-0" />
 		</div>
 	);
 

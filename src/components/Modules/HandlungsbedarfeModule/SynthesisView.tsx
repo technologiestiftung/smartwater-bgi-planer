@@ -75,10 +75,6 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 		[layerConfig, layers, setLayerVisibility],
 	);
 
-	useEffect(() => {
-		console.log("[SynthesisView] answers::", answers);
-	}, [answers]);
-
 	return (
 		<div className="flex h-full w-full flex-col">
 			<div className="flex-1 overflow-y-auto p-6">
@@ -101,10 +97,29 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 						return layer?.visibility ?? false;
 					});
 
+					// Determine icon color based on answers in this section
+					const sectionAnswers = sectionQuestions
+						.filter((q) => q !== "starter_question")
+						.map((questionId) => answers[questionId]);
+
+					const allTrue =
+						sectionAnswers.length > 0 &&
+						sectionAnswers.every((a) => a === true);
+					const allFalse =
+						sectionAnswers.length > 0 &&
+						sectionAnswers.every((a) => a === false);
+
+					let iconColor = "bg-yellow";
+					if (allTrue) {
+						iconColor = "bg-red text-white";
+					} else if (allFalse) {
+						iconColor = "bg-green";
+					}
+
 					return (
 						<div key={step.id} className="my-6">
 							<div className="mb-3 flex items-center gap-2">
-								<div className="bg-red rounded-full p-1 text-white">
+								<div className={`${iconColor} rounded-full p-1`}>
 									{step.icon}
 								</div>
 								<h3 className="text-primary text-lg font-medium">
