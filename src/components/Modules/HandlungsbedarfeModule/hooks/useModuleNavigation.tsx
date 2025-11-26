@@ -3,13 +3,11 @@ import {
 	type SectionId,
 } from "@/components/Modules/HandlungsbedarfeModule/constants";
 import { useVerticalStepper } from "@/components/VerticalStepper";
-import { useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
 import { useCallback, useMemo } from "react";
 
 export function useModuleNavigation() {
 	const { goToStep, currentStepId } = useVerticalStepper();
-	const applyConfigLayers = useLayersStore((state) => state.applyConfigLayers);
 	const resetDrawInteractions = useUiStore(
 		(state) => state.resetDrawInteractions,
 	);
@@ -17,7 +15,7 @@ export function useModuleNavigation() {
 	const questionIndices = useUiStore((state) => state.moduleQuestionIndices);
 	const setQuestionIndex = useUiStore((state) => state.setModuleQuestionIndex);
 	const saveCurrentState = useUiStore((state) => state.saveModuleState);
-	const restoreSavedState = useUiStore((state) => state.restoreModuleState);
+	const setIsSynthesisMode = useUiStore((state) => state.setIsSynthesisMode);
 
 	const allQuestions = useMemo(
 		() =>
@@ -174,32 +172,8 @@ export function useModuleNavigation() {
 				);
 		}
 		saveCurrentState();
-	}, [questionIndices, saveCurrentState]);
-
-	const handleBackToQuestions = useCallback(() => {
-		resetDrawInteractions();
-		const savedState = restoreSavedState();
-
-		if (savedState) {
-			goToStep(savedState.sectionId);
-			const currentSection = steps.find((s) => s.id === savedState.sectionId);
-			const currentQuestionIndex =
-				savedState.questionIndices[savedState.sectionId];
-			const currentQuestionId =
-				currentSection?.questions?.[currentQuestionIndex];
-
-			if (currentQuestionId) {
-				applyConfigLayers(currentQuestionId);
-			}
-		} else {
-			const firstQuestionId = steps[0]?.questions?.[0];
-			if (firstQuestionId) {
-				applyConfigLayers(firstQuestionId);
-			}
-		}
-
-		return savedState;
-	}, [restoreSavedState, resetDrawInteractions, goToStep, applyConfigLayers]);
+		setIsSynthesisMode(true);
+	}, [questionIndices, saveCurrentState, setIsSynthesisMode]);
 
 	return {
 		questionIndices,
@@ -210,6 +184,5 @@ export function useModuleNavigation() {
 		navigateToPrevious,
 		navigateToNext,
 		handleShowSynthesis,
-		handleBackToQuestions,
 	};
 }

@@ -16,6 +16,7 @@ export interface UiState {
 		sectionId: SectionId;
 		questionIndices: Record<SectionId, number>;
 	} | null;
+	isSynthesisMode: boolean;
 }
 
 export interface UiActions {
@@ -41,4 +42,5 @@ export interface UiActions {
 		sectionId: SectionId;
 		questionIndices: Record<SectionId, number>;
 	} | null;
+	setIsSynthesisMode: (isSynthesisMode: boolean) => void;
 }

@@ -22,7 +22,6 @@ import { useCallback, useEffect, useState } from "react";
 interface HandlungsbedarfeModuleProps {
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
-	projectId: string;
 }
 
 function QuestionsContent({
@@ -57,14 +56,17 @@ export default function HandlungsbedarfeModule({
 }: HandlungsbedarfeModuleProps) {
 	const layerConfig = useLayersStore((state) => state.layerConfig);
 	const applyConfigLayers = useLayersStore((state) => state.applyConfigLayers);
+
 	const resetDrawInteractions = useUiStore(
 		(state) => state.resetDrawInteractions,
 	);
 	const questionIndices = useUiStore((state) => state.moduleQuestionIndices);
 	const saveModuleState = useUiStore((state) => state.saveModuleState);
 	const restoreModuleState = useUiStore((state) => state.restoreModuleState);
+	const setIsSynthesisMode = useUiStore((state) => state.setIsSynthesisMode);
+	const isSynthesisMode = useUiStore((state) => state.isSynthesisMode);
+
 	const isMapReady = useMapReady();
-	const [isSynthesisMode, setIsSynthesisMode] = useState(false);
 	const [stepperKey, setStepperKey] = useState(0);
 	const [initialStepId, setInitialStepId] = useState<SectionId>("heavyRain");
 
@@ -72,10 +74,6 @@ export default function HandlungsbedarfeModule({
 		if (open && layerConfig.length > 0 && isMapReady) {
 			const firstQuestionId = steps[0]?.questions?.[0];
 			if (firstQuestionId) {
-				console.log(
-					"[HandlungsbedarfeModule] Initializing first question:",
-					firstQuestionId,
-				);
 				applyConfigLayers(firstQuestionId);
 			}
 		}
@@ -110,7 +108,12 @@ export default function HandlungsbedarfeModule({
 
 		setIsSynthesisMode(false);
 		setStepperKey((prev) => prev + 1);
-	}, [restoreModuleState, resetDrawInteractions, applyConfigLayers]);
+	}, [
+		restoreModuleState,
+		resetDrawInteractions,
+		applyConfigLayers,
+		setIsSynthesisMode,
+	]);
 
 	const onShowSynthesis = useCallback(() => {
 		const currentStepId = useUiStore.getState().currentStepId;
@@ -124,7 +127,7 @@ export default function HandlungsbedarfeModule({
 		}
 		saveModuleState();
 		setIsSynthesisMode(true);
-	}, [questionIndices, saveModuleState]);
+	}, [questionIndices, saveModuleState, setIsSynthesisMode]);
 
 	return (
 		<SideMenu

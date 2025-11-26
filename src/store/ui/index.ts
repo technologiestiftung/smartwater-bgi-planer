@@ -19,6 +19,7 @@ const initialState: UiState = {
 		waterProtection: 0,
 	},
 	moduleSavedState: null,
+	isSynthesisMode: false,
 };
 
 export const useUiStore = create<UiState & UiActions>((set, get) => ({
@@ -76,4 +77,5 @@ export const useUiStore = create<UiState & UiActions>((set, get) => ({
 		}
 		return null;
 	},
+	setIsSynthesisMode: (isSynthesisMode) => set({ isSynthesisMode }),
 }));
