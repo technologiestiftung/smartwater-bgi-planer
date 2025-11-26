@@ -391,11 +391,6 @@ export const useLayerPersistence = (
 		});
 	}, [map, mapReady, autoSave, saveLayerDebounced]);
 
-	// Auto-save setup
-	useEffect(() => {
-		setupAutoSave();
-	}, [setupAutoSave]);
-
 	// One-time restore on mount
 	useEffect(() => {
 		if (!map || !mapReady || !autoRestore || hasRestoredRef.current) return;
@@ -407,6 +402,7 @@ export const useLayerPersistence = (
 			await restoreDrawLayers();
 			await restoreUploadedLayers();
 			hasRestoredRef.current = true;
+			setupAutoSave();
 		})();
 	}, [
 		map,
@@ -415,6 +411,7 @@ export const useLayerPersistence = (
 		getProject,
 		restoreDrawLayers,
 		restoreUploadedLayers,
+		setupAutoSave,
 	]);
 
 	// Cleanup timers and listeners

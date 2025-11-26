@@ -40,8 +40,6 @@ export const ensureVectorLayer = (
 		layer = new VectorLayer({ source });
 		layer.set("id", layerId);
 		map.addLayer(layer);
-	} else {
-		layer.setVisible(true);
 	}
 	return layer;
 };

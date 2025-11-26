@@ -17,7 +17,7 @@ import {
 import { useMapReady } from "@/hooks/use-map-ready";
 import { useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 interface HandlungsbedarfeModuleProps {
 	open: boolean;
@@ -69,15 +69,30 @@ export default function HandlungsbedarfeModule({
 	const isMapReady = useMapReady();
 	const [stepperKey, setStepperKey] = useState(0);
 	const [initialStepId, setInitialStepId] = useState<SectionId>("heavyRain");
+	const hasInitializedRef = useRef(false);
 
 	useEffect(() => {
-		if (open && layerConfig.length > 0 && isMapReady) {
+		if (
+			open &&
+			layerConfig.length > 0 &&
+			isMapReady &&
+			!hasInitializedRef.current
+		) {
 			const firstQuestionId = steps[0]?.questions?.[0];
 			if (firstQuestionId) {
 				applyConfigLayers(firstQuestionId, true);
+				hasInitializedRef.current = true;
+			} else {
+				console.warn("[HandlungsbedarfeModule] firstQuestionId is undefined!");
 			}
 		}
 	}, [open, layerConfig.length, applyConfigLayers, isMapReady]);
+
+	useEffect(() => {
+		if (!open) {
+			hasInitializedRef.current = false;
+		}
+	}, [open]);
 
 	useEffect(() => {
 		resetDrawInteractions();

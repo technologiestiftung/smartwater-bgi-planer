@@ -1,5 +1,7 @@
-import { Project, ProjectsState } from "./types";
+import { useAnswersStore } from "../answers";
 import { useFilesStore } from "../files";
+import { useUiStore } from "../ui";
+import { Project, ProjectsState } from "./types";
 
 type SetState = (fn: (state: ProjectsState) => Partial<ProjectsState>) => void;
 type GetState = () => ProjectsState;
@@ -40,6 +42,9 @@ export const createDeleteProject = (set: SetState, get: GetState) => {
 		if (projectId) {
 			await useFilesStore.getState().deleteProjectFiles(projectId);
 		}
+		// Reset all answers and module state
+		useAnswersStore.getState().clearAnswers();
+		useUiStore.getState().resetModuleState();
 	};
 };
 

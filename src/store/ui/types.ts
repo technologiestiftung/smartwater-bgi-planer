@@ -43,4 +43,5 @@ export interface UiActions {
 		questionIndices: Record<SectionId, number>;
 	} | null;
 	setIsSynthesisMode: (isSynthesisMode: boolean) => void;
+	resetModuleState: () => void;
 }

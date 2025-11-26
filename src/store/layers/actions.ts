@@ -151,15 +151,18 @@ export const createApplyConfigLayers =
 		// Hide other draw layers if requested
 		if (hideOtherDrawLayers) {
 			const keepVisibleDrawLayers = new Set([
-				layerConfigItem.drawLayerId,
 				"project_boundary",
 				"project_new_development",
 			]);
 
+			if (layerConfigItem.drawLayerId) {
+				keepVisibleDrawLayers.add(layerConfigItem.drawLayerId);
+			}
+
 			drawLayerIds.forEach((layerId) => {
 				if (!keepVisibleDrawLayers.has(layerId)) {
 					const layer = newLayersMap.get(layerId);
-					if (layer && layer.olLayer && layer.visibility) {
+					if (layer && layer.olLayer) {
 						layer.olLayer.setVisible(false);
 						newLayersMap.set(layerId, { ...layer, visibility: false });
 					}
@@ -167,14 +170,25 @@ export const createApplyConfigLayers =
 			});
 		}
 
-		// Turn on the requested layers
 		layerConfigItem.visibleLayerIds.forEach((layerId) => {
 			const layer = newLayersMap.get(layerId);
-			if (layer && layer.olLayer && !layer.visibility) {
+			if (layer && layer.olLayer) {
 				layer.olLayer.setVisible(true);
 				newLayersMap.set(layerId, { ...layer, visibility: true });
 			}
 		});
+
+		// Ensure the current draw layer is visible if it exists
+		if (layerConfigItem.drawLayerId) {
+			const drawLayer = newLayersMap.get(layerConfigItem.drawLayerId);
+			if (drawLayer && drawLayer.olLayer) {
+				drawLayer.olLayer.setVisible(true);
+				newLayersMap.set(layerConfigItem.drawLayerId, {
+					...drawLayer,
+					visibility: true,
+				});
+			}
+		}
 
 		set(() => ({ layers: newLayersMap }));
 	};

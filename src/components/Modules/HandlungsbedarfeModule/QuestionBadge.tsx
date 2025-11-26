@@ -49,7 +49,7 @@ export function QuestionBadge({
 					{!answer && <div className="h-4 w-4" />}
 				</div>
 			)}
-			<span className={`${answer === undefined && "pl-2"} pr-2`}>
+			<span className={answer === undefined ? "h-6 px-2" : "pr-2"}>
 				{questionConfig.name}
 			</span>
 		</button>

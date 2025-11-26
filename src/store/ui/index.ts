@@ -78,4 +78,17 @@ export const useUiStore = create<UiState & UiActions>((set, get) => ({
 		return null;
 	},
 	setIsSynthesisMode: (isSynthesisMode) => set({ isSynthesisMode }),
+	resetModuleState: () =>
+		set({
+			moduleCurrentSectionId: "heavyRain",
+			moduleQuestionIndices: {
+				heavyRain: 0,
+				heat: 0,
+				sealing: 0,
+				waterBalance: 0,
+				waterProtection: 0,
+			},
+			moduleSavedState: null,
+			isSynthesisMode: false,
+		}),
 }));

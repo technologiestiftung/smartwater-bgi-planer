@@ -24,7 +24,7 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 	useEffect(() => {
 		if (!isMapReady) return;
 
-		applyConfigLayers("synthesis_view", false);
+		applyConfigLayers("synthesis_view", true);
 	}, [applyConfigLayers, isMapReady]);
 
 	const handleToggleLayer = useCallback(
@@ -128,6 +128,7 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 							</div>
 							<div className="flex flex-wrap gap-2">
 								{sectionQuestions.map((questionId) => {
+									if (questionId === "starter_question") return null;
 									const answer = answers[questionId];
 									const questionConfig = layerConfig.find(
 										(config) => config.id === questionId,
