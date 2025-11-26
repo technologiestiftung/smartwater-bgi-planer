@@ -85,9 +85,9 @@ function StepperFooter({
 		if (!isMapReady) return;
 
 		if (currentStepId === "projectBoundary") {
-			applyConfigLayers("start_view_project_boundary");
+			applyConfigLayers("start_view_project_boundary", true);
 		} else if (currentStepId === "newDevelopment") {
-			applyConfigLayers("start_view_project_new_development");
+			applyConfigLayers("start_view_project_new_development", true);
 		}
 	}, [currentStepId, applyConfigLayers, isMapReady]);
 

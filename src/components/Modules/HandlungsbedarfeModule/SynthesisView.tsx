@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useMapReady } from "@/hooks/use-map-ready";
 import { useAnswersStore } from "@/store/answers";
 import { useLayersStore } from "@/store/layers";
+import { useUiStore } from "@/store/ui";
 import { EyeIcon, EyeSlashIcon, XIcon } from "@phosphor-icons/react";
 import { useCallback, useEffect } from "react";
 
@@ -19,13 +20,37 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 		(state) => state.setLayerVisibility,
 	);
 	const applyConfigLayers = useLayersStore((state) => state.applyConfigLayers);
+	const moduleSavedState = useUiStore((state) => state.moduleSavedState);
 	const isMapReady = useMapReady();
 
 	useEffect(() => {
 		if (!isMapReady) return;
 
 		applyConfigLayers("synthesis_view", true);
-	}, [applyConfigLayers, isMapReady]);
+
+		if (moduleSavedState) {
+			const lastActiveStep = steps.find(
+				(step) => step.id === moduleSavedState.sectionId,
+			);
+			const stepQuestions = lastActiveStep?.questions || [];
+
+			stepQuestions.forEach((questionId) => {
+				if (questionId === "starter_question") return;
+				const questionConfig = layerConfig.find(
+					(config) => config.id === questionId,
+				);
+				if (questionConfig?.drawLayerId) {
+					setLayerVisibility(questionConfig.drawLayerId, true);
+				}
+			});
+		}
+	}, [
+		applyConfigLayers,
+		isMapReady,
+		moduleSavedState,
+		layerConfig,
+		setLayerVisibility,
+	]);
 
 	const handleToggleLayer = useCallback(
 		(questionId: string) => {
@@ -44,7 +69,6 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 
 	const handleToggleStepLayers = useCallback(
 		(stepQuestions: string[]) => {
-			// Get all layers for this step
 			const stepLayers = stepQuestions
 				.map((questionId) => {
 					const questionConfig = layerConfig.find(
@@ -97,7 +121,6 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 						return layer?.visibility ?? false;
 					});
 
-					// Determine icon color based on answers in this section
 					const sectionAnswers = sectionQuestions
 						.filter((q) => q !== "starter_question")
 						.map((questionId) => answers[questionId]);
