@@ -1,3 +1,5 @@
+import type { SectionId } from "@/components/Modules/HandlungsbedarfeModule/constants";
+
 export interface UiState {
 	isLayerTreeOpen: boolean;
 	openLegendLayerId: string;
@@ -7,6 +9,13 @@ export interface UiState {
 	isDrawing: boolean;
 	isBlockAreaSelecting: boolean;
 	isDrawingNote: boolean;
+	// Module navigation state
+	moduleCurrentSectionId: SectionId;
+	moduleQuestionIndices: Record<SectionId, number>;
+	moduleSavedState: {
+		sectionId: SectionId;
+		questionIndices: Record<SectionId, number>;
+	} | null;
 }
 
 export interface UiActions {
@@ -20,4 +29,16 @@ export interface UiActions {
 	setIsBlockAreaSelecting: (isSelecting: boolean) => void;
 	setIsDrawingNote: (isDrawing: boolean) => void;
 	resetDrawInteractions: () => void;
+	// Module navigation actions
+	setModuleCurrentSection: (sectionId: SectionId) => void;
+	setModuleQuestionIndex: (sectionId: SectionId, index: number) => void;
+	navigateToModuleQuestion: (
+		sectionId: SectionId,
+		questionIndex: number,
+	) => void;
+	saveModuleState: () => void;
+	restoreModuleState: () => {
+		sectionId: SectionId;
+		questionIndices: Record<SectionId, number>;
+	} | null;
 }

@@ -4,7 +4,6 @@ import {
 	steps,
 	type SectionId,
 } from "@/components/Modules/HandlungsbedarfeModule/constants";
-import { useSectionQuestionState } from "@/components/Modules/HandlungsbedarfeModule/hooks/useSectionQuestionState";
 import { SectionContent } from "@/components/Modules/HandlungsbedarfeModule/SectionContent";
 import { StepperFooter } from "@/components/Modules/HandlungsbedarfeModule/StepperFooter";
 import { SynthesisView } from "@/components/Modules/HandlungsbedarfeModule/SynthesisView";
@@ -26,19 +25,48 @@ interface HandlungsbedarfeModuleProps {
 	projectId: string;
 }
 
+function QuestionsContent({
+	onClose,
+	onShowSynthesis,
+}: {
+	onClose: () => void;
+	onShowSynthesis: () => void;
+}) {
+	return (
+		<div className="flex h-full w-full flex-col">
+			<div className="flex min-h-0 flex-1 pb-4">
+				<StepIndicator className="w-20" />
+				<StepContainer className="overflow-y-auto">
+					{steps.map((step) => (
+						<StepContent key={step.id} stepId={step.id}>
+							<SectionContent sectionId={step.id as SectionId} />
+						</StepContent>
+					))}
+				</StepContainer>
+			</div>
+			<div className="shrink-0">
+				<StepperFooter onClose={onClose} onShowSynthesis={onShowSynthesis} />
+			</div>
+		</div>
+	);
+}
+
 export default function HandlungsbedarfeModule({
 	open,
 	onOpenChange,
 }: HandlungsbedarfeModuleProps) {
-	const { questionIndices, setQuestionIndex } = useSectionQuestionState();
 	const layerConfig = useLayersStore((state) => state.layerConfig);
 	const applyConfigLayers = useLayersStore((state) => state.applyConfigLayers);
 	const resetDrawInteractions = useUiStore(
 		(state) => state.resetDrawInteractions,
 	);
+	const questionIndices = useUiStore((state) => state.moduleQuestionIndices);
+	const saveModuleState = useUiStore((state) => state.saveModuleState);
+	const restoreModuleState = useUiStore((state) => state.restoreModuleState);
 	const isMapReady = useMapReady();
 	const [isSynthesisMode, setIsSynthesisMode] = useState(false);
 	const [stepperKey, setStepperKey] = useState(0);
+	const [initialStepId, setInitialStepId] = useState<SectionId>("heavyRain");
 
 	useEffect(() => {
 		if (open && layerConfig.length > 0 && isMapReady) {
@@ -57,21 +85,46 @@ export default function HandlungsbedarfeModule({
 		resetDrawInteractions();
 	}, [questionIndices, resetDrawInteractions]);
 
-	const handleBackToQuestions = useCallback(() => {
-		setQuestionIndex("heavyRain", 0);
+	const onBackToQuestions = useCallback(() => {
+		resetDrawInteractions();
+		const savedState = restoreModuleState();
+
+		if (savedState) {
+			setInitialStepId(savedState.sectionId);
+			const currentSection = steps.find((s) => s.id === savedState.sectionId);
+			const currentQuestionIndex =
+				savedState.questionIndices[savedState.sectionId];
+			const currentQuestionId =
+				currentSection?.questions?.[currentQuestionIndex];
+
+			if (currentQuestionId) {
+				applyConfigLayers(currentQuestionId);
+			}
+		} else {
+			setInitialStepId("heavyRain");
+			const firstQuestionId = steps[0]?.questions?.[0];
+			if (firstQuestionId) {
+				applyConfigLayers(firstQuestionId);
+			}
+		}
+
 		setIsSynthesisMode(false);
 		setStepperKey((prev) => prev + 1);
-		resetDrawInteractions();
+	}, [restoreModuleState, resetDrawInteractions, applyConfigLayers]);
 
-		const firstQuestionId = steps[0]?.questions?.[0];
-		if (firstQuestionId) {
-			applyConfigLayers(firstQuestionId);
+	const onShowSynthesis = useCallback(() => {
+		const currentStepId = useUiStore.getState().currentStepId;
+		if (currentStepId) {
+			useUiStore
+				.getState()
+				.navigateToModuleQuestion(
+					currentStepId as SectionId,
+					questionIndices[currentStepId as SectionId],
+				);
 		}
-	}, [setQuestionIndex, applyConfigLayers, resetDrawInteractions]);
-
-	const handleShowSynthesis = useCallback(() => {
+		saveModuleState();
 		setIsSynthesisMode(true);
-	}, []);
+	}, [questionIndices, saveModuleState]);
 
 	return (
 		<SideMenu
@@ -83,37 +136,17 @@ export default function HandlungsbedarfeModule({
 			bodyClassName="p-0"
 		>
 			{isSynthesisMode ? (
-				<SynthesisView onBackToQuestions={handleBackToQuestions} />
+				<SynthesisView onBackToQuestions={onBackToQuestions} />
 			) : (
 				<VerticalStepper
 					key={`questions-${stepperKey}`}
 					steps={steps}
-					initialStepId="heavyRain"
+					initialStepId={initialStepId}
 				>
-					<div className="flex h-full w-full flex-col">
-						<div className="flex min-h-0 flex-1 pb-4">
-							<StepIndicator className="w-20" />
-							<StepContainer className="overflow-y-auto">
-								{steps.map((step) => (
-									<StepContent key={step.id} stepId={step.id}>
-										<SectionContent
-											sectionId={step.id as SectionId}
-											questionIndices={questionIndices}
-											setQuestionIndex={setQuestionIndex}
-										/>
-									</StepContent>
-								))}
-							</StepContainer>
-						</div>
-						<div className="shrink-0">
-							<StepperFooter
-								onClose={() => onOpenChange(false)}
-								questionIndices={questionIndices}
-								setQuestionIndex={setQuestionIndex}
-								onShowSynthesis={handleShowSynthesis}
-							/>
-						</div>
-					</div>
+					<QuestionsContent
+						onClose={() => onOpenChange(false)}
+						onShowSynthesis={onShowSynthesis}
+					/>
 				</VerticalStepper>
 			)}
 		</SideMenu>

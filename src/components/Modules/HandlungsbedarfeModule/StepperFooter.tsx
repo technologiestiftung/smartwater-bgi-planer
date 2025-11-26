@@ -1,121 +1,56 @@
-import {
-	steps,
-	type SectionId,
-} from "@/components/Modules/HandlungsbedarfeModule/constants";
-import { useVerticalStepper } from "@/components/VerticalStepper";
+import { useModuleNavigation } from "@/components/Modules/HandlungsbedarfeModule/hooks/useModuleNavigation";
 import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
 	ListChecksIcon,
 } from "@phosphor-icons/react";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import { Button } from "../../ui/button";
 
 interface StepperFooterProps {
 	onClose: () => void;
-	questionIndices: Record<SectionId, number>;
-	setQuestionIndex: (sectionId: SectionId, index: number) => void;
 	onShowSynthesis: () => void;
 }
 
 export function StepperFooter({
 	onClose,
-	questionIndices,
-	setQuestionIndex,
 	onShowSynthesis,
 }: StepperFooterProps) {
-	const { currentStepId, goToStep } = useVerticalStepper();
+	const { getCurrentQuestionInfo, navigateToPrevious, navigateToNext } =
+		useModuleNavigation();
 
-	const allQuestions = useMemo(
-		() =>
-			steps.flatMap((step) =>
-				(step.questions || []).map((questionId) => ({
-					sectionId: step.id as SectionId,
-					questionId,
-				})),
-			),
-		[],
-	);
-
-	const sectionId = currentStepId as SectionId;
-	const currentSectionQuestions =
-		steps.find((s) => s.id === sectionId)?.questions || [];
-	const currentQuestionIndex = questionIndices[sectionId];
-	const currentQuestionId = currentSectionQuestions[currentQuestionIndex];
-
-	const globalQuestionIndex = allQuestions.findIndex(
-		(q) => q.questionId === currentQuestionId && q.sectionId === sectionId,
-	);
-
-	const canGoPrevious = globalQuestionIndex > 0;
-	const isLastQuestion = globalQuestionIndex === allQuestions.length - 1;
+	const { isFirstQuestion, isLastQuestion } = getCurrentQuestionInfo();
 
 	const handlePrevious = useCallback(() => {
-		if (!canGoPrevious) {
+		const success = navigateToPrevious();
+		if (!success) {
 			onClose();
-			return;
 		}
-
-		const prevQuestion = allQuestions[globalQuestionIndex - 1];
-		if (prevQuestion.sectionId !== sectionId) {
-			goToStep(prevQuestion.sectionId);
-		}
-
-		const prevSectionQuestions =
-			steps.find((s) => s.id === prevQuestion.sectionId)?.questions || [];
-		const prevQuestionIndex = prevSectionQuestions.findIndex(
-			(q) => q === prevQuestion.questionId,
-		);
-		setQuestionIndex(prevQuestion.sectionId, prevQuestionIndex);
-	}, [
-		canGoPrevious,
-		onClose,
-		allQuestions,
-		globalQuestionIndex,
-		sectionId,
-		goToStep,
-		setQuestionIndex,
-	]);
+	}, [navigateToPrevious, onClose]);
 
 	const handleNext = useCallback(() => {
-		if (isLastQuestion) {
+		const success = navigateToNext();
+		if (!success) {
 			onShowSynthesis();
-			return;
 		}
-
-		const nextQuestion = allQuestions[globalQuestionIndex + 1];
-		if (nextQuestion.sectionId !== sectionId) {
-			goToStep(nextQuestion.sectionId);
-		}
-
-		const nextSectionQuestions =
-			steps.find((s) => s.id === nextQuestion.sectionId)?.questions || [];
-		const nextQuestionIndex = nextSectionQuestions.findIndex(
-			(q) => q === nextQuestion.questionId,
-		);
-		setQuestionIndex(nextQuestion.sectionId, nextQuestionIndex);
-	}, [
-		isLastQuestion,
-		onShowSynthesis,
-		allQuestions,
-		globalQuestionIndex,
-		sectionId,
-		goToStep,
-		setQuestionIndex,
-	]);
+	}, [navigateToNext, onShowSynthesis]);
 
 	return (
 		<div className="border-muted flex h-full w-full border-t">
-			<div className="bg-secondary flex w-18 items-center justify-center">
+			<Button
+				onClick={onShowSynthesis}
+				variant="ghost"
+				className="bg-secondary flex h-full w-18 items-center justify-center rounded-none"
+			>
 				<ListChecksIcon className="h-6 w-6 text-white" />
-			</div>
+			</Button>
 			<div className="flex w-full items-center justify-between p-2">
 				<Button variant="ghost" onClick={handlePrevious}>
 					<ArrowLeftIcon />
-					{canGoPrevious ? "Zurück" : "Schließen"}
+					{isFirstQuestion ? "Schließen" : "Zurück"}
 				</Button>
 				<Button variant="ghost" onClick={handleNext}>
-					{isLastQuestion ? "Abschließen" : "Weiter"}
+					{isLastQuestion ? "Abschließen" : "Überspringen"}
 					<ArrowRightIcon />
 				</Button>
 			</div>

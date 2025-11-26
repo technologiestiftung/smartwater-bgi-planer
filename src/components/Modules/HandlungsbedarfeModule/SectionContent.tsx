@@ -1,9 +1,6 @@
 import Question from "@/components/Modules/HandlungsbedarfeModule/Question";
-import {
-	steps,
-	type SectionId,
-} from "@/components/Modules/HandlungsbedarfeModule/constants";
-import { useQuestionNavigation } from "@/components/Modules/HandlungsbedarfeModule/hooks/useQuestionNavigation";
+import type { SectionId } from "@/components/Modules/HandlungsbedarfeModule/constants";
+import { useModuleNavigation } from "@/components/Modules/HandlungsbedarfeModule/hooks/useModuleNavigation";
 import { Spinner } from "@/components/ui/spinner";
 import { useAnswersStore } from "@/store/answers";
 import { useLayersStore } from "@/store/layers";
@@ -11,29 +8,16 @@ import { useCallback, useMemo } from "react";
 
 interface SectionContentProps {
 	sectionId: SectionId;
-	questionIndices: Record<SectionId, number>;
-	setQuestionIndex: (sectionId: SectionId, index: number) => void;
 }
 
-export function SectionContent({
-	sectionId,
-	questionIndices,
-	setQuestionIndex,
-}: SectionContentProps) {
+export function SectionContent({ sectionId }: SectionContentProps) {
 	const layerConfig = useLayersStore((state) => state.layerConfig);
 	const setAnswer = useAnswersStore((state) => state.setAnswer);
-	const { navigateToNextQuestion } = useQuestionNavigation(
-		questionIndices,
-		setQuestionIndex,
-	);
+	const { navigateToNextQuestion, getCurrentSectionInfo } =
+		useModuleNavigation();
 
-	const currentStep = useMemo(
-		() => steps.find((step) => step.id === sectionId),
-		[sectionId],
-	);
-	const sectionQuestions = currentStep?.questions || [];
-	const currentQuestionIndex = questionIndices[sectionId];
-	const currentQuestionId = sectionQuestions[currentQuestionIndex];
+	const { currentStep, currentQuestionId } = getCurrentSectionInfo(sectionId);
+
 	const currentQuestionConfig = useMemo(
 		() => layerConfig.find((config) => config.id === currentQuestionId),
 		[layerConfig, currentQuestionId],

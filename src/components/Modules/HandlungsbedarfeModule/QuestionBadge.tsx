@@ -22,9 +22,9 @@ export function QuestionBadge({
 	console.log("[QuestionBadge] answer::", answer);
 
 	const getBackgroundColor = () => {
-		if (answer === null || answer === undefined) return "bg-neutral";
-		if (answer === true) return "bg-green";
-		if (answer === false) return "bg-red";
+		if (answer === null || answer === undefined) return "bg-neutral-light";
+		if (answer === true) return "bg-red";
+		if (answer === false) return "bg-green";
 		return "bg-neutral-light";
 	};
 
