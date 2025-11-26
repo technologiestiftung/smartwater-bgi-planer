@@ -153,6 +153,7 @@ export const createApplyConfigLayers =
 			const keepVisibleDrawLayers = new Set([
 				"project_boundary",
 				"project_new_development",
+				"module1_notes",
 			]);
 
 			if (layerConfigItem.drawLayerId) {
