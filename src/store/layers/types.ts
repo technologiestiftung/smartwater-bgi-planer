@@ -124,7 +124,10 @@ export interface LayersActions {
 	setLayerStatus: (id: string, status: LayerStatus) => void;
 	getLayerStatus: (id: string) => LayerStatus | undefined;
 	setLayerConfig: (config: LayerConfigItem[]) => void;
-	applyConfigLayers: (visibleLayerIds: string) => void;
+	applyConfigLayers: (
+		visibleLayerIds: string,
+		hideOtherDrawLayers?: boolean,
+	) => void;
 	setDrawLayer: (layerId: string) => void;
 	setLayerConfigId: (layerConfigId: string) => void;
 }

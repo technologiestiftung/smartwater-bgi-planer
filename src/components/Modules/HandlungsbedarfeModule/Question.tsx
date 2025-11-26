@@ -4,11 +4,10 @@ import ConfirmButton from "@/components/ConfirmButton/ConfirmButton";
 import { Button } from "@/components/ui/button";
 import { useLayerArea } from "@/hooks/use-layer-area";
 import { useLayerFeatures } from "@/hooks/use-layer-features";
-import { useLayersStore } from "@/store/layers";
 import { LayerConfigItem } from "@/store/layers/types";
 import { PlayIcon } from "@phosphor-icons/react";
 import Image from "next/image";
-import { FC, useEffect } from "react";
+import { FC } from "react";
 
 interface QuestionProps {
 	questionConfig: LayerConfigItem;
@@ -22,21 +21,8 @@ const Question: FC<QuestionProps> = ({
 	onAnswer,
 	onSkip: _onSkip,
 }) => {
-	const applyConfigLayers = useLayersStore((state) => state.applyConfigLayers);
 	const { hasFeatures } = useLayerFeatures(questionConfig.drawLayerId);
 	const { formattedArea } = useLayerArea(questionConfig.drawLayerId);
-
-	useEffect(() => {
-		if (!questionConfig.id) return;
-
-		applyConfigLayers(questionConfig.id);
-	}, [questionConfig, applyConfigLayers]);
-
-	useEffect(() => {
-		if (questionConfig.id) {
-			applyConfigLayers(questionConfig.id);
-		}
-	}, []);
 
 	const handleConfirm = (): boolean => {
 		const answer = hasFeatures;

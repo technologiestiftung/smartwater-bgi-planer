@@ -72,13 +72,18 @@ export const createSetLayerVisibility =
 	};
 
 export const createApplyConfigLayers =
-	(
-		set: SetState,
-		get: GetState,
-		getMapConfig: () => MapConfig | null,
-		getMapReady: () => boolean,
-	) =>
-	(visibleLayerIds: string) => {
+	({
+		set,
+		get,
+		getMapConfig,
+		getMapReady,
+	}: {
+		set: SetState;
+		get: GetState;
+		getMapConfig: () => MapConfig | null;
+		getMapReady: () => boolean;
+	}) =>
+	(visibleLayerIds: string, hideOtherDrawLayers = false) => {
 		const state = get();
 		const currentMapLayers = state.layers;
 		const layerConfigItem = state.layerConfig.find(
@@ -127,22 +132,40 @@ export const createApplyConfigLayers =
 			layerConfigId: layerConfigItem.id,
 		}));
 
-		const thememapsFolderElements = mapConfig.layerConfig.subjectlayer.elements;
-		const thememapsLayerIdsToTurnOff = getLayerIdsInFolder(
-			thememapsFolderElements,
-			"Thememaps",
-		);
+		const folderElements = mapConfig.layerConfig.subjectlayer.elements;
+		const thememapsLayerIds = getLayerIdsInFolder(folderElements, "Thememaps");
+
+		const drawLayerIds = getLayerIdsInFolder(folderElements, "Draw Layers");
 
 		const newLayersMap = new Map(currentMapLayers);
 
 		// Only turn off layers that are in the Thememaps folder
-		thememapsLayerIdsToTurnOff.forEach((layerId) => {
+		thememapsLayerIds.forEach((layerId) => {
 			const layer = newLayersMap.get(layerId);
 			if (layer && layer.olLayer && layer.visibility) {
 				layer.olLayer.setVisible(false);
 				newLayersMap.set(layerId, { ...layer, visibility: false });
 			}
 		});
+
+		// Hide other draw layers if requested
+		if (hideOtherDrawLayers) {
+			const keepVisibleDrawLayers = new Set([
+				layerConfigItem.drawLayerId,
+				"project_boundary",
+				"project_new_development",
+			]);
+
+			drawLayerIds.forEach((layerId) => {
+				if (!keepVisibleDrawLayers.has(layerId)) {
+					const layer = newLayersMap.get(layerId);
+					if (layer && layer.olLayer && layer.visibility) {
+						layer.olLayer.setVisible(false);
+						newLayersMap.set(layerId, { ...layer, visibility: false });
+					}
+				}
+			});
+		}
 
 		// Turn on the requested layers
 		layerConfigItem.visibleLayerIds.forEach((layerId) => {

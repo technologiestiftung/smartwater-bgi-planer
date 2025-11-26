@@ -24,7 +24,7 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 	useEffect(() => {
 		if (!isMapReady) return;
 
-		applyConfigLayers("synthesis_view");
+		applyConfigLayers("synthesis_view", false);
 	}, [applyConfigLayers, isMapReady]);
 
 	const handleToggleLayer = useCallback(

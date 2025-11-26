@@ -3,6 +3,7 @@ import {
 	type SectionId,
 } from "@/components/Modules/HandlungsbedarfeModule/constants";
 import { useVerticalStepper } from "@/components/VerticalStepper";
+import { useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
 import { useCallback, useMemo } from "react";
 
@@ -11,6 +12,7 @@ export function useModuleNavigation() {
 	const resetDrawInteractions = useUiStore(
 		(state) => state.resetDrawInteractions,
 	);
+	const applyConfigLayers = useLayersStore((state) => state.applyConfigLayers);
 
 	const questionIndices = useUiStore((state) => state.moduleQuestionIndices);
 	const setQuestionIndex = useUiStore((state) => state.setModuleQuestionIndex);
@@ -82,6 +84,7 @@ export function useModuleNavigation() {
 		);
 		setQuestionIndex(prevQuestion.sectionId, prevQuestionIndex);
 		resetDrawInteractions();
+		applyConfigLayers(prevQuestion.questionId, true);
 
 		return true;
 	}, [
@@ -91,6 +94,7 @@ export function useModuleNavigation() {
 		goToStep,
 		setQuestionIndex,
 		resetDrawInteractions,
+		applyConfigLayers,
 	]);
 
 	const navigateToNext = useCallback(() => {
@@ -110,6 +114,7 @@ export function useModuleNavigation() {
 		);
 		setQuestionIndex(nextQuestion.sectionId, nextQuestionIndex);
 		resetDrawInteractions();
+		applyConfigLayers(nextQuestion.questionId, true);
 
 		return true;
 	}, [
@@ -119,6 +124,7 @@ export function useModuleNavigation() {
 		goToStep,
 		setQuestionIndex,
 		resetDrawInteractions,
+		applyConfigLayers,
 	]);
 
 	// Simplified version for auto-navigation after answering questions
@@ -149,6 +155,7 @@ export function useModuleNavigation() {
 			);
 			setQuestionIndex(nextQuestion.sectionId, nextQuestionIndex);
 			resetDrawInteractions();
+			applyConfigLayers(nextQuestion.questionId, true);
 
 			return true;
 		},
@@ -158,6 +165,7 @@ export function useModuleNavigation() {
 			goToStep,
 			setQuestionIndex,
 			resetDrawInteractions,
+			applyConfigLayers,
 		],
 	);
 

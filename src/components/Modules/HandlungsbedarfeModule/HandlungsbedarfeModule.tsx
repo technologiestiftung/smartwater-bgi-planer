@@ -74,7 +74,7 @@ export default function HandlungsbedarfeModule({
 		if (open && layerConfig.length > 0 && isMapReady) {
 			const firstQuestionId = steps[0]?.questions?.[0];
 			if (firstQuestionId) {
-				applyConfigLayers(firstQuestionId);
+				applyConfigLayers(firstQuestionId, true);
 			}
 		}
 	}, [open, layerConfig.length, applyConfigLayers, isMapReady]);
@@ -96,13 +96,13 @@ export default function HandlungsbedarfeModule({
 				currentSection?.questions?.[currentQuestionIndex];
 
 			if (currentQuestionId) {
-				applyConfigLayers(currentQuestionId);
+				applyConfigLayers(currentQuestionId, true);
 			}
 		} else {
 			setInitialStepId("heavyRain");
 			const firstQuestionId = steps[0]?.questions?.[0];
 			if (firstQuestionId) {
-				applyConfigLayers(firstQuestionId);
+				applyConfigLayers(firstQuestionId, true);
 			}
 		}
 
