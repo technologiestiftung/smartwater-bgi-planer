@@ -22,6 +22,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 interface HandlungsbedarfeModuleProps {
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
+	projectId: string;
 }
 
 function QuestionsContent({
