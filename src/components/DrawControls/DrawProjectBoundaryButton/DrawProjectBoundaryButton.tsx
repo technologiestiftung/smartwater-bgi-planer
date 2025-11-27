@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { useLayerReady } from "@/hooks/use-layer-ready";
 import { getLayerById } from "@/lib/helpers/ol";
 import { useMapStore } from "@/store/map";
 import { LAYER_IDS } from "@/types/shared";
@@ -17,6 +18,10 @@ const DrawProjectBoundaryButton: FC = () => {
 	const drawRef = useRef<Draw | null>(null);
 	const modifyRef = useRef<Modify | null>(null);
 	const [mode, setMode] = useState<"idle" | "drawing" | "modifying">("idle");
+
+	// Check if the BTF planning layer is ready
+	const { isReady: isBTFLayerReady, isLoading: isBTFLayerLoading } =
+		useLayerReady("rabimo_input_2025");
 
 	const performIntersection = useCallback(() => {
 		if (!map) return;
@@ -145,13 +150,20 @@ const DrawProjectBoundaryButton: FC = () => {
 	}, [removeInteractions]);
 
 	const getButtonText = () => {
+		if (isBTFLayerLoading) return "Layer lädt...";
 		if (mode === "drawing") return "Stop zeichnen";
 		if (mode === "modifying") return "Stop bearbeiten";
 		return "Fläche zeichnen";
 	};
 
+	const isButtonDisabled = !isBTFLayerReady || !map;
+
 	return (
-		<Button variant="outline" onClick={handleButtonClick}>
+		<Button
+			variant="outline"
+			onClick={handleButtonClick}
+			disabled={isButtonDisabled}
+		>
 			<PolygonIcon />
 			{getButtonText()}
 		</Button>
