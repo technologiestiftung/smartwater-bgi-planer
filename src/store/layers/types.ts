@@ -72,6 +72,7 @@ export interface LayerService {
 	};
 	styleId?: string;
 	gfiAttributes?: string;
+	visibility?: boolean;
 }
 
 export interface VectorTileStyle {

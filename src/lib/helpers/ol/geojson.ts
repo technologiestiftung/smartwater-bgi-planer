@@ -1,12 +1,19 @@
 import { getLayerSource, getVectorLayer } from "@/lib/helpers/ol";
+import type { FeatureCollection, GeoJsonProperties, Geometry } from "geojson";
 import GeoJSON from "ol/format/GeoJSON";
 import type Map from "ol/Map";
+
+interface GeoJSONWithMetadata
+	extends FeatureCollection<Geometry, GeoJsonProperties> {
+	metadata?: Record<string, any>;
+}
 
 const format = new GeoJSON();
 
 export const exportLayerAsGeoJSON = (
 	map: Map,
 	layerId: string,
+	metadata?: Record<string, any>,
 ): File | null => {
 	const layer = getVectorLayer(map, layerId);
 	if (!layer) {
@@ -27,7 +34,11 @@ export const exportLayerAsGeoJSON = (
 		const geojsonObject = format.writeFeaturesObject(features, {
 			featureProjection: map.getView().getProjection().getCode(),
 			dataProjection: "EPSG:4326",
-		});
+		}) as GeoJSONWithMetadata;
+
+		if (metadata) {
+			geojsonObject.metadata = metadata;
+		}
 
 		const blob = new Blob([JSON.stringify(geojsonObject, null, 2)], {
 			type: "application/json",

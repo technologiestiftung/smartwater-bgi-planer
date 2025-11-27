@@ -58,10 +58,13 @@ export const useLayerPersistence = (
 
 			const wmsParams = source.getParams();
 			const previewUrl = wmsLayer.get("previewUrl");
+			const isVisible = wmsLayer.getVisible();
+			const layerName =
+				wmsLayer.get("name") || wmsLayer.get("title") || "WMS Layer";
 
 			const serviceConfig: LayerService = {
 				id: layerId,
-				name: wmsLayer.get("title") || "WMS Layer",
+				name: layerName,
 				typ: "WMS",
 				url: source.getUrls()?.[0],
 				layers: wmsParams.LAYERS,
@@ -70,6 +73,7 @@ export const useLayerPersistence = (
 				transparent: wmsParams.TRANSPARENT !== false,
 				singleTile: false,
 				crs: wmsParams.CRS || wmsParams.SRS,
+				visibility: isVisible,
 				...(previewUrl && { preview: { src: previewUrl } }),
 			};
 
@@ -81,7 +85,7 @@ export const useLayerPersistence = (
 					`${layerId}.json`,
 					{ type: "application/json" },
 				),
-				displayFileName: wmsLayer.get("title"),
+				displayFileName: layerName,
 			});
 		},
 		[map, addFile],
@@ -101,7 +105,20 @@ export const useLayerPersistence = (
 			}
 
 			try {
-				const geoJsonFile = exportLayerAsGeoJSON(map, layerId);
+				const isUploadedLayer = layerId.startsWith("uploaded_");
+				let metadata: Record<string, any> | undefined;
+
+				if (isUploadedLayer) {
+					const layer = getLayerById(map, layerId);
+					const visibility = layer?.getVisible() ?? true;
+					const displayName = layer?.get("name") || layer?.get("title");
+					metadata = {
+						visibility,
+						...(displayName && { displayFileName: displayName }),
+					};
+				}
+
+				const geoJsonFile = exportLayerAsGeoJSON(map, layerId, metadata);
 
 				if (geoJsonFile) {
 					await addFile({
@@ -194,6 +211,10 @@ export const useLayerPersistence = (
 				displayFileName,
 			});
 			olLayer.setZIndex(500);
+
+			const visibility = serviceConfig.visibility ?? true;
+			olLayer.setVisible(visibility);
+
 			mapInstance.addLayer(olLayer);
 
 			const managedLayer = createManagedLayerFromConfig({
@@ -203,6 +224,7 @@ export const useLayerPersistence = (
 				zIndex: 500,
 				layerType: "subject",
 				service: serviceConfig,
+				visibility,
 			});
 			addLayer(managedLayer);
 		},
@@ -220,6 +242,10 @@ export const useLayerPersistence = (
 			const { mapInstance, layerId, geojsonText, displayFileName } = params;
 
 			const geojsonObject = JSON.parse(geojsonText);
+
+			const visibility = geojsonObject.metadata?.visibility ?? true;
+			const savedDisplayName = geojsonObject.metadata?.displayFileName;
+
 			const format = new GeoJSON();
 			const features = format.readFeatures(geojsonObject, {
 				dataProjection: "EPSG:4326",
@@ -227,7 +253,9 @@ export const useLayerPersistence = (
 			});
 
 			const displayName =
-				displayFileName || layerId.replace(/\.(geojson|json)$/i, "");
+				savedDisplayName ||
+				displayFileName ||
+				layerId.replace(/\.(geojson|json)$/i, "");
 			const vectorLayer = createVectorLayer({
 				features,
 				fileName: displayName,
@@ -236,8 +264,16 @@ export const useLayerPersistence = (
 			});
 
 			vectorLayer.setZIndex(501);
+			vectorLayer.setVisible(visibility);
 			mapInstance.addLayer(vectorLayer);
-			addLayer(createManagedLayer(layerId, displayName, vectorLayer));
+
+			const managedLayer = createManagedLayer(
+				layerId,
+				displayName,
+				vectorLayer,
+			);
+			managedLayer.visibility = visibility;
+			addLayer(managedLayer);
 		},
 		[addLayer],
 	);

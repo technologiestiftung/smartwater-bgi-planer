@@ -157,6 +157,7 @@ export const createManagedLayerFromConfig = (params: {
 	zIndex?: number;
 	layerType?: "base" | "subject";
 	service?: LayerService;
+	visibility?: boolean;
 }): ManagedLayer => {
 	const {
 		layerId,
@@ -165,6 +166,7 @@ export const createManagedLayerFromConfig = (params: {
 		zIndex = 501,
 		layerType = "subject",
 		service,
+		visibility = true,
 	} = params;
 
 	return {
@@ -172,14 +174,14 @@ export const createManagedLayerFromConfig = (params: {
 		config: {
 			id: layerId,
 			name,
-			visibility: true,
+			visibility,
 			status: "loaded",
 			elements: [],
 			...(service && { service }),
 		},
 		olLayer,
 		status: "loaded",
-		visibility: true,
+		visibility,
 		opacity: 1,
 		zIndex,
 		layerType,
