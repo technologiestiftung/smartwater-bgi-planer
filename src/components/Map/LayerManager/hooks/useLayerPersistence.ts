@@ -38,6 +38,7 @@ export const useLayerPersistence = (
 	const mapReady = useMapStore((state) => state.isReady);
 	const getProject = useProjectsStore((state) => state.getProject);
 	const { addFile, getFile, deleteFile, getAllProjectFiles } = useFilesStore();
+	const filesHydrated = useFilesStore((state) => state.hasHydrated);
 	const { layers, addLayer } = useLayersStore();
 
 	const debounceTimersRef = useRef<
@@ -431,7 +432,14 @@ export const useLayerPersistence = (
 
 	// One-time restore on mount
 	useEffect(() => {
-		if (!map || !mapReady || !autoRestore || hasRestoredRef.current) return;
+		if (
+			!map ||
+			!mapReady ||
+			!autoRestore ||
+			!filesHydrated ||
+			hasRestoredRef.current
+		)
+			return;
 
 		const project = getProject();
 		if (!project) return;
@@ -446,6 +454,7 @@ export const useLayerPersistence = (
 		map,
 		mapReady,
 		autoRestore,
+		filesHydrated,
 		getProject,
 		restoreDrawLayers,
 		restoreUploadedLayers,
