@@ -193,13 +193,14 @@ export const useLayerPersistence = (
 				serviceConfig,
 				displayFileName,
 			});
+			olLayer.setZIndex(500);
 			mapInstance.addLayer(olLayer);
 
 			const managedLayer = createManagedLayerFromConfig({
 				layerId,
 				name: displayFileName || serviceConfig.name,
 				olLayer,
-				zIndex: 998,
+				zIndex: 500,
 				layerType: "subject",
 				service: serviceConfig,
 			});
@@ -234,6 +235,7 @@ export const useLayerPersistence = (
 				style: DEFAULT_STYLE,
 			});
 
+			vectorLayer.setZIndex(501);
 			mapInstance.addLayer(vectorLayer);
 			addLayer(createManagedLayer(layerId, displayName, vectorLayer));
 		},

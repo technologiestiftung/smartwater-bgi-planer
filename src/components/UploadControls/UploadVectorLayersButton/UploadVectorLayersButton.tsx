@@ -33,6 +33,7 @@ const UploadVectorLayersButton: FC = () => {
 				style: DEFAULT_STYLE,
 			});
 
+			vectorLayer.setZIndex(501);
 			map.addLayer(vectorLayer);
 			addLayer(createManagedLayer(layerId, fileName, vectorLayer));
 			fitMapToExtent(map, vectorLayer);

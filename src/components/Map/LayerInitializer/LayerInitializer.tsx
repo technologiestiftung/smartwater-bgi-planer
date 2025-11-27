@@ -62,13 +62,31 @@ const LayerInitializer: FC = () => {
 				);
 				const layerType: "base" | "subject" = isBaseLayer ? "base" : "subject";
 
-				const zIndex = index;
+				// Check if this is a draw layer
+				const drawLayerIds = Array.from(
+					config.layerConfig.subjectlayer.elements.find(
+						(el) => el.type === "folder" && el.name === "Draw Layers",
+					)?.elements || [],
+				)
+					.filter((el) => "id" in el)
+					.map((el) => ("id" in el ? el.id : ""))
+					.filter(Boolean);
+				const isDrawLayer = drawLayerIds.includes(layerConfig.id);
+
+				// Explicit zIndex values to ensure proper layer ordering:
+				let zIndex: number;
+				if (isBaseLayer) {
+					zIndex = index;
+				} else if (isDrawLayer) {
+					zIndex = 1000 + index;
+				} else {
+					zIndex = 100 + index;
+				}
 
 				olLayer.setZIndex(zIndex);
 				olLayer.setVisible(layerConfig.visibility);
 				olLayer.setOpacity(1);
 				olLayer.set("id", layerConfig.id);
-
 				const managedLayer: ManagedLayer = {
 					id: layerConfig.id,
 					config: layerConfig,
