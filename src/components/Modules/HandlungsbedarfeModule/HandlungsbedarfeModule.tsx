@@ -35,11 +35,12 @@ function QuestionsContent({
 	onClose: () => void;
 	onShowSynthesis: () => void;
 }) {
-	const { setStepValidation } = useVerticalStepper();
+	const { setStepValidation, currentStepId } = useVerticalStepper();
 	const questionIndices = useUiStore((state) => state.moduleQuestionIndices);
 	const { hasFeatures: hasProjectBoundary } = useLayerFeatures(
 		LAYER_IDS.PROJECT_BOUNDARY,
 	);
+	const applyConfigLayers = useLayersStore((state) => state.applyConfigLayers);
 
 	useEffect(() => {
 		const currentQuestionIndex = questionIndices.heavyRain;
@@ -53,6 +54,19 @@ function QuestionsContent({
 			return !isOnStarterQuestion || hasProjectBoundary;
 		});
 	}, [setStepValidation, questionIndices, hasProjectBoundary]);
+
+	useEffect(() => {
+		if (!currentStepId) return;
+
+		const sectionId = currentStepId as SectionId;
+		const currentQuestionIndex = questionIndices[sectionId];
+		const sectionQuestions = steps.find((s) => s.id === sectionId)?.questions;
+		const questionId = sectionQuestions?.[currentQuestionIndex];
+
+		if (questionId) {
+			applyConfigLayers(questionId, true);
+		}
+	}, [currentStepId, questionIndices, applyConfigLayers]);
 
 	return (
 		<div className="flex h-full w-full flex-col">
