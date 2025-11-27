@@ -131,4 +131,5 @@ export interface LayersActions {
 	) => void;
 	setDrawLayer: (layerId: string) => void;
 	setLayerConfigId: (layerConfigId: string) => void;
+	hideLayersByPattern: (pattern: string | string[]) => void;
 }

@@ -77,8 +77,10 @@ function StepperFooter({
 		totalSteps,
 	} = useVerticalStepper();
 	const applyConfigLayers = useLayersStore((state) => state.applyConfigLayers);
+	const hideLayersByPattern = useLayersStore(
+		(state) => state.hideLayersByPattern,
+	);
 	const { clearUploadStatus } = useUiStore();
-
 	const isMapReady = useMapReady();
 
 	useEffect(() => {
@@ -89,12 +91,13 @@ function StepperFooter({
 		} else if (currentStepId === "newDevelopment") {
 			applyConfigLayers("start_view_project_new_development", true);
 		}
-	}, [currentStepId, applyConfigLayers, isMapReady]);
+	}, [currentStepId, applyConfigLayers, isMapReady, hideLayersByPattern]);
 
 	const isLastStep = currentStepIndex === totalSteps - 1;
 
 	const handleSkip = () => {
 		if (isLastStep) {
+			hideLayersByPattern(["uploaded_", "uploaded_wms_"]);
 			clearUploadStatus();
 			onComplete?.();
 		} else {

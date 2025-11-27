@@ -193,3 +193,28 @@ export const createApplyConfigLayers =
 
 		set(() => ({ layers: newLayersMap }));
 	};
+
+export const createHideLayersByPattern =
+	(set: SetState, get: GetState) =>
+	(pattern: string | string[]): void => {
+		const patterns = Array.isArray(pattern) ? pattern : [pattern];
+		const currentLayersMap = get().layers;
+		const newLayersMap = new Map(currentLayersMap);
+		let hasChanges = false;
+
+		Array.from(currentLayersMap.values()).forEach((layer) => {
+			const matchesPattern = patterns.some((p) => layer.id.includes(p));
+
+			if (matchesPattern && layer.visibility) {
+				if (layer.olLayer) {
+					layer.olLayer.setVisible(false);
+				}
+				newLayersMap.set(layer.id, { ...layer, visibility: false });
+				hasChanges = true;
+			}
+		});
+
+		if (hasChanges) {
+			set(() => ({ layers: newLayersMap }));
+		}
+	};

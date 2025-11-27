@@ -2,6 +2,7 @@ import {
 	createAddLayer,
 	createApplyConfigLayers,
 	createGetLayerStatus,
+	createHideLayersByPattern,
 	createRemoveLayer,
 	createSetLayerStatus,
 	createSetLayerVisibility,
@@ -40,5 +41,6 @@ export const useLayersStore = create<LayersState & LayersActions>(
 		}),
 		setDrawLayer: (layerId) => set({ drawLayerId: layerId }),
 		setLayerConfigId: (layerId) => set({ layerConfigId: layerId }),
+		hideLayersByPattern: createHideLayersByPattern(set, get),
 	}),
 );
