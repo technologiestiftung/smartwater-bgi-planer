@@ -1,10 +1,11 @@
 "use client";
 
 import { createLayerByType } from "@/components/Map/LayerInitializer/shared/layerFactory";
+import { getDrawLayerIds } from "@/lib/helpers/ol";
 import { useLayersStore } from "@/store/layers";
-import { LayerService, ManagedLayer } from "@/store/layers/types";
+import { ManagedLayer } from "@/store/layers/types";
 import { useMapStore } from "@/store/map";
-import { FC, useCallback, useEffect } from "react";
+import { FC, useEffect } from "react";
 import { useWmtsCapabilities } from "./hooks/useWmtsCapabilities";
 
 const LayerInitializer: FC = () => {
@@ -22,16 +23,7 @@ const LayerInitializer: FC = () => {
 		flattenedLayerElements,
 	);
 
-	const createLayer = useCallback(
-		(serviceConfig: LayerService) => {
-			return createLayerByType(serviceConfig, {
-				wmtsCapabilities,
-				config,
-			});
-		},
-		[wmtsCapabilities, config],
-	);
-
+	// eslint-disable-next-line complexity
 	useEffect(() => {
 		if (
 			!config ||
@@ -43,6 +35,7 @@ const LayerInitializer: FC = () => {
 		}
 
 		const newManagedLayersMap = new Map<string, ManagedLayer>();
+		const drawLayerIdsForInit = getDrawLayerIds(config);
 
 		flattenedLayerElements.forEach((layerConfig, index) => {
 			const { service: serviceConfig } = layerConfig;
@@ -54,7 +47,14 @@ const LayerInitializer: FC = () => {
 				return;
 			}
 
-			const { layer: olLayer, status, error } = createLayer(serviceConfig);
+			const {
+				layer: olLayer,
+				status,
+				error,
+			} = createLayerByType(serviceConfig, {
+				wmtsCapabilities,
+				config,
+			});
 
 			if (olLayer) {
 				const isBaseLayer = config.layerConfig.baselayer.elements.some(
@@ -62,16 +62,7 @@ const LayerInitializer: FC = () => {
 				);
 				const layerType: "base" | "subject" = isBaseLayer ? "base" : "subject";
 
-				// Check if this is a draw layer
-				const drawLayerIds = Array.from(
-					config.layerConfig.subjectlayer.elements.find(
-						(el) => el.type === "folder" && el.name === "Draw Layers",
-					)?.elements || [],
-				)
-					.filter((el) => "id" in el)
-					.map((el) => ("id" in el ? el.id : ""))
-					.filter(Boolean);
-				const isDrawLayer = drawLayerIds.includes(layerConfig.id);
+				const isDrawLayer = drawLayerIdsForInit.includes(layerConfig.id);
 
 				// Explicit zIndex values to ensure proper layer ordering:
 				let zIndex: number;
@@ -158,7 +149,7 @@ const LayerInitializer: FC = () => {
 		map,
 		capabilitiesLoaded,
 		flattenedLayerElements,
-		createLayer,
+		wmtsCapabilities,
 		setLayersInStore,
 		setMapReady,
 		setMapError,

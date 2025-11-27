@@ -6,6 +6,7 @@ import {
 	ManagedLayer,
 } from "@/store/layers/types";
 import { useMapStore } from "@/store/map";
+import { MapConfig } from "@/store/map/types";
 import { Feature } from "ol";
 import VectorLayer from "ol/layer/Vector";
 import type Map from "ol/Map";
@@ -13,6 +14,21 @@ import { Vector as VectorSource } from "ol/source";
 import { Style } from "ol/style";
 
 export type LayerTreeElement = LayerElementBase | LayerFolder;
+
+export const getDrawLayerIds = (mapConfig: MapConfig | null): string[] => {
+	if (!mapConfig) return [];
+
+	const drawFolder = mapConfig.layerConfig.subjectlayer.elements.find(
+		(el): el is LayerFolder =>
+			el.type === "folder" && el.name === "Draw Layers",
+	);
+
+	if (!drawFolder) return [];
+
+	return drawFolder.elements
+		.filter((el): el is LayerElementBase => "id" in el)
+		.map((el) => el.id);
+};
 
 export const getVectorLayer = (map: Map, layerId: string) => {
 	return getLayerById(map, layerId) as VectorLayer<VectorSource> | null;
