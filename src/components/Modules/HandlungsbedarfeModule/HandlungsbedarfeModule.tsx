@@ -13,10 +13,13 @@ import {
 	StepContent,
 	StepIndicator,
 	VerticalStepper,
+	useVerticalStepper,
 } from "@/components/VerticalStepper";
+import { useLayerFeatures } from "@/hooks/use-layer-features";
 import { useMapReady } from "@/hooks/use-map-ready";
 import { useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
+import { LAYER_IDS } from "@/types/shared";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 interface HandlungsbedarfeModuleProps {
@@ -32,6 +35,25 @@ function QuestionsContent({
 	onClose: () => void;
 	onShowSynthesis: () => void;
 }) {
+	const { setStepValidation } = useVerticalStepper();
+	const questionIndices = useUiStore((state) => state.moduleQuestionIndices);
+	const { hasFeatures: hasProjectBoundary } = useLayerFeatures(
+		LAYER_IDS.PROJECT_BOUNDARY,
+	);
+
+	useEffect(() => {
+		const currentQuestionIndex = questionIndices.heavyRain;
+		const heavyRainQuestions = steps.find(
+			(s) => s.id === "heavyRain",
+		)?.questions;
+		const currentQuestionId = heavyRainQuestions?.[currentQuestionIndex];
+		const isOnStarterQuestion = currentQuestionId === "starter_question";
+
+		setStepValidation("heavyRain", () => {
+			return !isOnStarterQuestion || hasProjectBoundary;
+		});
+	}, [setStepValidation, questionIndices, hasProjectBoundary]);
+
 	return (
 		<div className="flex h-full w-full flex-col">
 			<div className="flex min-h-0 flex-1 pb-4">

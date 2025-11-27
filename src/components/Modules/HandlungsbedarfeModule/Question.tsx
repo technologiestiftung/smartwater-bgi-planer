@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useLayerArea } from "@/hooks/use-layer-area";
 import { useLayerFeatures } from "@/hooks/use-layer-features";
 import { LayerConfigItem } from "@/store/layers/types";
+import { LAYER_IDS } from "@/types/shared";
 import { PlayIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import { FC } from "react";
@@ -23,6 +24,9 @@ const Question: FC<QuestionProps> = ({
 }) => {
 	const { hasFeatures } = useLayerFeatures(questionConfig.drawLayerId);
 	const { formattedArea } = useLayerArea(questionConfig.drawLayerId);
+	const { hasFeatures: hasProjectBoundary } = useLayerFeatures(
+		LAYER_IDS.PROJECT_BOUNDARY,
+	);
 
 	const handleConfirm = (): boolean => {
 		const answer = hasFeatures;
@@ -51,10 +55,18 @@ const Question: FC<QuestionProps> = ({
 
 				<div className="pt-4">
 					{questionConfig.id === "starter_question" ? (
-						<Button onClick={handleConfirm}>
-							<PlayIcon />
-							Checkfragen starten
-						</Button>
+						<>
+							<Button onClick={handleConfirm} disabled={!hasProjectBoundary}>
+								<PlayIcon />
+								Checkfragen starten
+							</Button>
+							{/* {!hasProjectBoundary && (
+								<div className="border-primary text-red mt-4 rounded-sm border border-dashed bg-red-50 p-2 text-sm">
+									Bitte zeichnen Sie zuerst ein Projektgebiet ein, bevor Sie die
+									Checkfragen starten.
+								</div>
+							)} */}
+						</>
 					) : (
 						<ConfirmButton
 							onConfirm={handleConfirm}

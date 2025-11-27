@@ -1,4 +1,6 @@
 import { useModuleNavigation } from "@/components/Modules/HandlungsbedarfeModule/hooks/useModuleNavigation";
+import { useLayerFeatures } from "@/hooks/use-layer-features";
+import { LAYER_IDS } from "@/types/shared";
 import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
@@ -19,7 +21,14 @@ export function StepperFooter({
 	const { getCurrentQuestionInfo, navigateToPrevious, navigateToNext } =
 		useModuleNavigation();
 
-	const { isFirstQuestion, isLastQuestion } = getCurrentQuestionInfo();
+	const { isFirstQuestion, isLastQuestion, currentQuestionId } =
+		getCurrentQuestionInfo();
+	const { hasFeatures: hasProjectBoundary } = useLayerFeatures(
+		LAYER_IDS.PROJECT_BOUNDARY,
+	);
+
+	const isStarterQuestion = currentQuestionId === "starter_question";
+	const shouldDisableNext = isStarterQuestion && !hasProjectBoundary;
 
 	const handlePrevious = useCallback(() => {
 		const success = navigateToPrevious();
@@ -40,6 +49,7 @@ export function StepperFooter({
 			<Button
 				onClick={onShowSynthesis}
 				variant="ghost"
+				disabled={shouldDisableNext}
 				className="bg-secondary flex h-full w-18 items-center justify-center rounded-none"
 			>
 				<ListChecksIcon className="h-6 w-6 text-white" />
@@ -49,7 +59,11 @@ export function StepperFooter({
 					<ArrowLeftIcon />
 					{isFirstQuestion ? "Schließen" : "Zurück"}
 				</Button>
-				<Button variant="ghost" onClick={handleNext}>
+				<Button
+					variant="ghost"
+					onClick={handleNext}
+					disabled={shouldDisableNext}
+				>
 					{isLastQuestion ? "Abschließen" : "Überspringen"}
 					<ArrowRightIcon />
 				</Button>

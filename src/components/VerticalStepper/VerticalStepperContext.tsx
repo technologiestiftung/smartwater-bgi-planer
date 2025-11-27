@@ -87,9 +87,15 @@ export function VerticalStepperProvider({
 		return true;
 	}, [currentStepId, currentStep, stepValidations]);
 
-	const goToStep = useCallback((stepId: string) => {
-		setCurrentStepId(stepId);
-	}, []);
+	const goToStep = useCallback(
+		(stepId: string) => {
+			if (stepId !== currentStepId && !canCurrentStepProceed()) {
+				return;
+			}
+			setCurrentStepId(stepId);
+		},
+		[currentStepId, canCurrentStepProceed],
+	);
 
 	const nextStep = useCallback(() => {
 		const currentIndex = steps.findIndex((step) => step.id === currentStepId);
