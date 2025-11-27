@@ -58,16 +58,16 @@ const AdditionalLayerTree: FC = ({}) => {
 	const getGridConfig = () => {
 		const layerCount = uploadedLayers.length;
 
-		if (viewState === "collapsed") {
-			return {
-				cols: 1,
-				rows: 1,
-				visibleLayers: uploadedLayers.slice(0, 1),
-				showMoreButton: layerCount > 1,
-			};
-		}
+		// if (viewState === "collapsed") {
+		// 	return {
+		// 		cols: 1,
+		// 		rows: 1,
+		// 		visibleLayers: uploadedLayers.slice(0, 1),
+		// 		showMoreButton: layerCount > 1,
+		// 	};
+		// }
 
-		if (viewState === "open") {
+		if (viewState === "open" || viewState === "collapsed") {
 			const maxVisible = 8;
 			return {
 				cols: 3,
