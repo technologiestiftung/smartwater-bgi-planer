@@ -9,6 +9,7 @@ export interface UiState {
 	isDrawing: boolean;
 	isBlockAreaSelecting: boolean;
 	isDrawingNote: boolean;
+	isAdditionalLayerTreeVisible: boolean;
 	// Module navigation state
 	moduleCurrentSectionId: SectionId;
 	moduleQuestionIndices: Record<SectionId, number>;
@@ -30,6 +31,7 @@ export interface UiActions {
 	setIsBlockAreaSelecting: (isSelecting: boolean) => void;
 	setIsDrawingNote: (isDrawing: boolean) => void;
 	resetDrawInteractions: () => void;
+	setIsAdditionalLayerTreeVisible: (isVisible: boolean) => void;
 	// Module navigation actions
 	setModuleCurrentSection: (sectionId: SectionId) => void;
 	setModuleQuestionIndex: (sectionId: SectionId, index: number) => void;

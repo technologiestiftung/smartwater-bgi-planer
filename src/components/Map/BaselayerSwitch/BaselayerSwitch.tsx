@@ -2,8 +2,9 @@
 
 import { useLayersStore } from "@/store/layers";
 import Image from "next/image";
-import { FC, useMemo } from "react";
+import { FC, useCallback, useMemo } from "react";
 
+// eslint-disable-next-line complexity
 const BaselayerSwitch: FC = () => {
 	const layersMap = useLayersStore((state) => state.layers);
 	const setLayerVisibility = useLayersStore(
@@ -19,22 +20,29 @@ const BaselayerSwitch: FC = () => {
 		return baseLayers.find((l) => !l.visibility);
 	}, [baseLayers]);
 
-	const handleToggleBaselayer = () => {
-		if (baseLayers.length !== 2) return;
+	const activeBaseLayer = useMemo(() => {
+		return baseLayers.find((l) => l.visibility);
+	}, [baseLayers]);
 
-		const activeLayer = baseLayers.find((l) => l.visibility);
-		const inactiveLayer = baseLayers.find((l) => !l.visibility);
+	const handleToggleBaselayer = useCallback(() => {
+		if (baseLayers.length !== 2 || !activeBaseLayer || !inactiveBaseLayer)
+			return;
 
-		if (!activeLayer || !inactiveLayer) return;
+		setLayerVisibility(activeBaseLayer.id, false);
+		setLayerVisibility(inactiveBaseLayer.id, true);
+	}, [
+		baseLayers.length,
+		activeBaseLayer,
+		inactiveBaseLayer,
+		setLayerVisibility,
+	]);
 
-		setLayerVisibility(activeLayer.id, false);
-		setLayerVisibility(inactiveLayer.id, true);
-	};
-
-	if (baseLayers.length < 2 || !inactiveBaseLayer) return null;
+	if (baseLayers.length < 2) return null;
+	if (!inactiveBaseLayer) return null;
 
 	const previewSrc = inactiveBaseLayer.config?.service?.preview?.src || "";
 	const layerName = inactiveBaseLayer.config?.service?.name || "Base Layer";
+	const shouldLoadEager = inactiveBaseLayer.visibility;
 
 	return (
 		<button
@@ -48,7 +56,7 @@ const BaselayerSwitch: FC = () => {
 					alt={layerName}
 					fill
 					sizes="48px"
-					loading={inactiveBaseLayer.visibility ? "eager" : "lazy"}
+					loading={shouldLoadEager ? "eager" : "lazy"}
 					className="h-12 w-12 overflow-hidden rounded-sm object-cover"
 				/>
 			)}

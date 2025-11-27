@@ -10,6 +10,7 @@ const initialState: UiState = {
 	isDrawing: false,
 	isBlockAreaSelecting: false,
 	isDrawingNote: false,
+	isAdditionalLayerTreeVisible: false,
 	moduleCurrentSectionId: "heavyRain",
 	moduleQuestionIndices: {
 		heavyRain: 0,
@@ -41,6 +42,8 @@ export const useUiStore = create<UiState & UiActions>((set, get) => ({
 			isBlockAreaSelecting: false,
 			isDrawingNote: false,
 		}),
+	setIsAdditionalLayerTreeVisible: (isVisible) =>
+		set({ isAdditionalLayerTreeVisible: isVisible }),
 	// Module navigation actions
 	setModuleCurrentSection: (sectionId) =>
 		set({ moduleCurrentSectionId: sectionId }),

@@ -1,12 +1,16 @@
 "use client";
 
 import { useLayersStore } from "@/store/layers";
+import { useUiStore } from "@/store/ui";
 import { StackIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import { FC, useEffect, useMemo, useRef, useState } from "react";
 
 const AdditionalLayerTree: FC = ({}) => {
 	const { layers, setLayerVisibility } = useLayersStore();
+	const isAdditionalLayerTreeVisible = useUiStore(
+		(state) => state.isAdditionalLayerTreeVisible,
+	);
 	const [viewState, setViewState] = useState<"collapsed" | "open" | "extended">(
 		"collapsed",
 	);
@@ -87,9 +91,15 @@ const AdditionalLayerTree: FC = ({}) => {
 	const { cols, visibleLayers, showMoreButton } = getGridConfig();
 
 	return (
-		<div ref={containerRef} className="flex items-end">
+		<div
+			ref={containerRef}
+			className="pointer-events-none absolute bottom-0 left-[calc(100%+0.5rem)] flex items-end transition-opacity duration-300"
+			style={{
+				opacity: isAdditionalLayerTreeVisible ? 1 : 0,
+			}}
+		>
 			<div
-				className="bg-background grid h-fit w-fit gap-1 rounded-sm p-1 shadow-sm"
+				className="bg-background pointer-events-auto grid h-fit w-fit gap-1 rounded-sm p-1 shadow-sm"
 				style={{
 					gridTemplateColumns: `repeat(${cols}, 48px)`,
 				}}
