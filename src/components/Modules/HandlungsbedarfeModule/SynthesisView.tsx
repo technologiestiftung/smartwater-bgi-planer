@@ -1,4 +1,4 @@
-import { QuestionBadge } from "@/components/Modules/HandlungsbedarfeModule/QuestionBadge";
+import { SynthesisBadge } from "@/components/Modules/HandlungsbedarfeModule/SynthesisBadge";
 import { steps } from "@/components/Modules/HandlungsbedarfeModule/constants";
 import { Button } from "@/components/ui/button";
 import { useMapReady } from "@/hooks/use-map-ready";
@@ -176,7 +176,7 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 										: null;
 									const isVisible = layer?.visibility ?? false;
 									return (
-										<QuestionBadge
+										<SynthesisBadge
 											key={questionId}
 											questionId={questionId}
 											answer={answer}

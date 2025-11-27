@@ -1,25 +1,23 @@
 import { useLayersStore } from "@/store/layers";
 import { EyeIcon, EyeSlashIcon } from "@phosphor-icons/react";
 
-interface QuestionBadgeProps {
+interface SynthesisBadgeProps {
 	questionId: string;
 	answer: boolean | null;
 	onToggle: () => void;
 	isVisible: boolean;
 }
 
-export function QuestionBadge({
+export function SynthesisBadge({
 	questionId,
 	answer,
 	onToggle,
 	isVisible,
-}: QuestionBadgeProps) {
+}: SynthesisBadgeProps) {
 	const layerConfig = useLayersStore((state) => state.layerConfig);
 	const questionConfig = layerConfig.find((config) => config.id === questionId);
 
 	if (!questionConfig) return null;
-
-	console.log("[QuestionBadge] answer::", answer);
 
 	const getBackgroundColor = () => {
 		if (answer === null || answer === undefined) return "bg-neutral-light";
