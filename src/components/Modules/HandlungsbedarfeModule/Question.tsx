@@ -43,12 +43,8 @@ const Question: FC<QuestionProps> = ({
 							{questionConfig.name}
 						</h4>
 						<div className="mb-4">
-							<p className="mb-2 text-base font-medium">
-								{questionConfig.question}
-							</p>
-							<p className="text-muted-foreground text-sm">
-								{questionConfig.description}
-							</p>
+							<p className="mb-2 font-semibold">{questionConfig.question}</p>
+							<p className="">{questionConfig.description}</p>
 						</div>
 					</div>
 				)}
