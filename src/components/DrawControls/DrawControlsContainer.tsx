@@ -6,10 +6,10 @@ import {
 	DrawNoteButton,
 	DrawProjectBoundaryButton,
 } from "@/components/DrawControls";
-import UploadProjectBoundaryButton from "@/components/UploadControls/UploadProjectBoundaryButton/UploadProjectBoundaryButton";
 import { useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
 import { usePathname } from "next/navigation";
+import UploadDrawLayerButton from "../UploadControls/UploadDrawLayerButton/UploadDrawLayerButton";
 
 interface DrawControlsContainerProps {
 	projectId?: string;
@@ -28,12 +28,17 @@ export default function DrawControlsContainer({}: DrawControlsContainerProps) {
 
 	if (isProjectStarter) {
 		if (currentStepId === "newDevelopment") {
-			controls = <DrawButton />;
+			controls = (
+				<>
+					<DrawButton />
+					<UploadDrawLayerButton />
+				</>
+			);
 		} else if (currentStepId === "projectBoundary") {
 			controls = (
 				<>
 					<DrawProjectBoundaryButton />
-					<UploadProjectBoundaryButton />
+					<UploadDrawLayerButton />
 				</>
 			);
 		}
