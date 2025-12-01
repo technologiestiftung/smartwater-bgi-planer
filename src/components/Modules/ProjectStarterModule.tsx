@@ -207,9 +207,7 @@ function NewDevelopmentStep() {
 	return (
 		<div className="space-y-4">
 			<h3 className="text-primary">Neubauten und versiegelte Flächen</h3>
-			<h4>
-				Neubauten und versiegelte Flächen Welche Bauwerke werden schon geplant?
-			</h4>
+			<h4>Welche Bauwerke werden schon geplant?</h4>
 			<p className="text-muted-foreground">
 				Falls Ihr Projekt Bauvorhaben umfasst, die noch nicht auf der Karte zu
 				sehen sind, können Sie diese jetzt einzeichnen.
