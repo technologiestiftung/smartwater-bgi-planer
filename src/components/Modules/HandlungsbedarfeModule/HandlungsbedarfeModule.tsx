@@ -189,6 +189,7 @@ export default function HandlungsbedarfeModule({
 			description="Untersuchen Sie Ihr Gebiet auf Handlungsbedarfe"
 			footer={null}
 			bodyClassName="p-0"
+			showStepper={!isSynthesisMode}
 		>
 			{isSynthesisMode ? (
 				<SynthesisView onBackToQuestions={onBackToQuestions} />
