@@ -187,3 +187,19 @@ export const createManagedLayerFromConfig = (params: {
 		layerType,
 	};
 };
+
+export function scaleToResolution(
+	scale: number,
+	mapConfig: MapConfig | null,
+): number | undefined {
+	if (!mapConfig?.portalConfig?.map?.mapView?.options) return undefined;
+	const sorted = [...mapConfig.portalConfig.map.mapView.options].sort(
+		(a, b) => b.scale - a.scale,
+	);
+	for (const entry of sorted) {
+		if (scale >= entry.scale) {
+			return entry.resolution;
+		}
+	}
+	return sorted.length > 0 ? sorted[sorted.length - 1].resolution : undefined;
+}

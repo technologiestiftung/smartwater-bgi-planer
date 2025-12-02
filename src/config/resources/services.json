@@ -88,7 +88,7 @@
 		"datasets": false,
 		"layers": "ca_ua_phk_aufenth_grfrei_tag_2022",
 		"gfiAttributes": "ignore",
-		"maxScale": "25000"
+		"minScale": "25000"
 	},
 	{
 		"id": "bgi-planer:cb_ua_phk_bioklim_siedl_tag_2022",
@@ -101,7 +101,7 @@
 		"datasets": false,
 		"layers": "cb_ua_phk_bioklim_siedl_tag_2022",
 		"gfiAttributes": "ignore",
-		"maxScale": "25000"
+		"minScale": "25000"
 	},
 	{
 		"id": "bgi-planer:cc_ua_phk_biolim_str_tag_2022",
@@ -114,7 +114,7 @@
 		"datasets": false,
 		"layers": "cc_ua_phk_biolim_str_tag_2022",
 		"gfiAttributes": "ignore",
-		"maxScale": "25000"
+		"minScale": "25000"
 	},
 	{
 		"id": "bgi-planer:dc_ua_phk_bioklim_siedl_nacht_2022",
@@ -127,7 +127,7 @@
 		"datasets": false,
 		"layers": "dc_ua_phk_bioklim_siedl_nacht_2022",
 		"gfiAttributes": "ignore",
-		"maxScale": "25000"
+		"minScale": "25000"
 	},
 	{
 		"id": "bgi-planer:dd_ua_phk_bioklim_str_nacht_2022",
@@ -140,7 +140,7 @@
 		"datasets": false,
 		"layers": "dd_ua_phk_bioklim_str_nacht_2022",
 		"gfiAttributes": "ignore",
-		"maxScale": "25000"
+		"minScale": "25000"
 	},
 	{
 		"id": "bgi-planer:HA4_Kleingewaesser_trocken_pkt",
@@ -152,8 +152,7 @@
 		"format": "image/png",
 		"datasets": false,
 		"layers": "HA4_Kleingewaesser_trocken_pkt",
-		"gfiAttributes": "ignore",
-		"maxScale": "25000"
+		"gfiAttributes": "ignore"
 	},
 	{
 		"id": "bgi-planer:HA4_Kleingewaesser_trocken_topoEZG_pl",
@@ -165,8 +164,7 @@
 		"format": "image/png",
 		"datasets": false,
 		"layers": "HA4_Kleingewaesser_trocken_topoEZG_pl",
-		"gfiAttributes": "ignore",
-		"maxScale": "25000"
+		"gfiAttributes": "ignore"
 	},
 	{
 		"id": "bgi-planer:versiegelung_2021",
@@ -178,8 +176,7 @@
 		"format": "image/png",
 		"datasets": false,
 		"layers": "versiegelung_2021",
-		"gfiAttributes": "ignore",
-		"maxScale": "25000"
+		"gfiAttributes": "ignore"
 	},
 	{
 		"id": "bgi-planer:a_gruenvol2020",
@@ -191,8 +188,7 @@
 		"format": "image/png",
 		"datasets": false,
 		"layers": "a_gruenvol2020",
-		"gfiAttributes": "ignore",
-		"maxScale": "25000"
+		"gfiAttributes": "ignore"
 	},
 	{
 		"id": "rabimo_input_2025",
@@ -204,8 +200,7 @@
 		"featureType": "amarex:rabimo_input_2025",
 		"featureNS": "http://geoserver.org",
 		"datasets": false,
-		"gfiAttributes": "showAll",
-		"maxScale": "25000"
+		"gfiAttributes": "showAll"
 	},
 	{
 		"id": "BGI DRAW MAPS"

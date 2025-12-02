@@ -1,4 +1,8 @@
-import { applyStyleToLayer, getEpsgFromCrs } from "@/lib/helpers/ol";
+import {
+	applyStyleToLayer,
+	getEpsgFromCrs,
+	scaleToResolution,
+} from "@/lib/helpers/ol";
 import { LayerService, ManagedLayer } from "@/store/layers/types";
 import { applyStyle } from "ol-mapbox-style";
 import GeoJSON from "ol/format/GeoJSON";
@@ -59,9 +63,19 @@ const createWMTSLayer = (
 			...options,
 			attributions: serviceConfig.layerAttribution,
 		});
+		const tileLayer = new TileLayer({ source: wmtsSource });
+
+		if (serviceConfig.minScale) {
+			const minRes = scaleToResolution(serviceConfig.minScale, helpers.config);
+			if (minRes !== undefined) tileLayer.setMinResolution(minRes);
+		}
+		if (serviceConfig.maxScale) {
+			const maxRes = scaleToResolution(serviceConfig.maxScale, helpers.config);
+			if (maxRes !== undefined) tileLayer.setMaxResolution(maxRes);
+		}
 
 		return {
-			layer: new TileLayer({ source: wmtsSource }),
+			layer: tileLayer,
 			status: "loaded",
 		};
 	} catch (error) {
@@ -73,7 +87,10 @@ const createWMTSLayer = (
 	}
 };
 
-const createWMSLayer = (serviceConfig: LayerService): LayerCreationResult => {
+const createWMSLayer = (
+	serviceConfig: LayerService,
+	helpers?: LayerCreationHelpers,
+): LayerCreationResult => {
 	try {
 		if (!serviceConfig.url) {
 			return {
@@ -97,8 +114,24 @@ const createWMSLayer = (serviceConfig: LayerService): LayerCreationResult => {
 				serverType: "geoserver",
 				attributions: serviceConfig.layerAttribution,
 			});
+			const imageLayer = new ImageLayer({ source: imageSource });
+
+			if (serviceConfig.minScale && helpers) {
+				const minRes = scaleToResolution(
+					serviceConfig.minScale,
+					helpers.config,
+				);
+				if (minRes !== undefined) imageLayer.setMinResolution(minRes);
+			}
+			if (serviceConfig.maxScale && helpers) {
+				const maxRes = scaleToResolution(
+					serviceConfig.maxScale,
+					helpers.config,
+				);
+				if (maxRes !== undefined) imageLayer.setMaxResolution(maxRes);
+			}
 			return {
-				layer: new ImageLayer({ source: imageSource }),
+				layer: imageLayer,
 				status: "loaded",
 			};
 		}
@@ -109,9 +142,17 @@ const createWMSLayer = (serviceConfig: LayerService): LayerCreationResult => {
 			serverType: "geoserver",
 			attributions: serviceConfig.layerAttribution,
 		});
-
+		const tileLayer = new TileLayer({ source: tileSource });
+		if (serviceConfig.minScale && helpers) {
+			const minRes = scaleToResolution(serviceConfig.minScale, helpers.config);
+			if (minRes !== undefined) tileLayer.setMinResolution(minRes);
+		}
+		if (serviceConfig.maxScale && helpers) {
+			const maxRes = scaleToResolution(serviceConfig.maxScale, helpers.config);
+			if (maxRes !== undefined) tileLayer.setMaxResolution(maxRes);
+		}
 		return {
-			layer: new TileLayer({ source: tileSource }),
+			layer: tileLayer,
 			status: "loaded",
 		};
 	} catch (error) {
@@ -271,7 +312,7 @@ export const createLayerByType = (
 		case "WMTS":
 			return createWMTSLayer(serviceConfig, helpers);
 		case "WMS":
-			return createWMSLayer(serviceConfig);
+			return createWMSLayer(serviceConfig, helpers);
 		case "WFS":
 			return createWFSLayer(serviceConfig, helpers);
 		case "VectorTile":
