@@ -218,11 +218,11 @@
 							"visibility": false
 						},
 						{
-							"id": "ua_klimabewertung_2022:dc_ua_phk_bioklim_siedl_nacht_2022",
+							"id": "bgi-planer:dc_ua_phk_bioklim_siedl_nacht_2022",
 							"visibility": false
 						},
 						{
-							"id": "ua_klimabewertung_2022:dd_ua_phk_bioklim_str_nacht_2022",
+							"id": "bgi-planer:dd_ua_phk_bioklim_str_nacht_2022",
 							"visibility": false
 						},
 						{

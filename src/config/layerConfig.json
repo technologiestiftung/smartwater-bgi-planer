@@ -107,8 +107,8 @@
 		"canDrawBTF": true,
 		"canDrawNotes": true,
 		"visibleLayerIds": [
-			"ua_klimabewertung_2022:dc_ua_phk_bioklim_siedl_nacht_2022",
-			"ua_klimabewertung_2022:dd_ua_phk_bioklim_str_nacht_2022",
+			"bgi-planer:dc_ua_phk_bioklim_siedl_nacht_2022",
+			"bgi-planer:dd_ua_phk_bioklim_str_nacht_2022",
 			"bgi-planer:g_ua_lufttemp_raster_t2m_04h_2022"
 		],
 		"legendSrc": "/legends/placeholder.svg"
