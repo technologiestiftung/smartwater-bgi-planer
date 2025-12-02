@@ -65,6 +65,18 @@
 		"maxScale": "25000"
 	},
 	{
+		"id": "bgi-planer:ua_versiegelung_2021_raster",
+		"name": "ua_versiegelung_2021_raster",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "ua_versiegelung_2021_raster",
+		"gfiAttributes": "ignore"
+	},
+	{
 		"id": "bgi-planer:g_ua_lufttemp_raster_t2m_04h_2022",
 		"name": "g_ua_lufttemp_raster_t2m_04h_2022",
 		"crs": "EPSG:25833",

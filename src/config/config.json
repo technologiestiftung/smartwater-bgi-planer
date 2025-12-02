@@ -228,6 +228,10 @@
 						{
 							"id": "alkis_gebaeude:gebaeude",
 							"visibility": false
+						},
+						{
+							"id": "bgi-planer:ua_versiegelung_2021_raster",
+							"visibility": false
 						}
 					]
 				},
