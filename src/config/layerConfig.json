@@ -232,7 +232,7 @@
 		"canDrawPolygons": false,
 		"canDrawBTF": true,
 		"canDrawNotes": true,
-		"visibleLayerIds": ["ua_kanalisation_2022:sp02_09kanalisation2022"],
+		"visibleLayerIds": ["bgi-planer:sp02_09kanalisation2022"],
 		"legendSrc": "/legends/placeholder.svg"
 	},
 	{
@@ -246,7 +246,7 @@
 		"canDrawNotes": true,
 		"visibleLayerIds": [
 			"bgi-planer:HA4_Kleingewaesser_trocken_pkt",
-			" ua_kanalisation_2022:sp02_09kanalisation2022_2"
+			"ua_kanalisation_2022:sp02_09kanalisation2022_2"
 		],
 		"legendSrc": "/legends/placeholder.svg"
 	},

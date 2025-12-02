@@ -155,6 +155,18 @@
 		"minScale": "25000"
 	},
 	{
+		"id": "bgi-planer:sp02_09kanalisation2022",
+		"name": "sp02_09kanalisation2022",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "sp02_09kanalisation2022",
+		"gfiAttributes": "ignore"
+	},
+	{
 		"id": "bgi-planer:HA4_Kleingewaesser_trocken_pkt",
 		"name": "HA4_Kleingewaesser_trocken_pkt",
 		"crs": "EPSG:25833",
