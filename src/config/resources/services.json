@@ -116,15 +116,15 @@
 		"minScale": "25000"
 	},
 	{
-		"id": "bgi-planer:cc_ua_phk_biolim_str_tag_2022",
-		"name": "cc_ua_phk_biolim_str_tag_2022",
+		"id": "bgi-planer:cc_ua_phk_bioklim_str_tag_2022",
+		"name": "cc_ua_phk_bioklim_str_tag_2022",
 		"crs": "EPSG:25833",
 		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
 		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
 		"typ": "WMS",
 		"format": "image/png",
 		"datasets": false,
-		"layers": "cc_ua_phk_biolim_str_tag_2022",
+		"layers": "cc_ua_phk_bioklim_str_tag_2022",
 		"gfiAttributes": "ignore",
 		"minScale": "25000"
 	},
