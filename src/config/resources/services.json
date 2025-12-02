@@ -62,7 +62,7 @@
 		"datasets": false,
 		"layers": "q_ua_pet_raster_2022",
 		"gfiAttributes": "ignore",
-		"maxScale": "25000"
+		"maxScale": "5000"
 	},
 	{
 		"id": "bgi-planer:ua_versiegelung_2021_raster",
@@ -87,7 +87,7 @@
 		"datasets": false,
 		"layers": "g_ua_lufttemp_raster_t2m_04h_2022",
 		"gfiAttributes": "ignore",
-		"maxScale": "25000"
+		"maxScale": "5000"
 	},
 	{
 		"id": "bgi-planer:ca_ua_phk_aufenth_grfrei_tag_2022",
@@ -100,7 +100,7 @@
 		"datasets": false,
 		"layers": "ca_ua_phk_aufenth_grfrei_tag_2022",
 		"gfiAttributes": "ignore",
-		"minScale": "25000"
+		"minScale": "5000"
 	},
 	{
 		"id": "bgi-planer:cb_ua_phk_bioklim_siedl_tag_2022",
@@ -113,7 +113,7 @@
 		"datasets": false,
 		"layers": "cb_ua_phk_bioklim_siedl_tag_2022",
 		"gfiAttributes": "ignore",
-		"minScale": "25000"
+		"minScale": "5000"
 	},
 	{
 		"id": "bgi-planer:cc_ua_phk_bioklim_str_tag_2022",
@@ -126,7 +126,7 @@
 		"datasets": false,
 		"layers": "cc_ua_phk_bioklim_str_tag_2022",
 		"gfiAttributes": "ignore",
-		"minScale": "25000"
+		"minScale": "5000"
 	},
 	{
 		"id": "bgi-planer:dc_ua_phk_bioklim_siedl_nacht_2022",
@@ -139,7 +139,7 @@
 		"datasets": false,
 		"layers": "dc_ua_phk_bioklim_siedl_nacht_2022",
 		"gfiAttributes": "ignore",
-		"minScale": "25000"
+		"minScale": "5000"
 	},
 	{
 		"id": "bgi-planer:dd_ua_phk_bioklim_str_nacht_2022",
@@ -152,7 +152,7 @@
 		"datasets": false,
 		"layers": "dd_ua_phk_bioklim_str_nacht_2022",
 		"gfiAttributes": "ignore",
-		"minScale": "25000"
+		"minScale": "5000"
 	},
 	{
 		"id": "bgi-planer:sp02_09kanalisation2022",
