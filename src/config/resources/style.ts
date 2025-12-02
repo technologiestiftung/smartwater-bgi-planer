@@ -20,7 +20,7 @@ const styleList = [
 		rules: [
 			{
 				style: {
-					polygonStrokeWidth: 4,
+					polygonStrokeWidth: 6,
 					polygonStrokeColor: [60, 188, 252, 1],
 				},
 			},
@@ -44,8 +44,8 @@ const styleList = [
 			{
 				style: {
 					polygonStrokeWidth: 2,
-					polygonStrokeColor: [60, 188, 252, 0.4],
-					polygonFillColor: [60, 188, 252, 0.2],
+					polygonStrokeColor: [248, 237, 68, 1],
+					polygonFillColor: [248, 237, 68, 0.3],
 				},
 			},
 		],
