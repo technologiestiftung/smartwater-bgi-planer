@@ -8,6 +8,7 @@ import { useMapReady } from "@/hooks/use-map-ready";
 import { useMapStore } from "@/store";
 import dynamic from "next/dynamic";
 import { FC } from "react";
+import OpacityControl from "./Controls/OpacityControl";
 
 const LazyOlMap = dynamic(() => import("./OlMap/OlMap"), {
 	ssr: false,
@@ -38,6 +39,7 @@ const Map: FC = () => {
 				<ClickControl layerId="module1_notes" minZoomForClick={0}>
 					<NoteCard />
 				</ClickControl>
+				<OpacityControl />
 			</LazyOlMap>
 		</div>
 	);
