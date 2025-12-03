@@ -45,7 +45,7 @@ export default function MenuModalContent({ projectId }: MenuModalProps) {
 									Untersuchungsgebiet/Neubauten
 								</Link>
 							</Button>
-							<Button>
+							<Button disabled>
 								<DownloadIcon className="mr-2" />
 								Download und speichern
 							</Button>
@@ -76,7 +76,7 @@ export default function MenuModalContent({ projectId }: MenuModalProps) {
 					sideElements={<ShovelIcon className="text-primary size-16" />}
 					additionalInfo="17 von 21 Fragen beantwortet"
 					buttonBottom={
-						<Button>
+						<Button disabled>
 							Zum Modul
 							<ArrowCircleRightIcon className="ml-2 size-6" />
 						</Button>
@@ -88,14 +88,14 @@ export default function MenuModalContent({ projectId }: MenuModalProps) {
 					sideElements={<PencilRulerIcon className="text-primary size-16" />}
 					additionalInfo="3 Maßnahmen platziert"
 					buttonBottom={
-						<Button>
+						<Button disabled>
 							Zum Modul
 							<ArrowCircleRightIcon className="ml-2 size-6" />
 						</Button>
 					}
 				/>
 				<div className="flex items-end justify-end px-6 py-4">
-					<Button variant="outline">
+					<Button disabled variant="outline">
 						<BookOpenTextIcon className="mr-2" />
 						Gesamter Report
 					</Button>

@@ -60,7 +60,11 @@ export default function ProjectModalWrapper({
 			</Button>
 		),
 		additionalButtons: (
-			<Button variant="outline" onClick={() => console.log("Download")}>
+			<Button
+				disabled
+				variant="outline"
+				onClick={() => console.log("Download")}
+			>
 				<DownloadIcon className="mr-2" />
 				Download und speichern
 			</Button>

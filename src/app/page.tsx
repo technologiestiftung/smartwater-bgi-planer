@@ -53,6 +53,7 @@ export default function Home() {
 							</Link>
 						</Button>
 						<Button
+							disabled
 							variant="outline"
 							className="grow"
 							onClick={() => setShowUploadAlert(!showUploadAlert)}
