@@ -46,8 +46,8 @@ export function SectionContent({ sectionId }: SectionContentProps) {
 	}
 
 	return (
-		<div className="h-full">
-			<h3 className="text-primary">{currentStep?.title}</h3>
+		<div className="flex h-full flex-col">
+			<h3 className="text-primary shrink-0">{currentStep?.title}</h3>
 			<Question
 				key={currentQuestionConfig.id}
 				questionConfig={currentQuestionConfig}

@@ -35,8 +35,8 @@ const Question: FC<QuestionProps> = ({
 	};
 
 	return (
-		<div className="flex h-full flex-col">
-			<div className="mt-4 grow">
+		<div className="flex min-h-0 flex-1 flex-col">
+			<div className="mt-4">
 				{questionConfig && (
 					<div>
 						<h4 className="text-primary mb-2 text-lg font-semibold">
@@ -74,7 +74,7 @@ const Question: FC<QuestionProps> = ({
 			</div>
 
 			{questionConfig.legendSrc && (
-				<div className="mt-4">
+				<div className="mt-auto pt-6 pb-4">
 					<h5 className="mb-2 text-sm font-medium">Legende:</h5>
 					<Image
 						src={questionConfig.legendSrc}
