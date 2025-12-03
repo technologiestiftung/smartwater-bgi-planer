@@ -2,6 +2,7 @@
 
 import MenuModule from "@/components/MenuModal/MenuModule";
 import { Button } from "@/components/ui/button";
+import { useProjectsStore } from "@/store/projects";
 import {
 	ArrowCircleRightIcon,
 	BookOpenTextIcon,
@@ -12,7 +13,6 @@ import {
 	ShovelIcon,
 } from "@phosphor-icons/react";
 import Link from "next/link";
-import { useProjectsStore } from "@/store/projects";
 
 interface MenuModalProps {
 	projectId: string;
@@ -76,9 +76,11 @@ export default function MenuModalContent({ projectId }: MenuModalProps) {
 					sideElements={<ShovelIcon className="text-primary size-16" />}
 					additionalInfo="17 von 21 Fragen beantwortet"
 					buttonBottom={
-						<Button disabled>
-							Zum Modul
-							<ArrowCircleRightIcon className="ml-2 size-6" />
+						<Button asChild>
+							<Link href={`/${projectId}/machbarkeit`}>
+								Zum Modul
+								<ArrowCircleRightIcon className="ml-2 size-6" />
+							</Link>
 						</Button>
 					}
 				/>
@@ -88,9 +90,11 @@ export default function MenuModalContent({ projectId }: MenuModalProps) {
 					sideElements={<PencilRulerIcon className="text-primary size-16" />}
 					additionalInfo="3 Maßnahmen platziert"
 					buttonBottom={
-						<Button disabled>
-							Zum Modul
-							<ArrowCircleRightIcon className="ml-2 size-6" />
+						<Button asChild>
+							<Link href={`/${projectId}/planung`}>
+								Zum Modul
+								<ArrowCircleRightIcon className="ml-2 size-6" />
+							</Link>
 						</Button>
 					}
 				/>

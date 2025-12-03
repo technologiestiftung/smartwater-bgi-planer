@@ -1,18 +1,16 @@
 "use client";
 
-import NeedForActionModule from "@/components/Modules/NeedForActionModule/NeedForActionModule";
+import { FeasibilityModule } from "@/components/Modules/FeasibilityModule";
 import { useRouter } from "next/navigation";
 import { use } from "react";
 
-interface HandlungsbedarfePageProps {
+interface MachbarkeitPageProps {
 	params: Promise<{
 		id: string;
 	}>;
 }
 
-export default function HandlungsbedarfePage({
-	params,
-}: HandlungsbedarfePageProps) {
+export default function MachbarkeitPage({ params }: MachbarkeitPageProps) {
 	const router = useRouter();
 	const { id } = use(params);
 
@@ -21,7 +19,7 @@ export default function HandlungsbedarfePage({
 	};
 
 	return (
-		<NeedForActionModule
+		<FeasibilityModule
 			open={true}
 			onOpenChange={(open) => !open && handleClose()}
 			projectId={id}

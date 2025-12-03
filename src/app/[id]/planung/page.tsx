@@ -1,18 +1,19 @@
 "use client";
 
-import NeedForActionModule from "@/components/Modules/NeedForActionModule/NeedForActionModule";
+import MeasurePlaningModule from "@/components/Modules/MeasurePlaningModule/MeasurePlaningModule";
 import { useRouter } from "next/navigation";
 import { use } from "react";
 
-interface HandlungsbedarfePageProps {
+interface MaßnahmenplanungPageProps {
 	params: Promise<{
 		id: string;
 	}>;
 }
 
-export default function HandlungsbedarfePage({
+export default function MaßnahmenplanungPage({
 	params,
-}: HandlungsbedarfePageProps) {
+}: MaßnahmenplanungPageProps) {
+	console.log("Rendering MaßnahmenplanungPage");
 	const router = useRouter();
 	const { id } = use(params);
 
@@ -21,7 +22,7 @@ export default function HandlungsbedarfePage({
 	};
 
 	return (
-		<NeedForActionModule
+		<MeasurePlaningModule
 			open={true}
 			onOpenChange={(open) => !open && handleClose()}
 			projectId={id}

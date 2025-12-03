@@ -1,5 +1,5 @@
-import { SynthesisBadge } from "@/components/Modules/HandlungsbedarfeModule/SynthesisBadge";
-import { steps } from "@/components/Modules/HandlungsbedarfeModule/constants";
+import { SynthesisBadge } from "@/components/Modules/NeedForActionModule/SynthesisBadge";
+import { steps } from "@/components/Modules/NeedForActionModule/constants";
 import { Button } from "@/components/ui/button";
 import { useMapReady } from "@/hooks/use-map-ready";
 import { useAnswersStore } from "@/store/answers";

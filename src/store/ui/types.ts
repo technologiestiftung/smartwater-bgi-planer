@@ -1,4 +1,11 @@
-import type { SectionId } from "@/components/Modules/HandlungsbedarfeModule/constants";
+import type { FeasibilitySectionId } from "@/components/Modules/FeasibilityModule/constants";
+import type { MeasurePlaningSectionId } from "@/components/Modules/MeasurePlaningModule/constants";
+import type { SectionId as NeedForActionSectionId } from "@/components/Modules/NeedForActionModule/constants";
+
+export type SectionId =
+	| NeedForActionSectionId
+	| FeasibilitySectionId
+	| MeasurePlaningSectionId;
 
 export interface UiState {
 	isLayerTreeOpen: boolean;
