@@ -3,7 +3,7 @@
  * @param {idRoot} The root of the layer ID
  * @returns A random layer ID
  */
-export const generateLayerId = (idRoot = "uploaded_") =>
+export const generateLayerId = (idRoot = "uploaded") =>
 	`${idRoot}_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
 
 /**
