@@ -8,6 +8,7 @@ import {
 	SidebarProvider,
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
+import { useUiStore } from "@/store/ui";
 import { SideMenuFooter } from "./SideMenuFooter";
 import { SideMenuHeader } from "./SideMenuHeader";
 
@@ -28,10 +29,11 @@ function SideMenuInner({
 	children,
 	footer,
 	bodyClassName = "p-6",
-	showStepper = true,
-}: Omit<SideMenuProps, "open" | "onOpenChange" | "side" | "description"> & {
-	showStepper?: boolean;
-}) {
+}: Omit<
+	SideMenuProps,
+	"open" | "onOpenChange" | "side" | "description" | "showStepper"
+>) {
+	const showStepper = useUiStore((state) => state.showStepper);
 	return (
 		<Sidebar collapsible="offcanvas">
 			<SidebarHeader className="flex flex-row">
@@ -58,7 +60,6 @@ export function SideMenu(props: SideMenuProps) {
 		children,
 		footer,
 		bodyClassName = "p-6",
-		showStepper = true,
 	} = props;
 	return (
 		<SidebarProvider open={open} onOpenChange={onOpenChange}>
@@ -66,7 +67,6 @@ export function SideMenu(props: SideMenuProps) {
 				title={title}
 				footer={footer}
 				bodyClassName={bodyClassName}
-				showStepper={showStepper}
 			>
 				{children}
 			</SideMenuInner>

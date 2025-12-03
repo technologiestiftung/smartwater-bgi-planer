@@ -7,14 +7,7 @@ import {
 	ThermometerHotIcon,
 } from "@phosphor-icons/react";
 
-export type SectionId =
-	| "heavyRain"
-	| "heat"
-	| "sealing"
-	| "waterBalance"
-	| "waterProtection";
-
-export const steps: StepConfig[] = [
+export const needForActionSteps: StepConfig[] = [
 	{
 		id: "heavyRain",
 		icon: <CloudRainIcon />,

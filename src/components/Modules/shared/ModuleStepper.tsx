@@ -1,4 +1,4 @@
-import { useModuleNavigationGeneric } from "@/components/Modules/shared/useModuleNavigationGeneric";
+import { useModuleNavigation } from "@/components/Modules/shared/useModuleNavigation";
 import { SideMenu } from "@/components/SideMenu";
 import type { StepConfig } from "@/components/VerticalStepper";
 import {
@@ -10,7 +10,7 @@ import {
 } from "@/components/VerticalStepper";
 import { useMapReady } from "@/hooks/use-map-ready";
 import { useLayersStore, useUiStore } from "@/store";
-import type { SectionId } from "@/store/ui/types";
+import type { SectionId } from "@/types/sectionIds";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 interface ModuleStepperProps<TSectionId extends SectionId> {
@@ -40,7 +40,7 @@ function ModuleStepperContent<TSectionId extends SectionId>({
 	"open" | "title" | "description" | "projectId"
 >) {
 	const { setStepValidation, currentStepId, goToStep } = useVerticalStepper();
-	const moduleNavigation = useModuleNavigationGeneric({
+	const moduleNavigation = useModuleNavigation({
 		steps,
 		useVerticalStepper,
 	});
@@ -50,8 +50,12 @@ function ModuleStepperContent<TSectionId extends SectionId>({
 
 	const { applyConfigLayers } = useLayersStore((state) => state);
 
-	const { resetDrawInteractions, setIsSynthesisMode, isSynthesisMode } =
-		useUiStore((state) => state);
+	const {
+		resetDrawInteractions,
+		setIsSynthesisMode,
+		isSynthesisMode,
+		setShowStepper,
+	} = useUiStore((state) => state);
 
 	useEffect(() => {
 		if (isStepValid) {
@@ -86,11 +90,13 @@ function ModuleStepperContent<TSectionId extends SectionId>({
 			}
 		}
 		setIsSynthesisMode(false);
+		setShowStepper(true);
 	}, [
 		restoreModuleState,
 		resetDrawInteractions,
 		applyConfigLayers,
 		setIsSynthesisMode,
+		setShowStepper,
 		steps,
 		goToStep,
 	]);

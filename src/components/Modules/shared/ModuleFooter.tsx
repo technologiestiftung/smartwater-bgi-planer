@@ -1,12 +1,12 @@
+import { Button } from "@/components/ui/button";
 import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
 	ListChecksIcon,
 } from "@phosphor-icons/react";
 import { useCallback } from "react";
-import { Button } from "../../ui/button";
 
-interface GenericStepperFooterProps {
+interface ModuleFooterProps {
 	onClose: () => void;
 	onShowSynthesis: () => void;
 	useModuleNavigation: () => {
@@ -20,12 +20,12 @@ interface GenericStepperFooterProps {
 	isNextDisabled?: boolean;
 }
 
-export function GenericStepperFooter({
+export function ModuleFooter({
 	onClose,
 	onShowSynthesis,
 	useModuleNavigation,
 	isNextDisabled = false,
-}: GenericStepperFooterProps) {
+}: ModuleFooterProps) {
 	const { getCurrentQuestionInfo, navigateToPrevious, navigateToNext } =
 		useModuleNavigation();
 

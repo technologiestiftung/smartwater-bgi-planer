@@ -1,13 +1,11 @@
-import {
-	steps,
-	type SectionId,
-} from "@/components/Modules/NeedForActionModule/constants";
+import { needForActionSteps } from "@/components/Modules/NeedForActionModule/constants";
 import Question from "@/components/Modules/NeedForActionModule/Question";
-import { useModuleNavigationGeneric } from "@/components/Modules/shared/useModuleNavigationGeneric";
+import { useModuleNavigation } from "@/components/Modules/shared/useModuleNavigation";
 import { Spinner } from "@/components/ui/spinner";
 import { useVerticalStepper } from "@/components/VerticalStepper";
 import { useLayersStore } from "@/store";
 import { useAnswersStore } from "@/store/answers";
+import { SectionId } from "@/types/sectionIds";
 import { useCallback, useMemo } from "react";
 
 interface SectionContentProps {
@@ -17,11 +15,12 @@ interface SectionContentProps {
 export function SectionContent({ sectionId }: SectionContentProps) {
 	const layerConfig = useLayersStore((state) => state.layerConfig);
 	const setAnswer = useAnswersStore((state) => state.setAnswer);
-	const { navigateToNextQuestion, getCurrentSectionInfo } =
-		useModuleNavigationGeneric({
-			steps,
+	const { navigateToNextQuestion, getCurrentSectionInfo } = useModuleNavigation(
+		{
+			steps: needForActionSteps,
 			useVerticalStepper,
-		});
+		},
+	);
 
 	const { currentStep, currentQuestionId } = getCurrentSectionInfo(sectionId);
 

@@ -1,5 +1,5 @@
 import { SynthesisBadge } from "@/components/Modules/NeedForActionModule/SynthesisBadge";
-import { steps } from "@/components/Modules/NeedForActionModule/constants";
+import { needForActionSteps } from "@/components/Modules/NeedForActionModule/constants";
 import { Button } from "@/components/ui/button";
 import { useMapReady } from "@/hooks/use-map-ready";
 import { useAnswersStore } from "@/store/answers";
@@ -29,7 +29,7 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 		applyConfigLayers("synthesis_view", true);
 
 		if (moduleSavedState) {
-			const lastActiveStep = steps.find(
+			const lastActiveStep = needForActionSteps.find(
 				(step) => step.id === moduleSavedState.sectionId,
 			);
 			const stepQuestions = lastActiveStep?.questions || [];
@@ -109,7 +109,7 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 					direkt bearbeiten zu können
 				</p>
 
-				{steps.map((step) => {
+				{needForActionSteps.map((step) => {
 					const sectionQuestions = step.questions || [];
 					const anyLayerVisible = sectionQuestions.some((questionId) => {
 						const questionConfig = layerConfig.find(

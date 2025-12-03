@@ -1,6 +1,9 @@
-import { GenericStepperFooter } from "@/components/Modules/shared/GenericStepperFooter";
+import { useStepValid } from "@/components/Modules/shared/isStepValidUtil";
+import { ModuleFooter } from "@/components/Modules/shared/ModuleFooter";
 import { ModuleStepper } from "@/components/Modules/shared/ModuleStepper";
-import { FeasibilitySectionId, feasibilitySteps } from "./constants";
+import { SectionId } from "@/types/sectionIds";
+import { LAYER_IDS } from "@/types/shared";
+import { feasibilitySteps } from "./constants";
 import { SectionContent } from "./SectionContent";
 import { SynthesisView } from "./SynthesisView";
 
@@ -15,17 +18,25 @@ export default function FeasibilityModule({
 	onOpenChange,
 	projectId,
 }: FeasibilityModuleProps) {
+	const isStepValid = useStepValid({
+		stepName: "feasibilityA",
+		starterQuestionId: "starter_question",
+		layerId: LAYER_IDS.PROJECT_BOUNDARY,
+		steps: feasibilitySteps,
+	});
+
 	return (
-		<ModuleStepper<FeasibilitySectionId>
+		<ModuleStepper<SectionId>
 			steps={feasibilitySteps}
 			SectionContent={(props) => <SectionContent {...props} />}
-			StepperFooter={GenericStepperFooter}
+			StepperFooter={ModuleFooter}
 			SynthesisView={SynthesisView}
 			open={open}
 			onOpenChange={onOpenChange}
 			title="Modul 2: Machbarkeit"
 			description="Untersuchen Sie die Machbarkeit Ihrer Maßnahmen"
 			projectId={projectId}
+			isStepValid={isStepValid}
 		/>
 	);
 }

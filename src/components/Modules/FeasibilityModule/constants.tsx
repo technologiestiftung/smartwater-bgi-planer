@@ -1,8 +1,6 @@
 import { StepConfig } from "@/components/VerticalStepper";
 import { CloudRainIcon, ThermometerHotIcon } from "@phosphor-icons/react";
 
-export type FeasibilitySectionId = "feasibilityA" | "feasibilityB";
-
 export const feasibilitySteps: StepConfig[] = [
 	{
 		id: "feasibilityA",

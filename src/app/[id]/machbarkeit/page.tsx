@@ -1,6 +1,6 @@
 "use client";
 
-import { FeasibilityModule } from "@/components/Modules/FeasibilityModule";
+import FeasibilityModule from "@/components/Modules/FeasibilityModule/FeasibilityModule";
 import { useRouter } from "next/navigation";
 import { use } from "react";
 

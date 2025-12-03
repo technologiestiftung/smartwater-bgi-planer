@@ -1,25 +1,26 @@
 import Question from "@/components/Modules/NeedForActionModule/Question";
-import { useModuleNavigationGeneric } from "@/components/Modules/shared/useModuleNavigationGeneric";
+import { useModuleNavigation } from "@/components/Modules/shared/useModuleNavigation";
 import { useVerticalStepper } from "@/components/VerticalStepper";
 import { useAnswersStore } from "@/store/answers";
+import { SectionId } from "@/types/sectionIds";
 import { useCallback, useMemo } from "react";
-import type { MeasurePlaningSectionId } from "./constants";
 
 import { useLayersStore } from "@/store/layers";
 import { measurePlaningSteps } from "./constants";
 
 interface SectionContentProps {
-	sectionId: MeasurePlaningSectionId;
+	sectionId: SectionId;
 }
 
 export function SectionContent({ sectionId }: SectionContentProps) {
 	const layerConfig = useLayersStore((state) => state.layerConfig);
 	const setAnswer = useAnswersStore((state) => state.setAnswer);
-	const { getCurrentSectionInfo, navigateToNextQuestion } =
-		useModuleNavigationGeneric({
+	const { getCurrentSectionInfo, navigateToNextQuestion } = useModuleNavigation(
+		{
 			steps: measurePlaningSteps,
 			useVerticalStepper,
-		});
+		},
+	);
 	const { currentStep, currentQuestionId } = getCurrentSectionInfo(sectionId);
 	const currentQuestionConfig = useMemo(
 		() => layerConfig.find((config: any) => config.id === currentQuestionId),
