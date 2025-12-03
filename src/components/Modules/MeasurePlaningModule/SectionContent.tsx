@@ -5,27 +5,20 @@ import { useAnswersStore } from "@/store/answers";
 import { useCallback, useMemo } from "react";
 import type { MeasurePlaningSectionId } from "./constants";
 
+import { useLayersStore } from "@/store/layers";
 import { measurePlaningSteps } from "./constants";
 
 interface SectionContentProps {
 	sectionId: MeasurePlaningSectionId;
-	useUiStore: any;
-	useLayersStore: any;
 }
 
-export function SectionContent({
-	sectionId,
-	useUiStore,
-	useLayersStore,
-}: SectionContentProps) {
-	const layerConfig = useLayersStore((state: any) => state.layerConfig);
+export function SectionContent({ sectionId }: SectionContentProps) {
+	const layerConfig = useLayersStore((state) => state.layerConfig);
 	const setAnswer = useAnswersStore((state) => state.setAnswer);
 	const { getCurrentSectionInfo, navigateToNextQuestion } =
 		useModuleNavigationGeneric({
 			steps: measurePlaningSteps,
 			useVerticalStepper,
-			useUiStore,
-			useLayersStore,
 		});
 	const { currentStep, currentQuestionId } = getCurrentSectionInfo(sectionId);
 	const currentQuestionConfig = useMemo(

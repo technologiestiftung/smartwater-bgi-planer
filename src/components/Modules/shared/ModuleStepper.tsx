@@ -8,6 +8,8 @@ import {
 	VerticalStepper,
 	useVerticalStepper,
 } from "@/components/VerticalStepper";
+import { useMapReady } from "@/hooks/use-map-ready";
+import { useLayersStore, useUiStore } from "@/store";
 import type { SectionId } from "@/store/ui/types";
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -21,9 +23,6 @@ interface ModuleStepperProps<TSectionId extends SectionId> {
 	title: string;
 	description: string;
 	projectId: string;
-	useLayersStore: any;
-	useUiStore: any;
-	LAYER_IDS: any;
 	footerProps?: Record<string, any>;
 	isStepValid?: (stepId: string) => boolean;
 }
@@ -34,37 +33,26 @@ function ModuleStepperContent<TSectionId extends SectionId>({
 	StepperFooter,
 	SynthesisView,
 	onOpenChange,
-	useLayersStore,
-	useUiStore,
 	footerProps = {},
 	isStepValid,
 }: Omit<
 	ModuleStepperProps<TSectionId>,
-	"open" | "title" | "description" | "projectId" | "LAYER_IDS"
+	"open" | "title" | "description" | "projectId"
 >) {
 	const { setStepValidation, currentStepId, goToStep } = useVerticalStepper();
 	const moduleNavigation = useModuleNavigationGeneric({
 		steps,
 		useVerticalStepper,
-		useUiStore,
-		useLayersStore,
 	});
 
 	const { questionIndices, restoreModuleState, handleShowSynthesis } =
 		moduleNavigation;
 
-	const applyConfigLayers = useLayersStore(
-		(state: any) => state.applyConfigLayers,
-	);
-	const resetDrawInteractions = useUiStore(
-		(state: any) => state.resetDrawInteractions,
-	);
-	const setIsSynthesisMode = useUiStore(
-		(state: any) => state.setIsSynthesisMode,
-	);
-	const isSynthesisMode = useUiStore((state: any) => state.isSynthesisMode);
+	const { applyConfigLayers } = useLayersStore((state) => state);
 
-	// Validation Effect
+	const { resetDrawInteractions, setIsSynthesisMode, isSynthesisMode } =
+		useUiStore((state) => state);
+
 	useEffect(() => {
 		if (isStepValid) {
 			steps.forEach((step) => {
@@ -73,7 +61,6 @@ function ModuleStepperContent<TSectionId extends SectionId>({
 		}
 	}, [steps, setStepValidation, isStepValid]);
 
-	// Reset Draw Interactions Effect
 	useEffect(() => {
 		resetDrawInteractions();
 	}, [questionIndices, resetDrawInteractions]);
@@ -149,16 +136,12 @@ export function ModuleStepper<TSectionId extends SectionId>({
 	onOpenChange,
 	title,
 	description,
-	useLayersStore,
-	useUiStore,
 	footerProps = {},
 	isStepValid,
 }: ModuleStepperProps<TSectionId>) {
-	const layerConfig = useLayersStore((state: any) => state.layerConfig);
-	const applyConfigLayers = useLayersStore(
-		(state: any) => state.applyConfigLayers,
-	);
-	const isMapReady = true; // Replace with useMapReady if needed
+	const layerConfig = useLayersStore((state) => state.layerConfig);
+	const applyConfigLayers = useLayersStore((state) => state.applyConfigLayers);
+	const isMapReady = useMapReady();
 	const hasInitializedRef = useRef(false);
 	const [initialStepId] = useState<string>(steps[0]?.id);
 
@@ -200,8 +183,6 @@ export function ModuleStepper<TSectionId extends SectionId>({
 					StepperFooter={StepperFooter}
 					SynthesisView={SynthesisView}
 					onOpenChange={onOpenChange}
-					useLayersStore={useLayersStore}
-					useUiStore={useUiStore}
 					footerProps={footerProps}
 					isStepValid={isStepValid}
 				/>

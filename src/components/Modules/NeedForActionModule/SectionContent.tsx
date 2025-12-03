@@ -6,28 +6,21 @@ import Question from "@/components/Modules/NeedForActionModule/Question";
 import { useModuleNavigationGeneric } from "@/components/Modules/shared/useModuleNavigationGeneric";
 import { Spinner } from "@/components/ui/spinner";
 import { useVerticalStepper } from "@/components/VerticalStepper";
+import { useLayersStore } from "@/store";
 import { useAnswersStore } from "@/store/answers";
 import { useCallback, useMemo } from "react";
 
 interface SectionContentProps {
 	sectionId: SectionId;
-	useUiStore: any;
-	useLayersStore: any;
 }
 
-export function SectionContent({
-	sectionId,
-	useUiStore,
-	useLayersStore,
-}: SectionContentProps) {
-	const layerConfig = useLayersStore((state: any) => state.layerConfig);
+export function SectionContent({ sectionId }: SectionContentProps) {
+	const layerConfig = useLayersStore((state) => state.layerConfig);
 	const setAnswer = useAnswersStore((state) => state.setAnswer);
 	const { navigateToNextQuestion, getCurrentSectionInfo } =
 		useModuleNavigationGeneric({
 			steps,
 			useVerticalStepper,
-			useUiStore,
-			useLayersStore,
 		});
 
 	const { currentStep, currentQuestionId } = getCurrentSectionInfo(sectionId);

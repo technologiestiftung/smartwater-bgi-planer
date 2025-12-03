@@ -1,4 +1,6 @@
 import type { StepConfig } from "@/components/VerticalStepper";
+import { useLayersStore } from "@/store/layers";
+import { useUiStore } from "@/store/ui";
 import type { SectionId } from "@/store/ui/types";
 import { useCallback, useMemo } from "react";
 
@@ -8,15 +10,11 @@ type UseModuleNavigationGenericOptions = {
 		goToStep: (id: string) => void;
 		currentStepId: string | null;
 	};
-	useUiStore: any;
-	useLayersStore: any;
 };
 
 export function useModuleNavigationGeneric({
 	steps,
 	useVerticalStepper,
-	useUiStore,
-	useLayersStore,
 }: UseModuleNavigationGenericOptions) {
 	const { goToStep, currentStepId } = useVerticalStepper();
 	const resetDrawInteractions = useUiStore(
@@ -191,7 +189,7 @@ export function useModuleNavigationGeneric({
 		}
 		saveCurrentState();
 		setIsSynthesisMode(true);
-	}, [questionIndices, saveCurrentState, setIsSynthesisMode, useUiStore]);
+	}, [questionIndices, saveCurrentState, setIsSynthesisMode]);
 
 	return {
 		questionIndices,

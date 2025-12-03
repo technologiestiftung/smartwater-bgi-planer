@@ -1,6 +1,7 @@
 import Question from "@/components/Modules/NeedForActionModule/Question";
 import { useModuleNavigationGeneric } from "@/components/Modules/shared/useModuleNavigationGeneric";
 import { useVerticalStepper } from "@/components/VerticalStepper";
+import { useLayersStore } from "@/store";
 import { useAnswersStore } from "@/store/answers";
 import { useCallback, useMemo } from "react";
 import type { FeasibilitySectionId } from "./constants";
@@ -8,23 +9,15 @@ import { feasibilitySteps } from "./constants";
 
 interface SectionContentProps {
 	sectionId: FeasibilitySectionId;
-	useUiStore: any;
-	useLayersStore: any;
 }
 
-export function SectionContent({
-	sectionId,
-	useUiStore,
-	useLayersStore,
-}: SectionContentProps) {
+export function SectionContent({ sectionId }: SectionContentProps) {
 	const layerConfig = useLayersStore((state: any) => state.layerConfig);
 	const setAnswer = useAnswersStore((state: any) => state.setAnswer);
 	const { getCurrentSectionInfo, navigateToNextQuestion } =
 		useModuleNavigationGeneric({
 			steps: feasibilitySteps,
 			useVerticalStepper,
-			useUiStore,
-			useLayersStore,
 		});
 	const { currentStep, currentQuestionId } = getCurrentSectionInfo(sectionId);
 	const currentQuestionConfig = useMemo(
