@@ -208,10 +208,7 @@
 		"canDrawPolygons": true,
 		"canDrawBTF": false,
 		"canDrawNotes": true,
-		"visibleLayerIds": [
-			"bgi-planer:ua_versiegelung_2021_raster",
-			"alkis_gebaeude:gebaeude"
-		],
+		"visibleLayerIds": ["bgi-planer:ua_versiegelung_2021_raster"],
 		"legendSrc": "/legends/1v3.svg"
 	},
 	{
