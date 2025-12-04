@@ -6,10 +6,10 @@ import {
 	DrawNoteButton,
 	DrawProjectBoundaryButton,
 } from "@/components/DrawControls";
+import UploadDrawLayerButton from "@/components/UploadControls/UploadDrawLayerButton/UploadDrawLayerButton";
 import { useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
 import { usePathname } from "next/navigation";
-import UploadDrawLayerButton from "../UploadControls/UploadDrawLayerButton/UploadDrawLayerButton";
 
 interface DrawControlsContainerProps {
 	projectId?: string;
@@ -22,7 +22,8 @@ export default function DrawControlsContainer({}: DrawControlsContainerProps) {
 	const layerConfig = useLayersStore((state) => state.layerConfig);
 
 	const isProjectStarter = pathname.includes("/project-starter");
-	const isHandlungsbedarfe = pathname.includes("/handlungsbedarfe");
+	const isModule =
+		pathname.includes("/handlungsbedarfe") || pathname.includes("/machbarkeit");
 
 	let controls: React.ReactNode = null;
 
@@ -42,7 +43,7 @@ export default function DrawControlsContainer({}: DrawControlsContainerProps) {
 				</>
 			);
 		}
-	} else if (isHandlungsbedarfe) {
+	} else if (isModule) {
 		const currentQuestionConfig = layerConfig.find(
 			(config) => config.id === layerConfigId,
 		);

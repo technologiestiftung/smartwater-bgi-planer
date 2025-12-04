@@ -264,5 +264,37 @@
 			"bgi-planer:HA4_Kleingewaesser_trocken_topoEZG_pl"
 		],
 		"legendSrc": "/legends/placeholder.svg"
+	},
+	{
+		"id": "module_2_1",
+		"name": "Module 2.1",
+		"question": "Wo gibt es im Quartier oder in der Umgebung Gewässer mit Wasserbedarf?",
+		"description": "Die Karte gibt Auskunft darüber, welche Kleingewässer und Feuchtbiotope, einen besonderen Bedarf an zusätzlichen Wassermengen haben. Mit Klick auf das Gewässer werden mehr Informationen gegeben.",
+		"drawLayerId": "need_groundwater_hotspots_q3",
+		"canDrawPolygons": false,
+		"canDrawBTF": true,
+		"canDrawNotes": true,
+		"visibleLayerIds": [
+			"bgi-planer:HA4_Kleingewaesser_trocken_pkt",
+			"bgi-planer:HA4_Kleingewaesser_trocken_topoEZG_pl"
+		],
+		"legendSrc": "/legends/placeholder.svg"
+	},
+	{
+		"id": "module_2_2",
+		"name": "Kaltluft Module 2.2",
+		"question": "Wo befinden sich Bereiche mit einer hohen Volumenstromdichte und eindeutiger Strömungsrichtung von Grünflächen zu Einwirkbereichen (blau)? ",
+		"description": "Der Luftaustausch entsteht zwischen Kaltluftentstehungsgebieten wie Grün- und Freiräumen und thermisch belasteten Siedlungsräumen. In den Übergangsbereichen ist ein hoher Grün- und Freiflächenanteil für die Kühlung förderlich.",
+		"drawLayerId": "need_temperature_hotspots_q6",
+		"canDrawPolygons": true,
+		"canDrawBTF": true,
+		"canDrawNotes": true,
+		"visibleLayerIds": [
+			"ua_klimaanalyse_2022:td_kak_kaltlufteinwirkbereich_siedlungsfl_2022",
+			"ua_klimaanalyse_2022:tj_kak_gruen_kvs_hoch_2022",
+			"ua_klimaanalyse_2022:bb_ua_windfeld_2m_22h_2022_100m",
+			"ua_klimaanalyse_2022:ba_ua_windfeld_2m_22h_2022_20m"
+		],
+		"legendSrc": "/legends/1h5.svg"
 	}
 ]
