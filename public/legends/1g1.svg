@@ -5,7 +5,7 @@
       text { font-family: "Arthouse Owned", Arial, sans-serif; }
     </style>
   </defs>
-  <rect width="100%" height="100%" fill="white"/>
+  <rect width="100%" height="100%" fill="transparent" />
   <rect x="16" y="12.0" width="24" height="16" rx="2" ry="2" fill="#EAD6D5" stroke="#0C4C38" stroke-width="1"/>
   <text x="56" y="25" font-size="14" fill="#0C4C38">Mischwasserkanalisation</text>
 </svg>

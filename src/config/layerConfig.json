@@ -221,7 +221,7 @@
 		"canDrawBTF": true,
 		"canDrawNotes": true,
 		"visibleLayerIds": ["ua_wasserhaushalt_2022:f_deltaw_2022"],
-		"legendSrc": "/legends/placeholder.svg"
+		"legendSrc": "/legends/1w1.svg"
 	},
 	{
 		"id": "water_protection_sewer_type",
