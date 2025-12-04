@@ -1,11 +1,12 @@
 "use client";
 
+import FeatureMenu from "@/components/FeatureMenu/FeatureMenu";
 import ClickControl from "@/components/Map/Controls/ClickControl";
 import MapNavigationContainer from "@/components/Map/Controls/MapNavigation/MapNavigationContainer";
 import NoteCard from "@/components/NoteCard/NoteCard";
 import { Spinner } from "@/components/ui/spinner";
 import { useMapReady } from "@/hooks/use-map-ready";
-import { useMapStore } from "@/store";
+import { useLayersStore, useMapStore } from "@/store";
 import dynamic from "next/dynamic";
 import { FC } from "react";
 import OpacityControl from "./Controls/OpacityControl";
@@ -18,6 +19,7 @@ const LazyOlMap = dynamic(() => import("./OlMap/OlMap"), {
 const Map: FC = () => {
 	const isMapReady = useMapReady();
 	const { hasError, errorMessage } = useMapStore();
+	const drawLayerId = useLayersStore((state) => state.drawLayerId);
 
 	return (
 		<div className="Map-root relative h-full w-full">
@@ -36,13 +38,34 @@ const Map: FC = () => {
 			)}
 			<LazyOlMap>
 				<MapNavigationContainer />
-				<ClickControl layerId="module1_notes" minZoomForClick={0}>
-					<NoteCard />
-				</ClickControl>
+				<ClickControl
+					layerIds={["module1_notes", ...(drawLayerId ? [drawLayerId] : [])]}
+					minZoomForClick={0}
+					renderContent={(feature, layerId, onClose) => {
+						if (layerId === "module1_notes") {
+							return (
+								<NoteCard
+									features={feature}
+									layerId={layerId}
+									onClose={onClose}
+								/>
+							);
+						}
+						if (drawLayerId && layerId === drawLayerId) {
+							return (
+								<FeatureMenu
+									features={feature}
+									layerId={layerId}
+									onClose={onClose}
+								/>
+							);
+						}
+						return null;
+					}}
+				/>
 				<OpacityControl />
 			</LazyOlMap>
 		</div>
 	);
 };
-
 export default Map;
