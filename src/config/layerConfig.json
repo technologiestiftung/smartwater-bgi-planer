@@ -51,7 +51,7 @@
 			"ua_srhk:db_fliessgeschw_aussergew_kostra",
 			"ua_srgk:bb_fliessgeschwindigkeit_aussergewoehnlich"
 		],
-		"legendSrc": "/legends/placeholder.svg"
+		"legendSrc": "/legends/1s1.svg"
 	},
 	{
 		"id": "heavy_rain_water_level",
@@ -66,7 +66,7 @@
 			"ua_srhk:dc_wasserstand_aussergew_kostra",
 			"ua_srgk:cb_wasserstand_aussergewoehnlich"
 		],
-		"legendSrc": "/legends/placeholder.svg"
+		"legendSrc": "/legends/1s2.svg"
 	},
 	{
 		"id": "heavy_rain_fire_department_incidents",
@@ -78,7 +78,7 @@
 		"canDrawBTF": true,
 		"canDrawNotes": true,
 		"visibleLayerIds": ["ua_srhk:g_srhk_feuerwehreinsaetze"],
-		"legendSrc": "/legends/placeholder.svg"
+		"legendSrc": "/legends/1s3.svg"
 	},
 	{
 		"id": "heat_thermal_load_day",
@@ -95,7 +95,7 @@
 			"bgi-planer:ca_ua_phk_aufenth_grfrei_tag_2022",
 			"bgi-planer:q_ua_pet_raster_2022"
 		],
-		"legendSrc": "/legends/placeholder.svg"
+		"legendSrc": "/legends/1h1.svg"
 	},
 	{
 		"id": "heat_thermal_load_night",
@@ -111,7 +111,7 @@
 			"bgi-planer:dd_ua_phk_bioklim_str_nacht_2022",
 			"bgi-planer:g_ua_lufttemp_raster_t2m_04h_2022"
 		],
-		"legendSrc": "/legends/placeholder.svg"
+		"legendSrc": "/legends/1h2.svg"
 	},
 	{
 		"id": "heat_vulnerable_areas",
@@ -123,7 +123,7 @@
 		"canDrawBTF": true,
 		"canDrawNotes": true,
 		"visibleLayerIds": ["ua_klimabewertung_2022:eb_ua_phk_vul_geb_demog_2022"],
-		"legendSrc": "/legends/placeholder.svg"
+		"legendSrc": "/legends/1h3.svg"
 	},
 	{
 		"id": "heat_cold_air_corridors",
@@ -138,7 +138,7 @@
 			"ua_klimaanalyse_2022:wfs:tk_kak_leitbahnkorridor_2022",
 			"ua_klimaanalyse_2022:ta_kak_luftaustausch_2022"
 		],
-		"legendSrc": "/legends/placeholder.svg"
+		"legendSrc": "/legends/1h4a.svg"
 	},
 	{
 		"id": "heat_air_exchange_corridors",
@@ -153,7 +153,7 @@
 			"ua_klimaanalyse_2022:ta_kak_luftaustausch_2022",
 			"ua_klimaanalyse_2022:wfs:tk_kak_leitbahnkorridor_2022"
 		],
-		"legendSrc": "/legends/placeholder.svg"
+		"legendSrc": "/legends/1h4b.svg"
 	},
 	{
 		"id": "heat_cold_air_flow",
@@ -170,7 +170,7 @@
 			"ua_klimaanalyse_2022:bb_ua_windfeld_2m_22h_2022_100m",
 			"ua_klimaanalyse_2022:ba_ua_windfeld_2m_22h_2022_20m"
 		],
-		"legendSrc": "/legends/placeholder.svg"
+		"legendSrc": "/legends/1h5.svg"
 	},
 	{
 		"id": "sealing_block_areas_high",
@@ -182,7 +182,7 @@
 		"canDrawBTF": true,
 		"canDrawNotes": true,
 		"visibleLayerIds": ["bgi-planer:versiegelung_2021"],
-		"legendSrc": "/legends/placeholder.svg"
+		"legendSrc": "/legends/1v1.svg"
 	},
 	{
 		"id": "sealing_green_volume_low",
@@ -194,7 +194,7 @@
 		"canDrawBTF": true,
 		"canDrawNotes": true,
 		"visibleLayerIds": ["bgi-planer:a_gruenvol2020"],
-		"legendSrc": "/legends/placeholder.svg"
+		"legendSrc": "/legends/1v2.svg"
 	},
 	{
 		"id": "sealing_small_scale_high",
@@ -209,7 +209,7 @@
 			"bgi-planer:ua_versiegelung_2021_raster",
 			"alkis_gebaeude:gebaeude"
 		],
-		"legendSrc": "/legends/placeholder.svg"
+		"legendSrc": "/legends/1v3.svg"
 	},
 	{
 		"id": "water_balance_natural_deviation",
@@ -221,7 +221,7 @@
 		"canDrawBTF": true,
 		"canDrawNotes": true,
 		"visibleLayerIds": ["ua_wasserhaushalt_2022:f_deltaw_2022"],
-		"legendSrc": "/legends/placeholder.svg"
+		"legendSrc": "/legends/1w1.svg"
 	},
 	{
 		"id": "water_protection_sewer_type",
@@ -233,7 +233,7 @@
 		"canDrawBTF": true,
 		"canDrawNotes": true,
 		"visibleLayerIds": ["bgi-planer:sp02_09kanalisation2022"],
-		"legendSrc": "/legends/placeholder.svg"
+		"legendSrc": "/legends/1g1.svg"
 	},
 	{
 		"id": "water_protection_decoupling_requirements",
