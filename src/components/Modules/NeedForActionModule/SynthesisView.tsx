@@ -7,6 +7,7 @@ import { useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
 import { EyeIcon, EyeSlashIcon, XIcon } from "@phosphor-icons/react";
 import { useCallback, useEffect } from "react";
+import { useShallow } from "zustand/react/shallow";
 
 interface SynthesisViewProps {
 	onBackToQuestions: () => void;
@@ -14,12 +15,17 @@ interface SynthesisViewProps {
 
 export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 	const answers = useAnswersStore((state) => state.answers);
-	const layerConfig = useLayersStore((state) => state.layerConfig);
-	const layers = useLayersStore((state) => state.layers);
-	const setLayerVisibility = useLayersStore(
-		(state) => state.setLayerVisibility,
-	);
-	const applyConfigLayers = useLayersStore((state) => state.applyConfigLayers);
+
+	const { layerConfig, layers, setLayerVisibility, applyConfigLayers } =
+		useLayersStore(
+			useShallow((state) => ({
+				layerConfig: state.layerConfig,
+				layers: state.layers,
+				setLayerVisibility: state.setLayerVisibility,
+				applyConfigLayers: state.applyConfigLayers,
+			})),
+		);
+
 	const moduleSavedState = useUiStore((state) => state.moduleSavedState);
 	const isMapReady = useMapReady();
 

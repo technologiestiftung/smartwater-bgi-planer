@@ -3,6 +3,7 @@ import { useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
 import type { SectionId } from "@/types/sectionIds";
 import { useCallback, useMemo } from "react";
+import { useShallow } from "zustand/react/shallow";
 
 type UseModuleNavigationOptions = {
 	steps: StepConfig[];
@@ -17,24 +18,28 @@ export function useModuleNavigation({
 	useVerticalStepper,
 }: UseModuleNavigationOptions) {
 	const { goToStep, currentStepId } = useVerticalStepper();
-	const resetDrawInteractions = useUiStore(
-		(state: any) => state.resetDrawInteractions,
+
+	const {
+		resetDrawInteractions,
+		moduleQuestionIndices: questionIndices,
+		setModuleQuestionIndex: setQuestionIndex,
+		saveModuleState: saveCurrentState,
+		setIsSynthesisMode,
+		setShowStepper,
+	} = useUiStore(
+		useShallow((state) => ({
+			resetDrawInteractions: state.resetDrawInteractions,
+			moduleQuestionIndices: state.moduleQuestionIndices,
+			setModuleQuestionIndex: state.setModuleQuestionIndex,
+			saveModuleState: state.saveModuleState,
+			setIsSynthesisMode: state.setIsSynthesisMode,
+			setShowStepper: state.setShowStepper,
+		})),
 	);
+
 	const applyConfigLayers = useLayersStore(
 		(state: any) => state.applyConfigLayers,
 	);
-	const questionIndices = useUiStore(
-		(state: any) => state.moduleQuestionIndices,
-	);
-	const setQuestionIndex = useUiStore(
-		(state: any) => state.setModuleQuestionIndex,
-	);
-	const saveCurrentState = useUiStore((state: any) => state.saveModuleState);
-
-	const setIsSynthesisMode = useUiStore(
-		(state: any) => state.setIsSynthesisMode,
-	);
-	const setShowStepper = useUiStore((state: any) => state.setShowStepper);
 
 	const allQuestions = useMemo(
 		() =>

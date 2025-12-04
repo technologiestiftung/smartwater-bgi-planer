@@ -3,15 +3,6 @@ import { useUiStore } from "@/store/ui";
 import { SectionId } from "@/types/sectionIds";
 import { useCallback } from "react";
 
-/**
- * Utility-Hook für Step-Validierung im Stepper.
- *
- * @param stepName Name des Steps, z.B. "heavyRain"
- * @param starterQuestionId ID der Starter-Frage, z.B. "starter_question"
- * @param layerId Layer-ID, z.B. LAYER_IDS.PROJECT_BOUNDARY
- * @param steps Step-Konfiguration (Array)
- * @returns Callback für isStepValid
- */
 export function useStepValid({
 	stepName,
 	starterQuestionId,

@@ -23,7 +23,7 @@ export function AddressSearch() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [isOpen, setIsOpen] = useState(false);
 	const [selectedIndex, setSelectedIndex] = useState(-1);
-	const { map } = useMapStore();
+	const map = useMapStore((state) => state.map);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const resultsRef = useRef<HTMLDivElement>(null);
 	const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(

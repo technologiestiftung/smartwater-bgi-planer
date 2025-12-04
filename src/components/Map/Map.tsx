@@ -8,6 +8,7 @@ import { useMapReady } from "@/hooks/use-map-ready";
 import { useMapStore } from "@/store";
 import dynamic from "next/dynamic";
 import { FC } from "react";
+import { useShallow } from "zustand/react/shallow";
 import OpacityControl from "./Controls/OpacityControl";
 
 const LazyOlMap = dynamic(() => import("./OlMap/OlMap"), {
@@ -17,7 +18,12 @@ const LazyOlMap = dynamic(() => import("./OlMap/OlMap"), {
 
 const Map: FC = () => {
 	const isMapReady = useMapReady();
-	const { hasError, errorMessage } = useMapStore();
+	const { hasError, errorMessage } = useMapStore(
+		useShallow((state) => ({
+			hasError: state.hasError,
+			errorMessage: state.errorMessage,
+		})),
+	);
 
 	return (
 		<div className="Map-root relative h-full w-full">

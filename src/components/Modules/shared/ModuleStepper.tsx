@@ -12,6 +12,7 @@ import { useMapReady } from "@/hooks/use-map-ready";
 import { useLayersStore, useUiStore } from "@/store";
 import type { SectionId } from "@/types/sectionIds";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useShallow } from "zustand/react/shallow";
 
 interface ModuleStepperProps<TSectionId extends SectionId> {
 	steps: StepConfig[];
@@ -48,14 +49,21 @@ function ModuleStepperContent<TSectionId extends SectionId>({
 	const { questionIndices, restoreModuleState, handleShowSynthesis } =
 		moduleNavigation;
 
-	const { applyConfigLayers } = useLayersStore((state) => state);
+	const applyConfigLayers = useLayersStore((state) => state.applyConfigLayers);
 
 	const {
 		resetDrawInteractions,
 		setIsSynthesisMode,
 		isSynthesisMode,
 		setShowStepper,
-	} = useUiStore((state) => state);
+	} = useUiStore(
+		useShallow((state) => ({
+			resetDrawInteractions: state.resetDrawInteractions,
+			setIsSynthesisMode: state.setIsSynthesisMode,
+			isSynthesisMode: state.isSynthesisMode,
+			setShowStepper: state.setShowStepper,
+		})),
+	);
 
 	useEffect(() => {
 		if (isStepValid) {
@@ -145,8 +153,12 @@ export function ModuleStepper<TSectionId extends SectionId>({
 	footerProps = {},
 	isStepValid,
 }: ModuleStepperProps<TSectionId>) {
-	const layerConfig = useLayersStore((state) => state.layerConfig);
-	const applyConfigLayers = useLayersStore((state) => state.applyConfigLayers);
+	const { layerConfig, applyConfigLayers } = useLayersStore(
+		useShallow((state) => ({
+			layerConfig: state.layerConfig,
+			applyConfigLayers: state.applyConfigLayers,
+		})),
+	);
 	const isMapReady = useMapReady();
 	const hasInitializedRef = useRef(false);
 	const [initialStepId] = useState<string>(steps[0]?.id);

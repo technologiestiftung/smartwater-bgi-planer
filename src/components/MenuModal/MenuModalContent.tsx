@@ -19,7 +19,7 @@ interface MenuModalProps {
 }
 
 export default function MenuModalContent({ projectId }: MenuModalProps) {
-	const { getProject } = useProjectsStore();
+	const getProject = useProjectsStore((state) => state.getProject);
 	const project = getProject();
 
 	const name = project?.name || "Unbenanntes Projekt";

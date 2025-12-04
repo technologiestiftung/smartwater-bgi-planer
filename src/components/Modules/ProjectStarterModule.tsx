@@ -31,6 +31,7 @@ import {
 	TrashIcon,
 } from "@phosphor-icons/react";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useShallow } from "zustand/react/shallow";
 
 interface ProjectStarterModuleProps {
 	open: boolean;
@@ -76,11 +77,15 @@ function StepperFooter({
 		currentStepIndex,
 		totalSteps,
 	} = useVerticalStepper();
-	const applyConfigLayers = useLayersStore((state) => state.applyConfigLayers);
-	const hideLayersByPattern = useLayersStore(
-		(state) => state.hideLayersByPattern,
+
+	const { applyConfigLayers, hideLayersByPattern } = useLayersStore(
+		useShallow((state) => ({
+			applyConfigLayers: state.applyConfigLayers,
+			hideLayersByPattern: state.hideLayersByPattern,
+		})),
 	);
-	const { clearUploadStatus } = useUiStore();
+
+	const clearUploadStatus = useUiStore((state) => state.clearUploadStatus);
 	const isMapReady = useMapReady();
 
 	useEffect(() => {
@@ -135,7 +140,13 @@ function ProjectBoundaryStep() {
 	const { hasFeatures } = useLayerFeatures(LAYER_IDS.PROJECT_BOUNDARY);
 	const { formattedArea } = useLayerArea(LAYER_IDS.PROJECT_BOUNDARY);
 	const { setStepValidation } = useVerticalStepper();
-	const { uploadError, uploadSuccess, clearUploadStatus } = useUiStore();
+	const { uploadError, uploadSuccess, clearUploadStatus } = useUiStore(
+		useShallow((state) => ({
+			uploadError: state.uploadError,
+			uploadSuccess: state.uploadSuccess,
+			clearUploadStatus: state.clearUploadStatus,
+		})),
+	);
 	const [mapError, setMapError] = useState("");
 
 	useEffect(() => {
@@ -229,10 +240,21 @@ function NewDevelopmentStep() {
 }
 
 function AdditionalMapsStep({ projectId }: { projectId: string }) {
-	const { uploadError, uploadSuccess, clearUploadStatus } = useUiStore();
-	const { layers, removeLayer } = useLayersStore();
+	const { uploadError, uploadSuccess, clearUploadStatus } = useUiStore(
+		useShallow((state) => ({
+			uploadError: state.uploadError,
+			uploadSuccess: state.uploadSuccess,
+			clearUploadStatus: state.clearUploadStatus,
+		})),
+	);
+	const { layers, removeLayer } = useLayersStore(
+		useShallow((state) => ({
+			layers: state.layers,
+			removeLayer: state.removeLayer,
+		})),
+	);
 	const map = useMapStore((state) => state.map);
-	const { deleteFile } = useFilesStore();
+	const deleteFile = useFilesStore((state) => state.deleteFile);
 
 	const uploadedLayers = useMemo(() => {
 		return Array.from(layers.values()).filter(
@@ -327,7 +349,7 @@ export default function ProjectStarterModule({
 	onComplete,
 	projectId,
 }: ProjectStarterModuleProps) {
-	const { clearUploadStatus } = useUiStore();
+	const clearUploadStatus = useUiStore((state) => state.clearUploadStatus);
 
 	useEffect(() => {
 		return () => {
