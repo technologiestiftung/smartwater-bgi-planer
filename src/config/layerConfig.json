@@ -77,7 +77,10 @@
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
 		"canDrawNotes": true,
-		"visibleLayerIds": ["ua_srhk:g_srhk_feuerwehreinsaetze"],
+		"visibleLayerIds": [
+			"ua_srhk:g_srhk_feuerwehreinsaetze",
+			"ua_srhk:b_srhk_feuerwehreinsaetze_pkt"
+		],
 		"legendSrc": "/legends/1s3.svg"
 	},
 	{

@@ -110,6 +110,10 @@
 							"visibility": false
 						},
 						{
+							"id": "ua_srhk:b_srhk_feuerwehreinsaetze_pkt",
+							"visibility": false
+						},
+						{
 							"id": "ua_klimaanalyse_2022:q_ua_pet_raster_2022",
 							"visibility": false
 						},
