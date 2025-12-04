@@ -135,7 +135,7 @@
 		"canDrawBTF": false,
 		"canDrawNotes": true,
 		"visibleLayerIds": [
-			"ua_klimaanalyse_2022:wfs:tk_kak_leitbahnkorridor_2022",
+			"ua_klimaanalyse_2022:tk_kak_leitbahnkorridor_2022",
 			"ua_klimaanalyse_2022:ta_kak_luftaustausch_2022"
 		],
 		"legendSrc": "/legends/1h4a.svg"
@@ -151,7 +151,7 @@
 		"canDrawNotes": true,
 		"visibleLayerIds": [
 			"ua_klimaanalyse_2022:ta_kak_luftaustausch_2022",
-			"ua_klimaanalyse_2022:wfs:tk_kak_leitbahnkorridor_2022"
+			"ua_klimaanalyse_2022:tk_kak_leitbahnkorridor_2022"
 		],
 		"legendSrc": "/legends/1h4b.svg"
 	},
