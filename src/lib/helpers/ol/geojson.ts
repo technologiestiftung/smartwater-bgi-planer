@@ -3,8 +3,10 @@ import type { FeatureCollection, GeoJsonProperties, Geometry } from "geojson";
 import GeoJSON from "ol/format/GeoJSON";
 import type Map from "ol/Map";
 
-interface GeoJSONWithMetadata
-	extends FeatureCollection<Geometry, GeoJsonProperties> {
+interface GeoJSONWithMetadata extends FeatureCollection<
+	Geometry,
+	GeoJsonProperties
+> {
 	metadata?: Record<string, any>;
 }
 
