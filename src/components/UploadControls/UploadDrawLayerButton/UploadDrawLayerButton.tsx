@@ -2,21 +2,22 @@
 
 import { Button } from "@/components/ui/button";
 import { useVectorUpload } from "@/components/UploadControls/hooks/useVectorUpload";
-import { ensureVectorLayer } from "@/lib/helper/layerHelpers";
-import { getLayerById } from "@/lib/helper/mapHelpers";
-import { useFilesStore } from "@/store/files";
+import {
+	ensureVectorLayer,
+	fitMapToExtent,
+	getLayerById,
+} from "@/lib/helpers/ol";
+import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";
-import { useProjectsStore } from "@/store/projects";
 import { LAYER_IDS } from "@/types/shared";
 import { UploadIcon } from "@phosphor-icons/react";
 import { Feature } from "ol";
 import { intersects } from "ol/extent";
 import { FC, useCallback, useRef } from "react";
 
-const UploadProjectBoundaryButton: FC = () => {
+const UploadDrawLayerButton: FC = () => {
 	const map = useMapStore((state) => state.map);
-	const getProject = useProjectsStore((state) => state.getProject);
-	const addFile = useFilesStore((state) => state.addFile);
+	const drawLayerId = useLayersStore((state) => state.drawLayerId);
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const { uploading, handleUpload } = useVectorUpload();
 
@@ -70,25 +71,26 @@ const UploadProjectBoundaryButton: FC = () => {
 		});
 	}, [map]);
 
-	const addProjectBoundaryFeaturesToMap = useCallback(
+	const addFeaturesToDrawLayer = useCallback(
 		(features: Feature[]) => {
-			if (!map) return;
+			if (!map || !drawLayerId) return;
 
-			const boundaryLayer = ensureVectorLayer(map, LAYER_IDS.PROJECT_BOUNDARY);
-			const boundarySource = boundaryLayer.getSource()!;
+			const layer = ensureVectorLayer(map, drawLayerId);
+			const source = layer.getSource()!;
 
-			boundarySource.clear();
-			boundarySource.addFeatures(features);
-			boundarySource.changed();
-
-			performIntersection();
-
-			const extent = boundarySource.getExtent();
-			if (extent?.every((val) => isFinite(val))) {
-				map.getView().fit(extent, { padding: [50, 50, 50, 50], duration: 500 });
+			if (drawLayerId === LAYER_IDS.PROJECT_BOUNDARY) {
+				source.clear();
+				source.addFeatures(features);
+				source.changed();
+				performIntersection();
+			} else {
+				source.addFeatures(features);
+				source.changed();
 			}
+
+			fitMapToExtent(map, layer);
 		},
-		[map, performIntersection],
+		[map, drawLayerId, performIntersection],
 	);
 
 	const handleFileChange = async (
@@ -97,13 +99,8 @@ const UploadProjectBoundaryButton: FC = () => {
 		const file = event.target.files?.[0];
 		if (!file) return;
 
-		await handleUpload(file, async (features, uploadedFile) => {
-			addProjectBoundaryFeaturesToMap(features);
-
-			const project = getProject();
-			if (project) {
-				await addFile(project.id, LAYER_IDS.PROJECT_BOUNDARY, uploadedFile);
-			}
+		await handleUpload(file, async (features) => {
+			addFeaturesToDrawLayer(features);
 		});
 
 		if (fileInputRef.current) fileInputRef.current.value = "";
@@ -130,4 +127,4 @@ const UploadProjectBoundaryButton: FC = () => {
 	);
 };
 
-export default UploadProjectBoundaryButton;
+export default UploadDrawLayerButton;

@@ -7,9 +7,9 @@ import {
 	SidebarHeader,
 	SidebarProvider,
 } from "@/components/ui/sidebar";
-import { SideMenuHeader } from "./SideMenuHeader";
-import { SideMenuFooter } from "./SideMenuFooter";
 import { cn } from "@/lib/utils";
+import { SideMenuFooter } from "./SideMenuFooter";
+import { SideMenuHeader } from "./SideMenuHeader";
 
 interface SideMenuProps {
 	open: boolean;
@@ -20,6 +20,7 @@ interface SideMenuProps {
 	footer?: React.ReactNode;
 	side?: "left" | "right";
 	bodyClassName?: string;
+	showStepper?: boolean;
 }
 
 function SideMenuInner({
@@ -27,11 +28,14 @@ function SideMenuInner({
 	children,
 	footer,
 	bodyClassName = "p-6",
-}: Omit<SideMenuProps, "open" | "onOpenChange" | "side" | "description">) {
+	showStepper = true,
+}: Omit<SideMenuProps, "open" | "onOpenChange" | "side" | "description"> & {
+	showStepper?: boolean;
+}) {
 	return (
 		<Sidebar collapsible="offcanvas">
 			<SidebarHeader className="flex flex-row">
-				<div className="w-20" />
+				<div className={showStepper ? "w-20" : "w-4"} />
 				<SideMenuHeader title={title} />
 			</SidebarHeader>
 			<SidebarContent className={cn("overflow-y-auto", bodyClassName)}>
@@ -46,20 +50,23 @@ function SideMenuInner({
 	);
 }
 
-export function SideMenu({
-	open,
-	onOpenChange,
-	title,
-	children,
-	footer,
-	bodyClassName = "p-6",
-}: SideMenuProps) {
+export function SideMenu(props: SideMenuProps) {
+	const {
+		open,
+		onOpenChange,
+		title,
+		children,
+		footer,
+		bodyClassName = "p-6",
+		showStepper = true,
+	} = props;
 	return (
 		<SidebarProvider open={open} onOpenChange={onOpenChange}>
 			<SideMenuInner
 				title={title}
 				footer={footer}
 				bodyClassName={bodyClassName}
+				showStepper={showStepper}
 			>
 				{children}
 			</SideMenuInner>

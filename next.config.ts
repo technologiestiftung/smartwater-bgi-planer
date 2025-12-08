@@ -1,7 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-	/* config options here */
 	images: {
 		remotePatterns: [
 			{
@@ -17,6 +16,14 @@ const nextConfig: NextConfig = {
 				hostname: "*smartwater-bgi-planer.netlify.app/",
 			},
 		],
+	},
+	turbopack: {
+		rules: {
+			"*.svg": {
+				loaders: ["@svgr/webpack"],
+				as: "*.js",
+			},
+		},
 	},
 	webpack(config) {
 		const fileLoaderRule = config.module.rules.find((rule: any) =>

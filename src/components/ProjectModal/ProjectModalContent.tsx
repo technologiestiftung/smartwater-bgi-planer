@@ -1,18 +1,10 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import {
-	Field,
-	FieldDescription,
-	FieldGroup,
-	FieldLabel,
-	FieldSet,
-} from "@/components/ui/field";
+import { Field, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
-import { UploadIcon } from "@phosphor-icons/react";
-import { useState, useEffect } from "react";
 import { UseCase } from "@/store/projects/types";
+import { useEffect, useState } from "react";
 
 export interface ProjectFormData {
 	name: string;
@@ -108,23 +100,6 @@ export default function ProjectModalContent({
 							<p>Straßen, Wege, Plätze / Grün- und Freiflächen</p>
 						</div>
 					</RadioGroup>
-				</Field>
-				<Field className="mt-4">
-					<FieldDescription>
-						Laden Sie hier eigene Karten hoch. Diese können als
-						Referenzinformation für die Beantwortung der Checkfragen dienen.
-						Sollten Ihnen, zum Beispiel, Karten über Altlasten, unterirdische
-						Leitungen, oder geplante Bauvorhaben zur Verfügung stehen, sie
-						können hier hochgeladen werden und jederzeit in der Bearbeitung des
-						Projektes ein- und ausgeblendet werden. GeoTIFF Dateien und WMS
-						Dienste werden unterstützt. Bearbeiten
-					</FieldDescription>
-					<div className="mt-2 flex justify-end gap-2">
-						<Button>
-							<UploadIcon />
-							Weitere Karten hochladen
-						</Button>
-					</div>
 				</Field>
 			</FieldGroup>
 		</FieldSet>

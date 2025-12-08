@@ -2,6 +2,7 @@ import {
 	createAddLayer,
 	createApplyConfigLayers,
 	createGetLayerStatus,
+	createHideLayersByPattern,
 	createRemoveLayer,
 	createSetLayerStatus,
 	createSetLayerVisibility,
@@ -32,13 +33,14 @@ export const useLayersStore = create<LayersState & LayersActions>(
 		setLayerStatus: createSetLayerStatus(set, get),
 		getLayerStatus: createGetLayerStatus(get),
 		setLayerConfig: (config) => set({ layerConfig: config }),
-		applyConfigLayers: createApplyConfigLayers(
+		applyConfigLayers: createApplyConfigLayers({
 			set,
 			get,
-			() => useMapStore.getState().config,
-			() => useMapStore.getState().isReady,
-		),
+			getMapConfig: () => useMapStore.getState().config,
+			getMapReady: () => useMapStore.getState().isReady,
+		}),
 		setDrawLayer: (layerId) => set({ drawLayerId: layerId }),
 		setLayerConfigId: (layerId) => set({ layerConfigId: layerId }),
+		hideLayersByPattern: createHideLayersByPattern(set, get),
 	}),
 );

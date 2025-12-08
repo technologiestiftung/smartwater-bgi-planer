@@ -37,7 +37,7 @@ export function StepIndicator({ className }: StepIndicatorProps) {
 									"border-light bg-light text-primary [&_svg]:fill-primary",
 								!isActive &&
 									!isPast &&
-									"border-muted text-muted fill-muted [&_svg]:fill-muted border-3",
+									"border-neutral-mid-darker text-neutral-mid-darker fill-neutral-mid-darker [&_svg]:fill-neutral-mid-darker border-3",
 							)}
 						>
 							<div
@@ -56,7 +56,7 @@ export function StepIndicator({ className }: StepIndicatorProps) {
 							<div
 								className={cn(
 									"w-1",
-									isPast ? "bg-light" : "bg-muted",
+									isPast ? "bg-light" : "bg-neutral-mid-darker",
 									isActive ? "bg-primary grow" : "h-6",
 								)}
 							/>

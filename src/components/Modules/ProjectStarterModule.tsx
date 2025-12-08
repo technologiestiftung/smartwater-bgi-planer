@@ -1,9 +1,9 @@
 "use client";
 
-import AddWMSButton from "@/components/AddWMSButton/AddWMSButton";
 import ConfirmButton from "@/components/ConfirmButton/ConfirmButton";
 import { SideMenu } from "@/components/SideMenu";
 import { Button } from "@/components/ui/button";
+import AddWMSButton from "@/components/UploadControls/AddWMSButton/AddWMSButton";
 import UploadVectorLayersButton from "@/components/UploadControls/UploadVectorLayersButton/UploadVectorLayersButton";
 import {
 	StepConfig,
@@ -16,6 +16,7 @@ import {
 import { useLayerArea } from "@/hooks/use-layer-area";
 import { useLayerFeatures } from "@/hooks/use-layer-features";
 import { useMapReady } from "@/hooks/use-map-ready";
+import { useFilesStore } from "@/store/files";
 import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";
 import { useUiStore } from "@/store/ui";
@@ -76,24 +77,27 @@ function StepperFooter({
 		totalSteps,
 	} = useVerticalStepper();
 	const applyConfigLayers = useLayersStore((state) => state.applyConfigLayers);
+	const hideLayersByPattern = useLayersStore(
+		(state) => state.hideLayersByPattern,
+	);
 	const { clearUploadStatus } = useUiStore();
-
 	const isMapReady = useMapReady();
 
 	useEffect(() => {
 		if (!isMapReady) return;
 
 		if (currentStepId === "projectBoundary") {
-			applyConfigLayers("start_view_project_boundary");
+			applyConfigLayers("start_view_project_boundary", true);
 		} else if (currentStepId === "newDevelopment") {
-			applyConfigLayers("start_view_project_new_development");
+			applyConfigLayers("start_view_project_new_development", true);
 		}
-	}, [currentStepId, applyConfigLayers, isMapReady]);
+	}, [currentStepId, applyConfigLayers, isMapReady, hideLayersByPattern]);
 
 	const isLastStep = currentStepIndex === totalSteps - 1;
 
 	const handleSkip = () => {
 		if (isLastStep) {
+			hideLayersByPattern(["uploaded_", "uploaded_wms_"]);
 			clearUploadStatus();
 			onComplete?.();
 		} else {
@@ -203,9 +207,7 @@ function NewDevelopmentStep() {
 	return (
 		<div className="space-y-4">
 			<h3 className="text-primary">Neubauten und versiegelte Flächen</h3>
-			<h4>
-				Neubauten und versiegelte Flächen Welche Bauwerke werden schon geplant?
-			</h4>
+			<h4>Welche Bauwerke werden schon geplant?</h4>
 			<p className="text-muted-foreground">
 				Falls Ihr Projekt Bauvorhaben umfasst, die noch nicht auf der Karte zu
 				sehen sind, können Sie diese jetzt einzeichnen.
@@ -226,10 +228,11 @@ function NewDevelopmentStep() {
 	);
 }
 
-function AdditionalMapsStep() {
+function AdditionalMapsStep({ projectId }: { projectId: string }) {
 	const { uploadError, uploadSuccess, clearUploadStatus } = useUiStore();
 	const { layers, removeLayer } = useLayersStore();
 	const map = useMapStore((state) => state.map);
+	const { deleteFile } = useFilesStore();
 
 	const uploadedLayers = useMemo(() => {
 		return Array.from(layers.values()).filter(
@@ -240,7 +243,7 @@ function AdditionalMapsStep() {
 	}, [layers]);
 
 	const deleteLayer = useCallback(
-		(layerId: string) => {
+		async (layerId: string) => {
 			if (!map) return;
 
 			const _layers = map.getLayers().getArray();
@@ -250,12 +253,13 @@ function AdditionalMapsStep() {
 
 			if (layerToRemove) {
 				map.removeLayer(layerToRemove);
+				await deleteFile(projectId, layerId);
 			}
 
 			removeLayer(layerId);
 			clearUploadStatus();
 		},
-		[map, removeLayer, clearUploadStatus],
+		[map, removeLayer, clearUploadStatus, deleteFile, projectId],
 	);
 
 	useEffect(() => {
@@ -321,6 +325,7 @@ export default function ProjectStarterModule({
 	open,
 	onOpenChange,
 	onComplete,
+	projectId,
 }: ProjectStarterModuleProps) {
 	const { clearUploadStatus } = useUiStore();
 
@@ -353,7 +358,7 @@ export default function ProjectStarterModule({
 							</StepContent>
 
 							<StepContent stepId="additionalMaps">
-								<AdditionalMapsStep />
+								<AdditionalMapsStep projectId={projectId} />
 							</StepContent>
 						</StepContainer>
 					</div>

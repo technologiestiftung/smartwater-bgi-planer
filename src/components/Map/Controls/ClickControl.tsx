@@ -1,17 +1,16 @@
 import { useMapStore } from "@/store/map";
+import { useUiStore } from "@/store/ui";
 import Overlay, { Options } from "ol/Overlay.js";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 
-interface ClickControlChildProps {
-	features: any;
-	layerId: string;
-	onClose: () => void;
-}
-
 interface ClickControlProps {
-	layerId: string;
+	layerIds: string[];
 	overlayOptions?: Options;
-	children: React.ReactElement<Partial<ClickControlChildProps>>;
+	renderContent: (
+		feature: any,
+		layerId: string,
+		onClose: () => void,
+	) => React.ReactNode;
 	minZoomForClick?: number;
 }
 
@@ -29,17 +28,24 @@ const POSITION_OFFSETS: Record<OverlayPositioning, [number, number]> = {
 };
 
 const ClickControl: FC<ClickControlProps> = ({
-	layerId,
+	layerIds,
 	overlayOptions,
-	children,
+	renderContent,
 	minZoomForClick = 4,
 }) => {
 	const map = useMapStore((state) => state.map);
+	const isDrawing = useUiStore((state) => state.isDrawing);
+	const isBlockAreaSelecting = useUiStore(
+		(state) => state.isBlockAreaSelecting,
+	);
+	const isDrawingNote = useUiStore((state) => state.isDrawingNote);
+
 	const overlayRef = useRef<HTMLDivElement>(null);
 	const overlayInstanceRef = useRef<Overlay | null>(null);
 	const overlaySizeRef = useRef({ width: 0, height: 0 });
 
 	const [features, setFeatures] = useState<any>();
+	const [matchedLayerId, setMatchedLayerId] = useState<string | null>(null);
 	const [cardPosition, setCardPosition] =
 		useState<OverlayPositioning>("bottom-left");
 
@@ -68,14 +74,6 @@ const ClickControl: FC<ClickControlProps> = ({
 		[map, cardPosition],
 	);
 
-	const handleCloseOverlay = useCallback(() => {
-		if (overlayInstanceRef.current) {
-			overlayInstanceRef.current.setPosition(undefined);
-		}
-		setFeatures(undefined);
-	}, []);
-
-	// Update overlay positioning when cardPosition changes
 	useEffect(() => {
 		if (overlayInstanceRef.current) {
 			overlayInstanceRef.current.setPositioning(cardPosition);
@@ -83,7 +81,17 @@ const ClickControl: FC<ClickControlProps> = ({
 		}
 	}, [cardPosition]);
 
-	// Track overlay size with ResizeObserver
+	useEffect(() => {
+		if (!features && overlayInstanceRef.current) {
+			overlayInstanceRef.current.setPosition(undefined);
+		}
+	}, [features]);
+
+	const handleCloseOverlay = useCallback(() => {
+		setFeatures(undefined);
+		setMatchedLayerId(null);
+	}, []);
+
 	useEffect(() => {
 		if (!overlayRef.current) return;
 
@@ -98,7 +106,6 @@ const ClickControl: FC<ClickControlProps> = ({
 		return () => observer.disconnect();
 	}, []);
 
-	// Main map click handler
 	useEffect(() => {
 		if (!map || !overlayRef.current) return;
 
@@ -114,12 +121,17 @@ const ClickControl: FC<ClickControlProps> = ({
 		map.addOverlay(overlay);
 
 		const handleClick = (evt: any) => {
+			if (isDrawing || isBlockAreaSelecting || isDrawingNote) {
+				return;
+			}
+
 			const zoom = map.getView().getZoom() ?? 0;
 			if (zoom < minZoomForClick) return;
 
 			const pixel = evt.pixel;
 			const coordinate = evt.coordinate;
 			let matchedFeature = null;
+			let matchedLayer = null;
 
 			const newPositioning = calculatePositioning(pixel);
 			if (newPositioning !== cardPosition) {
@@ -127,23 +139,27 @@ const ClickControl: FC<ClickControlProps> = ({
 			}
 
 			map.forEachFeatureAtPixel(pixel, (feature, layer) => {
-				if (layer?.get("id") === layerId) {
+				const currentLayerId = layer?.get("id");
+				if (layerIds.includes(currentLayerId)) {
 					const clusteredFeatures = feature.get("features");
 					const isCluster = clusteredFeatures?.length > 1;
 
 					if (!isCluster) {
 						matchedFeature = feature;
+						matchedLayer = currentLayerId;
 					}
 					return true;
 				}
 			});
 
-			if (matchedFeature) {
+			if (matchedFeature && matchedLayer) {
 				overlay.setPosition(coordinate);
 				setFeatures(matchedFeature);
+				setMatchedLayerId(matchedLayer);
 			} else {
 				overlay.setPosition(undefined);
 				setFeatures(undefined);
+				setMatchedLayerId(null);
 			}
 		};
 
@@ -156,23 +172,21 @@ const ClickControl: FC<ClickControlProps> = ({
 		};
 	}, [
 		map,
-		layerId,
+		layerIds,
 		overlayOptions,
 		cardPosition,
 		calculatePositioning,
 		minZoomForClick,
+		isDrawing,
+		isBlockAreaSelecting,
+		isDrawingNote,
 	]);
 
 	return (
 		<div className="ClickControl-root" ref={overlayRef}>
-			{features ? (
-				<children.type
-					{...children.props}
-					features={features}
-					layerId={layerId}
-					onClose={handleCloseOverlay}
-				/>
-			) : null}
+			{features && matchedLayerId
+				? renderContent(features, matchedLayerId, handleCloseOverlay)
+				: null}
 		</div>
 	);
 };

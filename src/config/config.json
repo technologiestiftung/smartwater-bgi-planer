@@ -97,7 +97,6 @@
 							"id": "ua_srgk:bb_fliessgeschwindigkeit_aussergewoehnlich",
 							"visibility": false
 						},
-
 						{
 							"id": "ua_srhk:dc_wasserstand_aussergew_kostra",
 							"visibility": false
@@ -108,6 +107,10 @@
 						},
 						{
 							"id": "ua_srhk:g_srhk_feuerwehreinsaetze",
+							"visibility": false
+						},
+						{
+							"id": "ua_srhk:b_srhk_feuerwehreinsaetze_pkt",
 							"visibility": false
 						},
 						{
@@ -147,7 +150,7 @@
 							"visibility": false
 						},
 						{
-							"id": "ua_kanalisation_2022:sp02_09kanalisation2022",
+							"id": "bgi-planer:sp02_09kanalisation2022",
 							"visibility": false
 						},
 						{
@@ -175,6 +178,26 @@
 							"visibility": false
 						},
 						{
+							"id": "bgi-planer:g_ua_lufttemp_raster_t2m_04h_2022",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:q_ua_pet_raster_2022",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:ca_ua_phk_aufenth_grfrei_tag_2022",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:cb_ua_phk_bioklim_siedl_tag_2022",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:cc_ua_phk_bioklim_str_tag_2022",
+							"visibility": false
+						},
+						{
 							"id": "bgi-planer:versiegelung_2021",
 							"visibility": false
 						},
@@ -199,27 +222,19 @@
 							"visibility": false
 						},
 						{
-							"id": "ua_klimabewertung_2022:cb_ua_phk_bioklim_siedl_tag_2022",
+							"id": "bgi-planer:dc_ua_phk_bioklim_siedl_nacht_2022",
 							"visibility": false
 						},
 						{
-							"id": "ua_klimabewertung_2022:ca_ua_phk_aufenth_grfrei_tag_2022",
-							"visibility": false
-						},
-						{
-							"id": "ua_klimabewertung_2022:dc_ua_phk_bioklim_siedl_nacht_2022",
-							"visibility": false
-						},
-						{
-							"id": "ua_klimabewertung_2022:dd_ua_phk_bioklim_str_nacht_2022",
-							"visibility": false
-						},
-						{
-							"id": "ua_klimabewertung_2022:cc_ua_phk_bioklim_str_tag_2022",
+							"id": "bgi-planer:dd_ua_phk_bioklim_str_nacht_2022",
 							"visibility": false
 						},
 						{
 							"id": "alkis_gebaeude:gebaeude",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:ua_versiegelung_2021_raster",
 							"visibility": false
 						}
 					]

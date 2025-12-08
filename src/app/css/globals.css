@@ -20,6 +20,7 @@
 	/* White & Dark */
 	--white: #ffffff;
 	--lighter: #f1f1f1;
+	--neutral-light: #f1f1f1;
 	--neutral-mid: #e5e5e5;
 	--neutral-mid-darker: #b3b3b3;
 	--dark: #444444;
@@ -52,6 +53,12 @@
 	--color-accent: var(--accent);
 	--color-accent-foreground: var(--black);
 	--color-destructive: var(--red);
+
+	--color-neutral-light: var(--neutral-light);
+	--color-neutral-mid-darker: var(--neutral-mid-darker);
+	--color-green: var(--green);
+	--color-red: var(--red);
+	--color-yellow: var(--yellow);
 
 	--color-border: var(--border);
 	--color-input: var(--neutral-mid-darker);

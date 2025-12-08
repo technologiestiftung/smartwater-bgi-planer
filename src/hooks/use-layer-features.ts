@@ -1,4 +1,4 @@
-import { getLayerById } from "@/lib/helper/mapHelpers";
+import { getLayerById } from "@/lib/helpers/ol";
 import { useMapStore } from "@/store/map";
 import VectorSource from "ol/source/Vector";
 import { useEffect, useState } from "react";
@@ -19,7 +19,8 @@ export function useLayerFeatures(layerId: string) {
 		if (!source) return;
 
 		const checkFeatures = () => {
-			setHasFeatures(source.getFeatures().length > 0);
+			const featureCount = source.getFeatures().length;
+			setHasFeatures(featureCount > 0);
 		};
 
 		checkFeatures();

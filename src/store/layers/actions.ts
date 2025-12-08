@@ -1,4 +1,4 @@
-import { getLayerIdsInFolder } from "@/lib/helper/layerHelpers";
+import { getLayerIdsInFolder } from "@/lib/helpers/ol";
 import { LayersState, ManagedLayer } from "@/store/layers/types";
 import { MapConfig } from "@/store/map/types";
 import { LayerStatus } from "@/types/shared";
@@ -72,13 +72,18 @@ export const createSetLayerVisibility =
 	};
 
 export const createApplyConfigLayers =
-	(
-		set: SetState,
-		get: GetState,
-		getMapConfig: () => MapConfig | null,
-		getMapReady: () => boolean,
-	) =>
-	(visibleLayerIds: string) => {
+	({
+		set,
+		get,
+		getMapConfig,
+		getMapReady,
+	}: {
+		set: SetState;
+		get: GetState;
+		getMapConfig: () => MapConfig | null;
+		getMapReady: () => boolean;
+	}) =>
+	(visibleLayerIds: string, hideOtherDrawLayers = false) => {
 		const state = get();
 		const currentMapLayers = state.layers;
 		const layerConfigItem = state.layerConfig.find(
@@ -127,16 +132,15 @@ export const createApplyConfigLayers =
 			layerConfigId: layerConfigItem.id,
 		}));
 
-		const thememapsFolderElements = mapConfig.layerConfig.subjectlayer.elements;
-		const thememapsLayerIdsToTurnOff = getLayerIdsInFolder(
-			thememapsFolderElements,
-			"Thememaps",
-		);
+		const folderElements = mapConfig.layerConfig.subjectlayer.elements;
+		const thememapsLayerIds = getLayerIdsInFolder(folderElements, "Thememaps");
+
+		const drawLayerIds = getLayerIdsInFolder(folderElements, "Draw Layers");
 
 		const newLayersMap = new Map(currentMapLayers);
 
 		// Only turn off layers that are in the Thememaps folder
-		thememapsLayerIdsToTurnOff.forEach((layerId) => {
+		thememapsLayerIds.forEach((layerId) => {
 			const layer = newLayersMap.get(layerId);
 			if (layer && layer.olLayer && layer.visibility) {
 				layer.olLayer.setVisible(false);
@@ -144,14 +148,73 @@ export const createApplyConfigLayers =
 			}
 		});
 
-		// Turn on the requested layers
+		// Hide other draw layers if requested
+		if (hideOtherDrawLayers) {
+			const keepVisibleDrawLayers = new Set([
+				"project_boundary",
+				"project_new_development",
+				"module1_notes",
+			]);
+
+			if (layerConfigItem.drawLayerId) {
+				keepVisibleDrawLayers.add(layerConfigItem.drawLayerId);
+			}
+
+			drawLayerIds.forEach((layerId) => {
+				if (!keepVisibleDrawLayers.has(layerId)) {
+					const layer = newLayersMap.get(layerId);
+					if (layer && layer.olLayer) {
+						layer.olLayer.setVisible(false);
+						newLayersMap.set(layerId, { ...layer, visibility: false });
+					}
+				}
+			});
+		}
+
 		layerConfigItem.visibleLayerIds.forEach((layerId) => {
 			const layer = newLayersMap.get(layerId);
-			if (layer && layer.olLayer && !layer.visibility) {
+			if (layer && layer.olLayer) {
 				layer.olLayer.setVisible(true);
 				newLayersMap.set(layerId, { ...layer, visibility: true });
 			}
 		});
 
+		// Ensure the current draw layer is visible if it exists
+		if (layerConfigItem.drawLayerId) {
+			const drawLayer = newLayersMap.get(layerConfigItem.drawLayerId);
+			if (drawLayer && drawLayer.olLayer) {
+				drawLayer.olLayer.setVisible(true);
+				newLayersMap.set(layerConfigItem.drawLayerId, {
+					...drawLayer,
+					visibility: true,
+				});
+			}
+		}
+
 		set(() => ({ layers: newLayersMap }));
+	};
+
+export const createHideLayersByPattern =
+	(set: SetState, get: GetState) =>
+	(pattern: string | string[]): void => {
+		const patterns = Array.isArray(pattern) ? pattern : [pattern];
+		const currentLayersMap = get().layers;
+		const newLayersMap = new Map(currentLayersMap);
+		let hasChanges = false;
+
+		Array.from(currentLayersMap.values()).forEach((layer) => {
+			const matchesPattern = patterns.some((p) => layer.id.includes(p));
+
+			if (matchesPattern && layer.visibility) {
+				if (layer.olLayer) {
+					layer.olLayer.setVisible(false);
+				}
+				newLayersMap.set(layer.id, { ...layer, visibility: false });
+				hasChanges = true;
+			}
+		});
+
+		if (hasChanges) {
+			set(() => ({ layers: newLayersMap }));
+		}
 	};

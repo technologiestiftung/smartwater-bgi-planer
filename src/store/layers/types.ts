@@ -23,6 +23,7 @@ export interface LayerElement extends LayerElementBase {
 	visibility: boolean;
 	status: LayerStatus;
 	service?: LayerService;
+	zIndex?: number;
 }
 
 export interface ManagedLayer {
@@ -71,6 +72,9 @@ export interface LayerService {
 	};
 	styleId?: string;
 	gfiAttributes?: string;
+	visibility?: boolean;
+	minScale?: number;
+	maxScale?: number;
 }
 
 export interface VectorTileStyle {
@@ -93,8 +97,13 @@ export interface LayerConfigItem {
 	id: string;
 	name: string;
 	description?: string;
+	question?: string;
 	drawLayerId: string;
 	visibleLayerIds: string[];
+	canDrawPolygons?: boolean;
+	canDrawBTF?: boolean;
+	canDrawNotes?: boolean;
+	legendSrc?: string;
 }
 
 export interface LayersState {
@@ -118,7 +127,11 @@ export interface LayersActions {
 	setLayerStatus: (id: string, status: LayerStatus) => void;
 	getLayerStatus: (id: string) => LayerStatus | undefined;
 	setLayerConfig: (config: LayerConfigItem[]) => void;
-	applyConfigLayers: (visibleLayerIds: string) => void;
+	applyConfigLayers: (
+		visibleLayerIds: string,
+		hideOtherDrawLayers?: boolean,
+	) => void;
 	setDrawLayer: (layerId: string) => void;
 	setLayerConfigId: (layerConfigId: string) => void;
+	hideLayersByPattern: (pattern: string | string[]) => void;
 }

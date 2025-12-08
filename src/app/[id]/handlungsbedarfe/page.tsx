@@ -1,6 +1,6 @@
 "use client";
 
-import HandlungsbedarfeModule from "@/components/Modules/HandlungsbedarfeModule";
+import HandlungsbedarfeModule from "@/components/Modules/HandlungsbedarfeModule/HandlungsbedarfeModule";
 import { useRouter } from "next/navigation";
 import { use } from "react";
 
@@ -16,10 +16,14 @@ export default function HandlungsbedarfePage({
 	const router = useRouter();
 	const { id } = use(params);
 
+	const handleClose = () => {
+		router.push(`/${id}/menu`);
+	};
+
 	return (
 		<HandlungsbedarfeModule
 			open={true}
-			onOpenChange={(open) => !open && router.back()}
+			onOpenChange={(open) => !open && handleClose()}
 			projectId={id}
 		/>
 	);

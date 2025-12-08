@@ -1,23 +1,28 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { getLayerById } from "@/lib/helper/mapHelpers";
+import { getLayerById } from "@/lib/helpers/ol";
 import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";
+import { useUiStore } from "@/store/ui";
 import { CursorClickIcon } from "@phosphor-icons/react";
 import { Feature } from "ol";
 import { CollectionEvent } from "ol/Collection";
 import { click } from "ol/events/condition.js";
 import Select from "ol/interaction/Select.js";
 import { Vector as VectorSource } from "ol/source.js";
-import { FC, useCallback, useEffect, useRef, useState } from "react";
+import { FC, useCallback, useEffect, useRef } from "react";
 
 const BlockAreaSelector: FC = () => {
 	const map = useMapStore((state) => state.map);
 	const drawLayerId = useLayersStore((state) => state.drawLayerId);
+	const isActive = useUiStore((state) => state.isBlockAreaSelecting);
+	const setIsActive = useUiStore((state) => state.setIsBlockAreaSelecting);
+	const resetDrawInteractions = useUiStore(
+		(state) => state.resetDrawInteractions,
+	);
 
 	const selectInteractionRef = useRef<Select | null>(null);
-	const [isActive, setIsActive] = useState(false);
 
 	const toggleRabimoInputVisibility = useCallback(
 		(visible: boolean) => {
@@ -35,8 +40,11 @@ const BlockAreaSelector: FC = () => {
 
 	const toggleSelectionMode = useCallback(() => {
 		if (!map) return;
-		setIsActive((prev) => !prev);
-	}, [map]);
+		if (!isActive) {
+			resetDrawInteractions();
+		}
+		setIsActive(!isActive);
+	}, [map, isActive, setIsActive, resetDrawInteractions]);
 
 	useEffect(() => {
 		if (!map || !drawLayerId) return;
@@ -54,7 +62,9 @@ const BlockAreaSelector: FC = () => {
 		const drawSource = drawLayer.getSource()!;
 
 		const handleFeatureAdd = (event: CollectionEvent<Feature>) => {
-			drawSource.addFeature(event.element.clone());
+			const clonedFeature = event.element.clone();
+			drawSource.addFeature(clonedFeature);
+			drawSource.changed();
 		};
 
 		const handleFeatureRemove = (event: CollectionEvent<Feature>) => {
@@ -63,6 +73,8 @@ const BlockAreaSelector: FC = () => {
 				.getFeatures()
 				.filter((f) => f.get("code") === originalFeature.get("code"));
 			featuresToRemove.forEach((f) => drawSource.removeFeature(f));
+
+			drawSource.changed();
 		};
 
 		if (isActive && inputLayer) {
@@ -98,6 +110,14 @@ const BlockAreaSelector: FC = () => {
 			toggleRabimoInputVisibility(false);
 		};
 	}, [map, isActive, toggleRabimoInputVisibility, drawLayerId]);
+
+	useEffect(() => {
+		if (!isActive && selectInteractionRef.current && map) {
+			map.removeInteraction(selectInteractionRef.current);
+			selectInteractionRef.current = null;
+			toggleRabimoInputVisibility(false);
+		}
+	}, [isActive, map, toggleRabimoInputVisibility]);
 
 	return (
 		<div className="BlockAreaSelector-root">

@@ -3,7 +3,7 @@
 import mapConfig from "@/config/config.json";
 import layerConfig from "@/config/layerConfig.json";
 import services from "@/config/resources/services.json";
-import { initializeProjections } from "@/lib/utils/ol/mapUtils";
+import { initializeProjections } from "@/lib/helpers/ol";
 import { useLayersStore } from "@/store/layers";
 import {
 	LayerConfigItem,

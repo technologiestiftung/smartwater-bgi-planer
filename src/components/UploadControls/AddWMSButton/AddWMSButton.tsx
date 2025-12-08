@@ -10,9 +10,15 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import { validateWMSUrl } from "@/lib/helper/layerHelpers";
+import { generateLayerId } from "@/lib/helpers/file";
+import {
+	buildCapabilitiesUrl,
+	createManagedLayerFromConfig,
+	generatePreviewUrl,
+	getBaseUrl,
+	validateWMSUrl,
+} from "@/lib/helpers/ol";
 import { useLayersStore } from "@/store/layers";
-import { ManagedLayer } from "@/store/layers/types";
 import { useMapStore } from "@/store/map";
 import { useUiStore } from "@/store/ui";
 import { LinkIcon } from "@phosphor-icons/react";
@@ -24,16 +30,14 @@ interface WMSLayer {
 	name: string;
 	title: string;
 	abstract?: string;
+	previewUrl?: string;
 }
 
 const WMS_VERSION = "1.3.0";
 const FETCH_DEBOUNCE_MS = 1000;
 const VALIDATION_DEBOUNCE_MS = 500;
 
-const generateLayerId = () =>
-	`uploaded_wms_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
-
-const parseCapabilities = (xmlText: string): WMSLayer[] => {
+const parseCapabilities = (xmlText: string, baseUrl: string): WMSLayer[] => {
 	try {
 		const parser = new DOMParser();
 		const xmlDoc = parser.parseFromString(xmlText, "text/xml");
@@ -57,6 +61,11 @@ const parseCapabilities = (xmlText: string): WMSLayer[] => {
 					name: nameEl.textContent,
 					title: titleEl.textContent,
 					abstract: abstractEl?.textContent,
+					previewUrl: generatePreviewUrl(
+						baseUrl,
+						nameEl.textContent,
+						WMS_VERSION,
+					),
 				});
 			}
 		});
@@ -68,33 +77,15 @@ const parseCapabilities = (xmlText: string): WMSLayer[] => {
 	}
 };
 
-const buildCapabilitiesUrl = (baseUrl: string): URL => {
-	const url = new URL(baseUrl.trim());
-	url.searchParams.delete("service");
-	url.searchParams.delete("SERVICE");
-	url.searchParams.delete("request");
-	url.searchParams.delete("REQUEST");
-	url.searchParams.delete("version");
-	url.searchParams.delete("VERSION");
+const createWMSLayer = (params: {
+	url: string;
+	layerName: string;
+	layerTitle: string;
+	layerId: string;
+	previewUrl?: string;
+}) => {
+	const { url, layerName, layerTitle, layerId, previewUrl } = params;
 
-	url.searchParams.set("service", "WMS");
-	url.searchParams.set("request", "GetCapabilities");
-	url.searchParams.set("version", WMS_VERSION);
-	return url;
-};
-
-const getBaseUrl = (urlString: string): string => {
-	const url = new URL(urlString.trim());
-	url.search = "";
-	return url.toString();
-};
-
-const createWMSLayer = (
-	url: string,
-	layerName: string,
-	layerTitle: string,
-	layerId: string,
-) => {
 	const wmsSource = new TileWMS({
 		url,
 		params: {
@@ -108,30 +99,12 @@ const createWMSLayer = (
 	const wmsLayer = new TileLayer({ source: wmsSource });
 	wmsLayer.set("name", layerTitle);
 	wmsLayer.set("id", layerId);
+	if (previewUrl) {
+		wmsLayer.set("previewUrl", previewUrl);
+	}
 
 	return wmsLayer;
 };
-
-const createManagedLayer = (
-	layerId: string,
-	layerTitle: string,
-	olLayer: TileLayer<TileWMS>,
-): ManagedLayer => ({
-	id: layerId,
-	config: {
-		id: layerId,
-		name: layerTitle,
-		visibility: true,
-		status: "loaded",
-		elements: [],
-	},
-	olLayer,
-	status: "loaded",
-	visibility: true,
-	opacity: 1,
-	zIndex: 998,
-	layerType: "subject",
-});
 
 const AddWMSButton: FC = () => {
 	const map = useMapStore((state) => state.map);
@@ -162,7 +135,8 @@ const AddWMSButton: FC = () => {
 				return;
 			}
 
-			const url = buildCapabilitiesUrl(wmsUrl);
+			const baseUrl = getBaseUrl(wmsUrl);
+			const url = buildCapabilitiesUrl(wmsUrl, WMS_VERSION);
 			const response = await fetch(url.toString());
 
 			if (!response.ok) {
@@ -170,7 +144,7 @@ const AddWMSButton: FC = () => {
 			}
 
 			const xmlText = await response.text();
-			const layers = parseCapabilities(xmlText);
+			const layers = parseCapabilities(xmlText, baseUrl);
 
 			if (layers.length === 0) {
 				setValidationError(
@@ -191,14 +165,35 @@ const AddWMSButton: FC = () => {
 	}, [wmsUrl, clearUploadStatus]);
 
 	const addWMSLayerToMap = useCallback(
-		(url: string, layerName: string, layerTitle: string) => {
+		(params: {
+			url: string;
+			layerName: string;
+			layerTitle: string;
+			previewUrl?: string;
+		}) => {
 			if (!map) return;
 
-			const layerId = generateLayerId();
-			const wmsLayer = createWMSLayer(url, layerName, layerTitle, layerId);
+			const { url, layerName, layerTitle, previewUrl } = params;
+			const layerId = generateLayerId("uploaded_wms_");
 
+			const wmsLayer = createWMSLayer({
+				url,
+				layerName,
+				layerTitle,
+				layerId,
+				previewUrl,
+			});
+
+			wmsLayer.setZIndex(500);
 			map.addLayer(wmsLayer);
-			addLayer(createManagedLayer(layerId, layerTitle, wmsLayer));
+			addLayer(
+				createManagedLayerFromConfig({
+					layerId,
+					name: layerTitle,
+					olLayer: wmsLayer,
+					zIndex: 500,
+				}),
+			);
 		},
 		[map, addLayer],
 	);
@@ -215,7 +210,12 @@ const AddWMSButton: FC = () => {
 			const baseUrl = getBaseUrl(wmsUrl);
 
 			layersToAdd.forEach((layer) => {
-				addWMSLayerToMap(baseUrl, layer.name, layer.title);
+				addWMSLayerToMap({
+					url: baseUrl,
+					layerName: layer.name,
+					layerTitle: layer.title,
+					previewUrl: layer.previewUrl,
+				});
 			});
 
 			setUploadSuccess(

@@ -130,6 +130,21 @@ export const deleteProjectFileBlobs = async (
 };
 
 /**
+ * Gets all file keys from IndexedDB (across all projects)
+ */
+export const getAllFileKeys = async (): Promise<string[]> => {
+	const db = await openDB();
+	const tx = db.transaction(STORE_NAME, "readonly");
+	const store = tx.objectStore(STORE_NAME);
+
+	return new Promise((resolve, reject) => {
+		const request = store.getAllKeys();
+		request.onsuccess = () => resolve(request.result as string[]);
+		request.onerror = () => reject(request.error);
+	});
+};
+
+/**
  * Gets all file keys for a given project
  */
 export const getProjectFileKeys = async (
@@ -166,39 +181,42 @@ export const filesStorage = {
 				return null;
 			}
 
-			const localData = localStorage.getItem(name);
-			if (!localData) return null;
+			// Get all files from IndexedDB
+			const allKeys = await getAllFileKeys();
+			console.log("[filesStorage] Found", allKeys.length, "files in IndexedDB");
 
-			const parsed = JSON.parse(localData) as StorageValue<FilesStore>;
+			const filesMap = new Map();
 
-			if (parsed.state.files && Array.isArray(parsed.state.files)) {
-				const filesMap = new Map();
-
-				// Restore each file by fetching blob from IndexedDB
-				for (const [key, metadata] of parsed.state.files as [
-					string,
-					{ projectId: string; layerId: string; uploadedAt: number },
-				][]) {
-					const parsed = parseFileKey(key);
-					if (parsed) {
-						const file = await getFileBlob(parsed.projectId, parsed.layerId);
-						if (file) {
-							filesMap.set(key, {
-								projectId: parsed.projectId,
-								layerId: parsed.layerId,
-								file,
-								uploadedAt: metadata.uploadedAt,
-							});
-						}
+			// Load all files from IndexedDB
+			for (const key of allKeys) {
+				const parsed = parseFileKey(key);
+				if (parsed) {
+					const file = await getFileBlob(parsed.projectId, parsed.layerId);
+					if (file) {
+						filesMap.set(key, {
+							projectId: parsed.projectId,
+							layerId: parsed.layerId,
+							file,
+							uploadedAt: file.lastModified,
+						});
 					}
 				}
-
-				parsed.state.files = filesMap;
-			} else {
-				parsed.state.files = new Map();
 			}
 
-			return parsed;
+			console.log("[filesStorage] Loaded", filesMap.size, "files into store");
+
+			const localData = localStorage.getItem(name);
+			const version = localData
+				? (JSON.parse(localData) as { version?: number }).version
+				: 0;
+
+			return {
+				state: {
+					files: filesMap,
+					hasHydrated: false,
+				},
+				version: version || 0,
+			} as StorageValue<FilesStore>;
 		} catch (error) {
 			console.error("Error loading files:", error);
 			return null;

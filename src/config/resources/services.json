@@ -52,6 +52,121 @@
 		"id": "GEOSERVER THEMEMAPS"
 	},
 	{
+		"id": "bgi-planer:q_ua_pet_raster_2022",
+		"name": "q_ua_pet_raster_2022",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "q_ua_pet_raster_2022",
+		"gfiAttributes": "ignore",
+		"maxScale": "5000"
+	},
+	{
+		"id": "bgi-planer:ua_versiegelung_2021_raster",
+		"name": "ua_versiegelung_2021_raster",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "ua_versiegelung_2021_raster",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:g_ua_lufttemp_raster_t2m_04h_2022",
+		"name": "g_ua_lufttemp_raster_t2m_04h_2022",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "g_ua_lufttemp_raster_t2m_04h_2022",
+		"gfiAttributes": "ignore",
+		"maxScale": "5000"
+	},
+	{
+		"id": "bgi-planer:ca_ua_phk_aufenth_grfrei_tag_2022",
+		"name": "ca_ua_phk_aufenth_grfrei_tag_2022",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "ca_ua_phk_aufenth_grfrei_tag_2022",
+		"gfiAttributes": "ignore",
+		"minScale": "5000"
+	},
+	{
+		"id": "bgi-planer:cb_ua_phk_bioklim_siedl_tag_2022",
+		"name": "cb_ua_phk_bioklim_siedl_tag_2022",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "cb_ua_phk_bioklim_siedl_tag_2022",
+		"gfiAttributes": "ignore",
+		"minScale": "5000"
+	},
+	{
+		"id": "bgi-planer:cc_ua_phk_bioklim_str_tag_2022",
+		"name": "cc_ua_phk_bioklim_str_tag_2022",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "cc_ua_phk_bioklim_str_tag_2022",
+		"gfiAttributes": "ignore",
+		"minScale": "5000"
+	},
+	{
+		"id": "bgi-planer:dc_ua_phk_bioklim_siedl_nacht_2022",
+		"name": "dc_ua_phk_bioklim_siedl_nacht_2022",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "dc_ua_phk_bioklim_siedl_nacht_2022",
+		"gfiAttributes": "ignore",
+		"minScale": "5000"
+	},
+	{
+		"id": "bgi-planer:dd_ua_phk_bioklim_str_nacht_2022",
+		"name": "dd_ua_phk_bioklim_str_nacht_2022",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "dd_ua_phk_bioklim_str_nacht_2022",
+		"gfiAttributes": "ignore",
+		"minScale": "5000"
+	},
+	{
+		"id": "bgi-planer:sp02_09kanalisation2022",
+		"name": "sp02_09kanalisation2022",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "sp02_09kanalisation2022",
+		"gfiAttributes": "ignore"
+	},
+	{
 		"id": "bgi-planer:HA4_Kleingewaesser_trocken_pkt",
 		"name": "HA4_Kleingewaesser_trocken_pkt",
 		"crs": "EPSG:25833",
@@ -61,8 +176,7 @@
 		"format": "image/png",
 		"datasets": false,
 		"layers": "HA4_Kleingewaesser_trocken_pkt",
-		"gfiAttributes": "ignore",
-		"maxScale": "25000"
+		"gfiAttributes": "ignore"
 	},
 	{
 		"id": "bgi-planer:HA4_Kleingewaesser_trocken_topoEZG_pl",
@@ -74,8 +188,7 @@
 		"format": "image/png",
 		"datasets": false,
 		"layers": "HA4_Kleingewaesser_trocken_topoEZG_pl",
-		"gfiAttributes": "ignore",
-		"maxScale": "25000"
+		"gfiAttributes": "ignore"
 	},
 	{
 		"id": "bgi-planer:versiegelung_2021",
@@ -87,8 +200,7 @@
 		"format": "image/png",
 		"datasets": false,
 		"layers": "versiegelung_2021",
-		"gfiAttributes": "ignore",
-		"maxScale": "25000"
+		"gfiAttributes": "ignore"
 	},
 	{
 		"id": "bgi-planer:a_gruenvol2020",
@@ -100,8 +212,7 @@
 		"format": "image/png",
 		"datasets": false,
 		"layers": "a_gruenvol2020",
-		"gfiAttributes": "ignore",
-		"maxScale": "25000"
+		"gfiAttributes": "ignore"
 	},
 	{
 		"id": "rabimo_input_2025",
@@ -113,8 +224,7 @@
 		"featureType": "amarex:rabimo_input_2025",
 		"featureNS": "http://geoserver.org",
 		"datasets": false,
-		"gfiAttributes": "showAll",
-		"maxScale": "25000"
+		"gfiAttributes": "showAll"
 	},
 	{
 		"id": "BGI DRAW MAPS"

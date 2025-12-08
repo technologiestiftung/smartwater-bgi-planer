@@ -60,7 +60,11 @@ export default function ProjectModalWrapper({
 			</Button>
 		),
 		additionalButtons: (
-			<Button variant="outline" onClick={() => console.log("Download")}>
+			<Button
+				disabled
+				variant="outline"
+				onClick={() => console.log("Download")}
+			>
 				<DownloadIcon className="mr-2" />
 				Download und speichern
 			</Button>
@@ -184,7 +188,7 @@ export default function ProjectModalWrapper({
 
 	const customBackdrop = (
 		<div className="bg-primary absolute -z-99 flex h-full w-full items-center justify-center overflow-hidden">
-			<Background className="min-h-full min-w-full flex-shrink-0" />
+			<Background className="min-h-full min-w-full shrink-0" />
 		</div>
 	);
 

@@ -1,6 +1,6 @@
 import styleList from "@/config/resources/style";
 import VectorLayer from "ol/layer/Vector";
-import VectorSource from "ol/source/Vector";
+import { Vector as VectorSource } from "ol/source";
 import { Circle, Fill, Icon, Stroke, Style } from "ol/style";
 
 interface StyleConfig {
@@ -14,6 +14,11 @@ interface StyleConfig {
 	icon?: string;
 	iconScale?: number;
 }
+
+export const DEFAULT_STYLE = new Style({
+	stroke: new Stroke({ color: "#3b82f6", width: 2 }),
+	fill: new Fill({ color: "rgba(59, 130, 246, 0.1)" }),
+});
 
 export const getStyleConfig = (styleId: string): StyleConfig | null => {
 	const styleConfig = styleList.find((s) => s.styleId === styleId);
