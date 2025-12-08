@@ -1,7 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-	/* config options here */
 	images: {
 		remotePatterns: [
 			{
@@ -18,7 +17,14 @@ const nextConfig: NextConfig = {
 			},
 		],
 	},
-	turbopack: {},
+	turbopack: {
+		rules: {
+			"*.svg": {
+				loaders: ["@svgr/webpack"],
+				as: "*.js",
+			},
+		},
+	},
 	webpack(config) {
 		const fileLoaderRule = config.module.rules.find((rule: any) =>
 			rule.test?.test?.(".svg"),
