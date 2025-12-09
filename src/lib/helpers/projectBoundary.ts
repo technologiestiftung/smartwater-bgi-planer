@@ -1,6 +1,7 @@
 import { getLayerById } from "@/lib/helpers/ol";
 import { LAYER_IDS } from "@/types/shared";
-import { intersects } from "ol/extent";
+import booleanIntersects from "@turf/boolean-intersects";
+import { GeoJSON } from "ol/format";
 import VectorLayer from "ol/layer/Vector.js";
 import type Map from "ol/Map.js";
 import { Vector as VectorSource } from "ol/source.js";
@@ -48,18 +49,21 @@ export const performProjectBoundaryIntersection = (map: Map | null) => {
 
 	planningSource.clear();
 
+	const format = new GeoJSON();
+
 	rabimoLayer.getSource()!.forEachFeature((rabimoFeature) => {
 		const rabimoGeometry = rabimoFeature.getGeometry();
 		if (!rabimoGeometry) return;
+
+		const rabimoGeoJSON = format.writeFeatureObject(rabimoFeature);
 
 		const intersectsAny = boundaryFeatures.some((boundaryFeature) => {
 			const drawnGeometry = boundaryFeature.getGeometry();
 			if (!drawnGeometry) return false;
 
-			return (
-				intersects(drawnGeometry.getExtent(), rabimoGeometry.getExtent()) &&
-				drawnGeometry.intersectsExtent(rabimoGeometry.getExtent())
-			);
+			const boundaryGeoJSON = format.writeFeatureObject(boundaryFeature);
+
+			return booleanIntersects(rabimoGeoJSON, boundaryGeoJSON);
 		});
 
 		if (intersectsAny) {
