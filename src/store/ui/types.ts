@@ -10,6 +10,8 @@ export interface UiState {
 	isBlockAreaSelecting: boolean;
 	isDrawingNote: boolean;
 	isAdditionalLayerTreeVisible: boolean;
+	showUploadAlert: boolean;
+	uploadedFiles: File[];
 	// Module navigation state
 	moduleCurrentSectionId: SectionId;
 	moduleQuestionIndices: Record<SectionId, number>;
@@ -32,6 +34,8 @@ export interface UiActions {
 	setIsDrawingNote: (isDrawing: boolean) => void;
 	resetDrawInteractions: () => void;
 	setIsAdditionalLayerTreeVisible: (isVisible: boolean) => void;
+	setShowUploadAlert: (show: boolean) => void;
+	setUploadedFiles: (files: File[]) => void;
 	// Module navigation actions
 	setModuleCurrentSection: (sectionId: SectionId) => void;
 	setModuleQuestionIndex: (sectionId: SectionId, index: number) => void;

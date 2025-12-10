@@ -11,6 +11,8 @@ const initialState: UiState = {
 	isBlockAreaSelecting: false,
 	isDrawingNote: false,
 	isAdditionalLayerTreeVisible: false,
+	showUploadAlert: false,
+	uploadedFiles: [],
 	moduleCurrentSectionId: "heavyRain",
 	moduleQuestionIndices: {
 		heavyRain: 0,
@@ -44,6 +46,8 @@ export const useUiStore = create<UiState & UiActions>((set, get) => ({
 		}),
 	setIsAdditionalLayerTreeVisible: (isVisible) =>
 		set({ isAdditionalLayerTreeVisible: isVisible }),
+	setShowUploadAlert: (show) => set({ showUploadAlert: show }),
+	setUploadedFiles: (files) => set({ uploadedFiles: files }),
 	// Module navigation actions
 	setModuleCurrentSection: (sectionId) =>
 		set({ moduleCurrentSectionId: sectionId }),

@@ -35,11 +35,6 @@ const LayerInitializer: FC = () => {
 			return;
 		}
 
-		console.log(
-			"[LayerInitializer] initialConfig has changed::",
-			initialConfig,
-		);
-
 		const newManagedLayersMap = new Map<string, ManagedLayer>();
 		const drawLayerIdsForInit = getDrawLayerIds(initialConfig);
 

@@ -1,25 +1,25 @@
 "use client";
 
 import { FileUploadZone } from "@/components/FileUpload/FileUploadZone";
+import ProjectUploader, {
+	handleProjectFilesUpload,
+} from "@/components/ProjectControls/ProjectUploader/ProjectUploader";
 import { Button } from "@/components/ui/button";
 import { CarouselWithIndicators } from "@/components/ui/carousel-with-indicators";
 import Funding from "@/logos/gdb_logo.svg";
-import SWLogo from "@/logos/SWLogo.svg";
 import SmartWaterLogo from "@/logos/SmartWater-Logo.svg";
-import {
-	GithubLogoIcon,
-	PlusSquareIcon,
-	UploadIcon,
-} from "@phosphor-icons/react";
-import Link from "next/link";
-import { useState, useEffect } from "react";
+import SWLogo from "@/logos/SWLogo.svg";
 import { useProjectsStore } from "@/store/projects";
+import { useUiStore } from "@/store/ui";
+import { GithubLogoIcon, PlusSquareIcon } from "@phosphor-icons/react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Home() {
-	const [showUploadAlert, setShowUploadAlert] = useState(false);
 	const router = useRouter();
 	const { getProject, hasHydrated } = useProjectsStore();
+	const { showUploadAlert } = useUiStore();
 
 	useEffect(() => {
 		if (!hasHydrated) return;
@@ -39,11 +39,7 @@ export default function Home() {
 				<div className="Welcome-root flex flex-col gap-6">
 					<h1 className="">Herzlich willkommen beim BGI Planer</h1>
 					{showUploadAlert && (
-						<FileUploadZone
-							onFilesChange={(files: File[]) =>
-								console.log("Files uploaded:", files)
-							}
-						/>
+						<FileUploadZone onFilesChange={handleProjectFilesUpload} />
 					)}
 					<div className="flex flex-wrap items-center justify-between gap-2 md:gap-8">
 						<Button asChild className="grow">
@@ -52,15 +48,7 @@ export default function Home() {
 								<p>Projekt anlegen</p>
 							</Link>
 						</Button>
-						<Button
-							disabled
-							variant="outline"
-							className="grow"
-							onClick={() => setShowUploadAlert(!showUploadAlert)}
-						>
-							<UploadIcon className="mr-2" />
-							<p>Dateien importieren</p>
-						</Button>
+						<ProjectUploader />
 					</div>
 				</div>
 				<div className="Footer-root flex flex-col gap-4">

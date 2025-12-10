@@ -4,7 +4,6 @@ import { useLayersStore } from "@/store/layers";
 import Image from "next/image";
 import { FC, useCallback, useMemo } from "react";
 
-// eslint-disable-next-line complexity
 const BaselayerSwitch: FC = () => {
 	const layersMap = useLayersStore((state) => state.layers);
 	const setLayerVisibility = useLayersStore(
@@ -42,7 +41,6 @@ const BaselayerSwitch: FC = () => {
 
 	const previewSrc = inactiveBaseLayer.config?.service?.preview?.src || "";
 	const layerName = inactiveBaseLayer.config?.service?.name || "Base Layer";
-	const shouldLoadEager = inactiveBaseLayer.visibility;
 
 	return (
 		<button
@@ -56,7 +54,7 @@ const BaselayerSwitch: FC = () => {
 					alt={layerName}
 					fill
 					sizes="48px"
-					loading={shouldLoadEager ? "eager" : "lazy"}
+					loading="eager"
 					className="h-12 w-12 overflow-hidden rounded-sm object-cover"
 				/>
 			)}

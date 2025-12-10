@@ -52,19 +52,12 @@ const MapInitializer: FC = () => {
 
 	// Check localStorage config on hydration
 	useEffect(() => {
-		console.log("[MapInitializer CHECK] hasHydrated:", hasHydrated);
-		console.log("[MapInitializer CHECK] isConfigReady:", isConfigReady);
-
 		if (!hasHydrated) return;
 		if (isConfigReady) return;
-
-		console.log("[MapInitializer CHECK] config from store:", config);
 
 		const isValidConfig =
 			config?.layerConfig?.baselayer?.elements &&
 			config?.layerConfig?.subjectlayer?.elements;
-
-		console.log("[MapInitializer CHECK] isValidConfig:", isValidConfig);
 
 		if (!isValidConfig) {
 			console.log("[MapInitializer CHECK] No valid config, will trigger INIT");
@@ -73,21 +66,13 @@ const MapInitializer: FC = () => {
 	}, [hasHydrated, config, isConfigReady]);
 
 	useEffect(() => {
-		console.log("[MapInitializer INIT] hasHydrated:", hasHydrated);
-		console.log("[MapInitializer INIT] isConfigReady:", isConfigReady);
-		console.log("[MapInitializer INIT] shouldInitialize:", shouldInitialize);
-
 		if (!hasHydrated) {
-			console.log("[MapInitializer INIT] Waiting for hydration...");
 			return;
 		}
 
 		if (isConfigReady && !shouldInitialize) {
-			console.log("[MapInitializer INIT] Already ready and no re-init needed");
 			return;
 		}
-
-		console.log("[MapInitializer INIT] Starting initialization...");
 
 		const servicesMap = new Map(
 			services.map((service) => [service.id, service]),
@@ -116,12 +101,6 @@ const MapInitializer: FC = () => {
 			? structuredClone(config)
 			: structuredClone(mapConfig);
 
-		console.log(
-			"[MapInitializer INIT] Using config:",
-			config ? "from store" : "default",
-		);
-		console.log("[MapInitializer INIT] rawMapConfig:", rawMapConfig);
-
 		const enrichedBaseLayers = enrichAndTransformElements(
 			rawMapConfig.layerConfig.baselayer.elements,
 		) as LayerElement[];
@@ -147,12 +126,6 @@ const MapInitializer: FC = () => {
 			...flattenLayerElements(enrichedSubjectLayers),
 		];
 
-		console.log(
-			"[MapInitializer INIT] fullyEnrichedConfig:",
-			fullyEnrichedConfig,
-		);
-		console.log("[MapInitializer INIT] Setting stores...");
-
 		setConfig(fullyEnrichedConfig);
 		const currentInitialConfig = useMapStore.getState().initialConfig;
 		if (!currentInitialConfig) setInitialConfig(fullyEnrichedConfig);
@@ -160,8 +133,6 @@ const MapInitializer: FC = () => {
 		setFlattenedLayerElements(allBaseAndSubjectLayers);
 		setIsConfigReady(true);
 		setShouldInitialize(false);
-
-		console.log("[MapInitializer INIT] Initialization complete");
 	}, [
 		hasHydrated,
 		shouldInitialize,
