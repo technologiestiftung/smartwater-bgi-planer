@@ -10,6 +10,7 @@ import { useLayersStore, useMapStore } from "@/store";
 import dynamic from "next/dynamic";
 import { FC } from "react";
 import OpacityControl from "./Controls/OpacityControl";
+import MapFooter from "./MapFooter/MapFooter";
 
 const LazyOlMap = dynamic(() => import("./OlMap/OlMap"), {
 	ssr: false,
@@ -64,6 +65,7 @@ const Map: FC = () => {
 					}}
 				/>
 				<OpacityControl />
+				<MapFooter />
 			</LazyOlMap>
 		</div>
 	);

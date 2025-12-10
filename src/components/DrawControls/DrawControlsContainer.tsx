@@ -77,6 +77,6 @@ export default function DrawControlsContainer({}: DrawControlsContainerProps) {
 	if (!controls) return null;
 
 	return (
-		<div className="absolute right-4 bottom-4 z-48 flex gap-2">{controls}</div>
+		<div className="absolute right-4 bottom-8 z-48 flex gap-2">{controls}</div>
 	);
 }
