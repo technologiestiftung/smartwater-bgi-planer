@@ -21,7 +21,7 @@ export const steps: StepConfig[] = [
 		title: "Starkregen",
 		questions: [
 			"handlungsbedarfe_module_introduction",
-			"starter_question",
+			"heavyRain_starter_question",
 			"heavy_rain_flow_velocity",
 			"heavy_rain_water_level",
 			"heavy_rain_fire_department_incidents",
@@ -32,6 +32,7 @@ export const steps: StepConfig[] = [
 		icon: <ThermometerHotIcon />,
 		title: "Hitze",
 		questions: [
+			"heat_starter_question",
 			"heat_thermal_load_day",
 			"heat_thermal_load_night",
 			"heat_vulnerable_areas",
@@ -45,6 +46,7 @@ export const steps: StepConfig[] = [
 		icon: <RoadHorizonIcon />,
 		title: "Versiegelung",
 		questions: [
+			"sealing_starter_question",
 			"sealing_block_areas_high",
 			"sealing_green_volume_low",
 			"sealing_small_scale_high",
@@ -54,13 +56,17 @@ export const steps: StepConfig[] = [
 		id: "waterBalance",
 		icon: <DropIcon />,
 		title: "Wasserhaushalt",
-		questions: ["water_balance_natural_deviation"],
+		questions: [
+			"waterBalance_starter_question",
+			"water_balance_natural_deviation",
+		],
 	},
 	{
 		id: "waterProtection",
 		icon: <FishIcon />,
 		title: "Gewässerschutz",
 		questions: [
+			"waterProtection_starter_question",
 			"water_protection_sewer_type",
 			"water_protection_decoupling_requirements",
 			"water_protection_small_waters_demand",

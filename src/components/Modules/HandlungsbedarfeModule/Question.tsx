@@ -50,7 +50,7 @@ const Question: FC<QuestionProps> = ({
 				)}
 
 				<div className="pt-4">
-					{questionConfig.id === "starter_question" ||
+					{questionConfig.id.includes("starter_question") ||
 					questionConfig.isIntro ? (
 						<>
 							<Button onClick={handleConfirm} disabled={!hasProjectBoundary}>

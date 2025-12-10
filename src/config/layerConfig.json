@@ -31,7 +31,7 @@
 		"moduleName": "Handlungsbedarfe"
 	},
 	{
-		"id": "starter_question",
+		"id": "heavyRain_starter_question",
 		"name": "",
 		"question": "Durch Überflutungen in Folge von Starkregen kann es zu Gefährdungen von Lebewesen, Gebäuden, Infrastruktur und weiteren Sachwerten kommen.",
 		"description": "(Um dem vorzubeugen, können bestimmte Bereiche des Quartiers von einer Bebauung oder einer vulnerablen Nutzung freigehalten bzw. Maßnahmen zur Überflutungsvorsorge implementiert werden.)",
@@ -97,6 +97,18 @@
 			"ua_srhk:b_srhk_feuerwehreinsaetze_pkt"
 		],
 		"legendSrc": "/legends/1s3.svg"
+	},
+	{
+		"id": "heat_starter_question",
+		"name": "",
+		"question": "Hitzebelastung kann zur gesundheitlichen Gefährdung besonders von Kindern, älteren und chronisch kranken Menschen führen.",
+		"description": "Um dem vorzubeugen, sind Maßnahmen zur Verbesserung des Mikroklimas sowie zur Freihaltung der Kaltluftbahnen notwendig.",
+		"drawLayerId": "",
+		"canDrawPolygons": false,
+		"canDrawBTF": false,
+		"canDrawNotes": false,
+		"visibleLayerIds": ["project_boundary", "project_new_development"],
+		"legendSrc": ""
 	},
 	{
 		"id": "heat_thermal_load_day",
@@ -191,6 +203,18 @@
 		"legendSrc": "/legends/1h5.svg"
 	},
 	{
+		"id": "sealing_starter_question",
+		"name": "",
+		"question": "Eine hohe Versiegelung führt zum Verlust der natürlichen Bodenfunktionen und ist dadurch ein zentrales Umweltproblem. Versiegelung verstärkt das Überflutungsrisiko, die Hitzebelastung, die Abweichung vom naturnahen Wasserhaushalt sowie die Gewässerbelastung und wirkt sich negativ auf die Biodiversität aus.",
+		"description": "Um dem vorzubeugen ist ein behutsamer Umgang mit der Flächenversiegelung sowie Maßnahmen zur Entsiegelung notwendig.",
+		"drawLayerId": "",
+		"canDrawPolygons": false,
+		"canDrawBTF": false,
+		"canDrawNotes": false,
+		"visibleLayerIds": ["project_boundary", "project_new_development"],
+		"legendSrc": ""
+	},
+	{
 		"id": "sealing_block_areas_high",
 		"name": "Versiegelung der Blockteilflächen",
 		"question": "Wo liegen Bereiche, in denen der Versiegelungsgrad den Durchschnitt um mehr als 20 % überschreitet?",
@@ -227,6 +251,18 @@
 		"legendSrc": "/legends/1v3.svg"
 	},
 	{
+		"id": "waterBalance_starter_question",
+		"name": "",
+		"question": "Saubere Gewässer erhöhen die Aufenthaltsqualität unserer Stadt und bieten einen wichtigen Lebensraum für Flora und Fauna. Außerdem sind sie essenziell für den Berliner Wasserkreislauf und damit für die Trinkwasserversorgung.",
+		"description": "Projekte zur Regenwasserbewirtschaftung können die Kanalisation entlasten (Abkopplung) und sich damit positiv auf die aufnehmenden Fließgewässer auswirken oder gezielt Kleingewässer stützen.",
+		"drawLayerId": "",
+		"canDrawPolygons": false,
+		"canDrawBTF": false,
+		"canDrawNotes": false,
+		"visibleLayerIds": ["project_boundary", "project_new_development"],
+		"legendSrc": ""
+	},
+	{
 		"id": "water_balance_natural_deviation",
 		"name": "Komponenten des Wasserhaushalts",
 		"question": "Wo liegen die Blockteilflächen, in denen der Wasserhaushalt stärker als 20 % vom natürlichen Wasserhaushalt abweicht? (Notieren Sie, welche Komponente besonders abweicht mithilfe einer Attributabfrage in Karte zu Delta W (Evaporation, Versickerung und Oberflächenabfluss)).",
@@ -237,6 +273,18 @@
 		"canDrawNotes": true,
 		"visibleLayerIds": ["ua_wasserhaushalt_2022:f_deltaw_2022"],
 		"legendSrc": "/legends/1w1.svg"
+	},
+	{
+		"id": "waterProtection_starter_question",
+		"name": "",
+		"question": "Ein veränderter Wasserhaushalt spiegelt die Herausforderungen in Bezug auf Hitzebelastung, Überflutungsrisiko, Versiegelung und Gewässerbelastung wieder.",
+		"description": "Ziel ist es durch die Planungen den natürlichen Zustand möglichst nah zu erreichen. In der Regel muss dafür v.a. die Verdunstungskomponente (Evaporation) gestärkt werden.",
+		"drawLayerId": "",
+		"canDrawPolygons": false,
+		"canDrawBTF": false,
+		"canDrawNotes": false,
+		"visibleLayerIds": ["project_boundary", "project_new_development"],
+		"legendSrc": ""
 	},
 	{
 		"id": "water_protection_sewer_type",
