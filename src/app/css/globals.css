@@ -86,6 +86,12 @@
 		font-size: 3rem; /* 48px */
 		line-height: 3.5rem; /* 56px */
 	}
+	@media screen and (max-width: 768px) {
+		h1 {
+			font-size: 1.5rem; /* 24px */
+			line-height: 2rem; /* 32px */
+		}
+	}
 
 	h2 {
 		font-weight: 700;
