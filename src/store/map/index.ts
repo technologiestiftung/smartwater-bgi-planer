@@ -59,7 +59,7 @@ export const useMapStore = create<MapState & MapActions>()(
 						coordinates: null,
 						accuracy: undefined,
 					},
-					hasHydrated: false,
+					hasHydrated: true,
 					isInitializing: false,
 				}),
 		}),
