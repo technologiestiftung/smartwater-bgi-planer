@@ -50,11 +50,14 @@ const Question: FC<QuestionProps> = ({
 				)}
 
 				<div className="pt-4">
-					{questionConfig.id === "starter_question" ? (
+					{questionConfig.id === "starter_question" ||
+					questionConfig.isIntro ? (
 						<>
 							<Button onClick={handleConfirm} disabled={!hasProjectBoundary}>
 								<PlayIcon />
-								Checkfragen starten
+								{questionConfig.isIntro
+									? `Modul ${questionConfig.moduleNumber} anfangen`
+									: "Checkfragen starten"}
 							</Button>
 							{/* {!hasProjectBoundary && (
 								<div className="border-primary text-red mt-4 rounded-sm border border-dashed bg-red-50 p-2 text-sm">

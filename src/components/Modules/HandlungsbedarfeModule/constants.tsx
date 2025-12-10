@@ -20,6 +20,7 @@ export const steps: StepConfig[] = [
 		icon: <CloudRainIcon />,
 		title: "Starkregen",
 		questions: [
+			"handlungsbedarfe_module_introduction",
 			"starter_question",
 			"heavy_rain_flow_velocity",
 			"heavy_rain_water_level",

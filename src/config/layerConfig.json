@@ -16,6 +16,21 @@
 		"visibleLayerIds": ["project_new_development"]
 	},
 	{
+		"id": "handlungsbedarfe_module_introduction",
+		"name": "",
+		"question": "Die Herausforderungen im Gebiet in Bezug auf Klimafolgen zu kennen, ist eine wichtige Voraussetzung für die Priorisierung von Maßnahmen. Zu Beginn sollen daher Handlungsbedarfe ermittelt werden, die auf aktuelle und künftige Problemlagen hinweisen. Während die bekanntesten Folgen des Klimawandels Hitze und Starkregen sind, ist hier auch das Thema Versiegelung separat aufgenommen, da es die Auswirkungen von Hitze und Starkregen unmittelbar verstärkt. Darüber hinaus werden Handlungsbedarfe im Bereich Gewässerschutz aufgezeigt, hier bezogen auf aufnehmende Fließgewässer im Bereich der Mischkanalisation und Kleingewässer. Der Wasserhaushalt ist ein wichtiger Querschnittsindikator für diese vier Themen.",
+		"description": "",
+		"drawLayerId": "",
+		"canDrawPolygons": false,
+		"canDrawBTF": false,
+		"canDrawNotes": false,
+		"visibleLayerIds": ["project_boundary", "project_new_development"],
+		"legendSrc": "",
+		"isIntro": true,
+		"moduleNumber": 1,
+		"moduleName": "Handlungsbedarfe"
+	},
+	{
 		"id": "starter_question",
 		"name": "",
 		"question": "Durch Überflutungen in Folge von Starkregen kann es zu Gefährdungen von Lebewesen, Gebäuden, Infrastruktur und weiteren Sachwerten kommen.",
