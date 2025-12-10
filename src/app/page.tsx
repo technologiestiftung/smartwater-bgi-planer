@@ -38,6 +38,7 @@ export default function Home() {
 				</div>
 				<div className="Welcome-root flex flex-col gap-6">
 					<h1 className="">Herzlich willkommen beim BGI Planer</h1>
+					<h2 className="lg:hidden">Mobile Version</h2>
 					<p className="text-muted-foreground lg:hidden">
 						Der BGI Planer ist nur für die Nutzung auf dem Desktop vorgesehen,
 						damit alle Funktionen vollumfänglich genutzt werden können.
