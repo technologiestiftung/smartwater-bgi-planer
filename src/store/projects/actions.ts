@@ -1,5 +1,6 @@
 import { useAnswersStore } from "../answers";
 import { useFilesStore } from "../files";
+import { useMapStore } from "../map";
 import { useUiStore } from "../ui";
 import { Project, ProjectsState } from "./types";
 
@@ -45,6 +46,7 @@ export const createDeleteProject = (set: SetState, get: GetState) => {
 		// Reset all answers and module state
 		useAnswersStore.getState().clearAnswers();
 		useUiStore.getState().resetModuleState();
+		useMapStore.getState().resetMapState();
 	};
 };
 

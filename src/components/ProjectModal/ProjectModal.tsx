@@ -1,22 +1,22 @@
 "use client";
+import { useConfirmDialog } from "@/components/ConfirmDialog";
 import { PageModal } from "@/components/Modal";
 import ProjectModalContent, {
 	ProjectFormData,
 } from "@/components/ProjectModal/ProjectModalContent";
 import { Button } from "@/components/ui/button";
-import { useConfirmDialog } from "@/components/ConfirmDialog";
 import Background from "@/images/background.svg";
-import {
-	DownloadIcon,
-	TrashIcon,
-	XIcon,
-	FloppyDiskBackIcon,
-	ArrowLeftIcon,
-} from "@phosphor-icons/react";
-import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
 import { useProjectsStore } from "@/store/projects";
 import { UseCase } from "@/store/projects/types";
+import {
+	ArrowLeftIcon,
+	DownloadIcon,
+	FloppyDiskBackIcon,
+	TrashIcon,
+	XIcon,
+} from "@phosphor-icons/react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 interface ProjectModalWrapperProps {
 	mode: "new" | "edit";

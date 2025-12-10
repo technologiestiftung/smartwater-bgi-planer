@@ -9,8 +9,10 @@ import { FC, useEffect } from "react";
 import { useWmtsCapabilities } from "./hooks/useWmtsCapabilities";
 
 const LayerInitializer: FC = () => {
-	const config = useMapStore((state) => state.config);
+	const initialConfig = useMapStore((state) => state.initialConfig);
+
 	const map = useMapStore((state) => state.map);
+
 	const setMapReady = useMapStore((state) => state.setMapReady);
 	const setMapError = useMapStore((state) => state.setMapError);
 	const setLayersInStore = useLayersStore((state) => state.setLayers);
@@ -19,14 +21,13 @@ const LayerInitializer: FC = () => {
 	);
 
 	const { wmtsCapabilities, capabilitiesLoaded } = useWmtsCapabilities(
-		config,
+		initialConfig,
 		flattenedLayerElements,
 	);
 
-	// eslint-disable-next-line complexity
 	useEffect(() => {
 		if (
-			!config ||
+			!initialConfig ||
 			!map ||
 			!capabilitiesLoaded ||
 			flattenedLayerElements.length === 0
@@ -34,8 +35,13 @@ const LayerInitializer: FC = () => {
 			return;
 		}
 
+		console.log(
+			"[LayerInitializer] initialConfig has changed::",
+			initialConfig,
+		);
+
 		const newManagedLayersMap = new Map<string, ManagedLayer>();
-		const drawLayerIdsForInit = getDrawLayerIds(config);
+		const drawLayerIdsForInit = getDrawLayerIds(initialConfig);
 
 		flattenedLayerElements.forEach((layerConfig, index) => {
 			const { service: serviceConfig } = layerConfig;
@@ -53,11 +59,11 @@ const LayerInitializer: FC = () => {
 				error,
 			} = createLayerByType(serviceConfig, {
 				wmtsCapabilities,
-				config,
+				config: initialConfig,
 			});
 
 			if (olLayer) {
-				const isBaseLayer = config.layerConfig.baselayer.elements.some(
+				const isBaseLayer = initialConfig.layerConfig.baselayer.elements.some(
 					(baseEl) => baseEl.id === layerConfig.id,
 				);
 				const layerType: "base" | "subject" = isBaseLayer ? "base" : "subject";
@@ -145,7 +151,7 @@ const LayerInitializer: FC = () => {
 			setMapReady(false);
 		};
 	}, [
-		config,
+		initialConfig,
 		map,
 		capabilitiesLoaded,
 		flattenedLayerElements,
