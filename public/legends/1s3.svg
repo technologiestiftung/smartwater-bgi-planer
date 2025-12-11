@@ -1,15 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="426" height="60" viewBox="0 0 426 60">
+<svg xmlns="http://www.w3.org/2000/svg" width="426" height="80" viewBox="0 0 426 60">
   <defs>
     <style>
       @import url("https://fonts.cdnfonts.com/css/arthouse-owned");
       text { font-family: "Arthouse Owned", Arial, sans-serif; }
     </style>
   </defs>
-  <rect width="100%" height="100%" fill="transparent" />
+  <rect width="100%" height="100%" fill="transparent"/>
   <rect x="16" y="12.0" width="24" height="16" rx="2" ry="2" fill="#F5DCD9" stroke="#0C4C38" stroke-width="1"/>
   <text x="56" y="25" font-size="14" fill="#0C4C38">1</text>
   <rect x="96.4" y="12.0" width="24" height="16" rx="2" ry="2" fill="#DC98B5" stroke="#0C4C38" stroke-width="1"/>
   <text x="136.4" y="25" font-size="14" fill="#0C4C38">2 - 5</text>
   <rect x="210.4" y="12.0" width="24" height="16" rx="2" ry="2" fill="#A55FA7" stroke="#0C4C38" stroke-width="1"/>
   <text x="250.4" y="25" font-size="14" fill="#0C4C38">>=6</text>
+  <rect x="16" y="56.0" width="8" height="8" rx="4" ry="4" fill="#d02c3b" stroke="#0C4C38" stroke-width="1"/>
+  <text x="40" y="65" font-size="14" fill="#0C4C38">Feuerwehreins&#228;tze</text>
 </svg>

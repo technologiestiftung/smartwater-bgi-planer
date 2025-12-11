@@ -29,6 +29,10 @@ export function SectionContent({ sectionId }: SectionContentProps) {
 		[layerConfig, currentQuestionId],
 	);
 
+	const title = currentQuestionConfig?.isIntro
+		? currentQuestionConfig?.moduleName
+		: currentStep?.title;
+
 	const handleAnswer = useCallback(
 		(answer: boolean) => {
 			setAnswer(currentQuestionId, answer);
@@ -45,7 +49,7 @@ export function SectionContent({ sectionId }: SectionContentProps) {
 	if (!currentQuestionConfig) {
 		return (
 			<div className="h-full">
-				<h3 className="text-primary">{currentStep?.title}</h3>
+				<h3 className="text-primary">{title}</h3>
 				<Spinner className="mt-6" />
 			</div>
 		);
@@ -53,7 +57,7 @@ export function SectionContent({ sectionId }: SectionContentProps) {
 
 	return (
 		<div className="flex h-full flex-col">
-			<h3 className="text-primary shrink-0">{currentStep?.title}</h3>
+			<h3 className="text-primary shrink-0">{title}</h3>
 			<Question
 				key={currentQuestionConfig.id}
 				questionConfig={currentQuestionConfig}

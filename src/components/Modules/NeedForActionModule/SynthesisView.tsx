@@ -41,7 +41,11 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 			const stepQuestions = lastActiveStep?.questions || [];
 
 			stepQuestions.forEach((questionId) => {
-				if (questionId === "starter_question") return;
+				if (
+					questionId.includes("starter_question") ||
+					questionId.includes("module_introduction")
+				)
+					return;
 				const questionConfig = layerConfig.find(
 					(config) => config.id === questionId,
 				);
@@ -128,7 +132,11 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 					});
 
 					const sectionAnswers = sectionQuestions
-						.filter((q) => q !== "starter_question")
+						.filter(
+							(q) =>
+								!q.includes("starter_question") &&
+								!q.includes("module_introduction"),
+						)
 						.map((questionId) => answers[questionId]);
 
 					const allTrue =
@@ -172,7 +180,11 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 							</div>
 							<div className="flex flex-wrap gap-2">
 								{sectionQuestions.map((questionId) => {
-									if (questionId === "starter_question") return null;
+									if (
+										questionId.includes("starter_question") ||
+										questionId.includes("module_introduction")
+									)
+										return null;
 									const answer = answers[questionId];
 									const questionConfig = layerConfig.find(
 										(config) => config.id === questionId,
