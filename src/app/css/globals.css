@@ -107,12 +107,12 @@
 
 	@media screen and (max-width: 768px) {
 		h1 {
-			font-size: 2rem; /* 32px */
-			line-height: 2.5rem; /* 40px */
+			font-size: 2rem;
+			line-height: 2.5rem;
 		}
 		h2 {
-			font-size: 1.2rem; /* 19.2px */
-			line-height: 1.5rem; /* 24px */
+			font-size: 1.2rem;
+			line-height: 1.5rem;
 		}
 	}
 
