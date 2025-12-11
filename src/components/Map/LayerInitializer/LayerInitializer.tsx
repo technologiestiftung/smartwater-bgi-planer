@@ -5,14 +5,28 @@ import { getDrawLayerIds } from "@/lib/helpers/ol";
 import { useLayersStore } from "@/store/layers";
 import { ManagedLayer } from "@/store/layers/types";
 import { useMapStore } from "@/store/map";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useRef } from "react";
 import { useWmtsCapabilities } from "./hooks/useWmtsCapabilities";
+
+const Z_INDEX = {
+	BASE: 0,
+	SUBJECT: 100,
+	DRAW: 1000,
+} as const;
+
+function calculateZIndex(
+	isBaseLayer: boolean,
+	isDrawLayer: boolean,
+	index: number,
+): number {
+	if (isBaseLayer) return Z_INDEX.BASE + index;
+	if (isDrawLayer) return Z_INDEX.DRAW + index;
+	return Z_INDEX.SUBJECT + index;
+}
 
 const LayerInitializer: FC = () => {
 	const initialConfig = useMapStore((state) => state.initialConfig);
-
 	const map = useMapStore((state) => state.map);
-
 	const setMapReady = useMapStore((state) => state.setMapReady);
 	const setMapError = useMapStore((state) => state.setMapError);
 	const setLayersInStore = useLayersStore((state) => state.setLayers);
@@ -25,23 +39,26 @@ const LayerInitializer: FC = () => {
 		flattenedLayerElements,
 	);
 
+	const hasInitialized = useRef(false);
+
 	useEffect(() => {
 		if (
 			!initialConfig ||
 			!map ||
 			!capabilitiesLoaded ||
-			flattenedLayerElements.length === 0
+			flattenedLayerElements.length === 0 ||
+			hasInitialized.current
 		) {
 			return;
 		}
 
-		console.log(
-			"[LayerInitializer] initialConfig has changed::",
-			initialConfig,
-		);
+		hasInitialized.current = true;
 
 		const newManagedLayersMap = new Map<string, ManagedLayer>();
-		const drawLayerIdsForInit = getDrawLayerIds(initialConfig);
+		const drawLayerIds = getDrawLayerIds(initialConfig);
+		const baseLayerIds = new Set(
+			initialConfig.layerConfig.baselayer.elements.map((el) => el.id),
+		);
 
 		flattenedLayerElements.forEach((layerConfig, index) => {
 			const { service: serviceConfig } = layerConfig;
@@ -62,47 +79,7 @@ const LayerInitializer: FC = () => {
 				config: initialConfig,
 			});
 
-			if (olLayer) {
-				const isBaseLayer = initialConfig.layerConfig.baselayer.elements.some(
-					(baseEl) => baseEl.id === layerConfig.id,
-				);
-				const layerType: "base" | "subject" = isBaseLayer ? "base" : "subject";
-
-				const isDrawLayer = drawLayerIdsForInit.includes(layerConfig.id);
-
-				// Explicit zIndex values to ensure proper layer ordering:
-				let zIndex: number;
-				if (isBaseLayer) {
-					zIndex = index;
-				} else if (isDrawLayer) {
-					zIndex = 1000 + index;
-				} else {
-					zIndex = 100 + index;
-				}
-
-				olLayer.setZIndex(zIndex);
-				olLayer.setVisible(layerConfig.visibility);
-				olLayer.setOpacity(1);
-				olLayer.set("id", layerConfig.id);
-				const managedLayer: ManagedLayer = {
-					id: layerConfig.id,
-					config: layerConfig,
-					olLayer: olLayer,
-					status: status,
-					visibility: layerConfig.visibility,
-					opacity: 1,
-					zIndex: zIndex,
-					layerType: layerType,
-					error: error,
-				};
-
-				newManagedLayersMap.set(layerConfig.id, managedLayer);
-				map.addLayer(olLayer);
-			} else {
-				console.error(
-					`[LayerInitializer] Failed to create layer ${layerConfig.id}:`,
-					error,
-				);
+			if (!olLayer) {
 				newManagedLayersMap.set(layerConfig.id, {
 					id: layerConfig.id,
 					config: layerConfig,
@@ -114,7 +91,32 @@ const LayerInitializer: FC = () => {
 					layerType: "subject",
 					error: error || "Layer creation failed",
 				});
+				return;
 			}
+
+			const isBaseLayer = baseLayerIds.has(layerConfig.id);
+			const isDrawLayer = drawLayerIds.includes(layerConfig.id);
+			const zIndex = calculateZIndex(isBaseLayer, isDrawLayer, index);
+
+			olLayer.setZIndex(zIndex);
+			olLayer.setVisible(layerConfig.visibility);
+			olLayer.setOpacity(1);
+			olLayer.set("id", layerConfig.id);
+
+			const managedLayer: ManagedLayer = {
+				id: layerConfig.id,
+				config: layerConfig,
+				olLayer,
+				status,
+				visibility: layerConfig.visibility,
+				opacity: 1,
+				zIndex,
+				layerType: isBaseLayer ? "base" : "subject",
+				error,
+			};
+
+			newManagedLayersMap.set(layerConfig.id, managedLayer);
+			map.addLayer(olLayer);
 		});
 
 		setLayersInStore(newManagedLayersMap);
@@ -122,33 +124,33 @@ const LayerInitializer: FC = () => {
 		const baseLayers = Array.from(newManagedLayersMap.values()).filter(
 			(layer) => layer.layerType === "base",
 		);
-		const hasAnyLoadedBaseLayers = baseLayers.some(
-			(layer) => layer.status === "loaded",
-		);
-		const hasBasemapErrors = baseLayers.some(
-			(layer) => layer.status === "error",
-		);
 
-		if (baseLayers.length > 0 && !hasAnyLoadedBaseLayers && hasBasemapErrors) {
-			const firstError = baseLayers.find((layer) => layer.error)?.error;
-			setMapError(
-				true,
-				firstError || "Hintergrundkarte konnte nicht geladen werden",
+		if (baseLayers.length > 0) {
+			const hasLoadedBase = baseLayers.some(
+				(layer) => layer.status === "loaded",
 			);
-			setMapReady(false);
-		} else if (hasAnyLoadedBaseLayers) {
-			setMapError(false);
-			setMapReady(true);
+			const hasErrorBase = baseLayers.some((layer) => layer.status === "error");
+
+			if (!hasLoadedBase && hasErrorBase) {
+				const firstError = baseLayers.find((layer) => layer.error)?.error;
+				setMapError(
+					true,
+					firstError || "Hintergrundkarte konnte nicht geladen werden",
+				);
+				setMapReady(false);
+			} else if (hasLoadedBase) {
+				setMapError(false);
+				setMapReady(true);
+			}
 		}
 
 		return () => {
 			newManagedLayersMap.forEach((managedLayer) => {
-				if (managedLayer.olLayer) {
-					map.removeLayer(managedLayer.olLayer);
-				}
+				if (managedLayer.olLayer) map.removeLayer(managedLayer.olLayer);
 			});
 			setLayersInStore(new Map());
 			setMapReady(false);
+			hasInitialized.current = false;
 		};
 	}, [
 		initialConfig,

@@ -14,7 +14,7 @@ export function ConfirmDialogFooter({
 	return (
 		<div
 			className={cn(
-				"ConfirmDialogFooter-root border-muted flex flex-shrink-0 items-center justify-end gap-2 border-t p-3",
+				"ConfirmDialogFooter-root border-muted flex shrink-0 items-center justify-end gap-2 border-t p-3",
 				className,
 			)}
 		>

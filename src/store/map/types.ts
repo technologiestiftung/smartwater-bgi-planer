@@ -36,17 +36,10 @@ export interface MapConfig {
 	layerConfig: LayerConfig;
 }
 
-export interface MapView {
-	center: number[];
-	zoomLevel: number;
-}
-
 export interface MapState {
 	config: MapConfig | null;
 	initialConfig: MapConfig | null;
 	isConfigReady: boolean;
-	shouldInitialize: boolean;
-	mapView: MapView | null;
 	map: OLMap | null;
 	isReady: boolean;
 	hasError: boolean;
@@ -56,17 +49,13 @@ export interface MapState {
 		accuracy?: number;
 	};
 	hasHydrated: boolean;
-	isInitializing: boolean;
 }
 
 export interface MapActions {
 	setConfig: (config: MapConfig) => void;
 	setInitialConfig: (config: MapConfig) => void;
 	setIsConfigReady: (ready: boolean) => void;
-	setShouldInitialize: (shouldInitialize: boolean) => void;
-
-	setMapView: (mapView: MapView) => void;
-	updateMapView: (updates: Partial<MapView>) => void;
+	updateConfig: (updates: Partial<MapViewConfig>) => void;
 	populateMap: (map: OLMap) => void;
 	removeMap: () => void;
 	setMapReady: (ready: boolean) => void;
@@ -76,6 +65,5 @@ export interface MapActions {
 		accuracy?: number;
 	}) => void;
 	setHasHydrated: (state: boolean) => void;
-	setIsInitializing: (state: boolean) => void;
 	resetMapState: () => void;
 }

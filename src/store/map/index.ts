@@ -1,4 +1,5 @@
 import { MapActions, MapState } from "@/store/map/types";
+import { produce } from "immer";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -7,8 +8,6 @@ const initialState: MapState = {
 	config: null,
 	initialConfig: null,
 	isConfigReady: false,
-	shouldInitialize: false,
-	mapView: null,
 	isReady: false,
 	hasError: false,
 	errorMessage: null,
@@ -17,7 +16,6 @@ const initialState: MapState = {
 		accuracy: undefined,
 	},
 	hasHydrated: false,
-	isInitializing: false,
 };
 
 export const useMapStore = create<MapState & MapActions>()(
@@ -27,15 +25,14 @@ export const useMapStore = create<MapState & MapActions>()(
 			setConfig: (config) => set({ config }),
 			setInitialConfig: (initialConfig) => set({ initialConfig }),
 			setIsConfigReady: (ready) => set({ isConfigReady: ready }),
-			setShouldInitialize: (should) => set({ shouldInitialize: should }),
-
-			setMapView: (mapView) => set({ mapView }),
-			updateMapView: (updates) =>
-				set((state) => ({
-					mapView: state.mapView
-						? { ...state.mapView, ...updates }
-						: { center: [0, 0], zoomLevel: 1, ...updates },
-				})),
+			updateConfig: (updates) =>
+				set(
+					produce((state) => {
+						if (!state.config) return;
+						const mapView = state.config.portalConfig.map.mapView;
+						Object.assign(mapView, updates);
+					}),
+				),
 			populateMap: (map) => set({ map }),
 			removeMap: () => set({ map: null, isReady: false }),
 			setMapReady: (ready) => set({ isReady: ready }),
@@ -43,35 +40,19 @@ export const useMapStore = create<MapState & MapActions>()(
 				set({ hasError, errorMessage: errorMessage || null }),
 			setUserLocation: (userLocation) => set({ userLocation }),
 			setHasHydrated: (state) => set({ hasHydrated: state }),
-			setIsInitializing: (state) => set({ isInitializing: state }),
 			resetMapState: () =>
 				set({
-					map: null,
-					config: null,
-					initialConfig: null,
-					isConfigReady: false,
-					shouldInitialize: false,
-					mapView: null,
-					isReady: false,
-					hasError: false,
-					errorMessage: null,
-					userLocation: {
-						coordinates: null,
-						accuracy: undefined,
-					},
+					...initialState,
 					hasHydrated: true,
-					isInitializing: false,
 				}),
 		}),
 		{
 			name: "map-storage",
 			partialize: (state) => ({
 				config: state.config,
-				mapView: state.mapView,
 				userLocation: state.userLocation,
 			}),
 			onRehydrateStorage: () => (state) => {
-				console.log("[index] map state::", state);
 				state?.setHasHydrated(true);
 			},
 		},

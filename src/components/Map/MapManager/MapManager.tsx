@@ -6,7 +6,7 @@ import { FC, useEffect } from "react";
 interface MapManagerProps {}
 
 const MapManager: FC<MapManagerProps> = ({}) => {
-	const updateMapView = useMapStore((state) => state.updateMapView);
+	const updateConfig = useMapStore((state) => state.updateConfig);
 	const map = useMapStore((state) => state.map);
 
 	useEffect(() => {
@@ -22,10 +22,10 @@ const MapManager: FC<MapManagerProps> = ({}) => {
 				const newZoom = view.getZoom();
 
 				if (newCenter && newZoom !== undefined) {
-					updateMapView({
-						center: newCenter,
-						zoomLevel: newZoom,
-					});
+					// updateConfig({
+					// 	startCenter: newCenter,
+					// 	startZoomLevel: newZoom,
+					// });
 				}
 			}, 1000);
 		};
@@ -38,7 +38,7 @@ const MapManager: FC<MapManagerProps> = ({}) => {
 			view.un("change:center", handleViewChange);
 			view.un("change:resolution", handleViewChange);
 		};
-	}, [map, updateMapView]);
+	}, [map, updateConfig]);
 
 	return null;
 };
