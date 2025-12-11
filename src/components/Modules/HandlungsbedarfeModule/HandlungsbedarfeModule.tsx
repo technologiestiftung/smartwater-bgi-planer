@@ -48,7 +48,7 @@ function QuestionsContent({
 			(s) => s.id === "heavyRain",
 		)?.questions;
 		const currentQuestionId = heavyRainQuestions?.[currentQuestionIndex];
-		const isOnStarterQuestion = currentQuestionId === "starter_question";
+		const isOnStarterQuestion = currentQuestionId?.includes("starter_question");
 
 		setStepValidation("heavyRain", () => {
 			return !isOnStarterQuestion || hasProjectBoundary;

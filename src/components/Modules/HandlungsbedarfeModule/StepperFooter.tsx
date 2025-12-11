@@ -27,7 +27,7 @@ export function StepperFooter({
 		LAYER_IDS.PROJECT_BOUNDARY,
 	);
 
-	const isStarterQuestion = currentQuestionId === "starter_question";
+	const isStarterQuestion = currentQuestionId?.includes("starter_question");
 	const shouldDisableNext = isStarterQuestion && !hasProjectBoundary;
 
 	const handlePrevious = useCallback(() => {
