@@ -1,11 +1,13 @@
-import { feasibilitySteps } from "@/components/Modules/FeasibilityModule/constants";
-import { measurePlaningSteps } from "@/components/Modules/MeasurePlaningModule/constants";
-import { needForActionSteps } from "@/components/Modules/NeedForActionModule/constants";
+import { getModuleSteps } from "@/components/Modules/shared/moduleConfig";
 import { UiActions, UiState } from "@/store/ui/types";
 import { create } from "zustand";
 
 const getInitialModuleQuestionIndices = () => {
 	const indices: Record<string, number> = {};
+	const needForActionSteps = getModuleSteps("needForAction");
+	const feasibilitySteps = getModuleSteps("feasibility");
+	const measurePlaningSteps = getModuleSteps("measurePlaning");
+
 	[...needForActionSteps, ...feasibilitySteps, ...measurePlaningSteps].forEach(
 		(step) => {
 			indices[step.id] = 0;

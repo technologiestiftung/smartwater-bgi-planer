@@ -1,5 +1,5 @@
 import { SynthesisBadge } from "@/components/Modules/NeedForActionModule/SynthesisBadge";
-import { needForActionSteps } from "@/components/Modules/NeedForActionModule/constants";
+import { getModuleSteps } from "@/components/Modules/shared/moduleConfig";
 import { Button } from "@/components/ui/button";
 import { useMapReady } from "@/hooks/use-map-ready";
 import { useAnswersStore } from "@/store/answers";
@@ -28,6 +28,7 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 
 	const moduleSavedState = useUiStore((state) => state.moduleSavedState);
 	const isMapReady = useMapReady();
+	const needForActionSteps = getModuleSteps("needForAction");
 
 	useEffect(() => {
 		if (!isMapReady) return;
@@ -60,6 +61,7 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 		moduleSavedState,
 		layerConfig,
 		setLayerVisibility,
+		needForActionSteps,
 	]);
 
 	const handleToggleLayer = useCallback(

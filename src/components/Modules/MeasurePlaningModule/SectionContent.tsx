@@ -1,4 +1,5 @@
 import Question from "@/components/Modules/NeedForActionModule/Question";
+import { getModuleSteps } from "@/components/Modules/shared/moduleConfig";
 import { useModuleNavigation } from "@/components/Modules/shared/useModuleNavigation";
 import { useVerticalStepper } from "@/components/VerticalStepper";
 import { useAnswersStore } from "@/store/answers";
@@ -6,7 +7,6 @@ import { SectionId } from "@/types/sectionIds";
 import { useCallback, useMemo } from "react";
 
 import { useLayersStore } from "@/store/layers";
-import { measurePlaningSteps } from "./constants";
 
 interface SectionContentProps {
 	sectionId: SectionId;
@@ -15,6 +15,7 @@ interface SectionContentProps {
 export function SectionContent({ sectionId }: SectionContentProps) {
 	const layerConfig = useLayersStore((state) => state.layerConfig);
 	const setAnswer = useAnswersStore((state) => state.setAnswer);
+	const measurePlaningSteps = getModuleSteps("measurePlaning");
 	const { getCurrentSectionInfo, navigateToNextQuestion } = useModuleNavigation(
 		{
 			steps: measurePlaningSteps,

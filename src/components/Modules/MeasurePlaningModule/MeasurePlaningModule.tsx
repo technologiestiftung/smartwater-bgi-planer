@@ -1,9 +1,12 @@
 import { useStepValid } from "@/components/Modules/shared/isStepValidUtil";
+import {
+	getModuleMetadata,
+	getModuleSteps,
+} from "@/components/Modules/shared/moduleConfig";
 import { ModuleFooter } from "@/components/Modules/shared/ModuleFooter";
 import { ModuleStepper } from "@/components/Modules/shared/ModuleStepper";
 import { SectionId } from "@/types/sectionIds";
 import { LAYER_IDS } from "@/types/shared";
-import { measurePlaningSteps } from "./constants";
 import { SectionContent } from "./SectionContent";
 import { SynthesisView } from "./SynthesisView";
 
@@ -18,23 +21,26 @@ export default function MeasurePlaningModule({
 	onOpenChange,
 	projectId,
 }: MeasurePlaningModuleProps) {
+	const steps = getModuleSteps("measurePlaning");
+	const { title, description } = getModuleMetadata("measurePlaning");
+
 	const isStepValid = useStepValid({
 		stepName: "planingA",
 		starterQuestionId: "starter_question",
 		layerId: LAYER_IDS.PROJECT_BOUNDARY,
-		steps: measurePlaningSteps,
+		steps,
 	});
 
 	return (
 		<ModuleStepper<SectionId>
-			steps={measurePlaningSteps}
+			steps={steps}
 			SectionContent={(props) => <SectionContent {...props} />}
 			StepperFooter={ModuleFooter}
 			SynthesisView={SynthesisView}
 			open={open}
 			onOpenChange={onOpenChange}
-			title="Modul 3: Maßnahmenplanung"
-			description="Planen Sie Ihre Maßnahmen im Detail"
+			title={title}
+			description={description}
 			projectId={projectId}
 			isStepValid={isStepValid}
 		/>

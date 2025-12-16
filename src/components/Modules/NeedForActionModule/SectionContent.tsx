@@ -1,5 +1,5 @@
-import { needForActionSteps } from "@/components/Modules/NeedForActionModule/constants";
 import Question from "@/components/Modules/NeedForActionModule/Question";
+import { getModuleSteps } from "@/components/Modules/shared/moduleConfig";
 import { useModuleNavigation } from "@/components/Modules/shared/useModuleNavigation";
 import { Spinner } from "@/components/ui/spinner";
 import { useVerticalStepper } from "@/components/VerticalStepper";
@@ -15,6 +15,7 @@ interface SectionContentProps {
 export function SectionContent({ sectionId }: SectionContentProps) {
 	const layerConfig = useLayersStore((state) => state.layerConfig);
 	const setAnswer = useAnswersStore((state) => state.setAnswer);
+	const needForActionSteps = getModuleSteps("needForAction");
 	const { navigateToNextQuestion, getCurrentSectionInfo } = useModuleNavigation(
 		{
 			steps: needForActionSteps,

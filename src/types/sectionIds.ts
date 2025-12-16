@@ -1,8 +1,10 @@
-import { feasibilitySteps } from "@/components/Modules/FeasibilityModule/constants";
-import { measurePlaningSteps } from "@/components/Modules/MeasurePlaningModule/constants";
-import { needForActionSteps } from "@/components/Modules/NeedForActionModule/constants";
+import { getModuleSteps } from "@/components/Modules/shared/moduleConfig";
 
 export function getSectionIds() {
+	const needForActionSteps = getModuleSteps("needForAction");
+	const feasibilitySteps = getModuleSteps("feasibility");
+	const measurePlaningSteps = getModuleSteps("measurePlaning");
+
 	return [
 		...needForActionSteps,
 		...feasibilitySteps,

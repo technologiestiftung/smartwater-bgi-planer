@@ -1,9 +1,12 @@
 "use client";
 
-import { needForActionSteps } from "@/components/Modules/NeedForActionModule/constants";
 import { SectionContent } from "@/components/Modules/NeedForActionModule/SectionContent";
 import { SynthesisView } from "@/components/Modules/NeedForActionModule/SynthesisView";
 import { useStepValid } from "@/components/Modules/shared/isStepValidUtil";
+import {
+	getModuleMetadata,
+	getModuleSteps,
+} from "@/components/Modules/shared/moduleConfig";
 import { ModuleFooter } from "@/components/Modules/shared/ModuleFooter";
 import { ModuleStepper } from "@/components/Modules/shared/ModuleStepper";
 import { SectionId } from "@/types/sectionIds";
@@ -20,23 +23,26 @@ export default function NeedForActionModule({
 	onOpenChange,
 	projectId,
 }: NeedForActionModuleProps) {
+	const steps = getModuleSteps("needForAction");
+	const { title, description } = getModuleMetadata("needForAction");
+
 	const isStepValid = useStepValid({
 		stepName: "heavyRain",
 		starterQuestionId: "starter_question",
 		layerId: LAYER_IDS.PROJECT_BOUNDARY,
-		steps: needForActionSteps,
+		steps,
 	});
 
 	return (
 		<ModuleStepper<SectionId>
-			steps={needForActionSteps}
+			steps={steps}
 			SectionContent={(props) => <SectionContent {...props} />}
 			StepperFooter={ModuleFooter}
 			SynthesisView={SynthesisView}
 			open={open}
 			onOpenChange={onOpenChange}
-			title="Modul 1: Handlungsbedarfe"
-			description="Untersuchen Sie Ihr Gebiet auf Handlungsbedarfe"
+			title={title}
+			description={description}
 			projectId={projectId}
 			isStepValid={isStepValid}
 		/>
