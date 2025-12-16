@@ -16,7 +16,22 @@
 		"visibleLayerIds": ["project_new_development"]
 	},
 	{
-		"id": "starter_question",
+		"id": "handlungsbedarfe_module_introduction",
+		"name": "",
+		"question": "Die Herausforderungen im Gebiet in Bezug auf Klimafolgen zu kennen, ist eine wichtige Voraussetzung für die Priorisierung von Maßnahmen. Zu Beginn sollen daher Handlungsbedarfe ermittelt werden, die auf aktuelle und künftige Problemlagen hinweisen.",
+		"description": "Während die bekanntesten Folgen des Klimawandels Hitze und Starkregen sind, ist hier auch das Thema Versiegelung separat aufgenommen, da es die Auswirkungen von Hitze und Starkregen unmittelbar verstärkt. Darüber hinaus werden Handlungsbedarfe im Bereich Gewässerschutz aufgezeigt, hier bezogen auf aufnehmende Fließgewässer im Bereich der Mischkanalisation und Kleingewässer. Der Wasserhaushalt ist ein wichtiger Querschnittsindikator für diese vier Themen.",
+		"drawLayerId": "",
+		"canDrawPolygons": false,
+		"canDrawBTF": false,
+		"canDrawNotes": false,
+		"visibleLayerIds": ["project_boundary", "project_new_development"],
+		"legendSrc": "",
+		"isIntro": true,
+		"moduleNumber": 1,
+		"moduleName": "Handlungsbedarfe"
+	},
+	{
+		"id": "heavyRain_starter_question",
 		"name": "",
 		"question": "Durch Überflutungen in Folge von Starkregen kann es zu Gefährdungen von Lebewesen, Gebäuden, Infrastruktur und weiteren Sachwerten kommen.",
 		"description": "(Um dem vorzubeugen, können bestimmte Bereiche des Quartiers von einer Bebauung oder einer vulnerablen Nutzung freigehalten bzw. Maßnahmen zur Überflutungsvorsorge implementiert werden.)",
@@ -82,6 +97,18 @@
 			"ua_srhk:b_srhk_feuerwehreinsaetze_pkt"
 		],
 		"legendSrc": "/legends/1s3.svg"
+	},
+	{
+		"id": "heat_starter_question",
+		"name": "",
+		"question": "Hitzebelastung kann zur gesundheitlichen Gefährdung besonders von Kindern, älteren und chronisch kranken Menschen führen.",
+		"description": "Um dem vorzubeugen, sind Maßnahmen zur Verbesserung des Mikroklimas sowie zur Freihaltung der Kaltluftbahnen notwendig.",
+		"drawLayerId": "",
+		"canDrawPolygons": false,
+		"canDrawBTF": false,
+		"canDrawNotes": false,
+		"visibleLayerIds": ["project_boundary", "project_new_development"],
+		"legendSrc": ""
 	},
 	{
 		"id": "heat_thermal_load_day",
@@ -176,6 +203,18 @@
 		"legendSrc": "/legends/1h5.svg"
 	},
 	{
+		"id": "sealing_starter_question",
+		"name": "",
+		"question": "Eine hohe Versiegelung führt zum Verlust der natürlichen Bodenfunktionen und ist dadurch ein zentrales Umweltproblem. Versiegelung verstärkt das Überflutungsrisiko, die Hitzebelastung, die Abweichung vom naturnahen Wasserhaushalt sowie die Gewässerbelastung und wirkt sich negativ auf die Biodiversität aus.",
+		"description": "Um dem vorzubeugen ist ein behutsamer Umgang mit der Flächenversiegelung sowie Maßnahmen zur Entsiegelung notwendig.",
+		"drawLayerId": "",
+		"canDrawPolygons": false,
+		"canDrawBTF": false,
+		"canDrawNotes": false,
+		"visibleLayerIds": ["project_boundary", "project_new_development"],
+		"legendSrc": ""
+	},
+	{
 		"id": "sealing_block_areas_high",
 		"name": "Versiegelung der Blockteilflächen",
 		"question": "Wo liegen Bereiche, in denen der Versiegelungsgrad den Durchschnitt um mehr als 20 % überschreitet?",
@@ -212,6 +251,18 @@
 		"legendSrc": "/legends/1v3.svg"
 	},
 	{
+		"id": "waterBalance_starter_question",
+		"name": "",
+		"question": "Saubere Gewässer erhöhen die Aufenthaltsqualität unserer Stadt und bieten einen wichtigen Lebensraum für Flora und Fauna. Außerdem sind sie essenziell für den Berliner Wasserkreislauf und damit für die Trinkwasserversorgung.",
+		"description": "Projekte zur Regenwasserbewirtschaftung können die Kanalisation entlasten (Abkopplung) und sich damit positiv auf die aufnehmenden Fließgewässer auswirken oder gezielt Kleingewässer stützen.",
+		"drawLayerId": "",
+		"canDrawPolygons": false,
+		"canDrawBTF": false,
+		"canDrawNotes": false,
+		"visibleLayerIds": ["project_boundary", "project_new_development"],
+		"legendSrc": ""
+	},
+	{
 		"id": "water_balance_natural_deviation",
 		"name": "Komponenten des Wasserhaushalts",
 		"question": "Wo liegen die Blockteilflächen, in denen der Wasserhaushalt stärker als 20 % vom natürlichen Wasserhaushalt abweicht? (Notieren Sie, welche Komponente besonders abweicht mithilfe einer Attributabfrage in Karte zu Delta W (Evaporation, Versickerung und Oberflächenabfluss)).",
@@ -222,6 +273,18 @@
 		"canDrawNotes": true,
 		"visibleLayerIds": ["ua_wasserhaushalt_2022:f_deltaw_2022"],
 		"legendSrc": "/legends/1w1.svg"
+	},
+	{
+		"id": "waterProtection_starter_question",
+		"name": "",
+		"question": "Ein veränderter Wasserhaushalt spiegelt die Herausforderungen in Bezug auf Hitzebelastung, Überflutungsrisiko, Versiegelung und Gewässerbelastung wieder.",
+		"description": "Ziel ist es durch die Planungen den natürlichen Zustand möglichst nah zu erreichen. In der Regel muss dafür v.a. die Verdunstungskomponente (Evaporation) gestärkt werden.",
+		"drawLayerId": "",
+		"canDrawPolygons": false,
+		"canDrawBTF": false,
+		"canDrawNotes": false,
+		"visibleLayerIds": ["project_boundary", "project_new_development"],
+		"legendSrc": ""
 	},
 	{
 		"id": "water_protection_sewer_type",
@@ -264,5 +327,37 @@
 			"bgi-planer:HA4_Kleingewaesser_trocken_topoEZG_pl"
 		],
 		"legendSrc": "/legends/placeholder.svg"
+	},
+	{
+		"id": "module_2_1",
+		"name": "Module 2.1",
+		"question": "Wo gibt es im Quartier oder in der Umgebung Gewässer mit Wasserbedarf?",
+		"description": "Die Karte gibt Auskunft darüber, welche Kleingewässer und Feuchtbiotope, einen besonderen Bedarf an zusätzlichen Wassermengen haben. Mit Klick auf das Gewässer werden mehr Informationen gegeben.",
+		"drawLayerId": "need_groundwater_hotspots_q3",
+		"canDrawPolygons": false,
+		"canDrawBTF": true,
+		"canDrawNotes": true,
+		"visibleLayerIds": [
+			"bgi-planer:HA4_Kleingewaesser_trocken_pkt",
+			"bgi-planer:HA4_Kleingewaesser_trocken_topoEZG_pl"
+		],
+		"legendSrc": "/legends/placeholder.svg"
+	},
+	{
+		"id": "module_2_2",
+		"name": "Kaltluft Module 2.2",
+		"question": "Wo befinden sich Bereiche mit einer hohen Volumenstromdichte und eindeutiger Strömungsrichtung von Grünflächen zu Einwirkbereichen (blau)? ",
+		"description": "Der Luftaustausch entsteht zwischen Kaltluftentstehungsgebieten wie Grün- und Freiräumen und thermisch belasteten Siedlungsräumen. In den Übergangsbereichen ist ein hoher Grün- und Freiflächenanteil für die Kühlung förderlich.",
+		"drawLayerId": "need_temperature_hotspots_q6",
+		"canDrawPolygons": true,
+		"canDrawBTF": true,
+		"canDrawNotes": true,
+		"visibleLayerIds": [
+			"ua_klimaanalyse_2022:td_kak_kaltlufteinwirkbereich_siedlungsfl_2022",
+			"ua_klimaanalyse_2022:tj_kak_gruen_kvs_hoch_2022",
+			"ua_klimaanalyse_2022:bb_ua_windfeld_2m_22h_2022_100m",
+			"ua_klimaanalyse_2022:ba_ua_windfeld_2m_22h_2022_20m"
+		],
+		"legendSrc": "/legends/1h5.svg"
 	}
 ]

@@ -31,13 +31,18 @@ export default function Home() {
 	}, [hasHydrated, getProject, router]);
 
 	return (
-		<div className="relativ bg-background grid h-full w-full md:grid-cols-2">
-			<div className="flex h-full flex-col justify-between p-18">
+		<div className="relativ bg-background grid h-full w-full lg:grid-cols-2">
+			<div className="flex h-full flex-col justify-start p-4 lg:justify-between lg:p-18">
 				<div className="Logo-root flex flex-col gap-6">
 					<SWLogo className="h-28 w-48 max-w-48" />
 				</div>
 				<div className="Welcome-root flex flex-col gap-6">
 					<h1 className="">Herzlich willkommen beim BGI Planer</h1>
+					<h2 className="lg:hidden">Mobile Version</h2>
+					<p className="text-muted-foreground lg:hidden">
+						Der BGI Planer ist nur für die Nutzung auf dem Desktop vorgesehen,
+						damit alle Funktionen vollumfänglich genutzt werden können.
+					</p>
 					{showUploadAlert && (
 						<FileUploadZone
 							onFilesChange={(files: File[]) =>
@@ -45,7 +50,7 @@ export default function Home() {
 							}
 						/>
 					)}
-					<div className="flex flex-wrap items-center justify-between gap-2 md:gap-8">
+					<div className="hidden flex-wrap items-center justify-between gap-8 lg:flex">
 						<Button asChild className="grow">
 							<Link href="/new">
 								<PlusSquareIcon className="mr-2" />
@@ -63,7 +68,7 @@ export default function Home() {
 						</Button>
 					</div>
 				</div>
-				<div className="Footer-root flex flex-col gap-4">
+				<div className="Footer-root mt-40 flex flex-col gap-4 lg:mt-0">
 					<div className="flex flex-col gap-2 text-left">
 						<p className="font-bold">Ein Teil des Projektes</p>
 						<SmartWaterLogo className="w-52" />
@@ -72,7 +77,7 @@ export default function Home() {
 						<p className="font-bold">Gefördert im Rahmen von</p>
 						<Funding className="w-full" />
 					</div>
-					<div className="flex justify-between font-bold underline underline-offset-4">
+					<div className="flex flex-col justify-between font-bold underline underline-offset-4 lg:flex-row">
 						<a
 							href="https://www.technologiestiftung-berlin.de/impressum/"
 							target="_blank"
@@ -105,7 +110,7 @@ export default function Home() {
 					</div>
 				</div>
 			</div>
-			<div className="bg-primary flex items-center justify-center rounded-l-[3.125rem] p-2.5">
+			<div className="bg-primary hidden items-center justify-center rounded-l-[3.125rem] p-2.5 lg:flex">
 				<div className="flex max-w-114 flex-col items-center justify-between gap-8">
 					<CarouselWithIndicators
 						slides={[

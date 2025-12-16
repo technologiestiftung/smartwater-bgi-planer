@@ -17,7 +17,7 @@ import { FC, useCallback, useRef } from "react";
 
 const UploadVectorLayersButton: FC = () => {
 	const map = useMapStore((state) => state.map);
-	const { addLayer } = useLayersStore();
+	const addLayer = useLayersStore((state) => state.addLayer);
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const { uploading, handleUpload } = useVectorUpload();
 

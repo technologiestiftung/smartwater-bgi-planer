@@ -1,4 +1,4 @@
-import type { SectionId } from "@/components/Modules/HandlungsbedarfeModule/constants";
+import type { SectionId } from "@/types/sectionIds";
 
 export interface UiState {
 	isLayerTreeOpen: boolean;
@@ -10,6 +10,7 @@ export interface UiState {
 	isBlockAreaSelecting: boolean;
 	isDrawingNote: boolean;
 	isAdditionalLayerTreeVisible: boolean;
+	showStepper: boolean;
 	// Module navigation state
 	moduleCurrentSectionId: SectionId;
 	moduleQuestionIndices: Record<SectionId, number>;
@@ -31,6 +32,7 @@ export interface UiActions {
 	setIsBlockAreaSelecting: (isSelecting: boolean) => void;
 	setIsDrawingNote: (isDrawing: boolean) => void;
 	resetDrawInteractions: () => void;
+	setShowStepper: (show: boolean) => void;
 	setIsAdditionalLayerTreeVisible: (isVisible: boolean) => void;
 	// Module navigation actions
 	setModuleCurrentSection: (sectionId: SectionId) => void;

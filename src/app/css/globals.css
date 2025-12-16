@@ -105,6 +105,17 @@
 		line-height: 1.75rem; /* 28px */
 	}
 
+	@media screen and (max-width: 768px) {
+		h1 {
+			font-size: 2rem;
+			line-height: 2.5rem;
+		}
+		h2 {
+			font-size: 1.2rem;
+			line-height: 1.5rem;
+		}
+	}
+
 	/* Body text */
 	p {
 		font-weight: 400;

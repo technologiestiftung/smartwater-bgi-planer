@@ -1,0 +1,109 @@
+{
+	"modules": [
+		{
+			"id": "needForAction",
+			"order": 1,
+			"title": "Modul 1: Handlungsbedarfe",
+			"description": "Untersuchen Sie Ihr Gebiet auf Handlungsbedarfe",
+			"steps": [
+				{
+					"id": "heavyRain",
+					"icon": "CloudRain",
+					"title": "Starkregen",
+					"questions": [
+						"handlungsbedarfe_module_introduction",
+						"heavyRain_starter_question",
+						"heavy_rain_flow_velocity",
+						"heavy_rain_water_level",
+						"heavy_rain_fire_department_incidents"
+					]
+				},
+				{
+					"id": "heat",
+					"icon": "ThermometerHot",
+					"title": "Hitze",
+					"questions": [
+						"heat_starter_question",
+						"heat_thermal_load_day",
+						"heat_thermal_load_night",
+						"heat_vulnerable_areas",
+						"heat_cold_air_corridors",
+						"heat_air_exchange_corridors",
+						"heat_cold_air_flow"
+					]
+				},
+				{
+					"id": "sealing",
+					"icon": "RoadHorizon",
+					"title": "Versiegelung",
+					"questions": [
+						"sealing_starter_question",
+						"sealing_block_areas_high",
+						"sealing_green_volume_low",
+						"sealing_small_scale_high"
+					]
+				},
+				{
+					"id": "waterBalance",
+					"icon": "Drop",
+					"title": "Wasserhaushalt",
+					"questions": [
+						"waterBalance_starter_question",
+						"water_balance_natural_deviation"
+					]
+				},
+				{
+					"id": "waterProtection",
+					"icon": "Fish",
+					"title": "Gewässerschutz",
+					"questions": [
+						"waterProtection_starter_question",
+						"water_protection_sewer_type",
+						"water_protection_decoupling_requirements",
+						"water_protection_small_waters_demand"
+					]
+				}
+			]
+		},
+		{
+			"id": "feasibility",
+			"order": 2,
+			"title": "Modul 2: Machbarkeit",
+			"description": "Untersuchen Sie die Machbarkeit Ihrer Maßnahmen",
+			"steps": [
+				{
+					"id": "feasibilityA",
+					"icon": "CloudRain",
+					"title": "Machbarkeit A",
+					"questions": ["starter_question", "module_2_2"]
+				},
+				{
+					"id": "feasibilityB",
+					"icon": "ThermometerHot",
+					"title": "Machbarkeit B",
+					"questions": ["starter_question", "module_2_1"]
+				}
+			]
+		},
+		{
+			"id": "measurePlaning",
+			"order": 3,
+			"title": "Modul 3: Maßnahmenplanung",
+			"description": "Planen Sie Ihre Maßnahmen im Detail",
+			"steps": [
+				{
+					"id": "planingA",
+					"icon": "Drop",
+					"title": "Maßnahmenplanung A",
+					"questions": ["starter_question"]
+				},
+				{
+					"id": "planingB",
+					"icon": "RoadHorizon",
+					"title": "Maßnahmenplanung B",
+					"questions": ["starter_question"]
+				}
+			]
+		}
+	]
+}

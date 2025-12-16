@@ -25,6 +25,7 @@ import { LinkIcon } from "@phosphor-icons/react";
 import TileLayer from "ol/layer/Tile";
 import TileWMS from "ol/source/TileWMS";
 import { FC, useCallback, useEffect, useState } from "react";
+import { useShallow } from "zustand/react/shallow";
 
 interface WMSLayer {
 	name: string;
@@ -108,8 +109,14 @@ const createWMSLayer = (params: {
 
 const AddWMSButton: FC = () => {
 	const map = useMapStore((state) => state.map);
-	const { addLayer } = useLayersStore();
-	const { setUploadError, setUploadSuccess, clearUploadStatus } = useUiStore();
+	const addLayer = useLayersStore((state) => state.addLayer);
+	const { setUploadError, setUploadSuccess, clearUploadStatus } = useUiStore(
+		useShallow((state) => ({
+			setUploadError: state.setUploadError,
+			setUploadSuccess: state.setUploadSuccess,
+			clearUploadStatus: state.clearUploadStatus,
+		})),
+	);
 
 	const [isOpen, setIsOpen] = useState(false);
 	const [wmsUrl, setWmsUrl] = useState("");

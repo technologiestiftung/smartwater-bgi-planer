@@ -1,5 +1,5 @@
-import { SynthesisBadge } from "@/components/Modules/HandlungsbedarfeModule/SynthesisBadge";
-import { steps } from "@/components/Modules/HandlungsbedarfeModule/constants";
+import { SynthesisBadge } from "@/components/Modules/NeedForActionModule/SynthesisBadge";
+import { getModuleSteps } from "@/components/Modules/shared/moduleConfig";
 import { Button } from "@/components/ui/button";
 import { useMapReady } from "@/hooks/use-map-ready";
 import { useAnswersStore } from "@/store/answers";
@@ -7,6 +7,7 @@ import { useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
 import { EyeIcon, EyeSlashIcon, XIcon } from "@phosphor-icons/react";
 import { useCallback, useEffect } from "react";
+import { useShallow } from "zustand/react/shallow";
 
 interface SynthesisViewProps {
 	onBackToQuestions: () => void;
@@ -14,14 +15,20 @@ interface SynthesisViewProps {
 
 export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 	const answers = useAnswersStore((state) => state.answers);
-	const layerConfig = useLayersStore((state) => state.layerConfig);
-	const layers = useLayersStore((state) => state.layers);
-	const setLayerVisibility = useLayersStore(
-		(state) => state.setLayerVisibility,
-	);
-	const applyConfigLayers = useLayersStore((state) => state.applyConfigLayers);
+
+	const { layerConfig, layers, setLayerVisibility, applyConfigLayers } =
+		useLayersStore(
+			useShallow((state) => ({
+				layerConfig: state.layerConfig,
+				layers: state.layers,
+				setLayerVisibility: state.setLayerVisibility,
+				applyConfigLayers: state.applyConfigLayers,
+			})),
+		);
+
 	const moduleSavedState = useUiStore((state) => state.moduleSavedState);
 	const isMapReady = useMapReady();
+	const needForActionSteps = getModuleSteps("needForAction");
 
 	useEffect(() => {
 		if (!isMapReady) return;
@@ -29,13 +36,17 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 		applyConfigLayers("synthesis_view", true);
 
 		if (moduleSavedState) {
-			const lastActiveStep = steps.find(
+			const lastActiveStep = needForActionSteps.find(
 				(step) => step.id === moduleSavedState.sectionId,
 			);
 			const stepQuestions = lastActiveStep?.questions || [];
 
 			stepQuestions.forEach((questionId) => {
-				if (questionId === "starter_question") return;
+				if (
+					questionId.includes("starter_question") ||
+					questionId.includes("module_introduction")
+				)
+					return;
 				const questionConfig = layerConfig.find(
 					(config) => config.id === questionId,
 				);
@@ -50,6 +61,7 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 		moduleSavedState,
 		layerConfig,
 		setLayerVisibility,
+		needForActionSteps,
 	]);
 
 	const handleToggleLayer = useCallback(
@@ -109,7 +121,7 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 					direkt bearbeiten zu können
 				</p>
 
-				{steps.map((step) => {
+				{needForActionSteps.map((step) => {
 					const sectionQuestions = step.questions || [];
 					const anyLayerVisible = sectionQuestions.some((questionId) => {
 						const questionConfig = layerConfig.find(
@@ -122,7 +134,11 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 					});
 
 					const sectionAnswers = sectionQuestions
-						.filter((q) => q !== "starter_question")
+						.filter(
+							(q) =>
+								!q.includes("starter_question") &&
+								!q.includes("module_introduction"),
+						)
 						.map((questionId) => answers[questionId]);
 
 					const allTrue =
@@ -166,7 +182,11 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 							</div>
 							<div className="flex flex-wrap gap-2">
 								{sectionQuestions.map((questionId) => {
-									if (questionId === "starter_question") return null;
+									if (
+										questionId.includes("starter_question") ||
+										questionId.includes("module_introduction")
+									)
+										return null;
 									const answer = answers[questionId];
 									const questionConfig = layerConfig.find(
 										(config) => config.id === questionId,
