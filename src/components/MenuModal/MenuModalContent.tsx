@@ -31,11 +31,21 @@ export default function MenuModalContent({ projectId }: MenuModalProps) {
 	const getQuestionsNumber = () => {
 		return steps.reduce((total, step) => {
 			if (!step.questions) return total;
-			return total + step.questions.length;
+			return (
+				total +
+				step.questions.filter(
+					(currentQuestion) =>
+						!currentQuestion.includes("module_introduction") &&
+						!currentQuestion.includes("starter_question"),
+				).length
+			);
 		}, 0);
 	};
 
-	const answersLength = Object.keys(answers).length;
+	const answersLength = Object.keys(answers).filter(
+		(key) =>
+			!key.includes("module_introduction") && !key.includes("starter_question"),
+	).length;
 
 	return (
 		<>
