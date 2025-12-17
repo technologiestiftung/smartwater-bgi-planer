@@ -15,6 +15,7 @@ import Link from "next/link";
 import { useProjectsStore } from "@/store/projects";
 import { steps } from "../Modules/HandlungsbedarfeModule/constants";
 import { useAnswersStore } from "@/store";
+import { checkForQuestion } from "@/lib/utils";
 
 interface MenuModalProps {
 	projectId: string;
@@ -33,18 +34,15 @@ export default function MenuModalContent({ projectId }: MenuModalProps) {
 			if (!step.questions) return total;
 			return (
 				total +
-				step.questions.filter(
-					(currentQuestion) =>
-						!currentQuestion.includes("module_introduction") &&
-						!currentQuestion.includes("starter_question"),
+				step.questions.filter((currentQuestion) =>
+					checkForQuestion(currentQuestion),
 				).length
 			);
 		}, 0);
 	};
 
-	const answersLength = Object.keys(answers).filter(
-		(key) =>
-			!key.includes("module_introduction") && !key.includes("starter_question"),
+	const answersLength = Object.keys(answers).filter((key) =>
+		checkForQuestion(key),
 	).length;
 
 	return (
