@@ -6,7 +6,7 @@ import { useAnswersStore } from "@/store/answers";
 import { useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
 import { EyeIcon, EyeSlashIcon, XIcon } from "@phosphor-icons/react";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useShallow } from "zustand/react/shallow";
 
 interface SynthesisViewProps {
@@ -30,8 +30,20 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 	const isMapReady = useMapReady();
 	const needForActionSteps = getModuleSteps("needForAction");
 
+	const hasInitialized = useRef(false);
+	const lastSectionId = useRef<string | null>(null);
+
 	useEffect(() => {
-		if (!isMapReady) return;
+		const currentSectionId = moduleSavedState?.sectionId ?? null;
+
+		if (lastSectionId.current !== currentSectionId) {
+			hasInitialized.current = false;
+			lastSectionId.current = currentSectionId;
+		}
+
+		if (!isMapReady || hasInitialized.current) return;
+
+		hasInitialized.current = true;
 
 		applyConfigLayers("synthesis_view", true);
 
@@ -56,12 +68,12 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 			});
 		}
 	}, [
-		applyConfigLayers,
 		isMapReady,
 		moduleSavedState,
+		applyConfigLayers,
+		needForActionSteps,
 		layerConfig,
 		setLayerVisibility,
-		needForActionSteps,
 	]);
 
 	const handleToggleLayer = useCallback(

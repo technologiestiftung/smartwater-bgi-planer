@@ -40,11 +40,17 @@ export const useMapStore = create<MapState & MapActions>()(
 				set({ hasError, errorMessage: errorMessage || null }),
 			setUserLocation: (userLocation) => set({ userLocation }),
 			setHasHydrated: (state) => set({ hasHydrated: state }),
-			resetMapState: () =>
+			resetMapState: () => {
+				const currentMap = _get().map;
+				if (currentMap) {
+					currentMap.setTarget(undefined);
+				}
+
 				set({
 					...initialState,
 					hasHydrated: true,
-				}),
+				});
+			},
 		}),
 		{
 			name: "map-storage",
