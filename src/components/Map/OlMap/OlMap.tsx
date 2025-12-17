@@ -18,18 +18,9 @@ const OlMap: FC<OlMapProps> = ({ children }) => {
 
 	useEffect(() => {
 		if (!isConfigReady || !config || hasInitialized.current) {
-			console.log(
-				"[OlMap] Early return - isConfigReady:",
-				isConfigReady,
-				"config:",
-				!!config,
-				"hasInitialized:",
-				hasInitialized.current,
-			);
 			return;
 		}
 
-		console.log("[OlMap] Initializing map");
 		hasInitialized.current = true;
 
 		const mapViewConfig = config.portalConfig.map.mapView;
@@ -66,10 +57,8 @@ const OlMap: FC<OlMapProps> = ({ children }) => {
 			});
 
 			useMapStore.getState().populateMap(map);
-			console.log("[OlMap] Map created and set in store");
 
 			return () => {
-				console.log("[OlMap] Cleanup: destroying map");
 				if (map) {
 					map.setTarget(undefined);
 				}

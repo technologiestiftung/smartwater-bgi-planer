@@ -5,7 +5,7 @@ import { getDrawLayerIds } from "@/lib/helpers/ol";
 import { useLayersStore } from "@/store/layers";
 import { ManagedLayer } from "@/store/layers/types";
 import { useMapStore } from "@/store/map";
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useRef } from "react";
 import { useWmtsCapabilities } from "./hooks/useWmtsCapabilities";
 
 const Z_INDEX = {
@@ -25,14 +25,8 @@ function calculateZIndex(
 }
 
 const LayerInitializer: FC = () => {
-	const [isMapInited, setIsMapInited] = useState(false);
-	const [shouldInitialize, setShouldInitialize] = useState(false);
-
 	const initialConfig = useMapStore((state) => state.initialConfig);
 	const map = useMapStore((state) => state.map);
-	const setMapReady = useMapStore((state) => state.setMapReady);
-	const setMapError = useMapStore((state) => state.setMapError);
-	const setLayersInStore = useLayersStore((state) => state.setLayers);
 	const flattenedLayerElements = useLayersStore(
 		(state) => state.flattenedLayerElements,
 	);
@@ -44,38 +38,17 @@ const LayerInitializer: FC = () => {
 
 	const hasInitialized = useRef(false);
 
-	// Trigger initialization when all prerequisites are met - only once
 	useEffect(() => {
+		// Guard: check all prerequisites and ensure we only initialize once
 		if (
-			map &&
-			initialConfig &&
-			capabilitiesLoaded &&
-			flattenedLayerElements.length > 0 &&
-			!isMapInited &&
-			!shouldInitialize &&
-			!hasInitialized.current
+			!map ||
+			!initialConfig ||
+			!capabilitiesLoaded ||
+			flattenedLayerElements.length === 0 ||
+			hasInitialized.current
 		) {
-			console.log(
-				"[LayerInitializer] All prerequisites met, triggering initialization",
-			);
-			setShouldInitialize(true);
-		}
-	}, [
-		map,
-		initialConfig,
-		capabilitiesLoaded,
-		flattenedLayerElements.length,
-		isMapInited,
-		shouldInitialize,
-	]);
-
-	// Actual initialization effect - only runs when triggered
-	useEffect(() => {
-		if (!shouldInitialize || hasInitialized.current || !map || !initialConfig) {
 			return;
 		}
-
-		console.log("[LayerInitializer] Starting map initialization");
 
 		hasInitialized.current = true;
 
@@ -144,7 +117,7 @@ const LayerInitializer: FC = () => {
 			map.addLayer(olLayer);
 		});
 
-		setLayersInStore(newManagedLayersMap);
+		useLayersStore.getState().setLayers(newManagedLayersMap);
 
 		const baseLayers = Array.from(newManagedLayersMap.values()).filter(
 			(layer) => layer.layerType === "base",
@@ -158,20 +131,26 @@ const LayerInitializer: FC = () => {
 
 			if (!hasLoadedBase && hasErrorBase) {
 				const firstError = baseLayers.find((layer) => layer.error)?.error;
-				setMapError(
-					true,
-					firstError || "Hintergrundkarte konnte nicht geladen werden",
-				);
-				setMapReady(false);
+				useMapStore
+					.getState()
+					.setMapError(
+						true,
+						firstError || "Hintergrundkarte konnte nicht geladen werden",
+					);
+				useMapStore.getState().setMapReady(false);
 			} else if (hasLoadedBase) {
-				setMapError(false);
-				setMapReady(true);
-				setIsMapInited(true);
+				useMapStore.getState().setMapError(false);
+				useMapStore.getState().setMapReady(true);
 			}
 		}
-
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [shouldInitialize]);
+	}, [
+		map,
+		initialConfig,
+		capabilitiesLoaded,
+		flattenedLayerElements.length,
+		wmtsCapabilities,
+	]);
 
 	return null;
 };
