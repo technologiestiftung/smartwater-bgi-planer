@@ -3,9 +3,9 @@
 import { useMapStore } from "@/store/map";
 import { FC, useEffect } from "react";
 
-interface MapManagerProps {}
+interface ConfigManagerProps {}
 
-const MapManager: FC<MapManagerProps> = ({}) => {
+const ConfigManager: FC<ConfigManagerProps> = ({}) => {
 	const updateConfig = useMapStore((state) => state.updateConfig);
 	const map = useMapStore((state) => state.map);
 
@@ -43,4 +43,4 @@ const MapManager: FC<MapManagerProps> = ({}) => {
 	return null;
 };
 
-export default MapManager;
+export default ConfigManager;

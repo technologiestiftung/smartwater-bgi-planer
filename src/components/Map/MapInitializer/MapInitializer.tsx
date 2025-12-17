@@ -116,14 +116,6 @@ const MapInitializer: FC = () => {
 		setLayerConfig,
 	]);
 
-	useEffect(() => {
-		console.log("[MapInitializer] hasHydrated::", hasHydrated);
-	}, [hasHydrated]);
-
-	useEffect(() => {
-		console.log("[MapInitializer] isConfigReady::", isConfigReady);
-	}, [isConfigReady]);
-
 	return null;
 };
 
