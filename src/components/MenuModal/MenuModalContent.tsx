@@ -15,7 +15,7 @@ import Link from "next/link";
 import { useProjectsStore } from "@/store/projects";
 import { steps } from "../Modules/HandlungsbedarfeModule/constants";
 import { useAnswersStore } from "@/store";
-import { checkForQuestion } from "@/lib/utils";
+import { checkForQuestion } from "@/lib/helpers/questions";
 
 interface MenuModalProps {
 	projectId: string;

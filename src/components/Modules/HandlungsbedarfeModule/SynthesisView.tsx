@@ -2,7 +2,7 @@ import { SynthesisBadge } from "@/components/Modules/HandlungsbedarfeModule/Synt
 import { steps } from "@/components/Modules/HandlungsbedarfeModule/constants";
 import { Button } from "@/components/ui/button";
 import { useMapReady } from "@/hooks/use-map-ready";
-import { checkForQuestion } from "@/lib/utils";
+import { checkForQuestion } from "@/lib/helpers/questions";
 import { useAnswersStore } from "@/store/answers";
 import { useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
