@@ -22,10 +22,10 @@ const MapManager: FC<MapManagerProps> = ({}) => {
 				const newZoom = view.getZoom();
 
 				if (newCenter && newZoom !== undefined) {
-					// updateConfig({
-					// 	startCenter: newCenter,
-					// 	startZoomLevel: newZoom,
-					// });
+					updateConfig({
+						startCenter: newCenter,
+						startZoomLevel: newZoom,
+					});
 				}
 			}, 1000);
 		};

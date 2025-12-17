@@ -5,7 +5,7 @@ import { getDrawLayerIds } from "@/lib/helpers/ol";
 import { useLayersStore } from "@/store/layers";
 import { ManagedLayer } from "@/store/layers/types";
 import { useMapStore } from "@/store/map";
-import { FC, useEffect, useRef } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { useWmtsCapabilities } from "./hooks/useWmtsCapabilities";
 
 const Z_INDEX = {
@@ -25,6 +25,9 @@ function calculateZIndex(
 }
 
 const LayerInitializer: FC = () => {
+	const [isMapInited, setIsMapInited] = useState(false);
+	const [shouldInitialize, setShouldInitialize] = useState(false);
+
 	const initialConfig = useMapStore((state) => state.initialConfig);
 	const map = useMapStore((state) => state.map);
 	const setMapReady = useMapStore((state) => state.setMapReady);
@@ -41,16 +44,38 @@ const LayerInitializer: FC = () => {
 
 	const hasInitialized = useRef(false);
 
+	// Trigger initialization when all prerequisites are met - only once
 	useEffect(() => {
 		if (
-			!initialConfig ||
-			!map ||
-			!capabilitiesLoaded ||
-			flattenedLayerElements.length === 0 ||
-			hasInitialized.current
+			map &&
+			initialConfig &&
+			capabilitiesLoaded &&
+			flattenedLayerElements.length > 0 &&
+			!isMapInited &&
+			!shouldInitialize &&
+			!hasInitialized.current
 		) {
+			console.log(
+				"[LayerInitializer] All prerequisites met, triggering initialization",
+			);
+			setShouldInitialize(true);
+		}
+	}, [
+		map,
+		initialConfig,
+		capabilitiesLoaded,
+		flattenedLayerElements.length,
+		isMapInited,
+		shouldInitialize,
+	]);
+
+	// Actual initialization effect - only runs when triggered
+	useEffect(() => {
+		if (!shouldInitialize || hasInitialized.current || !map || !initialConfig) {
 			return;
 		}
+
+		console.log("[LayerInitializer] Starting map initialization");
 
 		hasInitialized.current = true;
 
@@ -141,27 +166,12 @@ const LayerInitializer: FC = () => {
 			} else if (hasLoadedBase) {
 				setMapError(false);
 				setMapReady(true);
+				setIsMapInited(true);
 			}
 		}
 
-		return () => {
-			newManagedLayersMap.forEach((managedLayer) => {
-				if (managedLayer.olLayer) map.removeLayer(managedLayer.olLayer);
-			});
-			setLayersInStore(new Map());
-			setMapReady(false);
-			hasInitialized.current = false;
-		};
-	}, [
-		initialConfig,
-		map,
-		capabilitiesLoaded,
-		flattenedLayerElements,
-		wmtsCapabilities,
-		setLayersInStore,
-		setMapReady,
-		setMapError,
-	]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [shouldInitialize]);
 
 	return null;
 };

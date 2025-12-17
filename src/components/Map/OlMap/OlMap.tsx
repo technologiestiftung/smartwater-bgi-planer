@@ -11,14 +11,26 @@ interface OlMapProps {
 }
 
 const OlMap: FC<OlMapProps> = ({ children }) => {
-	const setMap = useMapStore((state) => state.populateMap);
-	const destroyMap = useMapStore((state) => state.removeMap);
-	const setMapError = useMapStore((state) => state.setMapError);
 	const config = useMapStore((state) => state.config);
+	const isConfigReady = useMapStore((state) => state.isConfigReady);
 	const mapId = useRef<HTMLDivElement>(null);
+	const hasInitialized = useRef(false);
 
 	useEffect(() => {
-		if (!config) return;
+		if (!isConfigReady || !config || hasInitialized.current) {
+			console.log(
+				"[OlMap] Early return - isConfigReady:",
+				isConfigReady,
+				"config:",
+				!!config,
+				"hasInitialized:",
+				hasInitialized.current,
+			);
+			return;
+		}
+
+		console.log("[OlMap] Initializing map");
+		hasInitialized.current = true;
 
 		const mapViewConfig = config.portalConfig.map.mapView;
 
@@ -33,6 +45,7 @@ const OlMap: FC<OlMapProps> = ({ children }) => {
 
 		if (!mapId.current) {
 			console.error("[OlMap] mapId.current is not defined");
+			hasInitialized.current = false;
 			return;
 		}
 
@@ -52,19 +65,26 @@ const OlMap: FC<OlMapProps> = ({ children }) => {
 				}),
 			});
 
-			setMap(map);
+			useMapStore.getState().populateMap(map);
+			console.log("[OlMap] Map created and set in store");
 
 			return () => {
+				console.log("[OlMap] Cleanup: destroying map");
 				if (map) {
 					map.setTarget(undefined);
 				}
-				destroyMap();
+				useMapStore.getState().removeMap();
+				hasInitialized.current = false;
 			};
 		} catch (error) {
 			console.error("[OlMap] Error initializing map:", error);
-			setMapError(true, "Fehler beim Initialisieren der Karte");
+			useMapStore
+				.getState()
+				.setMapError(true, "Fehler beim Initialisieren der Karte");
+			hasInitialized.current = false;
 		}
-	}, [config, destroyMap, setMap, setMapError]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isConfigReady]);
 
 	return (
 		<div ref={mapId} className="map h-full w-full bg-slate-300">

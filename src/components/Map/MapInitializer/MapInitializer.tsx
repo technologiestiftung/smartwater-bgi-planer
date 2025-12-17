@@ -13,7 +13,7 @@ import {
 import { useMapStore } from "@/store/map";
 import { MapConfig } from "@/store/map/types";
 import { LayerStatus } from "@/types/shared";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useRef } from "react";
 
 initializeProjections();
 
@@ -68,10 +68,8 @@ function createEnrichedConfig(rawConfig: MapConfig): MapConfig {
 }
 
 const MapInitializer: FC = () => {
-	const config = useMapStore((state) => state.config);
-	const isConfigReady = useMapStore((state) => state.isConfigReady);
 	const hasHydrated = useMapStore((state) => state.hasHydrated);
-	const initialConfig = useMapStore((state) => state.initialConfig);
+	const isConfigReady = useMapStore((state) => state.isConfigReady);
 
 	const setConfig = useMapStore((state) => state.setConfig);
 	const setInitialConfig = useMapStore((state) => state.setInitialConfig);
@@ -81,8 +79,15 @@ const MapInitializer: FC = () => {
 	);
 	const setLayerConfig = useLayersStore((state) => state.setLayerConfig);
 
+	const hasInitialized = useRef(false);
+
 	useEffect(() => {
-		if (!hasHydrated || isConfigReady) return;
+		if (!hasHydrated || isConfigReady || hasInitialized.current) return;
+
+		hasInitialized.current = true;
+
+		const config = useMapStore.getState().config;
+		const initialConfig = useMapStore.getState().initialConfig;
 
 		const rawMapConfig = config
 			? structuredClone(config)
@@ -104,14 +109,20 @@ const MapInitializer: FC = () => {
 	}, [
 		hasHydrated,
 		isConfigReady,
-		config,
-		initialConfig,
 		setConfig,
 		setInitialConfig,
 		setIsConfigReady,
 		setFlattenedLayerElements,
 		setLayerConfig,
 	]);
+
+	useEffect(() => {
+		console.log("[MapInitializer] hasHydrated::", hasHydrated);
+	}, [hasHydrated]);
+
+	useEffect(() => {
+		console.log("[MapInitializer] isConfigReady::", isConfigReady);
+	}, [isConfigReady]);
 
 	return null;
 };
