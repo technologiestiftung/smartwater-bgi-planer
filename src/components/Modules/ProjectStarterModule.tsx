@@ -135,7 +135,7 @@ function ProjectBoundaryStep() {
 	const { hasFeatures } = useLayerFeatures(LAYER_IDS.PROJECT_BOUNDARY);
 	const { formattedArea } = useLayerArea(LAYER_IDS.PROJECT_BOUNDARY);
 	const { setStepValidation } = useVerticalStepper();
-	const { uploadError, uploadSuccess, clearUploadStatus } = useUiStore();
+	const { uploadError, clearUploadStatus } = useUiStore();
 	const [mapError, setMapError] = useState("");
 
 	useEffect(() => {
@@ -178,19 +178,9 @@ function ProjectBoundaryStep() {
 				/>
 			</div>
 
-			{uploadError && (
-				<div className="text-red mt-4 rounded-sm border border-dashed bg-red-50 p-2 text-sm">
-					{uploadError}
-				</div>
-			)}
 			{mapError && (
 				<div className="border-primary text-red mt-4 rounded-sm border border-dashed bg-red-50 p-2 text-sm">
 					{mapError}
-				</div>
-			)}
-			{uploadSuccess && (
-				<div className="border-primary bg-light mt-4 rounded-sm border border-dashed p-2 text-sm">
-					{uploadSuccess}
 				</div>
 			)}
 		</div>
