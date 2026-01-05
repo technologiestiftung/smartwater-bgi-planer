@@ -1,0 +1,331 @@
+[
+	{
+		"id": "start_view_project_boundary",
+		"name": "Planungsgebiet anlegen",
+		"drawLayerId": "project_boundary",
+		"visibleLayerIds": [
+			"rabimo_input_2025",
+			"project_btf_planning",
+			"project_boundary"
+		]
+	},
+	{
+		"id": "start_view_project_new_development",
+		"name": "Neubauten und Versiegelte Flächen anlegen",
+		"drawLayerId": "project_new_development",
+		"visibleLayerIds": ["project_new_development"]
+	},
+	{
+		"id": "handlungsbedarfe_module_introduction",
+		"name": "",
+		"question": "Die Herausforderungen im Gebiet in Bezug auf Klimafolgen zu kennen, ist eine wichtige Voraussetzung für die Priorisierung von Maßnahmen. Zu Beginn sollen daher Handlungsbedarfe ermittelt werden, die auf aktuelle und künftige Problemlagen hinweisen.",
+		"description": "Während die bekanntesten Folgen des Klimawandels Hitze und Starkregen sind, ist hier auch das Thema Versiegelung separat aufgenommen, da es die Auswirkungen von Hitze und Starkregen unmittelbar verstärkt. Darüber hinaus werden Handlungsbedarfe im Bereich Gewässerschutz aufgezeigt, hier bezogen auf aufnehmende Fließgewässer im Bereich der Mischkanalisation und Kleingewässer. Der Wasserhaushalt ist ein wichtiger Querschnittsindikator für diese vier Themen.",
+		"drawLayerId": "",
+		"canDrawPolygons": false,
+		"canDrawBTF": false,
+		"canDrawNotes": false,
+		"visibleLayerIds": ["project_boundary", "project_new_development"],
+		"legendSrc": "",
+		"isIntro": true,
+		"moduleNumber": 1,
+		"moduleName": "Handlungsbedarfe"
+	},
+	{
+		"id": "heavyRain_starter_question",
+		"name": "",
+		"question": "Durch Überflutungen in Folge von Starkregen kann es zu Gefährdungen von Lebewesen, Gebäuden, Infrastruktur und weiteren Sachwerten kommen.",
+		"description": "(Um dem vorzubeugen, können bestimmte Bereiche des Quartiers von einer Bebauung oder einer vulnerablen Nutzung freigehalten bzw. Maßnahmen zur Überflutungsvorsorge implementiert werden.)",
+		"drawLayerId": "",
+		"canDrawPolygons": false,
+		"canDrawBTF": false,
+		"canDrawNotes": false,
+		"visibleLayerIds": ["project_boundary", "project_new_development"],
+		"legendSrc": ""
+	},
+	{
+		"id": "synthesis_view",
+		"name": "Synthese",
+		"drawLayerId": "",
+		"canDrawPolygons": false,
+		"canDrawBTF": false,
+		"canDrawNotes": false,
+		"visibleLayerIds": ["project_boundary", "project_new_development"],
+		"legendSrc": ""
+	},
+	{
+		"id": "heavy_rain_flow_velocity",
+		"name": "Fließgeschwindigkeit",
+		"question": "Wo gibt es Bereiche in denen Fließgeschwindigkeiten über 0,5 m/s auftreten und dadurch eine Gefährdung bestehen könnte?",
+		"description": "Die Karte enthält Aussagen zur Fließgeschwindigkeit und zur Fließrichtung für ein außergewöhnliches Starkregenereignis, welches rein statistisch alle 100 Jahre vorkommt. Zu beachten ist auch, ob durch die Geländesituation in der Umgebung ein oberirdischer Zufluss in das Quartier oder ein Abfluss aus dem Quartier zu erwarten ist.",
+		"drawLayerId": "need_flooding_hotspots_q1",
+		"canDrawPolygons": true,
+		"canDrawBTF": true,
+		"canDrawNotes": true,
+		"visibleLayerIds": [
+			"ua_srhk:da_fr_aussergewoehnlich",
+			"ua_srhk:db_fliessgeschw_aussergew_kostra",
+			"ua_srgk:bb_fliessgeschwindigkeit_aussergewoehnlich"
+		],
+		"legendSrc": "/legends/1s1.svg"
+	},
+	{
+		"id": "heavy_rain_water_level",
+		"name": "Wasserstand",
+		"question": "Wo gibt es Bereiche, in denen ein Wasserstand von über 30 cm auftritt und damit eine Gefährdung für Menschen oder von Infrastruktur sowie Sachwerten ausgehen könnte? (Zum Beispiel, Bereiche mit hohen Wasserständen unmittelbar an den Gebäuden.)",
+		"description": "Die Karte enthält Aussagen zum Wasserstand für ein außergewöhnliches Starkregenereignis, welches rein statistisch alle 100 Jahre vorkommt. Relevant sind dabei Bereiche, wo ein Wasserstand von über 30 cm auftritt. Bei höheren Fließgeschwindigkeiten, können bereits Wasserstände ab 10 cm relevant sein. \n Für die Überflutungsvorsorge ist es zudem wichtig, ob es Bereiche mit hohen Wasserständen unmittelbar an den Gebäuden gibt.",
+		"drawLayerId": "need_flooding_hotspots_q2",
+		"canDrawPolygons": true,
+		"canDrawBTF": true,
+		"canDrawNotes": true,
+		"visibleLayerIds": [
+			"ua_srhk:dc_wasserstand_aussergew_kostra",
+			"ua_srgk:cb_wasserstand_aussergewoehnlich"
+		],
+		"legendSrc": "/legends/1s2.svg"
+	},
+	{
+		"id": "heavy_rain_fire_department_incidents",
+		"name": "Feuerwehreinsätze",
+		"question": "In welchen Blockteilflächen oder Bereichen gab es einen oder mehrere starkregenbedingte Feuerwehreinsätze? Oder ist Ihnen das Auftreten von Schäden in der Vergangenheit bekannt?",
+		"description": "Die Karte zeigt die Blockteilflächen an, in denen in der Zeit zwischen Mai 2005 bis November 2021 starkregenbedingte Feuerwehreinsätze gemeldet wurden.",
+		"drawLayerId": "need_flooding_hotspots_q3",
+		"canDrawPolygons": true,
+		"canDrawBTF": true,
+		"canDrawNotes": true,
+		"visibleLayerIds": [
+			"ua_srhk:g_srhk_feuerwehreinsaetze",
+			"ua_srhk:b_srhk_feuerwehreinsaetze_pkt"
+		],
+		"legendSrc": "/legends/1s3.svg"
+	},
+	{
+		"id": "heat_starter_question",
+		"name": "",
+		"question": "Hitzebelastung kann zur gesundheitlichen Gefährdung besonders von Kindern, älteren und chronisch kranken Menschen führen.",
+		"description": "Um dem vorzubeugen, sind Maßnahmen zur Verbesserung des Mikroklimas sowie zur Freihaltung der Kaltluftbahnen notwendig.",
+		"drawLayerId": "",
+		"canDrawPolygons": false,
+		"canDrawBTF": false,
+		"canDrawNotes": false,
+		"visibleLayerIds": ["project_boundary", "project_new_development"],
+		"legendSrc": ""
+	},
+	{
+		"id": "heat_thermal_load_day",
+		"name": "Hitzebelastung am Tag",
+		"question": "Wo gibt es Bereiche mit einer starken oder extremen thermischen Belastung von 35 ° C oder mehr?",
+		"description": "Die Karte bewertet die thermische Belastung am Tag. Grundlage bildet die Durchführung einer gesamtstädtischen Klimamodellierung eines durchschnittlichen Sommertages.",
+		"drawLayerId": "need_temperature_hotspots_q1",
+		"canDrawPolygons": true,
+		"canDrawBTF": true,
+		"canDrawNotes": true,
+		"visibleLayerIds": [
+			"bgi-planer:cc_ua_phk_bioklim_str_tag_2022",
+			"bgi-planer:cb_ua_phk_bioklim_siedl_tag_2022",
+			"bgi-planer:ca_ua_phk_aufenth_grfrei_tag_2022",
+			"bgi-planer:q_ua_pet_raster_2022"
+		],
+		"legendSrc": "/legends/1h1.svg"
+	},
+	{
+		"id": "heat_thermal_load_night",
+		"name": "Hitzebelastung in der Nacht",
+		"question": "Wo gibt es Bereiche mit einer ungünstigen oder sehr ungünstigen thermischen Belastung von 18 ° C oder mehr?",
+		"description": "Die Karte bewertet die thermische Belastung in der Nacht. Die nächtliche Abkühlung des Siedlungsraums spielt für die Hitzebelastung eine besondere Rolle. Bei hohen Temperaturen in der Nacht kann die Hitzebelastung nicht mehr ausgeglichen werden.",
+		"drawLayerId": "need_temperature_hotspots_q2",
+		"canDrawPolygons": true,
+		"canDrawBTF": true,
+		"canDrawNotes": true,
+		"visibleLayerIds": [
+			"bgi-planer:dc_ua_phk_bioklim_siedl_nacht_2022",
+			"bgi-planer:dd_ua_phk_bioklim_str_nacht_2022",
+			"bgi-planer:g_ua_lufttemp_raster_t2m_04h_2022"
+		],
+		"legendSrc": "/legends/1h2.svg"
+	},
+	{
+		"id": "heat_vulnerable_areas",
+		"name": "Vulnerable Bereiche",
+		"question": "Wo gibt es besonders vulnerable Bevölkerungsgruppen und Nutzungen, die vor Hitze geschützt werden müssen?",
+		"description": "Bereiche mit hoher thermischer Belastung haben insbesondere für vulnerable Bevölkerungsgruppen (über 65-jährige und unter 6-jährige Personen), für bestimmte Flächennutzungen (z.B. Krankenhäuser) und für Quartiere mit einer Grünflächenunterversorgung negative Auswirkungen und bedürfen der besonderen Vorsorge.",
+		"drawLayerId": "need_temperature_hotspots_q3",
+		"canDrawPolygons": false,
+		"canDrawBTF": true,
+		"canDrawNotes": true,
+		"visibleLayerIds": ["ua_klimabewertung_2022:eb_ua_phk_vul_geb_demog_2022"],
+		"legendSrc": "/legends/1h3.svg"
+	},
+	{
+		"id": "heat_cold_air_corridors",
+		"name": "Luftaustausch: Kaltluftbahnen",
+		"question": "Wo verlaufen Kaltluftbahnen im Gebiet oder im Umkreis? (Bereiche zwischen den Pfeilen)",
+		"description": "Großräumige Luftleitbahnen bilden wichtige Bereiche, in denen ein Luftaustausch insbesondere von Kaltluft erfolgen kann. Leitbahnkorridore bedürfen einer besonderen planerischen Berücksichtigung, um den Luftaustausch von der Leitbahn in das umliegende Stadtgebiet zu ermöglichen.",
+		"drawLayerId": "need_temperature_hotspots_q4",
+		"canDrawPolygons": true,
+		"canDrawBTF": false,
+		"canDrawNotes": true,
+		"visibleLayerIds": [
+			"ua_klimaanalyse_2022:tk_kak_leitbahnkorridor_2022",
+			"ua_klimaanalyse_2022:ta_kak_luftaustausch_2022"
+		],
+		"legendSrc": "/legends/1h4a.svg"
+	},
+	{
+		"id": "heat_air_exchange_corridors",
+		"name": "Luftaustausch: Leitbahnkorridore",
+		"question": "Wo sind Bereiche, die von einem Leitbahnkorridor überlagert werden?",
+		"description": "Großräumige Luftleitbahnen bilden wichtige Bereiche, in denen ein Luftaustausch insbesondere von Kaltluft erfolgen kann. Leitbahnkorridore bedürfen einer besonderen planerischen Berücksichtigung, um den Luftaustausch von der Leitbahn in das umliegende Stadtgebiet zu ermöglichen.",
+		"drawLayerId": "need_temperature_hotspots_q5",
+		"canDrawPolygons": false,
+		"canDrawBTF": true,
+		"canDrawNotes": true,
+		"visibleLayerIds": [
+			"ua_klimaanalyse_2022:ta_kak_luftaustausch_2022",
+			"ua_klimaanalyse_2022:tk_kak_leitbahnkorridor_2022"
+		],
+		"legendSrc": "/legends/1h4b.svg"
+	},
+	{
+		"id": "heat_cold_air_flow",
+		"name": "Kaltluft",
+		"question": "Wo befinden sich Bereiche mit einer hohen Volumenstromdichte und eindeutiger Strömungsrichtung von Grünflächen zu Einwirkbereichen (blau)? ",
+		"description": "Der Luftaustausch entsteht zwischen Kaltluftentstehungsgebieten wie Grün- und Freiräumen und thermisch belasteten Siedlungsräumen. In den Übergangsbereichen ist ein hoher Grün- und Freiflächenanteil für die Kühlung förderlich.",
+		"drawLayerId": "need_temperature_hotspots_q6",
+		"canDrawPolygons": true,
+		"canDrawBTF": true,
+		"canDrawNotes": true,
+		"visibleLayerIds": [
+			"ua_klimaanalyse_2022:td_kak_kaltlufteinwirkbereich_siedlungsfl_2022",
+			"ua_klimaanalyse_2022:tj_kak_gruen_kvs_hoch_2022",
+			"ua_klimaanalyse_2022:bb_ua_windfeld_2m_22h_2022_100m",
+			"ua_klimaanalyse_2022:ba_ua_windfeld_2m_22h_2022_20m"
+		],
+		"legendSrc": "/legends/1h5.svg"
+	},
+	{
+		"id": "sealing_starter_question",
+		"name": "",
+		"question": "Eine hohe Versiegelung führt zum Verlust der natürlichen Bodenfunktionen und ist dadurch ein zentrales Umweltproblem. Versiegelung verstärkt das Überflutungsrisiko, die Hitzebelastung, die Abweichung vom naturnahen Wasserhaushalt sowie die Gewässerbelastung und wirkt sich negativ auf die Biodiversität aus.",
+		"description": "Um dem vorzubeugen ist ein behutsamer Umgang mit der Flächenversiegelung sowie Maßnahmen zur Entsiegelung notwendig.",
+		"drawLayerId": "",
+		"canDrawPolygons": false,
+		"canDrawBTF": false,
+		"canDrawNotes": false,
+		"visibleLayerIds": ["project_boundary", "project_new_development"],
+		"legendSrc": ""
+	},
+	{
+		"id": "sealing_block_areas_high",
+		"name": "Versiegelung der Blockteilflächen",
+		"question": "Wo liegen Bereiche, in denen der Versiegelungsgrad den Durchschnitt um mehr als 20 % überschreitet?",
+		"description": "Die Karte zeigt die Abweichung vom Durchschnittswert des jeweiligen Flächentyps an. *Hinweis: Die gesamte Landesfläche Berlins ist mit 52 Flächentypen gekennzeichnet.",
+		"drawLayerId": "need_impermeability_hotspots_q1",
+		"canDrawPolygons": true,
+		"canDrawBTF": true,
+		"canDrawNotes": true,
+		"visibleLayerIds": ["bgi-planer:versiegelung_2021"],
+		"legendSrc": "/legends/1v1.svg"
+	},
+	{
+		"id": "sealing_green_volume_low",
+		"name": "Grünvolumenzahl",
+		"question": "Wo liegen Bereiche, in denen die Grünvolumenzahl den Durchschnitt um mehr als 20 % unterschreitet?",
+		"description": "Die Grünvolumenzahl berechnet sich aus dem Grünvolumen [m³] pro Flächeneinheit [m²]. Die Karte zeigt die Abweichungen vom Durchschnittswert des jeweiligen Flächentyps an.",
+		"drawLayerId": "need_impermeability_hotspots_q2",
+		"canDrawPolygons": true,
+		"canDrawBTF": true,
+		"canDrawNotes": true,
+		"visibleLayerIds": ["bgi-planer:a_gruenvol2020"],
+		"legendSrc": "/legends/1v2.svg"
+	},
+	{
+		"id": "sealing_small_scale_high",
+		"name": "Kleinteilige Versiegelung",
+		"question": "Wo liegen Bereiche mit einem Versiegelungsgrad von 70 % oder höher? (Notieren Sie mögliche Veränderungen im Luftbild).",
+		"description": "Die Karte zeigt den Grad der Versiegelung (in einem Raster 10 m x 10 m) an. Darüber liegen die Gebäude und Bauwerke aus dem ALKIS. Diese Überlagerung ermöglicht die Identifizierung von stark versiegelten unbebauten Bereichen. \n Wichtig ist es, die Versiegelungskarte mit einem aktuellen Luftbild abzugleichen und Veränderungen zu notieren, insbesondere hinsichtlich der Schattenflächen.",
+		"drawLayerId": "need_impermeability_hotspots_q3",
+		"canDrawPolygons": true,
+		"canDrawBTF": false,
+		"canDrawNotes": true,
+		"visibleLayerIds": ["bgi-planer:ua_versiegelung_2021_raster"],
+		"legendSrc": "/legends/1v3.svg"
+	},
+	{
+		"id": "waterBalance_starter_question",
+		"name": "",
+		"question": "Saubere Gewässer erhöhen die Aufenthaltsqualität unserer Stadt und bieten einen wichtigen Lebensraum für Flora und Fauna. Außerdem sind sie essenziell für den Berliner Wasserkreislauf und damit für die Trinkwasserversorgung.",
+		"description": "Projekte zur Regenwasserbewirtschaftung können die Kanalisation entlasten (Abkopplung) und sich damit positiv auf die aufnehmenden Fließgewässer auswirken oder gezielt Kleingewässer stützen.",
+		"drawLayerId": "",
+		"canDrawPolygons": false,
+		"canDrawBTF": false,
+		"canDrawNotes": false,
+		"visibleLayerIds": ["project_boundary", "project_new_development"],
+		"legendSrc": ""
+	},
+	{
+		"id": "water_balance_natural_deviation",
+		"name": "Komponenten des Wasserhaushalts",
+		"question": "Wo liegen die Blockteilflächen, in denen der Wasserhaushalt stärker als 20 % vom natürlichen Wasserhaushalt abweicht? (Notieren Sie, welche Komponente besonders abweicht mithilfe einer Attributabfrage in Karte zu Delta W (Evaporation, Versickerung und Oberflächenabfluss)).",
+		"description": "Die Karten zeigen den aktuellen Zustand des Wasserhaushalts sowie die Abweichung vom natürlichen Zustand (Delta-W). Der Wasserhaushalt setzt sich aus den Komponenten Verdunstung, Versickerung und Oberflächenabfluss zusammen.",
+		"drawLayerId": "need_waterbalance_hotspots_q1",
+		"canDrawPolygons": false,
+		"canDrawBTF": true,
+		"canDrawNotes": true,
+		"visibleLayerIds": ["ua_wasserhaushalt_2022:f_deltaw_2022"],
+		"legendSrc": "/legends/1w1.svg"
+	},
+	{
+		"id": "waterProtection_starter_question",
+		"name": "",
+		"question": "Ein veränderter Wasserhaushalt spiegelt die Herausforderungen in Bezug auf Hitzebelastung, Überflutungsrisiko, Versiegelung und Gewässerbelastung wieder.",
+		"description": "Ziel ist es durch die Planungen den natürlichen Zustand möglichst nah zu erreichen. In der Regel muss dafür v.a. die Verdunstungskomponente (Evaporation) gestärkt werden.",
+		"drawLayerId": "",
+		"canDrawPolygons": false,
+		"canDrawBTF": false,
+		"canDrawNotes": false,
+		"visibleLayerIds": ["project_boundary", "project_new_development"],
+		"legendSrc": ""
+	},
+	{
+		"id": "water_protection_sewer_type",
+		"name": "Art der Kanalisation",
+		"question": "Liegt das Quartier ausschließlich innerhalb der Mischwasserkanalisation?",
+		"description": "Um Überläufe aus der Mischwasserkanalisation bei Starkregen in die Berliner Fließgewässer wirksam zu reduzieren, ist eine konsequente dezentrale Regenwasserbewirtschaftung im Einzugsbereich der Mischkanalisation erforderlich. Dies umfasst Maßnahmen wie Versickerung, Rückhaltung und Nutzung des Regenwassers.",
+		"drawLayerId": "need_groundwater_hotspots_q1",
+		"canDrawPolygons": false,
+		"canDrawBTF": true,
+		"canDrawNotes": true,
+		"visibleLayerIds": ["bgi-planer:sp02_09kanalisation2022"],
+		"legendSrc": "/legends/1g1.svg"
+	},
+	{
+		"id": "water_protection_decoupling_requirements",
+		"name": "Abkopplung vom erstaufnehmenden Gewässer",
+		"question": "Wo liegen in dem Gebiet erstaufnehmende Gewässer, die belastet sind und wo Regenwasser eingeleitet wird, und deswegen ein Abkopplungsbedarf besteht?",
+		"description": "Die Karte gibt Auskunft darüber, in welches (erstaufnehmende) Gewässer das in die Regenwasserkanalisation eingeleitete Regenwasser gelangt und ob dieses belastet ist. Falls das Gewässer belastet ist, sollte es das Ziel sein, das Gewässer von Regenwassereinleitungen abzukoppeln. Ob das Gewässer einen Abkopplungsbedarf hat, ist mit der Wasserbehörde abzustimmen. In den Einzugsgebieten von Fließgewässern 1. Ordnung (Spree, Havel, Berlin-Spandauer Schifffahrtskanal, Landwehrkanal, u.a.) ist eine Abkopplung geboten.  Mit Klick auf das Gewässer werden mehr Informationen gegeben.",
+		"drawLayerId": "need_groundwater_hotspots_q2",
+		"canDrawPolygons": false,
+		"canDrawBTF": true,
+		"canDrawNotes": true,
+		"visibleLayerIds": [
+			"bgi-planer:HA4_Kleingewaesser_trocken_pkt",
+			"ua_kanalisation_2022:sp02_09kanalisation2022_2"
+		],
+		"legendSrc": "/legends/placeholder.svg"
+	},
+	{
+		"id": "water_protection_small_waters_demand",
+		"name": "Kleingewässer mit Wasserbedarf",
+		"question": "Wo gibt es im Quartier oder in der Umgebung Gewässer mit Wasserbedarf?",
+		"description": "Die Karte gibt Auskunft darüber, welche Kleingewässer und Feuchtbiotope einen besonderen Bedarf an zusätzlichen Wassermengen haben. Falls das Gewässer von Trockenfall betroffen bzw. gefährdet ist, sollte es das Ziel sein, Regenwasser einzuleiten. Mit Klick auf das Gewässer werden mehr Informationen gegeben.",
+		"drawLayerId": "need_groundwater_hotspots_q3",
+		"canDrawPolygons": false,
+		"canDrawBTF": true,
+		"canDrawNotes": true,
+		"visibleLayerIds": [
+			"bgi-planer:HA4_Kleingewaesser_trocken_pkt",
+			"bgi-planer:HA4_Kleingewaesser_trocken_topoEZG_pl"
+		],
+		"legendSrc": "/legends/placeholder.svg"
+	}
+]

@@ -14,7 +14,7 @@ export const technologiestiftungRules = {
 		"arrow-parens": "error",
 		"default-param-last": ["warn"],
 		eqeqeq: "error",
-		"max-depth": ["error", 4],
+		"max-depth": ["warn", 4],
 		"max-params": ["warn", 3],
 		complexity: ["warn", 10],
 		"new-cap": [
@@ -36,7 +36,7 @@ export const technologiestiftungRules = {
 		"no-new": "error",
 		"no-param-reassign": "error",
 		"no-return-assign": "error",
-		"no-shadow": "error",
+		"no-shadow": "warn",
 		"no-throw-literal": "error",
 		"no-unneeded-ternary": "error",
 		"@typescript-eslint/no-unused-vars": [

@@ -1,9 +1,22 @@
+import LayerInitializer from "@/components/Map/LayerInitializer/LayerInitializer";
+import MapInitializer from "@/components/Map/MapInitializer/MapInitializer";
+import Background from "@/images/background.svg";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./css/globals.css";
 
 const arthouseOwned = localFont({
 	src: [
+		{
+			path: "../../public/fonts/ArthouseOwnedLight.ttf",
+			weight: "300",
+			style: "normal",
+		},
+		{
+			path: "../../public/fonts/ArthouseOwnedRegular.ttf",
+			weight: "400",
+			style: "normal",
+		},
 		{
 			path: "../../public/fonts/ArthouseOwnedMedium.ttf",
 			weight: "500",
@@ -36,12 +49,26 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
 	children,
+	modal,
 }: Readonly<{
 	children: React.ReactNode;
+	modal: React.ReactNode;
 }>) {
 	return (
 		<html lang="de">
-			<body className={arthouseOwned.variable}>{children}</body>
+			<body className={arthouseOwned.variable}>
+				<div className="relative h-full w-full">
+					<div className="absolute h-full w-full">
+						<MapInitializer />
+						<LayerInitializer />
+						{children}
+						{modal}
+					</div>
+					<div className="bg-primary absolute -z-99 flex h-full w-full items-center justify-center overflow-hidden">
+						<Background className="min-h-full min-w-full shrink-0" />
+					</div>
+				</div>
+			</body>
 		</html>
 	);
 }

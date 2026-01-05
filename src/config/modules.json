@@ -1,0 +1,63 @@
+[
+	{
+		"id": "needs_analysis",
+		"label": "Bedarfsanalyse",
+		"order": 1,
+		"sections": [
+			{
+				"id": "flooding",
+				"label": "Starkregen",
+				"icon": "🌧️",
+				"color": "blue",
+				"questionIds": [
+					"module_1_question_1",
+					"module_1_question_2",
+					"module_1_question_3"
+				]
+			},
+			{
+				"id": "temperature",
+				"label": "Hitze",
+				"icon": "🔥",
+				"color": "red",
+				"questionIds": [
+					"module_1_question_4",
+					"module_1_question_5",
+					"module_1_question_6",
+					"module_1_question_7",
+					"module_1_question_8",
+					"module_1_question_9"
+				]
+			},
+			{
+				"id": "impermeability",
+				"label": "Versiegelung",
+				"icon": "🏗️",
+				"color": "gray",
+				"questionIds": [
+					"module_1_question_10",
+					"module_1_question_11",
+					"module_1_question_12"
+				]
+			},
+			{
+				"id": "waterbalance",
+				"label": "Wasserhaushalt",
+				"icon": "💧",
+				"color": "yellow",
+				"questionIds": ["module_1_question_13"]
+			},
+			{
+				"id": "groundwater",
+				"label": "Gewässerschutz",
+				"icon": "🌊",
+				"color": "green",
+				"questionIds": [
+					"module_1_question_14",
+					"module_1_question_15",
+					"module_1_question_16"
+				]
+			}
+		]
+	}
+]

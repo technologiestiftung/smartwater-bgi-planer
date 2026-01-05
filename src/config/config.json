@@ -1,0 +1,387 @@
+{
+	"portalConfig": {
+		"map": {
+			"controls": {
+				"zoom": true,
+				"orientation": {
+					"zoomMode": "once"
+				}
+			},
+			"mapView": {
+				"backgroundImage": "",
+				"startCenter": [389920, 5819697],
+				"extent": [310000, 5760000, 440000, 5865000],
+				"epsg": "EPSG:25833",
+				"startZoomLevel": 4,
+				"options": [
+					{
+						"resolution": 52.9,
+						"scale": 200000,
+						"zoomLevel": 0
+					},
+					{
+						"resolution": 28,
+						"scale": 100000,
+						"zoomLevel": 1
+					},
+					{
+						"resolution": 14,
+						"scale": 50000,
+						"zoomLevel": 2
+					},
+					{
+						"resolution": 7,
+						"scale": 25000,
+						"zoomLevel": 3
+					},
+					{
+						"resolution": 2.8,
+						"scale": 10000,
+						"zoomLevel": 4
+					},
+					{
+						"resolution": 1.4,
+						"scale": 5000,
+						"zoomLevel": 5
+					},
+					{
+						"resolution": 0.7,
+						"scale": 2500,
+						"zoomLevel": 6
+					},
+					{
+						"resolution": 0.28,
+						"scale": 1000,
+						"zoomLevel": 7
+					},
+					{
+						"resolution": 0.14,
+						"scale": 500,
+						"zoomLevel": 8
+					}
+				]
+			}
+		},
+		"portalFooter": {
+			"urls": []
+		}
+	},
+	"layerConfig": {
+		"baselayer": {
+			"elements": [
+				{
+					"id": "basemap_raster_grau",
+					"visibility": true
+				},
+				{
+					"id": "hintergrund_orthophoto",
+					"visibility": false
+				}
+			]
+		},
+		"subjectlayer": {
+			"elements": [
+				{
+					"name": "Thememaps",
+					"type": "folder",
+					"elements": [
+						{
+							"id": "ua_srhk:da_fr_aussergewoehnlich",
+							"visibility": false
+						},
+						{
+							"id": "ua_srhk:db_fliessgeschw_aussergew_kostra",
+							"visibility": false
+						},
+						{
+							"id": "ua_srgk:bb_fliessgeschwindigkeit_aussergewoehnlich",
+							"visibility": false
+						},
+						{
+							"id": "ua_srhk:dc_wasserstand_aussergew_kostra",
+							"visibility": false
+						},
+						{
+							"id": "ua_srgk:cb_wasserstand_aussergewoehnlich",
+							"visibility": false
+						},
+						{
+							"id": "ua_srhk:g_srhk_feuerwehreinsaetze",
+							"visibility": false
+						},
+						{
+							"id": "ua_srhk:b_srhk_feuerwehreinsaetze_pkt",
+							"visibility": false
+						},
+						{
+							"id": "ua_klimaanalyse_2022:q_ua_pet_raster_2022",
+							"visibility": false
+						},
+						{
+							"id": "ua_klimaanalyse_2022:g_ua_lufttemp_raster_t2m_04h_2022",
+							"visibility": false
+						},
+						{
+							"id": "ua_klimabewertung_2022:eb_ua_phk_vul_geb_demog_2022",
+							"visibility": false
+						},
+						{
+							"id": "ua_klimaanalyse_2022:ta_kak_luftaustausch_2022",
+							"visibility": false
+						},
+						{
+							"id": "ua_klimaanalyse_2022:tk_kak_leitbahnkorridor_2022",
+							"visibility": false
+						},
+						{
+							"id": "ua_klimaanalyse_2022:td_kak_kaltlufteinwirkbereich_siedlungsfl_2022",
+							"visibility": false
+						},
+						{
+							"id": "ua_klimaanalyse_2022:tj_kak_gruen_kvs_hoch_2022",
+							"visibility": false
+						},
+						{
+							"id": "ua_klimaanalyse_2022:bb_ua_windfeld_2m_22h_2022_100m",
+							"visibility": false
+						},
+						{
+							"id": "ua_klimaanalyse_2022:ba_ua_windfeld_2m_22h_2022_20m",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:sp02_09kanalisation2022",
+							"visibility": false
+						},
+						{
+							"id": "ua_kanalisation_2022:sp02_09kanalisation2022_2",
+							"visibility": false
+						},
+						{
+							"id": "alkis_bezirke:bezirksgrenzen",
+							"visibility": false
+						},
+						{
+							"id": "alkis_flurstuecke:flurstuecke",
+							"visibility": false
+						},
+						{
+							"id": "rabimo_input_2025",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:HA4_Kleingewaesser_trocken_pkt",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:HA4_Kleingewaesser_trocken_topoEZG_pl",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:g_ua_lufttemp_raster_t2m_04h_2022",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:q_ua_pet_raster_2022",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:ca_ua_phk_aufenth_grfrei_tag_2022",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:cb_ua_phk_bioklim_siedl_tag_2022",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:cc_ua_phk_bioklim_str_tag_2022",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:versiegelung_2021",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:a_gruenvol2020",
+							"visibility": false
+						},
+						{
+							"id": "ua_wasserhaushalt_2022:f_deltaw_2022",
+							"visibility": false
+						},
+						{
+							"id": "ua_wasserhaushalt_2022:e_verdunstung_2022",
+							"visibility": false
+						},
+						{
+							"id": "ua_wasserhaushalt_2022:b_versickerung_2022",
+							"visibility": false
+						},
+						{
+							"id": "ua_wasserhaushalt_2022:a_oberflaechenabfluss_2022",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:dc_ua_phk_bioklim_siedl_nacht_2022",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:dd_ua_phk_bioklim_str_nacht_2022",
+							"visibility": false
+						},
+						{
+							"id": "alkis_gebaeude:gebaeude",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:ua_versiegelung_2021_raster",
+							"visibility": false
+						}
+					]
+				},
+				{
+					"name": "Draw Layers",
+					"type": "folder",
+					"elements": [
+						{
+							"id": "project_btf_planning",
+							"visibility": true
+						},
+						{
+							"id": "project_boundary",
+							"visibility": true
+						},
+						{
+							"id": "project_new_development",
+							"visibility": false
+						},
+						{
+							"id": "project_custom_maps",
+							"visibility": false
+						},
+						{
+							"id": "need_flooding_hotspots_q1",
+							"visibility": false
+						},
+						{
+							"id": "need_flooding_hotspots_q2",
+							"visibility": false
+						},
+						{
+							"id": "need_flooding_hotspots_q3",
+							"visibility": false
+						},
+						{
+							"id": "need_temperature_hotspots_q1",
+							"visibility": false
+						},
+						{
+							"id": "need_temperature_hotspots_q2",
+							"visibility": false
+						},
+						{
+							"id": "need_temperature_hotspots_q3",
+							"visibility": false
+						},
+						{
+							"id": "need_temperature_hotspots_q4",
+							"visibility": false
+						},
+						{
+							"id": "need_temperature_hotspots_q5",
+							"visibility": false
+						},
+						{
+							"id": "need_temperature_hotspots_q6",
+							"visibility": false
+						},
+						{
+							"id": "need_impermeability_hotspots_q1",
+							"visibility": false
+						},
+						{
+							"id": "need_impermeability_hotspots_q2",
+							"visibility": false
+						},
+						{
+							"id": "need_impermeability_hotspots_q3",
+							"visibility": false
+						},
+						{
+							"id": "need_waterbalance_hotspots_q1",
+							"visibility": false
+						},
+						{
+							"id": "need_groundwater_hotspots_q1",
+							"visibility": false
+						},
+						{
+							"id": "need_groundwater_hotspots_q2",
+							"visibility": false
+						},
+						{
+							"id": "need_groundwater_hotspots_q3",
+							"visibility": false
+						},
+						{
+							"id": "feasibility_seepage",
+							"visibility": false
+						},
+						{
+							"id": "feasibility_permeability",
+							"visibility": false
+						},
+						{
+							"id": "feasibility_greening",
+							"visibility": false
+						},
+						{
+							"id": "feasibility_building_greening",
+							"visibility": false
+						},
+						{
+							"id": "feasibility_retention",
+							"visibility": false
+						},
+						{
+							"id": "measures_seepage",
+							"visibility": true
+						},
+						{
+							"id": "measures_permeability",
+							"visibility": false
+						},
+						{
+							"id": "measures_greening",
+							"visibility": false
+						},
+						{
+							"id": "measures_building_greening",
+							"visibility": false
+						},
+						{
+							"id": "measures_retention",
+							"visibility": false
+						},
+						{
+							"id": "measures_connected_areas",
+							"visibility": false
+						},
+						{
+							"id": "module1_notes",
+							"visibility": true
+						},
+						{
+							"id": "module2_notes",
+							"visibility": false
+						},
+						{
+							"id": "module3_notes",
+							"visibility": false
+						}
+					]
+				}
+			]
+		}
+	}
+}

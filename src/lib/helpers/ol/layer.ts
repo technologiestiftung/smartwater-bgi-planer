@@ -1,0 +1,205 @@
+import { getFileName } from "@/lib/helpers/file";
+import {
+	LayerElementBase,
+	LayerFolder,
+	LayerService,
+	ManagedLayer,
+} from "@/store/layers/types";
+import { useMapStore } from "@/store/map";
+import { MapConfig } from "@/store/map/types";
+import { Feature } from "ol";
+import VectorLayer from "ol/layer/Vector";
+import type Map from "ol/Map";
+import { Vector as VectorSource } from "ol/source";
+import { Style } from "ol/style";
+
+export type LayerTreeElement = LayerElementBase | LayerFolder;
+
+export const getDrawLayerIds = (mapConfig: MapConfig | null): string[] => {
+	if (!mapConfig) return [];
+
+	const drawFolder = mapConfig.layerConfig.subjectlayer.elements.find(
+		(el): el is LayerFolder =>
+			el.type === "folder" && el.name === "Draw Layers",
+	);
+
+	if (!drawFolder) return [];
+
+	return drawFolder.elements
+		.filter((el): el is LayerElementBase => "id" in el)
+		.map((el) => el.id);
+};
+
+export const getVectorLayer = (map: Map, layerId: string) => {
+	return getLayerById(map, layerId) as VectorLayer<VectorSource> | null;
+};
+
+export const getLayerSource = (layer: VectorLayer<VectorSource> | null) => {
+	return layer?.getSource() ?? null;
+};
+
+export const layerHasFeatures = (map: Map, layerId: string): boolean => {
+	const source = getLayerSource(getVectorLayer(map, layerId));
+	return source ? source.getFeatures().length > 0 : false;
+};
+
+export const ensureVectorLayer = (
+	map: Map,
+	layerId: string,
+): VectorLayer<VectorSource> => {
+	let layer = getLayerById(map, layerId) as
+		| VectorLayer<VectorSource>
+		| undefined;
+
+	if (!layer) {
+		const source = new VectorSource();
+		layer = new VectorLayer({ source });
+		layer.set("id", layerId);
+		map.addLayer(layer);
+	}
+	return layer;
+};
+
+export function getLayerIdsInFolder(
+	folderElements: LayerTreeElement[],
+	folderName: string,
+	foundIds: Set<string> = new Set(),
+): Set<string> {
+	folderElements.forEach((item) => {
+		if (item.type === "folder") {
+			if (item.name === folderName) {
+				const flattenFolderChildren = (children: LayerTreeElement[]) => {
+					children.forEach((child) => {
+						if (child.type === "folder") {
+							flattenFolderChildren(child.elements);
+						} else if ("id" in child) {
+							foundIds.add(child.id);
+						}
+					});
+				};
+				flattenFolderChildren(item.elements);
+			} else {
+				getLayerIdsInFolder(item.elements ?? [], folderName, foundIds);
+			}
+		}
+	});
+	return foundIds;
+}
+
+export const getLayerById = (map: Map | null, id: string) => {
+	if (!map) return null;
+	return map.getAllLayers().find((l) => l.get("id") === id) as
+		| VectorLayer<VectorSource>
+		| undefined;
+};
+
+export const createVectorLayer = (params: {
+	features: Feature[];
+	fileName: string;
+	layerId: string;
+	style: Style;
+}) => {
+	const { features, fileName, layerId, style } = params;
+	const vectorLayer = new VectorLayer({
+		source: new VectorSource({ features }),
+		style: style,
+	});
+
+	vectorLayer.set("name", getFileName(fileName));
+	vectorLayer.set("id", layerId);
+
+	return vectorLayer;
+};
+
+export const getLayerIdsFromFolder = (folderName: string): string[] => {
+	try {
+		const { config } = useMapStore.getState();
+		const elements = config?.layerConfig?.subjectlayer?.elements;
+
+		if (elements) {
+			return Array.from(getLayerIdsInFolder(elements, folderName));
+		}
+	} catch (error) {
+		console.error("[getAllDrawLayerIds] Error getting draw layer IDs:", error);
+	}
+	return [];
+};
+
+export const isDrawLayer = (layerId: string): boolean => {
+	return getLayerIdsFromFolder("Draw Layers").includes(layerId);
+};
+
+export const createManagedLayer = (
+	layerId: string,
+	fileName: string,
+	olLayer: VectorLayer<VectorSource>,
+): ManagedLayer => ({
+	id: layerId,
+	config: {
+		id: layerId,
+		name: getFileName(fileName),
+		visibility: true,
+		status: "loaded",
+		elements: [],
+	},
+	olLayer,
+	status: "loaded",
+	visibility: true,
+	opacity: 1,
+	zIndex: 501,
+	layerType: "subject",
+});
+
+export const createManagedLayerFromConfig = (params: {
+	layerId: string;
+	name: string;
+	olLayer: any;
+	zIndex?: number;
+	layerType?: "base" | "subject";
+	service?: LayerService;
+	visibility?: boolean;
+}): ManagedLayer => {
+	const {
+		layerId,
+		name,
+		olLayer,
+		zIndex = 501,
+		layerType = "subject",
+		service,
+		visibility = true,
+	} = params;
+
+	return {
+		id: layerId,
+		config: {
+			id: layerId,
+			name,
+			visibility,
+			status: "loaded",
+			elements: [],
+			...(service && { service }),
+		},
+		olLayer,
+		status: "loaded",
+		visibility,
+		opacity: 1,
+		zIndex,
+		layerType,
+	};
+};
+
+export function scaleToResolution(
+	scale: number,
+	mapConfig: MapConfig | null,
+): number | undefined {
+	if (!mapConfig?.portalConfig?.map?.mapView?.options) return undefined;
+	const sorted = [...mapConfig.portalConfig.map.mapView.options].sort(
+		(a, b) => b.scale - a.scale,
+	);
+	for (const entry of sorted) {
+		if (scale >= entry.scale) {
+			return entry.resolution;
+		}
+	}
+	return sorted.length > 0 ? sorted[sorted.length - 1].resolution : undefined;
+}
