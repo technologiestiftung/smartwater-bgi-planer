@@ -135,7 +135,13 @@ function ProjectBoundaryStep() {
 	const { hasFeatures } = useLayerFeatures(LAYER_IDS.PROJECT_BOUNDARY);
 	const { formattedArea } = useLayerArea(LAYER_IDS.PROJECT_BOUNDARY);
 	const { setStepValidation } = useVerticalStepper();
-	const { uploadError, uploadSuccess, clearUploadStatus } = useUiStore();
+	const {
+		uploadError,
+		uploadSuccess,
+		clearUploadStatus,
+		setUploadError,
+		setUploadSuccess,
+	} = useUiStore();
 	const [mapError, setMapError] = useState("");
 
 	useEffect(() => {
@@ -153,6 +159,18 @@ function ProjectBoundaryStep() {
 		clearUploadStatus();
 		return true;
 	};
+
+	useEffect(() => {
+		if (uploadError || uploadSuccess) {
+			setTimeout(() => {
+				if (uploadSuccess) {
+					setUploadSuccess(null);
+				} else if (uploadError) {
+					setUploadError(null);
+				}
+			}, 3000);
+		}
+	}, [uploadError, uploadSuccess]);
 
 	return (
 		<div className="space-y-4">
@@ -199,10 +217,24 @@ function ProjectBoundaryStep() {
 
 function NewDevelopmentStep() {
 	const { formattedArea } = useLayerArea("project_new_development");
+	const { uploadError, uploadSuccess, setUploadError, setUploadSuccess } =
+		useUiStore();
 
 	const handleConfirm = (): boolean => {
 		return true;
 	};
+
+	useEffect(() => {
+		if (uploadError || uploadSuccess) {
+			setTimeout(() => {
+				if (uploadSuccess) {
+					setUploadSuccess(null);
+				} else if (uploadError) {
+					setUploadError(null);
+				}
+			}, 3000);
+		}
+	}, [uploadError, uploadSuccess]);
 
 	return (
 		<div className="space-y-4">
@@ -218,18 +250,35 @@ function NewDevelopmentStep() {
 				entsprechen. Diese sind für Simulationen relevant, weil die Gesamtmengen
 				von versiegelten und unversiegelten Flächen wichtige Basiswerte sind.
 			</p>
-
-			<ConfirmButton
-				onConfirm={handleConfirm}
-				buttonText="Bestätigen"
-				displayText={formattedArea}
-			/>
+			<div className="mt-8">
+				<ConfirmButton
+					onConfirm={handleConfirm}
+					buttonText="Bestätigen"
+					displayText={formattedArea}
+				/>
+			</div>
+			{uploadError && (
+				<div className="text-red mt-4 rounded-sm border border-dashed bg-red-50 p-2 text-sm">
+					{uploadError}
+				</div>
+			)}
+			{uploadSuccess && (
+				<div className="border-primary bg-light mt-4 rounded-sm border border-dashed p-2 text-sm">
+					{uploadSuccess}
+				</div>
+			)}
 		</div>
 	);
 }
 
 function AdditionalMapsStep({ projectId }: { projectId: string }) {
-	const { uploadError, uploadSuccess, clearUploadStatus } = useUiStore();
+	const {
+		uploadError,
+		uploadSuccess,
+		clearUploadStatus,
+		setUploadError,
+		setUploadSuccess,
+	} = useUiStore();
 	const { layers, removeLayer } = useLayersStore();
 	const map = useMapStore((state) => state.map);
 	const { deleteFile } = useFilesStore();
@@ -265,6 +314,18 @@ function AdditionalMapsStep({ projectId }: { projectId: string }) {
 	useEffect(() => {
 		clearUploadStatus();
 	}, [clearUploadStatus]);
+
+	useEffect(() => {
+		if (uploadError || uploadSuccess) {
+			setTimeout(() => {
+				if (uploadSuccess) {
+					setUploadSuccess(null);
+				} else if (uploadError) {
+					setUploadError(null);
+				}
+			}, 3000);
+		}
+	}, [uploadError, uploadSuccess]);
 
 	return (
 		<div className="space-y-4">
