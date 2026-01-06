@@ -207,6 +207,7 @@ useEffect(() => {
    - Triggert Reinitialisierung aller drei Komponenten
 
 2. **Projekt löschen:**
+
    ```typescript
    useMapStore.getState().resetMapState();
    ```
