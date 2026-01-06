@@ -26,7 +26,6 @@ export const useProjectsStore = create<ProjectsState & ProjectsActions>()(
 		{
 			name: "projects-storage",
 			onRehydrateStorage: () => (state) => {
-				console.log("[index] projects state::", state);
 				state?.setHasHydrated(true);
 			},
 		},
