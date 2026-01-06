@@ -13,7 +13,7 @@ import {
 import { useMapStore } from "@/store/map";
 import { MapConfig } from "@/store/map/types";
 import { LayerStatus } from "@/types/shared";
-import { FC, useEffect, useRef } from "react";
+import { FC, useEffect } from "react";
 
 initializeProjections();
 
@@ -70,6 +70,7 @@ function createEnrichedConfig(rawConfig: MapConfig): MapConfig {
 const MapInitializer: FC = () => {
 	const hasHydrated = useMapStore((state) => state.hasHydrated);
 	const isConfigReady = useMapStore((state) => state.isConfigReady);
+	const resetId = useMapStore((state) => state.resetId);
 
 	const setConfig = useMapStore((state) => state.setConfig);
 	const setInitialConfig = useMapStore((state) => state.setInitialConfig);
@@ -79,12 +80,8 @@ const MapInitializer: FC = () => {
 	);
 	const setLayerConfig = useLayersStore((state) => state.setLayerConfig);
 
-	const hasInitialized = useRef(false);
-
 	useEffect(() => {
-		if (!hasHydrated || isConfigReady || hasInitialized.current) return;
-
-		hasInitialized.current = true;
+		if (!hasHydrated || isConfigReady) return;
 
 		const config = useMapStore.getState().config;
 		const initialConfig = useMapStore.getState().initialConfig;
@@ -109,6 +106,7 @@ const MapInitializer: FC = () => {
 	}, [
 		hasHydrated,
 		isConfigReady,
+		resetId,
 		setConfig,
 		setInitialConfig,
 		setIsConfigReady,

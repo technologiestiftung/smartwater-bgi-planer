@@ -49,6 +49,7 @@ export interface MapState {
 		accuracy?: number;
 	};
 	hasHydrated: boolean;
+	resetId: number;
 }
 
 export interface MapActions {

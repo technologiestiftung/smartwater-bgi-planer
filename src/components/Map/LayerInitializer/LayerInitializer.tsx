@@ -5,7 +5,7 @@ import { getDrawLayerIds } from "@/lib/helpers/ol";
 import { useLayersStore } from "@/store/layers";
 import { ManagedLayer } from "@/store/layers/types";
 import { useMapStore } from "@/store/map";
-import { FC, useEffect, useRef } from "react";
+import { FC, useEffect } from "react";
 import { useWmtsCapabilities } from "./hooks/useWmtsCapabilities";
 
 const Z_INDEX = {
@@ -27,6 +27,7 @@ function calculateZIndex(
 const LayerInitializer: FC = () => {
 	const initialConfig = useMapStore((state) => state.initialConfig);
 	const map = useMapStore((state) => state.map);
+	const resetId = useMapStore((state) => state.resetId);
 	const flattenedLayerElements = useLayersStore(
 		(state) => state.flattenedLayerElements,
 	);
@@ -36,21 +37,15 @@ const LayerInitializer: FC = () => {
 		flattenedLayerElements,
 	);
 
-	const hasInitialized = useRef(false);
-
 	useEffect(() => {
-		// Guard: check all prerequisites and ensure we only initialize once
 		if (
 			!map ||
 			!initialConfig ||
 			!capabilitiesLoaded ||
-			flattenedLayerElements.length === 0 ||
-			hasInitialized.current
+			flattenedLayerElements.length === 0
 		) {
 			return;
 		}
-
-		hasInitialized.current = true;
 
 		const newManagedLayersMap = new Map<string, ManagedLayer>();
 		const drawLayerIds = getDrawLayerIds(initialConfig);
@@ -143,13 +138,13 @@ const LayerInitializer: FC = () => {
 				useMapStore.getState().setMapReady(true);
 			}
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [
 		map,
 		initialConfig,
 		capabilitiesLoaded,
-		flattenedLayerElements.length,
+		flattenedLayerElements,
 		wmtsCapabilities,
+		resetId,
 	]);
 
 	return null;

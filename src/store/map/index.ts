@@ -16,6 +16,7 @@ const initialState: MapState = {
 		accuracy: undefined,
 	},
 	hasHydrated: false,
+	resetId: 0,
 };
 
 export const useMapStore = create<MapState & MapActions>()(
@@ -43,12 +44,15 @@ export const useMapStore = create<MapState & MapActions>()(
 			resetMapState: () => {
 				const currentMap = _get().map;
 				if (currentMap) {
+					currentMap.getLayers().clear();
 					currentMap.setTarget(undefined);
+					currentMap.dispose();
 				}
 
 				set({
 					...initialState,
 					hasHydrated: true,
+					resetId: _get().resetId + 1,
 				});
 			},
 		}),
@@ -57,6 +61,7 @@ export const useMapStore = create<MapState & MapActions>()(
 			partialize: (state) => ({
 				config: state.config,
 				userLocation: state.userLocation,
+				// Don't persist resetId - it's only for runtime
 			}),
 			onRehydrateStorage: () => (state) => {
 				state?.setHasHydrated(true);

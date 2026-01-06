@@ -11,17 +11,20 @@ interface OlMapProps {
 }
 
 const OlMap: FC<OlMapProps> = ({ children }) => {
-	const config = useMapStore((state) => state.config);
 	const isConfigReady = useMapStore((state) => state.isConfigReady);
+	const resetId = useMapStore((state) => state.resetId);
 	const mapId = useRef<HTMLDivElement>(null);
-	const hasInitialized = useRef(false);
 
 	useEffect(() => {
-		if (!isConfigReady || !config || hasInitialized.current) {
+		if (!isConfigReady) {
 			return;
 		}
 
-		hasInitialized.current = true;
+		const config = useMapStore.getState().config;
+
+		if (!config) {
+			return;
+		}
 
 		const mapViewConfig = config.portalConfig.map.mapView;
 
@@ -36,7 +39,6 @@ const OlMap: FC<OlMapProps> = ({ children }) => {
 
 		if (!mapId.current) {
 			console.error("[OlMap] mapId.current is not defined");
-			hasInitialized.current = false;
 			return;
 		}
 
@@ -63,17 +65,14 @@ const OlMap: FC<OlMapProps> = ({ children }) => {
 					map.setTarget(undefined);
 				}
 				useMapStore.getState().removeMap();
-				hasInitialized.current = false;
 			};
 		} catch (error) {
 			console.error("[OlMap] Error initializing map:", error);
 			useMapStore
 				.getState()
 				.setMapError(true, "Fehler beim Initialisieren der Karte");
-			hasInitialized.current = false;
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [isConfigReady]);
+	}, [isConfigReady, resetId]);
 
 	return (
 		<div ref={mapId} className="map h-full w-full bg-slate-300">
