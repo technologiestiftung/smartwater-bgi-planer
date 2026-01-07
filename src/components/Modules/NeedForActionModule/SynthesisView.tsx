@@ -2,6 +2,7 @@ import { SynthesisBadge } from "@/components/Modules/NeedForActionModule/Synthes
 import { getModuleSteps } from "@/components/Modules/shared/moduleConfig";
 import { Button } from "@/components/ui/button";
 import { useMapReady } from "@/hooks/use-map-ready";
+import { checkForQuestion } from "@/lib/helpers/questions";
 import { useAnswersStore } from "@/store/answers";
 import { useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
@@ -54,11 +55,7 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 			const stepQuestions = lastActiveStep?.questions || [];
 
 			stepQuestions.forEach((questionId) => {
-				if (
-					questionId.includes("starter_question") ||
-					questionId.includes("module_introduction")
-				)
-					return;
+				if (checkForQuestion(questionId, true)) return;
 				const questionConfig = layerConfig.find(
 					(config) => config.id === questionId,
 				);
@@ -146,11 +143,7 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 					});
 
 					const sectionAnswers = sectionQuestions
-						.filter(
-							(q) =>
-								!q.includes("starter_question") &&
-								!q.includes("module_introduction"),
-						)
+						.filter((q) => checkForQuestion(q))
 						.map((questionId) => answers[questionId]);
 
 					const allTrue =
@@ -194,11 +187,7 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 							</div>
 							<div className="flex flex-wrap gap-2">
 								{sectionQuestions.map((questionId) => {
-									if (
-										questionId.includes("starter_question") ||
-										questionId.includes("module_introduction")
-									)
-										return null;
+									if (checkForQuestion(questionId, true)) return null;
 									const answer = answers[questionId];
 									const questionConfig = layerConfig.find(
 										(config) => config.id === questionId,

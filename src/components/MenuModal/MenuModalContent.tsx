@@ -1,7 +1,10 @@
 "use client";
 
 import MenuModule from "@/components/MenuModal/MenuModule";
+import ProjectDownloadButton from "@/components/ProjectDownloadButton/ProjectDownloadButton";
 import { Button } from "@/components/ui/button";
+import { checkForQuestion } from "@/lib/helpers/questions";
+import { useAnswersStore } from "@/store";
 import { useProjectsStore } from "@/store/projects";
 import {
 	ArrowCircleRightIcon,
@@ -13,7 +16,7 @@ import {
 	ShovelIcon,
 } from "@phosphor-icons/react";
 import Link from "next/link";
-import ProjectDownloadButton from "@/components/ProjectDownloadButton/ProjectDownloadButton";
+import modulesData from "../Modules/modules.json";
 
 interface MenuModalProps {
 	projectId: string;
@@ -22,9 +25,31 @@ interface MenuModalProps {
 export default function MenuModalContent({ projectId }: MenuModalProps) {
 	const getProject = useProjectsStore((state) => state.getProject);
 	const project = getProject();
+	const answers = useAnswersStore((state) => state.answers);
 
 	const name = project?.name || "Unbenanntes Projekt";
 	const description = project?.description || "Keine Beschreibung vorhanden.";
+
+	const getQuestionsNumber = () => {
+		const needForActionModule = modulesData.modules.find(
+			(module) => module.id === "needForAction",
+		);
+		if (!needForActionModule?.steps) return 0;
+
+		return needForActionModule.steps.reduce((total, step) => {
+			if (!step.questions) return total;
+			return (
+				total +
+				step.questions.filter((currentQuestion) =>
+					checkForQuestion(currentQuestion),
+				).length
+			);
+		}, 0);
+	};
+
+	const answersLength = Object.keys(answers).filter((key) =>
+		checkForQuestion(key),
+	).length;
 
 	return (
 		<>
@@ -34,13 +59,13 @@ export default function MenuModalContent({ projectId }: MenuModalProps) {
 					description={description || "Keine Beschreibung vorhanden."}
 					sideElements={
 						<div className="flex flex-col items-end gap-2">
-							<Button asChild>
+							<Button asChild className="w-full">
 								<Link href={`/${projectId}/edit`}>
 									<InfoIcon className="mr-2" />
 									Projektinformationen
 								</Link>
 							</Button>
-							<Button asChild>
+							<Button asChild className="w-full">
 								<Link href={`/${projectId}/project-starter`}>
 									<DownloadIcon className="mr-2" />
 									Untersuchungsgebiet/Neubauten
@@ -58,7 +83,7 @@ export default function MenuModalContent({ projectId }: MenuModalProps) {
 					sideElements={
 						<ListMagnifyingGlassIcon className="text-primary size-16" />
 					}
-					additionalInfo="17 von 21 Fragen beantwortet"
+					additionalInfo={`${answersLength} von ${getQuestionsNumber()} Fragen beantwortet`}
 					buttonBottom={
 						<Button asChild>
 							<Link href={`/${projectId}/handlungsbedarfe`}>
@@ -72,7 +97,7 @@ export default function MenuModalContent({ projectId }: MenuModalProps) {
 					title="Machbarkeit von Maßnahmen"
 					description="Prüfen Sie in diesem Modul die Machbarkeit der blau-grünen Maßnahmen am gewählten Standort."
 					sideElements={<ShovelIcon className="text-primary size-16" />}
-					additionalInfo="17 von 21 Fragen beantwortet"
+					additionalInfo="XX von XX Fragen beantwortet"
 					buttonBottom={
 						<Button asChild>
 							<Link href={`/${projectId}/machbarkeit`}>

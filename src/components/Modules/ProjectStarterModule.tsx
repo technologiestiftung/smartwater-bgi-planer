@@ -61,6 +61,55 @@ const steps: StepConfig[] = [
 	},
 ];
 
+// Custom hook for upload status management
+function useUploadStatusAutoHide() {
+	const { uploadError, uploadSuccess, setUploadError, setUploadSuccess } =
+		useUiStore(
+			useShallow((state) => ({
+				uploadError: state.uploadError,
+				uploadSuccess: state.uploadSuccess,
+				setUploadError: state.setUploadError,
+				setUploadSuccess: state.setUploadSuccess,
+			})),
+		);
+
+	useEffect(() => {
+		if (uploadError || uploadSuccess) {
+			const timer = setTimeout(() => {
+				if (uploadSuccess) setUploadSuccess(null);
+				if (uploadError) setUploadError(null);
+			}, 3000);
+			return () => clearTimeout(timer);
+		}
+	}, [uploadError, uploadSuccess, setUploadError, setUploadSuccess]);
+
+	return { uploadError, uploadSuccess };
+}
+
+// Reusable status messages component
+function UploadStatusMessages({
+	error,
+	success,
+}: {
+	error: string | null;
+	success: string | null;
+}) {
+	return (
+		<>
+			{error && (
+				<div className="text-red mt-4 rounded-sm border border-dashed bg-red-50 p-2 text-sm">
+					{error}
+				</div>
+			)}
+			{success && (
+				<div className="border-primary bg-light mt-4 rounded-sm border border-dashed p-2 text-sm">
+					{success}
+				</div>
+			)}
+		</>
+	);
+}
+
 function StepperFooter({
 	onClose,
 	onComplete,
@@ -77,26 +126,26 @@ function StepperFooter({
 		currentStepIndex,
 		totalSteps,
 	} = useVerticalStepper();
-
 	const { applyConfigLayers, hideLayersByPattern } = useLayersStore(
 		useShallow((state) => ({
 			applyConfigLayers: state.applyConfigLayers,
 			hideLayersByPattern: state.hideLayersByPattern,
 		})),
 	);
-
 	const clearUploadStatus = useUiStore((state) => state.clearUploadStatus);
 	const isMapReady = useMapReady();
 
 	useEffect(() => {
 		if (!isMapReady) return;
 
-		if (currentStepId === "projectBoundary") {
-			applyConfigLayers("start_view_project_boundary", true);
-		} else if (currentStepId === "newDevelopment") {
-			applyConfigLayers("start_view_project_new_development", true);
-		}
-	}, [currentStepId, applyConfigLayers, isMapReady, hideLayersByPattern]);
+		const configMap: Record<string, string> = {
+			projectBoundary: "start_view_project_boundary",
+			newDevelopment: "start_view_project_new_development",
+		};
+
+		const config = configMap[currentStepId];
+		if (config) applyConfigLayers(config, true);
+	}, [currentStepId, applyConfigLayers, isMapReady]);
 
 	const isLastStep = currentStepIndex === totalSteps - 1;
 
@@ -140,13 +189,8 @@ function ProjectBoundaryStep() {
 	const { hasFeatures } = useLayerFeatures(LAYER_IDS.PROJECT_BOUNDARY);
 	const { formattedArea } = useLayerArea(LAYER_IDS.PROJECT_BOUNDARY);
 	const { setStepValidation } = useVerticalStepper();
-	const { uploadError, uploadSuccess, clearUploadStatus } = useUiStore(
-		useShallow((state) => ({
-			uploadError: state.uploadError,
-			uploadSuccess: state.uploadSuccess,
-			clearUploadStatus: state.clearUploadStatus,
-		})),
-	);
+	const clearUploadStatus = useUiStore((state) => state.clearUploadStatus);
+	const { uploadError, uploadSuccess } = useUploadStatusAutoHide();
 	const [mapError, setMapError] = useState("");
 
 	useEffect(() => {
@@ -158,9 +202,7 @@ function ProjectBoundaryStep() {
 			setMapError("Bitte zeichnen Sie zuerst ein Projektgebiet ein.");
 			return false;
 		}
-		if (uploadError) {
-			return false;
-		}
+		if (uploadError) return false;
 		clearUploadStatus();
 		return true;
 	};
@@ -189,19 +231,10 @@ function ProjectBoundaryStep() {
 				/>
 			</div>
 
-			{uploadError && (
-				<div className="text-red mt-4 rounded-sm border border-dashed bg-red-50 p-2 text-sm">
-					{uploadError}
-				</div>
-			)}
+			<UploadStatusMessages error={uploadError} success={uploadSuccess} />
 			{mapError && (
 				<div className="border-primary text-red mt-4 rounded-sm border border-dashed bg-red-50 p-2 text-sm">
 					{mapError}
-				</div>
-			)}
-			{uploadSuccess && (
-				<div className="border-primary bg-light mt-4 rounded-sm border border-dashed p-2 text-sm">
-					{uploadSuccess}
 				</div>
 			)}
 		</div>
@@ -210,10 +243,7 @@ function ProjectBoundaryStep() {
 
 function NewDevelopmentStep() {
 	const { formattedArea } = useLayerArea("project_new_development");
-
-	const handleConfirm = (): boolean => {
-		return true;
-	};
+	const { uploadError, uploadSuccess } = useUploadStatusAutoHide();
 
 	return (
 		<div className="space-y-4">
@@ -229,24 +259,21 @@ function NewDevelopmentStep() {
 				entsprechen. Diese sind für Simulationen relevant, weil die Gesamtmengen
 				von versiegelten und unversiegelten Flächen wichtige Basiswerte sind.
 			</p>
-
-			<ConfirmButton
-				onConfirm={handleConfirm}
-				buttonText="Bestätigen"
-				displayText={formattedArea}
-			/>
+			<div className="mt-8">
+				<ConfirmButton
+					onConfirm={() => true}
+					buttonText="Bestätigen"
+					displayText={formattedArea}
+				/>
+			</div>
+			<UploadStatusMessages error={uploadError} success={uploadSuccess} />
 		</div>
 	);
 }
 
 function AdditionalMapsStep({ projectId }: { projectId: string }) {
-	const { uploadError, uploadSuccess, clearUploadStatus } = useUiStore(
-		useShallow((state) => ({
-			uploadError: state.uploadError,
-			uploadSuccess: state.uploadSuccess,
-			clearUploadStatus: state.clearUploadStatus,
-		})),
-	);
+	const clearUploadStatus = useUiStore((state) => state.clearUploadStatus);
+	const { uploadError, uploadSuccess } = useUploadStatusAutoHide();
 	const { layers, removeLayer } = useLayersStore(
 		useShallow((state) => ({
 			layers: state.layers,
@@ -256,13 +283,15 @@ function AdditionalMapsStep({ projectId }: { projectId: string }) {
 	const map = useMapStore((state) => state.map);
 	const deleteFile = useFilesStore((state) => state.deleteFile);
 
-	const uploadedLayers = useMemo(() => {
-		return Array.from(layers.values()).filter(
-			(layer) =>
-				layer.id.startsWith("uploaded_") ||
-				layer.id.startsWith("uploaded_wms_"),
-		);
-	}, [layers]);
+	const uploadedLayers = useMemo(
+		() =>
+			Array.from(layers.values()).filter(
+				(layer) =>
+					layer.id.startsWith("uploaded_") ||
+					layer.id.startsWith("uploaded_wms_"),
+			),
+		[layers],
+	);
 
 	const deleteLayer = useCallback(
 		async (layerId: string) => {
@@ -304,41 +333,26 @@ function AdditionalMapsStep({ projectId }: { projectId: string }) {
 			</div>
 
 			{uploadedLayers.length > 0 && (
-				<div className="space-y-2">
-					<div className="max-h-56 space-y-1 overflow-y-auto">
-						{uploadedLayers.map((layer) => (
-							<div
-								key={layer.id}
-								className="flex items-center justify-between rounded-sm"
+				<div className="max-h-56 space-y-1 overflow-y-auto">
+					{uploadedLayers.map((layer) => (
+						<div
+							key={layer.id}
+							className="flex items-center justify-between rounded-sm"
+						>
+							<span className="text-sm font-medium">{layer.config.name}</span>
+							<button
+								onClick={() => deleteLayer(layer.id)}
+								className="text-primary flex h-8 w-8 cursor-pointer items-center justify-center rounded-sm"
+								title="Layer löschen"
 							>
-								<div className="flex flex-col">
-									<span className="text-sm font-medium">
-										{layer.config.name}
-									</span>
-								</div>
-								<button
-									onClick={() => deleteLayer(layer.id)}
-									className="text-primary flex h-8 w-8 cursor-pointer items-center justify-center rounded-sm"
-									title="Layer löschen"
-								>
-									<TrashIcon size={16} />
-								</button>
-							</div>
-						))}
-					</div>
+								<TrashIcon size={16} />
+							</button>
+						</div>
+					))}
 				</div>
 			)}
 
-			{uploadSuccess && (
-				<div className="border-primary bg-light mt-4 rounded-sm border border-dashed p-2 text-sm">
-					{uploadSuccess}
-				</div>
-			)}
-			{uploadError && (
-				<div className="text-red mt-4 rounded-sm border border-dashed bg-red-50 p-2 text-sm">
-					{uploadError}
-				</div>
-			)}
+			<UploadStatusMessages error={uploadError} success={uploadSuccess} />
 		</div>
 	);
 }
@@ -351,11 +365,7 @@ export default function ProjectStarterModule({
 }: ProjectStarterModuleProps) {
 	const clearUploadStatus = useUiStore((state) => state.clearUploadStatus);
 
-	useEffect(() => {
-		return () => {
-			clearUploadStatus();
-		};
-	}, [clearUploadStatus]);
+	useEffect(() => () => clearUploadStatus(), [clearUploadStatus]);
 
 	return (
 		<SideMenu
@@ -374,11 +384,9 @@ export default function ProjectStarterModule({
 							<StepContent stepId="projectBoundary">
 								<ProjectBoundaryStep />
 							</StepContent>
-
 							<StepContent stepId="newDevelopment">
 								<NewDevelopmentStep />
 							</StepContent>
-
 							<StepContent stepId="additionalMaps">
 								<AdditionalMapsStep projectId={projectId} />
 							</StepContent>
