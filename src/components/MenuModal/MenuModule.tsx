@@ -20,11 +20,11 @@ const MenuModule: FC<MenuModuleProps> = ({
 	return (
 		<div className="MenuModule-root border-muted flex flex-col border p-6">
 			<div className="mb-4 flex gap-4">
-				<div className="flex flex-grow flex-col">
+				<div className="flex grow flex-col">
 					<h4 className="text-primary font-bold">{title}</h4>
 					<p className="">{description}</p>
 				</div>
-				{sideElements && <div className="flex-shrink">{sideElements}</div>}
+				{sideElements && <div className="shrink">{sideElements}</div>}
 			</div>
 
 			{showFooter && (
