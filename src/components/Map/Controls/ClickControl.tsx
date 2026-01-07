@@ -121,7 +121,7 @@ const ClickControl: FC<ClickControlProps> = ({
 		map.addOverlay(overlay);
 
 		const handleClick = (evt: any) => {
-			if (isDrawing || isBlockAreaSelecting || isDrawingNote) {
+			if (isDrawing || isBlockAreaSelecting) {
 				return;
 			}
 
