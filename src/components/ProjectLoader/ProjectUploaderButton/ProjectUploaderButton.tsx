@@ -13,7 +13,7 @@ interface ProjectUploaderButtonProps {
 	isUploadZoneVisible: boolean;
 	files: File[];
 	onToggle: () => void;
-	onComplete: () => void;
+	onComplete: (uploadedProject: any) => void;
 }
 
 const ProjectUploaderButton: FC<ProjectUploaderButtonProps> = ({
@@ -43,7 +43,8 @@ const ProjectUploaderButton: FC<ProjectUploaderButtonProps> = ({
 			const projectDataText = await projectDataFile.async("string");
 			const projectData = JSON.parse(projectDataText);
 
-			createProject(projectData.data.project);
+			const uploadedProject = projectData.data.project;
+			createProject(uploadedProject);
 
 			Object.entries(projectData.data.answers).forEach(([key, value]) => {
 				setAnswer(key, value as boolean);
@@ -60,27 +61,44 @@ const ProjectUploaderButton: FC<ProjectUploaderButtonProps> = ({
 				setUserLocation(projectData.data.map.userLocation);
 			}
 
-			await Promise.all(
-				projectData.data.files.map(async (fileInfo: any) => {
-					const layerFile = zipContent.file(fileInfo.metadata.fileName);
+			const filePromises = projectData.data.files.map(async (fileInfo: any) => {
+				const possiblePaths = [
+					fileInfo.metadata.fileName,
+					`files/${fileInfo.layerId}/${fileInfo.metadata.fileName}`,
+					`${fileInfo.layerId}/${fileInfo.metadata.fileName}`,
+				];
+
+				let layerFile = null;
+				let foundPath = null;
+
+				for (const path of possiblePaths) {
+					layerFile = zipContent.file(path);
 					if (layerFile) {
-						const fileContent = await layerFile.async("blob");
-						const _file = new File([fileContent], fileInfo.metadata.fileName, {
-							type: fileInfo.metadata.fileType,
-						});
-
-						await addFile({
-							projectId: fileInfo.projectId,
-							layerId: fileInfo.layerId,
-							file: _file,
-						});
+						foundPath = path;
+						break;
 					}
-				}),
-			);
+				}
 
-			console.log("[ProjectUploaderButton] files added::");
+				if (layerFile) {
+					console.log("Found file at path:", foundPath);
+					const fileContent = await layerFile.async("blob");
+					const _file = new File([fileContent], fileInfo.metadata.fileName, {
+						type: fileInfo.metadata.fileType,
+					});
 
-			onComplete();
+					await addFile({
+						projectId: fileInfo.projectId,
+						layerId: fileInfo.layerId,
+						file: _file,
+					});
+				} else {
+					console.error("File not found in zip:", fileInfo.metadata.fileName);
+				}
+			});
+
+			await Promise.all(filePromises);
+
+			onComplete(uploadedProject);
 		} catch (error) {
 			console.error("Error loading project:", error);
 		}

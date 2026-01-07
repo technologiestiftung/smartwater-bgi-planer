@@ -18,7 +18,7 @@ export default function Home() {
 	const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
 
 	const router = useRouter();
-	const { getProject, hasHydrated } = useProjectsStore();
+	const { getProject, hasHydrated, getLastPath } = useProjectsStore();
 
 	useEffect(() => {
 		if (!hasHydrated) return;
@@ -59,9 +59,20 @@ export default function Home() {
 							isUploadZoneVisible={showUploadAlert}
 							files={uploadedFiles}
 							onToggle={() => setShowUploadAlert(!showUploadAlert)}
-							onComplete={() => {
+							onComplete={(uploadedProject) => {
 								setShowUploadAlert(false);
 								setUploadedFiles([]);
+								const savedPath = getLastPath();
+
+								if (savedPath && uploadedProject) {
+									const updatedPath = savedPath.replace(
+										/^\/[^/]+/,
+										`/${uploadedProject.id}`,
+									);
+									router.replace(updatedPath);
+								} else if (uploadedProject) {
+									router.replace(`/${uploadedProject.id}`);
+								}
 							}}
 						/>
 					</div>

@@ -56,3 +56,16 @@ export const createGetProject = (get: GetState) => {
 		return state.project;
 	};
 };
+
+export const createSetLastPath = (set: SetState) => {
+	return (path: string | null) => {
+		set((state) => ({ ...state, lastPath: path }));
+	};
+};
+
+export const createGetLastPath = (get: GetState) => {
+	return () => {
+		const state = get();
+		return state.lastPath || null;
+	};
+};
