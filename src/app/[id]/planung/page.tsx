@@ -13,7 +13,6 @@ interface MaßnahmenplanungPageProps {
 export default function MaßnahmenplanungPage({
 	params,
 }: MaßnahmenplanungPageProps) {
-	console.log("Rendering MaßnahmenplanungPage");
 	const router = useRouter();
 	const { id } = use(params);
 

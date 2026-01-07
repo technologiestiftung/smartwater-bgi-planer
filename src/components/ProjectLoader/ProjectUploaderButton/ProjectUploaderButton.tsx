@@ -71,18 +71,15 @@ const ProjectUploaderButton: FC<ProjectUploaderButtonProps> = ({
 				];
 
 				let layerFile = null;
-				let foundPath = null;
 
 				for (const path of possiblePaths) {
 					layerFile = zipContent.file(path);
 					if (layerFile) {
-						foundPath = path;
 						break;
 					}
 				}
 
 				if (layerFile) {
-					console.log("Found file at path:", foundPath);
 					const fileContent = await layerFile.async("blob");
 					const _file = new File([fileContent], fileInfo.metadata.fileName, {
 						type: fileInfo.metadata.fileType,
