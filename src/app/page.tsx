@@ -1,23 +1,22 @@
 "use client";
 
 import { FileUploadZone } from "@/components/FileUpload/FileUploadZone";
+import ProjectUploaderButton from "@/components/ProjectLoader/ProjectUploaderButton/ProjectUploaderButton";
 import { Button } from "@/components/ui/button";
 import { CarouselWithIndicators } from "@/components/ui/carousel-with-indicators";
 import Funding from "@/logos/gdb_logo.svg";
-import SWLogo from "@/logos/SWLogo.svg";
 import SmartWaterLogo from "@/logos/SmartWater-Logo.svg";
-import {
-	GithubLogoIcon,
-	PlusSquareIcon,
-	UploadIcon,
-} from "@phosphor-icons/react";
-import Link from "next/link";
-import { useState, useEffect } from "react";
+import SWLogo from "@/logos/SWLogo.svg";
 import { useProjectsStore } from "@/store/projects";
+import { GithubLogoIcon, PlusSquareIcon } from "@phosphor-icons/react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Home() {
 	const [showUploadAlert, setShowUploadAlert] = useState(false);
+	const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+
 	const router = useRouter();
 	const { getProject, hasHydrated } = useProjectsStore();
 
@@ -45,9 +44,7 @@ export default function Home() {
 					</p>
 					{showUploadAlert && (
 						<FileUploadZone
-							onFilesChange={(files: File[]) =>
-								console.log("Files uploaded:", files)
-							}
+							onFilesChange={(files: File[]) => setUploadedFiles(files)}
 						/>
 					)}
 					<div className="hidden flex-wrap items-center justify-between gap-8 lg:flex">
@@ -57,15 +54,16 @@ export default function Home() {
 								<p>Projekt anlegen</p>
 							</Link>
 						</Button>
-						<Button
-							disabled
-							variant="outline"
-							className="grow"
-							onClick={() => setShowUploadAlert(!showUploadAlert)}
-						>
-							<UploadIcon className="mr-2" />
-							<p>Dateien importieren</p>
-						</Button>
+
+						<ProjectUploaderButton
+							isUploadZoneVisible={showUploadAlert}
+							files={uploadedFiles}
+							onToggle={() => setShowUploadAlert(!showUploadAlert)}
+							onComplete={() => {
+								setShowUploadAlert(false);
+								setUploadedFiles([]);
+							}}
+						/>
 					</div>
 				</div>
 				<div className="Footer-root mt-40 flex flex-col gap-4 lg:mt-0">
