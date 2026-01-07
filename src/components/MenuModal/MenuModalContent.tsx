@@ -13,6 +13,7 @@ import {
 	ShovelIcon,
 } from "@phosphor-icons/react";
 import Link from "next/link";
+import ProjectDownloadButton from "../ProjectLoader/ProjectDownloadButton/ProjectDownloadButton";
 
 interface MenuModalProps {
 	projectId: string;
@@ -45,10 +46,7 @@ export default function MenuModalContent({ projectId }: MenuModalProps) {
 									Untersuchungsgebiet/Neubauten
 								</Link>
 							</Button>
-							<Button disabled>
-								<DownloadIcon className="mr-2" />
-								Download und speichern
-							</Button>
+							<ProjectDownloadButton projectId={projectId} />
 						</div>
 					}
 				/>
