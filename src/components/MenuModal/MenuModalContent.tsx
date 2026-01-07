@@ -13,7 +13,7 @@ import {
 	ShovelIcon,
 } from "@phosphor-icons/react";
 import Link from "next/link";
-import ProjectDownloadButton from "../ProjectLoader/ProjectDownloadButton/ProjectDownloadButton";
+import ProjectDownloadButton from "@/components/ProjectDownloadButton/ProjectDownloadButton";
 
 interface MenuModalProps {
 	projectId: string;

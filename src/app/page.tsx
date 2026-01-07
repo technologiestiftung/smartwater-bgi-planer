@@ -1,7 +1,7 @@
 "use client";
 
 import { FileUploadZone } from "@/components/FileUpload/FileUploadZone";
-import ProjectUploaderButton from "@/components/ProjectLoader/ProjectUploaderButton/ProjectUploaderButton";
+import ProjectUploaderButton from "@/components/ProjectUploaderButton/ProjectUploaderButton";
 import { Button } from "@/components/ui/button";
 import { CarouselWithIndicators } from "@/components/ui/carousel-with-indicators";
 import Funding from "@/logos/gdb_logo.svg";

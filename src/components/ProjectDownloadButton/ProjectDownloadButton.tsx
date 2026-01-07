@@ -1,4 +1,4 @@
-import { downloadProject } from "@/components/ProjectLoader/ProjectDownloadButton/projectExport";
+import { downloadProject } from "@/components/ProjectDownloadButton/projectExport";
 import { Button } from "@/components/ui/button";
 import { useProjectsStore } from "@/store";
 import { DownloadIcon } from "@phosphor-icons/react";
@@ -17,12 +17,10 @@ const ProjectDownloadButton: FC<ProjectDownloadButtonProps> = ({
 	const handleDownload = async () => {
 		if (isDownloading) return;
 
+		setIsDownloading(true);
 		try {
-			setIsDownloading(true);
 			const project = getProject();
-			const projectName = project?.name || "Unknown Project";
-
-			await downloadProject(projectId, projectName);
+			await downloadProject(projectId, project?.name || "Unknown Project");
 		} catch (error) {
 			console.error("Failed to download project:", error);
 		} finally {
@@ -31,12 +29,10 @@ const ProjectDownloadButton: FC<ProjectDownloadButtonProps> = ({
 	};
 
 	return (
-		<div className="ProjectDownloadButton-root">
-			<Button onClick={handleDownload} disabled={isDownloading}>
-				<DownloadIcon className="mr-2" />
-				{isDownloading ? "Wird heruntergeladen..." : "Download und speichern"}
-			</Button>
-		</div>
+		<Button onClick={handleDownload} disabled={isDownloading}>
+			<DownloadIcon className="mr-2" />
+			{isDownloading ? "Wird heruntergeladen..." : "Download und speichern"}
+		</Button>
 	);
 };
 

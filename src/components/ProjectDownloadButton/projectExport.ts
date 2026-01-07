@@ -11,7 +11,6 @@ export interface ProjectBackup {
 	version: string;
 	exportedAt: string;
 	projectId: string;
-	// todo: fix types
 	data: {
 		project: any;
 		answers: Record<string, boolean | null>;
@@ -27,36 +26,46 @@ export interface ProjectBackup {
 
 const BACKUP_VERSION = "1.0.0";
 
+const getMapData = () => {
+	const mapView = useMapStore.getState().config?.portalConfig?.map?.mapView;
+	return {
+		mapView: {
+			startCenter: mapView?.startCenter,
+			startZoomLevel: mapView?.startZoomLevel,
+		},
+		userLocation: useMapStore.getState().userLocation,
+	};
+};
+
+const getFilesMetadata = (projectId: string) => {
+	return useFilesStore
+		.getState()
+		.getAllProjectFiles(projectId)
+		.map((layerFile) => ({
+			key: `${layerFile.projectId}:${layerFile.layerId}`,
+			projectId: layerFile.projectId,
+			layerId: layerFile.layerId,
+			metadata: {
+				uploadedAt: layerFile.uploadedAt,
+				displayFileName: layerFile.displayFileName,
+				fileName: layerFile.file.name,
+				fileSize: layerFile.file.size,
+				fileType: layerFile.file.type,
+				lastModified: layerFile.file.lastModified,
+			},
+		}));
+};
+
 export const collectProjectData = async (
 	projectId: string,
 ): Promise<ProjectBackup> => {
-	const projectStore = useProjectsStore.getState();
-	const project = projectStore.project;
+	const project = useProjectsStore.getState().project;
 
 	if (!project || project.id !== projectId) {
 		throw new Error(
 			`Project with ID ${projectId} not found or not current project`,
 		);
 	}
-
-	const [allProjectFiles] = await Promise.all([
-		Promise.resolve(useFilesStore.getState().getAllProjectFiles(projectId)),
-		getProjectFileKeys(projectId),
-	]);
-
-	const filesMetadata = allProjectFiles.map((layerFile) => ({
-		key: `${layerFile.projectId}:${layerFile.layerId}`,
-		projectId: layerFile.projectId,
-		layerId: layerFile.layerId,
-		metadata: {
-			uploadedAt: layerFile.uploadedAt,
-			displayFileName: layerFile.displayFileName,
-			fileName: layerFile.file.name,
-			fileSize: layerFile.file.size,
-			fileType: layerFile.file.type,
-			lastModified: layerFile.file.lastModified,
-		},
-	}));
 
 	return {
 		version: BACKUP_VERSION,
@@ -65,28 +74,13 @@ export const collectProjectData = async (
 		data: {
 			project,
 			answers: useAnswersStore.getState().answers,
-			map: {
-				mapView: {
-					startCenter:
-						useMapStore.getState().config?.portalConfig?.map?.mapView
-							.startCenter,
-					startZoomLevel:
-						useMapStore.getState().config?.portalConfig?.map?.mapView
-							.startZoomLevel,
-				},
-				userLocation: useMapStore.getState().userLocation,
-			},
-			files: filesMetadata,
+			map: getMapData(),
+			files: getFilesMetadata(projectId),
 		},
 	};
 };
 
-export const exportProjectAsZip = async (projectId: string): Promise<Blob> => {
-	const projectData = await collectProjectData(projectId);
-	const zip = new JSZip();
-
-	zip.file("project-data.json", JSON.stringify(projectData, null, 2));
-
+const addFilesToZip = async (zip: JSZip, projectId: string) => {
 	const fileKeys = await getProjectFileKeys(projectId);
 
 	await Promise.all(
@@ -101,8 +95,16 @@ export const exportProjectAsZip = async (projectId: string): Promise<Blob> => {
 			}
 		}),
 	);
+};
 
-	return await zip.generateAsync({ type: "blob" });
+export const exportProjectAsZip = async (projectId: string): Promise<Blob> => {
+	const projectData = await collectProjectData(projectId);
+	const zip = new JSZip();
+
+	zip.file("project-data.json", JSON.stringify(projectData, null, 2));
+	await addFilesToZip(zip, projectId);
+
+	return zip.generateAsync({ type: "blob" });
 };
 
 export const downloadProject = async (
