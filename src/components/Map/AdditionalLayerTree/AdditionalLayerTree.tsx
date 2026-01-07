@@ -76,7 +76,7 @@ const AdditionalLayerTree: FC = ({}) => {
 		if (viewState === "open" || viewState === "collapsed") {
 			const maxVisible = 8;
 			return {
-				cols: 3,
+				cols: layerCount < 3 ? layerCount : 3,
 				rows: 3,
 				visibleLayers: uploadedLayers.slice(0, maxVisible),
 				showMoreButton: layerCount > maxVisible,
