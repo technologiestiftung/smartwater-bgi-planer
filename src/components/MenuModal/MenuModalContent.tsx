@@ -9,10 +9,10 @@ import { useProjectsStore } from "@/store/projects";
 import {
 	ArrowCircleRightIcon,
 	BookOpenTextIcon,
-	DownloadIcon,
 	InfoIcon,
 	ListMagnifyingGlassIcon,
 	PencilRulerIcon,
+	PolygonIcon,
 	ShovelIcon,
 } from "@phosphor-icons/react";
 import Link from "next/link";
@@ -67,7 +67,7 @@ export default function MenuModalContent({ projectId }: MenuModalProps) {
 							</Button>
 							<Button asChild className="w-full">
 								<Link href={`/${projectId}/project-starter`}>
-									<DownloadIcon className="mr-2" />
+									<PolygonIcon className="mr-2" />
 									Untersuchungsgebiet/Neubauten
 								</Link>
 							</Button>
