@@ -1,6 +1,7 @@
 "use client";
 
 import ConfirmButton from "@/components/ConfirmButton/ConfirmButton";
+import { TextWithLinks } from "@/components/TextWithLinks/TextWithLinks";
 import { Button } from "@/components/ui/button";
 import { useLayerArea } from "@/hooks/use-layer-area";
 import { useLayerFeatures } from "@/hooks/use-layer-features";
@@ -44,7 +45,9 @@ const Question: FC<QuestionProps> = ({
 						</h4>
 						<div className="mb-4">
 							<p className="mb-2 font-semibold">{questionConfig.question}</p>
-							<p className="">{questionConfig.description}</p>
+							<div className="wrap-break-word">
+								<TextWithLinks text={questionConfig.description} />
+							</div>
 						</div>
 					</div>
 				)}
