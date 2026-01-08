@@ -53,6 +53,16 @@
 		"legendSrc": ""
 	},
 	{
+		"id": "feasibility_synthesis_view",
+		"name": "Synthese",
+		"drawLayerId": "",
+		"canDrawPolygons": false,
+		"canDrawBTF": false,
+		"canDrawNotes": false,
+		"visibleLayerIds": ["project_boundary", "project_new_development"],
+		"legendSrc": ""
+	},
+	{
 		"id": "heavy_rain_flow_velocity",
 		"name": "Fließgeschwindigkeit",
 		"question": "Wo gibt es Bereiche in denen Fließgeschwindigkeiten über 0,5 m/s auftreten und dadurch eine Gefährdung bestehen könnte?",
@@ -368,8 +378,8 @@
 		"legendSrc": "/legends/placeholder.svg"
 	},
 	{
-		"id": "2V3 🚫",
-		"name": "Unterirdische Infrastrukturen: Leitungsbestand, U-Bahntunnel",
+		"id": "2V3",
+		"name": "Unterirdische Infrastrukturen: Leitungsbestand, U-Bahntunnel 🚫",
 		"question": "Sind Leitungen oder unterirdische Infrastrukturen (z.B. U-Bahntunnel) vorhanden, die bei der Platzierung von z.B. Versickerungsanlagen oder Zisternen zu beachten sind?",
 		"description": "Vorhabenträger*in oder SGA können über infreST (https://www.infrest.de/) den Leitungsbestand abfragen.",
 		"drawLayerId": "module_2_2V3_draw",
