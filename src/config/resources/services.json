@@ -437,7 +437,7 @@
 		"styleId": "waterbalanceHotspots"
 	},
 	{
-		"id": "feasibility_seepage",
+		"id": "module_2_2V2_draw",
 		"name": "Versickerung Machbarkeit",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
@@ -445,7 +445,7 @@
 		"styleId": "feasibilityLayers"
 	},
 	{
-		"id": "feasibility_permeability",
+		"id": "module_2_2V3_draw",
 		"name": "Entsiegelung Machbarkeit",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
@@ -453,7 +453,7 @@
 		"styleId": "feasibilityLayers"
 	},
 	{
-		"id": "feasibility_greening",
+		"id": "module_2_2V4_draw",
 		"name": "Bepflanzung/Begrünung Machbarkeit",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
@@ -461,7 +461,7 @@
 		"styleId": "feasibilityLayers"
 	},
 	{
-		"id": "feasibility_building_greening",
+		"id": "module_2_2V5_draw",
 		"name": "Gebäudebegrünung Machbarkeit",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
@@ -469,7 +469,7 @@
 		"styleId": "feasibilityLayers"
 	},
 	{
-		"id": "feasibility_retention",
+		"id": "module_2_2B1_draw",
 		"name": "Speicherung Machbarkeit",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",

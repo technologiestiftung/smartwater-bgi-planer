@@ -5,6 +5,10 @@ import {
 	Icon,
 	RoadHorizonIcon,
 	ThermometerHotIcon,
+	TreeIcon,
+	RecycleIcon,
+	SolarRoofIcon,
+	WallIcon,
 } from "@phosphor-icons/react";
 
 export const iconMap: Record<string, Icon> = {
@@ -13,6 +17,10 @@ export const iconMap: Record<string, Icon> = {
 	RoadHorizon: RoadHorizonIcon,
 	Drop: DropIcon,
 	Fish: FishIcon,
+	Tree: TreeIcon,
+	Recycle: RecycleIcon,
+	SolarRoof: SolarRoofIcon,
+	Wall: WallIcon,
 };
 
 export function getIconComponent(iconName: string): Icon {

@@ -329,35 +329,127 @@
 		"legendSrc": "/legends/placeholder.svg"
 	},
 	{
-		"id": "module_2_1",
-		"name": "Module 2.1",
-		"question": "Wo gibt es im Quartier oder in der Umgebung Gewässer mit Wasserbedarf?",
-		"description": "Die Karte gibt Auskunft darüber, welche Kleingewässer und Feuchtbiotope, einen besonderen Bedarf an zusätzlichen Wassermengen haben. Mit Klick auf das Gewässer werden mehr Informationen gegeben.",
-		"drawLayerId": "need_groundwater_hotspots_q3",
+		"id": "feasibility_module_introduction",
+		"name": "",
+		"question": "Ortsnahe Versickerung kann u.a. dazu beitragen, den natürlichen Wasserhaushalt zu verbessern, Grundwasserneubildung zu fördern, die Mischwasserkanalisation zu entlasten oder Einleitgebühren einzusparen.",
+		"description": "Um das Ziel der ortsnahen Versickerung umzusetzen, benötigt es verfügbare Flächen an der städtischen Oberfläche sowie versickerungsfähigen Untergrund. Welche Flächen hierfür geeignet sind, hängt von einer Vielzahl von Rahmenbedingungen ab. Einige Daten zu wichtigen Kriterien wie Bodenbelastungen sind nicht öffentlich zugänglich und müssen gesondert beantragt oder erfasst werden. ",
+		"drawLayerId": "",
 		"canDrawPolygons": false,
-		"canDrawBTF": true,
+		"canDrawBTF": false,
+		"canDrawNotes": false,
+		"visibleLayerIds": ["project_boundary", "project_new_development"],
+		"legendSrc": "",
+		"isIntro": true,
+		"moduleNumber": 2,
+		"moduleName": "Machbarkeit"
+	},
+	{
+		"id": "2V1",
+		"name": "Versickerungspotenzial 🚫",
+		"question": "",
+		"description": "Die Versickerungspotenzialkarte zeigt die Anzahl der theoretisch möglichen Versickerungsarten an. Zusätzlich gibt es einzelne Maßnahmenkarten, die die Potenziale der jeweiligen Versickerungsart darstellt.\nIn der Schutzzone III B sowie außerhalb von Wasserschutzgebieten gilt die Niederschlagswasserfreistellungsverordnung. In allen anderen Schutzzonen bedarf es in jedem Fall einer Erlaubnis von der Wasserbehörde. Je nach Art und Nutzung der befestigten Fläche können unterschiedliche Versickerungsanlagen und ggf. Vorbehandlungen zum Einsatz kommen. (Siehe Hinweisblatt 2)\nI.d.R. ist ein Abstand von ca. 1 m von der Sohle der Versickerungsanlage bis zum Bemessungsgrundwasserstand einzuhalten. Als Bemessungsgrundwasserstand innerhalb von Wasserschutzgebieten ist der zu erwartende höchste Grundwasserstand (zeHGW) heranzuziehen, außerhalb von Wasserschutzgebieten der zu erwartende mittlere höchste Grundwasserstand (zeMHGW). Sollten keine Daten vorliegen, können Informationen bei der Wasserbehörde eingeholt werden (Siehe Hinweisblatt 2).\nBei der Planung von Versickerungsanlagen ist die Hangneigung zu berücksichtigen, da eine gleichmäßige Beschickung der oberirdischen Versickerungsanlagen angestrebt werden sollte.\nFür eine vollständige Abwägung der Versickerungsfähigkeit bedarf es einer Analyse der Randbedingungen in der Attributtabelle (s. auch Checkfragen 2V2-2V6):\n-\tBefindet sich das Vorhaben bzw. Plangebiet ganz oder teilweise in einem Wasserschutzgebiet und wenn ja in welcher Schutzzone?\n-\tWie groß ist der Abstand (von der Geländeoberkante) zum maßgeblichen Bemessungsgrundwasserstand? \n-\tGibt es arten- und naturschutzfachliche bedeutsame Biotope oder Schutzgebiete mit Relevanz für das Plangebiet? \n-\tGibt es starke Geländeneigungen (über 10 Grad), die bei der Planung von Versickerungsanlagen berücksichtigt werden sollten? \n-\tBestehen Belange des Denkmalschutzes, die es zu berücksichtigen gilt?\n\nDie Karte kann zur groben Ersteinschätzung dienen, ist jedoch kein Ersatz für Vor-Ort Untersuchungen bzw. Fachplanungen. Es wurden z. B. keine Altlasten, Leitungen im Untergrund oder Flächennutzungen betrachtet.",
+		"drawLayerId": "",
+		"canDrawPolygons": false,
+		"canDrawBTF": false,
 		"canDrawNotes": true,
-		"visibleLayerIds": [
-			"bgi-planer:HA4_Kleingewaesser_trocken_pkt",
-			"bgi-planer:HA4_Kleingewaesser_trocken_topoEZG_pl"
-		],
+		"visibleLayerIds": ["bgi-planer:sp02_09kanalisation2022"],
 		"legendSrc": "/legends/placeholder.svg"
 	},
 	{
-		"id": "module_2_2",
-		"name": "Kaltluft Module 2.2",
-		"question": "Wo befinden sich Bereiche mit einer hohen Volumenstromdichte und eindeutiger Strömungsrichtung von Grünflächen zu Einwirkbereichen (blau)? ",
-		"description": "Der Luftaustausch entsteht zwischen Kaltluftentstehungsgebieten wie Grün- und Freiräumen und thermisch belasteten Siedlungsräumen. In den Übergangsbereichen ist ein hoher Grün- und Freiflächenanteil für die Kühlung förderlich.",
-		"drawLayerId": "need_temperature_hotspots_q6",
+		"id": "2V2",
+		"name": "Altlasten 🚫",
+		"question": "Kommen Altlasten bzw. Altlastenverdachtsflächen im Plangebiet vor? (Relevant ist zum Beispiel, ob es ein Bodengutachten mit Aussagen zur Altlastensituation gibt.)",
+		"description": "Wenn ein Teil des Plangebiets im Bodenbelastungskataster Berlin als Altlasten- bzw. Altlastenverdachtsfläche erfasst ist, ist eine frühzeitige Rücksprache mit der oberen Wasserbehörde bzw. der zuständigen bezirklichen Bodenschutzbehörde notwendig. In der Regel ist ein Bodengutachten zu erstellen. Beim Antreffen von Altlasten oder anthropogenen Auffüllungen (z.B. Bauschutt) ist in Abstimmung mit der Bodenschutzbehörde ein Bodenaustausch im Bereich der geplanten Versickerungsanlagen vorzusehen.",
+		"drawLayerId": "module_2_2V2_draw",
+		"canDrawPolygons": true,
+		"canDrawBTF": false,
+		"canDrawNotes": true,
+		"visibleLayerIds": ["bgi-planer:sp02_09kanalisation2022"],
+		"legendSrc": "/legends/placeholder.svg"
+	},
+	{
+		"id": "2V3 🚫",
+		"name": "Unterirdische Infrastrukturen: Leitungsbestand, U-Bahntunnel",
+		"question": "Sind Leitungen oder unterirdische Infrastrukturen (z.B. U-Bahntunnel) vorhanden, die bei der Platzierung von z.B. Versickerungsanlagen oder Zisternen zu beachten sind?",
+		"description": "Vorhabenträger*in oder SGA können über infreST (https://www.infrest.de/) den Leitungsbestand abfragen.",
+		"drawLayerId": "module_2_2V3_draw",
+		"canDrawPolygons": true,
+		"canDrawBTF": false,
+		"canDrawNotes": true,
+		"visibleLayerIds": [],
+		"legendSrc": "/legends/placeholder.svg"
+	},
+	{
+		"id": "2V4",
+		"name": "Altbaumbestand ✅",
+		"question": "Gibt es einen Altbaumbestand, der bei der Verortung von Maßnahmen berücksichtigt werden muss?",
+		"description": "In der Karte Baumbestand werden Straßen- und Anlagenbäume auf öffentlichen Flächen dargestellt. Die müssen bei der Planung von Versickerungsmaßnahmen berücksichtigt werden, ebenso wie das Fehlen von Bäumen im Untersuchungsgebiet.",
+		"drawLayerId": "module_2_2V4_draw",
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
 		"canDrawNotes": true,
 		"visibleLayerIds": [
-			"ua_klimaanalyse_2022:td_kak_kaltlufteinwirkbereich_siedlungsfl_2022",
-			"ua_klimaanalyse_2022:tj_kak_gruen_kvs_hoch_2022",
-			"ua_klimaanalyse_2022:bb_ua_windfeld_2m_22h_2022_100m",
-			"ua_klimaanalyse_2022:ba_ua_windfeld_2m_22h_2022_20m"
+			"baumbestand:anlagenbaeume",
+			"baumbestand:strassenbaeume"
 		],
-		"legendSrc": "/legends/1h5.svg"
+		"legendSrc": "/legends/placeholder.svg"
+	},
+	{
+		"id": "2V5",
+		"name": "Geologischer Untergrund ✅",
+		"question": "Gibt es Bohrkernprofile, die für die Maßnahmenplanung relevant sind? (z.B. durch Auffüllungen (Bauschutt) oder oberflächennahe Grundwasserstände)",
+		"description": "Zur detaillierten Beurteilung der Bodenverhältnisse ist ein Bodengutachten zu erstellen. Zur groben Ersteinschätzung können ggf. vorhandene Bohrkerndaten genutzt werden. Über die Bohrdaten können eher gut versickerungsfähige Böden (Beispiele: Kies, Sande) und eher schlecht versickerungsfähige Böden (Beispiele: Geschiebemergel, Ton) erkannt werden.\nBei Auffüllungen (z.B. Bauschutt) muss ein Bodenaustausch bei der Umsetzung von Versickerungsanlagen erfolgen. \nBeim Antreffen oder Verdacht von oberflächennahem Grundwasser ist eine frühzeitige Rücksprache mit der Senatsumweltverwaltung (Wasserwirtschaft) erforderlich. Weitere Informationen finden Sie hier (https://www.berlin.de/sen/uvk/umwelt/wasser-und-geologie/regenwasser/regenwasserbewirtschaftung/versickerung-barnim/)\n\n*Hinweis: Auf der Barnim Hochfläche kann oberflächennah auch sog. Schichtenwasser zeitweise über wasserstauenden Schichten vorkommen. Hierzu gibt es weitere Informationen (https://www.berlin.de/sen/uvk/umwelt/wasser-und-geologie/regenwasser/regenwasserbewirtschaftung/versickerung-barnim/)",
+		"drawLayerId": "module_2_2V5_draw",
+		"canDrawPolygons": true,
+		"canDrawBTF": false,
+		"canDrawNotes": true,
+		"visibleLayerIds": ["bohrdaten:bohrpunkte"],
+		"legendSrc": "/legends/placeholder.svg"
+	},
+	{
+		"id": "2B1",
+		"name": "Denkmalschutz ✅",
+		"question": "Bestehen Belange des Denkmalschutzes, die es zu berücksichtigen gilt?",
+		"description": "Die Denkmalkarte Berlin stellt denkmalgeschützte Gebäude, Ensembles, Gärten, Gesamtanlagen und Bodendenkmäler dar. Maßnahmen der Klimaanpassung, die meist mit sichtbaren, baulichen Änderungen am Gebäude oder zugehörigen Außenanlagen einhergehen, müssen mit der Denkmalschutzbehörde abgestimmt werden. Die Umsetzung von Klimaanpassungsmaßnahmen kann durch Denkmalschutzbedenken eingeschränkt sein.",
+		"drawLayerId": "module_2_2B1_draw",
+		"canDrawPolygons": true,
+		"canDrawBTF": true,
+		"canDrawNotes": true,
+		"visibleLayerIds": [
+			"denkmale:a_baudenkmal",
+			"denkmale:b_bodendenkmal",
+			"denkmale:c_gartendenkmal",
+			"denkmale:d_denkmalbereich_gesamtanlage",
+			"denkmale:e_denkmalbereich_ensemble"
+		],
+		"legendSrc": "/legends/placeholder.svg"
+	},
+	{
+		"id": "2G1",
+		"name": "Gründachpotenziale ✅",
+		"question": "",
+		"description": "Gründächer können als intensiv begrüntes, extensiv begrüntes oder als Retentionsgründach mit Drossel ausgeführt werden. Intensive Begrünung oder ein Retentionsgründach sind nur auf einem Flachdach (mit einer Dachneigung < 5°) möglich. Zusätzlich können Gründächer mit Solaranlagen kombiniert oder als Biodiversitätsgründächer ausgeführt werden. \nDie Machbarkeit und die Art der Dachbegrünung ist auch von der Statik des Gebäudes abhängig (Tragfähigkeit bei extensivem Gründach etwa 60 kg/m²; bei intensivem Gründach ab etwa 300kg/m²). Eine extensive Dachbegrünung ist in der Regel möglich, wenn es eine Dachstuhlerneuerung mit ausreichender Lastreserve gab oder bereits ein Kiesdach vorhanden ist. \nIn Ergänzung zu der angezeigten Dachbegrünungspotentialkarte sollte über das Luftbild nach weiteren bereits realisierten Dachbegrünungen oder Photovoltaikanlagen geschaut werden.",
+		"drawLayerId": "",
+		"canDrawPolygons": false,
+		"canDrawBTF": false,
+		"canDrawNotes": true,
+		"visibleLayerIds": [
+			"potenziale_regenwasserbewirtschaftung:ca_dachbegruenungspotenzial",
+			"ua_gruendaecher_2020:b_begruente_dachteilfl_geb",
+			"ua_gruendaecher_2020:c_begruente_dachteilfl_tief"
+		],
+		"legendSrc": "/legends/placeholder.svg"
+	},
+	{
+		"id": "2E1",
+		"name": "Entsiegelungspotenzialflächen ✅",
+		"question": "",
+		"description": "Vereinzelte Flächen mit Potenzial zur Entsiegelung wurden bereits auf Basis einer Befragung der Bezirksämter und der Berliner Forsten ermittelt. Dabei wurde das Potenzial zur Entsiegelung festgestellt, bewertet und priorisiert.",
+		"drawLayerId": "",
+		"canDrawPolygons": false,
+		"canDrawBTF": false,
+		"canDrawNotes": true,
+		"visibleLayerIds": ["ua_entsiegelung:b_entsieg_klasse_teil"],
+		"legendSrc": "/legends/placeholder.svg"
 	}
 ]

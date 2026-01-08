@@ -25,8 +25,8 @@ export default function FeasibilityModule({
 	const { title, description } = getModuleMetadata("feasibility");
 
 	const isStepValid = useStepValid({
-		stepName: "feasibilityA",
-		starterQuestionId: "starter_question",
+		stepName: "versickerung",
+		starterQuestionId: "2V1",
 		layerId: LAYER_IDS.PROJECT_BOUNDARY,
 		steps,
 	});

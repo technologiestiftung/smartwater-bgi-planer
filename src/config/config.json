@@ -226,6 +226,54 @@
 						{
 							"id": "bgi-planer:ua_versiegelung_2021_raster",
 							"visibility": false
+						},
+						{
+							"id": "baumbestand:anlagenbaeume",
+							"visibility": false
+						},
+						{
+							"id": "baumbestand:strassenbaeume",
+							"visibility": false
+						},
+						{
+							"id": "bohrdaten:bohrpunkte",
+							"visibility": false
+						},
+						{
+							"id": "denkmale:a_baudenkmal",
+							"visibility": false
+						},
+						{
+							"id": "denkmale:b_bodendenkmal",
+							"visibility": false
+						},
+						{
+							"id": "denkmale:c_gartendenkmal",
+							"visibility": false
+						},
+						{
+							"id": "denkmale:d_denkmalbereich_gesamtanlage",
+							"visibility": false
+						},
+						{
+							"id": "denkmale:e_denkmalbereich_ensemble",
+							"visibility": false
+						},
+						{
+							"id": "potenziale_regenwasserbewirtschaftung:ca_dachbegruenungspotenzial",
+							"visibility": false
+						},
+						{
+							"id": "ua_gruendaecher_2020:b_begruente_dachteilfl_geb",
+							"visibility": false
+						},
+						{
+							"id": "ua_gruendaecher_2020:c_begruente_dachteilfl_tief",
+							"visibility": false
+						},
+						{
+							"id": "ua_entsiegelung:b_entsieg_klasse_teil",
+							"visibility": false
 						}
 					]
 				},
@@ -314,23 +362,23 @@
 							"visibility": false
 						},
 						{
-							"id": "feasibility_seepage",
+							"id": "module_2_2V2_draw",
 							"visibility": false
 						},
 						{
-							"id": "feasibility_permeability",
+							"id": "module_2_2V3_draw",
 							"visibility": false
 						},
 						{
-							"id": "feasibility_greening",
+							"id": "module_2_2V4_draw",
 							"visibility": false
 						},
 						{
-							"id": "feasibility_building_greening",
+							"id": "module_2_2V5_draw",
 							"visibility": false
 						},
 						{
-							"id": "feasibility_retention",
+							"id": "module_2_2B1_draw",
 							"visibility": false
 						},
 						{
