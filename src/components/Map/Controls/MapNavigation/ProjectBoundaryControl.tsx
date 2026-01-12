@@ -30,7 +30,7 @@ const ProjectBoundaryControl: FC<ProjectBoundaryControlProps> = ({}) => {
 				className="cursor-pointer"
 			>
 				<Image
-					src="/icons/mapPin.svg"
+					src="/icons/house.svg"
 					alt="Projekt Layer"
 					width={24}
 					height={24}
