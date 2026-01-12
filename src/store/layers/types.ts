@@ -103,11 +103,12 @@ export interface LayerConfigItem {
 	canDrawPolygons?: boolean;
 	canDrawBTF?: boolean;
 	canDrawNotes?: boolean;
-	canQueryFeatures?: string[];
 	legendSrc?: string;
 	isIntro?: boolean;
 	moduleNumber?: number;
 	moduleName?: string;
+	canQueryFeatures?: string[];
+	featureDisplay?: "tooltip" | "modal";
 }
 
 export interface LayersState {

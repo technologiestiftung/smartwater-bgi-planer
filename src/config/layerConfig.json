@@ -414,6 +414,7 @@
 		"canDrawBTF": false,
 		"canDrawNotes": true,
 		"canQueryFeatures": ["bohrdaten:bohrpunkte"],
+		"featureDisplay": "modal",
 		"visibleLayerIds": ["bohrdaten:bohrpunkte"],
 		"legendSrc": "/legends/placeholder.svg"
 	},
@@ -426,6 +427,14 @@
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
 		"canDrawNotes": true,
+		"featureDisplay": "tooltip",
+		"canQueryFeatures": [
+			"denkmale:a_baudenkmal",
+			"denkmale:b_bodendenkmal",
+			"denkmale:c_gartendenkmal",
+			"denkmale:d_denkmalbereich_gesamtanlage",
+			"denkmale:e_denkmalbereich_ensemble"
+		],
 		"visibleLayerIds": [
 			"denkmale:a_baudenkmal",
 			"denkmale:b_bodendenkmal",

@@ -6,7 +6,6 @@ import {
 	DrawNoteButton,
 	DrawProjectBoundaryButton,
 } from "@/components/DrawControls";
-import FeatureDisplayControl from "@/components/FeatureDisplayControl/FeatureDisplayControl";
 import UploadDrawLayerButton from "@/components/UploadControls/UploadDrawLayerButton/UploadDrawLayerButton";
 import { useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
@@ -31,8 +30,6 @@ export default function DrawControlsContainer({}: DrawControlsContainerProps) {
 	const currentQuestionConfig = layerConfig.find(
 		(config) => config.id === layerConfigId,
 	);
-
-	const queryableLayerIds = currentQuestionConfig?.canQueryFeatures || [];
 
 	if (isProjectStarter) {
 		if (currentStepId === "newDevelopment") {
@@ -78,23 +75,9 @@ export default function DrawControlsContainer({}: DrawControlsContainerProps) {
 		}
 	}
 
-	if (!controls)
-		return (
-			<>
-				{queryableLayerIds.length > 0 && (
-					<FeatureDisplayControl queryableLayerIds={queryableLayerIds} />
-				)}
-			</>
-		);
+	if (!controls) return null;
 
 	return (
-		<>
-			{queryableLayerIds.length > 0 && (
-				<FeatureDisplayControl queryableLayerIds={queryableLayerIds} />
-			)}
-			<div className="absolute right-4 bottom-8 z-48 flex gap-2">
-				{controls}
-			</div>
-		</>
+		<div className="absolute right-4 bottom-8 z-48 flex gap-2">{controls}</div>
 	);
 }
