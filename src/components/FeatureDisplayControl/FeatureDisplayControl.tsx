@@ -72,7 +72,7 @@ const FeatureDisplayControl: FC<FeatureDisplayControlProps> = ({
 					layer.getVisible()
 				) {
 					clickedLayerId = layerId;
-					break; 
+					break;
 				}
 			}
 
