@@ -6,6 +6,7 @@ import GeolocationControl from "@/components/Map/Controls/MapNavigation/Geolocat
 import ZoomControl from "@/components/Map/Controls/MapNavigation/ZoomControl";
 import { useUiStore } from "@/store/ui";
 import { FC, useCallback, useRef } from "react";
+import ProjectBoundaryControl from "./ProjectBoundaryControl";
 
 interface MapNavigationContainerProps {
 	onGeolocate?: () => void;
@@ -49,6 +50,7 @@ const MapNavigationContainer: FC<MapNavigationContainerProps> = ({
 	return (
 		<div className="absolute bottom-6 left-4 z-10 flex items-end gap-2">
 			<div className="flex flex-col gap-2">
+				<ProjectBoundaryControl />
 				<GeolocationControl onGeolocate={onGeolocate} />
 				<ZoomControl />
 				<div
