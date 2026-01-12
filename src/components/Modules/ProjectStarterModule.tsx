@@ -61,7 +61,6 @@ const steps: StepConfig[] = [
 	},
 ];
 
-// Custom hook for upload status management
 function useUploadStatusAutoHide() {
 	const { uploadError, uploadSuccess, setUploadError, setUploadSuccess } =
 		useUiStore(
@@ -86,7 +85,6 @@ function useUploadStatusAutoHide() {
 	return { uploadError, uploadSuccess };
 }
 
-// Reusable status messages component
 function UploadStatusMessages({
 	error,
 	success,
