@@ -406,13 +406,14 @@
 	},
 	{
 		"id": "2V5",
-		"name": "Geologischer Untergrund ✅",
+		"name": "Geologischer Untergrund ✅ 🚨",
 		"question": "Gibt es Bohrkernprofile, die für die Maßnahmenplanung relevant sind? (z.B. durch Auffüllungen (Bauschutt) oder oberflächennahe Grundwasserstände)",
 		"description": "Zur detaillierten Beurteilung der Bodenverhältnisse ist ein Bodengutachten zu erstellen. Zur groben Ersteinschätzung können ggf. vorhandene Bohrkerndaten genutzt werden. Über die Bohrdaten können eher gut versickerungsfähige Böden (Beispiele: Kies, Sande) und eher schlecht versickerungsfähige Böden (Beispiele: Geschiebemergel, Ton) erkannt werden.\nBei Auffüllungen (z.B. Bauschutt) muss ein Bodenaustausch bei der Umsetzung von Versickerungsanlagen erfolgen. \nBeim Antreffen oder Verdacht von oberflächennahem Grundwasser ist eine frühzeitige Rücksprache mit der Senatsumweltverwaltung (Wasserwirtschaft) erforderlich. Weitere Informationen finden Sie hier (https://www.berlin.de/sen/uvk/umwelt/wasser-und-geologie/regenwasser/regenwasserbewirtschaftung/versickerung-barnim/)\n\n*Hinweis: Auf der Barnim Hochfläche kann oberflächennah auch sog. Schichtenwasser zeitweise über wasserstauenden Schichten vorkommen. Hierzu gibt es weitere Informationen (https://www.berlin.de/sen/uvk/umwelt/wasser-und-geologie/regenwasser/regenwasserbewirtschaftung/versickerung-barnim/)",
 		"drawLayerId": "module_2_2V5_draw",
 		"canDrawPolygons": true,
 		"canDrawBTF": false,
 		"canDrawNotes": true,
+		"canQueryFeatures": ["bohrdaten:bohrpunkte"],
 		"visibleLayerIds": ["bohrdaten:bohrpunkte"],
 		"legendSrc": "/legends/placeholder.svg"
 	},

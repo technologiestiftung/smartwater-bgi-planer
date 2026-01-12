@@ -11,7 +11,6 @@ export interface UiState {
 	isDrawingNote: boolean;
 	isAdditionalLayerTreeVisible: boolean;
 	showStepper: boolean;
-	// Module navigation state
 	moduleCurrentSectionId: SectionId;
 	moduleQuestionIndices: Record<SectionId, number>;
 	moduleSavedState: {
@@ -34,7 +33,6 @@ export interface UiActions {
 	resetDrawInteractions: () => void;
 	setShowStepper: (show: boolean) => void;
 	setIsAdditionalLayerTreeVisible: (isVisible: boolean) => void;
-	// Module navigation actions
 	setModuleCurrentSection: (sectionId: SectionId) => void;
 	setModuleQuestionIndex: (sectionId: SectionId, index: number) => void;
 	navigateToModuleQuestion: (

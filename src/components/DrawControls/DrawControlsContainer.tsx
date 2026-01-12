@@ -6,6 +6,7 @@ import {
 	DrawNoteButton,
 	DrawProjectBoundaryButton,
 } from "@/components/DrawControls";
+import FeatureDisplayControl from "@/components/FeatureDisplayControl/FeatureDisplayControl";
 import UploadDrawLayerButton from "@/components/UploadControls/UploadDrawLayerButton/UploadDrawLayerButton";
 import { useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
@@ -27,6 +28,12 @@ export default function DrawControlsContainer({}: DrawControlsContainerProps) {
 
 	let controls: React.ReactNode = null;
 
+	const currentQuestionConfig = layerConfig.find(
+		(config) => config.id === layerConfigId,
+	);
+
+	const queryableLayerIds = currentQuestionConfig?.canQueryFeatures || [];
+
 	if (isProjectStarter) {
 		if (currentStepId === "newDevelopment") {
 			controls = (
@@ -44,10 +51,6 @@ export default function DrawControlsContainer({}: DrawControlsContainerProps) {
 			);
 		}
 	} else if (isModule) {
-		const currentQuestionConfig = layerConfig.find(
-			(config) => config.id === layerConfigId,
-		);
-
 		if (currentQuestionConfig) {
 			const controlsArray: React.ReactNode[] = [];
 
@@ -75,9 +78,23 @@ export default function DrawControlsContainer({}: DrawControlsContainerProps) {
 		}
 	}
 
-	if (!controls) return null;
+	if (!controls)
+		return (
+			<>
+				{queryableLayerIds.length > 0 && (
+					<FeatureDisplayControl queryableLayerIds={queryableLayerIds} />
+				)}
+			</>
+		);
 
 	return (
-		<div className="absolute right-4 bottom-8 z-48 flex gap-2">{controls}</div>
+		<>
+			{queryableLayerIds.length > 0 && (
+				<FeatureDisplayControl queryableLayerIds={queryableLayerIds} />
+			)}
+			<div className="absolute right-4 bottom-8 z-48 flex gap-2">
+				{controls}
+			</div>
+		</>
 	);
 }
