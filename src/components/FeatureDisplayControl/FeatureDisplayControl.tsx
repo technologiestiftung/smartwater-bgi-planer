@@ -1,6 +1,7 @@
 "use client";
 
 import { fetchFeatureInfo } from "@/lib/helpers/wmsFeatureInfo";
+import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";
 import { useUiStore } from "@/store/ui";
 import Overlay from "ol/Overlay.js";
@@ -34,6 +35,7 @@ const FeatureDisplayControl: FC<FeatureDisplayControlProps> = ({
 	layerDisplayConfigs = {},
 }) => {
 	const map = useMapStore((state) => state.map);
+	const drawLayerId = useLayersStore((state) => state.drawLayerId);
 	const isDrawing = useUiStore((state) => state.isDrawing);
 	const isBlockAreaSelecting = useUiStore(
 		(state) => state.isBlockAreaSelecting,
@@ -99,7 +101,21 @@ const FeatureDisplayControl: FC<FeatureDisplayControlProps> = ({
 
 			const { pixel, coordinate } = evt;
 
-			const activeLayers = map
+			if (drawLayerId) {
+				let drawLayerClicked = false;
+				map.forEachFeatureAtPixel(pixel, (feature, layer) => {
+					const currentLayerId = layer?.get("id");
+					if (currentLayerId === drawLayerId) {
+						drawLayerClicked = true;
+						return true;
+					}
+				});
+				if (drawLayerClicked) {
+					return;
+				}
+			}
+
+			const allQueryableLayers = map
 				.getAllLayers()
 				.filter((l) => {
 					const id = l.get("id");
@@ -107,14 +123,14 @@ const FeatureDisplayControl: FC<FeatureDisplayControlProps> = ({
 				})
 				.reverse();
 
-			if (activeLayers.length === 0) {
+			if (allQueryableLayers.length === 0) {
 				handleCloseAll();
 				return;
 			}
 
 			let foundData = false;
 
-			for (const layer of activeLayers) {
+			for (const layer of allQueryableLayers) {
 				const clickedLayerId = layer.get("id");
 
 				try {
@@ -164,6 +180,7 @@ const FeatureDisplayControl: FC<FeatureDisplayControlProps> = ({
 			isBlockAreaSelecting,
 			isDrawingNote,
 			map,
+			drawLayerId,
 			queryableLayerIds,
 			layerDisplayConfigs,
 			calculatePositioning,
