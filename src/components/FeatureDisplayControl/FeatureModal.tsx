@@ -1,18 +1,20 @@
-import { XCircleIcon } from "@phosphor-icons/react";
+import { SpinnerIcon, XCircleIcon } from "@phosphor-icons/react";
 import Image from "next/image";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Button } from "../ui/button";
 
 interface FeatureModalProps {
 	attributes: Record<string, any> | null;
-	layerId: string | null;
 	onClose: () => void;
 }
 
 const FeatureModal: FC<FeatureModalProps> = ({ attributes, onClose }) => {
-	if (!attributes) return null;
+	const profilUrl = attributes?.["Profil"];
+	const [isLoading, setIsLoading] = useState(!!profilUrl);
 
-	const profilUrl = attributes["Profil"];
+	if (!attributes) {
+		return null;
+	}
 
 	return (
 		<div className="FeatureModal-root fixed inset-0 z-9999 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
@@ -31,17 +33,23 @@ const FeatureModal: FC<FeatureModalProps> = ({ attributes, onClose }) => {
 				</div>
 
 				<div className="flex-1 overflow-y-auto p-2">
-					<div className="flex flex-col gap-8 lg:flex-row">
+					<div className="flex flex-col gap-4 lg:flex-row">
 						{profilUrl && (
-							<div className="flex w-full flex-col gap-2">
+							<div className="relative flex w-full flex-col gap-2">
 								<div className="rounded-md bg-white">
+									{isLoading && (
+										<div className="absolute inset-0 z-10 flex items-center justify-center bg-white">
+											<SpinnerIcon className="animate-spin" />
+										</div>
+									)}
 									<Image
 										src={profilUrl}
 										alt="Bohrprofil"
 										className="h-auto min-h-[300px] w-full object-contain"
 										layout="responsive"
 										objectFit="contain"
-										onError={() => null}
+										onLoad={() => setIsLoading(false)}
+										onError={() => setIsLoading(false)}
 										width={300}
 										height={100}
 									/>
@@ -51,7 +59,7 @@ const FeatureModal: FC<FeatureModalProps> = ({ attributes, onClose }) => {
 					</div>
 				</div>
 
-				<div className="bg-muted/10 flex justify-end border-t p-4">
+				<div className="bg-muted/10 border-muted flex justify-end border-t p-4">
 					<Button onClick={onClose}>Schließen</Button>
 				</div>
 			</div>
