@@ -46,12 +46,13 @@ const FeatureModal: FC<FeatureModalProps> = ({ attributes, onClose }) => {
 										src={profilUrl}
 										alt="Bohrprofil"
 										className="h-auto min-h-[300px] w-full object-contain"
-										layout="responsive"
-										objectFit="contain"
 										onLoad={() => setIsLoading(false)}
 										onError={() => setIsLoading(false)}
+										loading="lazy"
 										width={300}
 										height={100}
+										quality={100}
+										unoptimized
 									/>
 								</div>
 							</div>
