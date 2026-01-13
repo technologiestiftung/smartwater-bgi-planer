@@ -213,7 +213,6 @@ const FeatureDisplayControl: FC<FeatureDisplayControlProps> = ({
 			{modalData && (
 				<FeatureModal
 					attributes={modalData.attributes}
-					layerId={modalData.layerId}
 					onClose={handleCloseAll}
 				/>
 			)}
