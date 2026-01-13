@@ -51,6 +51,7 @@ const FeatureDisplayControl: FC<FeatureDisplayControlProps> = ({
 	const [modalData, setModalData] = useState<{
 		attributes: Record<string, any>;
 		layerId: string;
+		coordinate?: [number, number];
 	} | null>(null);
 
 	const overlayContainer = useMemo(() => {
@@ -133,6 +134,7 @@ const FeatureDisplayControl: FC<FeatureDisplayControlProps> = ({
 							setModalData({
 								attributes: result.attributes,
 								layerId: clickedLayerId,
+								coordinate,
 							});
 						} else {
 							setModalData(null);
@@ -213,6 +215,8 @@ const FeatureDisplayControl: FC<FeatureDisplayControlProps> = ({
 			{modalData && (
 				<FeatureModal
 					attributes={modalData.attributes}
+					layerId={modalData.layerId}
+					coordinate={modalData.coordinate}
 					onClose={handleCloseAll}
 				/>
 			)}

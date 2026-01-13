@@ -1,14 +1,29 @@
+import { getLayerById } from "@/lib/helpers/ol";
+import { useLayersStore } from "@/store/layers";
+import { useMapStore } from "@/store/map";
 import { SpinnerIcon, XCircleIcon } from "@phosphor-icons/react";
 import Image from "next/image";
+import { Feature } from "ol";
+import { Point } from "ol/geom";
+import VectorLayer from "ol/layer/Vector";
+import VectorSource from "ol/source/Vector";
 import { FC, useState } from "react";
 import { Button } from "../ui/button";
 
 interface FeatureModalProps {
 	attributes: Record<string, any> | null;
+	layerId: string;
+	coordinate?: [number, number];
 	onClose: () => void;
 }
 
-const FeatureModal: FC<FeatureModalProps> = ({ attributes, onClose }) => {
+const FeatureModal: FC<FeatureModalProps> = ({
+	attributes,
+	coordinate,
+	onClose,
+}) => {
+	const map = useMapStore((state) => state.map);
+	const drawLayerId = useLayersStore((state) => state.drawLayerId);
 	const profilUrl = attributes?.["Profil"];
 	const [isLoading, setIsLoading] = useState(!!profilUrl);
 
@@ -51,7 +66,6 @@ const FeatureModal: FC<FeatureModalProps> = ({ attributes, onClose }) => {
 										loading="lazy"
 										width={300}
 										height={100}
-										quality={100}
 										unoptimized
 									/>
 								</div>
@@ -61,7 +75,28 @@ const FeatureModal: FC<FeatureModalProps> = ({ attributes, onClose }) => {
 				</div>
 
 				<div className="bg-muted/10 border-muted flex justify-end border-t p-4">
-					<Button onClick={onClose}>Schließen</Button>
+					<Button
+						onClick={() => {
+							if (map && drawLayerId && coordinate) {
+								const layer = getLayerById(
+									map,
+									drawLayerId,
+								) as VectorLayer<VectorSource> | null;
+								if (layer && layer.getSource()) {
+									const pointFeature = new Feature({
+										geometry: new Point(coordinate),
+										note: "Schlecht Versickerungsfähig",
+										timestamp: new Date().toISOString(),
+									});
+									layer.getSource()?.addFeature(pointFeature);
+									layer.getSource()?.changed();
+								}
+							}
+							onClose();
+						}}
+					>
+						Schlecht Versickerungsfähig
+					</Button>
 				</div>
 			</div>
 		</div>
