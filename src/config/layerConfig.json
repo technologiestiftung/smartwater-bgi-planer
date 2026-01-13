@@ -363,7 +363,7 @@
 		"canDrawBTF": false,
 		"canDrawNotes": true,
 		"visibleLayerIds": ["bgi-planer:sp02_09kanalisation2022"],
-		"legendSrc": "/legends/placeholder.svg"
+		"legendSrc": "/legends/2v1.svg"
 	},
 	{
 		"id": "2V2",
@@ -402,7 +402,7 @@
 			"baumbestand:anlagenbaeume",
 			"baumbestand:strassenbaeume"
 		],
-		"legendSrc": "/legends/placeholder.svg"
+		"legendSrc": "/legends/2v4.svg"
 	},
 	{
 		"id": "2V5",
@@ -416,7 +416,7 @@
 		"canQueryFeatures": ["bohrdaten:bohrpunkte"],
 		"featureDisplay": "modal",
 		"visibleLayerIds": ["bohrdaten:bohrpunkte"],
-		"legendSrc": "/legends/placeholder.svg"
+		"legendSrc": "/legends/2v5.svg"
 	},
 	{
 		"id": "2B1",

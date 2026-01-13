@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="426" height="220" viewBox="0 0 426 220">
+  <defs>
+    <style>
+      @import url("https://fonts.cdnfonts.com/css/arthouse-owned");
+      text { font-family: "Arthouse Owned", Arial, sans-serif; }
+    </style>
+  </defs>
+  <rect width="100%" height="100%" fill="transparent"/>
+  <rect x="16" y="12.0" width="24" height="16" rx="2" ry="2" fill="#718fcd" stroke="#0C4C38" stroke-width="1"/>
+  <text x="56" y="25" font-size="14" fill="#0C4C38">Fl&#228;chenversickerung</text>
+  <rect x="16" y="52.0" width="24" height="16" rx="2" ry="2" fill="#9d40e7" stroke="#0C4C38" stroke-width="1"/>
+  <text x="56" y="65" font-size="14" fill="#0C4C38">Muldenversickerung</text>
+  <rect x="16" y="92.0" width="24" height="16" rx="2" ry="2" fill="#40e7d7" stroke="#0C4C38" stroke-width="1"/>
+  <text x="56" y="105" font-size="14" fill="#0C4C38">Mulden-Rigolenelement</text>
+  <rect x="16" y="132.0" width="24" height="16" rx="2" ry="2" fill="#88dc48" stroke="#0C4C38" stroke-width="1"/>
+  <text x="56" y="145" font-size="14" fill="#0C4C38">Rigolenanlage</text>
+  <rect x="16" y="172.0" width="24" height="16" rx="2" ry="2" fill="#e740d4" stroke="#0C4C38" stroke-width="1"/>
+  <text x="56" y="185" font-size="14" fill="#0C4C38">Mulden-Rigolensystem mit gedrosselter Ableitung</text>
+</svg>
