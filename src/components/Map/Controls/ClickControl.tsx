@@ -1,3 +1,5 @@
+"use client";
+
 import { useMapStore } from "@/store/map";
 import { useUiStore } from "@/store/ui";
 import Overlay, { Options } from "ol/Overlay.js";

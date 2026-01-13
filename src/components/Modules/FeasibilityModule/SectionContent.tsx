@@ -1,4 +1,6 @@
-import Question from "@/components/Modules/NeedForActionModule/Question";
+"use client";
+
+import Question from "@/components/Modules/shared/Question";
 import { getModuleSteps } from "@/components/Modules/shared/moduleConfig";
 import { useModuleNavigation } from "@/components/Modules/shared/useModuleNavigation";
 import { useVerticalStepper } from "@/components/VerticalStepper";
@@ -41,8 +43,8 @@ export function SectionContent({ sectionId }: SectionContentProps) {
 		return <div />;
 	}
 	return (
-		<div className="h-full">
-			<h3 className="text-primary">{(currentStep as any)?.title}</h3>
+		<div className="flex h-full flex-col">
+			<h3 className="text-primary shrink-0">{(currentStep as any)?.title}</h3>
 			<Question
 				key={currentQuestionConfig.id}
 				questionConfig={currentQuestionConfig}

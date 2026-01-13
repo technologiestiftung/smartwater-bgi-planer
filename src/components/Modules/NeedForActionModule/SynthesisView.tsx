@@ -1,3 +1,5 @@
+"use client";
+
 import { SynthesisView as SharedSynthesisView } from "@/components/Modules/shared/SynthesisView";
 
 interface SynthesisViewProps {

@@ -1,3 +1,5 @@
+"use client";
+
 import type { StepConfig } from "@/components/VerticalStepper";
 import { useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";

@@ -1,3 +1,5 @@
+"use client";
+
 import { useStepValid } from "@/components/Modules/shared/isStepValidUtil";
 import {
 	getModuleMetadata,

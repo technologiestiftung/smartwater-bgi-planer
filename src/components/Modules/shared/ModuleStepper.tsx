@@ -1,3 +1,5 @@
+"use client";
+
 import { useModuleNavigation } from "@/components/Modules/shared/useModuleNavigation";
 import { SideMenu } from "@/components/SideMenu";
 import type { StepConfig } from "@/components/VerticalStepper";

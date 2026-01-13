@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { performProjectBoundaryIntersection } from "@/lib/helpers/projectBoundary";
 import { useMapStore } from "@/store/map";

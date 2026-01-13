@@ -1,3 +1,5 @@
+"use client";
+
 import { getLayerById } from "@/lib/helpers/ol";
 import { useMapStore } from "@/store/map";
 import { MultiPolygon, Polygon } from "ol/geom";

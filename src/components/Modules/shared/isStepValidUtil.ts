@@ -1,3 +1,5 @@
+"use client";
+
 import { useLayerFeatures } from "@/hooks/use-layer-features";
 import { useUiStore } from "@/store/ui";
 import { SectionId } from "@/types/sectionIds";

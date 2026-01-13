@@ -1,5 +1,7 @@
-import Question from "@/components/Modules/NeedForActionModule/Question";
+"use client";
+
 import { getModuleSteps } from "@/components/Modules/shared/moduleConfig";
+import Question from "@/components/Modules/shared/Question";
 import { useModuleNavigation } from "@/components/Modules/shared/useModuleNavigation";
 import { Spinner } from "@/components/ui/spinner";
 import { useVerticalStepper } from "@/components/VerticalStepper";

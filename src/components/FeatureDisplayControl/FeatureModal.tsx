@@ -1,3 +1,5 @@
+"use client";
+
 import { getLayerById } from "@/lib/helpers/ol";
 import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";
@@ -33,7 +35,7 @@ const FeatureModal: FC<FeatureModalProps> = ({
 
 	return (
 		<div className="FeatureModal-root fixed inset-0 z-9999 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
-			<div className="bg-background flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-lg shadow-2xl">
+			<div className="bg-background flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-sm shadow-2xl">
 				<div className="border-muted flex h-8 min-h-12 w-full items-center justify-between border-b pl-2">
 					<h2 className="text-xl font-bold">Bohrprofil</h2>
 

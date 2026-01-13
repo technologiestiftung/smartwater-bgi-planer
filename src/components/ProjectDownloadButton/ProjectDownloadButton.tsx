@@ -1,3 +1,5 @@
+"use client";
+
 import { downloadProject } from "@/components/ProjectDownloadButton/projectExport";
 import { Button } from "@/components/ui/button";
 import { useProjectsStore } from "@/store";

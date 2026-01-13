@@ -1,3 +1,5 @@
+"use client";
+
 import { LayerElement } from "@/store/layers/types";
 import { MapConfig } from "@/store/map/types";
 import WMTSCapabilities from "ol/format/WMTSCapabilities";

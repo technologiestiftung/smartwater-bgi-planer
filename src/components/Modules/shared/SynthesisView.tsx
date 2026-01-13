@@ -1,4 +1,6 @@
-import { SynthesisBadge } from "@/components/Modules/NeedForActionModule/SynthesisBadge";
+"use client";
+
+import { SynthesisBadge } from "@/components/Modules/shared/SynthesisBadge";
 import { getModuleSteps } from "@/components/Modules/shared/moduleConfig";
 import { Button } from "@/components/ui/button";
 import { useMapReady } from "@/hooks/use-map-ready";
