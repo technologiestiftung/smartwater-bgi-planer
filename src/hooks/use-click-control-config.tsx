@@ -17,19 +17,14 @@ export const useClickControlConfig = () => {
 
 	const vectorLayerIds = useMemo(() => {
 		const ids: string[] = [];
-
-		if (currentConfig?.canDrawNotes) {
-			ids.push("module1_notes");
-		}
+		ids.push("module1_notes");
 
 		if (drawLayerId) {
 			ids.push(drawLayerId);
 		}
-
 		return ids;
-	}, [currentConfig, drawLayerId]);
+	}, [drawLayerId]);
 
-	// WMS Features für Queries (canQueryFeatures)
 	const wmsLayerIds = useMemo(() => {
 		return currentConfig?.canQueryFeatures || [];
 	}, [currentConfig]);
