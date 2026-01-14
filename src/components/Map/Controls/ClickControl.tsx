@@ -7,6 +7,7 @@ import { useUiStore } from "@/store/ui";
 import Overlay, { Options } from "ol/Overlay.js";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 
+// --- Typen & Konstanten ---
 interface ClickControlProps {
 	layerIds: string[];
 	vectorLayerIds: string[];
@@ -20,6 +21,13 @@ interface ClickControlProps {
 	) => React.ReactNode;
 	minZoomForClick?: number;
 }
+
+type Selection = {
+	feature: any;
+	layerId: string;
+	coordinate: [number, number];
+	displayMode: "overlay" | "modal";
+};
 
 type OverlayPositioning =
 	| "bottom-left"
@@ -35,7 +43,6 @@ const POSITION_OFFSETS: Record<OverlayPositioning, [number, number]> = {
 };
 
 const ClickControl: FC<ClickControlProps> = ({
-	layerIds,
 	vectorLayerIds,
 	wmsLayerIds,
 	currentConfig,
@@ -44,266 +51,266 @@ const ClickControl: FC<ClickControlProps> = ({
 	minZoomForClick = 4,
 }) => {
 	const map = useMapStore((state) => state.map);
-	const isDrawing = useUiStore((state) => state.isDrawing);
-	const isBlockAreaSelecting = useUiStore(
-		(state) => state.isBlockAreaSelecting,
-	);
-	const isDrawingNote = useUiStore((state) => state.isDrawingNote);
+	const { isDrawing, isBlockAreaSelecting, isDrawingNote } = useUiStore();
+
+	// Zustand für das aktuell ausgewählte Element
+	const [selection, setSelection] = useState<Selection | null>(null);
+	const [cardPosition, setCardPosition] =
+		useState<OverlayPositioning>("bottom-left");
+	const [isLoading, setIsLoading] = useState(false);
 
 	const overlayRef = useRef<HTMLDivElement>(null);
 	const overlayInstanceRef = useRef<Overlay | null>(null);
 	const overlaySizeRef = useRef({ width: 0, height: 0 });
 
-	const [features, setFeatures] = useState<any>();
-	const [matchedLayerId, setMatchedLayerId] = useState<string | null>(null);
-	const [modalData, setModalData] = useState<{
-		attributes: Record<string, any>;
-		layerId: string;
-		coordinate?: [number, number];
-	} | null>(null);
+	// --- Hilfsfunktionen ---
 
-	const [cardPosition, setCardPosition] =
-		useState<OverlayPositioning>("bottom-left");
+	const handleClose = useCallback(() => {
+		setSelection(null);
+	}, []);
 
 	const calculatePositioning = useCallback(
 		(pixel: [number, number]): OverlayPositioning => {
 			if (!map) return "top-left";
-
 			const mapSize = map.getSize();
 			if (!mapSize) return "top-left";
 
-			const { width: overlayWidth, height: overlayHeight } =
-				overlaySizeRef.current;
-			if (overlayWidth === 0 || overlayHeight === 0) return cardPosition;
+			const { width, height } = overlaySizeRef.current;
+			const [pX, pY] = pixel;
+			const [mW, mH] = mapSize;
+			const buffer = 15;
 
-			const [mapWidth, mapHeight] = mapSize;
-			const [pixelX, pixelY] = pixel;
-			const buffer = 10;
-
-			const vertical: "top" | "bottom" =
-				pixelY + overlayHeight + buffer > mapHeight ? "bottom" : "top";
-			const horizontal: "left" | "right" =
-				pixelX + overlayWidth + buffer > mapWidth ? "right" : "left";
-
+			const vertical = pY + height + buffer > mH ? "bottom" : "top";
+			const horizontal = pX + width + buffer > mW ? "right" : "left";
 			return `${vertical}-${horizontal}` as OverlayPositioning;
 		},
-		[map, cardPosition],
+		[map],
 	);
 
-	useEffect(() => {
-		if (overlayInstanceRef.current) {
-			overlayInstanceRef.current.setPositioning(cardPosition);
-			overlayInstanceRef.current.setOffset(POSITION_OFFSETS[cardPosition]);
-		}
-	}, [cardPosition]);
+	/**
+	 * SUCHE 1: Vektor Features (Notizen & Zeichnungen)
+	 * Diese Suche ist instantan, da die Daten lokal im Browser liegen.
+	 */
+	const findVectorFeature = useCallback(
+		(pixel: [number, number]) => {
+			if (!map) return null;
 
-	useEffect(() => {
-		if (!features && !modalData && overlayInstanceRef.current) {
-			overlayInstanceRef.current.setPosition(undefined);
-		}
-	}, [features, modalData]);
+			return map.forEachFeatureAtPixel(
+				pixel,
+				(feature, layer) => {
+					const id = layer?.get("id");
+					if (!id) return;
 
-	const handleCloseOverlay = useCallback(() => {
-		setFeatures(undefined);
-		setMatchedLayerId(null);
-		setModalData(null);
-	}, []);
+					// Priorität 1: Notizen (Immer Vorrang)
+					if (id === "module1_notes") {
+						const clusteredFeatures = feature.get("features");
+						if (clusteredFeatures && clusteredFeatures.length > 1) return; // Keine Cluster-Klicks
+						return { feature, layerId: id };
+					}
 
-	useEffect(() => {
-		if (!overlayRef.current) return;
+					// Priorität 2: Gezeichnete Objekte
+					if (vectorLayerIds.includes(id)) {
+						return { feature, layerId: id };
+					}
+				},
+				{
+					hitTolerance: 4, // Macht das Treffen von Punkten/Linien einfacher
+				},
+			);
+		},
+		[map, vectorLayerIds],
+	);
 
-		const observer = new ResizeObserver((entries) => {
-			for (const entry of entries) {
-				const { width, height } = entry.contentRect;
-				overlaySizeRef.current = { width, height };
-			}
-		});
+	/**
+	 * SUCHE 2: WMS Features (Server-Abfrage)
+	 * Parallelisierte Abfrage aller query-fähigen Layer.
+	 */
+	const findWmsFeature = useCallback(
+		async (coordinate: [number, number]) => {
+			if (!map || wmsLayerIds.length === 0) return null;
 
-		observer.observe(overlayRef.current);
-		return () => observer.disconnect();
-	}, []);
+			const activeWmsLayers = map
+				.getAllLayers()
+				.filter((l) => l.getVisible() && wmsLayerIds.includes(l.get("id")))
+				.reverse(); // Oberste Layer zuerst
 
+			// Alle Requests gleichzeitig starten
+			const fetchPromises = activeWmsLayers.map(async (layer) => {
+				const layerId = layer.get("id");
+				try {
+					const result = await fetchFeatureInfo({ coordinate, layerId, map });
+					if (result?.attributes && Object.keys(result.attributes).length > 0) {
+						return { feature: result.attributes, layerId };
+					}
+				} catch (e) {
+					console.error(e);
+					return null;
+				}
+				return null;
+			});
+
+			const results = await Promise.all(fetchPromises);
+			return results.find((res) => res !== null) || null;
+		},
+		[map, wmsLayerIds],
+	);
+
+	// --- Effects ---
+
+	// 1. Overlay Initialisierung
 	useEffect(() => {
 		if (!map || !overlayRef.current) return;
 
 		const overlay = new Overlay({
 			element: overlayRef.current,
-			id: "ClickControl-root",
-			positioning: cardPosition,
-			offset: POSITION_OFFSETS[cardPosition],
+			id: "ClickControl-overlay",
+			stopEvent: true, // Verhindert Klicks durch das Tooltip auf die Karte
 			...overlayOptions,
 		});
 
-		overlayInstanceRef.current = overlay;
 		map.addOverlay(overlay);
+		overlayInstanceRef.current = overlay;
+
+		return () => {
+			map.removeOverlay(overlay);
+		};
+	}, [map, overlayOptions]);
+
+	// 2. Click Handler Logik
+	useEffect(() => {
+		if (!map) return;
 
 		const handleClick = async (evt: any) => {
-			// 1. check ob wir uns im drawing mode befinden. falls ja, soll returned werden und die DrawButtons handeln die klicks
-			if (isDrawing || isBlockAreaSelecting || isDrawingNote) {
-				return;
-			}
+			// Blockieren wenn im Zeichen-Modus
+			if (isDrawing || isBlockAreaSelecting || isDrawingNote) return;
 
-			// 2. wenn wir uns nicht im drawing mode befinden, muss ich checken was geklickt wurde.
-			// hier gibt es priorisierungen
-			// wurde eine notiz geklickt, soll sich die notiz karte öffnen (alles was darunter liegt, soll ignoriert werden)
-			// wurde auf ein Feature von der drawLayerId geklickt soll sich das feature menu öffnen (alles darunter, soll ignoriert werden)
-			// und als letzte priorität gibt es die canQueryFeatures mit einem array aus layern. diese sollen klickbar sein und dann entsprechend der featureDisplay als tooltip oder modal geöffnet werden
+			// Zoom-Check
+			if ((map.getView().getZoom() ?? 0) < minZoomForClick) return;
 
-			const zoom = map.getView().getZoom() ?? 0;
-			if (zoom < minZoomForClick) return;
+			// A. Zuerst Vektor-Features suchen (Schnell/Lokal)
+			const vectorMatch = findVectorFeature(evt.pixel);
 
-			const pixel = evt.pixel;
-			const coordinate = evt.coordinate;
-			let matchedFeature: any = null;
-			let matchedLayer: string | null = null;
-
-			const newPositioning = calculatePositioning(pixel);
-			if (newPositioning !== cardPosition) {
-				setCardPosition(newPositioning);
-			}
-
-			// Priorität 1: Vector Features (Notizen) - sowohl neue als auch bestehende
-			if (vectorLayerIds.includes("module1_notes")) {
-				map.forEachFeatureAtPixel(pixel, (feature, layer) => {
-					const currentLayerId = layer?.get("id");
-					if (currentLayerId === "module1_notes" && !matchedFeature) {
-						const clusteredFeatures = feature.get("features");
-						const isCluster = clusteredFeatures?.length > 1;
-						if (!isCluster) {
-							matchedFeature = feature;
-							matchedLayer = currentLayerId;
-							return false;
-						}
-					}
-					return true;
+			if (vectorMatch) {
+				setCardPosition(calculatePositioning(evt.pixel));
+				setSelection({
+					...vectorMatch,
+					coordinate: evt.coordinate,
+					displayMode: "overlay",
 				});
+				return; // Suche beenden, Vektor hat Priorität
 			}
 
-			// Priorität 2: Draw Layer Features
-			if (!matchedFeature && vectorLayerIds.length > 1) {
-				map.forEachFeatureAtPixel(pixel, (feature, layer) => {
-					const currentLayerId = layer?.get("id");
-					if (
-						vectorLayerIds.includes(currentLayerId) &&
-						currentLayerId !== "module1_notes" &&
-						!matchedFeature
-					) {
-						const clusteredFeatures = feature.get("features");
-						const isCluster = clusteredFeatures?.length > 1;
-						if (!isCluster) {
-							matchedFeature = feature;
-							matchedLayer = currentLayerId;
-							return false;
-						}
-					}
-					return true;
-				});
-			}
+			// B. Wenn kein Vektor, dann WMS suchen (Langsam/Server)
+			if (wmsLayerIds.length > 0) {
+				setIsLoading(true);
+				document.body.style.cursor = "wait";
 
-			// Priorität 3: WMS Features (canQueryFeatures) - nur wenn kein Vector Feature gefunden
-			if (!matchedFeature && wmsLayerIds.length > 0) {
-				const allQueryableLayers = map
-					.getAllLayers()
-					.filter((l) => {
-						const id = l.get("id");
-						return id && wmsLayerIds.includes(id) && l.getVisible();
-					})
-					.reverse();
+				try {
+					const wmsMatch = await findWmsFeature(evt.coordinate);
+					if (wmsMatch) {
+						// Prüfen ob Modal oder Tooltip laut Config
+						const isModal =
+							currentConfig?.featureDisplay === "modal" &&
+							currentConfig?.canQueryFeatures?.includes(wmsMatch.layerId);
 
-				for (const layer of allQueryableLayers) {
-					const layerId = layer.get("id");
-					try {
-						const result = await fetchFeatureInfo({
-							coordinate,
-							layerId,
-							map,
+						setCardPosition(calculatePositioning(evt.pixel));
+						setSelection({
+							...wmsMatch,
+							coordinate: evt.coordinate,
+							displayMode: isModal ? "modal" : "overlay",
 						});
-
-						if (
-							result?.attributes &&
-							Object.keys(result.attributes).length > 0
-						) {
-							matchedFeature = result.attributes;
-							matchedLayer = layerId;
-							break; // Stop after first WMS match
-						}
-					} catch (error) {
-						console.debug(`WMS query failed for layer ${layerId}:`, error);
+					} else {
+						setSelection(null);
 					}
-				}
-			}
-
-			if (matchedFeature && matchedLayer) {
-				// Prüfe ob es ein Modal oder Tooltip sein soll
-				const shouldShowModal =
-					currentConfig?.canQueryFeatures?.includes(matchedLayer) &&
-					currentConfig?.featureDisplay === "modal";
-
-				if (shouldShowModal) {
-					// Modal: Schließe Overlay und öffne Modal
-					overlay.setPosition(undefined);
-					setFeatures(undefined);
-					setMatchedLayerId(null);
-					setModalData({
-						attributes: matchedFeature,
-						layerId: matchedLayer,
-						coordinate,
-					});
-				} else {
-					// Tooltip/andere: Zeige im Overlay
-					setModalData(null);
-					overlay.setPosition(coordinate);
-					setFeatures(matchedFeature);
-					setMatchedLayerId(matchedLayer);
+				} finally {
+					setIsLoading(false);
+					document.body.style.cursor = "auto";
 				}
 			} else {
-				// Nichts gefunden: Alles schließen
-				overlay.setPosition(undefined);
-				setFeatures(undefined);
-				setMatchedLayerId(null);
-				setModalData(null);
+				setSelection(null);
 			}
 		};
 
 		map.on("click", handleClick);
-
 		return () => {
 			map.un("click", handleClick);
-			map.removeOverlay(overlay);
-			overlayInstanceRef.current = null;
+			document.body.style.cursor = "auto";
 		};
 	}, [
 		map,
-		layerIds,
-		vectorLayerIds,
-		wmsLayerIds,
-		currentConfig,
-		overlayOptions,
-		cardPosition,
-		calculatePositioning,
-		minZoomForClick,
 		isDrawing,
 		isBlockAreaSelecting,
 		isDrawingNote,
+		minZoomForClick,
+		findVectorFeature,
+		findWmsFeature,
+		calculatePositioning,
+		currentConfig,
+		wmsLayerIds,
 	]);
+
+	// 3. Overlay Positionierung synchronisieren
+	useEffect(() => {
+		const overlay = overlayInstanceRef.current;
+		if (!overlay) return;
+
+		if (selection?.displayMode === "overlay" && selection.coordinate) {
+			overlay.setPositioning(cardPosition);
+			overlay.setOffset(POSITION_OFFSETS[cardPosition]);
+			overlay.setPosition(selection.coordinate);
+		} else {
+			overlay.setPosition(undefined);
+		}
+	}, [selection, cardPosition]);
+
+	// 4. Resize Observer für korrekte Positionsberechnung
+	useEffect(() => {
+		if (!overlayRef.current) return;
+		const observer = new ResizeObserver((entries) => {
+			for (const entry of entries) {
+				overlaySizeRef.current = {
+					width: entry.contentRect.width,
+					height: entry.contentRect.height,
+				};
+			}
+		});
+		observer.observe(overlayRef.current);
+		return () => observer.disconnect();
+	}, []);
 
 	return (
 		<>
-			{/* Overlay für Tooltips/andere */}
-			<div className="ClickControl-root" ref={overlayRef}>
-				{features && matchedLayerId
-					? renderContent(features, matchedLayerId, handleCloseOverlay)
-					: null}
+			{/* Overlay für Tooltips / Notizen / Menüs */}
+			<div
+				ref={overlayRef}
+				className="ClickControl-root"
+				style={{
+					pointerEvents: selection?.displayMode === "overlay" ? "auto" : "none",
+				}}
+			>
+				{selection?.displayMode === "overlay" &&
+					renderContent(selection.feature, selection.layerId, handleClose)}
 			</div>
 
-			{/* Modal außerhalb des Overlays */}
-			{modalData && (
+			{/* Modal-Anzeige (außerhalb des OL-Overlays) */}
+			{selection?.displayMode === "modal" && (
 				<FeatureModal
-					attributes={modalData.attributes}
-					layerId={modalData.layerId}
-					coordinate={modalData.coordinate}
-					onClose={handleCloseOverlay}
+					attributes={
+						selection.feature?.getProperties
+							? selection.feature.getProperties()
+							: selection.feature
+					}
+					layerId={selection.layerId}
+					coordinate={selection.coordinate}
+					onClose={handleClose}
 				/>
+			)}
+
+			{/* Optional: Globaler Loader-Indikator (CSS-Klasse hinzufügen falls gewünscht) */}
+			{isLoading && (
+				<div className="pointer-events-none fixed right-4 bottom-4 animate-pulse rounded bg-white/80 p-2 text-xs shadow-sm">
+					Lade Feature-Info...
+				</div>
 			)}
 		</>
 	);
