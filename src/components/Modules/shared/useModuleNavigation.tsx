@@ -201,6 +201,20 @@ export function useModuleNavigation({
 		setShowStepper(false);
 	}, [questionIndices, saveCurrentState, setIsSynthesisMode, setShowStepper]);
 
+	const handleShowPotentialMaps = useCallback(() => {
+		const stepId = useUiStore.getState().currentStepId;
+		if (stepId) {
+			useUiStore
+				.getState()
+				.navigateToModuleQuestion(
+					stepId as SectionId,
+					questionIndices[stepId as SectionId],
+				);
+		}
+		saveCurrentState();
+		setShowStepper(false);
+	}, [questionIndices, saveCurrentState, setShowStepper]);
+
 	return {
 		questionIndices,
 		setQuestionIndex,
@@ -210,6 +224,7 @@ export function useModuleNavigation({
 		navigateToPrevious,
 		navigateToNext,
 		handleShowSynthesis,
+		handleShowPotentialMaps,
 		saveModuleState: saveCurrentState,
 		restoreModuleState: useUiStore.getState().restoreModuleState,
 	};

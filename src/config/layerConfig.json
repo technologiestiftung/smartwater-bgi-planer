@@ -354,6 +354,18 @@
 		"moduleName": "Machbarkeit"
 	},
 	{
+		"id": "potential_maps_view",
+		"name": "Machbarkeiten prüfen – Versickerungspotential",
+		"question": "",
+		"description": "",
+		"drawLayerId": "",
+		"canDrawPolygons": false,
+		"canDrawBTF": false,
+		"canDrawNotes": false,
+		"visibleLayerIds": ["project_boundary", "project_new_development"],
+		"legendSrc": ""
+	},
+	{
 		"id": "2V1",
 		"name": "Versickerungspotenzial 🚫",
 		"question": "",
