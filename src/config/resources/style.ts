@@ -162,6 +162,21 @@ const styleList = [
 		],
 	},
 	{
+		styleId: "2v5",
+		rules: [
+			{
+				style: {
+					pointFillColor: [255, 146, 146, 1],
+					pointStrokeColor: [246, 27, 54, 1],
+					pointStrokeWidth: 2,
+					pointRadius: 8,
+					iconScale: 0.8,
+					icon: "/icons/x-circle.svg",
+				},
+			},
+		],
+	},
+	{
 		styleId: "module2Notes",
 		rules: [
 			{

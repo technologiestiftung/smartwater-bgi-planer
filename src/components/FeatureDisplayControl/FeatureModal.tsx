@@ -17,17 +17,39 @@ interface FeatureModalProps {
 	layerId: string;
 	coordinate?: [number, number];
 	onClose: () => void;
+	isLoading?: boolean;
 }
 
 const FeatureModal: FC<FeatureModalProps> = ({
 	attributes,
 	coordinate,
 	onClose,
+	isLoading: externalLoading = false,
 }) => {
 	const map = useMapStore((state) => state.map);
 	const drawLayerId = useLayersStore((state) => state.drawLayerId);
 	const profilUrl = attributes?.["Profil"];
-	const [isLoading, setIsLoading] = useState(!!profilUrl);
+	const [isImageLoading, setIsImageLoading] = useState(!!profilUrl);
+
+	function handleClick() {
+		if (map && drawLayerId && coordinate) {
+			const layer = getLayerById(
+				map,
+				drawLayerId,
+			) as VectorLayer<VectorSource> | null;
+			if (layer && layer.getSource()) {
+				const pointFeature = new Feature({
+					geometry: new Point(coordinate),
+					note: "Schlecht Versickerungsfähig",
+					timestamp: new Date().toISOString(),
+				});
+
+				layer.getSource()?.addFeature(pointFeature);
+				layer.getSource()?.changed();
+			}
+		}
+		onClose();
+	}
 
 	if (!attributes) {
 		return null;
@@ -37,7 +59,12 @@ const FeatureModal: FC<FeatureModalProps> = ({
 		<div className="FeatureModal-root fixed inset-0 z-9999 ml-136 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
 			<div className="bg-background flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-sm shadow-2xl">
 				<div className="border-muted flex h-8 min-h-12 w-full items-center justify-between border-b pl-2">
-					<h2 className="text-xl font-bold">Bohrprofil</h2>
+					<h2 className="text-xl font-bold">
+						Bohrprofil{" "}
+						{externalLoading && (
+							<SpinnerIcon className="ml-2 inline animate-spin" size={16} />
+						)}
+					</h2>
 
 					<div className="bg-secondary h-12 w-12 text-white">
 						<button
@@ -54,7 +81,7 @@ const FeatureModal: FC<FeatureModalProps> = ({
 						{profilUrl && (
 							<div className="relative flex w-full flex-col gap-2">
 								<div className="rounded-md bg-white">
-									{isLoading && (
+									{isImageLoading && (
 										<div className="absolute inset-0 z-10 flex items-center justify-center bg-white">
 											<SpinnerIcon className="animate-spin" />
 										</div>
@@ -63,8 +90,8 @@ const FeatureModal: FC<FeatureModalProps> = ({
 										src={profilUrl}
 										alt="Bohrprofil"
 										className="h-auto min-h-[300px] w-full object-contain"
-										onLoad={() => setIsLoading(false)}
-										onError={() => setIsLoading(false)}
+										onLoad={() => setIsImageLoading(false)}
+										onError={() => setIsImageLoading(false)}
 										loading="lazy"
 										width={300}
 										height={100}
@@ -77,28 +104,7 @@ const FeatureModal: FC<FeatureModalProps> = ({
 				</div>
 
 				<div className="bg-muted/10 border-muted flex justify-end border-t p-4">
-					<Button
-						onClick={() => {
-							if (map && drawLayerId && coordinate) {
-								const layer = getLayerById(
-									map,
-									drawLayerId,
-								) as VectorLayer<VectorSource> | null;
-								if (layer && layer.getSource()) {
-									const pointFeature = new Feature({
-										geometry: new Point(coordinate),
-										note: "Schlecht Versickerungsfähig",
-										timestamp: new Date().toISOString(),
-									});
-									layer.getSource()?.addFeature(pointFeature);
-									layer.getSource()?.changed();
-								}
-							}
-							onClose();
-						}}
-					>
-						Schlecht Versickerungsfähig
-					</Button>
+					<Button onClick={handleClick}>Schlecht Versickerungsfähig</Button>
 					<Button className="ml-2" onClick={onClose}>
 						Gut Versickerungsfähig
 					</Button>
