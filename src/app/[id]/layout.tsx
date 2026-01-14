@@ -1,6 +1,5 @@
 import { AddressSearch } from "@/components/AddressSearch/AddressSearch";
 import { DrawControlsContainer } from "@/components/DrawControls";
-import FeatureInfoManager from "@/components/FeatureDisplayControl/FeatureInfoManager";
 import ConfigManager from "@/components/Map/ConfigManager/ConfigManager";
 import LayerManager from "@/components/Map/LayerManager/LayerManager";
 import Map from "@/components/Map/Map";
@@ -26,7 +25,6 @@ export default async function ProjectLayout({
 				<div className="relative">
 					<Map />
 					<DrawControlsContainer projectId={id} />
-					<FeatureInfoManager />
 					<MenuToggleButton projectId={id} />
 					<AddressSearch />
 				</div>

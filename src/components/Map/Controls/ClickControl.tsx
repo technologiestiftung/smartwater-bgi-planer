@@ -1,5 +1,7 @@
 "use client";
 
+import FeatureModal from "@/components/FeatureDisplayControl/FeatureModal";
+import { fetchFeatureInfo } from "@/lib/helpers/wmsFeatureInfo";
 import { useMapStore } from "@/store/map";
 import { useUiStore } from "@/store/ui";
 import Overlay, { Options } from "ol/Overlay.js";
@@ -7,6 +9,9 @@ import { FC, useCallback, useEffect, useRef, useState } from "react";
 
 interface ClickControlProps {
 	layerIds: string[];
+	vectorLayerIds: string[];
+	wmsLayerIds: string[];
+	currentConfig?: any;
 	overlayOptions?: Options;
 	renderContent: (
 		feature: any,
@@ -31,6 +36,9 @@ const POSITION_OFFSETS: Record<OverlayPositioning, [number, number]> = {
 
 const ClickControl: FC<ClickControlProps> = ({
 	layerIds,
+	vectorLayerIds,
+	wmsLayerIds,
+	currentConfig,
 	overlayOptions,
 	renderContent,
 	minZoomForClick = 4,
@@ -48,6 +56,12 @@ const ClickControl: FC<ClickControlProps> = ({
 
 	const [features, setFeatures] = useState<any>();
 	const [matchedLayerId, setMatchedLayerId] = useState<string | null>(null);
+	const [modalData, setModalData] = useState<{
+		attributes: Record<string, any>;
+		layerId: string;
+		coordinate?: [number, number];
+	} | null>(null);
+
 	const [cardPosition, setCardPosition] =
 		useState<OverlayPositioning>("bottom-left");
 
@@ -84,14 +98,15 @@ const ClickControl: FC<ClickControlProps> = ({
 	}, [cardPosition]);
 
 	useEffect(() => {
-		if (!features && overlayInstanceRef.current) {
+		if (!features && !modalData && overlayInstanceRef.current) {
 			overlayInstanceRef.current.setPosition(undefined);
 		}
-	}, [features]);
+	}, [features, modalData]);
 
 	const handleCloseOverlay = useCallback(() => {
 		setFeatures(undefined);
 		setMatchedLayerId(null);
+		setModalData(null);
 	}, []);
 
 	useEffect(() => {
@@ -122,46 +137,131 @@ const ClickControl: FC<ClickControlProps> = ({
 		overlayInstanceRef.current = overlay;
 		map.addOverlay(overlay);
 
-		const handleClick = (evt: any) => {
-			if (isDrawing || isBlockAreaSelecting) {
+		const handleClick = async (evt: any) => {
+			// 1. check ob wir uns im drawing mode befinden. falls ja, soll returned werden und die DrawButtons handeln die klicks
+			if (isDrawing || isBlockAreaSelecting || isDrawingNote) {
 				return;
 			}
+
+			// 2. wenn wir uns nicht im drawing mode befinden, muss ich checken was geklickt wurde.
+			// hier gibt es priorisierungen
+			// wurde eine notiz geklickt, soll sich die notiz karte öffnen (alles was darunter liegt, soll ignoriert werden)
+			// wurde auf ein Feature von der drawLayerId geklickt soll sich das feature menu öffnen (alles darunter, soll ignoriert werden)
+			// und als letzte priorität gibt es die canQueryFeatures mit einem array aus layern. diese sollen klickbar sein und dann entsprechend der featureDisplay als tooltip oder modal geöffnet werden
 
 			const zoom = map.getView().getZoom() ?? 0;
 			if (zoom < minZoomForClick) return;
 
 			const pixel = evt.pixel;
 			const coordinate = evt.coordinate;
-			let matchedFeature = null;
-			let matchedLayer = null;
+			let matchedFeature: any = null;
+			let matchedLayer: string | null = null;
 
 			const newPositioning = calculatePositioning(pixel);
 			if (newPositioning !== cardPosition) {
 				setCardPosition(newPositioning);
 			}
 
-			map.forEachFeatureAtPixel(pixel, (feature, layer) => {
-				const currentLayerId = layer?.get("id");
-				if (layerIds.includes(currentLayerId)) {
-					const clusteredFeatures = feature.get("features");
-					const isCluster = clusteredFeatures?.length > 1;
-
-					if (!isCluster) {
-						matchedFeature = feature;
-						matchedLayer = currentLayerId;
+			// Priorität 1: Vector Features (Notizen) - sowohl neue als auch bestehende
+			if (vectorLayerIds.includes("module1_notes")) {
+				map.forEachFeatureAtPixel(pixel, (feature, layer) => {
+					const currentLayerId = layer?.get("id");
+					if (currentLayerId === "module1_notes" && !matchedFeature) {
+						const clusteredFeatures = feature.get("features");
+						const isCluster = clusteredFeatures?.length > 1;
+						if (!isCluster) {
+							matchedFeature = feature;
+							matchedLayer = currentLayerId;
+							return false;
+						}
 					}
 					return true;
+				});
+			}
+
+			// Priorität 2: Draw Layer Features
+			if (!matchedFeature && vectorLayerIds.length > 1) {
+				map.forEachFeatureAtPixel(pixel, (feature, layer) => {
+					const currentLayerId = layer?.get("id");
+					if (
+						vectorLayerIds.includes(currentLayerId) &&
+						currentLayerId !== "module1_notes" &&
+						!matchedFeature
+					) {
+						const clusteredFeatures = feature.get("features");
+						const isCluster = clusteredFeatures?.length > 1;
+						if (!isCluster) {
+							matchedFeature = feature;
+							matchedLayer = currentLayerId;
+							return false;
+						}
+					}
+					return true;
+				});
+			}
+
+			// Priorität 3: WMS Features (canQueryFeatures) - nur wenn kein Vector Feature gefunden
+			if (!matchedFeature && wmsLayerIds.length > 0) {
+				const allQueryableLayers = map
+					.getAllLayers()
+					.filter((l) => {
+						const id = l.get("id");
+						return id && wmsLayerIds.includes(id) && l.getVisible();
+					})
+					.reverse();
+
+				for (const layer of allQueryableLayers) {
+					const layerId = layer.get("id");
+					try {
+						const result = await fetchFeatureInfo({
+							coordinate,
+							layerId,
+							map,
+						});
+
+						if (
+							result?.attributes &&
+							Object.keys(result.attributes).length > 0
+						) {
+							matchedFeature = result.attributes;
+							matchedLayer = layerId;
+							break; // Stop after first WMS match
+						}
+					} catch (error) {
+						console.debug(`WMS query failed for layer ${layerId}:`, error);
+					}
 				}
-			});
+			}
 
 			if (matchedFeature && matchedLayer) {
-				overlay.setPosition(coordinate);
-				setFeatures(matchedFeature);
-				setMatchedLayerId(matchedLayer);
+				// Prüfe ob es ein Modal oder Tooltip sein soll
+				const shouldShowModal =
+					currentConfig?.canQueryFeatures?.includes(matchedLayer) &&
+					currentConfig?.featureDisplay === "modal";
+
+				if (shouldShowModal) {
+					// Modal: Schließe Overlay und öffne Modal
+					overlay.setPosition(undefined);
+					setFeatures(undefined);
+					setMatchedLayerId(null);
+					setModalData({
+						attributes: matchedFeature,
+						layerId: matchedLayer,
+						coordinate,
+					});
+				} else {
+					// Tooltip/andere: Zeige im Overlay
+					setModalData(null);
+					overlay.setPosition(coordinate);
+					setFeatures(matchedFeature);
+					setMatchedLayerId(matchedLayer);
+				}
 			} else {
+				// Nichts gefunden: Alles schließen
 				overlay.setPosition(undefined);
 				setFeatures(undefined);
 				setMatchedLayerId(null);
+				setModalData(null);
 			}
 		};
 
@@ -175,6 +275,9 @@ const ClickControl: FC<ClickControlProps> = ({
 	}, [
 		map,
 		layerIds,
+		vectorLayerIds,
+		wmsLayerIds,
+		currentConfig,
 		overlayOptions,
 		cardPosition,
 		calculatePositioning,
@@ -185,11 +288,24 @@ const ClickControl: FC<ClickControlProps> = ({
 	]);
 
 	return (
-		<div className="ClickControl-root" ref={overlayRef}>
-			{features && matchedLayerId
-				? renderContent(features, matchedLayerId, handleCloseOverlay)
-				: null}
-		</div>
+		<>
+			{/* Overlay für Tooltips/andere */}
+			<div className="ClickControl-root" ref={overlayRef}>
+				{features && matchedLayerId
+					? renderContent(features, matchedLayerId, handleCloseOverlay)
+					: null}
+			</div>
+
+			{/* Modal außerhalb des Overlays */}
+			{modalData && (
+				<FeatureModal
+					attributes={modalData.attributes}
+					layerId={modalData.layerId}
+					coordinate={modalData.coordinate}
+					onClose={handleCloseOverlay}
+				/>
+			)}
+		</>
 	);
 };
 

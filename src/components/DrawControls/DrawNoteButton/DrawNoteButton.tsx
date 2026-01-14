@@ -82,6 +82,12 @@ const DrawNoteButton: FC<DrawNoteButtonProps> = ({ layerId }) => {
 				const coordinate = (geometry as any).getCoordinates();
 				const pixel = map.getPixelFromCoordinate(coordinate);
 
+				setIsDrawing(false);
+				if (drawRef.current) {
+					map.removeInteraction(drawRef.current);
+					drawRef.current = null;
+				}
+
 				const clickEvent = new MapBrowserEvent("click", map, {
 					type: "click",
 					target: map.getViewport(),
