@@ -22,12 +22,15 @@ export function SectionContent({
 	const setAnswer = useAnswersStore((state: any) => state.setAnswer);
 	const feasibilitySteps = getModuleSteps("feasibility");
 
-	const { getCurrentSectionInfo, navigateToNextQuestion } = useModuleNavigation(
-		{
-			steps: feasibilitySteps,
-			useVerticalStepper,
-		},
-	);
+	const {
+		getCurrentSectionInfo,
+		navigateToNextQuestion,
+		navigateToNext,
+		handleShowSynthesis,
+	} = useModuleNavigation({
+		steps: feasibilitySteps,
+		useVerticalStepper,
+	});
 
 	const { currentStep, currentQuestionId } = getCurrentSectionInfo(sectionId);
 	const currentQuestionConfig = useMemo(
@@ -38,9 +41,12 @@ export function SectionContent({
 	const handleAnswer = useCallback(
 		(answer: boolean) => {
 			setAnswer(currentQuestionId, answer);
-			navigateToNextQuestion(sectionId);
+			const success = navigateToNext();
+			if (!success) {
+				handleShowSynthesis();
+			}
 		},
-		[currentQuestionId, sectionId, setAnswer, navigateToNextQuestion],
+		[currentQuestionId, setAnswer, navigateToNext, handleShowSynthesis],
 	);
 
 	const handleSkip = useCallback(() => {

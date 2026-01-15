@@ -17,12 +17,11 @@ export function SectionContent({ sectionId }: SectionContentProps) {
 	const layerConfig = useLayersStore((state) => state.layerConfig);
 	const setAnswer = useAnswersStore((state) => state.setAnswer);
 	const measurePlaningSteps = getModuleSteps("measurePlaning");
-	const { getCurrentSectionInfo, navigateToNextQuestion } = useModuleNavigation(
-		{
+	const { getCurrentSectionInfo, navigateToNext, handleShowSynthesis } =
+		useModuleNavigation({
 			steps: measurePlaningSteps,
 			useVerticalStepper,
-		},
-	);
+		});
 	const { currentStep, currentQuestionId } = getCurrentSectionInfo(sectionId);
 	const currentQuestionConfig = useMemo(
 		() => layerConfig.find((config: any) => config.id === currentQuestionId),
@@ -31,14 +30,21 @@ export function SectionContent({ sectionId }: SectionContentProps) {
 	const handleAnswer = useCallback(
 		(answer: boolean) => {
 			setAnswer(currentQuestionId, answer);
-			navigateToNextQuestion(sectionId);
+			const success = navigateToNext();
+			if (!success) {
+				handleShowSynthesis();
+			}
 		},
-		[currentQuestionId, sectionId, setAnswer, navigateToNextQuestion],
+		[currentQuestionId, setAnswer, navigateToNext, handleShowSynthesis],
 	);
+
 	const handleSkip = useCallback(() => {
 		setAnswer(currentQuestionId, null);
-		navigateToNextQuestion(sectionId);
-	}, [currentQuestionId, sectionId, setAnswer, navigateToNextQuestion]);
+		const success = navigateToNext();
+		if (!success) {
+			handleShowSynthesis();
+		}
+	}, [currentQuestionId, setAnswer, navigateToNext, handleShowSynthesis]);
 	if (!currentQuestionConfig) {
 		return <div />;
 	}
