@@ -22,14 +22,12 @@ export function SectionContent({
 	const setAnswer = useAnswersStore((state: any) => state.setAnswer);
 	const feasibilitySteps = getModuleSteps("feasibility");
 
-	const {
-		getCurrentSectionInfo,
-		navigateToNextQuestion,
-		handleShowPotentialMaps,
-	} = useModuleNavigation({
-		steps: feasibilitySteps,
-		useVerticalStepper,
-	});
+	const { getCurrentSectionInfo, navigateToNextQuestion } = useModuleNavigation(
+		{
+			steps: feasibilitySteps,
+			useVerticalStepper,
+		},
+	);
 
 	const { currentStep, currentQuestionId } = getCurrentSectionInfo(sectionId);
 	const currentQuestionConfig = useMemo(
@@ -39,26 +37,10 @@ export function SectionContent({
 
 	const handleAnswer = useCallback(
 		(answer: boolean) => {
-			if (currentQuestionId === "feasibility_module_introduction") {
-				if (onShowPotentialMaps) {
-					onShowPotentialMaps();
-				} else {
-					handleShowPotentialMaps();
-				}
-				return;
-			}
-
 			setAnswer(currentQuestionId, answer);
 			navigateToNextQuestion(sectionId);
 		},
-		[
-			currentQuestionId,
-			sectionId,
-			setAnswer,
-			navigateToNextQuestion,
-			onShowPotentialMaps,
-			handleShowPotentialMaps,
-		],
+		[currentQuestionId, sectionId, setAnswer, navigateToNextQuestion],
 	);
 
 	const handleSkip = useCallback(() => {
@@ -77,6 +59,7 @@ export function SectionContent({
 				layerConfig={currentQuestionConfig}
 				onAnswer={handleAnswer}
 				onSkip={handleSkip}
+				onShowPotentialMaps={onShowPotentialMaps}
 			/>
 		</div>
 	);

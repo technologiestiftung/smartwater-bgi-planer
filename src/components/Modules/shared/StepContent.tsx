@@ -15,12 +15,14 @@ interface StepContentProps {
 	layerConfig: LayerConfigItem;
 	onAnswer: (answer: boolean) => void;
 	onSkip: () => void;
+	onShowPotentialMaps?: () => void;
 }
 
 const StepContent: FC<StepContentProps> = ({
 	layerConfig,
 	onAnswer,
 	onSkip: _onSkip,
+	onShowPotentialMaps,
 }) => {
 	const { hasFeatures } = useLayerFeatures(layerConfig.drawLayerId);
 	const { formattedArea } = useLayerArea(layerConfig.drawLayerId);
@@ -66,7 +68,7 @@ const StepContent: FC<StepContentProps> = ({
 									: "Checkfragen starten"}
 							</Button>
 							{layerConfig.id === "feasibility_module_introduction" && (
-								<Button>
+								<Button onClick={onShowPotentialMaps}>
 									öffne Potentialkarten
 									<CaretDoubleRightIcon />
 								</Button>
