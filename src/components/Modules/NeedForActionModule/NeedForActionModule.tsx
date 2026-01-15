@@ -2,13 +2,13 @@
 
 import { SectionContent } from "@/components/Modules/NeedForActionModule/SectionContent";
 import { SynthesisView } from "@/components/Modules/NeedForActionModule/SynthesisView";
-import { useStepValid } from "@/components/Modules/shared/isStepValidUtil";
 import {
 	getModuleMetadata,
 	getModuleSteps,
 } from "@/components/Modules/shared/moduleConfig";
 import { ModuleFooter } from "@/components/Modules/shared/ModuleFooter";
 import { ModuleStepper } from "@/components/Modules/shared/ModuleStepper";
+import { useStepValid } from "@/lib/helpers/isStepValidUtil";
 import { SectionId } from "@/types/sectionIds";
 import { LAYER_IDS } from "@/types/shared";
 
