@@ -9,7 +9,7 @@ import { LayerConfigItem } from "@/store/layers/types";
 import { LAYER_IDS } from "@/types/shared";
 import { CaretDoubleRightIcon, PlayIcon } from "@phosphor-icons/react";
 import Image from "next/image";
-import { FC, useEffect } from "react";
+import { FC } from "react";
 
 interface StepContentProps {
 	layerConfig: LayerConfigItem;
@@ -29,10 +29,6 @@ const StepContent: FC<StepContentProps> = ({
 	const { hasFeatures: hasProjectBoundary } = useLayerFeatures(
 		LAYER_IDS.PROJECT_BOUNDARY,
 	);
-
-	useEffect(() => {
-		console.log("[Question] layerConfig::", layerConfig);
-	}, [layerConfig]);
 
 	const handleConfirm = (): boolean => {
 		const answer = hasFeatures;
