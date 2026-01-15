@@ -1,14 +1,13 @@
 "use client";
 
-import Question from "@/components/Modules/shared/Question";
+import StepContent from "@/components/Modules/shared/StepContent";
 import { getModuleSteps } from "@/components/Modules/shared/moduleConfig";
 import { useModuleNavigation } from "@/components/Modules/shared/useModuleNavigation";
 import { useVerticalStepper } from "@/components/VerticalStepper";
 import { useAnswersStore } from "@/store/answers";
+import { useLayersStore } from "@/store/layers";
 import { SectionId } from "@/types/sectionIds";
 import { useCallback, useMemo } from "react";
-
-import { useLayersStore } from "@/store/layers";
 
 interface SectionContentProps {
 	sectionId: SectionId;
@@ -46,9 +45,8 @@ export function SectionContent({ sectionId }: SectionContentProps) {
 	return (
 		<div className="h-full">
 			<h3 className="text-primary">{(currentStep as any)?.title}</h3>
-			<Question
-				key={currentQuestionConfig.id}
-				questionConfig={currentQuestionConfig}
+			<StepContent
+				layerConfig={currentQuestionConfig}
 				onAnswer={handleAnswer}
 				onSkip={handleSkip}
 			/>

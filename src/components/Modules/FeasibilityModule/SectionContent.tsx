@@ -1,6 +1,6 @@
 "use client";
 
-import Question from "@/components/Modules/shared/Question";
+import StepContent from "@/components/Modules/shared/StepContent";
 import { getModuleSteps } from "@/components/Modules/shared/moduleConfig";
 import { useModuleNavigation } from "@/components/Modules/shared/useModuleNavigation";
 import { useVerticalStepper } from "@/components/VerticalStepper";
@@ -73,9 +73,8 @@ export function SectionContent({
 	return (
 		<div className="flex h-full flex-col">
 			<h3 className="text-primary shrink-0">{(currentStep as any)?.title}</h3>
-			<Question
-				key={currentQuestionConfig.id}
-				questionConfig={currentQuestionConfig}
+			<StepContent
+				layerConfig={currentQuestionConfig}
 				onAnswer={handleAnswer}
 				onSkip={handleSkip}
 			/>

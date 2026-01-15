@@ -1,7 +1,7 @@
 "use client";
 
 import { getModuleSteps } from "@/components/Modules/shared/moduleConfig";
-import Question from "@/components/Modules/shared/Question";
+import StepContent from "@/components/Modules/shared/StepContent";
 import { useModuleNavigation } from "@/components/Modules/shared/useModuleNavigation";
 import { Spinner } from "@/components/ui/spinner";
 import { useVerticalStepper } from "@/components/VerticalStepper";
@@ -61,9 +61,8 @@ export function SectionContent({ sectionId }: SectionContentProps) {
 	return (
 		<div className="flex h-full flex-col">
 			<h3 className="text-primary shrink-0">{title}</h3>
-			<Question
-				key={currentQuestionConfig.id}
-				questionConfig={currentQuestionConfig}
+			<StepContent
+				layerConfig={currentQuestionConfig}
 				onAnswer={handleAnswer}
 				onSkip={handleSkip}
 			/>
