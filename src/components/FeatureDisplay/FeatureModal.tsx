@@ -31,7 +31,7 @@ const FeatureModal: FC<FeatureModalProps> = ({
 	const profilUrl = attributes?.["Profil"];
 	const [isImageLoading, setIsImageLoading] = useState(!!profilUrl);
 
-	function handleClick() {
+	function handleClick(noteType: "schlecht" | "gut") {
 		if (map && drawLayerId && coordinate) {
 			const layer = getLayerById(
 				map,
@@ -40,7 +40,11 @@ const FeatureModal: FC<FeatureModalProps> = ({
 			if (layer && layer.getSource()) {
 				const pointFeature = new Feature({
 					geometry: new Point(coordinate),
-					note: "Schlecht Versickerungsfähig",
+					note:
+						noteType === "schlecht"
+							? "Schlecht Versickerungsfähig"
+							: "Gut Versickerungsfähig",
+					noteType,
 					timestamp: new Date().toISOString(),
 				});
 
@@ -104,8 +108,10 @@ const FeatureModal: FC<FeatureModalProps> = ({
 				</div>
 
 				<div className="bg-muted/10 border-muted flex justify-end border-t p-4">
-					<Button onClick={handleClick}>Schlecht Versickerungsfähig</Button>
-					<Button className="ml-2" onClick={onClose}>
+					<Button onClick={() => handleClick("schlecht")}>
+						Schlecht Versickerungsfähig
+					</Button>
+					<Button className="ml-2" onClick={() => handleClick("gut")}>
 						Gut Versickerungsfähig
 					</Button>
 				</div>

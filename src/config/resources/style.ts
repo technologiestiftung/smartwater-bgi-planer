@@ -3,6 +3,11 @@ const abimoStroke = {
 	polygonStrokeColor: [84, 187, 168, 1],
 };
 
+const resultStroke = {
+	polygonStrokeWidth: 2,
+	polygonStrokeColor: [36, 65, 209, 1], // default, can be overridden
+};
+
 const styleList = [
 	{
 		styleId: "default",
@@ -165,13 +170,17 @@ const styleList = [
 		styleId: "2v5",
 		rules: [
 			{
+				conditions: { properties: { noteType: "schlecht" } },
 				style: {
-					pointFillColor: [255, 146, 146, 1],
-					pointStrokeColor: [246, 27, 54, 1],
-					pointStrokeWidth: 2,
-					pointRadius: 8,
 					iconScale: 0.8,
 					icon: "/icons/x-circle.svg",
+				},
+			},
+			{
+				conditions: { properties: { noteType: "gut" } },
+				style: {
+					iconScale: 0.8,
+					icon: "/icons/check.svg",
 				},
 			},
 		],
@@ -220,6 +229,67 @@ const styleList = [
 					polygonStrokeWidth: 1,
 					polygonStrokeColor: [0, 0, 0, 0.3],
 					polygonFillColor: [0, 0, 0, 0],
+				},
+			},
+		],
+	},
+	// Conditional style for abimo_result_delta_w
+	{
+		styleId: "abimo_result_delta_w",
+		rules: [
+			{
+				conditions: {
+					properties: {
+						delta_w: [0, 20],
+					},
+				},
+				style: {
+					...resultStroke,
+					polygonFillColor: [36, 65, 209, 1],
+				},
+			},
+			{
+				conditions: {
+					properties: {
+						delta_w: [20, 40],
+					},
+				},
+				style: {
+					...resultStroke,
+					polygonFillColor: [127, 148, 247, 1],
+				},
+			},
+			{
+				conditions: {
+					properties: {
+						delta_w: [40, 60],
+					},
+				},
+				style: {
+					...resultStroke,
+					polygonFillColor: [240, 151, 130, 1],
+				},
+			},
+			{
+				conditions: {
+					properties: {
+						delta_w: [60, 80],
+					},
+				},
+				style: {
+					...resultStroke,
+					polygonFillColor: [203, 78, 90, 1],
+				},
+			},
+			{
+				conditions: {
+					properties: {
+						delta_w: [80, 100],
+					},
+				},
+				style: {
+					...resultStroke,
+					polygonFillColor: [138, 26, 39, 1],
 				},
 			},
 		],

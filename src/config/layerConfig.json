@@ -430,7 +430,7 @@
 	},
 	{
 		"id": "2V2",
-		"name": "Altlasten ✅",
+		"name": "Altlasten",
 		"question": "Kommen Altlasten bzw. Altlastenverdachtsflächen im Plangebiet vor? (Relevant ist zum Beispiel, ob es ein Bodengutachten mit Aussagen zur Altlastensituation gibt.)",
 		"description": "Wenn ein Teil des Plangebiets im Bodenbelastungskataster Berlin als Altlasten- bzw. Altlastenverdachtsfläche erfasst ist, ist eine frühzeitige Rücksprache mit der oberen Wasserbehörde bzw. der zuständigen bezirklichen Bodenschutzbehörde notwendig. In der Regel ist ein Bodengutachten zu erstellen. Beim Antreffen von Altlasten oder anthropogenen Auffüllungen (z.B. Bauschutt) ist in Abstimmung mit der Bodenschutzbehörde ein Bodenaustausch im Bereich der geplanten Versickerungsanlagen vorzusehen.",
 		"drawLayerId": "module_2_2V2_draw",
@@ -441,7 +441,7 @@
 	},
 	{
 		"id": "2V3",
-		"name": "Unterirdische Infrastrukturen: Leitungsbestand, U-Bahntunnel ✅",
+		"name": "Unterirdische Infrastrukturen: Leitungsbestand, U-Bahntunnel",
 		"question": "Sind Leitungen oder unterirdische Infrastrukturen (z.B. U-Bahntunnel) vorhanden, die bei der Platzierung von z.B. Versickerungsanlagen oder Zisternen zu beachten sind?",
 		"description": "Vorhabenträger*in oder SGA können über infreST (https://www.infrest.de/) den Leitungsbestand abfragen.",
 		"drawLayerId": "module_2_2V3_draw",
@@ -452,7 +452,7 @@
 	},
 	{
 		"id": "2V4",
-		"name": "Altbaumbestand ✅",
+		"name": "Altbaumbestand",
 		"question": "Gibt es einen Altbaumbestand, der bei der Verortung von Maßnahmen berücksichtigt werden muss?",
 		"description": "In der Karte Baumbestand werden Straßen- und Anlagenbäume auf öffentlichen Flächen dargestellt. Die müssen bei der Planung von Versickerungsmaßnahmen berücksichtigt werden, ebenso wie das Fehlen von Bäumen im Untersuchungsgebiet.",
 		"drawLayerId": "module_2_2V4_draw",
@@ -467,7 +467,7 @@
 	},
 	{
 		"id": "2V5",
-		"name": "Geologischer Untergrund ✅ 🚨",
+		"name": "Geologischer Untergrund 🚨",
 		"question": "Gibt es Bohrkernprofile, die für die Maßnahmenplanung relevant sind? (z.B. durch Auffüllungen (Bauschutt) oder oberflächennahe Grundwasserstände)",
 		"description": [
 			"Zur detaillierten Beurteilung der Bodenverhältnisse ist ein Bodengutachten zu erstellen. Zur groben Ersteinschätzung können ggf. vorhandene Bohrkerndaten genutzt werden. Über die Bohrdaten können eher gut versickerungsfähige Böden (Beispiele: Kies, Sande) und eher schlecht versickerungsfähige Böden (Beispiele: Geschiebemergel, Ton) erkannt werden.",
@@ -486,7 +486,7 @@
 	},
 	{
 		"id": "2B1",
-		"name": "Denkmalschutz ✅",
+		"name": "Denkmalschutz",
 		"question": "Bestehen Belange des Denkmalschutzes, die es zu berücksichtigen gilt?",
 		"description": "Die Denkmalkarte Berlin stellt denkmalgeschützte Gebäude, Ensembles, Gärten, Gesamtanlagen und Bodendenkmäler dar. Maßnahmen der Klimaanpassung, die meist mit sichtbaren, baulichen Änderungen am Gebäude oder zugehörigen Außenanlagen einhergehen, müssen mit der Denkmalschutzbehörde abgestimmt werden. Die Umsetzung von Klimaanpassungsmaßnahmen kann durch Denkmalschutzbedenken eingeschränkt sein.",
 		"drawLayerId": "module_2_2B1_draw",
@@ -512,7 +512,7 @@
 	},
 	{
 		"id": "2G1",
-		"name": "Gründachpotenziale ✅",
+		"name": "Gründachpotenziale",
 		"question": "",
 		"description": "Gründächer können als intensiv begrüntes, extensiv begrüntes oder als Retentionsgründach mit Drossel ausgeführt werden. Intensive Begrünung oder ein Retentionsgründach sind nur auf einem Flachdach (mit einer Dachneigung < 5°) möglich. Zusätzlich können Gründächer mit Solaranlagen kombiniert oder als Biodiversitätsgründächer ausgeführt werden. \nDie Machbarkeit und die Art der Dachbegrünung ist auch von der Statik des Gebäudes abhängig (Tragfähigkeit bei extensivem Gründach etwa 60 kg/m²; bei intensivem Gründach ab etwa 300kg/m²). Eine extensive Dachbegrünung ist in der Regel möglich, wenn es eine Dachstuhlerneuerung mit ausreichender Lastreserve gab oder bereits ein Kiesdach vorhanden ist. \nIn Ergänzung zu der angezeigten Dachbegrünungspotentialkarte sollte über das Luftbild nach weiteren bereits realisierten Dachbegrünungen oder Photovoltaikanlagen geschaut werden.",
 		"drawLayerId": "",
@@ -528,7 +528,7 @@
 	},
 	{
 		"id": "2E1",
-		"name": "Entsiegelungspotenzialflächen ✅",
+		"name": "Entsiegelungspotenzialflächen",
 		"question": "",
 		"description": "Vereinzelte Flächen mit Potenzial zur Entsiegelung wurden bereits auf Basis einer Befragung der Bezirksämter und der Berliner Forsten ermittelt. Dabei wurde das Potenzial zur Entsiegelung festgestellt, bewertet und priorisiert.",
 		"drawLayerId": "",
