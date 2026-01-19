@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useLayersStore } from "@/store";
 import { useMapStore } from "@/store/map";
 import {
+	InfoIcon,
 	WaveSineIcon,
 	WaveSquareIcon,
 	WaveTriangleIcon,
@@ -63,19 +64,34 @@ const ScenarioDisplay: FC<ScenarioDisplayProps> = ({}) => {
 	}, [selectedScenario, applyConfigLayers]);
 
 	return (
-		<div className="ScenarioDisplay-root">
+		<div className="ScenarioDisplay-root my-6">
 			<p className="mb-2 font-semibold">Szenario auswählen</p>
-			<div className="mb-2 wrap-break-word">
+			<div className="mb-4 wrap-break-word">
 				Wählen Sie ein Szenario, um die Potenziale der Maßnahmen in
 				unterschiedlichem Umsetzungsaufwand anzuzeigen.
 			</div>
 
-			<div className="mb-2 wrap-break-word">
-				Bitte beachten Sie, dass Sie zum Darstellen der Karten ein Zoomlevel von
-				mindestens 6 haben. Ihr aktuelles Zoomlevel ist {currentZoom}.
+			<div className="border-primary bg-primary-50 text-primary mb-3 flex items-start gap-2 rounded-sm border border-dashed p-3 text-sm">
+				<span className="text-primary mt-0.5">
+					<InfoIcon size={20} weight="duotone" />
+				</span>
+				<span>
+					Bitte beachten Sie, dass Sie zum Darstellen der Karten ein Zoomlevel
+					von mindestens
+					<span className="font-bold"> 6 </span>
+					benötigen.
+					<br />
+					Ihr aktuelles Zoomlevel ist
+					<span
+						className={currentZoom < 6 ? "text-red font-bold" : "font-bold"}
+					>
+						&nbsp;{currentZoom}
+					</span>
+					.
+				</span>
 			</div>
 
-			<div className="mb-4 flex flex-wrap gap-2">
+			<div className="my-6 flex flex-wrap gap-2">
 				{SCENARIOS.map((scenario) => (
 					<Button
 						key={scenario.id}

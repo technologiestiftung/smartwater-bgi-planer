@@ -36,6 +36,10 @@ const StepContent: FC<StepContentProps> = ({
 		return true;
 	};
 
+	const handleNext = () => {
+		_onSkip();
+	};
+
 	return (
 		<div className="flex min-h-0 flex-1 flex-col">
 			<div className="mt-4">
@@ -55,23 +59,39 @@ const StepContent: FC<StepContentProps> = ({
 				)}
 
 				<div className="pt-4">
-					{layerConfig.id.includes("starter_question") ||
-					layerConfig.isIntro ? (
-						<div className="flex w-full gap-2">
-							<Button onClick={handleConfirm} disabled={!hasProjectBoundary}>
-								<PlayIcon />
-								{layerConfig.isIntro
-									? `Modul ${layerConfig.moduleNumber} anfangen`
-									: "Checkfragen starten"}
-							</Button>
-						</div>
-					) : (
-						<ConfirmButton
-							onConfirm={handleConfirm}
-							displayText={formattedArea}
-							autoAdvanceStep={false}
-						/>
-					)}
+					{(() => {
+						if (layerConfig.id === "2V1") {
+							return (
+								<div className="flex w-full gap-2">
+									<Button onClick={handleNext}>Weiter</Button>
+								</div>
+							);
+						} else if (
+							layerConfig.id.includes("starter_question") ||
+							layerConfig.isIntro
+						) {
+							return (
+								<div className="flex w-full gap-2">
+									<Button
+										onClick={handleConfirm}
+										disabled={!hasProjectBoundary}
+									>
+										<PlayIcon />
+										{layerConfig.isIntro
+											? `Modul ${layerConfig.moduleNumber} anfangen`
+											: "Checkfragen starten"}
+									</Button>
+								</div>
+							);
+						}
+						return (
+							<ConfirmButton
+								onConfirm={handleConfirm}
+								displayText={formattedArea}
+								autoAdvanceStep={false}
+							/>
+						);
+					})()}
 				</div>
 			</div>
 
