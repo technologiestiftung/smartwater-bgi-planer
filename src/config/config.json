@@ -276,23 +276,7 @@
 							"visibility": false
 						},
 						{
-							"id": "potenziale_regenwasserbewirtschaftung:aa_versickerungspotenzial_eu:m3=1",
-							"visibility": false
-						},
-						{
-							"id": "potenziale_regenwasserbewirtschaftung:aa_versickerungspotenzial_eu:m4=1",
-							"visibility": false
-						},
-						{
-							"id": "potenziale_regenwasserbewirtschaftung:aa_versickerungspotenzial_eu:m5=1",
-							"visibility": false
-						},
-						{
-							"id": "potenziale_regenwasserbewirtschaftung:aa_versickerungspotenzial_eu:m6=1",
-							"visibility": false
-						},
-						{
-							"id": "potenziale_regenwasserbewirtschaftung:aa_versickerungspotenzial_eu:m6=10",
+							"id": "potenziale_regenwasserbewirtschaftung:aa_versickerungspotenzial_eu",
 							"visibility": false
 						}
 					]

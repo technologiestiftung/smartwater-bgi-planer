@@ -362,12 +362,16 @@
 		"canDrawPolygons": false,
 		"canDrawBTF": false,
 		"canDrawNotes": false,
-		"visibleLayerIds": ["project_boundary", "project_new_development"],
+		"visibleLayerIds": [
+			"project_boundary",
+			"project_new_development",
+			"potenziale_regenwasserbewirtschaftung:aa_versickerungspotenzial_eu"
+		],
 		"legendSrc": ""
 	},
 	{
 		"id": "2V1",
-		"name": "Versickerungspotenzial 🚫 🫣 FILTER",
+		"name": "Versickerungspotential",
 		"question": "",
 		"description": "Die Versickerungspotenzialkarte zeigt die Anzahl der theoretisch möglichen Versickerungsarten an. Zusätzlich gibt es einzelne Maßnahmenkarten, die die Potenziale der jeweiligen Versickerungsart darstellt.\nIn der Schutzzone III B sowie außerhalb von Wasserschutzgebieten gilt die Niederschlagswasserfreistellungsverordnung. In allen anderen Schutzzonen bedarf es in jedem Fall einer Erlaubnis von der Wasserbehörde. Je nach Art und Nutzung der befestigten Fläche können unterschiedliche Versickerungsanlagen und ggf. Vorbehandlungen zum Einsatz kommen. (Siehe Hinweisblatt 2)\nI.d.R. ist ein Abstand von ca. 1 m von der Sohle der Versickerungsanlage bis zum Bemessungsgrundwasserstand einzuhalten. Als Bemessungsgrundwasserstand innerhalb von Wasserschutzgebieten ist der zu erwartende höchste Grundwasserstand (zeHGW) heranzuziehen, außerhalb von Wasserschutzgebieten der zu erwartende mittlere höchste Grundwasserstand (zeMHGW). Sollten keine Daten vorliegen, können Informationen bei der Wasserbehörde eingeholt werden (Siehe Hinweisblatt 2).\nBei der Planung von Versickerungsanlagen ist die Hangneigung zu berücksichtigen, da eine gleichmäßige Beschickung der oberirdischen Versickerungsanlagen angestrebt werden sollte.\nFür eine vollständige Abwägung der Versickerungsfähigkeit bedarf es einer Analyse der Randbedingungen in der Attributtabelle (s. auch Checkfragen 2V2-2V6):\n-\tBefindet sich das Vorhaben bzw. Plangebiet ganz oder teilweise in einem Wasserschutzgebiet und wenn ja in welcher Schutzzone?\n-\tWie groß ist der Abstand (von der Geländeoberkante) zum maßgeblichen Bemessungsgrundwasserstand? \n-\tGibt es arten- und naturschutzfachliche bedeutsame Biotope oder Schutzgebiete mit Relevanz für das Plangebiet? \n-\tGibt es starke Geländeneigungen (über 10 Grad), die bei der Planung von Versickerungsanlagen berücksichtigt werden sollten? \n-\tBestehen Belange des Denkmalschutzes, die es zu berücksichtigen gilt?\n\nDie Karte kann zur groben Ersteinschätzung dienen, ist jedoch kein Ersatz für Vor-Ort Untersuchungen bzw. Fachplanungen. Es wurden z. B. keine Altlasten, Leitungen im Untergrund oder Flächennutzungen betrachtet.",
 		"drawLayerId": "",
@@ -376,14 +380,10 @@
 		"canDrawNotes": true,
 		"featureDisplay": "tooltip",
 		"canQueryFeatures": [
-			"potenziale_regenwasserbewirtschaftung:aa_versickerungspotenzial_eu:m3=1"
+			"potenziale_regenwasserbewirtschaftung:aa_versickerungspotenzial_eu"
 		],
 		"visibleLayerIds": [
-			"potenziale_regenwasserbewirtschaftung:aa_versickerungspotenzial_eu:m3=1",
-			"potenziale_regenwasserbewirtschaftung:aa_versickerungspotenzial_eu:m4=1",
-			"potenziale_regenwasserbewirtschaftung:aa_versickerungspotenzial_eu:m5=1",
-			"potenziale_regenwasserbewirtschaftung:aa_versickerungspotenzial_eu:m6=1",
-			"potenziale_regenwasserbewirtschaftung:aa_versickerungspotenzial_eu:m4=10"
+			"potenziale_regenwasserbewirtschaftung:aa_versickerungspotenzial_eu"
 		],
 		"legendSrc": "/legends/2v1.svg"
 	},
