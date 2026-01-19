@@ -252,9 +252,5 @@ Texts and content available as [CC BY](https://creativecommons.org/licenses/by/3
       </a>
     </td>
   </tr>
-  <tr>
-  <td colspan="2">
-  <img src="./public/logo.svg" alt="Logo">
-</td>
 </tr>
 </table>
