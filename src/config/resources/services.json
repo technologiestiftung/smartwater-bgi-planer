@@ -9834,7 +9834,7 @@
 				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
 			}
 		],
-		"maxScale": "2500.0",
+		"maxScale": "10000.0",
 		"format": "image/png",
 		"version": "1.3.0",
 		"featureCount": "10",
@@ -9862,7 +9862,7 @@
 				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
 			}
 		],
-		"maxScale": "2500.0",
+		"maxScale": "10000.0",
 		"format": "image/png",
 		"version": "1.3.0",
 		"featureCount": "10",

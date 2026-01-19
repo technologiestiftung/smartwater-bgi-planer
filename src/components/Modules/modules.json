@@ -87,7 +87,7 @@
 				{
 					"id": "building_greening",
 					"icon": "SolarRoof",
-					"title": "Gebäudebegrünung",
+					"title": "Potentiale",
 					"questions": ["2V1", "2G1", "2E1"]
 				}
 			]
