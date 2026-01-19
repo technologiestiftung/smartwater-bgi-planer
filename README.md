@@ -15,15 +15,9 @@
 
 # Smartwater BGI Planer
 
-Frontend application for the Smartwater BGI Planer project - TBD.
+The BGI Planner is a map-based web application designed to support staff in Berlin’s planning departments at both Senate and district levels in integrating blue-green infrastructure measures into new and existing planning processes. The aim is to increase Berlin’s resilience to the impacts of climate change, such as heavy rainfall and heat. The tool is intended to facilitate strategic decision-making in early planning phases and to provide guidance for the implementation of concrete measures in later phases.
 
-## Overview
-
-TDB...
-
-**Key Features:**
-
-- TBD
+This Next.js application is being developed as part of the [Smart Water project](https://gemeinsamdigital.berlin.de/de/smart-water/) and thus is part of the state of Berlin's digital strategy.
 
 ## Tech Stack
 
@@ -241,15 +235,26 @@ Texts and content available as [CC BY](https://creativecommons.org/licenses/by/3
 
 ## Credits
 
-© 2025 - TBD
-
 <table>
   <tr>
-    <td align="center">
-      <strong>Technische Umsetzung</strong><br />
-      <a href="https://www.technologiestiftung-berlin.de/">
-        <img width="120" src="src/logos/technologiestiftung.svg" alt="Technologiestiftung Berlin" />
+    <td>
+      Made by  <a href="https://www.technologiestiftung-berlin.de/">
+        <br />
+        <br />
+        <img width="150" src="https://logos.citylab-berlin.org/logo-technologiestiftung-berlin-de.svg" />
+      </a>
+    </td>
+    <td>
+      Supported by <a href="https://www.berlin.de/">
+        <br />
+        <br />
+        <img width="150" src="https://logos.citylab-berlin.org/logo-berlin.svg" />
       </a>
     </td>
   </tr>
+  <tr>
+  <td colspan="2">
+  <img src="./public/logo.svg" alt="Logo">
+</td>
+</tr>
 </table>
