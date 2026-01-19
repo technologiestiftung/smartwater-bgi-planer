@@ -7,7 +7,7 @@ import { useLayerArea } from "@/hooks/use-layer-area";
 import { useLayerFeatures } from "@/hooks/use-layer-features";
 import { LayerConfigItem } from "@/store/layers/types";
 import { LAYER_IDS } from "@/types/shared";
-import { CaretDoubleRightIcon, PlayIcon } from "@phosphor-icons/react";
+import { PlayIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import { FC } from "react";
 
@@ -22,7 +22,6 @@ const StepContent: FC<StepContentProps> = ({
 	layerConfig,
 	onAnswer,
 	onSkip: _onSkip,
-	onShowPotentialMaps,
 }) => {
 	const { hasFeatures } = useLayerFeatures(layerConfig.drawLayerId);
 	const { formattedArea } = useLayerArea(layerConfig.drawLayerId);
@@ -63,18 +62,18 @@ const StepContent: FC<StepContentProps> = ({
 									? `Modul ${layerConfig.moduleNumber} anfangen`
 									: "Checkfragen starten"}
 							</Button>
-							{layerConfig.id === "feasibility_module_introduction" && (
+							{/* {layerConfig.id === "feasibility_module_introduction" && (
 								<Button onClick={onShowPotentialMaps}>
 									öffne Potentialkarten
 									<CaretDoubleRightIcon />
 								</Button>
-							)}
-							{!hasProjectBoundary && (
+							)} */}
+							{/* {!hasProjectBoundary && (
 								<div className="border-primary text-red mt-4 rounded-sm border border-dashed bg-red-50 p-2 text-sm">
 									Bitte zeichnen Sie zuerst ein Projektgebiet ein, bevor Sie die
 									Checkfragen starten.
 								</div>
-							)}
+							)} */}
 						</div>
 					) : (
 						<ConfirmButton
