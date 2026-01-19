@@ -373,7 +373,24 @@
 		"id": "2V1",
 		"name": "Versickerungspotential",
 		"question": "",
-		"description": "Die Versickerungspotenzialkarte zeigt die Anzahl der theoretisch möglichen Versickerungsarten an. Zusätzlich gibt es einzelne Maßnahmenkarten, die die Potenziale der jeweiligen Versickerungsart darstellt.\nIn der Schutzzone III B sowie außerhalb von Wasserschutzgebieten gilt die Niederschlagswasserfreistellungsverordnung. In allen anderen Schutzzonen bedarf es in jedem Fall einer Erlaubnis von der Wasserbehörde. Je nach Art und Nutzung der befestigten Fläche können unterschiedliche Versickerungsanlagen und ggf. Vorbehandlungen zum Einsatz kommen. (Siehe Hinweisblatt 2)\nI.d.R. ist ein Abstand von ca. 1 m von der Sohle der Versickerungsanlage bis zum Bemessungsgrundwasserstand einzuhalten. Als Bemessungsgrundwasserstand innerhalb von Wasserschutzgebieten ist der zu erwartende höchste Grundwasserstand (zeHGW) heranzuziehen, außerhalb von Wasserschutzgebieten der zu erwartende mittlere höchste Grundwasserstand (zeMHGW). Sollten keine Daten vorliegen, können Informationen bei der Wasserbehörde eingeholt werden (Siehe Hinweisblatt 2).\nBei der Planung von Versickerungsanlagen ist die Hangneigung zu berücksichtigen, da eine gleichmäßige Beschickung der oberirdischen Versickerungsanlagen angestrebt werden sollte.\nFür eine vollständige Abwägung der Versickerungsfähigkeit bedarf es einer Analyse der Randbedingungen in der Attributtabelle (s. auch Checkfragen 2V2-2V6):\n-\tBefindet sich das Vorhaben bzw. Plangebiet ganz oder teilweise in einem Wasserschutzgebiet und wenn ja in welcher Schutzzone?\n-\tWie groß ist der Abstand (von der Geländeoberkante) zum maßgeblichen Bemessungsgrundwasserstand? \n-\tGibt es arten- und naturschutzfachliche bedeutsame Biotope oder Schutzgebiete mit Relevanz für das Plangebiet? \n-\tGibt es starke Geländeneigungen (über 10 Grad), die bei der Planung von Versickerungsanlagen berücksichtigt werden sollten? \n-\tBestehen Belange des Denkmalschutzes, die es zu berücksichtigen gilt?\n\nDie Karte kann zur groben Ersteinschätzung dienen, ist jedoch kein Ersatz für Vor-Ort Untersuchungen bzw. Fachplanungen. Es wurden z. B. keine Altlasten, Leitungen im Untergrund oder Flächennutzungen betrachtet.",
+		"description": [
+			"Die Versickerungspotenzialkarte zeigt die Potentialflächen der jeweiligen Versickerungsarten an.",
+			"Bei der Planung von Versickerungsanlagen ist zudem die Hangneigung zu berücksichtigen, da eine gleichmäßige Beschickung der oberirdischen Versickerungsanlagen angestrebt werden sollte.",
+			"Für eine vollständige Abwägung der Versickerungsfähigkeit bedarf es einer Analyse der Randbedingungen:",
+			{
+				"type": "bullets",
+				"items": [
+					"Befindet sich das Vorhaben bzw. Plangebiet ganz oder teilweise in einem Wasserschutzgebiet und wenn ja in welcher Schutzzone?",
+					"Wie groß ist der Abstand (von der Geländeoberkante) zum maßgeblichen Bemessungsgrundwasserstand?",
+					"Gibt es arten- und naturschutzfachliche bedeutsame Biotope oder Schutzgebiete mit Relevanz für das Plangebiet?",
+					"Gibt es starke Geländeneigungen (über 10 Grad), die bei der Planung von Versickerungsanlagen berücksichtigt werden sollten?",
+					"Bestehen Belange des Denkmalschutzes, die es zu berücksichtigen gilt?"
+				]
+			},
+			"Die Karte kann zur groben Ersteinschätzung dienen, ist jedoch kein Ersatz für Vor-Ort Untersuchungen bzw. Fachplanungen. Es wurden z. B. keine Altlasten, Leitungen im Untergrund oder Flächennutzungen betrachtet.",
+			"In der Schutzzone III B sowie außerhalb von Wasserschutzgebieten gilt die Niederschlagswasserfreistellungsverordnung (NWFreiV). In allen anderen Schutzzonen bedarf es in jedem Fall einer Erlaubnis von der Wasserbehörde. Je nach Art und Nutzung der befestigten Fläche können unterschiedliche Versickerungsanlagen und ggf. Vorbehandlungen zum Einsatz kommen. (Siehe Hinweisblatt 2 zur Antragstellung: Versickerung von Niederschlagswasser, https://www.berlin.de/sen/uvk/_assets/umwelt/wasser-und-geologie/publikationen-und-merkblaetter/hinweisblatt2-versick.pdf)",
+			"I.d.R. ist ein Abstand von ca. 1 m von der Sohle der Versickerungsanlage bis zum Bemessungsgrundwasserstand einzuhalten. Als Bemessungsgrundwasserstand innerhalb von Wasserschutzgebieten ist der zu erwartende höchste Grundwasserstand (zeHGW) heranzuziehen, außerhalb von Wasserschutzgebieten der zu erwartende mittlere höchste Grundwasserstand (zeMHGW). Sollten keine Daten vorliegen, können Informationen bei der Wasserbehörde eingeholt werden (Siehe Hinweisblatt 2)."
+		],
 		"drawLayerId": "",
 		"canDrawPolygons": false,
 		"canDrawBTF": false,
@@ -452,7 +469,12 @@
 		"id": "2V5",
 		"name": "Geologischer Untergrund ✅ 🚨",
 		"question": "Gibt es Bohrkernprofile, die für die Maßnahmenplanung relevant sind? (z.B. durch Auffüllungen (Bauschutt) oder oberflächennahe Grundwasserstände)",
-		"description": "Zur detaillierten Beurteilung der Bodenverhältnisse ist ein Bodengutachten zu erstellen. Zur groben Ersteinschätzung können ggf. vorhandene Bohrkerndaten genutzt werden. Über die Bohrdaten können eher gut versickerungsfähige Böden (Beispiele: Kies, Sande) und eher schlecht versickerungsfähige Böden (Beispiele: Geschiebemergel, Ton) erkannt werden.\nBei Auffüllungen (z.B. Bauschutt) muss ein Bodenaustausch bei der Umsetzung von Versickerungsanlagen erfolgen. \nBeim Antreffen oder Verdacht von oberflächennahem Grundwasser ist eine frühzeitige Rücksprache mit der Senatsumweltverwaltung (Wasserwirtschaft) erforderlich. Weitere Informationen finden Sie hier (https://www.berlin.de/sen/uvk/umwelt/wasser-und-geologie/regenwasser/regenwasserbewirtschaftung/versickerung-barnim/)\n\n*Hinweis: Auf der Barnim Hochfläche kann oberflächennah auch sog. Schichtenwasser zeitweise über wasserstauenden Schichten vorkommen. Hierzu gibt es weitere Informationen (https://www.berlin.de/sen/uvk/umwelt/wasser-und-geologie/regenwasser/regenwasserbewirtschaftung/versickerung-barnim/)",
+		"description": [
+			"Zur detaillierten Beurteilung der Bodenverhältnisse ist ein Bodengutachten zu erstellen. Zur groben Ersteinschätzung können ggf. vorhandene Bohrkerndaten genutzt werden. Über die Bohrdaten können eher gut versickerungsfähige Böden (Beispiele: Kies, Sande) und eher schlecht versickerungsfähige Böden (Beispiele: Geschiebemergel, Ton) erkannt werden.",
+			"Bei Auffüllungen (z.B. Bauschutt) muss ein Bodenaustausch bei der Umsetzung von Versickerungsanlagen erfolgen.",
+			"Beim Antreffen oder Verdacht von oberflächennahem Grundwasser ist eine frühzeitige Rücksprache mit der Senatsumweltverwaltung (Wasserwirtschaft) erforderlich. Weitere Informationen finden Sie hier (https://www.berlin.de/sen/uvk/umwelt/wasser-und-geologie/regenwasser/regenwasserbewirtschaftung/versickerung-barnim/)",
+			"*Hinweis: Auf der Barnim Hochfläche kann oberflächennah auch sog. Schichtenwasser zeitweise über wasserstauenden Schichten vorkommen. Weitere Informationen dazu finden sie auf der Seite der Umweltverwaltung (https://www.berlin.de/sen/uvk/umwelt/wasser-und-geologie/regenwasser/regenwasserbewirtschaftung/versickerung-barnim/) und der Regenwasseragentur (https://regenwasseragentur.berlin/planen-und-umsetzen/regenwasser-auf-barnim-hochflaeche-versickern/)"
+		],
 		"drawLayerId": "module_2_2V5_draw",
 		"canDrawPolygons": false,
 		"canDrawBTF": false,

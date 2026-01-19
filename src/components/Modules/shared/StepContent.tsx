@@ -1,7 +1,7 @@
 "use client";
 
 import ConfirmButton from "@/components/ConfirmButton/ConfirmButton";
-import { TextWithLinks } from "@/components/TextWithLinks/TextWithLinks";
+import { RichTextWithLinks } from "@/components/RichTextWithLinks/RichTextWithLinks";
 import { Button } from "@/components/ui/button";
 import { useLayerArea } from "@/hooks/use-layer-area";
 import { useLayerFeatures } from "@/hooks/use-layer-features";
@@ -47,7 +47,7 @@ const StepContent: FC<StepContentProps> = ({
 						<div className="mb-4">
 							<p className="mb-2 font-semibold">{layerConfig.question}</p>
 							<div className="wrap-break-word">
-								<TextWithLinks text={layerConfig.description} />
+								<RichTextWithLinks text={layerConfig.description} />
 							</div>
 						</div>
 						{layerConfig.id === "2V1" && <ScenarioDisplay />}
