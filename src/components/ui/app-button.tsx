@@ -7,7 +7,8 @@ import type { VariantProps } from "class-variance-authority";
 import { buttonVariants, ShadButton } from "@/components/ui/button";
 
 interface ButtonProps
-	extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+	extends
+		React.ButtonHTMLAttributes<HTMLButtonElement>,
 		VariantProps<typeof buttonVariants> {
 	/** Text label inside the button */
 	text: string;
