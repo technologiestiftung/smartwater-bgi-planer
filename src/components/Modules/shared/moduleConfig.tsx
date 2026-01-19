@@ -1,6 +1,6 @@
 import { StepConfig } from "@/components/VerticalStepper";
+import { getIconComponent } from "@/lib/helpers/iconMap";
 import modulesConfig from "../modules.json";
-import { getIconComponent } from "./iconMap";
 
 interface ModuleStepConfig {
 	id: string;

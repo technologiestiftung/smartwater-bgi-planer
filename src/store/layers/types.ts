@@ -75,6 +75,8 @@ export interface LayerService {
 	visibility?: boolean;
 	minScale?: number;
 	maxScale?: number;
+	cqlFilter?: string;
+	styles?: string;
 }
 
 export interface VectorTileStyle {

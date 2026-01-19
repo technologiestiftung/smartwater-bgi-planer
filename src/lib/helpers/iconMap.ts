@@ -1,13 +1,16 @@
 import {
+	CheckSquareOffsetIcon,
 	CloudRainIcon,
 	DropIcon,
+	FileMagnifyingGlassIcon,
 	FishIcon,
 	Icon,
+	ListMagnifyingGlassIcon,
+	RecycleIcon,
 	RoadHorizonIcon,
+	SolarRoofIcon,
 	ThermometerHotIcon,
 	TreeIcon,
-	RecycleIcon,
-	SolarRoofIcon,
 	WallIcon,
 } from "@phosphor-icons/react";
 
@@ -21,6 +24,9 @@ export const iconMap: Record<string, Icon> = {
 	Recycle: RecycleIcon,
 	SolarRoof: SolarRoofIcon,
 	Wall: WallIcon,
+	Check: CheckSquareOffsetIcon,
+	File: FileMagnifyingGlassIcon,
+	List: ListMagnifyingGlassIcon,
 };
 
 export function getIconComponent(iconName: string): Icon {

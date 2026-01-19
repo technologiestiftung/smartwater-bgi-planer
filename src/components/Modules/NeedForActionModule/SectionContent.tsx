@@ -1,7 +1,7 @@
 "use client";
 
 import { getModuleSteps } from "@/components/Modules/shared/moduleConfig";
-import Question from "@/components/Modules/shared/Question";
+import StepContent from "@/components/Modules/shared/StepContent";
 import { useModuleNavigation } from "@/components/Modules/shared/useModuleNavigation";
 import { Spinner } from "@/components/ui/spinner";
 import { useVerticalStepper } from "@/components/VerticalStepper";
@@ -18,12 +18,11 @@ export function SectionContent({ sectionId }: SectionContentProps) {
 	const layerConfig = useLayersStore((state) => state.layerConfig);
 	const setAnswer = useAnswersStore((state) => state.setAnswer);
 	const needForActionSteps = getModuleSteps("needForAction");
-	const { navigateToNextQuestion, getCurrentSectionInfo } = useModuleNavigation(
-		{
+	const { getCurrentSectionInfo, navigateToNext, handleShowSynthesis } =
+		useModuleNavigation({
 			steps: needForActionSteps,
 			useVerticalStepper,
-		},
-	);
+		});
 
 	const { currentStep, currentQuestionId } = getCurrentSectionInfo(sectionId);
 
@@ -39,15 +38,21 @@ export function SectionContent({ sectionId }: SectionContentProps) {
 	const handleAnswer = useCallback(
 		(answer: boolean) => {
 			setAnswer(currentQuestionId, answer);
-			navigateToNextQuestion(sectionId);
+			const success = navigateToNext();
+			if (!success) {
+				handleShowSynthesis();
+			}
 		},
-		[currentQuestionId, sectionId, setAnswer, navigateToNextQuestion],
+		[currentQuestionId, setAnswer, navigateToNext, handleShowSynthesis],
 	);
 
 	const handleSkip = useCallback(() => {
 		setAnswer(currentQuestionId, null);
-		navigateToNextQuestion(sectionId);
-	}, [currentQuestionId, sectionId, setAnswer, navigateToNextQuestion]);
+		const success = navigateToNext();
+		if (!success) {
+			handleShowSynthesis();
+		}
+	}, [currentQuestionId, setAnswer, navigateToNext, handleShowSynthesis]);
 
 	if (!currentQuestionConfig) {
 		return (
@@ -61,9 +66,8 @@ export function SectionContent({ sectionId }: SectionContentProps) {
 	return (
 		<div className="flex h-full flex-col">
 			<h3 className="text-primary shrink-0">{title}</h3>
-			<Question
-				key={currentQuestionConfig.id}
-				questionConfig={currentQuestionConfig}
+			<StepContent
+				layerConfig={currentQuestionConfig}
 				onAnswer={handleAnswer}
 				onSkip={handleSkip}
 			/>

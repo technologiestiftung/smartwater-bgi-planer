@@ -1,6 +1,6 @@
 "use client";
 
-import Question from "@/components/Modules/shared/Question";
+import StepContent from "@/components/Modules/shared/StepContent";
 import { getModuleSteps } from "@/components/Modules/shared/moduleConfig";
 import { useModuleNavigation } from "@/components/Modules/shared/useModuleNavigation";
 import { useVerticalStepper } from "@/components/VerticalStepper";
@@ -11,45 +11,61 @@ import { useCallback, useMemo } from "react";
 
 interface SectionContentProps {
 	sectionId: SectionId;
+	onShowPotentialMaps?: () => void;
 }
 
-export function SectionContent({ sectionId }: SectionContentProps) {
+export function SectionContent({
+	sectionId,
+	onShowPotentialMaps,
+}: SectionContentProps) {
 	const layerConfig = useLayersStore((state: any) => state.layerConfig);
 	const setAnswer = useAnswersStore((state: any) => state.setAnswer);
 	const feasibilitySteps = getModuleSteps("feasibility");
-	const { getCurrentSectionInfo, navigateToNextQuestion } = useModuleNavigation(
-		{
-			steps: feasibilitySteps,
-			useVerticalStepper,
-		},
-	);
+
+	const {
+		getCurrentSectionInfo,
+		navigateToNextQuestion,
+		navigateToNext,
+		handleShowSynthesis,
+	} = useModuleNavigation({
+		steps: feasibilitySteps,
+		useVerticalStepper,
+	});
+
 	const { currentStep, currentQuestionId } = getCurrentSectionInfo(sectionId);
 	const currentQuestionConfig = useMemo(
 		() => layerConfig.find((config: any) => config.id === currentQuestionId),
 		[layerConfig, currentQuestionId],
 	);
+
 	const handleAnswer = useCallback(
 		(answer: boolean) => {
 			setAnswer(currentQuestionId, answer);
-			navigateToNextQuestion(sectionId);
+			const success = navigateToNext();
+			if (!success) {
+				handleShowSynthesis();
+			}
 		},
-		[currentQuestionId, sectionId, setAnswer, navigateToNextQuestion],
+		[currentQuestionId, setAnswer, navigateToNext, handleShowSynthesis],
 	);
+
 	const handleSkip = useCallback(() => {
 		setAnswer(currentQuestionId, null);
 		navigateToNextQuestion(sectionId);
 	}, [currentQuestionId, sectionId, setAnswer, navigateToNextQuestion]);
+
 	if (!currentQuestionConfig) {
 		return <div />;
 	}
+
 	return (
 		<div className="flex h-full flex-col">
 			<h3 className="text-primary shrink-0">{(currentStep as any)?.title}</h3>
-			<Question
-				key={currentQuestionConfig.id}
-				questionConfig={currentQuestionConfig}
+			<StepContent
+				layerConfig={currentQuestionConfig}
 				onAnswer={handleAnswer}
 				onSkip={handleSkip}
+				onShowPotentialMaps={onShowPotentialMaps}
 			/>
 		</div>
 	);

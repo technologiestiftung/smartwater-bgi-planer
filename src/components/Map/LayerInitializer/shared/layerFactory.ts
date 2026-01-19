@@ -100,12 +100,19 @@ const createWMSLayer = (
 			};
 		}
 
-		const params = {
+		const params: Record<string, any> = {
 			LAYERS: serviceConfig.layers,
 			FORMAT: serviceConfig.format || "image/png",
 			TRANSPARENT: serviceConfig.transparent ?? true,
 			VERSION: serviceConfig.version || "1.3.0",
 		};
+
+		if (serviceConfig.cqlFilter) {
+			params.CQL_FILTER = serviceConfig.cqlFilter;
+		}
+		if (serviceConfig.styles) {
+			params.STYLES = serviceConfig.styles;
+		}
 
 		if (serviceConfig.singleTile) {
 			const imageSource = new ImageWMS({

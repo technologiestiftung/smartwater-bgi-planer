@@ -1,12 +1,12 @@
 "use client";
 
-import { useStepValid } from "@/components/Modules/shared/isStepValidUtil";
 import {
 	getModuleMetadata,
 	getModuleSteps,
 } from "@/components/Modules/shared/moduleConfig";
 import { ModuleFooter } from "@/components/Modules/shared/ModuleFooter";
 import { ModuleStepper } from "@/components/Modules/shared/ModuleStepper";
+import { useStepValid } from "@/lib/helpers/isStepValidUtil";
 import { SectionId } from "@/types/sectionIds";
 import { LAYER_IDS } from "@/types/shared";
 import { SectionContent } from "./SectionContent";

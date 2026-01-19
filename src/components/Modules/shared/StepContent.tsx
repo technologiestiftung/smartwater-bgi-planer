@@ -10,21 +10,22 @@ import { LAYER_IDS } from "@/types/shared";
 import { PlayIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import { FC } from "react";
+import ScenarioDisplay from "../FeasibilityModule/ScenarioDisplay";
 
-interface QuestionProps {
-	questionConfig: LayerConfigItem;
+interface StepContentProps {
+	layerConfig: LayerConfigItem;
 	onAnswer: (answer: boolean) => void;
 	onSkip: () => void;
-	showButtons?: boolean;
+	onShowPotentialMaps?: () => void;
 }
 
-const Question: FC<QuestionProps> = ({
-	questionConfig,
+const StepContent: FC<StepContentProps> = ({
+	layerConfig,
 	onAnswer,
 	onSkip: _onSkip,
 }) => {
-	const { hasFeatures } = useLayerFeatures(questionConfig.drawLayerId);
-	const { formattedArea } = useLayerArea(questionConfig.drawLayerId);
+	const { hasFeatures } = useLayerFeatures(layerConfig.drawLayerId);
+	const { formattedArea } = useLayerArea(layerConfig.drawLayerId);
 	const { hasFeatures: hasProjectBoundary } = useLayerFeatures(
 		LAYER_IDS.PROJECT_BOUNDARY,
 	);
@@ -38,37 +39,32 @@ const Question: FC<QuestionProps> = ({
 	return (
 		<div className="flex min-h-0 flex-1 flex-col">
 			<div className="mt-4">
-				{questionConfig && (
+				{layerConfig && (
 					<div>
 						<h4 className="text-primary mb-2 text-lg font-semibold">
-							{questionConfig.name}
+							{layerConfig.name}
 						</h4>
 						<div className="mb-4">
-							<p className="mb-2 font-semibold">{questionConfig.question}</p>
+							<p className="mb-2 font-semibold">{layerConfig.question}</p>
 							<div className="wrap-break-word">
-								<TextWithLinks text={questionConfig.description} />
+								<TextWithLinks text={layerConfig.description} />
 							</div>
 						</div>
+						{layerConfig.id === "2V1" && <ScenarioDisplay />}
 					</div>
 				)}
 
 				<div className="pt-4">
-					{questionConfig.id.includes("starter_question") ||
-					questionConfig.isIntro ? (
-						<>
+					{layerConfig.id.includes("starter_question") ||
+					layerConfig.isIntro ? (
+						<div className="flex w-full gap-2">
 							<Button onClick={handleConfirm} disabled={!hasProjectBoundary}>
 								<PlayIcon />
-								{questionConfig.isIntro
-									? `Modul ${questionConfig.moduleNumber} anfangen`
+								{layerConfig.isIntro
+									? `Modul ${layerConfig.moduleNumber} anfangen`
 									: "Checkfragen starten"}
 							</Button>
-							{/* {!hasProjectBoundary && (
-								<div className="border-primary text-red mt-4 rounded-sm border border-dashed bg-red-50 p-2 text-sm">
-									Bitte zeichnen Sie zuerst ein Projektgebiet ein, bevor Sie die
-									Checkfragen starten.
-								</div>
-							)} */}
-						</>
+						</div>
 					) : (
 						<ConfirmButton
 							onConfirm={handleConfirm}
@@ -79,11 +75,11 @@ const Question: FC<QuestionProps> = ({
 				</div>
 			</div>
 
-			{questionConfig.legendSrc && (
+			{layerConfig.legendSrc && (
 				<div className="mt-auto pt-6 pb-4">
 					<h5 className="mb-2 text-sm font-medium">Legende:</h5>
 					<Image
-						src={questionConfig.legendSrc}
+						src={layerConfig.legendSrc}
 						alt="Legende für die Karte"
 						width={400}
 						height={200}
@@ -95,4 +91,4 @@ const Question: FC<QuestionProps> = ({
 	);
 };
 
-export default Question;
+export default StepContent;

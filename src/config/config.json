@@ -274,6 +274,18 @@
 						{
 							"id": "ua_entsiegelung:b_entsieg_klasse_teil",
 							"visibility": false
+						},
+						{
+							"id": "potenziale_regenwasserbewirtschaftung:aa_versickerungspotenzial_eu",
+							"visibility": false
+						},
+						{
+							"id": "potenziale_regenwasserbewirtschaftung:ab_versickerungspotenzial_gp",
+							"visibility": false
+						},
+						{
+							"id": "potenziale_regenwasserbewirtschaftung:ac_versickerungspotenzial_au",
+							"visibility": false
 						}
 					]
 				},
