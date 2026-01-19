@@ -77,30 +77,18 @@
 					"title": "Versickerung",
 					"questions": [
 						"feasibility_module_introduction",
-						"2V1",
 						"2V2",
 						"2V3",
 						"2V4",
-						"2V5"
+						"2V5",
+						"2B1"
 					]
-				},
-				{
-					"id": "greening",
-					"icon": "Tree",
-					"title": "Begrünung / Bepflanzung",
-					"questions": ["2B1"]
 				},
 				{
 					"id": "building_greening",
 					"icon": "SolarRoof",
 					"title": "Gebäudebegrünung",
-					"questions": ["2G1"]
-				},
-				{
-					"id": "permeability",
-					"icon": "Wall",
-					"title": "Entsiegelung",
-					"questions": ["2E1"]
+					"questions": ["2V1", "2G1", "2E1"]
 				}
 			]
 		},

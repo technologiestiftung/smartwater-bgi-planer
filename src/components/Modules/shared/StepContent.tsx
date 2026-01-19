@@ -10,6 +10,7 @@ import { LAYER_IDS } from "@/types/shared";
 import { PlayIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import { FC } from "react";
+import ScenarioDisplay from "../FeasibilityModule/ScenarioDisplay";
 
 interface StepContentProps {
 	layerConfig: LayerConfigItem;
@@ -49,6 +50,7 @@ const StepContent: FC<StepContentProps> = ({
 								<TextWithLinks text={layerConfig.description} />
 							</div>
 						</div>
+						{layerConfig.id === "2V1" && <ScenarioDisplay />}
 					</div>
 				)}
 
@@ -62,18 +64,6 @@ const StepContent: FC<StepContentProps> = ({
 									? `Modul ${layerConfig.moduleNumber} anfangen`
 									: "Checkfragen starten"}
 							</Button>
-							{/* {layerConfig.id === "feasibility_module_introduction" && (
-								<Button onClick={onShowPotentialMaps}>
-									öffne Potentialkarten
-									<CaretDoubleRightIcon />
-								</Button>
-							)} */}
-							{/* {!hasProjectBoundary && (
-								<div className="border-primary text-red mt-4 rounded-sm border border-dashed bg-red-50 p-2 text-sm">
-									Bitte zeichnen Sie zuerst ein Projektgebiet ein, bevor Sie die
-									Checkfragen starten.
-								</div>
-							)} */}
 						</div>
 					) : (
 						<ConfirmButton
