@@ -72,9 +72,9 @@
 			"description": "Untersuchen Sie die Machbarkeit Ihrer Maßnahmen",
 			"steps": [
 				{
-					"id": "seepage",
-					"icon": "Recycle",
-					"title": "Versickerung",
+					"id": "check",
+					"icon": "Check",
+					"title": "Checkfragen",
 					"questions": [
 						"feasibility_module_introduction",
 						"2V2",
@@ -85,8 +85,8 @@
 					]
 				},
 				{
-					"id": "building_greening",
-					"icon": "SolarRoof",
+					"id": "potential",
+					"icon": "File",
 					"title": "Potentiale",
 					"questions": ["2V1", "2G1", "2E1"]
 				}
