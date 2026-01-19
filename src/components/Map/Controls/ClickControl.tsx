@@ -1,6 +1,6 @@
 "use client";
 
-import FeatureModal from "@/components/FeatureDisplayControl/FeatureModal";
+import FeatureModal from "@/components/FeatureDisplay/FeatureModal";
 import { fetchFeatureInfo } from "@/lib/helpers/wmsFeatureInfo";
 import { useMapStore } from "@/store/map";
 import { useUiStore } from "@/store/ui";
@@ -48,12 +48,11 @@ const ClickControl: FC<ClickControlProps> = ({
 	currentConfig,
 	overlayOptions,
 	renderContent,
-	minZoomForClick = 4,
+	minZoomForClick = 0,
 }) => {
 	const map = useMapStore((state) => state.map);
 	const { isDrawing, isBlockAreaSelecting, isDrawingNote } = useUiStore();
 
-	// Zustand für das aktuell ausgewählte Element
 	const [selection, setSelection] = useState<Selection | null>(null);
 	const [cardPosition, setCardPosition] =
 		useState<OverlayPositioning>("bottom-left");
@@ -62,8 +61,6 @@ const ClickControl: FC<ClickControlProps> = ({
 	const overlayRef = useRef<HTMLDivElement>(null);
 	const overlayInstanceRef = useRef<Overlay | null>(null);
 	const overlaySizeRef = useRef({ width: 0, height: 0 });
-
-	// --- Hilfsfunktionen ---
 
 	const handleClose = useCallback(() => {
 		setSelection(null);
@@ -87,10 +84,6 @@ const ClickControl: FC<ClickControlProps> = ({
 		[map],
 	);
 
-	/**
-	 * SUCHE 1: Vektor Features (Notizen & Zeichnungen)
-	 * Diese Suche ist instantan, da die Daten lokal im Browser liegen.
-	 */
 	const findVectorFeature = useCallback(
 		(pixel: [number, number]) => {
 			if (!map) return null;
@@ -101,30 +94,24 @@ const ClickControl: FC<ClickControlProps> = ({
 					const id = layer?.get("id");
 					if (!id) return;
 
-					// Priorität 1: Notizen (Immer Vorrang)
 					if (id === "module1_notes") {
 						const clusteredFeatures = feature.get("features");
-						if (clusteredFeatures && clusteredFeatures.length > 1) return; // Keine Cluster-Klicks
+						if (clusteredFeatures && clusteredFeatures.length > 1) return;
 						return { feature, layerId: id };
 					}
 
-					// Priorität 2: Gezeichnete Objekte
 					if (vectorLayerIds.includes(id)) {
 						return { feature, layerId: id };
 					}
 				},
 				{
-					hitTolerance: 4, // Macht das Treffen von Punkten/Linien einfacher
+					hitTolerance: 4,
 				},
 			);
 		},
 		[map, vectorLayerIds],
 	);
 
-	/**
-	 * SUCHE 2: WMS Features (Server-Abfrage)
-	 * Parallelisierte Abfrage aller query-fähigen Layer.
-	 */
 	const findWmsFeature = useCallback(
 		async (coordinate: [number, number]) => {
 			if (!map || wmsLayerIds.length === 0) return null;
@@ -132,9 +119,8 @@ const ClickControl: FC<ClickControlProps> = ({
 			const activeWmsLayers = map
 				.getAllLayers()
 				.filter((l) => l.getVisible() && wmsLayerIds.includes(l.get("id")))
-				.reverse(); // Oberste Layer zuerst
+				.reverse();
 
-			// Alle Requests gleichzeitig starten
 			const fetchPromises = activeWmsLayers.map(async (layer) => {
 				const layerId = layer.get("id");
 				try {
@@ -155,16 +141,13 @@ const ClickControl: FC<ClickControlProps> = ({
 		[map, wmsLayerIds],
 	);
 
-	// --- Effects ---
-
-	// 1. Overlay Initialisierung
 	useEffect(() => {
 		if (!map || !overlayRef.current) return;
 
 		const overlay = new Overlay({
 			element: overlayRef.current,
 			id: "ClickControl-overlay",
-			stopEvent: true, // Verhindert Klicks durch das Tooltip auf die Karte
+			stopEvent: true,
 			...overlayOptions,
 		});
 
@@ -176,18 +159,14 @@ const ClickControl: FC<ClickControlProps> = ({
 		};
 	}, [map, overlayOptions]);
 
-	// 2. Click Handler Logik
 	useEffect(() => {
 		if (!map) return;
 
 		const handleClick = async (evt: any) => {
-			// Blockieren wenn im Zeichen-Modus
 			if (isDrawing || isBlockAreaSelecting || isDrawingNote) return;
 
-			// Zoom-Check
 			if ((map.getView().getZoom() ?? 0) < minZoomForClick) return;
 
-			// A. Zuerst Vektor-Features suchen (Schnell/Lokal)
 			const vectorMatch = findVectorFeature(evt.pixel);
 
 			if (vectorMatch) {
@@ -197,10 +176,9 @@ const ClickControl: FC<ClickControlProps> = ({
 					coordinate: evt.coordinate,
 					displayMode: "overlay",
 				});
-				return; // Suche beenden, Vektor hat Priorität
+				return;
 			}
 
-			// B. Wenn kein Vektor, dann WMS suchen (Langsam/Server)
 			if (wmsLayerIds.length > 0) {
 				setIsLoading(true);
 				document.body.style.cursor = "wait";
@@ -208,7 +186,6 @@ const ClickControl: FC<ClickControlProps> = ({
 				try {
 					const wmsMatch = await findWmsFeature(evt.coordinate);
 					if (wmsMatch) {
-						// Prüfen ob Modal oder Tooltip laut Config
 						const isModal =
 							currentConfig?.featureDisplay === "modal" &&
 							currentConfig?.canQueryFeatures?.includes(wmsMatch.layerId);
@@ -232,6 +209,7 @@ const ClickControl: FC<ClickControlProps> = ({
 		};
 
 		map.on("click", handleClick);
+
 		return () => {
 			map.un("click", handleClick);
 			document.body.style.cursor = "auto";
@@ -249,7 +227,6 @@ const ClickControl: FC<ClickControlProps> = ({
 		wmsLayerIds,
 	]);
 
-	// 3. Overlay Positionierung synchronisieren
 	useEffect(() => {
 		const overlay = overlayInstanceRef.current;
 		if (!overlay) return;
@@ -263,7 +240,6 @@ const ClickControl: FC<ClickControlProps> = ({
 		}
 	}, [selection, cardPosition]);
 
-	// 4. Resize Observer für korrekte Positionsberechnung
 	useEffect(() => {
 		if (!overlayRef.current) return;
 		const observer = new ResizeObserver((entries) => {
@@ -280,7 +256,6 @@ const ClickControl: FC<ClickControlProps> = ({
 
 	return (
 		<>
-			{/* Overlay für Tooltips / Notizen / Menüs */}
 			<div
 				ref={overlayRef}
 				className="ClickControl-root"
@@ -292,7 +267,6 @@ const ClickControl: FC<ClickControlProps> = ({
 					renderContent(selection.feature, selection.layerId, handleClose)}
 			</div>
 
-			{/* Modal-Anzeige (außerhalb des OL-Overlays) */}
 			{selection?.displayMode === "modal" && (
 				<FeatureModal
 					attributes={
@@ -306,7 +280,6 @@ const ClickControl: FC<ClickControlProps> = ({
 				/>
 			)}
 
-			{/* Optional: Globaler Loader-Indikator (CSS-Klasse hinzufügen falls gewünscht) */}
 			{isLoading && (
 				<div className="pointer-events-none fixed right-4 bottom-4 animate-pulse rounded bg-white/80 p-2 text-xs shadow-sm">
 					Lade Feature-Info...

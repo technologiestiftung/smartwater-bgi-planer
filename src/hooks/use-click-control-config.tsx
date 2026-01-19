@@ -1,5 +1,5 @@
-import FeatureModal from "@/components/FeatureDisplayControl/FeatureModal";
-import FeatureTooltip from "@/components/FeatureDisplayControl/FeatureTooltip";
+import FeatureModal from "@/components/FeatureDisplay/FeatureModal";
+import FeatureTooltip from "@/components/FeatureDisplay/FeatureTooltip";
 import FeatureMenu from "@/components/FeatureMenu/FeatureMenu";
 import NoteCard from "@/components/NoteCard/NoteCard";
 import { useLayersStore } from "@/store/layers";
