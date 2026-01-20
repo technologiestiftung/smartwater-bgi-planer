@@ -9,8 +9,10 @@ import {
 import { ModuleFooter } from "@/components/Modules/shared/ModuleFooter";
 import { ModuleStepper } from "@/components/Modules/shared/ModuleStepper";
 import { useStepValid } from "@/lib/helpers/isStepValidUtil";
+import { useUiStore } from "@/store/ui";
 import { SectionId } from "@/types/sectionIds";
 import { LAYER_IDS } from "@/types/shared";
+import { useEffect } from "react";
 
 interface NeedForActionModuleProps {
 	open: boolean;
@@ -25,13 +27,18 @@ export default function NeedForActionModule({
 }: NeedForActionModuleProps) {
 	const steps = getModuleSteps("needForAction");
 	const { title, description } = getModuleMetadata("needForAction");
-
 	const isStepValid = useStepValid({
 		stepName: "heavyRain",
 		starterQuestionId: "starter_question",
 		layerId: LAYER_IDS.PROJECT_BOUNDARY,
 		steps,
 	});
+
+	const resetModuleState = useUiStore((state) => state.resetModuleState);
+	useEffect(() => {
+		resetModuleState();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<ModuleStepper<SectionId>
