@@ -30,26 +30,29 @@ export default function MenuModalContent({ projectId }: MenuModalProps) {
 	const name = project?.name || "Unbenanntes Projekt";
 	const description = project?.description || "Keine Beschreibung vorhanden.";
 
-	const getQuestionsNumber = () => {
-		const needForActionModule = modulesData.modules.find(
-			(module) => module.id === "needForAction",
-		);
-		if (!needForActionModule?.steps) return 0;
-
-		return needForActionModule.steps.reduce((total, step) => {
+	const getQuestionsNumber = (moduleId: string) => {
+		const _module = modulesData.modules.find((m) => m.id === moduleId);
+		if (!_module?.steps) return 0;
+		return _module.steps.reduce((total: number, step: any) => {
 			if (!step.questions) return total;
 			return (
 				total +
-				step.questions.filter((currentQuestion) =>
+				step.questions.filter((currentQuestion: any) =>
 					checkForQuestion(currentQuestion),
 				).length
 			);
 		}, 0);
 	};
 
-	const answersLength = Object.keys(answers).filter((key) =>
-		checkForQuestion(key),
-	).length;
+	const getAnsweredQuestionsLength = (moduleId: string) => {
+		const _module = modulesData.modules.find((m) => m.id === moduleId);
+		if (!_module?.steps) return 0;
+		const questionIds = _module.steps.flatMap((step: any) =>
+			(step.questions || []).filter((q: any) => checkForQuestion(q)),
+		);
+		return Object.keys(answers).filter((key) => questionIds.includes(key))
+			.length;
+	};
 
 	return (
 		<>
@@ -83,7 +86,7 @@ export default function MenuModalContent({ projectId }: MenuModalProps) {
 					sideElements={
 						<ListMagnifyingGlassIcon className="text-primary size-16" />
 					}
-					additionalInfo={`${answersLength} von ${getQuestionsNumber()} Fragen beantwortet`}
+					additionalInfo={`${getAnsweredQuestionsLength("needForAction")} von ${getQuestionsNumber("needForAction")} Fragen beantwortet`}
 					buttonBottom={
 						<Button asChild>
 							<Link href={`/${projectId}/handlungsbedarfe`}>
@@ -97,7 +100,7 @@ export default function MenuModalContent({ projectId }: MenuModalProps) {
 					title="Machbarkeit von Maßnahmen"
 					description="Prüfen Sie in diesem Modul die Machbarkeit der blau-grünen Maßnahmen am gewählten Standort."
 					sideElements={<ShovelIcon className="text-primary size-16" />}
-					additionalInfo="XX von XX Fragen beantwortet"
+					additionalInfo={`${getAnsweredQuestionsLength("feasibility")} von ${getQuestionsNumber("feasibility")} Fragen beantwortet`}
 					buttonBottom={
 						<Button asChild>
 							<Link href={`/${projectId}/machbarkeit`}>
