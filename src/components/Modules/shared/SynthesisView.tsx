@@ -148,7 +148,7 @@ export function SynthesisView({
 
 	return (
 		<div className="flex h-full w-full flex-col">
-			<div className="flex-1 overflow-y-auto p-6">
+			<div className="flex-1 overflow-y-auto pb-6 px-6">
 				<p className="mt-2 text-sm text-gray-600">{description}</p>
 
 				{moduleSteps.map((step) => {
