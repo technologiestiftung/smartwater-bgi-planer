@@ -181,7 +181,6 @@ const ClickControl: FC<ClickControlProps> = ({
 
 			if (wmsLayerIds.length > 0) {
 				setIsLoading(true);
-				document.body.style.cursor = "wait";
 
 				try {
 					const wmsMatch = await findWmsFeature(evt.coordinate);

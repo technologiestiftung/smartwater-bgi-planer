@@ -30,6 +30,7 @@ const FeatureModal: FC<FeatureModalProps> = ({
 	const drawLayerId = useLayersStore((state) => state.drawLayerId);
 	const profilUrl = attributes?.["Profil"];
 	const [isImageLoading, setIsImageLoading] = useState(!!profilUrl);
+	const [imageError, setImageError] = useState(false);
 
 	function handleClick(noteType: "schlecht" | "gut") {
 		if (map && drawLayerId && coordinate) {
@@ -84,23 +85,36 @@ const FeatureModal: FC<FeatureModalProps> = ({
 					<div className="flex flex-col gap-4 lg:flex-row">
 						{profilUrl && (
 							<div className="relative flex w-full flex-col gap-2">
-								<div className="rounded-md bg-white">
-									{isImageLoading && (
+								<div className="flex min-h-[300px] items-center justify-center rounded-md bg-white">
+									{isImageLoading && !imageError && (
 										<div className="absolute inset-0 z-10 flex items-center justify-center bg-white">
 											<SpinnerIcon className="animate-spin" />
 										</div>
 									)}
-									<Image
-										src={profilUrl}
-										alt="Bohrprofil"
-										className="h-auto min-h-[300px] w-full object-contain"
-										onLoad={() => setIsImageLoading(false)}
-										onError={() => setIsImageLoading(false)}
-										loading="lazy"
-										width={300}
-										height={100}
-										unoptimized
-									/>
+									{!imageError ? (
+										<Image
+											src={profilUrl}
+											alt="Bohrprofil"
+											className="h-auto min-h-[300px] w-full object-contain"
+											onLoad={() => setIsImageLoading(false)}
+											onError={() => {
+												setIsImageLoading(false);
+												setImageError(true);
+											}}
+											loading="lazy"
+											width={300}
+											height={100}
+											unoptimized
+										/>
+									) : (
+										<div className="flex h-full w-full flex-col items-center justify-center p-4 text-center text-red-600">
+											<span>Bild konnte nicht geladen werden.</span>
+											<span className="mt-2 text-xs text-gray-500">
+												Bitte prüfen Sie die Bild-URL oder versuchen Sie es
+												später erneut.
+											</span>
+										</div>
+									)}
 								</div>
 							</div>
 						)}
