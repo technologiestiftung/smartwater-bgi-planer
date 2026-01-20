@@ -402,7 +402,7 @@
 		"visibleLayerIds": [
 			"potenziale_regenwasserbewirtschaftung:aa_versickerungspotenzial_eu"
 		],
-		"legendSrc": "/legends/2v1.svg"
+		"legendSrc": "/legends/placeholder.svg"
 	},
 	{
 		"id": "2V1.1",
@@ -413,8 +413,7 @@
 		],
 		"visibleLayerIds": [
 			"potenziale_regenwasserbewirtschaftung:ab_versickerungspotenzial_gp"
-		],
-		"legendSrc": "/legends/2v1.svg"
+		]
 	},
 	{
 		"id": "2V1.2",
@@ -425,8 +424,7 @@
 		],
 		"visibleLayerIds": [
 			"potenziale_regenwasserbewirtschaftung:ac_versickerungspotenzial_au"
-		],
-		"legendSrc": "/legends/2v1.svg"
+		]
 	},
 	{
 		"id": "2V2",
@@ -493,14 +491,6 @@
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
 		"canDrawNotes": true,
-		"featureDisplay": "tooltip",
-		"canQueryFeatures": [
-			"denkmale:a_baudenkmal",
-			"denkmale:b_bodendenkmal",
-			"denkmale:c_gartendenkmal",
-			"denkmale:d_denkmalbereich_gesamtanlage",
-			"denkmale:e_denkmalbereich_ensemble"
-		],
 		"visibleLayerIds": [
 			"denkmale:a_baudenkmal",
 			"denkmale:b_bodendenkmal",
