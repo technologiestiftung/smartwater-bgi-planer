@@ -114,14 +114,14 @@ export default function MenuModalContent({ projectId }: MenuModalProps) {
 					title="Maßnahmen planen & bewerten"
 					description="Die Maßnahmenplanung hilft Ihnen den richtigen Standort für blau-grüne Maßnahmen zu finden."
 					sideElements={<PencilRulerIcon className="text-primary size-16" />}
-					additionalInfo="3 Maßnahmen platziert"
+					additionalInfo="Keine Fragen beantwortet"
 					buttonBottom={
-						<Button asChild>
-							<Link href={`/${projectId}/planung`}>
+						<div>
+							<Button disabled>
 								Zum Modul
 								<ArrowCircleRightIcon className="ml-2 size-6" />
-							</Link>
-						</Button>
+							</Button>
+						</div>
 					}
 				/>
 				<div className="flex items-end justify-end px-6 py-4">
