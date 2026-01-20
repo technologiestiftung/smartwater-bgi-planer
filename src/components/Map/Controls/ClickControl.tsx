@@ -57,14 +57,33 @@ const ClickControl: FC<ClickControlProps> = ({
 	const [cardPosition, setCardPosition] =
 		useState<OverlayPositioning>("bottom-left");
 	const [isLoading, setIsLoading] = useState(false);
+	const [isVisible, setIsVisible] = useState(false);
+	const [overlayReady, setOverlayReady] = useState(false);
 
 	const overlayRef = useRef<HTMLDivElement>(null);
 	const overlayInstanceRef = useRef<Overlay | null>(null);
 	const overlaySizeRef = useRef({ width: 0, height: 0 });
+	const showTimeoutRef = useRef<number | null>(null);
+	const hideTimeoutRef = useRef<number | null>(null);
+
+	const clearTimeouts = useCallback(() => {
+		if (showTimeoutRef.current) {
+			clearTimeout(showTimeoutRef.current);
+			showTimeoutRef.current = null;
+		}
+		if (hideTimeoutRef.current) {
+			clearTimeout(hideTimeoutRef.current);
+			hideTimeoutRef.current = null;
+		}
+	}, []);
 
 	const handleClose = useCallback(() => {
-		setSelection(null);
-	}, []);
+		clearTimeouts();
+		setIsVisible(false);
+		hideTimeoutRef.current = setTimeout(() => {
+			setSelection(null);
+		}, 200) as unknown as number;
+	}, [clearTimeouts]);
 
 	const calculatePositioning = useCallback(
 		(pixel: [number, number]): OverlayPositioning => {
@@ -170,12 +189,16 @@ const ClickControl: FC<ClickControlProps> = ({
 			const vectorMatch = findVectorFeature(evt.pixel);
 
 			if (vectorMatch) {
+				clearTimeouts();
 				setCardPosition(calculatePositioning(evt.pixel));
 				setSelection({
 					...vectorMatch,
 					coordinate: evt.coordinate,
 					displayMode: "overlay",
 				});
+				showTimeoutRef.current = setTimeout(() => {
+					setIsVisible(true);
+				}, 50) as unknown as number;
 				return;
 			}
 
@@ -189,27 +212,35 @@ const ClickControl: FC<ClickControlProps> = ({
 							currentConfig?.featureDisplay === "modal" &&
 							currentConfig?.canQueryFeatures?.includes(wmsMatch.layerId);
 
+						clearTimeouts();
 						setCardPosition(calculatePositioning(evt.pixel));
 						setSelection({
 							...wmsMatch,
 							coordinate: evt.coordinate,
 							displayMode: isModal ? "modal" : "overlay",
 						});
+
+						if (!isModal) {
+							showTimeoutRef.current = setTimeout(() => {
+								setIsVisible(true);
+							}, 50) as unknown as number;
+						}
 					} else {
-						setSelection(null);
+						handleClose();
 					}
 				} finally {
 					setIsLoading(false);
 					document.body.style.cursor = "auto";
 				}
 			} else {
-				setSelection(null);
+				handleClose();
 			}
 		};
 
 		map.on("click", handleClick);
 
 		return () => {
+			clearTimeouts();
 			map.un("click", handleClick);
 			document.body.style.cursor = "auto";
 		};
@@ -224,6 +255,8 @@ const ClickControl: FC<ClickControlProps> = ({
 		calculatePositioning,
 		currentConfig,
 		wmsLayerIds,
+		clearTimeouts,
+		handleClose,
 	]);
 
 	useEffect(() => {
@@ -241,6 +274,22 @@ const ClickControl: FC<ClickControlProps> = ({
 
 	useEffect(() => {
 		if (!overlayRef.current) return;
+
+		const updateSize = () => {
+			requestAnimationFrame(() => {
+				const rect = overlayRef.current?.getBoundingClientRect();
+				if (rect) {
+					overlaySizeRef.current = {
+						width: rect.width,
+						height: rect.height,
+					};
+					setOverlayReady(true);
+				}
+			});
+		};
+
+		updateSize();
+
 		const observer = new ResizeObserver((entries) => {
 			for (const entry of entries) {
 				overlaySizeRef.current = {
@@ -251,7 +300,7 @@ const ClickControl: FC<ClickControlProps> = ({
 		});
 		observer.observe(overlayRef.current);
 		return () => observer.disconnect();
-	}, []);
+	}, [selection]);
 
 	return (
 		<>
@@ -260,6 +309,9 @@ const ClickControl: FC<ClickControlProps> = ({
 				className="ClickControl-root"
 				style={{
 					pointerEvents: selection?.displayMode === "overlay" ? "auto" : "none",
+					visibility: overlayReady ? "visible" : "hidden",
+					opacity: isVisible ? 1 : 0,
+					transition: "opacity 200ms ease-out",
 				}}
 			>
 				{selection?.displayMode === "overlay" &&
