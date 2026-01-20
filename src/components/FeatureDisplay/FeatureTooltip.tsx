@@ -26,10 +26,11 @@ const FeatureTooltip: FC<FeatureTooltipProps> = ({ attributes, onClose }) => {
 				) : (
 					<div className="space-y-1">
 						{Object.entries(attributes).map(([key, value]) => (
-							<div key={key} className="grid grid-cols-3 text-sm">
-								<span className="col-span-2 font-medium text-gray-700">
-									{key}:
-								</span>
+							<div
+								key={key}
+								className="border-muted grid grid-cols-3 border-b text-sm"
+							>
+								<span className="col-span-2 pb-1 font-medium">{key}:</span>
 								<span className="col-span-1 ml-2 text-gray-900">
 									{value !== null && value !== undefined ? String(value) : "—"}
 								</span>
