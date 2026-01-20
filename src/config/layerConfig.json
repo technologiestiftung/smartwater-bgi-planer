@@ -465,7 +465,7 @@
 	},
 	{
 		"id": "2V5",
-		"name": "Geologischer Untergrund 🚨",
+		"name": "Geologischer Untergrund",
 		"question": "Gibt es Bohrkernprofile, die für die Maßnahmenplanung relevant sind? (z.B. durch Auffüllungen (Bauschutt) oder oberflächennahe Grundwasserstände)",
 		"description": [
 			"Zur detaillierten Beurteilung der Bodenverhältnisse ist ein Bodengutachten zu erstellen. Zur groben Ersteinschätzung können ggf. vorhandene Bohrkerndaten genutzt werden. Über die Bohrdaten können eher gut versickerungsfähige Böden (Beispiele: Kies, Sande) und eher schlecht versickerungsfähige Böden (Beispiele: Geschiebemergel, Ton) erkannt werden.",

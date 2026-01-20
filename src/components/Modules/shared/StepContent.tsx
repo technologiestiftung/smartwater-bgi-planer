@@ -36,9 +36,9 @@ const StepContent: FC<StepContentProps> = ({
 		return true;
 	};
 
-	const handleNext = () => {
-		_onSkip();
-	};
+	// const handleNext = () => {
+	// 	_onSkip();
+	// };
 
 	return (
 		<div className="flex min-h-0 flex-1 flex-col">
@@ -63,7 +63,7 @@ const StepContent: FC<StepContentProps> = ({
 						if (layerConfig.id === "2V1") {
 							return (
 								<div className="flex w-full gap-2">
-									<Button onClick={handleNext}>Weiter</Button>
+									{/* <Button onClick={handleNext}>Weiter</Button> */}
 								</div>
 							);
 						} else if (
