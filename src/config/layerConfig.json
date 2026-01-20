@@ -474,7 +474,7 @@
 			"*Hinweis: Auf der Barnim Hochfläche kann oberflächennah auch sog. Schichtenwasser zeitweise über wasserstauenden Schichten vorkommen. Weitere Informationen dazu finden sie auf der Seite der Umweltverwaltung (https://www.berlin.de/sen/uvk/umwelt/wasser-und-geologie/regenwasser/regenwasserbewirtschaftung/versickerung-barnim/) und der Regenwasseragentur (https://regenwasseragentur.berlin/planen-und-umsetzen/regenwasser-auf-barnim-hochflaeche-versickern/)"
 		],
 		"drawLayerId": "module_2_2V5_draw",
-		"canDrawPolygons": false,
+		"canDrawPolygons": true,
 		"canDrawBTF": false,
 		"canDrawNotes": true,
 		"canQueryFeatures": ["bohrdaten:bohrpunkte"],
