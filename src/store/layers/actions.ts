@@ -62,7 +62,6 @@ export const createSetLayerVisibility =
 		const currentLayersMap = get().layers;
 		const layerToUpdate = currentLayersMap.get(layerId);
 		if (layerToUpdate) {
-			console.log(`[Layer] ${visible ? "👁️ Show" : "🙈 Hide"}: ${layerId}`);
 			if (layerToUpdate.olLayer) {
 				layerToUpdate.olLayer.setVisible(visible);
 			}
@@ -112,8 +111,6 @@ export const createApplyConfigLayers =
 		const showLayer = (id: string) => setLayerVisibility(id, true);
 		const hideLayer = (id: string) => setLayerVisibility(id, false);
 
-		// Update active config state
-		console.log(`[LayerConfig] Applying config: ${visibleLayerIds}`);
 		set(() => ({
 			drawLayerId: layerConfigItem.drawLayerId,
 			layerConfigId: layerConfigItem.id,
@@ -217,10 +214,16 @@ export const createFilteredLayer =
 		const layers = get().layers;
 		const newLayerId = filteredLayerId || `${layerId}_filtered`;
 
+		// const newLayerId = filteredLayerId || `${layerId}_filtered`;
+
 		if (layers.has(newLayerId)) {
 			console.log(
 				`[Layer] Filtered layer ${newLayerId} already exists, skipping creation`,
 			);
+			return newLayerId;
+		}
+
+		if (layers.has(newLayerId)) {
 			return newLayerId;
 		}
 
@@ -250,16 +253,12 @@ export const createFilteredLayer =
 		});
 
 		newLayer.set("id", newLayerId);
-		console.log(`[Layer] ✨ Creating filtered layer: ${newLayerId}`);
 
-		// Übernimm die Visibility vom Original-Layer
 		const originalVisibility = originalLayer.visibility ?? false;
 		newLayer.setVisible(originalVisibility);
 
-		// Layer zur Karte hinzufügen
 		map.addLayer(newLayer);
 
-		// Im Store registrieren
 		const managedLayer: ManagedLayer = {
 			id: newLayerId,
 			config: {

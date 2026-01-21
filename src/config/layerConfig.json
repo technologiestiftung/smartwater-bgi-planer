@@ -341,8 +341,8 @@
 	{
 		"id": "feasibility_module_introduction",
 		"name": "",
-		"question": "Ortsnahe Versickerung kann u.a. dazu beitragen, den natürlichen Wasserhaushalt zu verbessern, Grundwasserneubildung zu fördern, die Mischwasserkanalisation zu entlasten oder Einleitgebühren einzusparen.",
-		"description": "Um das Ziel der ortsnahen Versickerung umzusetzen, benötigt es verfügbare Flächen an der städtischen Oberfläche sowie versickerungsfähigen Untergrund. Welche Flächen hierfür geeignet sind, hängt von einer Vielzahl von Rahmenbedingungen ab. Einige Daten zu wichtigen Kriterien wie Bodenbelastungen sind nicht öffentlich zugänglich und müssen gesondert beantragt oder erfasst werden. ",
+		"question": "Bevor konkrete Maßnahmen geplant werden können, soll sichtbar gemacht werden, welche Rahmenbedingungen die Umsetzbarkeit von verschiedenen Maßnahmengruppen beeinflussen. Die Maßnahmengruppen sind in grüne (Gebäudebegrünung, Begrünung/Bepflanzung, Entsiegelung) und blaue (Versickerung, Speicherung) Maßnahmen unterteilt.",
+		"description": "Während einerseits sehr allgemeine Rahmenbedingungen zu prüfen sind, die auf die Machbarkeiten von verschiedenen Maßnahmengruppen hinweisen, gibt es auch sehr konkrete Fragen, die es zu klären gilt. Dafür stehen nicht immer die notwendigen Geodaten zur Verfügung, weswegen hier stellenweise zusätzliche Recherche notwendig ist.",
 		"drawLayerId": "",
 		"canDrawPolygons": false,
 		"canDrawBTF": false,

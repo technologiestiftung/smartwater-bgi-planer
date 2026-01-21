@@ -45,22 +45,28 @@ const StepContent: FC<StepContentProps> = ({
 			<div className="mt-4">
 				{layerConfig && (
 					<div>
-						<h4 className="text-primary mb-2 text-lg font-semibold">
-							{layerConfig.name}
-						</h4>
+						{layerConfig.name && (
+							<h4 className="text-primary mb-2 text-lg font-semibold">
+								{layerConfig.name}
+							</h4>
+						)}
+						<div>{layerConfig.id === "2V1" && <ScenarioDisplay />}</div>
 						<div className="mb-4">
 							<p className="mb-2 font-semibold">{layerConfig.question}</p>
 							<div className="wrap-break-word">
 								<RichTextWithLinks text={layerConfig.description} />
 							</div>
 						</div>
-						{layerConfig.id === "2V1" && <ScenarioDisplay />}
 					</div>
 				)}
 
 				<div className="pt-4">
 					{(() => {
-						if (layerConfig.id === "2V1") {
+						if (
+							layerConfig.id === "2V1" ||
+							layerConfig.id === "2G1" ||
+							layerConfig.id === "2E1"
+						) {
 							return (
 								<div className="flex w-full gap-2">
 									{/* <Button onClick={handleNext}>Weiter</Button> */}
