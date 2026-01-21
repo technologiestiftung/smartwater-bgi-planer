@@ -10,7 +10,7 @@ import { useAnswersStore } from "@/store/answers";
 import { useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
 import { EyeIcon, EyeSlashIcon, XIcon } from "@phosphor-icons/react";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useShallow } from "zustand/react/shallow";
 
 interface SynthesisViewProps {
@@ -29,6 +29,10 @@ export function SynthesisView({
 	layerOverrides = {},
 }: SynthesisViewProps) {
 	const answers = useAnswersStore((state) => state.answers);
+	const moduleSavedState = useUiStore((state) => state.moduleSavedState);
+	const isMapReady = useMapReady();
+	const moduleSteps = getModuleSteps(moduleId);
+	const hasInitialized = useRef(false);
 	const { layerConfig, layers, setLayerVisibility, applyConfigLayers } =
 		useLayersStore(
 			useShallow((state) => ({
@@ -39,12 +43,11 @@ export function SynthesisView({
 			})),
 		);
 
-	const moduleSavedState = useUiStore((state) => state.moduleSavedState);
-	const isMapReady = useMapReady();
-	const moduleSteps = getModuleSteps(moduleId);
-	const hasInitialized = useRef(false);
+	const visibleModuleStep = useMemo(
+		() => moduleSteps.filter((step) => step.displayInSynthesis !== false),
+		[moduleSteps],
+	);
 
-	// Hilfsfunktion zur Ermittlung der korrekten Layer-ID und Sichtbarkeit
 	const getLayerData = useCallback(
 		(drawLayerId: string | undefined) => {
 			if (!drawLayerId) return { id: null, isVisible: false };
@@ -52,6 +55,7 @@ export function SynthesisView({
 				layerOverrides[drawLayerId] && layers.has(layerOverrides[drawLayerId])
 					? layerOverrides[drawLayerId]
 					: drawLayerId;
+
 			return {
 				id: effectiveId,
 				isVisible: layers.get(effectiveId)?.visibility ?? false,
@@ -72,7 +76,10 @@ export function SynthesisView({
 				if (checkForQuestion(qId, true)) return;
 				const config = layerConfig.find((c) => c.id === qId);
 				const { id } = getLayerData(config?.drawLayerId);
-				if (id) setLayerVisibility(id, true);
+
+				if (id && answers[qId] === true) {
+					setLayerVisibility(id, true);
+				}
 			});
 		}
 	}, [
@@ -84,16 +91,19 @@ export function SynthesisView({
 		layerConfig,
 		setLayerVisibility,
 		getLayerData,
+		answers,
 	]);
 
-	const handleToggleLayer = (questionId: string) => {
-		const config = layerConfig.find((c) => c.id === questionId);
+	const handleToggleLayer = (qId: string) => {
+		if (answers[qId] !== true) return;
+		const config = layerConfig.find((c) => c.id === qId);
 		const { id, isVisible } = getLayerData(config?.drawLayerId);
 		if (id) setLayerVisibility(id, !isVisible);
 	};
 
 	const handleToggleStepLayers = (stepQuestions: string[]) => {
 		const relevantLayers = stepQuestions
+			.filter((qId) => answers[qId] === true)
 			.map((qId) =>
 				getLayerData(layerConfig.find((c) => c.id === qId)?.drawLayerId),
 			)
@@ -106,8 +116,8 @@ export function SynthesisView({
 	return (
 		<div className="flex h-full w-full flex-col">
 			<div className="flex-1 overflow-y-auto px-6 pb-6">
-				<p className="mt-2 text-sm text-gray-600">{description}</p>
-				{moduleSteps.map((step) => {
+				<p className="text-primary mt-2">{description}</p>
+				{visibleModuleStep.map((step) => {
 					const sectionQuestions = step.questions || [];
 					const anyLayerVisible = sectionQuestions.some(
 						(qId) =>

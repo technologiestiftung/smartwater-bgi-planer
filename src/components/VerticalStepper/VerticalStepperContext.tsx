@@ -16,6 +16,7 @@ export interface StepConfig {
 	description?: string;
 	questions?: string[];
 	canProceed?: () => boolean;
+	displayInSynthesis?: boolean;
 }
 
 interface VerticalStepperContextValue {

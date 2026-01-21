@@ -7,6 +7,7 @@ interface ModuleStepConfig {
 	icon: string;
 	title: string;
 	questions: string[];
+	displayInSynthesis?: boolean;
 }
 
 interface ModuleConfig {
@@ -40,6 +41,7 @@ export function getModuleSteps(moduleId: string): StepConfig[] {
 			icon: <IconComponent />,
 			title: step.title,
 			questions: step.questions,
+			displayInSynthesis: step.displayInSynthesis,
 		};
 	});
 }

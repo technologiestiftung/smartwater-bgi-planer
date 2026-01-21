@@ -68,6 +68,10 @@ export const createSetLayerVisibility =
 			const updatedLayersMap = new Map(currentLayersMap);
 			updatedLayersMap.set(layerId, { ...layerToUpdate, visibility: visible });
 			set(() => ({ layers: updatedLayersMap }));
+		} else {
+			console.warn(
+				`[setLayerVisibility] Layer ${layerId} not found in layers map`,
+			);
 		}
 	};
 
@@ -92,7 +96,9 @@ export const createApplyConfigLayers =
 		);
 
 		if (!layerConfigItem) {
-			console.warn(`Layer config item with id ${visibleLayerIds} not found`);
+			console.warn(
+				`[applyConfigLayers] Layer config item with id ${visibleLayerIds} not found`,
+			);
 			return;
 		}
 
@@ -102,8 +108,12 @@ export const createApplyConfigLayers =
 
 		const setLayerVisibility = (id: string, visible: boolean) => {
 			const layer = newLayersMap.get(id);
-			if (!layer?.olLayer || layer.visibility === visible) return;
-
+			if (!layer?.olLayer) {
+				return;
+			}
+			if (layer.visibility === visible) {
+				return;
+			}
 			layer.olLayer.setVisible(visible);
 			newLayersMap.set(id, { ...layer, visibility: visible });
 		};
@@ -138,21 +148,26 @@ export const createApplyConfigLayers =
 		thememapsLayerIds.forEach(hideLayer);
 
 		/**
+		 * Determine which draw layers to keep visible
+		 */
+		const keepVisibleDrawLayers = new Set([
+			"project_boundary",
+			"project_new_development",
+			"module1_notes",
+		]);
+
+		if (layerConfigItem.drawLayerId) {
+			keepVisibleDrawLayers.add(layerConfigItem.drawLayerId);
+		}
+
+		/**
 		 * Hide other draw layers (optional)
 		 */
 		if (hideOtherDrawLayers) {
-			const keepVisibleDrawLayers = new Set([
-				"project_boundary",
-				"project_new_development",
-				"module1_notes",
-			]);
-
-			if (layerConfigItem.drawLayerId) {
-				keepVisibleDrawLayers.add(layerConfigItem.drawLayerId);
-			}
-
 			drawLayerIds.forEach((layerId) => {
-				if (keepVisibleDrawLayers.has(layerId)) return;
+				if (keepVisibleDrawLayers.has(layerId)) {
+					return;
+				}
 				hideLayer(layerId);
 
 				const relatedLayerIds = [layerId, `${layerId}_filtered`];
@@ -166,9 +181,12 @@ export const createApplyConfigLayers =
 		layerConfigItem.visibleLayerIds.forEach(showLayer);
 
 		/**
-		 * Ensure current draw layer is visible
+		 * Ensure current draw layer is visible (but not filtered versions)
 		 */
-		if (layerConfigItem.drawLayerId) {
+		if (
+			layerConfigItem.drawLayerId &&
+			!layerConfigItem.drawLayerId.includes("_filtered")
+		) {
 			showLayer(layerConfigItem.drawLayerId);
 		}
 
@@ -214,12 +232,7 @@ export const createFilteredLayer =
 		const layers = get().layers;
 		const newLayerId = filteredLayerId || `${layerId}_filtered`;
 
-		// const newLayerId = filteredLayerId || `${layerId}_filtered`;
-
 		if (layers.has(newLayerId)) {
-			console.log(
-				`[Layer] Filtered layer ${newLayerId} already exists, skipping creation`,
-			);
 			return newLayerId;
 		}
 
@@ -254,9 +267,6 @@ export const createFilteredLayer =
 
 		newLayer.set("id", newLayerId);
 
-		const originalVisibility = originalLayer.visibility ?? false;
-		newLayer.setVisible(originalVisibility);
-
 		map.addLayer(newLayer);
 
 		const managedLayer: ManagedLayer = {
@@ -264,13 +274,13 @@ export const createFilteredLayer =
 			config: {
 				id: newLayerId,
 				name: `${originalLayer.config.name || layerId} (gefiltert)`,
-				visibility: originalVisibility,
 				status: "loaded",
+				visibility: originalLayer.visibility,
 				elements: [],
 			},
 			olLayer: newLayer,
 			status: "loaded",
-			visibility: originalVisibility,
+			visibility: originalLayer.visibility,
 			opacity: originalLayer.opacity,
 			zIndex: originalLayer.zIndex,
 			layerType: originalLayer.layerType,
