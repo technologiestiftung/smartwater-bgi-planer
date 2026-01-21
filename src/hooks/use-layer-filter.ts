@@ -37,5 +37,6 @@ export function useLayerFilter(
 			setLayerVisibility(filterId, false);
 			setLayerVisibility(originalId, wasVisible);
 		};
-	}, [originalId, filterId, createFilteredLayer, setLayerVisibility]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [originalId, filterId]);
 }

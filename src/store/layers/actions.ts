@@ -215,6 +215,15 @@ export const createFilteredLayer =
 		if (!map) return null;
 
 		const layers = get().layers;
+		const newLayerId = filteredLayerId || `${layerId}_filtered`;
+
+		if (layers.has(newLayerId)) {
+			console.log(
+				`[Layer] Filtered layer ${newLayerId} already exists, skipping creation`,
+			);
+			return newLayerId;
+		}
+
 		const originalLayer = layers.get(layerId);
 		if (!originalLayer || !originalLayer.olLayer) return null;
 
@@ -240,8 +249,8 @@ export const createFilteredLayer =
 			zIndex: originalLayer.zIndex,
 		});
 
-		const newLayerId = filteredLayerId || `${layerId}_filtered`;
 		newLayer.set("id", newLayerId);
+		console.log(`[Layer] ✨ Creating filtered layer: ${newLayerId}`);
 
 		// Übernimm die Visibility vom Original-Layer
 		const originalVisibility = originalLayer.visibility ?? false;
