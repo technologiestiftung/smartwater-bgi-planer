@@ -62,6 +62,7 @@ export const createSetLayerVisibility =
 		const currentLayersMap = get().layers;
 		const layerToUpdate = currentLayersMap.get(layerId);
 		if (layerToUpdate) {
+			console.log(`[Layer] ${visible ? "👁️ Show" : "🙈 Hide"}: ${layerId}`);
 			if (layerToUpdate.olLayer) {
 				layerToUpdate.olLayer.setVisible(visible);
 			}
@@ -86,6 +87,7 @@ export const createApplyConfigLayers =
 	(visibleLayerIds: string, hideOtherDrawLayers = false) => {
 		const state = get();
 		const currentMapLayers = state.layers;
+
 		const layerConfigItem = state.layerConfig.find(
 			(item) => item.id === visibleLayerIds,
 		);
@@ -95,60 +97,52 @@ export const createApplyConfigLayers =
 			return;
 		}
 
-		const isMapReady = getMapReady();
+		if (!getMapReady()) return;
 
-		if (!isMapReady) {
-			return;
-		}
+		const newLayersMap = new Map(currentMapLayers);
 
-		// Get map config through callback for proper cross-store communication
+		const setLayerVisibility = (id: string, visible: boolean) => {
+			const layer = newLayersMap.get(id);
+			if (!layer?.olLayer || layer.visibility === visible) return;
+
+			layer.olLayer.setVisible(visible);
+			newLayersMap.set(id, { ...layer, visibility: visible });
+		};
+
+		const showLayer = (id: string) => setLayerVisibility(id, true);
+		const hideLayer = (id: string) => setLayerVisibility(id, false);
+
+		// Update active config state
+		console.log(`[LayerConfig] Applying config: ${visibleLayerIds}`);
+		set(() => ({
+			drawLayerId: layerConfigItem.drawLayerId,
+			layerConfigId: layerConfigItem.id,
+		}));
+
 		const mapConfig = getMapConfig();
 
 		if (!mapConfig) {
 			console.warn(
 				"Map config not available. Applying basic layer visibility.",
 			);
-			// Fallback: just turn on the requested layers without turning off others
-			set(() => ({
-				drawLayerId: layerConfigItem.drawLayerId,
-				layerConfigId: layerConfigItem.id,
-			}));
 
-			const newLayersMap = new Map(currentMapLayers);
-			layerConfigItem.visibleLayerIds.forEach((layerId) => {
-				const layer = newLayersMap.get(layerId);
-				if (layer && layer.olLayer && !layer.visibility) {
-					layer.olLayer.setVisible(true);
-					newLayersMap.set(layerId, { ...layer, visibility: true });
-				}
-			});
-
+			layerConfigItem.visibleLayerIds.forEach(showLayer);
 			set(() => ({ layers: newLayersMap }));
 			return;
 		}
 
-		set(() => ({
-			drawLayerId: layerConfigItem.drawLayerId,
-			layerConfigId: layerConfigItem.id,
-		}));
-
 		const folderElements = mapConfig.layerConfig.subjectlayer.elements;
 		const thememapsLayerIds = getLayerIdsInFolder(folderElements, "Thememaps");
-
 		const drawLayerIds = getLayerIdsInFolder(folderElements, "Draw Layers");
 
-		const newLayersMap = new Map(currentMapLayers);
+		/**
+		 * Turn off all Thememaps layers
+		 */
+		thememapsLayerIds.forEach(hideLayer);
 
-		// Only turn off layers that are in the Thememaps folder
-		thememapsLayerIds.forEach((layerId) => {
-			const layer = newLayersMap.get(layerId);
-			if (layer && layer.olLayer && layer.visibility) {
-				layer.olLayer.setVisible(false);
-				newLayersMap.set(layerId, { ...layer, visibility: false });
-			}
-		});
-
-		// Hide other draw layers if requested
+		/**
+		 * Hide other draw layers (optional)
+		 */
 		if (hideOtherDrawLayers) {
 			const keepVisibleDrawLayers = new Set([
 				"project_boundary",
@@ -161,34 +155,24 @@ export const createApplyConfigLayers =
 			}
 
 			drawLayerIds.forEach((layerId) => {
-				if (!keepVisibleDrawLayers.has(layerId)) {
-					const layer = newLayersMap.get(layerId);
-					if (layer && layer.olLayer) {
-						layer.olLayer.setVisible(false);
-						newLayersMap.set(layerId, { ...layer, visibility: false });
-					}
-				}
+				if (keepVisibleDrawLayers.has(layerId)) return;
+				hideLayer(layerId);
+
+				const relatedLayerIds = [layerId, `${layerId}_filtered`];
+				relatedLayerIds.forEach(hideLayer);
 			});
 		}
 
-		layerConfigItem.visibleLayerIds.forEach((layerId) => {
-			const layer = newLayersMap.get(layerId);
-			if (layer && layer.olLayer) {
-				layer.olLayer.setVisible(true);
-				newLayersMap.set(layerId, { ...layer, visibility: true });
-			}
-		});
+		/**
+		 * Turn on configured visible layers
+		 */
+		layerConfigItem.visibleLayerIds.forEach(showLayer);
 
-		// Ensure the current draw layer is visible if it exists
+		/**
+		 * Ensure current draw layer is visible
+		 */
 		if (layerConfigItem.drawLayerId) {
-			const drawLayer = newLayersMap.get(layerConfigItem.drawLayerId);
-			if (drawLayer && drawLayer.olLayer) {
-				drawLayer.olLayer.setVisible(true);
-				newLayersMap.set(layerConfigItem.drawLayerId, {
-					...drawLayer,
-					visibility: true,
-				});
-			}
+			showLayer(layerConfigItem.drawLayerId);
 		}
 
 		set(() => ({ layers: newLayersMap }));
@@ -258,7 +242,10 @@ export const createFilteredLayer =
 
 		const newLayerId = filteredLayerId || `${layerId}_filtered`;
 		newLayer.set("id", newLayerId);
-		newLayer.setVisible(true);
+
+		// Übernimm die Visibility vom Original-Layer
+		const originalVisibility = originalLayer.visibility ?? false;
+		newLayer.setVisible(originalVisibility);
 
 		// Layer zur Karte hinzufügen
 		map.addLayer(newLayer);
@@ -269,13 +256,13 @@ export const createFilteredLayer =
 			config: {
 				id: newLayerId,
 				name: `${originalLayer.config.name || layerId} (gefiltert)`,
-				visibility: true,
+				visibility: originalVisibility,
 				status: "loaded",
 				elements: [],
 			},
 			olLayer: newLayer,
 			status: "loaded",
-			visibility: true,
+			visibility: originalVisibility,
 			opacity: originalLayer.opacity,
 			zIndex: originalLayer.zIndex,
 			layerType: originalLayer.layerType,
