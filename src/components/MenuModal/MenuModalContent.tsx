@@ -1,6 +1,7 @@
 "use client";
 
 import MenuModule from "@/components/MenuModal/MenuModule";
+import modulesData from "@/components/Modules/modules.json";
 import ProjectDownloadButton from "@/components/ProjectDownloadButton/ProjectDownloadButton";
 import { Button } from "@/components/ui/button";
 import { checkForQuestion } from "@/lib/helpers/questions";
@@ -16,7 +17,6 @@ import {
 	ShovelIcon,
 } from "@phosphor-icons/react";
 import Link from "next/link";
-import modulesData from "../Modules/modules.json";
 
 interface MenuModalProps {
 	projectId: string;
