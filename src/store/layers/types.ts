@@ -141,4 +141,15 @@ export interface LayersActions {
 	setDrawLayer: (layerId: string) => void;
 	setLayerConfigId: (layerConfigId: string) => void;
 	hideLayersByPattern: (pattern: string | string[]) => void;
+	createFilteredLayer: (
+		layerId: string,
+		filterFn: (feature: any) => boolean,
+		filteredLayerId?: string,
+	) => string | null;
+	updateFilteredLayer: (
+		originalLayerId: string,
+		filterFn: (feature: any) => boolean,
+		filteredLayerId?: string,
+	) => void;
+	removeFilteredLayer: (filteredLayerId: string) => void;
 }

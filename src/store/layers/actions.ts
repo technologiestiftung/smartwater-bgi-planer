@@ -218,3 +218,131 @@ export const createHideLayersByPattern =
 			set(() => ({ layers: newLayersMap }));
 		}
 	};
+
+export const createFilteredLayer =
+	(set: SetState, get: GetState) =>
+	(
+		layerId: string,
+		filterFn: (feature: any) => boolean,
+		filteredLayerId?: string,
+	): string | null => {
+		const { useMapStore } = require("@/store/map");
+		const map = useMapStore.getState().map;
+		if (!map) return null;
+
+		const layers = get().layers;
+		const originalLayer = layers.get(layerId);
+		if (!originalLayer || !originalLayer.olLayer) return null;
+
+		const originalOlLayer = originalLayer.olLayer as any;
+		const source = originalOlLayer.getSource?.();
+		if (!source) return null;
+
+		// Features filtern
+		const allFeatures = source.getFeatures();
+		const filteredFeatures = allFeatures.filter(filterFn);
+
+		// Neuen Layer mit gefilterten Features erstellen
+		const VectorSource = require("ol/source/Vector").default;
+		const VectorLayer = require("ol/layer/Vector").default;
+
+		const newSource = new VectorSource({
+			features: filteredFeatures,
+		});
+
+		const newLayer = new VectorLayer({
+			source: newSource,
+			style: originalOlLayer.getStyle?.(),
+			zIndex: originalLayer.zIndex,
+		});
+
+		const newLayerId = filteredLayerId || `${layerId}_filtered`;
+		newLayer.set("id", newLayerId);
+		newLayer.setVisible(true);
+
+		// Layer zur Karte hinzufügen
+		map.addLayer(newLayer);
+
+		// Im Store registrieren
+		const managedLayer: ManagedLayer = {
+			id: newLayerId,
+			config: {
+				id: newLayerId,
+				name: `${originalLayer.config.name || layerId} (gefiltert)`,
+				visibility: true,
+				status: "loaded",
+				elements: [],
+			},
+			olLayer: newLayer,
+			status: "loaded",
+			visibility: true,
+			opacity: originalLayer.opacity,
+			zIndex: originalLayer.zIndex,
+			layerType: originalLayer.layerType,
+		};
+
+		set((state) => {
+			const newLayers = new Map(state.layers);
+			newLayers.set(newLayerId, managedLayer);
+			return { layers: newLayers };
+		});
+
+		return newLayerId;
+	};
+
+export const createUpdateFilteredLayer =
+	(set: SetState, get: GetState) =>
+	(
+		originalLayerId: string,
+		filterFn: (feature: any) => boolean,
+		filteredLayerId?: string,
+	): void => {
+		const { useMapStore } = require("@/store/map");
+		const map = useMapStore.getState().map;
+		if (!map) return;
+
+		const layers = get().layers;
+		const originalLayer = layers.get(originalLayerId);
+		if (!originalLayer || !originalLayer.olLayer) return;
+
+		const targetFilteredLayerId =
+			filteredLayerId || `${originalLayerId}_filtered`;
+		const filteredLayer = layers.get(targetFilteredLayerId);
+		if (!filteredLayer || !filteredLayer.olLayer) return;
+
+		const originalOlLayer = originalLayer.olLayer as any;
+		const source = originalOlLayer.getSource?.();
+		if (!source) return;
+
+		// Features neu filtern
+		const allFeatures = source.getFeatures();
+		const filteredFeatures = allFeatures.filter(filterFn);
+
+		// Source des gefilterten Layers aktualisieren
+		const filteredOlLayer = filteredLayer.olLayer as any;
+		const filteredSource = filteredOlLayer.getSource?.();
+		if (filteredSource) {
+			filteredSource.clear();
+			filteredSource.addFeatures(filteredFeatures);
+		}
+	};
+
+export const createRemoveFilteredLayer =
+	(set: SetState, get: GetState) =>
+	(filteredLayerId: string): void => {
+		const { useMapStore } = require("@/store/map");
+		const map = useMapStore.getState().map;
+		if (!map) return;
+
+		const layers = get().layers;
+		const layer = layers.get(filteredLayerId);
+		if (layer?.olLayer) {
+			map.removeLayer(layer.olLayer);
+		}
+
+		set((state) => {
+			const newLayers = new Map(state.layers);
+			newLayers.delete(filteredLayerId);
+			return { layers: newLayers };
+		});
+	};

@@ -18,6 +18,7 @@ interface SynthesisViewProps {
 	description: string;
 	colorLogic: "handlungsbedarf" | "machbarkeit";
 	onBackToQuestions: () => void;
+	layerOverrides?: Record<string, string>;
 }
 
 export function SynthesisView({
@@ -26,6 +27,7 @@ export function SynthesisView({
 	description,
 	colorLogic,
 	onBackToQuestions,
+	layerOverrides = {},
 }: SynthesisViewProps) {
 	const answers = useAnswersStore((state) => state.answers);
 
@@ -93,12 +95,19 @@ export function SynthesisView({
 			);
 			if (!questionConfig?.drawLayerId) return;
 
-			const layer = layers.get(questionConfig.drawLayerId);
+			// Verwende explizit angegebenen Override, falls vorhanden
+			const overrideLayerId = layerOverrides[questionConfig.drawLayerId];
+			const layerIdToToggle =
+				overrideLayerId && layers.get(overrideLayerId)
+					? overrideLayerId
+					: questionConfig.drawLayerId;
+
+			const layer = layers.get(layerIdToToggle);
 			const isCurrentlyVisible = layer?.visibility ?? false;
 
-			setLayerVisibility(questionConfig.drawLayerId, !isCurrentlyVisible);
+			setLayerVisibility(layerIdToToggle, !isCurrentlyVisible);
 		},
-		[layerConfig, layers, setLayerVisibility],
+		[layerConfig, layers, setLayerVisibility, layerOverrides],
 	);
 
 	const handleToggleStepLayers = useCallback(
@@ -108,12 +117,18 @@ export function SynthesisView({
 					const questionConfig = layerConfig.find(
 						(config) => config.id === questionId,
 					);
-					return questionConfig?.drawLayerId
-						? {
-								drawLayerId: questionConfig.drawLayerId,
-								layer: layers.get(questionConfig.drawLayerId),
-							}
-						: null;
+					if (!questionConfig?.drawLayerId) return null;
+
+					const overrideLayerId = layerOverrides[questionConfig.drawLayerId];
+					const layerIdToUse =
+						overrideLayerId && layers.get(overrideLayerId)
+							? overrideLayerId
+							: questionConfig.drawLayerId;
+
+					return {
+						drawLayerId: layerIdToUse,
+						layer: layers.get(layerIdToUse),
+					};
 				})
 				.filter(
 					(
@@ -130,7 +145,7 @@ export function SynthesisView({
 				setLayerVisibility(item.drawLayerId, !anyVisible);
 			});
 		},
-		[layerConfig, layers, setLayerVisibility],
+		[layerConfig, layers, setLayerVisibility, layerOverrides],
 	);
 
 	const getIconColor = (allTrue: boolean, allFalse: boolean) => {
@@ -157,10 +172,14 @@ export function SynthesisView({
 						const questionConfig = layerConfig.find(
 							(config) => config.id === questionId,
 						);
-						const layer = questionConfig?.drawLayerId
-							? layers.get(questionConfig.drawLayerId)
-							: null;
-						return layer?.visibility ?? false;
+						if (!questionConfig?.drawLayerId) return false;
+
+						const overrideLayerId = layerOverrides[questionConfig.drawLayerId];
+						const layerToCheck =
+							(overrideLayerId && layers.get(overrideLayerId)) ||
+							layers.get(questionConfig.drawLayerId);
+
+						return layerToCheck?.visibility ?? false;
 					});
 
 					const sectionAnswers = sectionQuestions
@@ -209,10 +228,17 @@ export function SynthesisView({
 									const questionConfig = layerConfig.find(
 										(config) => config.id === questionId,
 									);
-									const layer = questionConfig?.drawLayerId
-										? layers.get(questionConfig.drawLayerId)
-										: null;
-									const isVisible = layer?.visibility ?? false;
+
+									let isVisible = false;
+									if (questionConfig?.drawLayerId) {
+										const overrideLayerId =
+											layerOverrides[questionConfig.drawLayerId];
+										const layerToCheck =
+											(overrideLayerId && layers.get(overrideLayerId)) ||
+											layers.get(questionConfig.drawLayerId);
+										isVisible = layerToCheck?.visibility ?? false;
+									}
+
 									return (
 										<SynthesisBadge
 											key={questionId}
