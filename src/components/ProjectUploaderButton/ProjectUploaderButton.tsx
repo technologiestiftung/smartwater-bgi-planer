@@ -17,7 +17,6 @@ interface ProjectUploaderButtonProps {
 	files: File[];
 	onToggle: () => void;
 	onComplete: (uploadedProject: any) => void;
-	onReset?: () => void; // Optional gemacht, um Abstürze zu verhindern
 }
 
 const ProjectUploaderButton: FC<ProjectUploaderButtonProps> = ({
@@ -25,12 +24,12 @@ const ProjectUploaderButton: FC<ProjectUploaderButtonProps> = ({
 	files,
 	onToggle,
 	onComplete,
-	onReset,
 }) => {
 	const { createProject } = useProjectsStore();
 	const { setAnswer } = useAnswersStore();
 	const { updateConfig, setUserLocation } = useMapStore();
 	const { addFile } = useFilesStore();
+
 	const setUploadError = useUiStore((state) => state.setUploadError);
 	const uploadError = useUiStore((state) => state.uploadError);
 	const clearUploadStatus = useUiStore((state) => state.clearUploadStatus);
@@ -97,7 +96,17 @@ const ProjectUploaderButton: FC<ProjectUploaderButtonProps> = ({
 			setUploadError(
 				"Diese Datei ist nicht kompatibel mit dem BGI Planer. Bitte wählen Sie eine .zip Datei, der von BGI Planer erstellt wurde.",
 			);
-			onReset?.(); // Setzt die Files im Parent auf [] zurück
+		}
+	};
+
+	const handleButtonClick = () => {
+		if (isConfirmMode) {
+			handleConfirm();
+		} else {
+			if (uploadError) {
+				clearUploadStatus();
+			}
+			onToggle();
 		}
 	};
 
@@ -107,7 +116,7 @@ const ProjectUploaderButton: FC<ProjectUploaderButtonProps> = ({
 		<Button
 			variant={isConfirmMode ? "default" : "outline"}
 			className="grow"
-			onClick={isConfirmMode ? handleConfirm : onToggle}
+			onClick={handleButtonClick}
 		>
 			<UploadIcon className="mr-2" />
 			<p>{isConfirmMode ? "Projekt importieren" : "Datei hochladen"}</p>

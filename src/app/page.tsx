@@ -23,11 +23,19 @@ export default function Home() {
 	const uploadError = useUiStore((state) => state.uploadError);
 	const clearUploadStatus = useUiStore((state) => state.clearUploadStatus);
 
+	const handleNewProjectClick = () => {
+		if (uploadError) {
+			clearUploadStatus();
+		}
+		setUploadedFiles([]);
+		setShowUploadAlert(false);
+	};
+
 	const handleToggleUpload = () => {
 		if (uploadError) {
 			clearUploadStatus();
 			setUploadedFiles([]);
-			setShowUploadAlert(true);
+			setShowUploadAlert(false);
 		} else {
 			setShowUploadAlert(!showUploadAlert);
 		}
@@ -55,17 +63,16 @@ export default function Home() {
 						Der BGI Planer ist nur für die Nutzung auf dem Desktop vorgesehen,
 						damit alle Funktionen vollumfänglich genutzt werden können.
 					</p>
+
 					{showUploadAlert && (
 						<FileUploadZone
 							files={uploadedFiles}
 							onFilesChange={(files: File[]) => setUploadedFiles(files)}
 						/>
 					)}
-					<div
-						onClick={() => clearUploadStatus()}
-						className="hidden flex-wrap items-center justify-between gap-8 lg:flex"
-					>
-						<Button asChild className="grow">
+
+					<div className="hidden flex-wrap items-center justify-between gap-8 lg:flex">
+						<Button asChild className="grow" onClick={handleNewProjectClick}>
 							<Link href="/new">
 								<PlusSquareIcon className="mr-2" />
 								<p>Projekt anlegen</p>
@@ -94,6 +101,7 @@ export default function Home() {
 						/>
 					</div>
 				</div>
+
 				<div className="Footer-root mt-40 flex flex-col gap-4 lg:mt-0">
 					<div className="flex flex-col gap-2 text-left">
 						<p className="font-bold">Ein Teil des Projektes</p>
@@ -136,6 +144,7 @@ export default function Home() {
 					</div>
 				</div>
 			</div>
+
 			<div className="bg-primary hidden items-center justify-center rounded-l-[3.125rem] p-2.5 lg:flex">
 				<div className="flex max-w-114 flex-col items-center justify-between gap-8">
 					<CarouselWithIndicators
