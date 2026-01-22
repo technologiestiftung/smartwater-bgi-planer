@@ -402,7 +402,7 @@
 		"visibleLayerIds": [
 			"potenziale_regenwasserbewirtschaftung:aa_versickerungspotenzial_eu"
 		],
-		"legendSrc": "/legends/placeholder.svg"
+		"legendSrc": "/legends/2v1.svg"
 	},
 	{
 		"id": "2V1.1",
@@ -514,7 +514,7 @@
 			"ua_gruendaecher_2020:b_begruente_dachteilfl_geb",
 			"ua_gruendaecher_2020:c_begruente_dachteilfl_tief"
 		],
-		"legendSrc": "/legends/placeholder.svg"
+		"legendSrc": "/legends/2g1.svg"
 	},
 	{
 		"id": "2E1",
@@ -526,6 +526,6 @@
 		"canDrawBTF": false,
 		"canDrawNotes": true,
 		"visibleLayerIds": ["ua_entsiegelung:b_entsieg_klasse_teil"],
-		"legendSrc": "/legends/placeholder.svg"
+		"legendSrc": "/legends/2e1.svg"
 	}
 ]

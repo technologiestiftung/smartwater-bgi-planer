@@ -173,7 +173,7 @@ const styleList = [
 				conditions: { properties: { noteType: "schlecht" } },
 				style: {
 					iconScale: 0.8,
-					icon: "/icons/x-circle.svg",
+					icon: "/icons/warning.svg",
 				},
 			},
 			{

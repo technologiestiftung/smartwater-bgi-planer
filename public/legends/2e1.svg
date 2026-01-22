@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="426" height="300" viewBox="0 0 426 300">
+  <defs>
+    <style>
+      @import url("https://fonts.cdnfonts.com/css/arthouse-owned");
+      text { font-family: "Arthouse Owned", Arial, sans-serif; }
+    </style>
+	<pattern id="diagonalHatch" patternUnits="userSpaceOnUse" width="10" height="10">
+      <path d="M0,0 L10,10" stroke="#000" stroke-width="3"/>
+    </pattern>
+    <pattern id="crossHatch" patternUnits="userSpaceOnUse" width="10" height="10">
+      <path d="M0,10 L10,0 M0,0 L10,10" stroke="#000" stroke-width="3"/>
+    </pattern>
+  </defs>
+  <rect width="100%" height="100%" fill="transparent"/>
+  <rect x="16" y="12.0" width="24" height="16" rx="2" ry="2" fill="#338100" stroke="#0C4C38" stroke-width="1"/>
+  <text x="56" y="25" font-size="14" fill="#0C4C38">hohe fachliche Priorisierung</text>
+  <rect x="16" y="52.0" width="24" height="16" rx="2" ry="2" fill="#A1CD02" stroke="#0C4C38" stroke-width="1"/>
+  <text x="56" y="65" font-size="14" fill="#0C4C38">mittlere fachliche Priorisierung</text>
+  <rect x="16" y="92.0" width="24" height="16" rx="2" ry="2" fill="#EACA54" stroke="#0C4C38" stroke-width="1"/>
+  <text x="56" y="105" font-size="14" fill="#0C4C38">niedrige fachliche Priorisierung</text>
+  <rect x="16" y="132.0" width="24" height="16" rx="2" ry="2" fill="#A6967A" stroke="#0C4C38" stroke-width="1"/>
+  <text x="56" y="145" font-size="14" fill="#0C4C38">ohne fachliche Priorisierung</text>
+  <rect x="16" y="172.0" width="24" height="16" rx="2" ry="2" fill="#000000" stroke="#0C4C38" stroke-width="1"/>
+  <text x="56" y="185" font-size="14" fill="#0C4C38">Potenziell entsiegelbarer Anteil >50%</text>
+  <rect x="16" y="212.0" width="24" height="16" rx="2" ry="2" fill="url(#crossHatch)" stroke="#0C4C38" stroke-width="1"/>
+  <text x="56" y="225" font-size="14" fill="#0C4C38">Potenziell entsiegelbarer Anteil &#60;50%</text>
+  <rect x="16" y="252.0" width="24" height="16" rx="2" ry="2" fill="url(#diagonalHatch)" stroke="#0C4C38" stroke-width="1"/>
+  <text x="56" y="265" font-size="14" fill="#0C4C38">Potenziell entsiegelbarer Anteil unbekannt</text>
+</svg>
