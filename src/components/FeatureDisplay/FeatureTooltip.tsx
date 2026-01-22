@@ -1,3 +1,4 @@
+import { XCircleIcon } from "@phosphor-icons/react";
 import { FC } from "react";
 
 interface FeatureTooltipProps {
@@ -17,7 +18,7 @@ const FeatureTooltip: FC<FeatureTooltipProps> = ({ attributes, onClose }) => {
 					className="bg-secondary flex h-8 w-8 items-center justify-center text-white"
 					onClick={onClose}
 				>
-					×
+					<XCircleIcon />
 				</button>
 			</div>
 			<div className="max-h-[184px] overflow-y-scroll p-3">
