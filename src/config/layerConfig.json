@@ -514,6 +514,12 @@
 			"ua_gruendaecher_2020:b_begruente_dachteilfl_geb",
 			"ua_gruendaecher_2020:c_begruente_dachteilfl_tief"
 		],
+		"featureDisplay": "tooltip",
+		"canQueryFeatures": [
+			"potenziale_regenwasserbewirtschaftung:ca_dachbegruenungspotenzial",
+			"ua_gruendaecher_2020:b_begruente_dachteilfl_geb",
+			"ua_gruendaecher_2020:c_begruente_dachteilfl_tief"
+		],
 		"legendSrc": "/legends/2g1.svg"
 	},
 	{
@@ -526,6 +532,8 @@
 		"canDrawBTF": false,
 		"canDrawNotes": true,
 		"visibleLayerIds": ["ua_entsiegelung:b_entsieg_klasse_teil"],
+		"featureDisplay": "tooltip",
+		"canQueryFeatures": ["ua_entsiegelung:b_entsieg_klasse_teil"],
 		"legendSrc": "/legends/2e1.svg"
 	}
 ]
