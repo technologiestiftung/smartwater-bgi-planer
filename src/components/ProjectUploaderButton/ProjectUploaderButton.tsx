@@ -6,6 +6,7 @@ import {
 	useFilesStore,
 	useMapStore,
 	useProjectsStore,
+	useUiStore,
 } from "@/store";
 import { UploadIcon } from "@phosphor-icons/react";
 import JSZip from "jszip";
@@ -16,6 +17,7 @@ interface ProjectUploaderButtonProps {
 	files: File[];
 	onToggle: () => void;
 	onComplete: (uploadedProject: any) => void;
+	onReset?: () => void; // Optional gemacht, um Abstürze zu verhindern
 }
 
 const ProjectUploaderButton: FC<ProjectUploaderButtonProps> = ({
@@ -23,11 +25,15 @@ const ProjectUploaderButton: FC<ProjectUploaderButtonProps> = ({
 	files,
 	onToggle,
 	onComplete,
+	onReset,
 }) => {
 	const { createProject } = useProjectsStore();
 	const { setAnswer } = useAnswersStore();
 	const { updateConfig, setUserLocation } = useMapStore();
 	const { addFile } = useFilesStore();
+	const setUploadError = useUiStore((state) => state.setUploadError);
+	const uploadError = useUiStore((state) => state.uploadError);
+	const clearUploadStatus = useUiStore((state) => state.clearUploadStatus);
 
 	const findFileInZip = (zipContent: JSZip, fileInfo: any) => {
 		const paths = [
@@ -35,71 +41,67 @@ const ProjectUploaderButton: FC<ProjectUploaderButtonProps> = ({
 			`files/${fileInfo.layerId}/${fileInfo.metadata.fileName}`,
 			`${fileInfo.layerId}/${fileInfo.metadata.fileName}`,
 		];
-
 		return paths.map((p) => zipContent.file(p)).find(Boolean);
-	};
-
-	const restoreAnswers = (answers: Record<string, boolean>) => {
-		Object.entries(answers).forEach(([key, value]) => setAnswer(key, value));
-	};
-
-	const restoreMap = (mapData: any) => {
-		if (mapData?.mapView) {
-			updateConfig({
-				startCenter: mapData.mapView.startCenter,
-				startZoomLevel: mapData.mapView.startZoomLevel,
-			});
-		}
-		if (mapData?.userLocation) setUserLocation(mapData.userLocation);
-	};
-
-	const restoreFiles = async (zipContent: JSZip, filesData: any[]) => {
-		const filePromises = filesData.map(async (fileInfo) => {
-			const layerFile = findFileInZip(zipContent, fileInfo);
-
-			if (!layerFile) {
-				console.error("File not found in zip:", fileInfo.metadata.fileName);
-				return;
-			}
-
-			const blob = await layerFile.async("blob");
-			const file = new File([blob], fileInfo.metadata.fileName, {
-				type: fileInfo.metadata.fileType,
-			});
-
-			await addFile({
-				projectId: fileInfo.projectId,
-				layerId: fileInfo.layerId,
-				file,
-			});
-		});
-
-		await Promise.all(filePromises);
 	};
 
 	const handleConfirm = async () => {
 		if (!files[0]) return;
+		clearUploadStatus();
 
 		try {
 			const zipContent = await new JSZip().loadAsync(files[0]);
 			const projectFile = zipContent.file("project-data.json");
 
-			if (!projectFile) throw new Error("project-data.json not found");
+			if (!projectFile) {
+				setUploadError(
+					"Diese Datei ist nicht kompatibel mit dem BGI Planer. Bitte wählen Sie eine .zip Datei, der von BGI Planer erstellt wurde.",
+				);
+				return;
+			}
 
 			const { data } = JSON.parse(await projectFile.async("string"));
 
 			createProject(data.project);
-			restoreAnswers(data.answers);
-			restoreMap(data.map);
-			await restoreFiles(zipContent, data.files);
+			Object.entries(data.answers || {}).forEach(([k, v]) =>
+				setAnswer(k, v as boolean),
+			);
+
+			if (data.map?.mapView) {
+				updateConfig({
+					startCenter: data.map.mapView.startCenter,
+					startZoomLevel: data.map.mapView.startZoomLevel,
+				});
+			}
+			if (data.map?.userLocation) setUserLocation(data.map.userLocation);
+
+			await Promise.all(
+				(data.files || []).map(async (fileInfo: any) => {
+					const layerFile = findFileInZip(zipContent, fileInfo);
+					if (layerFile) {
+						const blob = await layerFile.async("blob");
+						const file = new File([blob], fileInfo.metadata.fileName, {
+							type: fileInfo.metadata.fileType,
+						});
+						await addFile({
+							projectId: fileInfo.projectId,
+							layerId: fileInfo.layerId,
+							file,
+						});
+					}
+				}),
+			);
 
 			onComplete(data.project);
 		} catch (error) {
-			console.error("Error loading project:", error);
+			console.error("Failed to import project:", error);
+			setUploadError(
+				"Diese Datei ist nicht kompatibel mit dem BGI Planer. Bitte wählen Sie eine .zip Datei, der von BGI Planer erstellt wurde.",
+			);
+			onReset?.(); // Setzt die Files im Parent auf [] zurück
 		}
 	};
 
-	const isConfirmMode = isUploadZoneVisible && files.length > 0;
+	const isConfirmMode = isUploadZoneVisible && files.length > 0 && !uploadError;
 
 	return (
 		<Button
@@ -108,7 +110,7 @@ const ProjectUploaderButton: FC<ProjectUploaderButtonProps> = ({
 			onClick={isConfirmMode ? handleConfirm : onToggle}
 		>
 			<UploadIcon className="mr-2" />
-			<p>{isConfirmMode ? "Projekt importieren" : "Dateien importieren"}</p>
+			<p>{isConfirmMode ? "Projekt importieren" : "Datei hochladen"}</p>
 		</Button>
 	);
 };

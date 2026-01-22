@@ -8,6 +8,7 @@ import Funding from "@/logos/gdb_logo.svg";
 import SmartWaterLogo from "@/logos/SmartWater-Logo.svg";
 import SWLogo from "@/logos/SWLogo.svg";
 import { useProjectsStore } from "@/store/projects";
+import { useUiStore } from "@/store/ui";
 import { GithubLogoIcon, PlusSquareIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -19,6 +20,18 @@ export default function Home() {
 
 	const router = useRouter();
 	const { getProject, hasHydrated, getLastPath } = useProjectsStore();
+	const uploadError = useUiStore((state) => state.uploadError);
+	const clearUploadStatus = useUiStore((state) => state.clearUploadStatus);
+
+	const handleToggleUpload = () => {
+		if (uploadError) {
+			clearUploadStatus();
+			setUploadedFiles([]);
+			setShowUploadAlert(true);
+		} else {
+			setShowUploadAlert(!showUploadAlert);
+		}
+	};
 
 	useEffect(() => {
 		if (!hasHydrated) return;
@@ -44,10 +57,14 @@ export default function Home() {
 					</p>
 					{showUploadAlert && (
 						<FileUploadZone
+							files={uploadedFiles}
 							onFilesChange={(files: File[]) => setUploadedFiles(files)}
 						/>
 					)}
-					<div className="hidden flex-wrap items-center justify-between gap-8 lg:flex">
+					<div
+						onClick={() => clearUploadStatus()}
+						className="hidden flex-wrap items-center justify-between gap-8 lg:flex"
+					>
 						<Button asChild className="grow">
 							<Link href="/new">
 								<PlusSquareIcon className="mr-2" />
@@ -58,7 +75,7 @@ export default function Home() {
 						<ProjectUploaderButton
 							isUploadZoneVisible={showUploadAlert}
 							files={uploadedFiles}
-							onToggle={() => setShowUploadAlert(!showUploadAlert)}
+							onToggle={handleToggleUpload}
 							onComplete={(uploadedProject) => {
 								setShowUploadAlert(false);
 								setUploadedFiles([]);
