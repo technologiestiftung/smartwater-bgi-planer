@@ -17,6 +17,7 @@ export interface Project {
 export interface ProjectsState {
 	project: Project | null;
 	hasHydrated: boolean;
+	lastPath?: string | null;
 }
 
 export interface ProjectsActions {
@@ -25,4 +26,6 @@ export interface ProjectsActions {
 	deleteProject: () => void;
 	getProject: () => Project | null;
 	setHasHydrated: (state: boolean) => void;
+	setLastPath: (path: string | null) => void;
+	getLastPath: () => string | null;
 }

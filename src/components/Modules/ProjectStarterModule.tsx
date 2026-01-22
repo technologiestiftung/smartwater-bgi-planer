@@ -31,6 +31,7 @@ import {
 	TrashIcon,
 } from "@phosphor-icons/react";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useShallow } from "zustand/react/shallow";
 
 interface ProjectStarterModuleProps {
 	open: boolean;
@@ -60,6 +61,53 @@ const steps: StepConfig[] = [
 	},
 ];
 
+function useUploadStatusAutoHide() {
+	const { uploadError, uploadSuccess, setUploadError, setUploadSuccess } =
+		useUiStore(
+			useShallow((state) => ({
+				uploadError: state.uploadError,
+				uploadSuccess: state.uploadSuccess,
+				setUploadError: state.setUploadError,
+				setUploadSuccess: state.setUploadSuccess,
+			})),
+		);
+
+	useEffect(() => {
+		if (uploadError || uploadSuccess) {
+			const timer = setTimeout(() => {
+				if (uploadSuccess) setUploadSuccess(null);
+				if (uploadError) setUploadError(null);
+			}, 3000);
+			return () => clearTimeout(timer);
+		}
+	}, [uploadError, uploadSuccess, setUploadError, setUploadSuccess]);
+
+	return { uploadError, uploadSuccess };
+}
+
+function UploadStatusMessages({
+	error,
+	success,
+}: {
+	error: string | null;
+	success: string | null;
+}) {
+	return (
+		<>
+			{error && (
+				<div className="text-red mt-4 rounded-sm border border-dashed bg-red-50 p-2 text-sm">
+					{error}
+				</div>
+			)}
+			{success && (
+				<div className="border-primary bg-light mt-4 rounded-sm border border-dashed p-2 text-sm">
+					{success}
+				</div>
+			)}
+		</>
+	);
+}
+
 function StepperFooter({
 	onClose,
 	onComplete,
@@ -76,22 +124,26 @@ function StepperFooter({
 		currentStepIndex,
 		totalSteps,
 	} = useVerticalStepper();
-	const applyConfigLayers = useLayersStore((state) => state.applyConfigLayers);
-	const hideLayersByPattern = useLayersStore(
-		(state) => state.hideLayersByPattern,
+	const { applyConfigLayers, hideLayersByPattern } = useLayersStore(
+		useShallow((state) => ({
+			applyConfigLayers: state.applyConfigLayers,
+			hideLayersByPattern: state.hideLayersByPattern,
+		})),
 	);
-	const { clearUploadStatus } = useUiStore();
+	const clearUploadStatus = useUiStore((state) => state.clearUploadStatus);
 	const isMapReady = useMapReady();
 
 	useEffect(() => {
 		if (!isMapReady) return;
 
-		if (currentStepId === "projectBoundary") {
-			applyConfigLayers("start_view_project_boundary", true);
-		} else if (currentStepId === "newDevelopment") {
-			applyConfigLayers("start_view_project_new_development", true);
-		}
-	}, [currentStepId, applyConfigLayers, isMapReady, hideLayersByPattern]);
+		const configMap: Record<string, string> = {
+			projectBoundary: "start_view_project_boundary",
+			newDevelopment: "start_view_project_new_development",
+		};
+
+		const config = configMap[currentStepId];
+		if (config) applyConfigLayers(config, true);
+	}, [currentStepId, applyConfigLayers, isMapReady]);
 
 	const isLastStep = currentStepIndex === totalSteps - 1;
 
@@ -135,13 +187,8 @@ function ProjectBoundaryStep() {
 	const { hasFeatures } = useLayerFeatures(LAYER_IDS.PROJECT_BOUNDARY);
 	const { formattedArea } = useLayerArea(LAYER_IDS.PROJECT_BOUNDARY);
 	const { setStepValidation } = useVerticalStepper();
-	const {
-		uploadError,
-		uploadSuccess,
-		clearUploadStatus,
-		setUploadError,
-		setUploadSuccess,
-	} = useUiStore();
+	const clearUploadStatus = useUiStore((state) => state.clearUploadStatus);
+	const { uploadError, uploadSuccess } = useUploadStatusAutoHide();
 	const [mapError, setMapError] = useState("");
 
 	useEffect(() => {
@@ -153,24 +200,10 @@ function ProjectBoundaryStep() {
 			setMapError("Bitte zeichnen Sie zuerst ein Projektgebiet ein.");
 			return false;
 		}
-		if (uploadError) {
-			return false;
-		}
+		if (uploadError) return false;
 		clearUploadStatus();
 		return true;
 	};
-
-	useEffect(() => {
-		if (uploadError || uploadSuccess) {
-			setTimeout(() => {
-				if (uploadSuccess) {
-					setUploadSuccess(null);
-				} else if (uploadError) {
-					setUploadError(null);
-				}
-			}, 3000);
-		}
-	}, [uploadError, uploadSuccess]);
 
 	return (
 		<div className="space-y-4">
@@ -196,19 +229,10 @@ function ProjectBoundaryStep() {
 				/>
 			</div>
 
-			{uploadError && (
-				<div className="text-red mt-4 rounded-sm border border-dashed bg-red-50 p-2 text-sm">
-					{uploadError}
-				</div>
-			)}
+			<UploadStatusMessages error={uploadError} success={uploadSuccess} />
 			{mapError && (
 				<div className="border-primary text-red mt-4 rounded-sm border border-dashed bg-red-50 p-2 text-sm">
 					{mapError}
-				</div>
-			)}
-			{uploadSuccess && (
-				<div className="border-primary bg-light mt-4 rounded-sm border border-dashed p-2 text-sm">
-					{uploadSuccess}
 				</div>
 			)}
 		</div>
@@ -217,24 +241,7 @@ function ProjectBoundaryStep() {
 
 function NewDevelopmentStep() {
 	const { formattedArea } = useLayerArea("project_new_development");
-	const { uploadError, uploadSuccess, setUploadError, setUploadSuccess } =
-		useUiStore();
-
-	const handleConfirm = (): boolean => {
-		return true;
-	};
-
-	useEffect(() => {
-		if (uploadError || uploadSuccess) {
-			setTimeout(() => {
-				if (uploadSuccess) {
-					setUploadSuccess(null);
-				} else if (uploadError) {
-					setUploadError(null);
-				}
-			}, 3000);
-		}
-	}, [uploadError, uploadSuccess]);
+	const { uploadError, uploadSuccess } = useUploadStatusAutoHide();
 
 	return (
 		<div className="space-y-4">
@@ -252,44 +259,37 @@ function NewDevelopmentStep() {
 			</p>
 			<div className="mt-8">
 				<ConfirmButton
-					onConfirm={handleConfirm}
+					onConfirm={() => true}
 					buttonText="Bestätigen"
 					displayText={formattedArea}
 				/>
 			</div>
-			{uploadError && (
-				<div className="text-red mt-4 rounded-sm border border-dashed bg-red-50 p-2 text-sm">
-					{uploadError}
-				</div>
-			)}
-			{uploadSuccess && (
-				<div className="border-primary bg-light mt-4 rounded-sm border border-dashed p-2 text-sm">
-					{uploadSuccess}
-				</div>
-			)}
+			<UploadStatusMessages error={uploadError} success={uploadSuccess} />
 		</div>
 	);
 }
 
 function AdditionalMapsStep({ projectId }: { projectId: string }) {
-	const {
-		uploadError,
-		uploadSuccess,
-		clearUploadStatus,
-		setUploadError,
-		setUploadSuccess,
-	} = useUiStore();
-	const { layers, removeLayer } = useLayersStore();
+	const clearUploadStatus = useUiStore((state) => state.clearUploadStatus);
+	const { uploadError, uploadSuccess } = useUploadStatusAutoHide();
+	const { layers, removeLayer } = useLayersStore(
+		useShallow((state) => ({
+			layers: state.layers,
+			removeLayer: state.removeLayer,
+		})),
+	);
 	const map = useMapStore((state) => state.map);
-	const { deleteFile } = useFilesStore();
+	const deleteFile = useFilesStore((state) => state.deleteFile);
 
-	const uploadedLayers = useMemo(() => {
-		return Array.from(layers.values()).filter(
-			(layer) =>
-				layer.id.startsWith("uploaded_") ||
-				layer.id.startsWith("uploaded_wms_"),
-		);
-	}, [layers]);
+	const uploadedLayers = useMemo(
+		() =>
+			Array.from(layers.values()).filter(
+				(layer) =>
+					layer.id.startsWith("uploaded_") ||
+					layer.id.startsWith("uploaded_wms_"),
+			),
+		[layers],
+	);
 
 	const deleteLayer = useCallback(
 		async (layerId: string) => {
@@ -315,18 +315,6 @@ function AdditionalMapsStep({ projectId }: { projectId: string }) {
 		clearUploadStatus();
 	}, [clearUploadStatus]);
 
-	useEffect(() => {
-		if (uploadError || uploadSuccess) {
-			setTimeout(() => {
-				if (uploadSuccess) {
-					setUploadSuccess(null);
-				} else if (uploadError) {
-					setUploadError(null);
-				}
-			}, 3000);
-		}
-	}, [uploadError, uploadSuccess]);
-
 	return (
 		<div className="space-y-4">
 			<h3 className="text-primary">Zusatzkarten</h3>
@@ -343,41 +331,26 @@ function AdditionalMapsStep({ projectId }: { projectId: string }) {
 			</div>
 
 			{uploadedLayers.length > 0 && (
-				<div className="space-y-2">
-					<div className="max-h-56 space-y-1 overflow-y-auto">
-						{uploadedLayers.map((layer) => (
-							<div
-								key={layer.id}
-								className="flex items-center justify-between rounded-sm"
+				<div className="max-h-56 space-y-1 overflow-y-auto">
+					{uploadedLayers.map((layer) => (
+						<div
+							key={layer.id}
+							className="flex items-center justify-between rounded-sm"
+						>
+							<span className="text-sm font-medium">{layer.config.name}</span>
+							<button
+								onClick={() => deleteLayer(layer.id)}
+								className="text-primary flex h-8 w-8 cursor-pointer items-center justify-center rounded-sm"
+								title="Layer löschen"
 							>
-								<div className="flex flex-col">
-									<span className="text-sm font-medium">
-										{layer.config.name}
-									</span>
-								</div>
-								<button
-									onClick={() => deleteLayer(layer.id)}
-									className="text-primary flex h-8 w-8 cursor-pointer items-center justify-center rounded-sm"
-									title="Layer löschen"
-								>
-									<TrashIcon size={16} />
-								</button>
-							</div>
-						))}
-					</div>
+								<TrashIcon size={16} />
+							</button>
+						</div>
+					))}
 				</div>
 			)}
 
-			{uploadSuccess && (
-				<div className="border-primary bg-light mt-4 rounded-sm border border-dashed p-2 text-sm">
-					{uploadSuccess}
-				</div>
-			)}
-			{uploadError && (
-				<div className="text-red mt-4 rounded-sm border border-dashed bg-red-50 p-2 text-sm">
-					{uploadError}
-				</div>
-			)}
+			<UploadStatusMessages error={uploadError} success={uploadSuccess} />
 		</div>
 	);
 }
@@ -388,13 +361,9 @@ export default function ProjectStarterModule({
 	onComplete,
 	projectId,
 }: ProjectStarterModuleProps) {
-	const { clearUploadStatus } = useUiStore();
+	const clearUploadStatus = useUiStore((state) => state.clearUploadStatus);
 
-	useEffect(() => {
-		return () => {
-			clearUploadStatus();
-		};
-	}, [clearUploadStatus]);
+	useEffect(() => () => clearUploadStatus(), [clearUploadStatus]);
 
 	return (
 		<SideMenu
@@ -413,11 +382,9 @@ export default function ProjectStarterModule({
 							<StepContent stepId="projectBoundary">
 								<ProjectBoundaryStep />
 							</StepContent>
-
 							<StepContent stepId="newDevelopment">
 								<NewDevelopmentStep />
 							</StepContent>
-
 							<StepContent stepId="additionalMaps">
 								<AdditionalMapsStep projectId={projectId} />
 							</StepContent>

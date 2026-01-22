@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="426" height="100" viewBox="0 0 426 100">
+  <defs>
+    <style>
+      @import url("https://fonts.cdnfonts.com/css/arthouse-owned");
+      text { font-family: "Arthouse Owned", Arial, sans-serif; }
+    </style>
+  </defs>
+  <rect width="100%" height="100%" fill="transparent"/>
+  <rect x="16" y="12.0" width="24" height="16" rx="2" ry="2" fill="#B2D9E9" stroke="#0C4C38" stroke-width="1"/>
+  <text x="56" y="25" font-size="14" fill="#0C4C38">1 Ma&#x00DF;nahme m&#246;glich</text>
+  <rect x="340.0" y="12.0" width="24" height="16" rx="2" ry="2" fill="#7EC2D8" stroke="#0C4C38" stroke-width="1"/>
+  <text x="380.0" y="25" font-size="14" fill="#0C4C38">2</text>
+  <rect x="16" y="52.0" width="24" height="16" rx="2" ry="2" fill="#5AB1C7" stroke="#0C4C38" stroke-width="1"/>
+  <text x="56" y="65" font-size="14" fill="#0C4C38">3</text>
+  <rect x="96.4" y="52.0" width="24" height="16" rx="2" ry="2" fill="#48A5B7" stroke="#0C4C38" stroke-width="1"/>
+  <text x="136.4" y="65" font-size="14" fill="#0C4C38">4</text>
+  <rect x="176.8" y="52.0" width="24" height="16" rx="2" ry="2" fill="" stroke="#0C4C38" stroke-width="1"/>
+  <text x="216.8" y="65" font-size="14" fill="#0C4C38"></text>
+</svg>

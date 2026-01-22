@@ -1,11 +1,14 @@
 import {
 	createAddLayer,
 	createApplyConfigLayers,
+	createFilteredLayer,
 	createGetLayerStatus,
 	createHideLayersByPattern,
+	createRemoveFilteredLayer,
 	createRemoveLayer,
 	createSetLayerStatus,
 	createSetLayerVisibility,
+	createUpdateFilteredLayer,
 	createUpdateLayer,
 } from "@/store/layers/actions";
 import { LayersActions, LayersState } from "@/store/layers/types";
@@ -42,5 +45,8 @@ export const useLayersStore = create<LayersState & LayersActions>(
 		setDrawLayer: (layerId) => set({ drawLayerId: layerId }),
 		setLayerConfigId: (layerId) => set({ layerConfigId: layerId }),
 		hideLayersByPattern: createHideLayersByPattern(set, get),
+		createFilteredLayer: createFilteredLayer(set, get),
+		updateFilteredLayer: createUpdateFilteredLayer(set, get),
+		removeFilteredLayer: createRemoveFilteredLayer(set, get),
 	}),
 );

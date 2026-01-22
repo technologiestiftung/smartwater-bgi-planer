@@ -50,24 +50,49 @@ export const performProjectBoundaryIntersection = (map: Map | null) => {
 	planningSource.clear();
 
 	const format = new GeoJSON();
+	let processed = 0;
+	let intersections = 0;
 
 	rabimoLayer.getSource()!.forEachFeature((rabimoFeature) => {
+		processed++;
+		if (processed % 1000 === 0) {
+			console.log(
+				`Processed ${processed} features, found ${intersections} intersections`,
+			);
+		}
+
 		const rabimoGeometry = rabimoFeature.getGeometry();
 		if (!rabimoGeometry) return;
 
-		const rabimoGeoJSON = format.writeFeatureObject(rabimoFeature);
+		try {
+			const rabimoGeoJSON = format.writeFeatureObject(rabimoFeature);
 
-		const intersectsAny = boundaryFeatures.some((boundaryFeature) => {
-			const drawnGeometry = boundaryFeature.getGeometry();
-			if (!drawnGeometry) return false;
+			const intersectsAny = boundaryFeatures.some((boundaryFeature) => {
+				const drawnGeometry = boundaryFeature.getGeometry();
+				if (!drawnGeometry) return false;
 
-			const boundaryGeoJSON = format.writeFeatureObject(boundaryFeature);
+				try {
+					if (!rabimoGeometry.intersectsExtent(drawnGeometry.getExtent())) {
+						return false;
+					}
 
-			return booleanIntersects(rabimoGeoJSON, boundaryGeoJSON);
-		});
+					const boundaryGeoJSON = format.writeFeatureObject(boundaryFeature);
+					return booleanIntersects(rabimoGeoJSON, boundaryGeoJSON);
+				} catch (error) {
+					console.warn(
+						"Error checking intersection for boundary feature:",
+						error,
+					);
+					return false;
+				}
+			});
 
-		if (intersectsAny) {
-			planningSource.addFeature(rabimoFeature.clone());
+			if (intersectsAny) {
+				intersections++;
+				planningSource.addFeature(rabimoFeature.clone());
+			}
+		} catch (error) {
+			console.warn("Error processing feature:", error);
 		}
 	});
 };

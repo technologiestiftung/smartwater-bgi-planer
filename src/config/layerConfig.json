@@ -53,6 +53,16 @@
 		"legendSrc": ""
 	},
 	{
+		"id": "feasibility_synthesis_view",
+		"name": "Synthese",
+		"drawLayerId": "",
+		"canDrawPolygons": false,
+		"canDrawBTF": false,
+		"canDrawNotes": false,
+		"visibleLayerIds": ["project_boundary", "project_new_development"],
+		"legendSrc": ""
+	},
+	{
 		"id": "heavy_rain_flow_velocity",
 		"name": "Fließgeschwindigkeit",
 		"question": "Wo gibt es Bereiche in denen Fließgeschwindigkeiten über 0,5 m/s auftreten und dadurch eine Gefährdung bestehen könnte?",
@@ -327,5 +337,203 @@
 			"bgi-planer:HA4_Kleingewaesser_trocken_topoEZG_pl"
 		],
 		"legendSrc": "/legends/placeholder.svg"
+	},
+	{
+		"id": "feasibility_module_introduction",
+		"name": "",
+		"question": "Bevor konkrete Maßnahmen geplant werden können, soll sichtbar gemacht werden, welche Rahmenbedingungen die Umsetzbarkeit von verschiedenen Maßnahmengruppen beeinflussen. Die Maßnahmengruppen sind in grüne (Gebäudebegrünung, Begrünung/Bepflanzung, Entsiegelung) und blaue (Versickerung, Speicherung) Maßnahmen unterteilt.",
+		"description": "Während einerseits sehr allgemeine Rahmenbedingungen zu prüfen sind, die auf die Machbarkeiten von verschiedenen Maßnahmengruppen hinweisen, gibt es auch sehr konkrete Fragen, die es zu klären gilt. Dafür stehen nicht immer die notwendigen Geodaten zur Verfügung, weswegen hier stellenweise zusätzliche Recherche notwendig ist.",
+		"drawLayerId": "",
+		"canDrawPolygons": false,
+		"canDrawBTF": false,
+		"canDrawNotes": false,
+		"visibleLayerIds": ["project_boundary", "project_new_development"],
+		"legendSrc": "",
+		"isIntro": true,
+		"moduleNumber": 2,
+		"moduleName": "Machbarkeit"
+	},
+	{
+		"id": "potential_maps_view",
+		"name": "Machbarkeiten prüfen – Versickerungspotential",
+		"question": "",
+		"description": "",
+		"drawLayerId": "",
+		"canDrawPolygons": false,
+		"canDrawBTF": false,
+		"canDrawNotes": false,
+		"visibleLayerIds": [
+			"project_boundary",
+			"project_new_development",
+			"potenziale_regenwasserbewirtschaftung:aa_versickerungspotenzial_eu"
+		],
+		"legendSrc": ""
+	},
+	{
+		"id": "2V1",
+		"name": "Versickerungspotential",
+		"question": "",
+		"description": [
+			"Die Versickerungspotenzialkarte zeigt die Potentialflächen der jeweiligen Versickerungsarten an.",
+			"Bei der Planung von Versickerungsanlagen ist zudem die Hangneigung zu berücksichtigen, da eine gleichmäßige Beschickung der oberirdischen Versickerungsanlagen angestrebt werden sollte.",
+			"Für eine vollständige Abwägung der Versickerungsfähigkeit bedarf es einer Analyse der Randbedingungen:",
+			{
+				"type": "bullets",
+				"items": [
+					"Befindet sich das Vorhaben bzw. Plangebiet ganz oder teilweise in einem Wasserschutzgebiet und wenn ja in welcher Schutzzone?",
+					"Wie groß ist der Abstand (von der Geländeoberkante) zum maßgeblichen Bemessungsgrundwasserstand?",
+					"Gibt es arten- und naturschutzfachliche bedeutsame Biotope oder Schutzgebiete mit Relevanz für das Plangebiet?",
+					"Gibt es starke Geländeneigungen (über 10 Grad), die bei der Planung von Versickerungsanlagen berücksichtigt werden sollten?",
+					"Bestehen Belange des Denkmalschutzes, die es zu berücksichtigen gilt?"
+				]
+			},
+			"Die Karte kann zur groben Ersteinschätzung dienen, ist jedoch kein Ersatz für Vor-Ort Untersuchungen bzw. Fachplanungen. Es wurden z. B. keine Altlasten, Leitungen im Untergrund oder Flächennutzungen betrachtet.",
+			"In der Schutzzone III B sowie außerhalb von Wasserschutzgebieten gilt die Niederschlagswasserfreistellungsverordnung (NWFreiV). In allen anderen Schutzzonen bedarf es in jedem Fall einer Erlaubnis von der Wasserbehörde. Je nach Art und Nutzung der befestigten Fläche können unterschiedliche Versickerungsanlagen und ggf. Vorbehandlungen zum Einsatz kommen. (Siehe Hinweisblatt 2 zur Antragstellung: Versickerung von Niederschlagswasser, https://www.berlin.de/sen/uvk/_assets/umwelt/wasser-und-geologie/publikationen-und-merkblaetter/hinweisblatt2-versick.pdf)",
+			"I.d.R. ist ein Abstand von ca. 1 m von der Sohle der Versickerungsanlage bis zum Bemessungsgrundwasserstand einzuhalten. Als Bemessungsgrundwasserstand innerhalb von Wasserschutzgebieten ist der zu erwartende höchste Grundwasserstand (zeHGW) heranzuziehen, außerhalb von Wasserschutzgebieten der zu erwartende mittlere höchste Grundwasserstand (zeMHGW). Sollten keine Daten vorliegen, können Informationen bei der Wasserbehörde eingeholt werden (Siehe Hinweisblatt 2)."
+		],
+		"drawLayerId": "",
+		"canDrawPolygons": false,
+		"canDrawBTF": false,
+		"canDrawNotes": true,
+		"featureDisplay": "tooltip",
+		"canQueryFeatures": [
+			"potenziale_regenwasserbewirtschaftung:aa_versickerungspotenzial_eu"
+		],
+		"visibleLayerIds": [
+			"potenziale_regenwasserbewirtschaftung:aa_versickerungspotenzial_eu"
+		],
+		"legendSrc": "/legends/2v1.svg"
+	},
+	{
+		"id": "2V1.1",
+		"canDrawNotes": true,
+		"featureDisplay": "tooltip",
+		"canQueryFeatures": [
+			"potenziale_regenwasserbewirtschaftung:ab_versickerungspotenzial_gp"
+		],
+		"visibleLayerIds": [
+			"potenziale_regenwasserbewirtschaftung:ab_versickerungspotenzial_gp"
+		]
+	},
+	{
+		"id": "2V1.2",
+		"canDrawNotes": true,
+		"featureDisplay": "tooltip",
+		"canQueryFeatures": [
+			"potenziale_regenwasserbewirtschaftung:ac_versickerungspotenzial_au"
+		],
+		"visibleLayerIds": [
+			"potenziale_regenwasserbewirtschaftung:ac_versickerungspotenzial_au"
+		]
+	},
+	{
+		"id": "2V2",
+		"name": "Altlasten",
+		"question": "Kommen Altlasten bzw. Altlastenverdachtsflächen im Plangebiet vor? (Relevant ist zum Beispiel, ob es ein Bodengutachten mit Aussagen zur Altlastensituation gibt.)",
+		"description": "Wenn ein Teil des Plangebiets im Bodenbelastungskataster Berlin als Altlasten- bzw. Altlastenverdachtsfläche erfasst ist, ist eine frühzeitige Rücksprache mit der oberen Wasserbehörde bzw. der zuständigen bezirklichen Bodenschutzbehörde notwendig. In der Regel ist ein Bodengutachten zu erstellen. Beim Antreffen von Altlasten oder anthropogenen Auffüllungen (z.B. Bauschutt) ist in Abstimmung mit der Bodenschutzbehörde ein Bodenaustausch im Bereich der geplanten Versickerungsanlagen vorzusehen.",
+		"drawLayerId": "module_2_2V2_draw",
+		"canDrawPolygons": true,
+		"canDrawBTF": false,
+		"canDrawNotes": true,
+		"visibleLayerIds": []
+	},
+	{
+		"id": "2V3",
+		"name": "Unterirdische Infrastrukturen: Leitungsbestand, U-Bahntunnel",
+		"question": "Sind Leitungen oder unterirdische Infrastrukturen (z.B. U-Bahntunnel) vorhanden, die bei der Platzierung von z.B. Versickerungsanlagen oder Zisternen zu beachten sind?",
+		"description": "Vorhabenträger*in oder SGA können über infreST (https://www.infrest.de/) den Leitungsbestand abfragen.",
+		"drawLayerId": "module_2_2V3_draw",
+		"canDrawPolygons": true,
+		"canDrawBTF": false,
+		"canDrawNotes": true,
+		"visibleLayerIds": []
+	},
+	{
+		"id": "2V4",
+		"name": "Altbaumbestand",
+		"question": "Gibt es einen Altbaumbestand, der bei der Verortung von Maßnahmen berücksichtigt werden muss?",
+		"description": "In der Karte Baumbestand werden Straßen- und Anlagenbäume auf öffentlichen Flächen dargestellt. Die müssen bei der Planung von Versickerungsmaßnahmen berücksichtigt werden, ebenso wie das Fehlen von Bäumen im Untersuchungsgebiet.",
+		"drawLayerId": "module_2_2V4_draw",
+		"canDrawPolygons": true,
+		"canDrawBTF": true,
+		"canDrawNotes": true,
+		"visibleLayerIds": [
+			"baumbestand:anlagenbaeume",
+			"baumbestand:strassenbaeume"
+		],
+		"legendSrc": "/legends/2v4.svg"
+	},
+	{
+		"id": "2V5",
+		"name": "Geologischer Untergrund",
+		"question": "Gibt es Bohrkernprofile, die für die Maßnahmenplanung relevant sind? (z.B. durch Auffüllungen (Bauschutt) oder oberflächennahe Grundwasserstände)",
+		"description": [
+			"Zur detaillierten Beurteilung der Bodenverhältnisse ist ein Bodengutachten zu erstellen. Zur groben Ersteinschätzung können ggf. vorhandene Bohrkerndaten genutzt werden. Über die Bohrdaten können eher gut versickerungsfähige Böden (Beispiele: Kies, Sande) und eher schlecht versickerungsfähige Böden (Beispiele: Geschiebemergel, Ton) erkannt werden.",
+			"Bei Auffüllungen (z.B. Bauschutt) muss ein Bodenaustausch bei der Umsetzung von Versickerungsanlagen erfolgen.",
+			"Beim Antreffen oder Verdacht von oberflächennahem Grundwasser ist eine frühzeitige Rücksprache mit der Senatsumweltverwaltung (Wasserwirtschaft) erforderlich. Weitere Informationen finden Sie hier (https://www.berlin.de/sen/uvk/umwelt/wasser-und-geologie/regenwasser/regenwasserbewirtschaftung/versickerung-barnim/)",
+			"*Hinweis: Auf der Barnim Hochfläche kann oberflächennah auch sog. Schichtenwasser zeitweise über wasserstauenden Schichten vorkommen. Weitere Informationen dazu finden sie auf der Seite der Umweltverwaltung (https://www.berlin.de/sen/uvk/umwelt/wasser-und-geologie/regenwasser/regenwasserbewirtschaftung/versickerung-barnim/) und der Regenwasseragentur (https://regenwasseragentur.berlin/planen-und-umsetzen/regenwasser-auf-barnim-hochflaeche-versickern/)"
+		],
+		"drawLayerId": "module_2_2V5_draw",
+		"canDrawPolygons": true,
+		"canDrawBTF": false,
+		"canDrawNotes": true,
+		"canQueryFeatures": ["bohrdaten:bohrpunkte"],
+		"featureDisplay": "modal",
+		"visibleLayerIds": ["bohrdaten:bohrpunkte"],
+		"legendSrc": "/legends/2v5.svg"
+	},
+	{
+		"id": "2B1",
+		"name": "Denkmalschutz",
+		"question": "Bestehen Belange des Denkmalschutzes, die es zu berücksichtigen gilt?",
+		"description": "Die Denkmalkarte Berlin stellt denkmalgeschützte Gebäude, Ensembles, Gärten, Gesamtanlagen und Bodendenkmäler dar. Maßnahmen der Klimaanpassung, die meist mit sichtbaren, baulichen Änderungen am Gebäude oder zugehörigen Außenanlagen einhergehen, müssen mit der Denkmalschutzbehörde abgestimmt werden. Die Umsetzung von Klimaanpassungsmaßnahmen kann durch Denkmalschutzbedenken eingeschränkt sein.",
+		"drawLayerId": "module_2_2B1_draw",
+		"canDrawPolygons": true,
+		"canDrawBTF": true,
+		"canDrawNotes": true,
+		"visibleLayerIds": [
+			"denkmale:a_baudenkmal",
+			"denkmale:b_bodendenkmal",
+			"denkmale:c_gartendenkmal",
+			"denkmale:d_denkmalbereich_gesamtanlage",
+			"denkmale:e_denkmalbereich_ensemble"
+		],
+		"legendSrc": "/legends/2b1.svg"
+	},
+	{
+		"id": "2G1",
+		"name": "Gründachpotenziale",
+		"question": "",
+		"description": "Gründächer können als intensiv begrüntes, extensiv begrüntes oder als Retentionsgründach mit Drossel ausgeführt werden. Intensive Begrünung oder ein Retentionsgründach sind nur auf einem Flachdach (mit einer Dachneigung < 5°) möglich. Zusätzlich können Gründächer mit Solaranlagen kombiniert oder als Biodiversitätsgründächer ausgeführt werden. \nDie Machbarkeit und die Art der Dachbegrünung ist auch von der Statik des Gebäudes abhängig (Tragfähigkeit bei extensivem Gründach etwa 60 kg/m²; bei intensivem Gründach ab etwa 300kg/m²). Eine extensive Dachbegrünung ist in der Regel möglich, wenn es eine Dachstuhlerneuerung mit ausreichender Lastreserve gab oder bereits ein Kiesdach vorhanden ist. \nIn Ergänzung zu der angezeigten Dachbegrünungspotentialkarte sollte über das Luftbild nach weiteren bereits realisierten Dachbegrünungen oder Photovoltaikanlagen geschaut werden.",
+		"drawLayerId": "",
+		"canDrawPolygons": false,
+		"canDrawBTF": false,
+		"canDrawNotes": true,
+		"visibleLayerIds": [
+			"potenziale_regenwasserbewirtschaftung:ca_dachbegruenungspotenzial",
+			"ua_gruendaecher_2020:b_begruente_dachteilfl_geb",
+			"ua_gruendaecher_2020:c_begruente_dachteilfl_tief"
+		],
+		"featureDisplay": "tooltip",
+		"canQueryFeatures": [
+			"potenziale_regenwasserbewirtschaftung:ca_dachbegruenungspotenzial",
+			"ua_gruendaecher_2020:b_begruente_dachteilfl_geb",
+			"ua_gruendaecher_2020:c_begruente_dachteilfl_tief"
+		],
+		"legendSrc": "/legends/2g1.svg"
+	},
+	{
+		"id": "2E1",
+		"name": "Entsiegelungspotenzialflächen",
+		"question": "",
+		"description": "Vereinzelte Flächen mit Potenzial zur Entsiegelung wurden bereits auf Basis einer Befragung der Bezirksämter und der Berliner Forsten ermittelt. Dabei wurde das Potenzial zur Entsiegelung festgestellt, bewertet und priorisiert.",
+		"drawLayerId": "",
+		"canDrawPolygons": false,
+		"canDrawBTF": false,
+		"canDrawNotes": true,
+		"visibleLayerIds": ["ua_entsiegelung:b_entsieg_klasse_teil"],
+		"featureDisplay": "tooltip",
+		"canQueryFeatures": ["ua_entsiegelung:b_entsieg_klasse_teil"],
+		"legendSrc": "/legends/2e1.svg"
 	}
 ]

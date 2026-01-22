@@ -1,34 +1,37 @@
-import { useModuleNavigation } from "@/components/Modules/HandlungsbedarfeModule/hooks/useModuleNavigation";
-import { useLayerFeatures } from "@/hooks/use-layer-features";
-import { LAYER_IDS } from "@/types/shared";
+"use client";
+
+import { Button } from "@/components/ui/button";
 import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
 	ListChecksIcon,
 } from "@phosphor-icons/react";
 import { useCallback } from "react";
-import { Button } from "../../ui/button";
 
-interface StepperFooterProps {
+interface ModuleFooterProps {
 	onClose: () => void;
 	onShowSynthesis: () => void;
+	useModuleNavigation: () => {
+		getCurrentQuestionInfo: () => {
+			isFirstQuestion: boolean;
+			isLastQuestion: boolean;
+		};
+		navigateToPrevious: () => boolean;
+		navigateToNext: () => boolean;
+	};
+	isNextDisabled?: boolean;
 }
 
-export function StepperFooter({
+export function ModuleFooter({
 	onClose,
 	onShowSynthesis,
-}: StepperFooterProps) {
+	useModuleNavigation,
+	isNextDisabled = false,
+}: ModuleFooterProps) {
 	const { getCurrentQuestionInfo, navigateToPrevious, navigateToNext } =
 		useModuleNavigation();
 
-	const { isFirstQuestion, isLastQuestion, currentQuestionId } =
-		getCurrentQuestionInfo();
-	const { hasFeatures: hasProjectBoundary } = useLayerFeatures(
-		LAYER_IDS.PROJECT_BOUNDARY,
-	);
-
-	const isStarterQuestion = currentQuestionId?.includes("starter_question");
-	const shouldDisableNext = isStarterQuestion && !hasProjectBoundary;
+	const { isFirstQuestion, isLastQuestion } = getCurrentQuestionInfo();
 
 	const handlePrevious = useCallback(() => {
 		const success = navigateToPrevious();
@@ -49,7 +52,7 @@ export function StepperFooter({
 			<Button
 				onClick={onShowSynthesis}
 				variant="ghost"
-				disabled={shouldDisableNext}
+				disabled={isNextDisabled}
 				className="bg-secondary flex h-full w-18 items-center justify-center rounded-none"
 			>
 				<ListChecksIcon className="h-6 w-6 text-white" />
@@ -59,11 +62,7 @@ export function StepperFooter({
 					<ArrowLeftIcon />
 					{isFirstQuestion ? "Schließen" : "Zurück"}
 				</Button>
-				<Button
-					variant="ghost"
-					onClick={handleNext}
-					disabled={shouldDisableNext}
-				>
+				<Button variant="ghost" onClick={handleNext} disabled={isNextDisabled}>
 					{isLastQuestion ? "Abschließen" : "Überspringen"}
 					<ArrowRightIcon />
 				</Button>

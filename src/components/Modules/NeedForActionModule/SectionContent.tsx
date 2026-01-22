@@ -1,9 +1,13 @@
-import Question from "@/components/Modules/HandlungsbedarfeModule/Question";
-import type { SectionId } from "@/components/Modules/HandlungsbedarfeModule/constants";
-import { useModuleNavigation } from "@/components/Modules/HandlungsbedarfeModule/hooks/useModuleNavigation";
+"use client";
+
+import { getModuleSteps } from "@/components/Modules/shared/moduleConfig";
+import StepContent from "@/components/Modules/shared/StepContent";
+import { useModuleNavigation } from "@/components/Modules/shared/useModuleNavigation";
 import { Spinner } from "@/components/ui/spinner";
+import { useVerticalStepper } from "@/components/VerticalStepper";
+import { useLayersStore } from "@/store";
 import { useAnswersStore } from "@/store/answers";
-import { useLayersStore } from "@/store/layers";
+import { SectionId } from "@/types/sectionIds";
 import { useCallback, useMemo } from "react";
 
 interface SectionContentProps {
@@ -13,13 +17,17 @@ interface SectionContentProps {
 export function SectionContent({ sectionId }: SectionContentProps) {
 	const layerConfig = useLayersStore((state) => state.layerConfig);
 	const setAnswer = useAnswersStore((state) => state.setAnswer);
-	const { navigateToNextQuestion, getCurrentSectionInfo } =
-		useModuleNavigation();
+	const needForActionSteps = getModuleSteps("needForAction");
+	const { getCurrentSectionInfo, navigateToNext, handleShowSynthesis } =
+		useModuleNavigation({
+			steps: needForActionSteps,
+			useVerticalStepper,
+		});
 
 	const { currentStep, currentQuestionId } = getCurrentSectionInfo(sectionId);
 
 	const currentQuestionConfig = useMemo(
-		() => layerConfig.find((config) => config.id === currentQuestionId),
+		() => layerConfig.find((config: any) => config.id === currentQuestionId),
 		[layerConfig, currentQuestionId],
 	);
 
@@ -30,15 +38,21 @@ export function SectionContent({ sectionId }: SectionContentProps) {
 	const handleAnswer = useCallback(
 		(answer: boolean) => {
 			setAnswer(currentQuestionId, answer);
-			navigateToNextQuestion(sectionId);
+			const success = navigateToNext();
+			if (!success) {
+				handleShowSynthesis();
+			}
 		},
-		[currentQuestionId, sectionId, setAnswer, navigateToNextQuestion],
+		[currentQuestionId, setAnswer, navigateToNext, handleShowSynthesis],
 	);
 
 	const handleSkip = useCallback(() => {
 		setAnswer(currentQuestionId, null);
-		navigateToNextQuestion(sectionId);
-	}, [currentQuestionId, sectionId, setAnswer, navigateToNextQuestion]);
+		const success = navigateToNext();
+		if (!success) {
+			handleShowSynthesis();
+		}
+	}, [currentQuestionId, setAnswer, navigateToNext, handleShowSynthesis]);
 
 	if (!currentQuestionConfig) {
 		return (
@@ -52,9 +66,8 @@ export function SectionContent({ sectionId }: SectionContentProps) {
 	return (
 		<div className="flex h-full flex-col">
 			<h3 className="text-primary shrink-0">{title}</h3>
-			<Question
-				key={currentQuestionConfig.id}
-				questionConfig={currentQuestionConfig}
+			<StepContent
+				layerConfig={currentQuestionConfig}
 				onAnswer={handleAnswer}
 				onSkip={handleSkip}
 			/>

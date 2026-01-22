@@ -1,3 +1,5 @@
+"use client";
+
 import { useLayersStore } from "@/store/layers";
 import { EyeIcon, EyeSlashIcon } from "@phosphor-icons/react";
 

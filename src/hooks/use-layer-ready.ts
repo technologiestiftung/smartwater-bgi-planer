@@ -1,3 +1,5 @@
+"use client";
+
 import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";
 import VectorLayer from "ol/layer/Vector";

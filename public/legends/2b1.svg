@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="426" height="180" viewBox="0 0 426 180">
+  <defs>
+    <style>
+      @import url("https://fonts.cdnfonts.com/css/arthouse-owned");
+      text { font-family: "Arthouse Owned", Arial, sans-serif; }
+    </style>
+  </defs>
+  <rect width="100%" height="100%" fill="transparent"/>
+  <rect x="16" y="12.0" width="24" height="16" rx="2" ry="2" fill="#EE6869" stroke="#0C4C38" stroke-width="1"/>
+  <text x="56" y="25" font-size="14" fill="#0C4C38">Baudenkmal</text>
+  <rect x="172.0" y="12.0" width="24" height="16" rx="2" ry="2" fill="#000000" stroke="#0C4C38" stroke-width="1"/>
+  <text x="212.0" y="25" font-size="14" fill="#0C4C38">Bodendenkmal</text>
+  <rect x="16" y="52.0" width="24" height="16" rx="2" ry="2" fill="#E6FFC2" stroke="#0C4C38" stroke-width="1"/>
+  <text x="56" y="65" font-size="14" fill="#0C4C38">Gartendenkmal</text>
+  <rect x="16" y="92.0" width="24" height="16" rx="2" ry="2" fill="#F8D2C2" stroke="#0C4C38" stroke-width="1"/>
+  <text x="56" y="105" font-size="14" fill="#0C4C38">Denkmalbereich Gesamtanlage</text>
+  <rect x="16" y="132.0" width="24" height="16" rx="2" ry="2" fill="#F6C2C3" stroke="#0C4C38" stroke-width="1"/>
+  <text x="56" y="145" font-size="14" fill="#0C4C38">Denkmalbereich Ensemble</text>
+</svg>

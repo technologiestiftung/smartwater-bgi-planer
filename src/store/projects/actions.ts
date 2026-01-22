@@ -1,5 +1,6 @@
 import { useAnswersStore } from "../answers";
 import { useFilesStore } from "../files";
+import { useMapStore } from "../map";
 import { useUiStore } from "../ui";
 import { Project, ProjectsState } from "./types";
 
@@ -45,6 +46,7 @@ export const createDeleteProject = (set: SetState, get: GetState) => {
 		// Reset all answers and module state
 		useAnswersStore.getState().clearAnswers();
 		useUiStore.getState().resetModuleState();
+		useMapStore.getState().resetMapState();
 	};
 };
 
@@ -52,5 +54,18 @@ export const createGetProject = (get: GetState) => {
 	return () => {
 		const state = get();
 		return state.project;
+	};
+};
+
+export const createSetLastPath = (set: SetState) => {
+	return (path: string | null) => {
+		set((state) => ({ ...state, lastPath: path }));
+	};
+};
+
+export const createGetLastPath = (get: GetState) => {
+	return () => {
+		const state = get();
+		return state.lastPath || null;
 	};
 };

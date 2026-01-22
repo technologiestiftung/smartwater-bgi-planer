@@ -20,12 +20,6 @@ export interface InvalidFile {
 	reason: string;
 }
 
-export interface FileUploadZoneProps {
-	accept?: string;
-	onFilesChange?: (files: File[]) => void;
-	className?: string;
-}
-
 export interface AddressFeature {
 	type: "Feature";
 	properties: {

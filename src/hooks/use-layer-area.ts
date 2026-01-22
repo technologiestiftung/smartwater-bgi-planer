@@ -1,3 +1,5 @@
+"use client";
+
 import { getLayerById } from "@/lib/helpers/ol";
 import { useMapStore } from "@/store/map";
 import { MultiPolygon, Polygon } from "ol/geom";
@@ -32,6 +34,8 @@ export function useLayerArea(layerId: string) {
 				} else if (geometry instanceof MultiPolygon) {
 					const featureArea = getArea(geometry);
 					area += featureArea;
+				} else if (geometry?.getType() === "Point") {
+					return;
 				} else {
 					console.warn(
 						`[useLayerArea] ${layerId} - Feature ${index} is not a Polygon/MultiPolygon (type: ${geometry?.getType()}), skipping`,

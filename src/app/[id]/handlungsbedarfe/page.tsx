@@ -1,6 +1,6 @@
 "use client";
 
-import HandlungsbedarfeModule from "@/components/Modules/HandlungsbedarfeModule/HandlungsbedarfeModule";
+import NeedForActionModule from "@/components/Modules/NeedForActionModule/NeedForActionModule";
 import { useRouter } from "next/navigation";
 import { use } from "react";
 
@@ -21,7 +21,7 @@ export default function HandlungsbedarfePage({
 	};
 
 	return (
-		<HandlungsbedarfeModule
+		<NeedForActionModule
 			open={true}
 			onOpenChange={(open) => !open && handleClose()}
 			projectId={id}

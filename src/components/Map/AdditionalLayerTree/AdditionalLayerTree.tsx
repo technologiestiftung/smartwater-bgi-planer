@@ -5,9 +5,15 @@ import { useUiStore } from "@/store/ui";
 import { StackIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import { FC, useEffect, useMemo, useRef, useState } from "react";
+import { useShallow } from "zustand/react/shallow";
 
 const AdditionalLayerTree: FC = ({}) => {
-	const { layers, setLayerVisibility } = useLayersStore();
+	const { layers, setLayerVisibility } = useLayersStore(
+		useShallow((state) => ({
+			layers: state.layers,
+			setLayerVisibility: state.setLayerVisibility,
+		})),
+	);
 	const isAdditionalLayerTreeVisible = useUiStore(
 		(state) => state.isAdditionalLayerTreeVisible,
 	);
@@ -70,7 +76,7 @@ const AdditionalLayerTree: FC = ({}) => {
 		if (viewState === "open" || viewState === "collapsed") {
 			const maxVisible = 8;
 			return {
-				cols: 3,
+				cols: layerCount < 3 ? layerCount : 3,
 				rows: 3,
 				visibleLayers: uploadedLayers.slice(0, maxVisible),
 				showMoreButton: layerCount > maxVisible,

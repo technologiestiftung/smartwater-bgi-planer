@@ -17,86 +17,102 @@ import { FC, useEffect } from "react";
 
 initializeProjections();
 
+const servicesMap = new Map(services.map((service) => [service.id, service]));
+
 function flattenLayerElements(
 	elements: (LayerElement | LayerFolder)[],
 ): LayerElement[] {
-	const result: LayerElement[] = [];
+	return elements.flatMap((item) =>
+		item.type === "folder"
+			? flattenLayerElements((item.elements as LayerElement[]) || [])
+			: [item as LayerElement],
+	);
+}
 
-	elements.forEach((item) => {
+function enrichAndTransformElements(
+	elements: any[],
+): (LayerElement | LayerFolder)[] {
+	return elements.map((item) => {
 		if (item.type === "folder") {
-			result.push(
-				...flattenLayerElements((item.elements as LayerElement[]) || []),
-			);
-		} else {
-			result.push(item as LayerElement);
+			return {
+				...item,
+				type: "folder",
+				elements: enrichAndTransformElements(item.elements || []),
+			} as LayerFolder;
 		}
+		return {
+			...item,
+			status: "initial" as LayerStatus,
+			service: servicesMap.get(item.id),
+			visibility: item.visibility ?? false,
+		} as LayerElement;
 	});
+}
 
-	return result;
+function createEnrichedConfig(rawConfig: MapConfig): MapConfig {
+	const enrichedBaseLayers = enrichAndTransformElements(
+		rawConfig.layerConfig.baselayer.elements,
+	) as LayerElement[];
+
+	const enrichedSubjectLayers = enrichAndTransformElements(
+		rawConfig.layerConfig.subjectlayer.elements,
+	);
+
+	return {
+		...rawConfig,
+		layerConfig: {
+			baselayer: { elements: enrichedBaseLayers },
+			subjectlayer: { elements: enrichedSubjectLayers },
+		},
+	};
 }
 
 const MapInitializer: FC = () => {
+	const hasHydrated = useMapStore((state) => state.hasHydrated);
+	const isConfigReady = useMapStore((state) => state.isConfigReady);
+	const resetId = useMapStore((state) => state.resetId);
+
 	const setConfig = useMapStore((state) => state.setConfig);
+	const setInitialConfig = useMapStore((state) => state.setInitialConfig);
+	const setIsConfigReady = useMapStore((state) => state.setIsConfigReady);
 	const setFlattenedLayerElements = useLayersStore(
 		(state) => state.setFlattenedLayerElements,
 	);
 	const setLayerConfig = useLayersStore((state) => state.setLayerConfig);
 
 	useEffect(() => {
-		const servicesMap = new Map(
-			services.map((service) => [service.id, service]),
-		);
+		if (!hasHydrated || isConfigReady) return;
 
-		const enrichAndTransformElements = (
-			elements: any[],
-		): (LayerElement | LayerFolder)[] =>
-			elements.map((item) => {
-				if (item.type === "folder") {
-					return {
-						...item,
-						type: "folder",
-						elements: enrichAndTransformElements(item.elements || []),
-					} as LayerFolder;
-				}
-				return {
-					...item,
-					status: "initial" as LayerStatus,
-					service: servicesMap.get(item.id),
-					visibility: item.visibility !== undefined ? item.visibility : false,
-				} as LayerElement;
-			});
+		const config = useMapStore.getState().config;
+		const initialConfig = useMapStore.getState().initialConfig;
 
-		const rawMapConfig = structuredClone(mapConfig);
+		const rawMapConfig = config
+			? structuredClone(config)
+			: structuredClone(mapConfig as any);
+		const fullyEnrichedConfig = createEnrichedConfig(rawMapConfig);
 
-		const enrichedBaseLayers = enrichAndTransformElements(
-			rawMapConfig.layerConfig.baselayer.elements,
-		) as LayerElement[];
-
-		const enrichedSubjectLayers = enrichAndTransformElements(
-			rawMapConfig.layerConfig.subjectlayer.elements,
-		);
-
-		const fullyEnrichedConfig: MapConfig = {
-			...rawMapConfig,
-			layerConfig: {
-				baselayer: {
-					elements: enrichedBaseLayers,
-				},
-				subjectlayer: {
-					elements: enrichedSubjectLayers,
-				},
-			},
-		};
-
-		const allBaseAndSubjectLayers = [
-			...enrichedBaseLayers,
-			...flattenLayerElements(enrichedSubjectLayers),
+		const allLayers = [
+			...fullyEnrichedConfig.layerConfig.baselayer.elements,
+			...flattenLayerElements(
+				fullyEnrichedConfig.layerConfig.subjectlayer.elements,
+			),
 		];
 
 		setConfig(fullyEnrichedConfig);
+		if (!initialConfig) setInitialConfig(fullyEnrichedConfig);
 		setLayerConfig(layerConfig as LayerConfigItem[]);
-		setFlattenedLayerElements(allBaseAndSubjectLayers);
-	}, [setConfig, setFlattenedLayerElements, setLayerConfig]);
+		setFlattenedLayerElements(allLayers);
+		setIsConfigReady(true);
+	}, [
+		hasHydrated,
+		isConfigReady,
+		resetId,
+		setConfig,
+		setInitialConfig,
+		setIsConfigReady,
+		setFlattenedLayerElements,
+		setLayerConfig,
+	]);
 
 	return null;
 };

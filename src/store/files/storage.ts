@@ -181,9 +181,7 @@ export const filesStorage = {
 				return null;
 			}
 
-			// Get all files from IndexedDB
 			const allKeys = await getAllFileKeys();
-			console.log("[filesStorage] Found", allKeys.length, "files in IndexedDB");
 
 			const filesMap = new Map();
 
@@ -202,8 +200,6 @@ export const filesStorage = {
 					}
 				}
 			}
-
-			console.log("[filesStorage] Loaded", filesMap.size, "files into store");
 
 			const localData = localStorage.getItem(name);
 			const version = localData

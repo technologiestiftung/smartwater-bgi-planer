@@ -38,6 +38,8 @@ export interface MapConfig {
 
 export interface MapState {
 	config: MapConfig | null;
+	initialConfig: MapConfig | null;
+	isConfigReady: boolean;
 	map: OLMap | null;
 	isReady: boolean;
 	hasError: boolean;
@@ -47,11 +49,14 @@ export interface MapState {
 		accuracy?: number;
 	};
 	hasHydrated: boolean;
-	isInitializing: boolean;
+	resetId: number;
 }
 
 export interface MapActions {
 	setConfig: (config: MapConfig) => void;
+	setInitialConfig: (config: MapConfig) => void;
+	setIsConfigReady: (ready: boolean) => void;
+	updateConfig: (updates: Partial<MapViewConfig>) => void;
 	populateMap: (map: OLMap) => void;
 	removeMap: () => void;
 	setMapReady: (ready: boolean) => void;
@@ -61,5 +66,5 @@ export interface MapActions {
 		accuracy?: number;
 	}) => void;
 	setHasHydrated: (state: boolean) => void;
-	setIsInitializing: (state: boolean) => void;
+	resetMapState: () => void;
 }

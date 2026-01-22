@@ -1,3 +1,5 @@
+"use client";
+
 import { createLayerByType } from "@/components/Map/LayerInitializer/shared/layerFactory";
 import {
 	createManagedLayer,
@@ -287,7 +289,6 @@ export const useLayerPersistence = (
 			layerFile: { file: File; displayFileName?: string },
 		): Promise<void> => {
 			if (getLayerById(mapInstance, layerId)) {
-				console.log(`Layer ${layerId} already exists, skipping restore`);
 				return;
 			}
 

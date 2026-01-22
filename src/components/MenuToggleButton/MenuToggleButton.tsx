@@ -1,9 +1,10 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { ListIcon } from "@phosphor-icons/react";
-import { useRouter, usePathname } from "next/navigation";
 import SWLogo from "@/logos/SWLogo.svg";
+import { useProjectsStore } from "@/store";
+import { ListIcon } from "@phosphor-icons/react";
+import { usePathname, useRouter } from "next/navigation";
 interface MenuToggleButtonProps {
 	projectId: string;
 }
@@ -11,11 +12,13 @@ interface MenuToggleButtonProps {
 export function MenuToggleButton({ projectId }: MenuToggleButtonProps) {
 	const router = useRouter();
 	const pathname = usePathname();
+	const { setLastPath } = useProjectsStore();
 
 	const handleToggle = () => {
 		if (pathname.includes("/menu")) {
 			router.back();
 		} else {
+			setLastPath(pathname);
 			router.push(`/${projectId}/menu`);
 		}
 	};

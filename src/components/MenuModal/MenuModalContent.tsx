@@ -1,49 +1,58 @@
 "use client";
 
 import MenuModule from "@/components/MenuModal/MenuModule";
+import modulesData from "@/components/Modules/modules.json";
+import ProjectDownloadButton from "@/components/ProjectDownloadButton/ProjectDownloadButton";
 import { Button } from "@/components/ui/button";
+import { checkForQuestion } from "@/lib/helpers/questions";
+import { useAnswersStore } from "@/store";
+import { useProjectsStore } from "@/store/projects";
 import {
 	ArrowCircleRightIcon,
 	BookOpenTextIcon,
-	DownloadIcon,
 	InfoIcon,
 	ListMagnifyingGlassIcon,
 	PencilRulerIcon,
+	PolygonIcon,
 	ShovelIcon,
 } from "@phosphor-icons/react";
 import Link from "next/link";
-import { useProjectsStore } from "@/store/projects";
-import { steps } from "../Modules/HandlungsbedarfeModule/constants";
-import { useAnswersStore } from "@/store";
-import { checkForQuestion } from "@/lib/helpers/questions";
 
 interface MenuModalProps {
 	projectId: string;
 }
 
 export default function MenuModalContent({ projectId }: MenuModalProps) {
-	const { getProject } = useProjectsStore();
+	const getProject = useProjectsStore((state) => state.getProject);
 	const project = getProject();
 	const answers = useAnswersStore((state) => state.answers);
 
 	const name = project?.name || "Unbenanntes Projekt";
 	const description = project?.description || "Keine Beschreibung vorhanden.";
 
-	const getQuestionsNumber = () => {
-		return steps.reduce((total, step) => {
+	const getQuestionsNumber = (moduleId: string) => {
+		const _module = modulesData.modules.find((m) => m.id === moduleId);
+		if (!_module?.steps) return 0;
+		return _module.steps.reduce((total: number, step: any) => {
 			if (!step.questions) return total;
 			return (
 				total +
-				step.questions.filter((currentQuestion) =>
+				step.questions.filter((currentQuestion: any) =>
 					checkForQuestion(currentQuestion),
 				).length
 			);
 		}, 0);
 	};
 
-	const answersLength = Object.keys(answers).filter((key) =>
-		checkForQuestion(key),
-	).length;
+	const getAnsweredQuestionsLength = (moduleId: string) => {
+		const _module = modulesData.modules.find((m) => m.id === moduleId);
+		if (!_module?.steps) return 0;
+		const questionIds = _module.steps.flatMap((step: any) =>
+			(step.questions || []).filter((q: any) => checkForQuestion(q)),
+		);
+		return Object.keys(answers).filter((key) => questionIds.includes(key))
+			.length;
+	};
 
 	return (
 		<>
@@ -61,14 +70,11 @@ export default function MenuModalContent({ projectId }: MenuModalProps) {
 							</Button>
 							<Button asChild className="w-full">
 								<Link href={`/${projectId}/project-starter`}>
-									<DownloadIcon className="mr-2" />
+									<PolygonIcon className="mr-2" />
 									Untersuchungsgebiet/Neubauten
 								</Link>
 							</Button>
-							<Button disabled className="w-full">
-								<DownloadIcon className="mr-2" />
-								Download und speichern
-							</Button>
+							<ProjectDownloadButton projectId={projectId} />
 						</div>
 					}
 				/>
@@ -80,7 +86,7 @@ export default function MenuModalContent({ projectId }: MenuModalProps) {
 					sideElements={
 						<ListMagnifyingGlassIcon className="text-primary size-16" />
 					}
-					additionalInfo={`${answersLength} von ${getQuestionsNumber()} Fragen beantwortet`}
+					additionalInfo={`${getAnsweredQuestionsLength("needForAction")} von ${getQuestionsNumber("needForAction")} Fragen beantwortet`}
 					buttonBottom={
 						<Button asChild>
 							<Link href={`/${projectId}/handlungsbedarfe`}>
@@ -94,11 +100,13 @@ export default function MenuModalContent({ projectId }: MenuModalProps) {
 					title="Machbarkeit von Maßnahmen"
 					description="Prüfen Sie in diesem Modul die Machbarkeit der blau-grünen Maßnahmen am gewählten Standort."
 					sideElements={<ShovelIcon className="text-primary size-16" />}
-					additionalInfo="XX von XX Fragen beantwortet"
+					additionalInfo={`${getAnsweredQuestionsLength("feasibility")} von ${getQuestionsNumber("feasibility")} Fragen beantwortet`}
 					buttonBottom={
-						<Button disabled>
-							Zum Modul
-							<ArrowCircleRightIcon className="ml-2 size-6" />
+						<Button asChild>
+							<Link href={`/${projectId}/machbarkeit`}>
+								Zum Modul
+								<ArrowCircleRightIcon className="ml-2 size-6" />
+							</Link>
 						</Button>
 					}
 				/>
@@ -106,12 +114,14 @@ export default function MenuModalContent({ projectId }: MenuModalProps) {
 					title="Maßnahmen planen & bewerten"
 					description="Die Maßnahmenplanung hilft Ihnen den richtigen Standort für blau-grüne Maßnahmen zu finden."
 					sideElements={<PencilRulerIcon className="text-primary size-16" />}
-					additionalInfo="3 Maßnahmen platziert"
+					additionalInfo="Keine Fragen beantwortet"
 					buttonBottom={
-						<Button disabled>
-							Zum Modul
-							<ArrowCircleRightIcon className="ml-2 size-6" />
-						</Button>
+						<div>
+							<Button disabled>
+								Zum Modul
+								<ArrowCircleRightIcon className="ml-2 size-6" />
+							</Button>
+						</div>
 					}
 				/>
 				<div className="flex items-end justify-end px-6 py-4">

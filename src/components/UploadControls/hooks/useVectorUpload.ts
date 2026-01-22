@@ -1,3 +1,5 @@
+"use client";
+
 import { convertShapefile } from "@/lib/serverActions/convertShapefile";
 import { useMapStore } from "@/store/map";
 import { useUiStore } from "@/store/ui";

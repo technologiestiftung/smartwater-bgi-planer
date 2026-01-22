@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { performProjectBoundaryIntersection } from "@/lib/helpers/projectBoundary";
 import { useMapStore } from "@/store/map";
@@ -5,7 +7,7 @@ import { LAYER_IDS } from "@/types/shared";
 import { TrashIcon, XCircleIcon } from "@phosphor-icons/react";
 import VectorLayer from "ol/layer/Vector.js";
 import { Vector as VectorSource } from "ol/source.js";
-import { FC } from "react";
+import { FC, useState } from "react";
 
 interface FeatureMenuProps {
 	layerId?: string;
@@ -15,23 +17,32 @@ interface FeatureMenuProps {
 
 const FeatureMenu: FC<FeatureMenuProps> = ({ layerId, features, onClose }) => {
 	const map = useMapStore((state) => state.map);
+	const [isDeleting, setIsDeleting] = useState(false);
 
-	const handleDelete = () => {
-		if (!features || !map || !layerId) return;
+	const handleDelete = async () => {
+		if (!features || !map || !layerId || isDeleting) return;
 
-		const layer = map
-			.getAllLayers()
-			.find((l) => l.get("id") === layerId) as VectorLayer<VectorSource>;
+		setIsDeleting(true);
+		try {
+			const layer = map
+				.getAllLayers()
+				.find((l) => l.get("id") === layerId) as VectorLayer<VectorSource>;
 
-		if (layer && layer.getSource()) {
-			const source = layer.getSource()!;
-			source.removeFeature(features);
-			source.changed();
+			if (layer && layer.getSource()) {
+				const source = layer.getSource()!;
+				source.removeFeature(features);
+				source.changed();
 
-			if (layerId === LAYER_IDS.PROJECT_BOUNDARY) {
-				performProjectBoundaryIntersection(map);
+				if (layerId === LAYER_IDS.PROJECT_BOUNDARY) {
+					setTimeout(() => {
+						performProjectBoundaryIntersection(map);
+					}, 10);
+				}
 			}
-
+		} catch (error) {
+			console.error("Error deleting feature:", error);
+		} finally {
+			setIsDeleting(false);
 			onClose?.();
 		}
 	};
@@ -52,9 +63,14 @@ const FeatureMenu: FC<FeatureMenuProps> = ({ layerId, features, onClose }) => {
 				</div>
 			</div>
 			<div className="flex flex-col gap-2 p-2">
-				<Button variant="outline" onClick={handleDelete} className="w-full">
+				<Button
+					variant="outline"
+					onClick={handleDelete}
+					className="w-full"
+					disabled={isDeleting}
+				>
 					<TrashIcon size={16} />
-					Feature löschen
+					{isDeleting ? "Wird gelöscht..." : "Feature löschen"}
 				</Button>
 			</div>
 		</div>

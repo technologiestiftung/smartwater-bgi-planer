@@ -11,22 +11,31 @@ interface OlMapProps {
 }
 
 const OlMap: FC<OlMapProps> = ({ children }) => {
-	const setMap = useMapStore((state) => state.populateMap);
-	const destroyMap = useMapStore((state) => state.removeMap);
-	const setMapError = useMapStore((state) => state.setMapError);
-	const config = useMapStore((state) => state.config);
+	const isConfigReady = useMapStore((state) => state.isConfigReady);
+	const resetId = useMapStore((state) => state.resetId);
 	const mapId = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		if (!config) return;
+		if (!isConfigReady) {
+			return;
+		}
+
+		const config = useMapStore.getState().config;
+
+		if (!config) {
+			return;
+		}
 
 		const mapViewConfig = config.portalConfig.map.mapView;
-		const projection = mapViewConfig.epsg;
-		const center = mapViewConfig.startCenter;
 
-		const resolutions = mapViewConfig.options
-			.sort((a, b) => a.zoomLevel - b.zoomLevel)
-			.map((option) => option.resolution);
+		interface MapViewOption {
+			zoomLevel: number;
+			resolution: number;
+		}
+
+		const resolutions: number[] = [...mapViewConfig.options]
+			.sort((a: MapViewOption, b: MapViewOption) => a.zoomLevel - b.zoomLevel)
+			.map((option: MapViewOption) => option.resolution);
 
 		if (!mapId.current) {
 			console.error("[OlMap] mapId.current is not defined");
@@ -37,9 +46,9 @@ const OlMap: FC<OlMapProps> = ({ children }) => {
 			const map = new Map({
 				target: mapId.current,
 				view: new View({
-					center: center,
+					center: mapViewConfig.startCenter,
 					zoom: mapViewConfig.startZoomLevel,
-					projection: projection,
+					projection: mapViewConfig.epsg,
 					smoothResolutionConstraint: false,
 					constrainResolution: true,
 					extent: mapViewConfig.extent,
@@ -49,19 +58,21 @@ const OlMap: FC<OlMapProps> = ({ children }) => {
 				}),
 			});
 
-			setMap(map);
+			useMapStore.getState().populateMap(map);
 
 			return () => {
 				if (map) {
 					map.setTarget(undefined);
 				}
-				destroyMap();
+				useMapStore.getState().removeMap();
 			};
 		} catch (error) {
 			console.error("[OlMap] Error initializing map:", error);
-			setMapError(true, "Fehler beim Initialisieren der Karte");
+			useMapStore
+				.getState()
+				.setMapError(true, "Fehler beim Initialisieren der Karte");
 		}
-	}, [config, destroyMap, setMap, setMapError]);
+	}, [isConfigReady, resetId]);
 
 	return (
 		<div ref={mapId} className="map h-full w-full bg-slate-300">

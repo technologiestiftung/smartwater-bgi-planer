@@ -1,5 +1,20 @@
+import { getModuleSteps } from "@/components/Modules/shared/moduleConfig";
 import { UiActions, UiState } from "@/store/ui/types";
 import { create } from "zustand";
+
+const getInitialModuleQuestionIndices = () => {
+	const indices: Record<string, number> = {};
+	const needForActionSteps = getModuleSteps("needForAction");
+	const feasibilitySteps = getModuleSteps("feasibility");
+	const measurePlaningSteps = getModuleSteps("measurePlaning");
+
+	[...needForActionSteps, ...feasibilitySteps, ...measurePlaningSteps].forEach(
+		(step) => {
+			indices[step.id] = 0;
+		},
+	);
+	return indices;
+};
 
 const initialState: UiState = {
 	isLayerTreeOpen: false,
@@ -11,14 +26,9 @@ const initialState: UiState = {
 	isBlockAreaSelecting: false,
 	isDrawingNote: false,
 	isAdditionalLayerTreeVisible: false,
+	showStepper: true,
 	moduleCurrentSectionId: "heavyRain",
-	moduleQuestionIndices: {
-		heavyRain: 0,
-		heat: 0,
-		sealing: 0,
-		waterBalance: 0,
-		waterProtection: 0,
-	},
+	moduleQuestionIndices: getInitialModuleQuestionIndices(),
 	moduleSavedState: null,
 	isSynthesisMode: false,
 };
@@ -44,6 +54,7 @@ export const useUiStore = create<UiState & UiActions>((set, get) => ({
 		}),
 	setIsAdditionalLayerTreeVisible: (isVisible) =>
 		set({ isAdditionalLayerTreeVisible: isVisible }),
+	setShowStepper: (show) => set({ showStepper: show }),
 	// Module navigation actions
 	setModuleCurrentSection: (sectionId) =>
 		set({ moduleCurrentSectionId: sectionId }),
@@ -84,13 +95,7 @@ export const useUiStore = create<UiState & UiActions>((set, get) => ({
 	resetModuleState: () =>
 		set({
 			moduleCurrentSectionId: "heavyRain",
-			moduleQuestionIndices: {
-				heavyRain: 0,
-				heat: 0,
-				sealing: 0,
-				waterBalance: 0,
-				waterProtection: 0,
-			},
+			moduleQuestionIndices: getInitialModuleQuestionIndices(),
 			moduleSavedState: null,
 			isSynthesisMode: false,
 		}),

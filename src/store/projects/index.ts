@@ -1,16 +1,19 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { ProjectsState, ProjectsActions } from "./types";
 import {
 	createCreateProject,
-	createUpdateProject,
 	createDeleteProject,
+	createGetLastPath,
 	createGetProject,
+	createSetLastPath,
+	createUpdateProject,
 } from "./actions";
+import { ProjectsActions, ProjectsState } from "./types";
 
 const initialState: ProjectsState = {
 	project: null,
 	hasHydrated: false,
+	lastPath: null,
 };
 
 export const useProjectsStore = create<ProjectsState & ProjectsActions>()(
@@ -22,6 +25,8 @@ export const useProjectsStore = create<ProjectsState & ProjectsActions>()(
 			deleteProject: createDeleteProject(set, get),
 			getProject: createGetProject(get),
 			setHasHydrated: (state) => set({ hasHydrated: state }),
+			setLastPath: createSetLastPath(set),
+			getLastPath: createGetLastPath(get),
 		}),
 		{
 			name: "projects-storage",

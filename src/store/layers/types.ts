@@ -75,6 +75,8 @@ export interface LayerService {
 	visibility?: boolean;
 	minScale?: number;
 	maxScale?: number;
+	cqlFilter?: string;
+	styles?: string;
 }
 
 export interface VectorTileStyle {
@@ -107,6 +109,8 @@ export interface LayerConfigItem {
 	isIntro?: boolean;
 	moduleNumber?: number;
 	moduleName?: string;
+	canQueryFeatures?: string[];
+	featureDisplay?: "tooltip" | "modal";
 }
 
 export interface LayersState {
@@ -137,4 +141,15 @@ export interface LayersActions {
 	setDrawLayer: (layerId: string) => void;
 	setLayerConfigId: (layerConfigId: string) => void;
 	hideLayersByPattern: (pattern: string | string[]) => void;
+	createFilteredLayer: (
+		layerId: string,
+		filterFn: (feature: any) => boolean,
+		filteredLayerId?: string,
+	) => string | null;
+	updateFilteredLayer: (
+		originalLayerId: string,
+		filterFn: (feature: any) => boolean,
+		filteredLayerId?: string,
+	) => void;
+	removeFilteredLayer: (filteredLayerId: string) => void;
 }

@@ -1,25 +1,45 @@
 "use client";
 
 import { FileUploadZone } from "@/components/FileUpload/FileUploadZone";
+import ProjectUploaderButton from "@/components/ProjectUploaderButton/ProjectUploaderButton";
 import { Button } from "@/components/ui/button";
 import { CarouselWithIndicators } from "@/components/ui/carousel-with-indicators";
 import Funding from "@/logos/gdb_logo.svg";
-import SWLogo from "@/logos/SWLogo.svg";
 import SmartWaterLogo from "@/logos/SmartWater-Logo.svg";
-import {
-	GithubLogoIcon,
-	PlusSquareIcon,
-	UploadIcon,
-} from "@phosphor-icons/react";
-import Link from "next/link";
-import { useState, useEffect } from "react";
+import SWLogo from "@/logos/SWLogo.svg";
 import { useProjectsStore } from "@/store/projects";
+import { useUiStore } from "@/store/ui";
+import { GithubLogoIcon, PlusSquareIcon } from "@phosphor-icons/react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Home() {
 	const [showUploadAlert, setShowUploadAlert] = useState(false);
+	const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+
 	const router = useRouter();
-	const { getProject, hasHydrated } = useProjectsStore();
+	const { getProject, hasHydrated, getLastPath } = useProjectsStore();
+	const uploadError = useUiStore((state) => state.uploadError);
+	const clearUploadStatus = useUiStore((state) => state.clearUploadStatus);
+
+	const handleNewProjectClick = () => {
+		if (uploadError) {
+			clearUploadStatus();
+		}
+		setUploadedFiles([]);
+		setShowUploadAlert(false);
+	};
+
+	const handleToggleUpload = () => {
+		if (uploadError) {
+			clearUploadStatus();
+			setUploadedFiles([]);
+			setShowUploadAlert(false);
+		} else {
+			setShowUploadAlert(!showUploadAlert);
+		}
+	};
 
 	useEffect(() => {
 		if (!hasHydrated) return;
@@ -43,31 +63,45 @@ export default function Home() {
 						Der BGI Planer ist nur für die Nutzung auf dem Desktop vorgesehen,
 						damit alle Funktionen vollumfänglich genutzt werden können.
 					</p>
+
 					{showUploadAlert && (
 						<FileUploadZone
-							onFilesChange={(files: File[]) =>
-								console.log("Files uploaded:", files)
-							}
+							files={uploadedFiles}
+							onFilesChange={(files: File[]) => setUploadedFiles(files)}
 						/>
 					)}
+
 					<div className="hidden flex-wrap items-center justify-between gap-8 lg:flex">
-						<Button asChild className="grow">
+						<Button asChild className="grow" onClick={handleNewProjectClick}>
 							<Link href="/new">
 								<PlusSquareIcon className="mr-2" />
 								<p>Projekt anlegen</p>
 							</Link>
 						</Button>
-						<Button
-							disabled
-							variant="outline"
-							className="grow"
-							onClick={() => setShowUploadAlert(!showUploadAlert)}
-						>
-							<UploadIcon className="mr-2" />
-							<p>Dateien importieren</p>
-						</Button>
+
+						<ProjectUploaderButton
+							isUploadZoneVisible={showUploadAlert}
+							files={uploadedFiles}
+							onToggle={handleToggleUpload}
+							onComplete={(uploadedProject) => {
+								setShowUploadAlert(false);
+								setUploadedFiles([]);
+								const savedPath = getLastPath();
+
+								if (savedPath && uploadedProject) {
+									const updatedPath = savedPath.replace(
+										/^\/[^/]+/,
+										`/${uploadedProject.id}`,
+									);
+									router.replace(updatedPath);
+								} else if (uploadedProject) {
+									router.replace(`/${uploadedProject.id}`);
+								}
+							}}
+						/>
 					</div>
 				</div>
+
 				<div className="Footer-root mt-40 flex flex-col gap-4 lg:mt-0">
 					<div className="flex flex-col gap-2 text-left">
 						<p className="font-bold">Ein Teil des Projektes</p>
@@ -110,6 +144,7 @@ export default function Home() {
 					</div>
 				</div>
 			</div>
+
 			<div className="bg-primary hidden items-center justify-center rounded-l-[3.125rem] p-2.5 lg:flex">
 				<div className="flex max-w-114 flex-col items-center justify-between gap-8">
 					<CarouselWithIndicators

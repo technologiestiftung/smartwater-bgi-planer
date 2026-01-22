@@ -3,6 +3,7 @@
 import { useProjectsStore } from "@/store/projects";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useShallow } from "zustand/react/shallow";
 
 interface ProjectGuardProps {
 	projectId: string;
@@ -14,7 +15,12 @@ export default function ProjectGuard({
 	children,
 }: ProjectGuardProps) {
 	const router = useRouter();
-	const { getProject, hasHydrated: _hasHydrated } = useProjectsStore();
+	const { getProject, hasHydrated: _hasHydrated } = useProjectsStore(
+		useShallow((state) => ({
+			getProject: state.getProject,
+			hasHydrated: state.hasHydrated,
+		})),
+	);
 	const [mounted, setMounted] = useState(false);
 
 	useEffect(() => {
