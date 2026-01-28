@@ -13,7 +13,6 @@ interface OlMapProps {
 const OlMap: FC<OlMapProps> = ({ children }) => {
 	const isInitializeReady = useMapStore((state) => state.isInitializeReady);
 	const resetId = useMapStore((state) => state.resetId);
-	const mapView = useMapStore((state) => state.mapView);
 	const mapId = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
