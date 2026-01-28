@@ -236,10 +236,6 @@ export const createFilteredLayer =
 			return newLayerId;
 		}
 
-		if (layers.has(newLayerId)) {
-			return newLayerId;
-		}
-
 		const originalLayer = layers.get(layerId);
 		if (!originalLayer || !originalLayer.olLayer) return null;
 
@@ -247,11 +243,9 @@ export const createFilteredLayer =
 		const source = originalOlLayer.getSource?.();
 		if (!source) return null;
 
-		// Features filtern
 		const allFeatures = source.getFeatures();
 		const filteredFeatures = allFeatures.filter(filterFn);
 
-		// Neuen Layer mit gefilterten Features erstellen
 		const VectorSource = require("ol/source/Vector").default;
 		const VectorLayer = require("ol/layer/Vector").default;
 
@@ -319,11 +313,9 @@ export const createUpdateFilteredLayer =
 		const source = originalOlLayer.getSource?.();
 		if (!source) return;
 
-		// Features neu filtern
 		const allFeatures = source.getFeatures();
 		const filteredFeatures = allFeatures.filter(filterFn);
 
-		// Source des gefilterten Layers aktualisieren
 		const filteredOlLayer = filteredLayer.olLayer as any;
 		const filteredSource = filteredOlLayer.getSource?.();
 		if (filteredSource) {

@@ -386,11 +386,11 @@
 							"visibility": false
 						},
 						{
-							"id": "module_2_2V5_draw",
+							"id": "module_2_2B1_draw",
 							"visibility": false
 						},
 						{
-							"id": "module_2_2B1_draw",
+							"id": "module_2_2V5_draw",
 							"visibility": false
 						},
 						{
@@ -420,14 +420,6 @@
 						{
 							"id": "module1_notes",
 							"visibility": true
-						},
-						{
-							"id": "module2_notes",
-							"visibility": false
-						},
-						{
-							"id": "module3_notes",
-							"visibility": false
 						}
 					]
 				}
