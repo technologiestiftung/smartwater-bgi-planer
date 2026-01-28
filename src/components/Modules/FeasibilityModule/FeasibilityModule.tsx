@@ -35,6 +35,7 @@ export default function FeasibilityModule({
 	});
 
 	const resetModuleState = useUiStore((state) => state.resetModuleState);
+
 	useEffect(() => {
 		resetModuleState();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
