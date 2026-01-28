@@ -69,26 +69,23 @@ function createEnrichedConfig(rawConfig: MapConfig): MapConfig {
 
 const MapInitializer: FC = () => {
 	const hasHydrated = useMapStore((state) => state.hasHydrated);
-	const isConfigReady = useMapStore((state) => state.isConfigReady);
+	const config = useMapStore((state) => state.config);
 	const resetId = useMapStore((state) => state.resetId);
+	const isInitializeReady = useMapStore((state) => state.isInitializeReady);
 
 	const setConfig = useMapStore((state) => state.setConfig);
-	const setInitialConfig = useMapStore((state) => state.setInitialConfig);
-	const setIsConfigReady = useMapStore((state) => state.setIsConfigReady);
+	const setIsInitializeReady = useMapStore(
+		(state) => state.setIsInitializeReady,
+	);
 	const setFlattenedLayerElements = useLayersStore(
 		(state) => state.setFlattenedLayerElements,
 	);
 	const setLayerConfig = useLayersStore((state) => state.setLayerConfig);
 
 	useEffect(() => {
-		if (!hasHydrated || isConfigReady) return;
+		if (!hasHydrated || isInitializeReady) return;
 
-		const config = useMapStore.getState().config;
-		const initialConfig = useMapStore.getState().initialConfig;
-
-		const rawMapConfig = config
-			? structuredClone(config)
-			: structuredClone(mapConfig as any);
+		const rawMapConfig = structuredClone(mapConfig as any);
 		const fullyEnrichedConfig = createEnrichedConfig(rawMapConfig);
 
 		const allLayers = [
@@ -99,17 +96,16 @@ const MapInitializer: FC = () => {
 		];
 
 		setConfig(fullyEnrichedConfig);
-		if (!initialConfig) setInitialConfig(fullyEnrichedConfig);
 		setLayerConfig(layerConfig as LayerConfigItem[]);
 		setFlattenedLayerElements(allLayers);
-		setIsConfigReady(true);
+		setIsInitializeReady(true);
 	}, [
 		hasHydrated,
-		isConfigReady,
+		config,
 		resetId,
+		isInitializeReady,
 		setConfig,
-		setInitialConfig,
-		setIsConfigReady,
+		setIsInitializeReady,
 		setFlattenedLayerElements,
 		setLayerConfig,
 	]);

@@ -25,7 +25,7 @@ function calculateZIndex(
 }
 
 const LayerInitializer: FC = () => {
-	const initialConfig = useMapStore((state) => state.initialConfig);
+	const config = useMapStore((state) => state.config);
 	const map = useMapStore((state) => state.map);
 	const resetId = useMapStore((state) => state.resetId);
 	const flattenedLayerElements = useLayersStore(
@@ -33,14 +33,14 @@ const LayerInitializer: FC = () => {
 	);
 
 	const { wmtsCapabilities, capabilitiesLoaded } = useWmtsCapabilities(
-		initialConfig,
+		config,
 		flattenedLayerElements,
 	);
 
 	useEffect(() => {
 		if (
 			!map ||
-			!initialConfig ||
+			!config ||
 			!capabilitiesLoaded ||
 			flattenedLayerElements.length === 0
 		) {
@@ -48,9 +48,9 @@ const LayerInitializer: FC = () => {
 		}
 
 		const newManagedLayersMap = new Map<string, ManagedLayer>();
-		const drawLayerIds = getDrawLayerIds(initialConfig);
+		const drawLayerIds = getDrawLayerIds(config);
 		const baseLayerIds = new Set(
-			initialConfig.layerConfig.baselayer.elements.map((el) => el.id),
+			config.layerConfig.baselayer.elements.map((el) => el.id),
 		);
 
 		flattenedLayerElements.forEach((layerConfig, index) => {
@@ -69,7 +69,7 @@ const LayerInitializer: FC = () => {
 				error,
 			} = createLayerByType(serviceConfig, {
 				wmtsCapabilities,
-				config: initialConfig,
+				config: config,
 			});
 
 			if (!olLayer) {
@@ -140,7 +140,7 @@ const LayerInitializer: FC = () => {
 		}
 	}, [
 		map,
-		initialConfig,
+		config,
 		capabilitiesLoaded,
 		flattenedLayerElements,
 		wmtsCapabilities,

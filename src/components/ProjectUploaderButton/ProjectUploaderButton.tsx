@@ -27,7 +27,7 @@ const ProjectUploaderButton: FC<ProjectUploaderButtonProps> = ({
 }) => {
 	const { createProject } = useProjectsStore();
 	const { setAnswer } = useAnswersStore();
-	const { updateConfig, setUserLocation } = useMapStore();
+	const { setMapView, setUserLocation } = useMapStore();
 	const { addFile } = useFilesStore();
 
 	const setUploadError = useUiStore((state) => state.setUploadError);
@@ -66,7 +66,7 @@ const ProjectUploaderButton: FC<ProjectUploaderButtonProps> = ({
 			);
 
 			if (data.map?.mapView) {
-				updateConfig({
+				setMapView({
 					startCenter: data.map.mapView.startCenter,
 					startZoomLevel: data.map.mapView.startZoomLevel,
 				});

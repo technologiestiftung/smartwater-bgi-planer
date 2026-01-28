@@ -6,7 +6,7 @@ import { FC, useEffect } from "react";
 interface ConfigManagerProps {}
 
 const ConfigManager: FC<ConfigManagerProps> = ({}) => {
-	const updateConfig = useMapStore((state) => state.updateConfig);
+	const setMapView = useMapStore((state) => state.setMapView);
 	const map = useMapStore((state) => state.map);
 
 	useEffect(() => {
@@ -22,7 +22,7 @@ const ConfigManager: FC<ConfigManagerProps> = ({}) => {
 				const newZoom = view.getZoom();
 
 				if (newCenter && newZoom !== undefined) {
-					updateConfig({
+					setMapView({
 						startCenter: newCenter,
 						startZoomLevel: newZoom,
 					});
@@ -38,7 +38,7 @@ const ConfigManager: FC<ConfigManagerProps> = ({}) => {
 			view.un("change:center", handleViewChange);
 			view.un("change:resolution", handleViewChange);
 		};
-	}, [map, updateConfig]);
+	}, [map, setMapView]);
 
 	return null;
 };

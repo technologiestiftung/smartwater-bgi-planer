@@ -36,14 +36,19 @@ export interface MapConfig {
 	layerConfig: LayerConfig;
 }
 
+export interface MapView {
+	startCenter: number[];
+	startZoomLevel: number;
+}
+
 export interface MapState {
 	config: MapConfig | null;
-	initialConfig: MapConfig | null;
-	isConfigReady: boolean;
+	isInitializeReady: boolean;
 	map: OLMap | null;
 	isReady: boolean;
 	hasError: boolean;
 	errorMessage: string | null;
+	mapView: MapView | null;
 	userLocation: {
 		coordinates: [number, number] | null;
 		accuracy?: number;
@@ -54,9 +59,8 @@ export interface MapState {
 
 export interface MapActions {
 	setConfig: (config: MapConfig) => void;
-	setInitialConfig: (config: MapConfig) => void;
-	setIsConfigReady: (ready: boolean) => void;
-	updateConfig: (updates: Partial<MapViewConfig>) => void;
+	setIsInitializeReady: (ready: boolean) => void;
+	setMapView: (mapView: MapView) => void;
 	populateMap: (map: OLMap) => void;
 	removeMap: () => void;
 	setMapReady: (ready: boolean) => void;

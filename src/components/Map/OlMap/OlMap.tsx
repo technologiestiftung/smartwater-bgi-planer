@@ -11,15 +11,15 @@ interface OlMapProps {
 }
 
 const OlMap: FC<OlMapProps> = ({ children }) => {
-	const isConfigReady = useMapStore((state) => state.isConfigReady);
+	const isInitializeReady = useMapStore((state) => state.isInitializeReady);
 	const resetId = useMapStore((state) => state.resetId);
+	const mapView = useMapStore((state) => state.mapView);
 	const mapId = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		if (!isConfigReady) {
+		if (!isInitializeReady) {
 			return;
 		}
-
 		const config = useMapStore.getState().config;
 
 		if (!config) {
@@ -72,7 +72,7 @@ const OlMap: FC<OlMapProps> = ({ children }) => {
 				.getState()
 				.setMapError(true, "Fehler beim Initialisieren der Karte");
 		}
-	}, [isConfigReady, resetId]);
+	}, [isInitializeReady, resetId]);
 
 	return (
 		<div ref={mapId} className="map h-full w-full bg-slate-300">

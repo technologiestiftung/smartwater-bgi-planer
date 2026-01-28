@@ -1,16 +1,15 @@
 import { MapActions, MapState } from "@/store/map/types";
-import { produce } from "immer";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 const initialState: MapState = {
 	map: null,
 	config: null,
-	initialConfig: null,
-	isConfigReady: false,
+	isInitializeReady: false,
 	isReady: false,
 	hasError: false,
 	errorMessage: null,
+	mapView: null,
 	userLocation: {
 		coordinates: null,
 		accuracy: undefined,
@@ -24,16 +23,8 @@ export const useMapStore = create<MapState & MapActions>()(
 		(set, _get) => ({
 			...initialState,
 			setConfig: (config) => set({ config }),
-			setInitialConfig: (initialConfig) => set({ initialConfig }),
-			setIsConfigReady: (ready) => set({ isConfigReady: ready }),
-			updateConfig: (updates) =>
-				set(
-					produce((state) => {
-						if (!state.config) return;
-						const mapView = state.config.portalConfig.map.mapView;
-						Object.assign(mapView, updates);
-					}),
-				),
+			setIsInitializeReady: (ready) => set({ isInitializeReady: ready }),
+			setMapView: (mapView) => set({ mapView }),
 			populateMap: (map) => set({ map }),
 			removeMap: () => set({ map: null, isReady: false }),
 			setMapReady: (ready) => set({ isReady: ready }),
@@ -59,9 +50,8 @@ export const useMapStore = create<MapState & MapActions>()(
 		{
 			name: "map-storage",
 			partialize: (state) => ({
-				config: state.config,
+				mapView: state.mapView,
 				userLocation: state.userLocation,
-				// Don't persist resetId - it's only for runtime
 			}),
 			onRehydrateStorage: () => (state) => {
 				state?.setHasHydrated(true);
