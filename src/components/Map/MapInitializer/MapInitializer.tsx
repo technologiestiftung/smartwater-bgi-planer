@@ -72,6 +72,7 @@ const MapInitializer: FC = () => {
 	const config = useMapStore((state) => state.config);
 	const resetId = useMapStore((state) => state.resetId);
 	const isInitializeReady = useMapStore((state) => state.isInitializeReady);
+	const mapView = useMapStore((state) => state.mapView);
 
 	const setConfig = useMapStore((state) => state.setConfig);
 	const setIsInitializeReady = useMapStore(
@@ -87,6 +88,14 @@ const MapInitializer: FC = () => {
 
 		const rawMapConfig = structuredClone(mapConfig as any);
 		const fullyEnrichedConfig = createEnrichedConfig(rawMapConfig);
+
+		if (mapView) {
+			fullyEnrichedConfig.portalConfig.map.mapView = {
+				...fullyEnrichedConfig.portalConfig.map.mapView,
+				startCenter: mapView.startCenter,
+				startZoomLevel: mapView.startZoomLevel,
+			};
+		}
 
 		const allLayers = [
 			...fullyEnrichedConfig.layerConfig.baselayer.elements,
@@ -104,6 +113,7 @@ const MapInitializer: FC = () => {
 		config,
 		resetId,
 		isInitializeReady,
+		mapView,
 		setConfig,
 		setIsInitializeReady,
 		setFlattenedLayerElements,

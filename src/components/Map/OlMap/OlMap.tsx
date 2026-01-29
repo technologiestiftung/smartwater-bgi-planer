@@ -1,6 +1,7 @@
 "use client";
 
 import { useMapStore } from "@/store/map";
+import { MapViewOption } from "@/store/map/types";
 import Map from "ol/Map";
 import View from "ol/View";
 import React, { FC, useEffect, useRef } from "react";
@@ -14,6 +15,11 @@ const OlMap: FC<OlMapProps> = ({ children }) => {
 	const isInitializeReady = useMapStore((state) => state.isInitializeReady);
 	const resetId = useMapStore((state) => state.resetId);
 	const mapId = useRef<HTMLDivElement>(null);
+	const mapView = useMapStore((state) => state.mapView);
+
+	useEffect(() => {
+		console.log("[OlMap] mapView::", mapView);
+	}, [mapView]);
 
 	useEffect(() => {
 		if (!isInitializeReady) {
@@ -25,12 +31,9 @@ const OlMap: FC<OlMapProps> = ({ children }) => {
 			return;
 		}
 
-		const mapViewConfig = config.portalConfig.map.mapView;
+		console.log("[OlMap] OL MAP WIRD INITIALISIERT::");
 
-		interface MapViewOption {
-			zoomLevel: number;
-			resolution: number;
-		}
+		const mapViewConfig = config.portalConfig.map.mapView;
 
 		const resolutions: number[] = [...mapViewConfig.options]
 			.sort((a: MapViewOption, b: MapViewOption) => a.zoomLevel - b.zoomLevel)

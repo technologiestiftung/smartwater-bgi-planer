@@ -41,6 +41,16 @@ export interface MapView {
 	startZoomLevel: number;
 }
 
+export interface MapViewOption {
+	zoomLevel: number;
+	resolution: number;
+}
+
+export interface UserLocation {
+	coordinates: [number, number] | null;
+	accuracy?: number;
+}
+
 export interface MapState {
 	config: MapConfig | null;
 	isInitializeReady: boolean;
@@ -49,10 +59,7 @@ export interface MapState {
 	hasError: boolean;
 	errorMessage: string | null;
 	mapView: MapView | null;
-	userLocation: {
-		coordinates: [number, number] | null;
-		accuracy?: number;
-	};
+	userLocation: UserLocation;
 	hasHydrated: boolean;
 	resetId: number;
 }

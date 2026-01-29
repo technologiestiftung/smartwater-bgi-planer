@@ -66,10 +66,7 @@ const ProjectUploaderButton: FC<ProjectUploaderButtonProps> = ({
 			);
 
 			if (data.map?.mapView) {
-				setMapView({
-					startCenter: data.map.mapView.startCenter,
-					startZoomLevel: data.map.mapView.startZoomLevel,
-				});
+				setMapView(data.map?.mapView);
 			}
 			if (data.map?.userLocation) setUserLocation(data.map.userLocation);
 

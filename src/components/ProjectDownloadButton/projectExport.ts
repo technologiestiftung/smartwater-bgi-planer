@@ -5,6 +5,7 @@ import {
 	useProjectsStore,
 } from "@/store";
 import { getFileBlob, getProjectFileKeys } from "@/store/files/storage";
+import { MapView, UserLocation } from "@/store/map/types";
 import JSZip from "jszip";
 
 export interface ProjectBackup {
@@ -14,7 +15,10 @@ export interface ProjectBackup {
 	data: {
 		project: any;
 		answers: Record<string, boolean | null>;
-		map: any;
+		map: {
+			mapView: MapView | null;
+			userLocation: UserLocation | null;
+		};
 		files: Array<{
 			key: string;
 			projectId: string;
@@ -27,12 +31,8 @@ export interface ProjectBackup {
 const BACKUP_VERSION = "1.0.0";
 
 const getMapData = () => {
-	const mapView = useMapStore.getState().config?.portalConfig?.map?.mapView;
 	return {
-		mapView: {
-			startCenter: mapView?.startCenter,
-			startZoomLevel: mapView?.startZoomLevel,
-		},
+		mapView: useMapStore.getState().mapView,
 		userLocation: useMapStore.getState().userLocation,
 	};
 };
