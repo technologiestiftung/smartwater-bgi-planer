@@ -9,7 +9,7 @@ const initialState: MapState = {
 	initialConfig: null,
 	isConfigReady: false,
 	isReady: false,
-	hasError: false,
+	hasMapError: false,
 	errorMessage: null,
 	userLocation: {
 		coordinates: null,
@@ -39,8 +39,8 @@ export const useMapStore = create<MapState & MapActions>()(
 			populateMap: (map) => set({ map }),
 			removeMap: () => set({ map: null, isReady: false }),
 			setMapReady: (ready) => set({ isReady: ready }),
-			setMapError: (hasError, errorMessage) =>
-				set({ hasError, errorMessage: errorMessage || null }),
+			setMapError: (hasMapError, errorMessage) =>
+				set({ hasMapError, errorMessage: errorMessage || null }),
 			setUserLocation: (userLocation) => set({ userLocation }),
 			setHasHydrated: (state) => set({ hasHydrated: state }),
 			resetMapState: () => {

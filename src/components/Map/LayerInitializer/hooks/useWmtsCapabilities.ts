@@ -1,6 +1,7 @@
 "use client";
 
 import { LayerElement } from "@/store/layers/types";
+import { useMapStore } from "@/store/map"; // <-- import your store
 import { MapConfig } from "@/store/map/types";
 import WMTSCapabilities from "ol/format/WMTSCapabilities";
 import { useEffect, useState } from "react";
@@ -17,6 +18,7 @@ export const useWmtsCapabilities = (
 		{},
 	);
 	const [capabilitiesLoaded, setCapabilitiesLoaded] = useState(false);
+	const setMapError = useMapStore((state) => state.setMapError);
 
 	useEffect(() => {
 		if (!config || flattenedLayerElements.length === 0) return;
@@ -47,7 +49,7 @@ export const useWmtsCapabilities = (
 					);
 					if (!response.ok) {
 						throw new Error(
-							`Failed to fetch WMTS capabilities from ${url}: ${response.status}`,
+							`Failed to fetch WMTS capabilities from ${url}: ${response.status} ${response.statusText}`,
 						);
 					}
 
@@ -65,8 +67,12 @@ export const useWmtsCapabilities = (
 				setWmtsCapabilities(capabilitiesMap);
 			} catch (error) {
 				console.error(
-					"[LayerInitializer] Error loading WMTS capabilities:",
+					"[useWmtsCapabilities] Error loading WMTS capabilities",
 					error,
+				);
+				setMapError(
+					true,
+					"Fehler beim Laden der Karten. Bitte versuchen Sie es später erneut.",
 				);
 			} finally {
 				setCapabilitiesLoaded(true);
@@ -74,7 +80,7 @@ export const useWmtsCapabilities = (
 		};
 
 		loadAllWmtsCapabilities();
-	}, [config, flattenedLayerElements]);
+	}, [config, flattenedLayerElements, setMapError]);
 
 	return { wmtsCapabilities, capabilitiesLoaded };
 };
