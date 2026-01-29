@@ -17,6 +17,7 @@ const initialState: MapState = {
 	},
 	hasHydrated: false,
 	resetId: 0,
+	mapView: null,
 };
 
 export const useMapStore = create<MapState & MapActions>()(
@@ -34,6 +35,7 @@ export const useMapStore = create<MapState & MapActions>()(
 						Object.assign(mapView, updates);
 					}),
 				),
+			setMapView: (mapView) => set({ mapView }),
 			populateMap: (map) => set({ map }),
 			removeMap: () => set({ map: null, isReady: false }),
 			setMapReady: (ready) => set({ isReady: ready }),
@@ -59,9 +61,8 @@ export const useMapStore = create<MapState & MapActions>()(
 		{
 			name: "map-storage",
 			partialize: (state) => ({
-				config: state.config,
+				mapView: state.mapView,
 				userLocation: state.userLocation,
-				// Don't persist resetId - it's only for runtime
 			}),
 			onRehydrateStorage: () => (state) => {
 				state?.setHasHydrated(true);

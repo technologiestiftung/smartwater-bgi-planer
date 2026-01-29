@@ -83,12 +83,18 @@ const MapInitializer: FC = () => {
 	useEffect(() => {
 		if (!hasHydrated || isConfigReady) return;
 
-		const config = useMapStore.getState().config;
+		const mapView = useMapStore.getState().mapView;
 		const initialConfig = useMapStore.getState().initialConfig;
 
-		const rawMapConfig = config
-			? structuredClone(config)
-			: structuredClone(mapConfig as any);
+		const rawMapConfig = structuredClone(mapConfig as any);
+
+		if (mapView) {
+			rawMapConfig.portalConfig.map.mapView = {
+				...rawMapConfig.portalConfig.map.mapView,
+				...mapView,
+			};
+		}
+
 		const fullyEnrichedConfig = createEnrichedConfig(rawMapConfig);
 
 		const allLayers = [

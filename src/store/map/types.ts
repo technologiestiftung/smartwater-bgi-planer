@@ -1,34 +1,29 @@
 import { LayerConfig } from "@/store/layers/types";
 import OLMap from "ol/Map";
 
+// Map View
 export interface MapViewOptions {
 	resolution: number;
 	scale: number;
 	zoomLevel: number;
 }
-
-export interface MapViewConfig {
-	backgroundImage: string;
+export interface MapView {
 	startCenter: number[];
+	startZoomLevel: number;
+}
+export interface MapViewConfig extends MapView {
 	extent: number[];
 	epsg: string;
-	startZoomLevel: number;
 	options: MapViewOptions[];
 }
 
+// Portal & Map Config
 export interface PortalMapConfig {
-	controls: {
-		zoom: boolean;
-		orientation: {
-			zoomMode: string;
-		};
-	};
 	mapView: MapViewConfig;
 }
 
 export interface PortalConfig {
 	map: PortalMapConfig;
-	portalFooter?: { urls: string[] };
 }
 
 export interface MapConfig {
@@ -36,6 +31,7 @@ export interface MapConfig {
 	layerConfig: LayerConfig;
 }
 
+// State
 export interface MapState {
 	config: MapConfig | null;
 	initialConfig: MapConfig | null;
@@ -50,10 +46,13 @@ export interface MapState {
 	};
 	hasHydrated: boolean;
 	resetId: number;
+	mapView: MapView | null;
 }
 
+// Actions
 export interface MapActions {
 	setConfig: (config: MapConfig) => void;
+	setMapView: (view: MapView) => void;
 	setInitialConfig: (config: MapConfig) => void;
 	setIsConfigReady: (ready: boolean) => void;
 	updateConfig: (updates: Partial<MapViewConfig>) => void;
