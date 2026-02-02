@@ -3,8 +3,8 @@
 import ClickControl from "@/components/Map/Controls/ClickControl";
 import MapNavigationContainer from "@/components/Map/Controls/MapNavigation/MapNavigationContainer";
 import { Spinner } from "@/components/ui/spinner";
-import { useClickControlConfig } from "@/hooks/use-click-control-config";
-import { useMapReady } from "@/hooks/use-map-ready";
+import { useClickControlConfig } from "@/hooks/useClickControlConfig";
+import { useMapReady } from "@/hooks/useMapReady";
 import { useMapStore } from "@/store";
 import dynamic from "next/dynamic";
 import { FC } from "react";

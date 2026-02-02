@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayerFeatures } from "@/hooks/use-layer-features";
+import { useLayerFeatures } from "@/hooks/useLayerFeatures";
 import { useUiStore } from "@/store/ui";
 import { SectionId } from "@/types/sectionIds";
 import { useCallback } from "react";

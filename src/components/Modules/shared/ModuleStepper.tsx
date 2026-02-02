@@ -10,7 +10,7 @@ import {
 	VerticalStepper,
 	useVerticalStepper,
 } from "@/components/VerticalStepper";
-import { useMapReady } from "@/hooks/use-map-ready";
+import { useMapReady } from "@/hooks/useMapReady";
 import { useLayersStore, useUiStore } from "@/store";
 import type { SectionId } from "@/types/sectionIds";
 import { useCallback, useEffect, useRef, useState } from "react";

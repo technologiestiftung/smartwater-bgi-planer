@@ -4,7 +4,7 @@ import { getLayerById } from "@/lib/helpers/ol";
 import { useMapStore } from "@/store/map";
 import VectorSource from "ol/source/Vector";
 import { useEffect, useState } from "react";
-import { useMapReady } from "./use-map-ready";
+import { useMapReady } from "./useMapReady";
 
 export function useLayerFeatures(layerId: string) {
 	const map = useMapStore((state) => state.map);
