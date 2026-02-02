@@ -13,4 +13,5 @@ export function getSectionIds() {
 }
 
 export const allSectionIds = getSectionIds();
+
 export type SectionId = (typeof allSectionIds)[number];
