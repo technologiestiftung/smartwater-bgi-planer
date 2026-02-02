@@ -1,99 +1,161 @@
 "use client";
 
 import { useLayersStore } from "@/store/layers";
-import { ManagedLayer } from "@/store/layers/types";
-import { FC, useCallback, useMemo } from "react";
+import { useUiStore } from "@/store/ui";
+import { StackIcon } from "@phosphor-icons/react";
+import Image from "next/image";
+import { FC, useEffect, useMemo, useRef, useState } from "react";
+import { useShallow } from "zustand/react/shallow";
 
-const useLayerData = () => {
-	const layersMap = useLayersStore((state) => state.layers);
-
-	const layerData = useMemo(() => {
-		const allLayers = Array.from(layersMap.values());
-
-		const subjectLayers = allLayers.filter((l) => l.layerType === "subject");
-		const visibleSubjectLayers = subjectLayers.filter((l) => l.visibility);
-
-		return {
-			subjectLayers,
-			visibleSubjectLayers,
-			visibleCount: visibleSubjectLayers.length,
-		};
-	}, [layersMap]);
-
-	return layerData;
-};
-
-const LayerItem: FC<{ layer: ManagedLayer }> = ({ layer }) => {
-	const setLayerVisibility = useLayersStore(
-		(state) => state.setLayerVisibility,
+const LayerTree: FC = ({}) => {
+	const { layers, setLayerVisibility } = useLayersStore(
+		useShallow((state) => ({
+			layers: state.layers,
+			setLayerVisibility: state.setLayerVisibility,
+		})),
 	);
-
-	const handleVisibilityChange = useCallback(
-		(e: React.ChangeEvent<HTMLInputElement>) => {
-			setLayerVisibility(layer.id, e.target.checked);
-		},
-		[layer.id, setLayerVisibility],
+	const isLayerTreeVisible = useUiStore((state) => state.isLayerTreeVisible);
+	const [viewState, setViewState] = useState<"collapsed" | "open" | "extended">(
+		"collapsed",
 	);
+	const containerRef = useRef<HTMLDivElement>(null);
 
-	const serviceName = layer.config?.service?.name ?? "Unnamed Layer";
-
-	return (
-		<div className="flex items-center justify-between border-b p-3">
-			<label
-				htmlFor={layer.id}
-				className="flex flex-1 cursor-pointer items-center space-x-3"
-			>
-				<span
-					className={`font-medium ${layer.visibility ? "text-blue-600" : ""}`}
-				>
-					{serviceName}
-				</span>
-			</label>
-			<input
-				id={layer.id}
-				type="checkbox"
-				checked={layer.visibility}
-				onChange={handleVisibilityChange}
-				className="h-5 w-5"
-				disabled={layer.status === "error"}
-			/>
-		</div>
-	);
-};
-
-const LayerTree: FC = () => {
-	const { subjectLayers } = useLayerData();
-
-	return (
-		<div className="fixed top-4 right-4 z-48 w-80 max-w-sm rounded-lg border bg-white shadow-lg">
-			<div className="border-b p-4">
-				<h2 className="text-lg font-semibold">Layer Tree</h2>
-			</div>
-			<div className="max-h-96 overflow-y-auto">
-				<LayerTreeContent layers={subjectLayers} />
-			</div>
-		</div>
-	);
-};
-
-export const LayerTreeContent: FC<{
-	layers?: ManagedLayer[];
-}> = ({ layers: providedLayers }) => {
-	const layersToRender = providedLayers;
-
-	if (!layersToRender || layersToRender.length === 0) {
-		return (
-			<div className="flex items-center justify-center py-8 text-gray-500">
-				<p>No layers available</p>
-			</div>
+	const uploadedLayers = useMemo(() => {
+		return Array.from(layers.values()).filter(
+			(layer) =>
+				layer.id.startsWith("uploaded_") ||
+				layer.id.startsWith("uploaded_wms_"),
 		);
-	}
+	}, [layers]);
+
+	useEffect(() => {
+		const handleClickOutside = (event: MouseEvent) => {
+			if (
+				containerRef.current &&
+				!containerRef.current.contains(event.target as Node)
+			) {
+				setViewState("collapsed");
+			}
+		};
+
+		if (viewState !== "collapsed") {
+			document.addEventListener("mousedown", handleClickOutside);
+		}
+
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside);
+		};
+	}, [viewState]);
+
+	const handleLayerToggle = (layerId: string, currentVisibility: boolean) => {
+		setLayerVisibility(layerId, !currentVisibility);
+	};
+
+	const handleMoreButtonClick = () => {
+		if (viewState === "collapsed") {
+			setViewState("open");
+		} else if (viewState === "open") {
+			setViewState("extended");
+		}
+	};
+
+	const getGridConfig = () => {
+		const layerCount = uploadedLayers.length;
+
+		// if (viewState === "collapsed") {
+		// 	return {
+		// 		cols: 1,
+		// 		rows: 1,
+		// 		visibleLayers: uploadedLayers.slice(0, 1),
+		// 		showMoreButton: layerCount > 1,
+		// 	};
+		// }
+
+		if (viewState === "open" || viewState === "collapsed") {
+			const maxVisible = 8;
+			return {
+				cols: layerCount < 3 ? layerCount : 3,
+				rows: 3,
+				visibleLayers: uploadedLayers.slice(0, maxVisible),
+				showMoreButton: layerCount > maxVisible,
+			};
+		}
+
+		const rows = Math.ceil(layerCount / 3);
+		return {
+			cols: 3,
+			rows,
+			visibleLayers: uploadedLayers,
+			showMoreButton: false,
+		};
+	};
+
+	if (uploadedLayers.length === 0) return null;
+
+	const { cols, visibleLayers, showMoreButton } = getGridConfig();
 
 	return (
-		<div>
-			{layersToRender.map((layer) => (
-				<LayerItem key={layer.id} layer={layer} />
-			))}
+		<div
+			ref={containerRef}
+			className="pointer-events-none absolute bottom-0 left-[calc(100%+0.5rem)] flex items-end transition-opacity duration-300"
+			style={{
+				opacity: isLayerTreeVisible ? 1 : 0,
+			}}
+		>
+			<div
+				className="bg-background pointer-events-auto grid h-fit w-fit gap-1 rounded-sm p-1 shadow-sm"
+				style={{
+					gridTemplateColumns: `repeat(${cols}, 48px)`,
+				}}
+			>
+				{visibleLayers.map((layer) => {
+					const displayName =
+						layer.config?.name || layer.id.replace(/^uploaded_(?:wms_)?/, "");
+
+					return (
+						<button
+							key={layer.id}
+							className="relative h-12 w-12 cursor-pointer overflow-hidden rounded-sm transition-all"
+							onClick={() => handleLayerToggle(layer.id, layer.visibility)}
+							title={displayName}
+						>
+							<div className="flex h-full items-center justify-center">
+								<Image
+									src={
+										layer.olLayer?.get("previewUrl") ||
+										"/preview-img/basemap-grau.png"
+									}
+									loading="lazy"
+									alt={displayName}
+									width={48}
+									height={48}
+									className="h-full w-full object-cover"
+								/>
+							</div>
+							{layer.visibility && (
+								<div className="border-accent pointer-events-none absolute inset-0 rounded-sm border" />
+							)}
+							<div className="absolute inset-x-0 bottom-0 truncate bg-black/30 px-2 py-1 text-[8px] text-white">
+								{displayName}
+							</div>
+						</button>
+					);
+				})}
+
+				{showMoreButton && (
+					<button
+						className="relative h-12 w-12 rounded border-2 border-dashed border-gray-300 bg-gray-50 transition-all hover:border-gray-400 hover:bg-gray-100"
+						onClick={handleMoreButtonClick}
+					>
+						<div className="flex h-full flex-col items-center justify-center">
+							<StackIcon className="h-5 w-5 text-gray-400" weight="duotone" />
+							<span className="mt-0.5 text-xs text-gray-500">
+								+{uploadedLayers.length - visibleLayers.length}
+							</span>
+						</div>
+					</button>
+				)}
+			</div>
 		</div>
 	);
 };

@@ -12,7 +12,7 @@ import { useShallow } from "zustand/react/shallow";
 import OpacityControl from "./Controls/OpacityControl";
 import MapFooter from "./MapFooter/MapFooter";
 
-const LazyOlMap = dynamic(() => import("./OlMap/OlMap"), {
+const LazyOlMap = dynamic(() => import("./Initializer/OlMap/OlMap"), {
 	ssr: false,
 	loading: () => null,
 });
