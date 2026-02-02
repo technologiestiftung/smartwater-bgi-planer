@@ -1,9 +1,6 @@
-import {
-	ModuleConfig,
-	ModulesConfigFile,
-} from "@/components/Modules/shared/types";
 import { StepConfig } from "@/components/VerticalStepper";
 import { getIconComponent } from "@/lib/helpers/iconMap";
+import { ModuleConfig, ModulesConfigFile } from "@/types/shared";
 import modulesConfig from "../modules.json";
 
 export function getModuleConfig(moduleId: string): ModuleConfig | undefined {

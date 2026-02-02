@@ -1,4 +1,4 @@
-import type { SectionId } from "@/types/sectionIds";
+import type { SectionId } from "@/lib/helpers/sectionIds";
 
 export interface UiState {
 	isLayerTreeOpen: boolean;
