@@ -9,13 +9,17 @@ import VectorLayer from "ol/layer/Vector.js";
 import { Vector as VectorSource } from "ol/source.js";
 import { FC, useState } from "react";
 
-interface FeatureMenuProps {
+interface FeatureActionMenuProps {
 	layerId?: string;
 	features?: any;
 	onClose?: () => void;
 }
 
-const FeatureMenu: FC<FeatureMenuProps> = ({ layerId, features, onClose }) => {
+const FeatureActionMenu: FC<FeatureActionMenuProps> = ({
+	layerId,
+	features,
+	onClose,
+}) => {
 	const map = useMapStore((state) => state.map);
 	const [isDeleting, setIsDeleting] = useState(false);
 
@@ -50,7 +54,7 @@ const FeatureMenu: FC<FeatureMenuProps> = ({ layerId, features, onClose }) => {
 	if (!features) return null;
 
 	return (
-		<div className="FeatureMenu-root bg-background w-[250px] shadow-lg">
+		<div className="FeatureActionMenu-root bg-background w-[250px] shadow-lg">
 			<div className="border-muted flex h-8 w-full items-center justify-between border-b pl-2">
 				<h3 className="text-sm font-semibold">Feature bearbeiten</h3>
 				<div className="bg-secondary h-8 w-8 text-white">
@@ -77,4 +81,4 @@ const FeatureMenu: FC<FeatureMenuProps> = ({ layerId, features, onClose }) => {
 	);
 };
 
-export default FeatureMenu;
+export default FeatureActionMenu;

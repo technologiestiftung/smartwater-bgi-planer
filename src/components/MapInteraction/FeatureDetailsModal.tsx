@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { getLayerById } from "@/lib/helpers/ol";
 import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";
@@ -10,9 +11,8 @@ import { Point } from "ol/geom";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
 import { FC, useState } from "react";
-import { Button } from "../ui/button";
 
-interface FeatureModalProps {
+interface FeatureDetailsModalProps {
 	attributes: Record<string, any> | null;
 	layerId: string;
 	coordinate?: [number, number];
@@ -20,7 +20,7 @@ interface FeatureModalProps {
 	isLoading?: boolean;
 }
 
-const FeatureModal: FC<FeatureModalProps> = ({
+const FeatureDetailsModal: FC<FeatureDetailsModalProps> = ({
 	attributes,
 	coordinate,
 	onClose,
@@ -61,7 +61,7 @@ const FeatureModal: FC<FeatureModalProps> = ({
 	}
 
 	return (
-		<div className="FeatureModal-root fixed inset-0 z-9999 ml-136 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
+		<div className="FeatureDetailsModal-root fixed inset-0 z-9999 ml-136 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
 			<div className="bg-background flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-sm shadow-2xl">
 				<div className="border-muted flex h-8 min-h-12 w-full items-center justify-between border-b pl-2">
 					<h2 className="text-xl font-bold">
@@ -134,4 +134,4 @@ const FeatureModal: FC<FeatureModalProps> = ({
 	);
 };
 
-export default FeatureModal;
+export default FeatureDetailsModal;
