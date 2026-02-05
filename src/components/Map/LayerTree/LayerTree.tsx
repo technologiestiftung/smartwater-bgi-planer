@@ -2,7 +2,7 @@
 
 import { useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
-import { StackIcon } from "@phosphor-icons/react";
+import { StackIcon, XCircleIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import { FC, useEffect, useMemo, useRef, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
@@ -20,11 +20,19 @@ const LayerTree: FC = ({}) => {
 	);
 	const containerRef = useRef<HTMLDivElement>(null);
 
+	// Eigene/Hochgeladene Layer
 	const uploadedLayers = useMemo(() => {
 		return Array.from(layers.values()).filter(
 			(layer) =>
 				layer.id.startsWith("uploaded_") ||
 				layer.id.startsWith("uploaded_wms_"),
+		);
+	}, [layers]);
+
+	// Fachdaten / Weitere Layer
+	const subjectLayers = useMemo(() => {
+		return Array.from(layers.values()).filter(
+			(l) => l.layerType === "subject" && !l.id.startsWith("uploaded_"),
 		);
 	}, [layers]);
 
@@ -41,10 +49,7 @@ const LayerTree: FC = ({}) => {
 		if (viewState !== "collapsed") {
 			document.addEventListener("mousedown", handleClickOutside);
 		}
-
-		return () => {
-			document.removeEventListener("mousedown", handleClickOutside);
-		};
+		return () => document.removeEventListener("mousedown", handleClickOutside);
 	}, [viewState]);
 
 	const handleLayerToggle = (layerId: string, currentVisibility: boolean) => {
@@ -52,110 +57,150 @@ const LayerTree: FC = ({}) => {
 	};
 
 	const handleMoreButtonClick = () => {
-		if (viewState === "collapsed") {
-			setViewState("open");
-		} else if (viewState === "open") {
-			setViewState("extended");
-		}
+		setViewState(viewState === "extended" ? "open" : "extended");
 	};
 
-	const getGridConfig = () => {
-		const layerCount = uploadedLayers.length;
+	// Gemeinsame Komponente für die Grid-Buttons im Extended-Menü
+	const LayerIconButton = ({ layer }: { layer: any }) => {
+		const displayName =
+			layer.config?.name ||
+			layer.config?.service?.name ||
+			layer.id.replace(/^uploaded_(?:wms_)?/, "");
+		const previewImg =
+			layer.olLayer?.get("previewUrl") || "/preview-img/basemap-grau.png";
 
-		// if (viewState === "collapsed") {
-		// 	return {
-		// 		cols: 1,
-		// 		rows: 1,
-		// 		visibleLayers: uploadedLayers.slice(0, 1),
-		// 		showMoreButton: layerCount > 1,
-		// 	};
-		// }
-
-		if (viewState === "open" || viewState === "collapsed") {
-			const maxVisible = 8;
-			return {
-				cols: layerCount < 3 ? layerCount : 3,
-				rows: 3,
-				visibleLayers: uploadedLayers.slice(0, maxVisible),
-				showMoreButton: layerCount > maxVisible,
-			};
-		}
-
-		const rows = Math.ceil(layerCount / 3);
-		return {
-			cols: 3,
-			rows,
-			visibleLayers: uploadedLayers,
-			showMoreButton: false,
-		};
+		return (
+			<button
+				onClick={() => handleLayerToggle(layer.id, layer.visibility)}
+				className="relative h-12 w-12 cursor-pointer overflow-hidden rounded-sm transition-all"
+			>
+				<div className="flex h-full items-center justify-center">
+					<Image
+						src={previewImg}
+						alt={displayName}
+						loading="lazy"
+						width={48}
+						height={48}
+						className="h-full w-full object-cover"
+					/>
+				</div>
+				{layer.visibility && (
+					<div className="border-accent pointer-events-none absolute inset-0 rounded-sm border-2" />
+				)}
+				<div className="absolute inset-x-0 bottom-0 truncate bg-black/40 px-1 py-0.5 text-[8px] text-white">
+					{displayName}
+				</div>
+			</button>
+		);
 	};
 
-	if (uploadedLayers.length === 0) return null;
-
-	const { cols, visibleLayers, showMoreButton } = getGridConfig();
+	if (uploadedLayers.length === 0 && subjectLayers.length === 0) return null;
 
 	return (
 		<div
 			ref={containerRef}
-			className="pointer-events-none absolute bottom-0 left-[calc(100%+0.5rem)] flex items-end transition-opacity duration-300"
-			style={{
-				opacity: isLayerTreeVisible ? 1 : 0,
-			}}
+			className="pointer-events-none absolute left-[calc(100%+1rem)] flex items-end transition-opacity duration-300"
+			style={{ opacity: isLayerTreeVisible ? 1 : 0 }}
 		>
-			<div
-				className="bg-background pointer-events-auto grid h-fit w-fit gap-1 rounded-sm p-1 shadow-sm"
-				style={{
-					gridTemplateColumns: `repeat(${cols}, 48px)`,
-				}}
-			>
-				{visibleLayers.map((layer) => {
-					const displayName =
-						layer.config?.name || layer.id.replace(/^uploaded_(?:wms_)?/, "");
+			{viewState === "extended" && (
+				<div className="bg-background pointer-events-auto absolute bottom-0 left-0 mb-2 flex w-[260px] flex-col overflow-hidden rounded-sm">
+					{/* Header */}
+					<div className="border-muted flex h-8 w-full items-center justify-between border-b pl-2">
+						<h3 className="text-sm font-semibold">Feature bearbeiten</h3>
 
-					return (
-						<button
-							key={layer.id}
-							className="relative h-12 w-12 cursor-pointer overflow-hidden rounded-sm transition-all"
-							onClick={() => handleLayerToggle(layer.id, layer.visibility)}
-							title={displayName}
-						>
-							<div className="flex h-full items-center justify-center">
-								<Image
-									src={
-										layer.olLayer?.get("previewUrl") ||
-										"/preview-img/basemap-grau.png"
-									}
-									loading="lazy"
-									alt={displayName}
-									width={48}
-									height={48}
-									className="h-full w-full object-cover"
-								/>
-							</div>
-							{layer.visibility && (
-								<div className="border-accent pointer-events-none absolute inset-0 rounded-sm border" />
-							)}
-							<div className="absolute inset-x-0 bottom-0 truncate bg-black/30 px-2 py-1 text-[8px] text-white">
-								{displayName}
-							</div>
-						</button>
-					);
-				})}
+						<div className="bg-secondary h-8 w-8 text-white">
+							<button
+								onClick={() => setViewState("open")}
+								className="flex h-full w-full items-center justify-center"
+							>
+								<XCircleIcon />
+							</button>
+						</div>
+					</div>
 
-				{showMoreButton && (
+					<div className="custom-scrollbar max-h-[60vh] overflow-y-auto p-2">
+						{/* Sektion 1: Eigene Ebenen */}
+						{uploadedLayers.length > 0 && (
+							<div className="mb-6">
+								<h3 className="mb-3">Eigene Ebenen</h3>
+								<div className="grid grid-cols-3 gap-2">
+									{uploadedLayers.map((layer) => (
+										<LayerIconButton key={layer.id} layer={layer} />
+									))}
+								</div>
+							</div>
+						)}
+
+						{/* Sektion 2: Fachdaten */}
+						{subjectLayers.length > 0 && (
+							<div>
+								<h3 className="mb-3">Weitere Daten</h3>
+								<div className="grid grid-cols-3 gap-2">
+									{subjectLayers.map((layer) => (
+										<LayerIconButton key={layer.id} layer={layer} />
+									))}
+								</div>
+							</div>
+						)}
+					</div>
+				</div>
+			)}
+
+			{viewState !== "extended" && (
+				<div
+					className="bg-background pointer-events-auto grid h-fit w-fit gap-1 rounded-sm p-1 shadow-sm"
+					style={{
+						gridTemplateColumns: `repeat(${Math.min(uploadedLayers.length + 1, 3)}, 48px)`,
+					}}
+				>
+					{uploadedLayers.slice(0, 8).map((layer) => {
+						const displayName =
+							layer.config?.name || layer.id.replace(/^uploaded_(?:wms_)?/, "");
+						return (
+							<button
+								key={layer.id}
+								className="relative h-12 w-12 cursor-pointer overflow-hidden rounded-sm transition-all"
+								onClick={() => handleLayerToggle(layer.id, layer.visibility)}
+								title={displayName}
+							>
+								<div className="flex h-full items-center justify-center">
+									<Image
+										src={
+											layer.olLayer?.get("previewUrl") ||
+											"/preview-img/basemap-grau.png"
+										}
+										loading="lazy"
+										alt={displayName}
+										width={48}
+										height={48}
+										className="h-full w-full object-cover"
+									/>
+								</div>
+								{layer.visibility && (
+									<div className="border-accent pointer-events-none absolute inset-0 rounded-sm border-2" />
+								)}
+								<div className="absolute inset-x-0 bottom-0 truncate bg-black/40 px-1 py-0.5 text-[8px] text-white">
+									{displayName}
+								</div>
+							</button>
+						);
+					})}
+
+					{/* More Button */}
 					<button
-						className="relative h-12 w-12 rounded border-2 border-dashed border-gray-300 bg-gray-50 transition-all hover:border-gray-400 hover:bg-gray-100"
+						className={`relative flex h-12 w-12 flex-col items-center justify-center rounded border border-dashed transition-all hover:bg-gray-100 ${viewState === "open" ? "border-primary" : "border-gray-300 bg-gray-50"}`}
 						onClick={handleMoreButtonClick}
 					>
-						<div className="flex h-full flex-col items-center justify-center">
-							<StackIcon className="h-5 w-5 text-gray-400" weight="duotone" />
-							<span className="mt-0.5 text-xs text-gray-500">
-								+{uploadedLayers.length - visibleLayers.length}
-							</span>
-						</div>
+						<StackIcon
+							className={`h-5 w-5 ${viewState === "open" ? "text-primary" : "text-gray-400"}`}
+							weight="duotone"
+						/>
+						<span className="text-[7px] font-bold text-gray-500 uppercase">
+							Mehr
+						</span>
 					</button>
-				)}
-			</div>
+				</div>
+			)}
 		</div>
 	);
 };
