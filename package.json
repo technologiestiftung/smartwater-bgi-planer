@@ -47,7 +47,7 @@
 		"@types/react-dom": "^19",
 		"@types/shpjs": "^3.4.7",
 		"baseline-browser-mapping": "^2.9.4",
-		"eslint": "^9",
+		"eslint": "^10.0.0",
 		"eslint-config-next": "^16.0.1",
 		"husky": "^9.1.7",
 		"prettier": "^3.6.2",
