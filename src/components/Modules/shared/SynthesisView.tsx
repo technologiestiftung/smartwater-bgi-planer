@@ -134,6 +134,7 @@ export function SynthesisView({
 					const allFalse =
 						sectionAnswers.length > 0 &&
 						sectionAnswers.every((a) => a === false);
+					const anyAnswered = sectionAnswers.some((a) => a !== undefined);
 
 					const iconColor =
 						moduleId === "needForAction"
@@ -151,7 +152,9 @@ export function SynthesisView({
 					return (
 						<div key={step.id} className="my-6">
 							<div className="mb-3 flex items-center gap-2">
-								<div className={`${iconColor} rounded-full p-1`}>
+								<div
+									className={`${anyAnswered ? iconColor : "bg-neutral-light"} rounded-full p-1`}
+								>
 									{step.icon}
 								</div>
 								<h3 className="text-primary text-lg font-medium">
