@@ -20,7 +20,13 @@ interface ModuleStepperProps<TSectionId extends SectionId> {
 	steps: StepConfig[];
 	SectionContent: React.ComponentType<{ sectionId: TSectionId }>;
 	StepperFooter: React.ComponentType<any>;
-	SynthesisView: React.ComponentType<{ onBackToQuestions: () => void }>;
+	SynthesisView: React.ComponentType<{
+		onBackToQuestions: () => void;
+		onBackToSpecificQuestion: (
+			questionId: string,
+			sectionId?: SectionId,
+		) => void;
+	}>;
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
 	title: string;
@@ -48,8 +54,12 @@ function ModuleStepperContent<TSectionId extends SectionId>({
 		useVerticalStepper,
 	});
 
-	const { questionIndices, restoreModuleState, handleShowSynthesis } =
-		moduleNavigation;
+	const {
+		questionIndices,
+		restoreModuleState,
+		handleShowSynthesis,
+		navigateToQuestion,
+	} = moduleNavigation;
 
 	const applyConfigLayers = useLayersStore((state) => state.applyConfigLayers);
 
@@ -111,11 +121,40 @@ function ModuleStepperContent<TSectionId extends SectionId>({
 		goToStep,
 	]);
 
+	const onBackToSpecificQuestion = useCallback(
+		(questionId: string, sectionId?: SectionId) => {
+			resetDrawInteractions();
+
+			const success = navigateToQuestion(questionId, sectionId);
+
+			if (!success) {
+				console.warn("Failed to navigate to specific question", {
+					questionId,
+					sectionId,
+				});
+			}
+
+			setIsSynthesisMode(false);
+			setShowStepper(true);
+		},
+		[
+			navigateToQuestion,
+			resetDrawInteractions,
+			setIsSynthesisMode,
+			setShowStepper,
+		],
+	);
+
 	const canProceed =
 		currentStepId && isStepValid ? isStepValid(currentStepId) : true;
 
 	if (isSynthesisMode) {
-		return <SynthesisView onBackToQuestions={onBackToQuestions} />;
+		return (
+			<SynthesisView
+				onBackToQuestions={onBackToQuestions}
+				onBackToSpecificQuestion={onBackToSpecificQuestion}
+			/>
+		);
 	}
 
 	return (

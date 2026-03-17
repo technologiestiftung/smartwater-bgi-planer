@@ -1,13 +1,17 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import { useLayersStore } from "@/store/layers";
 import { EyeIcon, EyeSlashIcon } from "@phosphor-icons/react";
+import { getModuleSteps } from "./moduleConfig";
+import { usePathname } from "next/navigation";
 
 interface SynthesisBadgeProps {
 	questionId: string;
 	answer: boolean | null;
 	onToggle: () => void;
 	isVisible: boolean;
+	onBackToSpecificQuestion: (questionId: string, sectionId: string) => void;
 }
 
 export function SynthesisBadge({
@@ -15,9 +19,17 @@ export function SynthesisBadge({
 	answer,
 	onToggle,
 	isVisible,
+	onBackToSpecificQuestion,
 }: SynthesisBadgeProps) {
 	const layerConfig = useLayersStore((state) => state.layerConfig);
 	const questionConfig = layerConfig.find((config) => config.id === questionId);
+	const pathname = usePathname();
+	const moduleId = pathname.includes("/handlungsbedarfe")
+		? "needForAction"
+		: pathname.includes("/machbarkeit")
+			? "feasibility"
+			: null;
+	const steps = getModuleSteps(moduleId as "needForAction" | "feasibility");
 
 	if (!questionConfig) return null;
 
@@ -29,13 +41,16 @@ export function SynthesisBadge({
 	};
 
 	return (
-		<button
-			onClick={onToggle}
+		<div
 			className={`bg-neutral-light flex items-center gap-2 overflow-hidden rounded-sm text-sm font-medium transition-all hover:opacity-80`}
 		>
 			{answer !== undefined && (
 				<div
-					className={`${getBackgroundColor()} flex items-center justify-center overflow-hidden p-1 text-white`}
+					onClick={onToggle}
+					className={cn(
+						`${getBackgroundColor()} flex items-center justify-center overflow-hidden p-1 text-white`,
+						!!answer && "cursor-pointer",
+					)}
 				>
 					{answer && (
 						<div>
@@ -49,9 +64,21 @@ export function SynthesisBadge({
 					{!answer && <div className="h-4 w-4" />}
 				</div>
 			)}
-			<span className={answer === undefined ? "h-6 px-2" : "pr-2"}>
+			<span
+				className={cn(
+					answer === undefined ? "h-6 px-2" : "pr-2",
+					"cursor-pointer select-none hover:underline",
+				)}
+				onClick={() => {
+					const findStep = steps.find((step) =>
+						step.questions?.some((q) => q === questionId),
+					);
+					if (!findStep?.id) return;
+					onBackToSpecificQuestion(questionId, findStep.id);
+				}}
+			>
 				{questionConfig.name}
 			</span>
-		</button>
+		</div>
 	);
 }

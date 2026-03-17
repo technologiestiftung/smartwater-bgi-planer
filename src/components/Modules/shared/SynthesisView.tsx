@@ -26,6 +26,7 @@ interface SynthesisViewProps {
 	description: string;
 	onBackToQuestions: () => void;
 	layerOverrides?: Record<string, string>;
+	onBackToSpecificQuestion: (questionId: string, sectionId: string) => void;
 }
 
 export function SynthesisView({
@@ -33,6 +34,7 @@ export function SynthesisView({
 	synthesisViewId,
 	description,
 	onBackToQuestions,
+	onBackToSpecificQuestion,
 	layerOverrides = {},
 }: SynthesisViewProps) {
 	const answers = useAnswersStore((state) => state.answers);
@@ -202,6 +204,7 @@ export function SynthesisView({
 											answer={answers[qId]}
 											onToggle={() => handleToggleLayer(qId)}
 											isVisible={isVisible}
+											onBackToSpecificQuestion={onBackToSpecificQuestion}
 										/>
 									);
 								})}
