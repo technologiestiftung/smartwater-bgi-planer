@@ -13,6 +13,11 @@ const arthouseOwned = localFont({
 			style: "normal",
 		},
 		{
+			path: "../../public/fonts/ArthouseOwnedLightItalic.ttf",
+			weight: "300",
+			style: "italic",
+		},
+		{
 			path: "../../public/fonts/ArthouseOwnedRegular.ttf",
 			weight: "400",
 			style: "normal",

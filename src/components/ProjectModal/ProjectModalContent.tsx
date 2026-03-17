@@ -5,6 +5,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
 import { UseCase } from "@/store/projects/types";
 import { useEffect, useState } from "react";
+import { Checkbox } from "../ui/checkbox";
 
 export interface ProjectFormData {
 	name: string;
@@ -100,6 +101,19 @@ export default function ProjectModalContent({
 							<p>Straßen, Wege, Plätze / Grün- und Freiflächen</p>
 						</div>
 					</RadioGroup>
+				</Field>
+
+				<Field orientation="horizontal">
+					<div className="flex w-full items-center justify-center gap-3">
+						<Checkbox id="hide-tutorials" />
+
+						<label
+							htmlFor="hide-tutorials"
+							className="cursor-pointer text-sm font-light italic select-none"
+						>
+							Tutorials und Hilfestellungen ausblenden
+						</label>
+					</div>
 				</Field>
 			</FieldGroup>
 		</FieldSet>
