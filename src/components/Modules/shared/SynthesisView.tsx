@@ -6,10 +6,17 @@ import { getModuleSteps } from "@/components/Modules/shared/moduleConfig";
 import { Button } from "@/components/ui/button";
 import { useMapReady } from "@/hooks/use-map-ready";
 import { checkForQuestion } from "@/lib/helpers/questions";
+import { useProjectsStore } from "@/store";
 import { useAnswersStore } from "@/store/answers";
 import { useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
-import { EyeIcon, EyeSlashIcon, XIcon } from "@phosphor-icons/react";
+import {
+	EyeIcon,
+	EyeSlashIcon,
+	XIcon,
+	ShovelIcon,
+} from "@phosphor-icons/react";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useShallow } from "zustand/react/shallow";
 
@@ -33,6 +40,10 @@ export function SynthesisView({
 	const isMapReady = useMapReady();
 	const moduleSteps = getModuleSteps(moduleId);
 	const hasInitialized = useRef(false);
+	const router = useRouter();
+	const { getProject } = useProjectsStore();
+	const project = getProject();
+	const projectId = project?.id || "";
 	const { layerConfig, layers, setLayerVisibility, applyConfigLayers } =
 		useLayersStore(
 			useShallow((state) => ({
@@ -112,6 +123,8 @@ export function SynthesisView({
 		const anyVisible = relevantLayers.some((l) => l.isVisible);
 		relevantLayers.forEach((l) => setLayerVisibility(l.id!, !anyVisible));
 	};
+
+	const onNextModule = () => router.push(`/${projectId}/machbarkeit`);
 
 	return (
 		<div className="flex h-full w-full flex-col">
@@ -197,14 +210,26 @@ export function SynthesisView({
 					);
 				})}
 			</div>
-			<div className="border-muted bg-secondary shrink-0 border-t p-4">
+			<div className="border-muted bg-secondary flex shrink-0 border-t px-4">
 				<Button
 					onClick={onBackToQuestions}
-					className="text-md w-full text-white hover:text-white"
+					className="text-md my-4 flex-1 text-white hover:text-white"
 					size="lg"
 					variant="ghost"
 				>
-					<XIcon className="h-4 w-4" /> Zurück zu den Checkfragen
+					<XIcon className="h-4 w-4" />
+					zu den Checkfragen
+				</Button>
+				<div className="w-[1px] self-stretch bg-white" />
+				<Button
+					onClick={onNextModule}
+					className="text-md my-4 flex-1 text-white hover:text-white"
+					size="lg"
+					variant="ghost"
+					disabled={moduleId === "feasibility"}
+				>
+					<ShovelIcon className="h-4 w-4" />
+					zu Modul {moduleId === "needForAction" ? "2" : "3"}
 				</Button>
 			</div>
 		</div>
