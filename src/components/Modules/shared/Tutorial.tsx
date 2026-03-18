@@ -21,6 +21,7 @@ export function Tutorial({ type, onVisibilityChange, test }: TutorialProps) {
 		hideControlsTutorial,
 		hideSynthesisTutorial,
 		setTutorialState,
+		isSynthesisMode,
 	} = useUiStore();
 	const { getProject } = useProjectsStore();
 	const project = getProject();
@@ -42,6 +43,7 @@ export function Tutorial({ type, onVisibilityChange, test }: TutorialProps) {
 		!currentQuestionConfig?.id?.startsWith("start_view") &&
 		!isProjectStarter &&
 		!takeUIStore &&
+		!isSynthesisMode &&
 		show;
 
 	const renderContent = () => {
