@@ -15,6 +15,7 @@ import {
 	EyeSlashIcon,
 	XIcon,
 	ShovelIcon,
+	PencilRulerIcon,
 } from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef } from "react";
@@ -231,7 +232,11 @@ export function SynthesisView({
 					variant="ghost"
 					disabled={moduleId === "feasibility"}
 				>
-					<ShovelIcon className="h-4 w-4" />
+					{moduleId === "needForAction" ? (
+						<ShovelIcon className="h-4 w-4" />
+					) : (
+						<PencilRulerIcon className="h-4 w-4" />
+					)}
 					zu Modul {moduleId === "needForAction" ? "2" : "3"}
 				</Button>
 			</div>
