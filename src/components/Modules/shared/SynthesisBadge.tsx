@@ -66,7 +66,7 @@ export function SynthesisBadge({
 			)}
 			<span
 				className={cn(
-					answer === undefined ? "h-6 px-2" : "pr-2",
+					answer === undefined ? "h-6 translate-y-[1px] px-2" : "pr-2",
 					"cursor-pointer select-none hover:underline",
 				)}
 				onClick={() => {
