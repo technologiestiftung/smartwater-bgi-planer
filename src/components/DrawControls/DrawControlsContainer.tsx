@@ -91,7 +91,11 @@ export default function DrawControlsContainer({}: DrawControlsContainerProps) {
 		<div
 			className={cn("absolute right-4 bottom-8", isTutorialVisible && "z-[52]")}
 		>
-			<Tutorial type="controls" onVisibilityChange={setIsTutorialVisible} />
+			<Tutorial
+				key={`controls-${currentStepId}-${layerConfigId}`}
+				type="controls"
+				onVisibilityChange={setIsTutorialVisible}
+			/>
 			<div
 				className={cn(
 					"relative mt-2 flex gap-2",

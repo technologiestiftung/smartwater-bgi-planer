@@ -17,7 +17,6 @@ interface TutorialProps {
 export function Tutorial({ type, onVisibilityChange, test }: TutorialProps) {
 	const pathname = usePathname();
 	const {
-		currentStepId,
 		hideControlsTutorial,
 		hideSynthesisTutorial,
 		setTutorialState,
@@ -109,7 +108,13 @@ export function Tutorial({ type, onVisibilityChange, test }: TutorialProps) {
 				setTutorialState(hideControlsTutorial ?? false, true);
 			}
 		}
-	}, [currentStepId, layerConfigId]);
+	}, [
+		hideOnNext,
+		type,
+		hideControlsTutorial,
+		hideSynthesisTutorial,
+		setTutorialState,
+	]);
 
 	useEffect(() => {
 		onVisibilityChange?.(showTutorial);
