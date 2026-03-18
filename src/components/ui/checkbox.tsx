@@ -2,8 +2,7 @@
 
 import * as React from "react";
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
-import { Check } from "lucide-react";
-import { cn } from "@/lib/utils"; // your className merge helper
+import { cn } from "@/lib/utils";
 
 const Checkbox = React.forwardRef<
 	React.ElementRef<typeof CheckboxPrimitive.Root>,
@@ -14,10 +13,10 @@ const Checkbox = React.forwardRef<
 			ref={ref}
 			className={cn(
 				// base layout / sizing
-				"aspect-square size-5 shrink-0 rounded-sm",
+				"aspect-square size-5 shrink-0 rounded-xs",
 
 				// borders & colors
-				"border-foreground text-foreground border",
+				"border-foreground text-foreground border border-2",
 
 				// background
 				"dark:bg-input/30",
@@ -40,7 +39,7 @@ const Checkbox = React.forwardRef<
 			{...props}
 		>
 			<CheckboxPrimitive.Indicator className="flex items-center justify-center text-current">
-				<Check className="h-3.5 w-3.5" />
+				<img src="/icons/checkbox-tick.svg" className="h-3.5 w-3.5" />
 			</CheckboxPrimitive.Indicator>
 		</CheckboxPrimitive.Root>
 	);

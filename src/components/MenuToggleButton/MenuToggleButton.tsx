@@ -28,7 +28,7 @@ export function MenuToggleButton({ projectId }: MenuToggleButtonProps) {
 			onClick={handleToggle}
 			size="lg"
 			variant="ghost"
-			className="bg-background fixed top-4 right-4 z-49 flex h-16 w-56 gap-4 p-2 shadow-lg"
+			className="bg-background fixed top-4 right-4 z-19 flex h-16 w-56 gap-4 p-2 shadow-lg"
 			aria-label="Toggle menu"
 		>
 			<SWLogo className="size-36" />

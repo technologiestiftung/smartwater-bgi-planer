@@ -7,6 +7,8 @@ import {
 	ListChecksIcon,
 } from "@phosphor-icons/react";
 import { useCallback } from "react";
+import { Tutorial } from "./Tutorial";
+import { usePathname } from "next/navigation";
 
 interface ModuleFooterProps {
 	onClose: () => void;
@@ -15,6 +17,7 @@ interface ModuleFooterProps {
 		getCurrentQuestionInfo: () => {
 			isFirstQuestion: boolean;
 			isLastQuestion: boolean;
+			globalQuestionIndex: number;
 		};
 		navigateToPrevious: () => boolean;
 		navigateToNext: () => boolean;
@@ -30,8 +33,15 @@ export function ModuleFooter({
 }: ModuleFooterProps) {
 	const { getCurrentQuestionInfo, navigateToPrevious, navigateToNext } =
 		useModuleNavigation();
+	const pathname = usePathname();
+	const moduleId = pathname.includes("/handlungsbedarfe")
+		? "needForAction"
+		: pathname.includes("/machbarkeit")
+			? "feasibility"
+			: null;
 
-	const { isFirstQuestion, isLastQuestion } = getCurrentQuestionInfo();
+	const { isFirstQuestion, isLastQuestion, globalQuestionIndex } =
+		getCurrentQuestionInfo();
 
 	const handlePrevious = useCallback(() => {
 		const success = navigateToPrevious();
@@ -53,10 +63,14 @@ export function ModuleFooter({
 				onClick={onShowSynthesis}
 				variant="ghost"
 				disabled={isNextDisabled}
-				className="bg-secondary flex h-full w-18 items-center justify-center rounded-none"
+				className="bg-secondary z-[101] flex h-full w-18 items-center justify-center rounded-none"
 			>
 				<ListChecksIcon className="h-6 w-6 text-white" />
 			</Button>
+			{((globalQuestionIndex === 3 && moduleId === "needForAction") ||
+				(globalQuestionIndex === 2 && moduleId === "feasibility")) && (
+				<Tutorial type="synthesis" />
+			)}
 			<div className="flex w-full items-center justify-between p-2">
 				<Button variant="ghost" onClick={handlePrevious}>
 					<ArrowLeftIcon />

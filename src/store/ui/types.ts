@@ -18,6 +18,8 @@ export interface UiState {
 		questionIndices: Record<SectionId, number>;
 	} | null;
 	isSynthesisMode: boolean;
+	hideControlsTutorial: boolean | null;
+	hideSynthesisTutorial: boolean | null;
 }
 
 export interface UiActions {
@@ -46,4 +48,8 @@ export interface UiActions {
 	} | null;
 	setIsSynthesisMode: (isSynthesisMode: boolean) => void;
 	resetModuleState: () => void;
+	setTutorialState: (
+		hideControlsTutorial: boolean,
+		hideSynthesisTutorial: boolean,
+	) => void;
 }

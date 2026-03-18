@@ -10,6 +10,9 @@ import UploadDrawLayerButton from "@/components/UploadControls/UploadDrawLayerBu
 import { useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
 import { usePathname } from "next/navigation";
+import { Tutorial } from "../Modules/shared/Tutorial";
+import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 interface DrawControlsContainerProps {
 	projectId?: string;
@@ -24,8 +27,15 @@ export default function DrawControlsContainer({}: DrawControlsContainerProps) {
 	const isProjectStarter = pathname.includes("/project-starter");
 	const isModule =
 		pathname.includes("/handlungsbedarfe") || pathname.includes("/machbarkeit");
+	const moduleId = pathname.includes("/handlungsbedarfe")
+		? "needForAction"
+		: pathname.includes("/machbarkeit")
+			? "feasibility"
+			: null;
 
 	let controls: React.ReactNode = null;
+
+	const [isTutorialVisible, setIsTutorialVisible] = useState(false);
 
 	const currentQuestionConfig = layerConfig.find(
 		(config) => config.id === layerConfigId,
@@ -78,6 +88,19 @@ export default function DrawControlsContainer({}: DrawControlsContainerProps) {
 	if (!controls) return null;
 
 	return (
-		<div className="absolute right-4 bottom-8 z-48 flex gap-2">{controls}</div>
+		<div
+			className={cn("absolute right-4 bottom-8", isTutorialVisible && "z-[52]")}
+		>
+			<Tutorial type="controls" onVisibilityChange={setIsTutorialVisible} />
+			<div
+				className={cn(
+					"relative mt-2 flex gap-2",
+					isTutorialVisible && "z-[52]",
+					moduleId === "feasibility" && isTutorialVisible && "justify-center",
+				)}
+			>
+				{controls}
+			</div>
+		</div>
 	);
 }

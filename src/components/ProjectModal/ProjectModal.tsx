@@ -78,6 +78,7 @@ export default function ProjectModalWrapper({
 		name: existingProject?.name || "",
 		description: existingProject?.description || "",
 		useCase: existingProject?.useCase || UseCase.Individual,
+		hideTutorials: existingProject?.hideTutorials ?? false,
 	});
 	const [isSaving, setIsSaving] = useState(false);
 	const [isOpen, setIsOpen] = useState(true);
@@ -90,6 +91,7 @@ export default function ProjectModalWrapper({
 					name: project.name,
 					description: project.description,
 					useCase: project.useCase,
+					hideTutorials: project.hideTutorials,
 				});
 			}
 		}
@@ -141,6 +143,7 @@ export default function ProjectModalWrapper({
 					name: formData.name,
 					description: formData.description,
 					useCase: formData.useCase,
+					hideTutorials: formData.hideTutorials,
 				});
 
 				// setIsOpen(false);
@@ -150,6 +153,7 @@ export default function ProjectModalWrapper({
 					name: formData.name,
 					description: formData.description,
 					useCase: formData.useCase,
+					hideTutorials: formData.hideTutorials,
 				});
 				handleClose();
 			}

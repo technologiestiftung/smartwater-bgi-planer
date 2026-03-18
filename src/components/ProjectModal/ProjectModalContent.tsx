@@ -11,6 +11,7 @@ export interface ProjectFormData {
 	name: string;
 	description: string;
 	useCase: UseCase;
+	hideTutorials: boolean;
 }
 
 interface ProjectModalProps {
@@ -28,6 +29,7 @@ export default function ProjectModalContent({
 		name: initialData?.name || "",
 		description: initialData?.description || "",
 		useCase: initialData?.useCase || UseCase.Individual,
+		hideTutorials: initialData?.hideTutorials ?? false,
 	});
 
 	useEffect(() => {
@@ -38,7 +40,7 @@ export default function ProjectModalContent({
 
 	const handleFieldChange = (
 		field: keyof ProjectFormData,
-		value: string | UseCase,
+		value: string | UseCase | boolean,
 	) => {
 		setFormData((prev) => ({ ...prev, [field]: value }));
 	};
@@ -105,7 +107,13 @@ export default function ProjectModalContent({
 
 				<Field orientation="horizontal">
 					<div className="flex w-full items-center justify-center gap-3">
-						<Checkbox id="hide-tutorials" />
+						<Checkbox
+							id="hide-tutorials"
+							checked={formData.hideTutorials}
+							onCheckedChange={(checked) =>
+								handleFieldChange("hideTutorials", checked)
+							}
+						/>
 
 						<label
 							htmlFor="hide-tutorials"
