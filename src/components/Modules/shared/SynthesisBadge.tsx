@@ -45,8 +45,10 @@ export function SynthesisBadge({
 			className={`bg-neutral-light flex min-h-[24px] items-center gap-2 overflow-hidden rounded-sm text-sm font-medium transition-all hover:opacity-80`}
 		>
 			{answer !== undefined && (
-				<div
+				<button
+					type="button"
 					onClick={onToggle}
+					aria-pressed={isVisible}
 					className={cn(
 						`${getBackgroundColor()} flex items-center justify-center overflow-hidden p-1 text-white`,
 						!!answer && "cursor-pointer",
@@ -62,9 +64,10 @@ export function SynthesisBadge({
 						</div>
 					)}
 					{!answer && <div className="h-4 w-4" />}
-				</div>
+				</button>
 			)}
-			<span
+			<button
+				type="button"
 				className={cn(
 					answer === undefined ? "px-2" : "pr-2",
 					"h-6 cursor-pointer select-none hover:underline",
@@ -78,7 +81,7 @@ export function SynthesisBadge({
 				}}
 			>
 				{questionConfig.name}
-			</span>
+			</button>
 		</div>
 	);
 }
