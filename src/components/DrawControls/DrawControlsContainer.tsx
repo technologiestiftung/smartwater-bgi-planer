@@ -10,6 +10,7 @@ import UploadDrawLayerButton from "@/components/UploadControls/UploadDrawLayerBu
 import { useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
 import { usePathname } from "next/navigation";
+import { Tutorial } from "@/components/Tutorials/Tutorial";
 
 interface DrawControlsContainerProps {
 	projectId?: string;
@@ -18,6 +19,8 @@ interface DrawControlsContainerProps {
 export default function DrawControlsContainer({}: DrawControlsContainerProps) {
 	const pathname = usePathname();
 	const currentStepId = useUiStore((state) => state.currentStepId);
+	const showTutorial = useUiStore((state) => state.showTutorial);
+	const setTutorialState = useUiStore((state) => state.setTutorialState);
 	const layerConfigId = useLayersStore((state) => state.layerConfigId);
 	const layerConfig = useLayersStore((state) => state.layerConfig);
 
@@ -78,6 +81,18 @@ export default function DrawControlsContainer({}: DrawControlsContainerProps) {
 	if (!controls) return null;
 
 	return (
-		<div className="absolute right-4 bottom-8 z-48 flex gap-2">{controls}</div>
+		<div className="absolute right-4 bottom-8 z-[52]">
+			<Tutorial type="controls" />
+			<div
+				className="relative mt-2 flex justify-center gap-2"
+				onClick={() => {
+					if (showTutorial) {
+						setTutorialState(false);
+					}
+				}}
+			>
+				{controls}
+			</div>
+		</div>
 	);
 }

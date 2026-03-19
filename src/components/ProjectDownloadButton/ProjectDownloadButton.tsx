@@ -14,7 +14,7 @@ const ProjectDownloadButton: FC<ProjectDownloadButtonProps> = ({
 	projectId,
 }) => {
 	const [isDownloading, setIsDownloading] = useState(false);
-	const { getProject } = useProjectsStore();
+	const getProject = useProjectsStore((state) => state.getProject);
 
 	const handleDownload = async () => {
 		if (isDownloading) return;
