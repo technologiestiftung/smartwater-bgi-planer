@@ -147,7 +147,11 @@
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
 		"canDrawNotes": true,
-		"visibleLayerIds": ["ua_klimabewertung_2022:eb_ua_phk_vul_geb_demog_2022"],
+		"visibleLayerIds": [
+			"ua_klimabewertung_2022:ed_ua_phk_vul_gruenversorgung_2022",
+			"ua_klimabewertung_2022:ec_ua_phk_vul_nutz_2022",
+			"ua_klimabewertung_2022:eb_ua_phk_vul_demog_2022"
+		],
 		"legendSrc": "/legends/1h3.svg"
 	},
 	{
