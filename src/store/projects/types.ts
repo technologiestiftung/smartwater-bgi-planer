@@ -10,7 +10,6 @@ export interface Project {
 	name: string;
 	description: string;
 	useCase: UseCase;
-	hideTutorials: boolean;
 	createdAt: number;
 	updatedAt: number;
 }
