@@ -10,7 +10,7 @@ import UploadDrawLayerButton from "@/components/UploadControls/UploadDrawLayerBu
 import { useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
 import { usePathname } from "next/navigation";
-import { Tutorial } from "@/components/Modules/shared/Tutorial";
+import { Tutorial } from "@/components/Tutorials/Tutorial";
 
 interface DrawControlsContainerProps {
 	projectId?: string;
@@ -18,7 +18,9 @@ interface DrawControlsContainerProps {
 
 export default function DrawControlsContainer({}: DrawControlsContainerProps) {
 	const pathname = usePathname();
-	const { currentStepId, showTutorial, setTutorialState } = useUiStore();
+	const currentStepId = useUiStore((state) => state.currentStepId);
+	const showTutorial = useUiStore((state) => state.showTutorial);
+	const setTutorialState = useUiStore((state) => state.setTutorialState);
 	const layerConfigId = useLayersStore((state) => state.layerConfigId);
 	const layerConfig = useLayersStore((state) => state.layerConfig);
 

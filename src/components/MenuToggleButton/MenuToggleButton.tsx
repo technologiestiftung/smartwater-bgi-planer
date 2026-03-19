@@ -13,14 +13,15 @@ interface MenuToggleButtonProps {
 export function MenuToggleButton({ projectId }: MenuToggleButtonProps) {
 	const router = useRouter();
 	const pathname = usePathname();
-	const { setLastPath } = useProjectsStore();
-	const { setTutorialState, showTutorial } = useUiStore((state) => ({
-		setTutorialState: state.setTutorialState,
-		showTutorial: state.showTutorial,
-	}));
+	const setLastPath = useProjectsStore((state) => state.setLastPath);
+
+	const showTutorial = useUiStore((state) => state.showTutorial);
+	const setTutorialState = useUiStore((state) => state.setTutorialState);
+
+	const layerConfigId = useLayersStore((state) => state.layerConfigId);
+	const layerConfig = useLayersStore((state) => state.layerConfig);
 	const isModule =
 		pathname.includes("/handlungsbedarfe") || pathname.includes("/machbarkeit");
-	const { layerConfigId, layerConfig } = useLayersStore();
 	const currentQuestionConfig = layerConfig.find(
 		(config) => config.id === layerConfigId,
 	);

@@ -7,7 +7,7 @@ import {
 	ListChecksIcon,
 } from "@phosphor-icons/react";
 import { useCallback } from "react";
-import { Tutorial } from "./Tutorial";
+import { Tutorial } from "../../Tutorials/Tutorial";
 import { useUiStore } from "@/store";
 
 interface ModuleFooterProps {
@@ -35,7 +35,7 @@ export function ModuleFooter({
 
 	const { isFirstQuestion, isLastQuestion } = getCurrentQuestionInfo();
 
-	const { setTutorialState } = useUiStore();
+	const setTutorialState = useUiStore((state) => state.setTutorialState);
 
 	const handlePrevious = useCallback(() => {
 		const success = navigateToPrevious();
