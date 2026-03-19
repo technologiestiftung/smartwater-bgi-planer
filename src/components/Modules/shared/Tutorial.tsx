@@ -1,15 +1,26 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { useUiStore } from "@/store";
+import { useLayersStore, useUiStore } from "@/store";
 import Image from "next/image";
+import { useEffect, useMemo } from "react";
 
 interface TutorialProps {
 	type: "synthesis" | "controls";
 }
 
 export function Tutorial({ type }: TutorialProps) {
-	const { showTutorial, setTutorialState } = useUiStore();
+	const {
+		showTutorial,
+		setTutorialState,
+		showTutorialOnFirstQuestion,
+		setTutorialOnFirstQuestionState,
+	} = useUiStore();
+	const { layerConfigId, layerConfig } = useLayersStore();
+	const currentQuestionConfig = useMemo(
+		() => layerConfig.find((config: any) => config.id === layerConfigId),
+		[layerConfig, layerConfigId],
+	);
 
 	const renderContent = () => {
 		if (type === "controls") {
@@ -63,6 +74,24 @@ export function Tutorial({ type }: TutorialProps) {
 		/>
 	);
 
+	useEffect(() => {
+		if (
+			currentQuestionConfig &&
+			!showTutorialOnFirstQuestion &&
+			(currentQuestionConfig.canDrawNotes ||
+				currentQuestionConfig.canDrawPolygons ||
+				currentQuestionConfig.canDrawBTF)
+		) {
+			setTutorialOnFirstQuestionState(true);
+			setTutorialState(true);
+		}
+	}, [
+		currentQuestionConfig,
+		setTutorialState,
+		showTutorialOnFirstQuestion,
+		setTutorialOnFirstQuestionState,
+	]);
+
 	if (!showTutorial) return null;
 
 	return (
@@ -79,7 +108,7 @@ export function Tutorial({ type }: TutorialProps) {
 				)}
 			>
 				{type === "synthesis" && renderArrow()}
-				<div className="bg-white">
+				<div className="border-accent rounded-xs border border-4 bg-white">
 					<div className="mt-4 flex max-w-[395px] flex-col gap-2 p-4">
 						{renderContent()}
 					</div>

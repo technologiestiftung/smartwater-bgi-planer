@@ -19,6 +19,7 @@ export interface UiState {
 	} | null;
 	isSynthesisMode: boolean;
 	showTutorial: boolean;
+	showTutorialOnFirstQuestion: boolean;
 }
 
 export interface UiActions {
@@ -48,4 +49,7 @@ export interface UiActions {
 	setIsSynthesisMode: (isSynthesisMode: boolean) => void;
 	resetModuleState: () => void;
 	setTutorialState: (showTutorial: boolean) => void;
+	setTutorialOnFirstQuestionState: (
+		showTutorialOnFirstQuestion: boolean,
+	) => void;
 }

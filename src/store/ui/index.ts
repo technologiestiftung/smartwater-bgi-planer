@@ -32,6 +32,7 @@ const initialState: UiState = {
 	moduleSavedState: null,
 	isSynthesisMode: false,
 	showTutorial: false,
+	showTutorialOnFirstQuestion: false,
 };
 
 export const useUiStore = create<UiState & UiActions>((set, get) => ({
@@ -102,5 +103,9 @@ export const useUiStore = create<UiState & UiActions>((set, get) => ({
 	setTutorialState: (showTutorial) =>
 		set({
 			showTutorial,
+		}),
+	setTutorialOnFirstQuestionState: (showTutorialOnFirstQuestion) =>
+		set({
+			showTutorialOnFirstQuestion,
 		}),
 }));
