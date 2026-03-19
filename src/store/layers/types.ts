@@ -106,6 +106,7 @@ export interface LayerConfigItem {
 	canDrawBTF?: boolean;
 	canDrawNotes?: boolean;
 	legendSrc?: string;
+	legendTitle?: string;
 	isIntro?: boolean;
 	moduleNumber?: number;
 	moduleName?: string;

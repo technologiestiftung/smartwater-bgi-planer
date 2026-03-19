@@ -3,13 +3,22 @@
 
 import { SynthesisBadge } from "@/components/Modules/shared/SynthesisBadge";
 import { getModuleSteps } from "@/components/Modules/shared/moduleConfig";
+import { SectionId } from "@/lib/helpers/sectionIds";
 import { Button } from "@/components/ui/button";
+import { useProjectsStore } from "@/store";
 import { useMapReady } from "@/hooks/useMapReady";
 import { checkForQuestion } from "@/lib/helpers/questionCheck";
 import { useAnswersStore } from "@/store/answers";
 import { useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
-import { EyeIcon, EyeSlashIcon, XIcon } from "@phosphor-icons/react";
+import {
+	EyeIcon,
+	EyeSlashIcon,
+	XIcon,
+	ShovelIcon,
+	PencilRulerIcon,
+} from "@phosphor-icons/react";
+import { useRouter, useParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useShallow } from "zustand/react/shallow";
 
@@ -19,6 +28,7 @@ interface SynthesisViewProps {
 	description: string;
 	onBackToQuestions: () => void;
 	layerOverrides?: Record<string, string>;
+	onBackToSpecificQuestion: (questionId: string, sectionId: SectionId) => void;
 }
 
 export function SynthesisView({
@@ -26,6 +36,7 @@ export function SynthesisView({
 	synthesisViewId,
 	description,
 	onBackToQuestions,
+	onBackToSpecificQuestion,
 	layerOverrides = {},
 }: SynthesisViewProps) {
 	const answers = useAnswersStore((state) => state.answers);
@@ -33,6 +44,11 @@ export function SynthesisView({
 	const isMapReady = useMapReady();
 	const moduleSteps = getModuleSteps(moduleId);
 	const hasInitialized = useRef(false);
+	const router = useRouter();
+	const params = useParams<{ projectId?: string }>();
+	const getProject = useProjectsStore((state) => state.getProject);
+	const project = getProject();
+	const projectId = params?.projectId ?? project?.id;
 	const { layerConfig, layers, setLayerVisibility, applyConfigLayers } =
 		useLayersStore(
 			useShallow((state) => ({
@@ -113,6 +129,8 @@ export function SynthesisView({
 		relevantLayers.forEach((l) => setLayerVisibility(l.id!, !anyVisible));
 	};
 
+	const onNextModule = () => router.push(`/${projectId}/machbarkeit`);
+
 	return (
 		<div className="flex h-full w-full flex-col">
 			<div className="flex-1 overflow-y-auto px-6 pb-6">
@@ -134,6 +152,7 @@ export function SynthesisView({
 					const allFalse =
 						sectionAnswers.length > 0 &&
 						sectionAnswers.every((a) => a === false);
+					const anyAnswered = sectionAnswers.some((a) => a !== undefined);
 
 					const iconColor =
 						moduleId === "needForAction"
@@ -151,7 +170,9 @@ export function SynthesisView({
 					return (
 						<div key={step.id} className="my-6">
 							<div className="mb-3 flex items-center gap-2">
-								<div className={`${iconColor} rounded-full p-1`}>
+								<div
+									className={`${anyAnswered ? iconColor : "bg-neutral-light"} rounded-full p-1`}
+								>
 									{step.icon}
 								</div>
 								<h3 className="text-primary text-lg font-medium">
@@ -186,6 +207,7 @@ export function SynthesisView({
 											answer={answers[qId]}
 											onToggle={() => handleToggleLayer(qId)}
 											isVisible={isVisible}
+											onBackToSpecificQuestion={onBackToSpecificQuestion}
 										/>
 									);
 								})}
@@ -194,14 +216,30 @@ export function SynthesisView({
 					);
 				})}
 			</div>
-			<div className="border-muted bg-secondary shrink-0 border-t p-4">
+			<div className="border-muted bg-secondary flex shrink-0 border-t px-4">
 				<Button
 					onClick={onBackToQuestions}
-					className="text-md w-full text-white hover:text-white"
+					className="text-md my-4 flex-1 text-white hover:text-white"
 					size="lg"
 					variant="ghost"
 				>
-					<XIcon className="h-4 w-4" /> Zurück zu den Checkfragen
+					<XIcon className="h-4 w-4" />
+					zu den Checkfragen
+				</Button>
+				<div className="w-[1px] self-stretch bg-white" />
+				<Button
+					onClick={onNextModule}
+					className="text-md my-4 flex-1 text-white hover:text-white"
+					size="lg"
+					variant="ghost"
+					disabled={moduleId === "feasibility"}
+				>
+					{moduleId === "needForAction" ? (
+						<ShovelIcon className="h-4 w-4" />
+					) : (
+						<PencilRulerIcon className="h-4 w-4" />
+					)}
+					zu Modul {moduleId === "needForAction" ? "2" : "3"}
 				</Button>
 			</div>
 		</div>

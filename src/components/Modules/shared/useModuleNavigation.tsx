@@ -186,6 +186,61 @@ export function useModuleNavigation({
 		],
 	);
 
+	const navigateToQuestion = useCallback(
+		(questionId: string, sectionId?: SectionId) => {
+			// 1. Find the question in global list
+			const target = allQuestions.find((q) =>
+				sectionId
+					? q.questionId === questionId && q.sectionId === sectionId
+					: q.questionId === questionId,
+			);
+
+			if (!target) {
+				console.warn("Question not found:", { questionId, sectionId });
+				return false;
+			}
+
+			const targetSectionId = target.sectionId;
+
+			// 2. Change step if needed
+			if (targetSectionId !== currentStepId) {
+				goToStep(targetSectionId);
+			}
+
+			// 3. Find index inside section
+			const sectionQuestions =
+				steps.find((s: StepConfig) => s.id === targetSectionId)?.questions ??
+				[];
+
+			const targetIndex = sectionQuestions.findIndex(
+				(q: string) => q === target.questionId,
+			);
+
+			if (targetIndex === -1) {
+				console.warn("Question not found in section:", target);
+				return false;
+			}
+
+			// 4. Set state
+			setQuestionIndex(targetSectionId, targetIndex);
+
+			// 5. Same side effects as your other nav functions
+			resetDrawInteractions();
+			applyConfigLayers(target.questionId, true);
+
+			return true;
+		},
+		[
+			allQuestions,
+			currentStepId,
+			goToStep,
+			setQuestionIndex,
+			resetDrawInteractions,
+			applyConfigLayers,
+			steps,
+		],
+	);
+
 	const handleShowSynthesis = useCallback(() => {
 		const stepId = useUiStore.getState().currentStepId;
 		if (stepId) {
@@ -221,6 +276,7 @@ export function useModuleNavigation({
 		getCurrentQuestionInfo,
 		getCurrentSectionInfo,
 		navigateToNextQuestion,
+		navigateToQuestion,
 		navigateToPrevious,
 		navigateToNext,
 		handleShowSynthesis,
