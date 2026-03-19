@@ -2,7 +2,7 @@
 "use client";
 
 import { SynthesisBadge } from "@/components/Modules/shared/SynthesisBadge";
-import { getModuleSteps } from "@/components/Modules/shared/moduleConfig";
+import { getModuleSteps, SectionId } from "@/components/Modules/shared/moduleConfig";
 import { Button } from "@/components/ui/button";
 import { useProjectsStore } from "@/store";
 import { useMapReady } from "@/hooks/useMapReady";
@@ -27,7 +27,7 @@ interface SynthesisViewProps {
 	description: string;
 	onBackToQuestions: () => void;
 	layerOverrides?: Record<string, string>;
-	onBackToSpecificQuestion: (questionId: string, sectionId: string) => void;
+	onBackToSpecificQuestion: (questionId: string, sectionId: SectionId) => void;
 }
 
 export function SynthesisView({
