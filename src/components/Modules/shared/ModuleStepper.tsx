@@ -123,8 +123,6 @@ function ModuleStepperContent<TSectionId extends SectionId>({
 
 	const onBackToSpecificQuestion = useCallback(
 		(questionId: string, sectionId?: SectionId) => {
-			resetDrawInteractions();
-
 			const success = navigateToQuestion(questionId, sectionId);
 
 			if (!success) {
@@ -137,12 +135,7 @@ function ModuleStepperContent<TSectionId extends SectionId>({
 			setIsSynthesisMode(false);
 			setShowStepper(true);
 		},
-		[
-			navigateToQuestion,
-			resetDrawInteractions,
-			setIsSynthesisMode,
-			setShowStepper,
-		],
+		[navigateToQuestion, setIsSynthesisMode, setShowStepper],
 	);
 
 	const canProceed =

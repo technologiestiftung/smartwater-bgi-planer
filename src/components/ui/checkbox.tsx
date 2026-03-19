@@ -39,7 +39,11 @@ const Checkbox = React.forwardRef<
 			{...props}
 		>
 			<CheckboxPrimitive.Indicator className="flex items-center justify-center text-current">
-				<img src="/icons/checkbox-tick.svg" className="h-3.5 w-3.5" />
+				<img
+					src="/icons/checkbox-tick.svg"
+					className="h-3.5 w-3.5"
+					aria-hidden="true"
+				/>
 			</CheckboxPrimitive.Indicator>
 		</CheckboxPrimitive.Root>
 	);

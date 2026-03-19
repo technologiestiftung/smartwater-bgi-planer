@@ -78,6 +78,7 @@ export function Tutorial({ type }: TutorialProps) {
 	);
 
 	useEffect(() => {
+		if (type !== "controls") return;
 		if (
 			currentQuestionConfig &&
 			!showTutorialOnFirstQuestion &&
@@ -89,6 +90,7 @@ export function Tutorial({ type }: TutorialProps) {
 			setTutorialState(true);
 		}
 	}, [
+		type,
 		currentQuestionConfig,
 		setTutorialState,
 		showTutorialOnFirstQuestion,
