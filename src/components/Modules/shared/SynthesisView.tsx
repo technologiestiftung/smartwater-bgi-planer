@@ -2,7 +2,8 @@
 "use client";
 
 import { SynthesisBadge } from "@/components/Modules/shared/SynthesisBadge";
-import { getModuleSteps, SectionId } from "@/components/Modules/shared/moduleConfig";
+import { getModuleSteps } from "@/components/Modules/shared/moduleConfig";
+import { SectionId } from "@/lib/helpers/sectionIds";
 import { Button } from "@/components/ui/button";
 import { useProjectsStore } from "@/store";
 import { useMapReady } from "@/hooks/useMapReady";
