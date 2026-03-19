@@ -1,3 +1,5 @@
+"use client";
+
 import { useMapStore } from "@/store/map";
 
 export const useMapReady = () => {

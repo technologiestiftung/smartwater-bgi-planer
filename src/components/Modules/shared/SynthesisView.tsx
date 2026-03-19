@@ -4,9 +4,9 @@
 import { SynthesisBadge } from "@/components/Modules/shared/SynthesisBadge";
 import { getModuleSteps } from "@/components/Modules/shared/moduleConfig";
 import { Button } from "@/components/ui/button";
-import { useMapReady } from "@/hooks/use-map-ready";
-import { checkForQuestion } from "@/lib/helpers/questions";
 import { useProjectsStore } from "@/store";
+import { useMapReady } from "@/hooks/useMapReady";
+import { checkForQuestion } from "@/lib/helpers/questionCheck";
 import { useAnswersStore } from "@/store/answers";
 import { useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";

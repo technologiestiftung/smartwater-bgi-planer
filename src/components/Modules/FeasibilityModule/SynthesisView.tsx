@@ -1,7 +1,7 @@
 "use client";
 
 import { SynthesisView as SharedSynthesisView } from "@/components/Modules/shared/SynthesisView";
-import { useLayerFilter } from "@/hooks/use-layer-filter";
+import { useLayerFilter } from "@/hooks/useLayerFilter";
 
 const FEASIBILITY_FILTER = (feature: any) => {
 	const type = feature.get("noteType");

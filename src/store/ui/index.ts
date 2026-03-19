@@ -25,7 +25,7 @@ const initialState: UiState = {
 	isDrawing: false,
 	isBlockAreaSelecting: false,
 	isDrawingNote: false,
-	isAdditionalLayerTreeVisible: false,
+	isLayerTreeVisible: false,
 	showStepper: true,
 	moduleCurrentSectionId: "heavyRain",
 	moduleQuestionIndices: getInitialModuleQuestionIndices(),
@@ -53,8 +53,7 @@ export const useUiStore = create<UiState & UiActions>((set, get) => ({
 			isBlockAreaSelecting: false,
 			isDrawingNote: false,
 		}),
-	setIsAdditionalLayerTreeVisible: (isVisible) =>
-		set({ isAdditionalLayerTreeVisible: isVisible }),
+	setIsLayerTreeVisible: (isVisible) => set({ isLayerTreeVisible: isVisible }),
 	setShowStepper: (show) => set({ showStepper: show }),
 	// Module navigation actions
 	setModuleCurrentSection: (sectionId) =>

@@ -4,7 +4,7 @@ import { useMapStore } from "@/store/map";
 import Map from "ol/Map";
 import View from "ol/View";
 import React, { FC, useEffect, useRef } from "react";
-import "../../../../node_modules/ol/ol.css";
+import "../../../../../node_modules/ol/ol.css";
 
 interface OlMapProps {
 	children?: React.ReactNode;

@@ -477,14 +477,6 @@
 		"styleId": "feasibilityLayers"
 	},
 	{
-		"id": "module2_notes",
-		"name": "Notizen",
-		"crs": "urn:ogc:def:crs:EPSG::25833",
-		"typ": "GEOJSON",
-		"gfiAttributes": "showAll",
-		"styleId": "module2Notes"
-	},
-	{
 		"id": "measures_seepage",
 		"name": "Maßnahmen - Versickerung",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
@@ -531,14 +523,6 @@
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
 		"styleId": "measuresLayers"
-	},
-	{
-		"id": "module3_notes",
-		"name": "Notizen",
-		"crs": "urn:ogc:def:crs:EPSG::25833",
-		"typ": "GEOJSON",
-		"gfiAttributes": "showAll",
-		"styleId": "module3Notes"
 	},
 	{
 		"id": "THEME MAPS"

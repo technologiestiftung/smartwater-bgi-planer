@@ -5,9 +5,9 @@ import StepContent from "@/components/Modules/shared/StepContent";
 import { useModuleNavigation } from "@/components/Modules/shared/useModuleNavigation";
 import { Spinner } from "@/components/ui/spinner";
 import { useVerticalStepper } from "@/components/VerticalStepper";
+import { SectionId } from "@/lib/helpers/sectionIds";
 import { useLayersStore } from "@/store";
 import { useAnswersStore } from "@/store/answers";
-import { SectionId } from "@/types/sectionIds";
 import { useCallback, useMemo } from "react";
 
 interface SectionContentProps {

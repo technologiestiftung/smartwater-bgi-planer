@@ -38,3 +38,23 @@ export interface AddressFeature {
 	};
 	bbox?: [number, number, number, number];
 }
+
+export interface ModuleStepConfig {
+	id: string;
+	icon: string;
+	title: string;
+	questions: string[];
+	displayInSynthesis?: boolean;
+}
+
+export interface ModuleConfig {
+	id: string;
+	order: number;
+	title: string;
+	description: string;
+	steps: ModuleStepConfig[];
+}
+
+export interface ModulesConfigFile {
+	modules: ModuleConfig[];
+}

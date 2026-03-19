@@ -1,6 +1,6 @@
 "use client";
 
-import { createLayerByType } from "@/components/Map/LayerInitializer/shared/layerFactory";
+import { createLayerByType } from "@/components/Map/Initializer/LayerInitializer/shared/layerFactory";
 import {
 	createManagedLayer,
 	createManagedLayerFromConfig,

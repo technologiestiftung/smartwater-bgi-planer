@@ -9,7 +9,7 @@ const initialState: MapState = {
 	initialConfig: null,
 	isConfigReady: false,
 	isReady: false,
-	hasError: false,
+	hasMapError: false,
 	errorMessage: null,
 	userLocation: {
 		coordinates: null,
@@ -17,6 +17,7 @@ const initialState: MapState = {
 	},
 	hasHydrated: false,
 	resetId: 0,
+	mapView: null,
 };
 
 export const useMapStore = create<MapState & MapActions>()(
@@ -34,11 +35,12 @@ export const useMapStore = create<MapState & MapActions>()(
 						Object.assign(mapView, updates);
 					}),
 				),
+			setMapView: (mapView) => set({ mapView }),
 			populateMap: (map) => set({ map }),
 			removeMap: () => set({ map: null, isReady: false }),
 			setMapReady: (ready) => set({ isReady: ready }),
-			setMapError: (hasError, errorMessage) =>
-				set({ hasError, errorMessage: errorMessage || null }),
+			setMapError: (hasMapError, errorMessage) =>
+				set({ hasMapError, errorMessage: errorMessage || null }),
 			setUserLocation: (userLocation) => set({ userLocation }),
 			setHasHydrated: (state) => set({ hasHydrated: state }),
 			resetMapState: () => {
@@ -59,9 +61,8 @@ export const useMapStore = create<MapState & MapActions>()(
 		{
 			name: "map-storage",
 			partialize: (state) => ({
-				config: state.config,
+				mapView: state.mapView,
 				userLocation: state.userLocation,
-				// Don't persist resetId - it's only for runtime
 			}),
 			onRehydrateStorage: () => (state) => {
 				state?.setHasHydrated(true);

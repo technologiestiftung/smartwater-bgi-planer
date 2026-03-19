@@ -8,6 +8,7 @@ interface ConfigManagerProps {}
 const ConfigManager: FC<ConfigManagerProps> = ({}) => {
 	const updateConfig = useMapStore((state) => state.updateConfig);
 	const map = useMapStore((state) => state.map);
+	const setMapView = useMapStore((state) => state.setMapView);
 
 	useEffect(() => {
 		if (!map) return;
@@ -26,6 +27,7 @@ const ConfigManager: FC<ConfigManagerProps> = ({}) => {
 						startCenter: newCenter,
 						startZoomLevel: newZoom,
 					});
+					setMapView({ startCenter: newCenter, startZoomLevel: newZoom });
 				}
 			}, 1000);
 		};
@@ -38,7 +40,7 @@ const ConfigManager: FC<ConfigManagerProps> = ({}) => {
 			view.un("change:center", handleViewChange);
 			view.un("change:resolution", handleViewChange);
 		};
-	}, [map, updateConfig]);
+	}, [map, updateConfig, setMapView]);
 
 	return null;
 };

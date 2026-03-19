@@ -6,7 +6,7 @@ import { useMapStore } from "@/store/map";
 import { CheckIcon, TrashIcon, XCircleIcon } from "@phosphor-icons/react";
 import { FC, useEffect, useState } from "react";
 
-interface NoteCardProps {
+interface FeatureNoteCardProps {
 	layerId?: string;
 	features?: any;
 	onClose?: () => void;
@@ -22,7 +22,11 @@ const getFeatureData = (feature: any) => {
 	return properties;
 };
 
-const NoteCard: FC<NoteCardProps> = ({ layerId, features, onClose }) => {
+const FeatureNoteCard: FC<FeatureNoteCardProps> = ({
+	layerId,
+	features,
+	onClose,
+}) => {
 	const [featureProperties, setFeatureProperties] = useState<any>(null);
 	const [note, setNote] = useState("");
 	const map = useMapStore((state) => state.map);
@@ -105,4 +109,4 @@ const NoteCard: FC<NoteCardProps> = ({ layerId, features, onClose }) => {
 	);
 };
 
-export default NoteCard;
+export default FeatureNoteCard;
