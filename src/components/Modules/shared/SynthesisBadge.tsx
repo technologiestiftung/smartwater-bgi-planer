@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { useLayersStore } from "@/store/layers";
 import { EyeIcon, EyeSlashIcon } from "@phosphor-icons/react";
 import { getModuleSteps } from "./moduleConfig";
+import type { SectionId } from "./moduleConfig";
 import { usePathname } from "next/navigation";
 
 interface SynthesisBadgeProps {
@@ -11,7 +12,7 @@ interface SynthesisBadgeProps {
 	answer: boolean | null;
 	onToggle: () => void;
 	isVisible: boolean;
-	onBackToSpecificQuestion: (questionId: string, sectionId: string) => void;
+	onBackToSpecificQuestion: (questionId: string, sectionId: SectionId) => void;
 }
 
 export function SynthesisBadge({
