@@ -17,7 +17,6 @@ interface ModuleFooterProps {
 		getCurrentQuestionInfo: () => {
 			isFirstQuestion: boolean;
 			isLastQuestion: boolean;
-			globalQuestionIndex: number;
 		};
 		navigateToPrevious: () => boolean;
 		navigateToNext: () => boolean;
