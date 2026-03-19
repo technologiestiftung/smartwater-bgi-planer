@@ -16,7 +16,7 @@ const Checkbox = React.forwardRef<
 				"aspect-square size-5 shrink-0 rounded-xs",
 
 				// borders & colors
-				"border-foreground text-foreground border border-2",
+				"border-foreground text-foreground border-2",
 
 				// background
 				"dark:bg-input/30",

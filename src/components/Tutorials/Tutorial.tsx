@@ -111,7 +111,7 @@ export function Tutorial({ type }: TutorialProps) {
 				)}
 			>
 				{type === "synthesis" && renderArrow()}
-				<div className="border-accent rounded-xs border border-4 bg-white">
+				<div className="border-accent rounded-xs border-4 bg-white">
 					<div className="flex max-w-[395px] flex-col gap-2 p-4">
 						{renderContent()}
 					</div>
