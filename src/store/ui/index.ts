@@ -31,8 +31,7 @@ const initialState: UiState = {
 	moduleQuestionIndices: getInitialModuleQuestionIndices(),
 	moduleSavedState: null,
 	isSynthesisMode: false,
-	hideControlsTutorial: null,
-	hideSynthesisTutorial: null,
+	showTutorial: false,
 };
 
 export const useUiStore = create<UiState & UiActions>((set, get) => ({
@@ -101,9 +100,8 @@ export const useUiStore = create<UiState & UiActions>((set, get) => ({
 			moduleSavedState: null,
 			isSynthesisMode: false,
 		}),
-	setTutorialState: (hideControlsTutorial, hideSynthesisTutorial) =>
+	setTutorialState: (showTutorial) =>
 		set({
-			hideControlsTutorial,
-			hideSynthesisTutorial,
+			showTutorial,
 		}),
 }));

@@ -11,8 +11,6 @@ import { useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
 import { usePathname } from "next/navigation";
 import { Tutorial } from "../Modules/shared/Tutorial";
-import { useState } from "react";
-import { cn } from "@/lib/utils";
 
 interface DrawControlsContainerProps {
 	projectId?: string;
@@ -20,22 +18,15 @@ interface DrawControlsContainerProps {
 
 export default function DrawControlsContainer({}: DrawControlsContainerProps) {
 	const pathname = usePathname();
-	const currentStepId = useUiStore((state) => state.currentStepId);
+	const { currentStepId, showTutorial, setTutorialState } = useUiStore();
 	const layerConfigId = useLayersStore((state) => state.layerConfigId);
 	const layerConfig = useLayersStore((state) => state.layerConfig);
 
 	const isProjectStarter = pathname.includes("/project-starter");
 	const isModule =
 		pathname.includes("/handlungsbedarfe") || pathname.includes("/machbarkeit");
-	const moduleId = pathname.includes("/handlungsbedarfe")
-		? "needForAction"
-		: pathname.includes("/machbarkeit")
-			? "feasibility"
-			: null;
 
 	let controls: React.ReactNode = null;
-
-	const [isTutorialVisible, setIsTutorialVisible] = useState(false);
 
 	const currentQuestionConfig = layerConfig.find(
 		(config) => config.id === layerConfigId,
@@ -88,20 +79,15 @@ export default function DrawControlsContainer({}: DrawControlsContainerProps) {
 	if (!controls) return null;
 
 	return (
-		<div
-			className={cn("absolute right-4 bottom-8", isTutorialVisible && "z-[52]")}
-		>
-			<Tutorial
-				key={`controls-${currentStepId}-${layerConfigId}`}
-				type="controls"
-				onVisibilityChange={setIsTutorialVisible}
-			/>
+		<div className="absolute right-4 bottom-8 z-[52]">
+			<Tutorial type="controls" />
 			<div
-				className={cn(
-					"relative mt-2 flex gap-2",
-					isTutorialVisible && "z-[52]",
-					moduleId === "feasibility" && isTutorialVisible && "justify-center",
-				)}
+				className="relative mt-2 flex justify-center gap-2"
+				onClick={() => {
+					if (showTutorial) {
+						setTutorialState(false);
+					}
+				}}
 			>
 				{controls}
 			</div>

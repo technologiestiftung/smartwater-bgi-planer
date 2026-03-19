@@ -1,49 +1,15 @@
 "use client";
 
-import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
-import { useLayersStore, useProjectsStore, useUiStore } from "@/store";
-import { XCircleIcon } from "@phosphor-icons/react";
+import { useUiStore } from "@/store";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
 
 interface TutorialProps {
 	type: "synthesis" | "controls";
-	onVisibilityChange?: (visible: boolean) => void;
-	test?: boolean;
 }
 
-export function Tutorial({ type, onVisibilityChange, test }: TutorialProps) {
-	const pathname = usePathname();
-	const {
-		hideControlsTutorial,
-		hideSynthesisTutorial,
-		setTutorialState,
-		isSynthesisMode,
-	} = useUiStore();
-	const { getProject } = useProjectsStore();
-	const project = getProject();
-	const hideTutorials = project?.hideTutorials ?? false;
-	const [show, setShow] = useState(true);
-	const takeUIStore =
-		type === "controls" ? hideControlsTutorial : hideSynthesisTutorial;
-	const [hideOnNext, setHideOnNext] = useState(takeUIStore ?? false);
-	const layerConfigId = useLayersStore((state) => state.layerConfigId);
-	const layerConfig = useLayersStore((state) => state.layerConfig);
-	const currentQuestionConfig = layerConfig.find(
-		(config) => config.id === layerConfigId,
-	);
-	const isProjectStarter = pathname.includes("/project-starter");
-	const showTutorial =
-		!hideTutorials &&
-		!currentQuestionConfig?.id?.includes("starter_question") &&
-		!currentQuestionConfig?.isIntro &&
-		!currentQuestionConfig?.id?.startsWith("start_view") &&
-		!isProjectStarter &&
-		!takeUIStore &&
-		!isSynthesisMode &&
-		show;
+export function Tutorial({ type }: TutorialProps) {
+	const { showTutorial, setTutorialState } = useUiStore();
 
 	const renderContent = () => {
 		if (type === "controls") {
@@ -92,77 +58,30 @@ export function Tutorial({ type, onVisibilityChange, test }: TutorialProps) {
 			height={type === "synthesis" ? 32 : 16}
 			className={cn(
 				"relative shrink-0 self-end object-contain",
-				type === "synthesis"
-					? "z-[52] translate-y-[6.5px] transform"
-					: "mx-auto",
+				type === "synthesis" ? "translate-y-[6.5px] transform" : "mx-auto",
 			)}
 		/>
 	);
 
-	useEffect(() => {
-		// setShow(true);
-		if (hideOnNext) {
-			if (type === "controls") {
-				setTutorialState(true, hideSynthesisTutorial ?? false);
-			} else {
-				setTutorialState(hideControlsTutorial ?? false, true);
-			}
-		}
-	}, [
-		hideOnNext,
-		type,
-		hideControlsTutorial,
-		hideSynthesisTutorial,
-		setTutorialState,
-	]);
-
-	useEffect(() => {
-		onVisibilityChange?.(showTutorial);
-	}, [showTutorial, onVisibilityChange]);
-
-	if (!showTutorial && !test) return null;
+	if (!showTutorial) return null;
 
 	return (
 		<>
+			{type === "synthesis" && (
+				<div
+					className="fixed inset-0 bg-black/58"
+					onClick={() => setTutorialState(false)}
+				/>
+			)}
 			<div
 				className={cn(
-					"fixed inset-0 bg-black/58",
-					type === "synthesis" ? "z-[100]" : "z-40",
-				)}
-				onClick={() => setShow(false)}
-			/>
-			<div
-				className={cn(
-					type === "synthesis"
-						? "absolute bottom-7 left-24 z-[101] flex"
-						: "relative z-[101]",
+					type === "synthesis" ? "absolute bottom-7 left-24 flex" : "relative",
 				)}
 			>
 				{type === "synthesis" && renderArrow()}
 				<div className="bg-white">
-					<div className="border-muted relative flex h-10 shrink-0 items-center border-b px-6">
-						<div
-							className="bg-secondary absolute top-0 right-0 flex size-10 cursor-pointer items-center justify-center"
-							onClick={() => setShow(false)}
-						>
-							<XCircleIcon className="size-5 text-white" />
-						</div>
-					</div>
 					<div className="mt-4 flex max-w-[395px] flex-col gap-2 p-4">
 						{renderContent()}
-						<div className="mt-2 flex w-full items-center gap-3">
-							<Checkbox
-								id="hide-tutorial"
-								checked={hideOnNext}
-								onCheckedChange={(checked: boolean) => setHideOnNext(checked)}
-							/>
-							<label
-								htmlFor="hide-tutorial"
-								className="text-dark cursor-pointer text-sm font-light italic select-none"
-							>
-								Hinweis nicht mehr anzeigen
-							</label>
-						</div>
 					</div>
 				</div>
 				{type === "controls" && renderArrow()}
