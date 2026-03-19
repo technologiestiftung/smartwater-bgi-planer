@@ -76,11 +76,11 @@
 					"type": "folder",
 					"elements": [
 						{
-							"id": "ua_srhk:da_fr_aussergewoehnlich",
+							"id": "ua_srhk:db_fliessgeschw_aussergew_kostra",
 							"visibility": false
 						},
 						{
-							"id": "ua_srhk:db_fliessgeschw_aussergew_kostra",
+							"id": "ua_srhk:da_fr_aussergewoehnlich",
 							"visibility": false
 						},
 						{
