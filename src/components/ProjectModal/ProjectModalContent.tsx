@@ -37,7 +37,7 @@ export default function ProjectModalContent({
 
 	const handleFieldChange = (
 		field: keyof ProjectFormData,
-		value: string | UseCase | boolean,
+		value: string | UseCase,
 	) => {
 		setFormData((prev) => ({ ...prev, [field]: value }));
 	};
