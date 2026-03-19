@@ -1,10 +1,10 @@
 "use client";
 
-import { SynthesisView as SharedSynthesisView } from "@/components/Modules/shared/SynthesisView";
+import { SynthesisView as SharedSynthesisView, SectionId } from "@/components/Modules/shared/SynthesisView";
 
 interface SynthesisViewProps {
 	onBackToQuestions: () => void;
-	onBackToSpecificQuestion: (questionId: string, sectionId: string) => void;
+	onBackToSpecificQuestion: (questionId: string, sectionId: SectionId) => void;
 }
 
 export function SynthesisView({
