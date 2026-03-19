@@ -41,12 +41,17 @@ export function MenuToggleButton({ projectId }: MenuToggleButtonProps) {
 						{showTutorial && (
 							<span className="bg-accent/80 absolute inset-0 animate-ping rounded-full [animation-duration:1s] [animation-fill-mode:forwards] [animation-iteration-count:3]" />
 						)}
-						<div
+						<button
+							type="button"
 							className="bg-accent flex size-8 cursor-pointer items-center justify-center rounded-full"
 							onClick={() => setTutorialState(!showTutorial)}
+							aria-label={showTutorial ? "Hide tutorial" : "Show tutorial"}
 						>
-							<InfoIcon className="text-neutral-dark size-6 cursor-pointer" />
-						</div>
+							<InfoIcon
+								className="text-neutral-dark size-6 cursor-pointer"
+								aria-hidden="true"
+							/>
+						</button>
 					</div>
 				)}
 			<div className="relative">
