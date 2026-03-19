@@ -3,8 +3,8 @@
 import ConfirmButton from "@/components/ConfirmButton/ConfirmButton";
 import { RichTextWithLinks } from "@/components/RichTextWithLinks/RichTextWithLinks";
 import { Button } from "@/components/ui/button";
-import { useLayerArea } from "@/hooks/use-layer-area";
-import { useLayerFeatures } from "@/hooks/use-layer-features";
+import { useLayerArea } from "@/hooks/useLayerArea";
+import { useLayerFeatures } from "@/hooks/useLayerFeatures";
 import { LayerConfigItem } from "@/store/layers/types";
 import { LAYER_IDS } from "@/types/shared";
 import { PlayIcon } from "@phosphor-icons/react";

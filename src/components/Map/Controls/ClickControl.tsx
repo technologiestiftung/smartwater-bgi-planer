@@ -1,6 +1,6 @@
 "use client";
 
-import FeatureModal from "@/components/FeatureDisplay/FeatureModal";
+import FeatureDetailsModal from "@/components/MapInteraction/FeatureDetailsModal";
 import { fetchFeatureInfo } from "@/lib/helpers/wmsFeatureInfo";
 import { useMapStore } from "@/store/map";
 import { useUiStore } from "@/store/ui";
@@ -319,7 +319,7 @@ const ClickControl: FC<ClickControlProps> = ({
 			</div>
 
 			{selection?.displayMode === "modal" && (
-				<FeatureModal
+				<FeatureDetailsModal
 					attributes={
 						selection.feature?.getProperties
 							? selection.feature.getProperties()

@@ -30,13 +30,18 @@ export const exportLayerAsGeoJSON = (
 	}
 
 	const features = source.getFeatures();
-	if (features.length === 0) return null;
 
 	try {
-		const geojsonObject = format.writeFeaturesObject(features, {
-			featureProjection: map.getView().getProjection().getCode(),
-			dataProjection: "EPSG:4326",
-		}) as GeoJSONWithMetadata;
+		const geojsonObject: GeoJSONWithMetadata =
+			features.length > 0
+				? (format.writeFeaturesObject(features, {
+						featureProjection: map.getView().getProjection().getCode(),
+						dataProjection: "EPSG:4326",
+					}) as GeoJSONWithMetadata)
+				: {
+						type: "FeatureCollection",
+						features: [],
+					};
 
 		if (metadata) {
 			geojsonObject.metadata = metadata;

@@ -13,9 +13,9 @@ import {
 	useVerticalStepper,
 	VerticalStepper,
 } from "@/components/VerticalStepper";
-import { useLayerArea } from "@/hooks/use-layer-area";
-import { useLayerFeatures } from "@/hooks/use-layer-features";
-import { useMapReady } from "@/hooks/use-map-ready";
+import { useLayerArea } from "@/hooks/useLayerArea";
+import { useLayerFeatures } from "@/hooks/useLayerFeatures";
+import { useMapReady } from "@/hooks/useMapReady";
 import { useFilesStore } from "@/store/files";
 import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";

@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { ensureVectorLayer, fitMapToExtent } from "@/lib/helpers/ol";
 import { useMapStore } from "@/store/map";
-import { LAYER_IDS } from "@/types";
+import { LAYER_IDS } from "@/types/shared";
 import Image from "next/image";
 import { FC, useCallback } from "react";
 

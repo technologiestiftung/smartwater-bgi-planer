@@ -1,9 +1,9 @@
 "use client";
 
-import AdditionalLayerTree from "@/components/Map/AdditionalLayerTree/AdditionalLayerTree";
 import BaselayerSwitch from "@/components/Map/BaselayerSwitch/BaselayerSwitch";
 import GeolocationControl from "@/components/Map/Controls/MapNavigation/GeolocationControl";
 import ZoomControl from "@/components/Map/Controls/MapNavigation/ZoomControl";
+import LayerTree from "@/components/Map/LayerTree/LayerTree";
 import { useUiStore } from "@/store/ui";
 import { FC, useCallback, useRef } from "react";
 import ProjectBoundaryControl from "./ProjectBoundaryControl";
@@ -15,8 +15,8 @@ interface MapNavigationContainerProps {
 const MapNavigationContainer: FC<MapNavigationContainerProps> = ({
 	onGeolocate,
 }) => {
-	const setIsAdditionalLayerTreeVisible = useUiStore(
-		(state) => state.setIsAdditionalLayerTreeVisible,
+	const setIsLayerTreeVisible = useUiStore(
+		(state) => state.setIsLayerTreeVisible,
 	);
 	const enterTimeoutRef = useRef<number | null>(null);
 	const leaveTimeoutRef = useRef<number | null>(null);
@@ -30,9 +30,9 @@ const MapNavigationContainer: FC<MapNavigationContainerProps> = ({
 			clearTimeout(enterTimeoutRef.current);
 		}
 		enterTimeoutRef.current = window.setTimeout(() => {
-			setIsAdditionalLayerTreeVisible(true);
+			setIsLayerTreeVisible(true);
 		}, 300);
-	}, [setIsAdditionalLayerTreeVisible]);
+	}, [setIsLayerTreeVisible]);
 
 	const handleMouseLeave = useCallback(() => {
 		if (enterTimeoutRef.current) {
@@ -43,9 +43,9 @@ const MapNavigationContainer: FC<MapNavigationContainerProps> = ({
 			clearTimeout(leaveTimeoutRef.current);
 		}
 		leaveTimeoutRef.current = window.setTimeout(() => {
-			setIsAdditionalLayerTreeVisible(false);
+			setIsLayerTreeVisible(false);
 		}, 1000);
-	}, [setIsAdditionalLayerTreeVisible]);
+	}, [setIsLayerTreeVisible]);
 
 	return (
 		<div className="absolute bottom-6 left-4 z-10 flex items-end gap-2">
@@ -59,7 +59,7 @@ const MapNavigationContainer: FC<MapNavigationContainerProps> = ({
 					onMouseLeave={handleMouseLeave}
 				>
 					<BaselayerSwitch />
-					<AdditionalLayerTree />
+					<LayerTree />
 				</div>
 			</div>
 		</div>

@@ -1,10 +1,7 @@
 "use client";
 
-import {
-	formatArea,
-	formatLength,
-} from "@/components/DrawControls/shared/drawHelpers";
 import { Button } from "@/components/ui/button";
+import { formatArea, formatLength } from "@/lib/helpers/ol/format";
 import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";
 import { PolygonIcon } from "@phosphor-icons/react";

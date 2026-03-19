@@ -1,7 +1,7 @@
 "use server";
 
 import { sanitizeAddressInput } from "@/lib/helpers/sanitizer";
-import { AddressFeature } from "@/types";
+import { AddressFeature } from "@/types/shared";
 
 const DEFAULT_LAT = "52.5";
 const DEFAULT_LON = "13.4";

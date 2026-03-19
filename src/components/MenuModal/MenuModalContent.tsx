@@ -4,7 +4,7 @@ import MenuModule from "@/components/MenuModal/MenuModule";
 import modulesData from "@/components/Modules/modules.json";
 import ProjectDownloadButton from "@/components/ProjectDownloadButton/ProjectDownloadButton";
 import { Button } from "@/components/ui/button";
-import { checkForQuestion } from "@/lib/helpers/questions";
+import { checkForQuestion } from "@/lib/helpers/questionCheck";
 import { useAnswersStore } from "@/store";
 import { useProjectsStore } from "@/store/projects";
 import {

@@ -1,8 +1,8 @@
 "use client";
 
-import { useLayerFeatures } from "@/hooks/use-layer-features";
+import { useLayerFeatures } from "@/hooks/useLayerFeatures";
+import { SectionId } from "@/lib/helpers/sectionIds";
 import { useUiStore } from "@/store/ui";
-import { SectionId } from "@/types/sectionIds";
 import { useCallback } from "react";
 
 export function useStepValid({

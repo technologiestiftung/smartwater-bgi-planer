@@ -1,26 +1,7 @@
 import { StepConfig } from "@/components/VerticalStepper";
 import { getIconComponent } from "@/lib/helpers/iconMap";
+import { ModuleConfig, ModulesConfigFile } from "@/types/shared";
 import modulesConfig from "../modules.json";
-
-interface ModuleStepConfig {
-	id: string;
-	icon: string;
-	title: string;
-	questions: string[];
-	displayInSynthesis?: boolean;
-}
-
-interface ModuleConfig {
-	id: string;
-	order: number;
-	title: string;
-	description: string;
-	steps: ModuleStepConfig[];
-}
-
-interface ModulesConfigFile {
-	modules: ModuleConfig[];
-}
 
 export function getModuleConfig(moduleId: string): ModuleConfig | undefined {
 	const config = modulesConfig as ModulesConfigFile;

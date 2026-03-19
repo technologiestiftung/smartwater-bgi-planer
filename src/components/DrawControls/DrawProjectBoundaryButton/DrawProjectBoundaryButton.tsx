@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useLayerReady } from "@/hooks/use-layer-ready";
+import { useLayerReady } from "@/hooks/useLayerReady";
 import { getLayerById } from "@/lib/helpers/ol";
 import { performProjectBoundaryIntersection } from "@/lib/helpers/projectBoundary";
 import { useMapStore } from "@/store/map";

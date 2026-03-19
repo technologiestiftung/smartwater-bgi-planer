@@ -1,7 +1,9 @@
-import FeatureModal from "@/components/FeatureDisplay/FeatureModal";
-import FeatureTooltip from "@/components/FeatureDisplay/FeatureTooltip";
-import FeatureMenu from "@/components/FeatureMenu/FeatureMenu";
-import NoteCard from "@/components/NoteCard/NoteCard";
+"use client";
+
+import FeatureActionMenu from "@/components/MapInteraction/FeatureActionMenu";
+import FeatureDetailsModal from "@/components/MapInteraction/FeatureDetailsModal";
+import FeatureNoteCard from "@/components/MapInteraction/FeatureNoteCard";
+import FeatureTooltip from "@/components/MapInteraction/FeatureTooltip";
 import { useLayersStore } from "@/store/layers";
 import { useCallback, useMemo } from "react";
 
@@ -29,7 +31,6 @@ export const useClickControlConfig = () => {
 		return currentConfig?.canQueryFeatures || [];
 	}, [currentConfig]);
 
-	// Alle Layer IDs zusammen für das Interface
 	const layerIds = useMemo(() => {
 		return [...vectorLayerIds, ...wmsLayerIds];
 	}, [vectorLayerIds, wmsLayerIds]);
@@ -38,20 +39,28 @@ export const useClickControlConfig = () => {
 		(feature: any, layerId: string, onClose: () => void) => {
 			if (layerId === "module1_notes") {
 				return (
-					<NoteCard features={feature} layerId={layerId} onClose={onClose} />
+					<FeatureNoteCard
+						features={feature}
+						layerId={layerId}
+						onClose={onClose}
+					/>
 				);
 			}
 
 			if (drawLayerId && layerId === drawLayerId) {
 				return (
-					<FeatureMenu features={feature} layerId={layerId} onClose={onClose} />
+					<FeatureActionMenu
+						features={feature}
+						layerId={layerId}
+						onClose={onClose}
+					/>
 				);
 			}
 
 			if (currentConfig?.canQueryFeatures?.includes(layerId)) {
 				if (currentConfig.featureDisplay === "modal") {
 					return (
-						<FeatureModal
+						<FeatureDetailsModal
 							attributes={
 								feature?.getProperties ? feature.getProperties() : feature
 							}

@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { sanitizeAddressInput } from "@/lib/helpers/sanitizer";
 import { searchAddresses } from "@/lib/serverActions/searchAddresses";
 import { useMapStore } from "@/store";
-import { AddressFeature } from "@/types";
+import { AddressFeature } from "@/types/shared";
 import {
 	ArrowRightIcon,
 	MagnifyingGlassIcon,

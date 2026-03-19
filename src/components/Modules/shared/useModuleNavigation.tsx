@@ -1,9 +1,9 @@
 "use client";
 
 import type { StepConfig } from "@/components/VerticalStepper";
+import type { SectionId } from "@/lib/helpers/sectionIds";
 import { useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
-import type { SectionId } from "@/types/sectionIds";
 import { useCallback, useMemo } from "react";
 import { useShallow } from "zustand/react/shallow";
 
