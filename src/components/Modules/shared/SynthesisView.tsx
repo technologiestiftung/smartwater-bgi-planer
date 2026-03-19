@@ -46,7 +46,7 @@ export function SynthesisView({
 	const hasInitialized = useRef(false);
 	const router = useRouter();
 	const params = useParams<{ projectId?: string }>();
-	const { getProject } = useProjectsStore();
+	const getProject = useProjectsStore((state) => state.getProject);
 	const project = getProject();
 	const projectId = params?.projectId ?? project?.id;
 	const { layerConfig, layers, setLayerVisibility, applyConfigLayers } =
