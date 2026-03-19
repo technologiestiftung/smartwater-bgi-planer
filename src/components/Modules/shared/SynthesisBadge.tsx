@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { useLayersStore } from "@/store/layers";
 import { EyeIcon, EyeSlashIcon } from "@phosphor-icons/react";
 import { getModuleSteps } from "./moduleConfig";
-import type { SectionId } from "./moduleConfig";
+import type { SectionId } from "@/lib/helpers/sectionIds";
 import { usePathname } from "next/navigation";
 
 interface SynthesisBadgeProps {
