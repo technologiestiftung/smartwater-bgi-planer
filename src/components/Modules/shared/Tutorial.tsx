@@ -10,15 +10,18 @@ interface TutorialProps {
 }
 
 export function Tutorial({ type }: TutorialProps) {
-	const {
-		showTutorial,
-		setTutorialState,
-		showTutorialOnFirstQuestion,
-		setTutorialOnFirstQuestionState,
-	} = useUiStore();
-	const { layerConfigId, layerConfig } = useLayersStore();
+	const showTutorial = useUiStore((state) => state.showTutorial);
+	const setTutorialState = useUiStore((state) => state.setTutorialState);
+	const showTutorialOnFirstQuestion = useUiStore(
+		(state) => state.showTutorialOnFirstQuestion,
+	);
+	const setTutorialOnFirstQuestionState = useUiStore(
+		(state) => state.setTutorialOnFirstQuestionState,
+	);
+	const layerConfigId = useLayersStore((state) => state.layerConfigId);
+	const layerConfig = useLayersStore((state) => state.layerConfig);
 	const currentQuestionConfig = useMemo(
-		() => layerConfig.find((config: any) => config.id === layerConfigId),
+		() => layerConfig.find((config) => config.id === layerConfigId),
 		[layerConfig, layerConfigId],
 	);
 
