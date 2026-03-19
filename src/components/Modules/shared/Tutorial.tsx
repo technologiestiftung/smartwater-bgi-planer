@@ -51,7 +51,7 @@ export function Tutorial({ type }: TutorialProps) {
 		return (
 			<p className="text-dark">
 				Die <span className="font-bold">Synthese</span> zeigt eine
-				Zusammenfassung der von Ihnen eingezeichneten Inhalte
+				Zusammenfassung der von Ihnen eingezeichneten Inhalte.
 			</p>
 		);
 	};
