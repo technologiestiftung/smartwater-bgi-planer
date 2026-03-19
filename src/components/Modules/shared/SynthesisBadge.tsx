@@ -42,7 +42,7 @@ export function SynthesisBadge({
 
 	return (
 		<div
-			className={`bg-neutral-light flex items-center gap-2 overflow-hidden rounded-sm text-sm font-medium transition-all hover:opacity-80`}
+			className={`bg-neutral-light flex min-h-[24px] items-center gap-2 overflow-hidden rounded-sm text-sm font-medium transition-all hover:opacity-80`}
 		>
 			{answer !== undefined && (
 				<div
@@ -66,8 +66,8 @@ export function SynthesisBadge({
 			)}
 			<span
 				className={cn(
-					answer === undefined ? "h-6 translate-y-[1px] px-2" : "pr-2",
-					"cursor-pointer select-none hover:underline",
+					answer === undefined ? "px-2" : "pr-2",
+					"h-6 cursor-pointer select-none hover:underline",
 				)}
 				onClick={() => {
 					const findStep = steps.find((step) =>
