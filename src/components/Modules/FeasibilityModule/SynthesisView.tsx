@@ -2,6 +2,7 @@
 
 import { SynthesisView as SharedSynthesisView } from "@/components/Modules/shared/SynthesisView";
 import { useLayerFilter } from "@/hooks/useLayerFilter";
+import { SectionId } from "@/lib/helpers/sectionIds";
 
 const FEASIBILITY_FILTER = (feature: any) => {
 	const type = feature.get("noteType");
@@ -13,7 +14,7 @@ export function SynthesisView({
 	onBackToSpecificQuestion,
 }: {
 	onBackToQuestions: () => void;
-	onBackToSpecificQuestion: (questionId: string, sectionId: string) => void;
+	onBackToSpecificQuestion: (questionId: string, sectionId: SectionId) => void;
 }) {
 	const ORIGINAL_ID = "module_2_2V5_draw";
 	const FILTERED_ID = "module_2_2V5_draw_filtered";
