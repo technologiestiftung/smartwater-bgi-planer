@@ -14,7 +14,10 @@ export function MenuToggleButton({ projectId }: MenuToggleButtonProps) {
 	const router = useRouter();
 	const pathname = usePathname();
 	const { setLastPath } = useProjectsStore();
-	const { setTutorialState, showTutorial } = useUiStore();
+	const { setTutorialState, showTutorial } = useUiStore((state) => ({
+		setTutorialState: state.setTutorialState,
+		showTutorial: state.showTutorial,
+	}));
 	const isModule =
 		pathname.includes("/handlungsbedarfe") || pathname.includes("/machbarkeit");
 	const { layerConfigId, layerConfig } = useLayersStore();
