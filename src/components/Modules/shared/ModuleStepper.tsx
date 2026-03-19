@@ -24,7 +24,7 @@ interface ModuleStepperProps<TSectionId extends SectionId> {
 		onBackToQuestions: () => void;
 		onBackToSpecificQuestion: (
 			questionId: string,
-			sectionId?: SectionId,
+			sectionId: TSectionId,
 		) => void;
 	}>;
 	open: boolean;
