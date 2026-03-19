@@ -17,7 +17,7 @@ import {
 	ShovelIcon,
 	PencilRulerIcon,
 } from "@phosphor-icons/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useShallow } from "zustand/react/shallow";
 
@@ -44,9 +44,10 @@ export function SynthesisView({
 	const moduleSteps = getModuleSteps(moduleId);
 	const hasInitialized = useRef(false);
 	const router = useRouter();
+	const params = useParams<{ projectId?: string }>();
 	const { getProject } = useProjectsStore();
 	const project = getProject();
-	const projectId = project?.id || "";
+	const projectId = params?.projectId ?? project?.id;
 	const { layerConfig, layers, setLayerVisibility, applyConfigLayers } =
 		useLayersStore(
 			useShallow((state) => ({
