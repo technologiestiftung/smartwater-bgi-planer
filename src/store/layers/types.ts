@@ -153,4 +153,5 @@ export interface LayersActions {
 		filteredLayerId?: string,
 	) => void;
 	removeFilteredLayer: (filteredLayerId: string) => void;
+	setLayerOpacity: (layerId: string, opacity: number) => void;
 }
