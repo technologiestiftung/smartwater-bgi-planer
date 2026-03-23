@@ -24,12 +24,12 @@ export default function Home() {
 
 	const router = useRouter();
 	const { getProject, hasHydrated, getLastPath } = useProjectsStore();
-	const hasProject = useProjectsStore((state) => state.project?.name);
+	const projectName = useProjectsStore((state) => state.project?.name);
 	const uploadError = useUiStore((state) => state.uploadError);
 	const clearUploadStatus = useUiStore((state) => state.clearUploadStatus);
 	const show: "buttons" | "loading" | "none" = !hasHydrated
 		? "none"
-		: hasProject
+		: projectName
 			? "loading"
 			: "buttons";
 
@@ -118,8 +118,8 @@ export default function Home() {
 								size={32}
 								className="animate-spin [animation-duration:3s]"
 							/>
-							{!!hasProject && (
-								<p>{`Projekt "${hasProject}" wird geladen...`}</p>
+							{!!projectName && (
+								<p>{`Projekt "${projectName}" wird geladen...`}</p>
 							)}
 						</div>
 					)}
