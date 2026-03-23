@@ -1,204 +1,286 @@
 "use client";
 
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
+import { Slider } from "@/components/ui/slider";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { useLayersStore } from "@/store/layers";
+import { ManagedLayer } from "@/store/layers/types";
 import { useUiStore } from "@/store/ui";
-import { StackIcon, XCircleIcon } from "@phosphor-icons/react";
+import { StackIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import { FC, useEffect, useMemo, useRef, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 
-const LayerTree: FC = ({}) => {
-	const { layers, setLayerVisibility } = useLayersStore(
+type ViewState = "collapsed" | "extended";
+
+const PREVIEW_FALLBACK = "/preview-img/basemap-grau.png";
+
+function getLayerDisplayName(layer: ManagedLayer): string {
+	return (
+		layer.config?.name ||
+		layer.config?.service?.name ||
+		layer.id.replace(/^uploaded_(?:wms_)?/, "")
+	);
+}
+
+function getLayerPreview(layer: ManagedLayer): string {
+	return (
+		layer.olLayer?.get("previewUrl") ||
+		layer.config?.service?.preview?.src ||
+		PREVIEW_FALLBACK
+	);
+}
+
+// ─── Sub-components ───────────────────────────────────────────────────────────
+
+interface LayerCardProps {
+	layer: ManagedLayer;
+	onToggle: (id: string, visible: boolean) => void;
+	onOpacity: (id: string, value: number) => void;
+}
+
+const LayerCard: FC<LayerCardProps> = ({ layer, onToggle, onOpacity }) => {
+	const name = getLayerDisplayName(layer);
+	const preview = getLayerPreview(layer);
+
+	return (
+		<div className="flex w-full items-center gap-2">
+			<div className="flex min-w-0 flex-1 flex-col">
+				<p className="truncate text-xs">{name}</p>
+				<Slider
+					min={0}
+					max={1}
+					step={0.01}
+					value={[layer.opacity]}
+					onValueChange={([v]) => onOpacity(layer.id, v)}
+					className="min-h-6 w-full"
+				/>
+			</div>
+			<div className="shrink-0">
+				<Tooltip>
+					<TooltipTrigger asChild>
+						<button
+							onClick={() => onToggle(layer.id, layer.visibility)}
+							className="focus-visible:ring-ring relative h-16 w-16 overflow-hidden rounded-md transition-all focus-visible:ring-2 focus-visible:outline-none"
+						>
+							<Image
+								src={preview}
+								alt={name}
+								loading="lazy"
+								width={64}
+								height={64}
+								className="h-full w-full object-cover"
+							/>
+							{layer.visibility && (
+								<div className="border-accent pointer-events-none absolute inset-0 rounded-md border-2" />
+							)}
+							<div className="absolute inset-x-0 bottom-0 truncate bg-black/50 px-1 py-0.5 text-[10px] text-white">
+								{name}
+							</div>
+						</button>
+					</TooltipTrigger>
+					<TooltipContent side="top">{name}</TooltipContent>
+				</Tooltip>
+			</div>
+		</div>
+	);
+};
+
+interface LayerSectionProps {
+	title?: string;
+	layers: ManagedLayer[];
+	onToggle: (id: string, visible: boolean) => void;
+	onOpacity: (id: string, value: number) => void;
+}
+
+const LayerSection: FC<LayerSectionProps> = ({
+	title,
+	layers,
+	onToggle,
+	onOpacity,
+}) => (
+	<div className="space-y-3">
+		{title && (
+			<p className="text-muted-foreground text-xs font-semibold tracking-wide uppercase">
+				{title}
+			</p>
+		)}
+		<div className="flex flex-col gap-2">
+			{layers.map((layer) => (
+				<LayerCard
+					key={layer.id}
+					layer={layer}
+					onToggle={onToggle}
+					onOpacity={onOpacity}
+				/>
+			))}
+		</div>
+	</div>
+);
+
+// ─── Main Component ───────────────────────────────────────────────────────────
+
+const LayerTree: FC = () => {
+	const { layers, setLayerVisibility, setLayerOpacity } = useLayersStore(
 		useShallow((state) => ({
 			layers: state.layers,
 			setLayerVisibility: state.setLayerVisibility,
+			setLayerOpacity: state.setLayerOpacity,
 		})),
 	);
 	const isLayerTreeVisible = useUiStore((state) => state.isLayerTreeVisible);
-	const [viewState, setViewState] = useState<"collapsed" | "open" | "extended">(
-		"collapsed",
-	);
+	const [viewState, setViewState] = useState<ViewState>("collapsed");
+	const [search, setSearch] = useState("");
 	const containerRef = useRef<HTMLDivElement>(null);
 
-	// Eigene/Hochgeladene Layer
-	const uploadedLayers = useMemo(() => {
-		return Array.from(layers.values()).filter(
-			(layer) =>
-				layer.id.startsWith("uploaded_") ||
-				layer.id.startsWith("uploaded_wms_"),
-		);
-	}, [layers]);
+	const allLayers = useMemo(() => Array.from(layers.values()), [layers]);
 
-	// Fachdaten / Weitere Layer
-	const subjectLayers = useMemo(() => {
-		return Array.from(layers.values()).filter(
-			(l) => l.layerType === "subject" && !l.id.startsWith("uploaded_"),
-		);
-	}, [layers]);
+	const uploadedLayers = useMemo(
+		() =>
+			allLayers.filter(
+				(l) => l.id.startsWith("uploaded_") || l.id.startsWith("uploaded_wms_"),
+			),
+		[allLayers],
+	);
+
+	const subjectLayers = useMemo(
+		() =>
+			allLayers.filter(
+				(l) => l.layerType === "subject" && !l.id.startsWith("uploaded_"),
+			),
+		[allLayers],
+	);
 
 	useEffect(() => {
-		const handleClickOutside = (event: MouseEvent) => {
+		if (viewState === "collapsed") return;
+		const handleClickOutside = (e: MouseEvent) => {
 			if (
 				containerRef.current &&
-				!containerRef.current.contains(event.target as Node)
+				!containerRef.current.contains(e.target as Node)
 			) {
 				setViewState("collapsed");
 			}
 		};
-
-		if (viewState !== "collapsed") {
-			document.addEventListener("mousedown", handleClickOutside);
-		}
+		document.addEventListener("mousedown", handleClickOutside);
 		return () => document.removeEventListener("mousedown", handleClickOutside);
 	}, [viewState]);
 
-	const handleLayerToggle = (layerId: string, currentVisibility: boolean) => {
-		setLayerVisibility(layerId, !currentVisibility);
-	};
-
-	const handleMoreButtonClick = () => {
-		setViewState(viewState === "extended" ? "open" : "extended");
-	};
-
-	// Gemeinsame Komponente für die Grid-Buttons im Extended-Menü
-	const LayerIconButton = ({ layer }: { layer: any }) => {
-		const displayName =
-			layer.config?.name ||
-			layer.config?.service?.name ||
-			layer.id.replace(/^uploaded_(?:wms_)?/, "");
-		const previewImg =
-			layer.olLayer?.get("previewUrl") || "/preview-img/basemap-grau.png";
-
-		return (
-			<button
-				onClick={() => handleLayerToggle(layer.id, layer.visibility)}
-				className="relative h-12 w-12 cursor-pointer overflow-hidden rounded-sm transition-all"
-			>
-				<div className="flex h-full items-center justify-center">
-					<Image
-						src={previewImg}
-						alt={displayName}
-						loading="lazy"
-						width={48}
-						height={48}
-						className="h-full w-full object-cover"
-					/>
-				</div>
-				{layer.visibility && (
-					<div className="border-accent pointer-events-none absolute inset-0 rounded-sm border-2" />
-				)}
-				<div className="absolute inset-x-0 bottom-0 truncate bg-black/40 px-1 py-0.5 text-[8px] text-white">
-					{displayName}
-				</div>
-			</button>
-		);
-	};
-
 	if (uploadedLayers.length === 0 && subjectLayers.length === 0) return null;
+
+	const maxVisible = 8;
+	const visibleUploaded = uploadedLayers.slice(0, maxVisible);
+	const hasMore = subjectLayers.length > 0;
+
+	// const sortByActive = (arr: ManagedLayer[]) =>
+	// 	[...arr].sort((a, b) => Number(b.visibility) - Number(a.visibility));
+
+	const filterLayers = (arr: ManagedLayer[]) =>
+		search.trim()
+			? arr.filter((l) =>
+					getLayerDisplayName(l).toLowerCase().includes(search.toLowerCase()),
+				)
+			: arr;
+
+	const filteredUploaded = filterLayers(uploadedLayers);
+	const filteredSubject = filterLayers(subjectLayers);
+	const noResults =
+		filteredUploaded.length === 0 && filteredSubject.length === 0;
 
 	return (
 		<div
 			ref={containerRef}
-			className="pointer-events-none absolute left-[calc(100%+1rem)] flex items-end transition-opacity duration-300"
-			style={{ opacity: isLayerTreeVisible ? 1 : 0 }}
+			className="absolute left-[calc(100%+1rem)] z-50 flex items-end transition-opacity duration-300"
+			style={{
+				opacity: isLayerTreeVisible ? 1 : 0,
+				pointerEvents: isLayerTreeVisible ? "auto" : "none",
+			}}
 		>
 			{viewState === "extended" && (
-				<div className="bg-background pointer-events-auto absolute bottom-0 left-0 mb-2 flex w-[260px] flex-col overflow-hidden rounded-sm">
-					{/* Header */}
-					<div className="border-muted flex h-8 w-full items-center justify-between border-b pl-2">
-						<h3 className="text-sm font-semibold">Feature bearbeiten</h3>
+				<div className="bg-background flex w-80 flex-col overflow-hidden rounded-sm shadow-md">
+					<div className="border-neutral-mid-darker border-b px-3 py-2">
+						<input
+							type="text"
+							placeholder="Ebenen suchen…"
+							value={search}
+							onChange={(e) => setSearch(e.target.value)}
+							className="bg-muted text-foreground placeholder:text-muted-foreground w-full rounded px-2 py-1 text-xs outline-none"
+						/>
+					</div>
 
-						<div className="bg-secondary h-8 w-8 text-white">
-							<button
-								onClick={() => setViewState("open")}
-								className="flex h-full w-full items-center justify-center"
-							>
-								<XCircleIcon />
-							</button>
+					<ScrollArea className="h-[60vh]">
+						<div className="flex flex-col gap-4 p-3">
+							{filteredUploaded.length > 0 && (
+								<LayerSection
+									title="Eigene Ebenen"
+									layers={filteredUploaded}
+									onToggle={(id, v) => setLayerVisibility(id, !v)}
+									onOpacity={setLayerOpacity}
+								/>
+							)}
+							{filteredUploaded.length > 0 && filteredSubject.length > 0 && (
+								<Separator />
+							)}
+							{filteredSubject.length > 0 && (
+								<LayerSection
+									title="Themenlayer"
+									layers={filteredSubject}
+									onToggle={(id, v) => setLayerVisibility(id, !v)}
+									onOpacity={setLayerOpacity}
+								/>
+							)}
+							{noResults && (
+								<p className="text-muted-foreground py-4 text-center text-xs">
+									Keine Ebenen gefunden
+								</p>
+							)}
 						</div>
-					</div>
-
-					<div className="custom-scrollbar max-h-[60vh] overflow-y-auto p-2">
-						{/* Sektion 1: Eigene Ebenen */}
-						{uploadedLayers.length > 0 && (
-							<div className="mb-6">
-								<h3 className="mb-3">Eigene Ebenen</h3>
-								<div className="grid grid-cols-3 gap-2">
-									{uploadedLayers.map((layer) => (
-										<LayerIconButton key={layer.id} layer={layer} />
-									))}
-								</div>
-							</div>
-						)}
-
-						{/* Sektion 2: Fachdaten */}
-						{subjectLayers.length > 0 && (
-							<div>
-								<h3 className="mb-3">Weitere Daten</h3>
-								<div className="grid grid-cols-3 gap-2">
-									{subjectLayers.map((layer) => (
-										<LayerIconButton key={layer.id} layer={layer} />
-									))}
-								</div>
-							</div>
-						)}
-					</div>
+					</ScrollArea>
 				</div>
 			)}
 
 			{viewState !== "extended" && (
-				<div
-					className="bg-background pointer-events-auto grid h-fit w-fit gap-1 rounded-sm p-1 shadow-sm"
-					style={{
-						gridTemplateColumns: `repeat(${Math.min(uploadedLayers.length + 1, 3)}, 48px)`,
-					}}
-				>
-					{uploadedLayers.slice(0, 8).map((layer) => {
-						const displayName =
-							layer.config?.name || layer.id.replace(/^uploaded_(?:wms_)?/, "");
-						return (
-							<button
-								key={layer.id}
-								className="relative h-12 w-12 cursor-pointer overflow-hidden rounded-sm transition-all"
-								onClick={() => handleLayerToggle(layer.id, layer.visibility)}
-								title={displayName}
-							>
-								<div className="flex h-full items-center justify-center">
-									<Image
-										src={
-											layer.olLayer?.get("previewUrl") ||
-											"/preview-img/basemap-grau.png"
-										}
-										loading="lazy"
-										alt={displayName}
-										width={48}
-										height={48}
-										className="h-full w-full object-cover"
-									/>
-								</div>
-								{layer.visibility && (
-									<div className="border-accent pointer-events-none absolute inset-0 rounded-sm border-2" />
-								)}
-								<div className="absolute inset-x-0 bottom-0 truncate bg-black/40 px-1 py-0.5 text-[8px] text-white">
-									{displayName}
-								</div>
-							</button>
-						);
-					})}
+				<div className="bg-background flex w-80 flex-col overflow-hidden rounded-sm shadow-md">
+					<ScrollArea className="h-[60vh]">
+						<div className="flex flex-col gap-4 p-3">
+							{visibleUploaded.map((layer) => (
+								<LayerCard
+									key={layer.id}
+									layer={layer}
+									onToggle={(id, v) => setLayerVisibility(id, !v)}
+									onOpacity={setLayerOpacity}
+								/>
+							))}
+						</div>
+					</ScrollArea>
 
-					{/* More Button */}
-					<button
-						className={`relative flex h-12 w-12 flex-col items-center justify-center rounded border border-dashed transition-all hover:bg-gray-100 ${viewState === "open" ? "border-primary" : "border-gray-300 bg-gray-50"}`}
-						onClick={handleMoreButtonClick}
-					>
-						<StackIcon
-							className={`h-5 w-5 ${viewState === "open" ? "text-primary" : "text-gray-400"}`}
-							weight="duotone"
-						/>
-						<span className="text-[7px] font-bold text-gray-500 uppercase">
-							Mehr
-						</span>
-					</button>
+					{hasMore && (
+						<div className="flex items-center justify-center p-3">
+							<Tooltip>
+								<TooltipTrigger asChild>
+									<button
+										className="relative h-16 w-16 rounded-md border-2 border-dashed border-gray-300 bg-gray-50 transition-all hover:border-gray-400 hover:bg-gray-100"
+										onClick={() => setViewState("extended")}
+									>
+										<div className="flex h-full flex-col items-center justify-center">
+											<StackIcon
+												className="h-5 w-5 text-gray-400"
+												weight="duotone"
+											/>
+											<span className="mt-0.5 text-xs text-gray-500">
+												+{subjectLayers.length}
+											</span>
+										</div>
+									</button>
+								</TooltipTrigger>
+								<TooltipContent side="top">Alle Ebenen anzeigen</TooltipContent>
+							</Tooltip>
+						</div>
+					)}
 				</div>
 			)}
 		</div>
