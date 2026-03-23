@@ -211,8 +211,9 @@ function ProjectBoundaryStep() {
 			<p className="text-muted-foreground">
 				Das Untersuchungsgebiet soll das ganze Gebiet umfassen, wo Änderungen im
 				Rahmen des aktuellen Projektes eingeführt werden können. Sie können
-				diese entweder freihand zeichnen oder eine Shapefile oder GeoJSON Datei
-				hochladen.
+				entweder freihand zeichnen oder eine Shapefile (in .zip format) oder
+				GeoJSON Datei hochladen. Hochgeladene Dateien müssen in EPSG: 25833 oder
+				EPSG:4326 Koordinatensysteme sein.
 			</p>
 			<p>
 				Die Blockteilflächen werden automatisch auch selektiert, die mit der
@@ -249,7 +250,9 @@ function NewDevelopmentStep() {
 			<h4>Welche Bauwerke werden schon geplant?</h4>
 			<p className="text-muted-foreground">
 				Falls Ihr Projekt Bauvorhaben umfasst, die noch nicht auf der Karte zu
-				sehen sind, können Sie diese jetzt einzeichnen.
+				sehen sind, können Sie diese jetzt entweder einzeichnen oder als eine
+				Shapefile (in .zip format) oder GeoJSON Datei hochladen. Hochgeladene
+				Dateien müssen in EPSG: 25833 oder EPSG:4326 Koordinatensysteme sein.
 			</p>
 			<p>
 				Auch wenn die Planung noch nicht komplett festgelegt ist, können Sie
@@ -322,7 +325,9 @@ function AdditionalMapsStep({ projectId }: { projectId: string }) {
 			<p className="text-muted-foreground">
 				Falls Sie weitere Karten über das Untersuchungsgebiet zur Verfügung
 				haben, die nicht im GeoPortal sind, können Sie diese gerne hier als
-				Dateien oder als WMS verlinken.
+				Dateien oder als WMS verlinken. Akzeptierte Datenformate sind Shapefile
+				(in .zip format) oder GeoJSON. Hochgeladene Dateien müssen in EPSG:
+				25833 oder EPSG:4326 Koordinatensysteme sein.
 			</p>
 
 			<div className="flex w-full gap-2 py-4">
