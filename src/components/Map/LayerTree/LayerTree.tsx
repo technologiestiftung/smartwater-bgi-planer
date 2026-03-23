@@ -49,39 +49,37 @@ const LayerCard: FC<LayerCardProps> = ({ layer, onToggle, onOpacity }) => {
 	const preview = getLayerPreview(layer);
 
 	return (
-		<div className="flex w-full items-center gap-2">
-			<div className="flex min-w-0 flex-1 flex-col">
-				<p className="truncate text-xs">{name}</p>
+		<div className="box-border flex min-h-12 w-full gap-2">
+			<div className="flex h-full flex-1 flex-col">
+				<p className="line-clamp-2 text-xs">{name}</p>
 				<Slider
 					min={0}
 					max={1}
 					step={0.01}
 					value={[layer.opacity]}
 					onValueChange={([v]) => onOpacity(layer.id, v)}
+					disabled={!layer.visibility}
 					className="min-h-6 w-full"
 				/>
 			</div>
-			<div className="shrink-0">
+			<div className="flex shrink-0 items-center">
 				<Tooltip>
 					<TooltipTrigger asChild>
 						<button
 							onClick={() => onToggle(layer.id, layer.visibility)}
-							className="focus-visible:ring-ring relative h-16 w-16 overflow-hidden rounded-md transition-all focus-visible:ring-2 focus-visible:outline-none"
+							className="focus-visible:ring-ring relative h-12 w-12 overflow-hidden rounded-sm transition-all focus-visible:ring-2 focus-visible:outline-none"
 						>
 							<Image
 								src={preview}
 								alt={name}
 								loading="lazy"
-								width={64}
-								height={64}
+								width={48}
+								height={48}
 								className="h-full w-full object-cover"
 							/>
 							{layer.visibility && (
-								<div className="border-accent pointer-events-none absolute inset-0 rounded-md border-2" />
+								<div className="border-accent pointer-events-none absolute inset-0 rounded-sm border-2" />
 							)}
-							<div className="absolute inset-x-0 bottom-0 truncate bg-black/50 px-1 py-0.5 text-[10px] text-white">
-								{name}
-							</div>
 						</button>
 					</TooltipTrigger>
 					<TooltipContent side="top">{name}</TooltipContent>
@@ -172,12 +170,9 @@ const LayerTree: FC = () => {
 
 	if (uploadedLayers.length === 0 && subjectLayers.length === 0) return null;
 
-	const maxVisible = 8;
+	const maxVisible = 5;
 	const visibleUploaded = uploadedLayers.slice(0, maxVisible);
 	const hasMore = subjectLayers.length > 0;
-
-	// const sortByActive = (arr: ManagedLayer[]) =>
-	// 	[...arr].sort((a, b) => Number(b.visibility) - Number(a.visibility));
 
 	const filterLayers = (arr: ManagedLayer[]) =>
 		search.trim()
@@ -212,7 +207,7 @@ const LayerTree: FC = () => {
 						/>
 					</div>
 
-					<ScrollArea className="h-[60vh]">
+					<ScrollArea className="h-[336px]">
 						<div className="flex flex-col gap-4 p-3">
 							{filteredUploaded.length > 0 && (
 								<LayerSection
@@ -245,7 +240,7 @@ const LayerTree: FC = () => {
 
 			{viewState !== "extended" && (
 				<div className="bg-background flex w-80 flex-col overflow-hidden rounded-sm shadow-md">
-					<ScrollArea className="h-[60vh]">
+					<ScrollArea className="h-[336px]">
 						<div className="flex flex-col gap-4 p-3">
 							{visibleUploaded.map((layer) => (
 								<LayerCard
@@ -263,7 +258,7 @@ const LayerTree: FC = () => {
 							<Tooltip>
 								<TooltipTrigger asChild>
 									<button
-										className="relative h-16 w-16 rounded-md border-2 border-dashed border-gray-300 bg-gray-50 transition-all hover:border-gray-400 hover:bg-gray-100"
+										className="relative h-12 w-12 rounded-sm border-2 border-dashed border-gray-300 bg-gray-50 transition-all hover:border-gray-400 hover:bg-gray-100"
 										onClick={() => setViewState("extended")}
 									>
 										<div className="flex h-full flex-col items-center justify-center">

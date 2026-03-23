@@ -44,7 +44,7 @@ const MapNavigationContainer: FC<MapNavigationContainerProps> = ({
 		}
 		leaveTimeoutRef.current = window.setTimeout(() => {
 			setIsLayerTreeVisible(false);
-		}, 1000);
+		}, 1500);
 	}, [setIsLayerTreeVisible]);
 
 	return (
