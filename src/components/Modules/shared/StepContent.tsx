@@ -103,7 +103,9 @@ const StepContent: FC<StepContentProps> = ({
 
 			{layerConfig.legendSrc && (
 				<div className="mt-auto pt-6 pb-4">
-					<h5 className="mb-2 text-sm font-medium">Legende:</h5>
+					<h5 className="mb-2 text-sm font-medium">
+						{layerConfig.legendTitle || "Legende"}
+					</h5>
 					<Image
 						src={layerConfig.legendSrc}
 						alt="Legende für die Karte"

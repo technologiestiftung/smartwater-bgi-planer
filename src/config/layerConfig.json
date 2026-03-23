@@ -64,7 +64,8 @@
 			"ua_srhk:db_fliessgeschw_aussergew_kostra",
 			"ua_srgk:bb_fliessgeschwindigkeit_aussergewoehnlich"
 		],
-		"legendSrc": "/legends/1s1.svg"
+		"legendSrc": "/legends/1s1.svg",
+		"legendTitle": "Fließgeschwindigkeit"
 	},
 	{
 		"id": "heavy_rain_water_level",
@@ -79,7 +80,8 @@
 			"ua_srhk:dc_wasserstand_aussergew_kostra",
 			"ua_srgk:cb_wasserstand_aussergewoehnlich"
 		],
-		"legendSrc": "/legends/1s2.svg"
+		"legendSrc": "/legends/1s2.svg",
+		"legendTitle": "Wasserstand"
 	},
 	{
 		"id": "heavy_rain_fire_department_incidents",
@@ -94,7 +96,8 @@
 			"ua_srhk:g_srhk_feuerwehreinsaetze",
 			"ua_srhk:b_srhk_feuerwehreinsaetze_pkt"
 		],
-		"legendSrc": "/legends/1s3.svg"
+		"legendSrc": "/legends/1s3.svg",
+		"legendTitle": "Anzahl Feuerwehreinsätze"
 	},
 	{
 		"id": "heat_starter_question",
@@ -120,7 +123,8 @@
 			"bgi-planer:ca_ua_phk_aufenth_grfrei_tag_2022",
 			"bgi-planer:q_ua_pet_raster_2022"
 		],
-		"legendSrc": "/legends/1h1.svg"
+		"legendSrc": "/legends/1h1.svg",
+		"legendTitle": "Hitzebelastung am Tag"
 	},
 	{
 		"id": "heat_thermal_load_night",
@@ -136,7 +140,8 @@
 			"bgi-planer:dd_ua_phk_bioklim_str_nacht_2022",
 			"bgi-planer:g_ua_lufttemp_raster_t2m_04h_2022"
 		],
-		"legendSrc": "/legends/1h2.svg"
+		"legendSrc": "/legends/1h2.svg",
+		"legendTitle": "Hitzebelastung in der Nacht"
 	},
 	{
 		"id": "heat_vulnerable_areas",
@@ -152,7 +157,8 @@
 			"ua_klimabewertung_2022:ec_ua_phk_vul_nutz_2022",
 			"ua_klimabewertung_2022:eb_ua_phk_vul_demog_2022"
 		],
-		"legendSrc": "/legends/1h3.svg"
+		"legendSrc": "/legends/1h3.svg",
+		"legendTitle": "Vulnerable Bereiche"
 	},
 	{
 		"id": "heat_cold_air_corridors",
@@ -244,7 +250,8 @@
 		"canDrawBTF": true,
 		"canDrawNotes": true,
 		"visibleLayerIds": ["bgi-planer:ua_versiegelung_2021_raster"],
-		"legendSrc": "/legends/1v3.svg"
+		"legendSrc": "/legends/1v3.svg",
+		"legendTitle": "Anteil versiegelte Fläche"
 	},
 	{
 		"id": "waterBalance_starter_question",
@@ -265,7 +272,8 @@
 		"canDrawBTF": true,
 		"canDrawNotes": true,
 		"visibleLayerIds": ["ua_wasserhaushalt_2022:f_deltaw_2022"],
-		"legendSrc": "/legends/1w1.svg"
+		"legendSrc": "/legends/1w1.svg",
+		"legendTitle": "Delta W (Varianz vom natürlichen Wasserhaushalt)"
 	},
 	{
 		"id": "waterProtection_starter_question",
@@ -286,7 +294,8 @@
 		"canDrawBTF": true,
 		"canDrawNotes": true,
 		"visibleLayerIds": ["bgi-planer:sp02_09kanalisation2022"],
-		"legendSrc": "/legends/1g1.svg"
+		"legendSrc": "/legends/1g1.svg",
+		"legendTitle": "Art der Kanalisation"
 	},
 	{
 		"id": "water_protection_decoupling_requirements",
@@ -379,7 +388,8 @@
 		"visibleLayerIds": [
 			"potenziale_regenwasserbewirtschaftung:aa_versickerungspotenzial_eu"
 		],
-		"legendSrc": "/legends/2v1.svg"
+		"legendSrc": "/legends/2v1.svg",
+		"legendTitle": "Anzahl mögliche Versickerungsmaßnahmen"
 	},
 	{
 		"id": "2V1.1",
@@ -438,7 +448,8 @@
 			"baumbestand:anlagenbaeume",
 			"baumbestand:strassenbaeume"
 		],
-		"legendSrc": "/legends/2v4.svg"
+		"legendSrc": "/legends/2v4.svg",
+		"legendTitle": "Bäume"
 	},
 	{
 		"id": "2V5",
@@ -457,7 +468,8 @@
 		"canQueryFeatures": ["bohrdaten:bohrpunkte"],
 		"featureDisplay": "modal",
 		"visibleLayerIds": ["bohrdaten:bohrpunkte"],
-		"legendSrc": "/legends/2v5.svg"
+		"legendSrc": "/legends/2v5.svg",
+		"legendTitle": "Bohrtiefe"
 	},
 	{
 		"id": "2B1",
@@ -475,7 +487,8 @@
 			"denkmale:d_denkmalbereich_gesamtanlage",
 			"denkmale:e_denkmalbereich_ensemble"
 		],
-		"legendSrc": "/legends/2b1.svg"
+		"legendSrc": "/legends/2b1.svg",
+		"legendTitle": "Denkmalbereiche"
 	},
 	{
 		"id": "2G1",
@@ -497,7 +510,8 @@
 			"ua_gruendaecher_2020:b_begruente_dachteilfl_geb",
 			"ua_gruendaecher_2020:c_begruente_dachteilfl_tief"
 		],
-		"legendSrc": "/legends/2g1.svg"
+		"legendSrc": "/legends/2g1.svg",
+		"legendTitle": "Gründachpotential"
 	},
 	{
 		"id": "2E1",
@@ -511,6 +525,7 @@
 		"visibleLayerIds": ["ua_entsiegelung:b_entsieg_klasse_teil"],
 		"featureDisplay": "tooltip",
 		"canQueryFeatures": ["ua_entsiegelung:b_entsieg_klasse_teil"],
-		"legendSrc": "/legends/2e1.svg"
+		"legendSrc": "/legends/2e1.svg",
+		"legendTitle": "Entsiegelungspotential"
 	}
 ]

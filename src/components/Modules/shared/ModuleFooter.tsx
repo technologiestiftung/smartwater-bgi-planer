@@ -7,6 +7,8 @@ import {
 	ListChecksIcon,
 } from "@phosphor-icons/react";
 import { useCallback } from "react";
+import { Tutorial } from "../../Tutorials/Tutorial";
+import { useUiStore } from "@/store";
 
 interface ModuleFooterProps {
 	onClose: () => void;
@@ -33,6 +35,8 @@ export function ModuleFooter({
 
 	const { isFirstQuestion, isLastQuestion } = getCurrentQuestionInfo();
 
+	const setTutorialState = useUiStore((state) => state.setTutorialState);
+
 	const handlePrevious = useCallback(() => {
 		const success = navigateToPrevious();
 		if (!success) {
@@ -50,13 +54,17 @@ export function ModuleFooter({
 	return (
 		<div className="border-muted flex h-full w-full border-t">
 			<Button
-				onClick={onShowSynthesis}
+				onClick={() => {
+					onShowSynthesis();
+					setTutorialState(false);
+				}}
 				variant="ghost"
 				disabled={isNextDisabled}
-				className="bg-secondary flex h-full w-18 items-center justify-center rounded-none"
+				className="bg-secondary z-[101] flex h-full w-18 items-center justify-center rounded-none"
 			>
 				<ListChecksIcon className="h-6 w-6 text-white" />
 			</Button>
+			<Tutorial type="synthesis" />
 			<div className="flex w-full items-center justify-between p-2">
 				<Button variant="ghost" onClick={handlePrevious}>
 					<ArrowLeftIcon />
