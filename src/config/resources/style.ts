@@ -49,8 +49,20 @@ const styleList = [
 			{
 				style: {
 					polygonStrokeWidth: 2,
+					polygonStrokeColor: [0, 0, 0, 1],
+					polygonFillColor: [0, 0, 0, 0],
+				},
+			},
+		],
+	},
+	{
+		styleId: "projectBTFSelection",
+		rules: [
+			{
+				style: {
+					polygonStrokeWidth: 2,
 					polygonStrokeColor: [248, 237, 68, 1],
-					polygonFillColor: [248, 237, 68, 0.3],
+					polygonFillColor: [0, 0, 0, 0],
 				},
 			},
 		],
@@ -74,7 +86,7 @@ const styleList = [
 				style: {
 					polygonStrokeWidth: 2,
 					polygonStrokeColor: [0, 119, 190, 1],
-					polygonFillColor: [0, 119, 190, 0.5],
+					polygonFillColor: [0, 119, 190, 0],
 				},
 			},
 		],

@@ -282,7 +282,8 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "floodingHotspots"
+		"styleId": "floodingHotspots",
+		"styleIdBTFSelection": true
 	},
 	{
 		"id": "need_flooding_hotspots_q2",
@@ -290,7 +291,8 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "floodingHotspots"
+		"styleId": "floodingHotspots",
+		"styleIdBTFSelection": true
 	},
 	{
 		"id": "need_flooding_hotspots_q3",
@@ -298,7 +300,8 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "floodingHotspots"
+		"styleId": "floodingHotspots",
+		"styleIdBTFSelection": true
 	},
 	{
 		"id": "need_temperature_hotspots",
@@ -314,7 +317,8 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "temperatureHotspots"
+		"styleId": "temperatureHotspots",
+		"styleIdBTFSelection": true
 	},
 	{
 		"id": "need_temperature_hotspots_q2",
@@ -322,7 +326,8 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "temperatureHotspots"
+		"styleId": "temperatureHotspots",
+		"styleIdBTFSelection": true
 	},
 	{
 		"id": "need_temperature_hotspots_q3",
@@ -330,7 +335,8 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "temperatureHotspots"
+		"styleId": "temperatureHotspots",
+		"styleIdBTFSelection": true
 	},
 	{
 		"id": "need_temperature_hotspots_q4",
@@ -338,7 +344,8 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "temperatureHotspots"
+		"styleId": "temperatureHotspots",
+		"styleIdBTFSelection": true
 	},
 	{
 		"id": "need_temperature_hotspots_q5",
@@ -346,7 +353,8 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "temperatureHotspots"
+		"styleId": "temperatureHotspots",
+		"styleIdBTFSelection": true
 	},
 	{
 		"id": "need_temperature_hotspots_q6",
@@ -354,7 +362,8 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "temperatureHotspots"
+		"styleId": "temperatureHotspots",
+		"styleIdBTFSelection": true
 	},
 	{
 		"id": "need_impermeability_hotspots",
@@ -370,7 +379,8 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "impermeabilityHotspots"
+		"styleId": "impermeabilityHotspots",
+		"styleIdBTFSelection": true
 	},
 	{
 		"id": "need_impermeability_hotspots_q2",
@@ -378,7 +388,8 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "impermeabilityHotspots"
+		"styleId": "impermeabilityHotspots",
+		"styleIdBTFSelection": true
 	},
 	{
 		"id": "need_impermeability_hotspots_q3",
@@ -386,7 +397,8 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "impermeabilityHotspots"
+		"styleId": "impermeabilityHotspots",
+		"styleIdBTFSelection": true
 	},
 	{
 		"id": "need_groundwater_hotspots",
@@ -402,7 +414,8 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "groundwaterHotspots"
+		"styleId": "groundwaterHotspots",
+		"styleIdBTFSelection": true
 	},
 	{
 		"id": "need_groundwater_hotspots_q2",
@@ -410,7 +423,8 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "groundwaterHotspots"
+		"styleId": "groundwaterHotspots",
+		"styleIdBTFSelection": true
 	},
 	{
 		"id": "need_groundwater_hotspots_q3",
@@ -418,7 +432,8 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "groundwaterHotspots"
+		"styleId": "groundwaterHotspots",
+		"styleIdBTFSelection": true
 	},
 	{
 		"id": "need_waterbalance_hotspots",
@@ -434,7 +449,8 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "waterbalanceHotspots"
+		"styleId": "waterbalanceHotspots",
+		"styleIdBTFSelection": true
 	},
 	{
 		"id": "module_2_2V2_draw",
