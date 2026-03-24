@@ -53,7 +53,7 @@
 	},
 	{
 		"id": "bgi-planer:q_ua_pet_raster_2022",
-		"name": "q_ua_pet_raster_2022",
+		"name": "Raster: Bewertungsindex Physiologisch Äquivalente Temperatur (PET) [°C] 2022",
 		"crs": "EPSG:25833",
 		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
 		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
@@ -67,7 +67,7 @@
 	},
 	{
 		"id": "bgi-planer:ua_versiegelung_2021_raster",
-		"name": "ua_versiegelung_2021_raster",
+		"name": "Versiegelung 2021 (unkorrigierte Versiegelungsgrade, Rasterdaten)",
 		"crs": "EPSG:25833",
 		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
 		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
@@ -79,7 +79,7 @@
 	},
 	{
 		"id": "bgi-planer:g_ua_lufttemp_raster_t2m_04h_2022",
-		"name": "g_ua_lufttemp_raster_t2m_04h_2022",
+		"name": "Raster: Lufttemperatur 04:00 Uhr [°C] 2022 (Klimaanalysekarten 2022 (Umweltatlas))",
 		"crs": "EPSG:25833",
 		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
 		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
@@ -93,7 +93,7 @@
 	},
 	{
 		"id": "bgi-planer:ca_ua_phk_aufenth_grfrei_tag_2022",
-		"name": "ca_ua_phk_aufenth_grfrei_tag_2022",
+		"name": "Gr\u00fcn- und Freifl\u00e4chen: Bewertung der Aufenthaltsqualit\u00e4t am Tag anhand des mittleren Physiologisch \u00c4quivalenten Temperatur (PET) pro Block(teil)fl\u00e4che um 14:00 Uhr [\u00b0C] 2022",
 		"crs": "EPSG:25833",
 		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
 		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
@@ -107,7 +107,7 @@
 	},
 	{
 		"id": "bgi-planer:cb_ua_phk_bioklim_siedl_tag_2022",
-		"name": "cb_ua_phk_bioklim_siedl_tag_2022",
+		"name": "Siedlungsfl\u00e4chen: Bewertung der bioklimatische Situation anhand des mittleren Physiologisch \u00c4quivalenten Temperatur (PET) pro Block(teil)fl\u00e4che um 14:00 Uhr [\u00b0C] 2022",
 		"crs": "EPSG:25833",
 		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
 		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
@@ -121,7 +121,7 @@
 	},
 	{
 		"id": "bgi-planer:cc_ua_phk_bioklim_str_tag_2022",
-		"name": "cc_ua_phk_bioklim_str_tag_2022",
+		"name": "Verkehrsfl\u00e4chen: Bewertung der bioklimatische Situation anhand des mittleren Physiologisch \u00c4quivalenten Temperatur (PET) pro Block(teil)fl\u00e4che um 14:00 Uhr [\u00b0C] 2022",
 		"crs": "EPSG:25833",
 		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
 		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
@@ -135,7 +135,7 @@
 	},
 	{
 		"id": "bgi-planer:dc_ua_phk_bioklim_siedl_nacht_2022",
-		"name": "dc_ua_phk_bioklim_siedl_nacht_2022",
+		"name": "Siedlungsfl\u00e4chen: Bioklimatische Bewertung anhand der mittleren Lufttemperatur pro Block(teil)fl\u00e4che um 04:00 Uhr [\u00b0C] 2022",
 		"crs": "EPSG:25833",
 		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
 		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
@@ -149,7 +149,7 @@
 	},
 	{
 		"id": "bgi-planer:dd_ua_phk_bioklim_str_nacht_2022",
-		"name": "dd_ua_phk_bioklim_str_nacht_2022",
+		"name": "Verkehrsfl\u00e4chen: Bioklimatische Bewertung anhand der mittleren Lufttemperatur pro Block(teil)fl\u00e4che um 04:00 Uhr [\u00b0C] 2022",
 		"crs": "EPSG:25833",
 		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
 		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
@@ -163,7 +163,7 @@
 	},
 	{
 		"id": "bgi-planer:sp02_09kanalisation2022",
-		"name": "sp02_09kanalisation2022",
+		"name": "Art der Kanalisation 2022",
 		"crs": "EPSG:25833",
 		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
 		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
@@ -200,7 +200,7 @@
 	},
 	{
 		"id": "bgi-planer:versiegelung_2021",
-		"name": "versiegelung_2021_local",
+		"name": "Versiegelung der Block- und Blockteilflächen 2021",
 		"crs": "EPSG:25833",
 		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
 		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
