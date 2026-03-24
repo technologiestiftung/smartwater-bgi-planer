@@ -11,14 +11,18 @@ import {
 import { useLayersStore } from "@/store/layers";
 import { ManagedLayer } from "@/store/layers/types";
 import { useUiStore } from "@/store/ui";
-import { StackIcon } from "@phosphor-icons/react";
 import Image from "next/image";
-import { FC, useEffect, useMemo, useRef, useState } from "react";
+import { FC, useMemo, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 
-type ViewState = "collapsed" | "extended";
-
 const PREVIEW_FALLBACK = "/preview-img/basemap-grau.png";
+
+const HIDDEN_LAYER_IDS = new Set([
+	"rabimo_input_2025",
+	"project_boundary",
+	"project_btf_planning",
+	"project_new_development",
+]);
 
 function getLayerDisplayName(layer: ManagedLayer): string {
 	return (
@@ -123,18 +127,32 @@ const LayerSection: FC<LayerSectionProps> = ({
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 
+function filterLayers(arr: ManagedLayer[], search: string): ManagedLayer[] {
+	if (!search.trim()) return arr;
+	return arr.filter((l) =>
+		getLayerDisplayName(l).toLowerCase().includes(search.toLowerCase()),
+	);
+}
+
+// eslint-disable-next-line complexity
 const LayerTree: FC = () => {
-	const { layers, setLayerVisibility, setLayerOpacity } = useLayersStore(
+	const {
+		layers,
+		setLayerVisibility,
+		setLayerOpacity,
+		layerConfig,
+		layerConfigId,
+	} = useLayersStore(
 		useShallow((state) => ({
 			layers: state.layers,
 			setLayerVisibility: state.setLayerVisibility,
 			setLayerOpacity: state.setLayerOpacity,
+			layerConfig: state.layerConfig,
+			layerConfigId: state.layerConfigId,
 		})),
 	);
 	const isLayerTreeVisible = useUiStore((state) => state.isLayerTreeVisible);
-	const [viewState, setViewState] = useState<ViewState>("collapsed");
 	const [search, setSearch] = useState("");
-	const containerRef = useRef<HTMLDivElement>(null);
 
 	const allLayers = useMemo(() => Array.from(layers.values()), [layers]);
 
@@ -146,138 +164,79 @@ const LayerTree: FC = () => {
 		[allLayers],
 	);
 
+	const currentVisibleLayerIds = useMemo(() => {
+		if (!layerConfigId) return null;
+		const item = layerConfig.find((c) => c.id === layerConfigId);
+		return item ? new Set(item.visibleLayerIds) : null;
+	}, [layerConfig, layerConfigId]);
+
 	const subjectLayers = useMemo(
 		() =>
 			allLayers.filter(
-				(l) => l.layerType === "subject" && !l.id.startsWith("uploaded_"),
+				(l) =>
+					l.layerType === "subject" &&
+					!l.id.startsWith("uploaded_") &&
+					!HIDDEN_LAYER_IDS.has(l.id) &&
+					(currentVisibleLayerIds === null || currentVisibleLayerIds.has(l.id)),
 			),
-		[allLayers],
+		[allLayers, currentVisibleLayerIds],
 	);
-
-	useEffect(() => {
-		if (viewState === "collapsed") return;
-		const handleClickOutside = (e: MouseEvent) => {
-			if (
-				containerRef.current &&
-				!containerRef.current.contains(e.target as Node)
-			) {
-				setViewState("collapsed");
-			}
-		};
-		document.addEventListener("mousedown", handleClickOutside);
-		return () => document.removeEventListener("mousedown", handleClickOutside);
-	}, [viewState]);
 
 	if (uploadedLayers.length === 0 && subjectLayers.length === 0) return null;
 
-	const maxVisible = 5;
-	const visibleUploaded = uploadedLayers.slice(0, maxVisible);
-	const hasMore = subjectLayers.length > 0;
-
-	const filterLayers = (arr: ManagedLayer[]) =>
-		search.trim()
-			? arr.filter((l) =>
-					getLayerDisplayName(l).toLowerCase().includes(search.toLowerCase()),
-				)
-			: arr;
-
-	const filteredUploaded = filterLayers(uploadedLayers);
-	const filteredSubject = filterLayers(subjectLayers);
+	const filteredUploaded = filterLayers(uploadedLayers, search);
+	const filteredSubject = filterLayers(subjectLayers, search);
 	const noResults =
 		filteredUploaded.length === 0 && filteredSubject.length === 0;
 
 	return (
 		<div
-			ref={containerRef}
 			className="absolute left-[calc(100%+1rem)] z-50 flex items-end transition-opacity duration-300"
 			style={{
 				opacity: isLayerTreeVisible ? 1 : 0,
 				pointerEvents: isLayerTreeVisible ? "auto" : "none",
 			}}
 		>
-			{viewState === "extended" && (
-				<div className="bg-background flex w-80 flex-col overflow-hidden rounded-sm shadow-md">
-					<div className="border-neutral-mid-darker border-b px-3 py-2">
-						<input
-							type="text"
-							placeholder="Ebenen suchen…"
-							value={search}
-							onChange={(e) => setSearch(e.target.value)}
-							className="bg-muted text-foreground placeholder:text-muted-foreground w-full rounded px-2 py-1 text-xs outline-none"
-						/>
+			<div className="bg-background flex w-80 flex-col overflow-hidden rounded-sm shadow-md">
+				<div className="border-neutral-mid-darker border-b px-3 py-2">
+					<input
+						type="text"
+						placeholder="Ebenen suchen…"
+						value={search}
+						onChange={(e) => setSearch(e.target.value)}
+						className="bg-muted text-foreground placeholder:text-muted-foreground w-full rounded px-2 py-1 text-xs outline-none"
+					/>
+				</div>
+
+				<ScrollArea className="h-[336px]">
+					<div className="flex flex-col gap-4 p-3">
+						{filteredUploaded.length > 0 && (
+							<LayerSection
+								title="Eigene Ebenen"
+								layers={filteredUploaded}
+								onToggle={(id, v) => setLayerVisibility(id, !v)}
+								onOpacity={setLayerOpacity}
+							/>
+						)}
+						{filteredUploaded.length > 0 && filteredSubject.length > 0 && (
+							<Separator />
+						)}
+						{filteredSubject.length > 0 && (
+							<LayerSection
+								title="Themenlayer"
+								layers={filteredSubject}
+								onToggle={(id, v) => setLayerVisibility(id, !v)}
+								onOpacity={setLayerOpacity}
+							/>
+						)}
+						{noResults && (
+							<p className="text-muted-foreground py-4 text-center text-xs">
+								Keine Ebenen gefunden
+							</p>
+						)}
 					</div>
-
-					<ScrollArea className="h-[336px]">
-						<div className="flex flex-col gap-4 p-3">
-							{filteredUploaded.length > 0 && (
-								<LayerSection
-									title="Eigene Ebenen"
-									layers={filteredUploaded}
-									onToggle={(id, v) => setLayerVisibility(id, !v)}
-									onOpacity={setLayerOpacity}
-								/>
-							)}
-							{filteredUploaded.length > 0 && filteredSubject.length > 0 && (
-								<Separator />
-							)}
-							{filteredSubject.length > 0 && (
-								<LayerSection
-									title="Themenlayer"
-									layers={filteredSubject}
-									onToggle={(id, v) => setLayerVisibility(id, !v)}
-									onOpacity={setLayerOpacity}
-								/>
-							)}
-							{noResults && (
-								<p className="text-muted-foreground py-4 text-center text-xs">
-									Keine Ebenen gefunden
-								</p>
-							)}
-						</div>
-					</ScrollArea>
-				</div>
-			)}
-
-			{viewState !== "extended" && (
-				<div className="bg-background flex w-80 flex-col overflow-hidden rounded-sm shadow-md">
-					<ScrollArea className="h-[336px]">
-						<div className="flex flex-col gap-4 p-3">
-							{visibleUploaded.map((layer) => (
-								<LayerCard
-									key={layer.id}
-									layer={layer}
-									onToggle={(id, v) => setLayerVisibility(id, !v)}
-									onOpacity={setLayerOpacity}
-								/>
-							))}
-						</div>
-					</ScrollArea>
-
-					{hasMore && (
-						<div className="flex items-center justify-center p-3">
-							<Tooltip>
-								<TooltipTrigger asChild>
-									<button
-										className="relative h-12 w-12 rounded-sm border-2 border-dashed border-gray-300 bg-gray-50 transition-all hover:border-gray-400 hover:bg-gray-100"
-										onClick={() => setViewState("extended")}
-									>
-										<div className="flex h-full flex-col items-center justify-center">
-											<StackIcon
-												className="h-5 w-5 text-gray-400"
-												weight="duotone"
-											/>
-											<span className="mt-0.5 text-xs text-gray-500">
-												+{subjectLayers.length}
-											</span>
-										</div>
-									</button>
-								</TooltipTrigger>
-								<TooltipContent side="top">Alle Ebenen anzeigen</TooltipContent>
-							</Tooltip>
-						</div>
-					)}
-				</div>
-			)}
+				</ScrollArea>
+			</div>
 		</div>
 	);
 };
