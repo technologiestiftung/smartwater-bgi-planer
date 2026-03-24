@@ -62,7 +62,7 @@ const styleList = [
 				style: {
 					polygonStrokeWidth: 2,
 					polygonStrokeColor: [255, 20, 20, 1],
-					polygonFillColor: [255, 20, 20, 0],
+					polygonFillColor: [255, 20, 20, 0.5],
 				},
 			},
 		],
