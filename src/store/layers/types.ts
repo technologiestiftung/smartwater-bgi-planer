@@ -77,6 +77,7 @@ export interface LayerService {
 	maxScale?: number;
 	cqlFilter?: string;
 	styles?: string;
+	sourceUrl?: string;
 }
 
 export interface VectorTileStyle {

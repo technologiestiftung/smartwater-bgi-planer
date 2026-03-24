@@ -40,17 +40,31 @@ interface LayerCardProps {
 
 const LayerCard: FC<LayerCardProps> = ({ layer, onToggle, onOpacity }) => {
 	const name = getLayerDisplayName(layer);
+	const sourceUrl = layer.config.service?.sourceUrl;
 
 	return (
 		<div className="box-border flex min-h-12 w-full gap-2">
 			<div className="flex h-full flex-1 flex-col">
-				<p
-					className={`line-clamp-2 text-sm font-medium ${
-						layer.visibility ? "text-primary" : "text-muted-foreground"
-					}`}
-				>
-					{name}
-				</p>
+				{sourceUrl ? (
+					<a
+						href={sourceUrl}
+						target="_blank"
+						rel="noopener noreferrer"
+						className={`line-clamp-2 text-sm hover:underline ${
+							layer.visibility ? "text-primary" : "text-muted-foreground"
+						}`}
+					>
+						{name}
+					</a>
+				) : (
+					<p
+						className={`line-clamp-2 text-sm ${
+							layer.visibility ? "text-primary" : "text-muted-foreground"
+						}`}
+					>
+						{name}
+					</p>
+				)}
 				<Slider
 					min={0}
 					max={1}
