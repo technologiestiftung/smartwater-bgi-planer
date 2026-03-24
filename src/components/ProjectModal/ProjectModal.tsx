@@ -102,10 +102,8 @@ export default function ProjectModalWrapper({
 			try {
 				deleteProject();
 				setDeleted(true);
-				setTimeout(() => {
-					router.push(`/`);
-					setIsOpen(false);
-				}, 1000);
+				setTimeout(() => router.push(`/`), 500);
+				setTimeout(() => setIsOpen(false), 1000);
 			} catch (error) {
 				console.error("Fehler beim Löschen des Projekts:", error);
 				alert("Fehler beim Löschen des Projekts.");
