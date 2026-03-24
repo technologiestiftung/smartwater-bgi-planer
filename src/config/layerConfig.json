@@ -73,8 +73,7 @@
 		"canDrawNotes": true,
 		"visibleLayerIds": [
 			"ua_srhk:da_fr_aussergewoehnlich",
-			"ua_srhk:db_fliessgeschw_aussergew_kostra",
-			"ua_srgk:bb_fliessgeschwindigkeit_aussergewoehnlich"
+			"ua_srhk:db_fliessgeschw_aussergew_kostra"
 		],
 		"legendSrc": "/legends/1s1.svg",
 		"legendTitle": "Fließgeschwindigkeit"
@@ -88,10 +87,7 @@
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
 		"canDrawNotes": true,
-		"visibleLayerIds": [
-			"ua_srhk:dc_wasserstand_aussergew_kostra",
-			"ua_srgk:cb_wasserstand_aussergewoehnlich"
-		],
+		"visibleLayerIds": ["ua_srhk:dc_wasserstand_aussergew_kostra"],
 		"legendSrc": "/legends/1s2.svg",
 		"legendTitle": "Wasserstand"
 	},
