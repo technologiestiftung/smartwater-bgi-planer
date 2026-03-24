@@ -198,10 +198,10 @@ const LayerTree: FC = () => {
 			}}
 		>
 			<div className="bg-background flex w-80 flex-col overflow-hidden rounded-sm shadow-md">
-				<div className="border-neutral-mid-darker border-b px-3 py-2">
+				<div className="px-3 py-2">
 					<input
 						type="text"
-						placeholder="Ebenen suchen…"
+						placeholder="Karte suchen"
 						value={search}
 						onChange={(e) => setSearch(e.target.value)}
 						className="bg-muted text-foreground placeholder:text-muted-foreground w-full rounded px-2 py-1 text-xs outline-none"
@@ -210,10 +210,10 @@ const LayerTree: FC = () => {
 
 				<ScrollArea className="h-[336px]">
 					<div className="flex flex-col gap-4 p-3">
-						{filteredUploaded.length > 0 && (
+						{filteredSubject.length > 0 && (
 							<LayerSection
-								title="Eigene Ebenen"
-								layers={filteredUploaded}
+								title="Inhaltskarten"
+								layers={filteredSubject}
 								onToggle={(id, v) => setLayerVisibility(id, !v)}
 								onOpacity={setLayerOpacity}
 							/>
@@ -221,10 +221,10 @@ const LayerTree: FC = () => {
 						{filteredUploaded.length > 0 && filteredSubject.length > 0 && (
 							<Separator />
 						)}
-						{filteredSubject.length > 0 && (
+						{filteredUploaded.length > 0 && (
 							<LayerSection
-								title="Themenlayer"
-								layers={filteredSubject}
+								title="Zusatzkarten"
+								layers={filteredUploaded}
 								onToggle={(id, v) => setLayerVisibility(id, !v)}
 								onOpacity={setLayerOpacity}
 							/>
