@@ -81,6 +81,7 @@ export default function ProjectModalWrapper({
 	});
 	const [isSaving, setIsSaving] = useState(false);
 	const [isOpen, setIsOpen] = useState(true);
+	const [deleted, setDeleted] = useState(false);
 
 	useEffect(() => {
 		if (mode === "edit" && projectId) {
@@ -99,9 +100,9 @@ export default function ProjectModalWrapper({
 		const confirmed = await confirm();
 		if (confirmed) {
 			try {
-				await deleteProject();
-				setIsOpen(false);
-				router.push("/");
+				deleteProject();
+				setDeleted(true);
+				setTimeout(() => router.push(`/`), 1000);
 			} catch (error) {
 				console.error("Fehler beim Löschen des Projekts:", error);
 				alert("Fehler beim Löschen des Projekts.");
@@ -200,7 +201,7 @@ export default function ProjectModalWrapper({
 				onOpenChange={() => handleClose()}
 				title={title}
 				description={description}
-				footer={footer}
+				footer={deleted ? undefined : footer}
 				customBackdrop={customBackdrop}
 			>
 				<ProjectModalContent
@@ -208,6 +209,7 @@ export default function ProjectModalWrapper({
 					projectId={projectId}
 					onFormChange={setFormData}
 					initialData={formData}
+					deleted={deleted}
 				/>
 			</PageModal>
 		</>
