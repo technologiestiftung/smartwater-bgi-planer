@@ -298,16 +298,6 @@ const createGeoJSONLayer = (
 			}
 		}
 
-		if (serviceConfig.styleIdBTFSelection) {
-			const styleApplied = applyStyleToLayer(
-				vectorLayer,
-				"projectBTFSelection",
-			);
-			if (!styleApplied) {
-				console.warn(`Failed to apply BTF selection style to layer`);
-			}
-		}
-
 		return {
 			layer: vectorLayer,
 			status: "loaded",

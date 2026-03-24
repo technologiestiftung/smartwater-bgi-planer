@@ -71,7 +71,6 @@ export interface LayerService {
 		src: string;
 	};
 	styleId?: string;
-	styleIdBTFSelection?: boolean;
 	gfiAttributes?: string;
 	visibility?: boolean;
 	minScale?: number;

@@ -87,6 +87,7 @@ const BlockAreaSelector: FC = () => {
 				addCondition: click,
 				removeCondition: click,
 				toggleCondition: click,
+				style: null,
 				multi: true,
 			});
 

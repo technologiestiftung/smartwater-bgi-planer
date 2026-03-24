@@ -56,25 +56,13 @@ const styleList = [
 		],
 	},
 	{
-		styleId: "projectBTFSelection",
-		rules: [
-			{
-				style: {
-					polygonStrokeWidth: 2,
-					polygonStrokeColor: [248, 237, 68, 1],
-					polygonFillColor: [0, 0, 0, 0],
-				},
-			},
-		],
-	},
-	{
 		styleId: "hotspots",
 		rules: [
 			{
 				style: {
 					polygonStrokeWidth: 2,
 					polygonStrokeColor: [255, 20, 20, 1],
-					polygonFillColor: [255, 20, 20, 0.5],
+					polygonFillColor: [255, 20, 20, 0],
 				},
 			},
 		],
@@ -86,7 +74,7 @@ const styleList = [
 				style: {
 					polygonStrokeWidth: 2,
 					polygonStrokeColor: [0, 119, 190, 1],
-					polygonFillColor: [0, 119, 190, 0],
+					polygonFillColor: [0, 119, 190, 0.3],
 				},
 			},
 		],
@@ -98,7 +86,7 @@ const styleList = [
 				style: {
 					polygonStrokeWidth: 2,
 					polygonStrokeColor: [255, 87, 34, 1],
-					polygonFillColor: [255, 87, 34, 0.5],
+					polygonFillColor: [255, 87, 34, 0.3],
 				},
 			},
 		],
@@ -110,7 +98,7 @@ const styleList = [
 				style: {
 					polygonStrokeWidth: 2,
 					polygonStrokeColor: [121, 85, 72, 1],
-					polygonFillColor: [121, 85, 72, 0.5],
+					polygonFillColor: [121, 85, 72, 0.3],
 				},
 			},
 		],
@@ -122,7 +110,7 @@ const styleList = [
 				style: {
 					polygonStrokeWidth: 2,
 					polygonStrokeColor: [3, 169, 244, 1],
-					polygonFillColor: [3, 169, 244, 0.5],
+					polygonFillColor: [3, 169, 244, 0.3],
 				},
 			},
 		],
@@ -134,7 +122,7 @@ const styleList = [
 				style: {
 					polygonStrokeWidth: 2,
 					polygonStrokeColor: [0, 150, 136, 1],
-					polygonFillColor: [0, 150, 136, 0.5],
+					polygonFillColor: [0, 150, 136, 0.3],
 				},
 			},
 		],
@@ -146,7 +134,7 @@ const styleList = [
 				style: {
 					polygonStrokeWidth: 2,
 					polygonStrokeColor: [156, 39, 176, 1],
-					polygonFillColor: [156, 39, 176, 0.4],
+					polygonFillColor: [156, 39, 176, 0.3],
 				},
 			},
 		],
