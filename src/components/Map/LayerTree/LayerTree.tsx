@@ -11,11 +11,9 @@ import {
 import { useLayersStore } from "@/store/layers";
 import { ManagedLayer } from "@/store/layers/types";
 import { useUiStore } from "@/store/ui";
-import Image from "next/image";
+import { EyeIcon, EyeSlashIcon } from "@phosphor-icons/react";
 import { FC, useMemo, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
-
-const PREVIEW_FALLBACK = "/preview-img/basemap-grau.png";
 
 const HIDDEN_LAYER_IDS = new Set([
 	"rabimo_input_2025",
@@ -32,14 +30,6 @@ function getLayerDisplayName(layer: ManagedLayer): string {
 	);
 }
 
-function getLayerPreview(layer: ManagedLayer): string {
-	return (
-		layer.olLayer?.get("previewUrl") ||
-		layer.config?.service?.preview?.src ||
-		PREVIEW_FALLBACK
-	);
-}
-
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
 interface LayerCardProps {
@@ -50,12 +40,17 @@ interface LayerCardProps {
 
 const LayerCard: FC<LayerCardProps> = ({ layer, onToggle, onOpacity }) => {
 	const name = getLayerDisplayName(layer);
-	const preview = getLayerPreview(layer);
 
 	return (
 		<div className="box-border flex min-h-12 w-full gap-2">
 			<div className="flex h-full flex-1 flex-col">
-				<p className="line-clamp-2 text-xs">{name}</p>
+				<p
+					className={`line-clamp-2 text-sm font-medium ${
+						layer.visibility ? "text-primary" : "text-muted-foreground"
+					}`}
+				>
+					{name}
+				</p>
 				<Slider
 					min={0}
 					max={1}
@@ -71,18 +66,16 @@ const LayerCard: FC<LayerCardProps> = ({ layer, onToggle, onOpacity }) => {
 					<TooltipTrigger asChild>
 						<button
 							onClick={() => onToggle(layer.id, layer.visibility)}
-							className="focus-visible:ring-ring relative h-12 w-12 overflow-hidden rounded-sm transition-all focus-visible:ring-2 focus-visible:outline-none"
+							className={`focus-visible:ring-ring relative flex h-12 w-12 items-center justify-center rounded-sm transition-all focus-visible:ring-2 focus-visible:outline-none ${
+								layer.visibility
+									? "bg-primary text-white"
+									: "border border-gray-200 bg-gray-50 text-gray-400"
+							}`}
 						>
-							<Image
-								src={preview}
-								alt={name}
-								loading="lazy"
-								width={48}
-								height={48}
-								className="h-full w-full object-cover"
-							/>
-							{layer.visibility && (
-								<div className="border-accent pointer-events-none absolute inset-0 rounded-sm border-2" />
+							{layer.visibility ? (
+								<EyeIcon className="h-5 w-5" weight="bold" />
+							) : (
+								<EyeSlashIcon className="h-5 w-5" weight="bold" />
 							)}
 						</button>
 					</TooltipTrigger>
@@ -204,7 +197,7 @@ const LayerTree: FC = () => {
 						placeholder="Karte suchen"
 						value={search}
 						onChange={(e) => setSearch(e.target.value)}
-						className="bg-muted text-foreground placeholder:text-muted-foreground w-full rounded px-2 py-1 text-xs outline-none"
+						className="bg-neutral-mid text-foreground placeholder:text-muted-foreground w-full rounded-sm px-2 py-1 text-xs outline-none"
 					/>
 				</div>
 
