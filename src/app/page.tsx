@@ -9,7 +9,11 @@ import SmartWaterLogo from "@/logos/SmartWater-Logo.svg";
 import SWLogo from "@/logos/SWLogo.svg";
 import { useProjectsStore } from "@/store/projects";
 import { useUiStore } from "@/store/ui";
-import { GithubLogoIcon, PlusSquareIcon } from "@phosphor-icons/react";
+import {
+	GithubLogoIcon,
+	PlusSquareIcon,
+	SpinnerIcon,
+} from "@phosphor-icons/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -20,8 +24,14 @@ export default function Home() {
 
 	const router = useRouter();
 	const { getProject, hasHydrated, getLastPath } = useProjectsStore();
+	const projectName = useProjectsStore((state) => state.project?.name);
 	const uploadError = useUiStore((state) => state.uploadError);
 	const clearUploadStatus = useUiStore((state) => state.clearUploadStatus);
+	const show: "buttons" | "loading" | "none" = !hasHydrated
+		? "none"
+		: projectName
+			? "loading"
+			: "buttons";
 
 	const handleNewProjectClick = () => {
 		if (uploadError) {
@@ -71,35 +81,48 @@ export default function Home() {
 						/>
 					)}
 
-					<div className="hidden flex-wrap items-center justify-between gap-8 lg:flex">
-						<Button asChild className="grow" onClick={handleNewProjectClick}>
-							<Link href="/new">
-								<PlusSquareIcon className="mr-2" />
-								<p>Projekt anlegen</p>
-							</Link>
-						</Button>
+					{show === "buttons" && (
+						<div className="hidden flex-wrap items-center justify-between gap-8 lg:flex">
+							<Button asChild className="grow" onClick={handleNewProjectClick}>
+								<Link href="/new">
+									<PlusSquareIcon className="mr-2" />
+									<p>Projekt anlegen</p>
+								</Link>
+							</Button>
 
-						<ProjectUploaderButton
-							isUploadZoneVisible={showUploadAlert}
-							files={uploadedFiles}
-							onToggle={handleToggleUpload}
-							onComplete={(uploadedProject) => {
-								setShowUploadAlert(false);
-								setUploadedFiles([]);
-								const savedPath = getLastPath();
+							<ProjectUploaderButton
+								isUploadZoneVisible={showUploadAlert}
+								files={uploadedFiles}
+								onToggle={handleToggleUpload}
+								onComplete={(uploadedProject) => {
+									setShowUploadAlert(false);
+									setUploadedFiles([]);
+									const savedPath = getLastPath();
 
-								if (savedPath && uploadedProject) {
-									const updatedPath = savedPath.replace(
-										/^\/[^/]+/,
-										`/${uploadedProject.id}`,
-									);
-									router.replace(updatedPath);
-								} else if (uploadedProject) {
-									router.replace(`/${uploadedProject.id}`);
-								}
-							}}
-						/>
-					</div>
+									if (savedPath && uploadedProject) {
+										const updatedPath = savedPath.replace(
+											/^\/[^/]+/,
+											`/${uploadedProject.id}`,
+										);
+										router.replace(updatedPath);
+									} else if (uploadedProject) {
+										router.replace(`/${uploadedProject.id}`);
+									}
+								}}
+							/>
+						</div>
+					)}
+					{show !== "buttons" && (
+						<div className="hidden flex-wrap items-center gap-2 lg:flex">
+							<SpinnerIcon
+								size={32}
+								className="animate-spin [animation-duration:3s]"
+							/>
+							{!!projectName && (
+								<p>{`Projekt "${projectName}" wird geladen...`}</p>
+							)}
+						</div>
+					)}
 				</div>
 
 				<div className="Footer-root mt-40 flex flex-col gap-4 lg:mt-0">
