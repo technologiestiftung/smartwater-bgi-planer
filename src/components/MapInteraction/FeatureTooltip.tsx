@@ -32,7 +32,7 @@ const FeatureTooltip: FC<FeatureTooltipProps> = ({ attributes, onClose }) => {
 								className="border-muted grid grid-cols-3 border-b text-sm"
 							>
 								<span className="col-span-2 pb-1 font-medium">{key}:</span>
-								<span className="col-span-1 ml-2 text-gray-900">
+								<span className="col-span-1 text-gray-900">
 									{value !== null && value !== undefined ? String(value) : "—"}
 								</span>
 							</div>

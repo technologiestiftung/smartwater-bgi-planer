@@ -49,13 +49,13 @@ export default function ProjectModalWrapper({
 		),
 		cancelButton: (
 			<Button variant="outline">
-				<ArrowLeftIcon className="mr-2" />
+				<ArrowLeftIcon />
 				Nicht löschen
 			</Button>
 		),
 		confirmButton: (
 			<Button>
-				<TrashIcon className="mr-2" />
+				<TrashIcon />
 				Löschen
 			</Button>
 		),
@@ -65,7 +65,7 @@ export default function ProjectModalWrapper({
 				variant="outline"
 				onClick={() => console.log("Download")}
 			>
-				<DownloadIcon className="mr-2" />
+				<DownloadIcon />
 				Download und speichern
 			</Button>
 		),
@@ -171,16 +171,16 @@ export default function ProjectModalWrapper({
 		<div className="flex gap-2">
 			{mode === "edit" && projectId && (
 				<Button variant="outline" onClick={handleDelete} disabled={isSaving}>
-					<TrashIcon className="mr-2" />
+					<TrashIcon />
 					Projekt löschen
 				</Button>
 			)}
 			<Button variant="outline" onClick={handleClose} disabled={isSaving}>
-				<XIcon className="mr-2" />
+				<XIcon />
 				Änderungen Verwerfen
 			</Button>
 			<Button onClick={handleSave} disabled={isSaving}>
-				<FloppyDiskBackIcon className="mr-2" />
+				<FloppyDiskBackIcon />
 				{isSaving ? "Speichern..." : "Änderungen Speichern"}
 			</Button>
 		</div>

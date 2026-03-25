@@ -118,7 +118,7 @@ const ProjectUploaderButton: FC<ProjectUploaderButtonProps> = ({
 			className="grow"
 			onClick={handleButtonClick}
 		>
-			<UploadIcon className="mr-2" />
+			<UploadIcon />
 			<p>{isConfirmMode ? "Projekt importieren" : "Datei hochladen"}</p>
 		</Button>
 	);

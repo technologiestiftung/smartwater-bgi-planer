@@ -64,13 +64,13 @@ export default function MenuModalContent({ projectId }: MenuModalProps) {
 						<div className="flex flex-col items-end gap-2">
 							<Button asChild className="w-full">
 								<Link href={`/${projectId}/edit`}>
-									<InfoIcon className="mr-2" />
+									<InfoIcon />
 									Projektinformationen
 								</Link>
 							</Button>
 							<Button asChild className="w-full">
 								<Link href={`/${projectId}/project-starter`}>
-									<PolygonIcon className="mr-2" />
+									<PolygonIcon />
 									Untersuchungsgebiet/Neubauten
 								</Link>
 							</Button>
@@ -91,7 +91,7 @@ export default function MenuModalContent({ projectId }: MenuModalProps) {
 						<Button asChild>
 							<Link href={`/${projectId}/handlungsbedarfe`}>
 								Zum Modul
-								<ArrowCircleRightIcon className="ml-2 size-6" />
+								<ArrowCircleRightIcon className="size-6" />
 							</Link>
 						</Button>
 					}
@@ -105,7 +105,7 @@ export default function MenuModalContent({ projectId }: MenuModalProps) {
 						<Button asChild>
 							<Link href={`/${projectId}/machbarkeit`}>
 								Zum Modul
-								<ArrowCircleRightIcon className="ml-2 size-6" />
+								<ArrowCircleRightIcon className="size-6" />
 							</Link>
 						</Button>
 					}
@@ -119,14 +119,14 @@ export default function MenuModalContent({ projectId }: MenuModalProps) {
 						<div>
 							<Button disabled>
 								Zum Modul
-								<ArrowCircleRightIcon className="ml-2 size-6" />
+								<ArrowCircleRightIcon className="size-6" />
 							</Button>
 						</div>
 					}
 				/>
 				<div className="flex items-end justify-end px-6 py-4">
 					<Button disabled variant="outline">
-						<BookOpenTextIcon className="mr-2" />
+						<BookOpenTextIcon />
 						Gesamter Report
 					</Button>
 				</div>
