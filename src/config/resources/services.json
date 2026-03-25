@@ -13201,5 +13201,77 @@
 		"infoFormat": "application/json",
 		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
 		"sourceUrl": "https://www.berlin.de/umweltatlas/wasser/wasserhaushalt/"
+	},
+	{
+		"id": "ua_klimabewertung_2022:ed_ua_phk_vul_gruenversorgung_2022",
+		"name": "Stadtklimatisch besonderes vulnerable Stadtgebiete bezogen auf Grünflächenunterversorgung 2022",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_klimabewertung_2022",
+		"typ": "WMS",
+		"layers": "ed_ua_phk_vul_gruenversorgung_2022",
+		"legend": true,
+		"datasets": [
+			{
+				"md_id": "d002e10f-d745-49e5-98b1-bde00700f4e4",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"transparent": true,
+		"gfiAttributes": "showAll",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"singleTile": true
+	},
+	{
+		"id": "ua_klimabewertung_2022:ec_ua_phk_vul_nutz_2022",
+		"name": "Stadtklimatisch besonderes vulnerable Stadtgebiete bezogen auf Gebäude- / Flächennutzung 2022",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_klimabewertung_2022",
+		"typ": "WMS",
+		"layers": "ec_ua_phk_vul_nutz_2022",
+		"legend": true,
+		"datasets": [
+			{
+				"md_id": "d002e10f-d745-49e5-98b1-bde00700f4e4",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"transparent": true,
+		"gfiAttributes": "showAll",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"singleTile": true
+	},
+	{
+		"id": "ua_klimabewertung_2022:eb_ua_phk_vul_demog_2022",
+		"name": "Stadtklimatisch besonderes vulnerable Stadtgebiete bezogen auf Demographie 2022",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_klimabewertung_2022",
+		"typ": "WMS",
+		"layers": "eb_ua_phk_vul_demog_2022",
+		"legend": true,
+		"datasets": [
+			{
+				"md_id": "d002e10f-d745-49e5-98b1-bde00700f4e4",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"transparent": true,
+		"gfiAttributes": "showAll",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"singleTile": true
 	}
 ]

@@ -76,11 +76,11 @@
 					"type": "folder",
 					"elements": [
 						{
-							"id": "ua_srhk:da_fr_aussergewoehnlich",
+							"id": "ua_srhk:db_fliessgeschw_aussergew_kostra",
 							"visibility": false
 						},
 						{
-							"id": "ua_srhk:db_fliessgeschw_aussergew_kostra",
+							"id": "ua_srhk:da_fr_aussergewoehnlich",
 							"visibility": false
 						},
 						{
@@ -285,6 +285,18 @@
 						},
 						{
 							"id": "potenziale_regenwasserbewirtschaftung:ac_versickerungspotenzial_au",
+							"visibility": false
+						},
+						{
+							"id": "ua_klimabewertung_2022:eb_ua_phk_vul_demog_2022",
+							"visibility": false
+						},
+						{
+							"id": "ua_klimabewertung_2022:ed_ua_phk_vul_gruenversorgung_2022",
+							"visibility": false
+						},
+						{
+							"id": "ua_klimabewertung_2022:ec_ua_phk_vul_nutz_2022",
 							"visibility": false
 						}
 					]
