@@ -7,10 +7,16 @@ import { useLayerArea } from "@/hooks/useLayerArea";
 import { useLayerFeatures } from "@/hooks/useLayerFeatures";
 import { LayerConfigItem } from "@/store/layers/types";
 import { LAYER_IDS } from "@/types/shared";
-import { PlayIcon } from "@phosphor-icons/react";
+import {
+	PlayIcon,
+	SelectionAllIcon,
+	SelectionSlashIcon,
+} from "@phosphor-icons/react";
 import Image from "next/image";
 import { FC } from "react";
 import ScenarioDisplay from "../FeasibilityModule/ScenarioDisplay";
+import { useDeselectAllFeatures } from "@/hooks/useDeselectAllFeatures";
+import { useSelectProjectBoundary } from "@/hooks/useSelectProjectBoundary";
 
 interface StepContentProps {
 	layerConfig: LayerConfigItem;
@@ -25,7 +31,9 @@ const StepContent: FC<StepContentProps> = ({
 	onSkip: _onSkip,
 }) => {
 	const { hasFeatures } = useLayerFeatures(layerConfig.drawLayerId);
-	const { formattedArea } = useLayerArea(layerConfig.drawLayerId);
+	const { formattedArea, area } = useLayerArea(layerConfig.drawLayerId);
+	const { deselectAllFeatures } = useDeselectAllFeatures();
+	const { selectProjectBoundary } = useSelectProjectBoundary();
 	const { hasFeatures: hasProjectBoundary } = useLayerFeatures(
 		LAYER_IDS.PROJECT_BOUNDARY,
 	);
@@ -36,9 +44,25 @@ const StepContent: FC<StepContentProps> = ({
 		return true;
 	};
 
-	// const handleNext = () => {
-	// 	_onSkip();
-	// };
+	const handleNotApplicable = (): boolean => {
+		if (area > 0) {
+			deselectAllFeatures();
+			setTimeout(() => {
+				onAnswer(false);
+			}, 500);
+		} else {
+			onAnswer(false);
+		}
+		return true;
+	};
+
+	const handleAllApplicable = (): boolean => {
+		selectProjectBoundary();
+		setTimeout(() => {
+			onAnswer(true);
+		}, 500);
+		return true;
+	};
 
 	return (
 		<div className="flex min-h-0 flex-1 flex-col">
@@ -91,11 +115,23 @@ const StepContent: FC<StepContentProps> = ({
 							);
 						}
 						return (
-							<ConfirmButton
-								onConfirm={handleConfirm}
-								displayText={formattedArea}
-								autoAdvanceStep={false}
-							/>
+							<div className="flex flex-wrap gap-3">
+								<Button onClick={handleNotApplicable}>
+									<SelectionSlashIcon />
+									Nicht zutreffend
+								</Button>
+								<Button onClick={handleAllApplicable}>
+									<SelectionAllIcon />
+									Überall zutreffend
+								</Button>
+								<ConfirmButton
+									onConfirm={handleConfirm}
+									displayText={formattedArea}
+									autoAdvanceStep={false}
+									buttonText="Auswahl bestätigen"
+									disabled={area === 0}
+								/>
+							</div>
 						);
 					})()}
 				</div>
