@@ -11,6 +11,7 @@ interface ConfirmButtonProps {
 	displayText?: string;
 	autoAdvanceStep?: boolean;
 	buttonText?: string;
+	disabled?: boolean;
 }
 
 const ConfirmButton: FC<ConfirmButtonProps> = ({
@@ -19,6 +20,7 @@ const ConfirmButton: FC<ConfirmButtonProps> = ({
 	displayText,
 	autoAdvanceStep = true,
 	buttonText = "Bestätigen",
+	disabled = false,
 }) => {
 	const { nextStep } = useVerticalStepper();
 	const [isLoading, setIsLoading] = useState(false);
@@ -51,8 +53,7 @@ const ConfirmButton: FC<ConfirmButtonProps> = ({
 		<div className="ConfirmButton-root flex items-center gap-2">
 			<Button
 				onClick={handleConfirm}
-				disabled={!isValid || isLoading}
-				className="gap-2"
+				disabled={!isValid || isLoading || disabled}
 			>
 				<CheckIcon />
 				{isLoading ? "Wird verarbeitet..." : buttonText}
