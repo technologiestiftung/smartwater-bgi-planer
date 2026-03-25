@@ -215,7 +215,7 @@ const LayerTree: FC = () => {
 					/>
 				</div>
 
-				<ScrollArea className="h-[336px]">
+				<ScrollArea type="scroll" viewportClassName="max-h-84 !h-auto">
 					<div className="flex flex-col gap-4 p-3">
 						{filteredSubject.length > 0 && (
 							<LayerSection
