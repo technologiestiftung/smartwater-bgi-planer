@@ -12,6 +12,7 @@ export function useLayerArea(layerId: string) {
 	const map = useMapStore((state) => state.map);
 	const isMapReady = useMapReady();
 	const [formattedArea, setFormattedArea] = useState("0 m²");
+	const [area, setArea] = useState(0);
 
 	useEffect(() => {
 		if (!map || !layerId || !isMapReady) return;
@@ -49,6 +50,7 @@ export function useLayerArea(layerId: string) {
 					: `${Math.round(area * 100) / 100} m²`;
 
 			setFormattedArea(formattedAreaValue);
+			setArea(area);
 		};
 
 		calculateArea();
@@ -63,5 +65,5 @@ export function useLayerArea(layerId: string) {
 		};
 	}, [map, layerId, isMapReady]);
 
-	return { formattedArea };
+	return { formattedArea, area };
 }
