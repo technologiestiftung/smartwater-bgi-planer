@@ -63,7 +63,7 @@
 		"layers": "q_ua_pet_raster_2022",
 		"gfiAttributes": "ignore",
 		"maxScale": "5000",
-		"sourceUrl": "https://technologiestiftungberlin0-my.sharepoint.com/:i:/g/personal/austin_kotting_ts_berlin/EYQqyImAKt5OjVft8MwdLKcBzpS517V9Ad-r68EqU30S-g?e=jw6Kfg"
+		"sourceUrl": "https://www.berlin.de/umweltatlas/klima/klimaanalyse/"
 	},
 	{
 		"id": "bgi-planer:ua_versiegelung_2021_raster",
@@ -75,7 +75,8 @@
 		"format": "image/png",
 		"datasets": false,
 		"layers": "ua_versiegelung_2021_raster",
-		"gfiAttributes": "ignore"
+		"gfiAttributes": "ignore",
+		"sourceUrl": "https://www.berlin.de/umweltatlas/boden/versiegelung/"
 	},
 	{
 		"id": "bgi-planer:g_ua_lufttemp_raster_t2m_04h_2022",
@@ -89,7 +90,7 @@
 		"layers": "g_ua_lufttemp_raster_t2m_04h_2022",
 		"gfiAttributes": "ignore",
 		"maxScale": "5000",
-		"sourceUrl": "https://technologiestiftungberlin0-my.sharepoint.com/:i:/g/personal/austin_kotting_ts_berlin/EY0mefueWD9EiiAdG5ZEKAABtC_QiOtEwLIRikldX1ufoA?e=T74Xzm"
+		"sourceUrl": "https://www.berlin.de/umweltatlas/klima/klimaanalyse/"
 	},
 	{
 		"id": "bgi-planer:ca_ua_phk_aufenth_grfrei_tag_2022",
