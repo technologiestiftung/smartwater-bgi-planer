@@ -309,7 +309,7 @@
 		"canDrawPolygons": false,
 		"canDrawBTF": true,
 		"canDrawNotes": true,
-		"visibleLayerIds": ["bgi-planer:sp02_09kanalisation2022"],
+		"visibleLayerIds": ["ua_kanalisation_2022:sp02_09kanalisation2022"],
 		"legendSrc": "/legends/1g1.svg",
 		"legendTitle": "Art der Kanalisation"
 	},
