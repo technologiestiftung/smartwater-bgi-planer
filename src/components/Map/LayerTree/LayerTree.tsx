@@ -1,6 +1,5 @@
 "use client";
 
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Slider } from "@/components/ui/slider";
 import {
@@ -195,7 +194,7 @@ const LayerTree: FC = () => {
 
 	return (
 		<div
-			className="absolute left-[calc(100%+1rem)] z-50 flex items-end transition-opacity duration-300"
+			className="absolute left-[calc(100%+1rem)] z-30 flex items-end transition-opacity duration-300"
 			style={{
 				opacity: isLayerTreeVisible ? 1 : 0,
 				pointerEvents: isLayerTreeVisible ? "auto" : "none",
@@ -212,7 +211,7 @@ const LayerTree: FC = () => {
 					/>
 				</div>
 
-				<ScrollArea type="scroll" viewportClassName="max-h-[21rem] !h-auto">
+				<div className="max-h-80 overflow-y-auto">
 					<div className="flex flex-col gap-4 p-3">
 						{filteredSubject.length > 0 && (
 							<LayerSection
@@ -239,7 +238,7 @@ const LayerTree: FC = () => {
 							</p>
 						)}
 					</div>
-				</ScrollArea>
+				</div>
 			</div>
 		</div>
 	);
