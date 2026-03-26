@@ -83,6 +83,7 @@ const LayerCard: FC<LayerCardProps> = ({ layer, onToggle, onOpacity }) => {
 									? "bg-primary text-white"
 									: "border border-gray-200 bg-gray-50 text-gray-400"
 							}`}
+							aria-label={`${layer.visibility ? "Hide" : "Show"} ${name} layer`}
 						>
 							{layer.visibility ? (
 								<EyeIcon className="h-5 w-5" weight="bold" />
@@ -211,7 +212,7 @@ const LayerTree: FC = () => {
 					/>
 				</div>
 
-				<ScrollArea type="scroll" viewportClassName="max-h-84 !h-auto">
+				<ScrollArea type="scroll" viewportClassName="max-h-[21rem] !h-auto">
 					<div className="flex flex-col gap-4 p-3">
 						{filteredSubject.length > 0 && (
 							<LayerSection
