@@ -213,7 +213,7 @@ export const useLayerPersistence = (
 				serviceConfig,
 				displayFileName,
 			});
-			olLayer.setZIndex(500);
+			olLayer.setZIndex(100);
 
 			const visibility = serviceConfig.visibility ?? true;
 			olLayer.setVisible(visibility);
@@ -224,7 +224,7 @@ export const useLayerPersistence = (
 				layerId,
 				name: displayFileName || serviceConfig.name,
 				olLayer,
-				zIndex: 500,
+				zIndex: 100,
 				layerType: "subject",
 				service: serviceConfig,
 				visibility,
@@ -266,7 +266,7 @@ export const useLayerPersistence = (
 				style: DEFAULT_STYLE,
 			});
 
-			vectorLayer.setZIndex(501);
+			vectorLayer.setZIndex(101);
 			vectorLayer.setVisible(visibility);
 			mapInstance.addLayer(vectorLayer);
 

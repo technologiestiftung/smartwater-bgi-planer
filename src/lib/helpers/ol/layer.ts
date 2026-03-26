@@ -146,7 +146,7 @@ export const createManagedLayer = (
 	status: "loaded",
 	visibility: true,
 	opacity: 1,
-	zIndex: 501,
+	zIndex: 101,
 	layerType: "subject",
 });
 
@@ -163,7 +163,7 @@ export const createManagedLayerFromConfig = (params: {
 		layerId,
 		name,
 		olLayer,
-		zIndex = 501,
+		zIndex = 101,
 		layerType = "subject",
 		service,
 		visibility = true,
