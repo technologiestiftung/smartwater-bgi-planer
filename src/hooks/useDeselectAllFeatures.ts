@@ -15,12 +15,10 @@ export function useDeselectAllFeatures() {
 	const deselectAllFeatures = useCallback(() => {
 		if (!map || !drawLayerId) return;
 
-		// 1. Clear current OL selection state
 		if (selectInteractionRef?.current) {
 			selectInteractionRef.current.getFeatures().clear();
 		}
 
-		// 2. Clear the draw layer that contains the copied/selected features
 		const drawLayer = getLayerById(map, drawLayerId);
 		if (drawLayer) {
 			const source = drawLayer.getSource();

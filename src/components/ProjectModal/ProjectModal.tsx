@@ -145,7 +145,6 @@ export default function ProjectModalWrapper({
 					useCase: formData.useCase,
 				});
 
-				// setIsOpen(false);
 				router.push(`/${newProjectId}`);
 			} else if (projectId) {
 				updateProject({

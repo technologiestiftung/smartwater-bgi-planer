@@ -57,24 +57,19 @@ export function useSelectProjectBoundary() {
 		const boundaryFeatures = boundarySource.getFeatures();
 		if (!boundaryFeatures.length) return;
 
-		// ✅ reset previous interactions
 		resetDrawInteractions();
 		removeInteractions();
 
-		// ✅ clear previous selection
 		drawSource.clear();
 
-		// ✅ clone boundary into draw layer
 		boundaryFeatures.forEach((feature) => {
 			drawSource.addFeature(feature.clone());
 		});
 
 		drawSource.changed();
 
-		// ✅ run your existing logic
 		performIntersection();
 
-		// ✅ enable modify interaction
 		modifyRef.current = new Modify({ source: drawSource });
 
 		modifyRef.current.on("modifyend", () => {

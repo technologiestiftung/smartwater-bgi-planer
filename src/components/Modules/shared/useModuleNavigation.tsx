@@ -188,7 +188,6 @@ export function useModuleNavigation({
 
 	const navigateToQuestion = useCallback(
 		(questionId: string, sectionId?: SectionId) => {
-			// 1. Find the question in global list
 			const target = allQuestions.find((q) =>
 				sectionId
 					? q.questionId === questionId && q.sectionId === sectionId
@@ -202,12 +201,10 @@ export function useModuleNavigation({
 
 			const targetSectionId = target.sectionId;
 
-			// 2. Change step if needed
 			if (targetSectionId !== currentStepId) {
 				goToStep(targetSectionId);
 			}
 
-			// 3. Find index inside section
 			const sectionQuestions =
 				steps.find((s: StepConfig) => s.id === targetSectionId)?.questions ??
 				[];
@@ -221,10 +218,8 @@ export function useModuleNavigation({
 				return false;
 			}
 
-			// 4. Set state
 			setQuestionIndex(targetSectionId, targetIndex);
 
-			// 5. Same side effects as your other nav functions
 			resetDrawInteractions();
 			applyConfigLayers(target.questionId, true);
 
