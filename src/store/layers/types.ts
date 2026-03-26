@@ -77,6 +77,7 @@ export interface LayerService {
 	maxScale?: number;
 	cqlFilter?: string;
 	styles?: string;
+	sourceUrl?: string;
 }
 
 export interface VectorTileStyle {
@@ -153,4 +154,5 @@ export interface LayersActions {
 		filteredLayerId?: string,
 	) => void;
 	removeFilteredLayer: (filteredLayerId: string) => void;
+	setLayerOpacity: (layerId: string, opacity: number) => void;
 }

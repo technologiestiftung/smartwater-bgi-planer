@@ -6,6 +6,7 @@ import {
 	createHideLayersByPattern,
 	createRemoveFilteredLayer,
 	createRemoveLayer,
+	createSetLayerOpacity,
 	createSetLayerStatus,
 	createSetLayerVisibility,
 	createUpdateFilteredLayer,
@@ -48,5 +49,6 @@ export const useLayersStore = create<LayersState & LayersActions>(
 		createFilteredLayer: createFilteredLayer(set, get),
 		updateFilteredLayer: createUpdateFilteredLayer(set, get),
 		removeFilteredLayer: createRemoveFilteredLayer(set, get),
+		setLayerOpacity: createSetLayerOpacity(set, get),
 	}),
 );

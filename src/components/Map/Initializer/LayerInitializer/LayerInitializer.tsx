@@ -10,7 +10,7 @@ import { useWmtsCapabilities } from "./hooks/useWmtsCapabilities";
 
 const Z_INDEX = {
 	BASE: 0,
-	SUBJECT: 100,
+	SUBJECT: 500,
 	DRAW: 1000,
 } as const;
 

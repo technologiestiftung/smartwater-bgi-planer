@@ -191,14 +191,14 @@ const AddWMSButton: FC = () => {
 				previewUrl,
 			});
 
-			wmsLayer.setZIndex(500);
+			wmsLayer.setZIndex(100);
 			map.addLayer(wmsLayer);
 			addLayer(
 				createManagedLayerFromConfig({
 					layerId,
 					name: layerTitle,
 					olLayer: wmsLayer,
-					zIndex: 500,
+					zIndex: 100,
 				}),
 			);
 		},

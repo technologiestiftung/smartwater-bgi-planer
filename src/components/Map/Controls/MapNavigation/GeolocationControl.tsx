@@ -32,7 +32,7 @@ const GeolocationControl: FC<GeolocationControlProps> = ({ onGeolocate }) => {
 					scale: 1,
 				}),
 			}),
-			zIndex: 1000,
+			zIndex: 2000,
 		});
 
 		map.addLayer(vectorLayer);

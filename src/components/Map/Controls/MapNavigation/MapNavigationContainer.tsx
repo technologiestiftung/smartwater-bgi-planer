@@ -44,11 +44,11 @@ const MapNavigationContainer: FC<MapNavigationContainerProps> = ({
 		}
 		leaveTimeoutRef.current = window.setTimeout(() => {
 			setIsLayerTreeVisible(false);
-		}, 1000);
+		}, 1500);
 	}, [setIsLayerTreeVisible]);
 
 	return (
-		<div className="absolute bottom-6 left-4 z-10 flex items-end gap-2">
+		<div className="absolute bottom-6 left-4 z-20 flex items-end gap-2">
 			<div className="flex flex-col gap-2">
 				<ProjectBoundaryControl />
 				<GeolocationControl onGeolocate={onGeolocate} />

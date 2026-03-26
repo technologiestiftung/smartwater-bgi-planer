@@ -343,3 +343,26 @@ export const createRemoveFilteredLayer =
 			return { layers: newLayers };
 		});
 	};
+
+export const createSetLayerOpacity =
+	(set: SetState, get: GetState) => (layerId: string, opacity: number) => {
+		const currentLayersMap = get().layers;
+		const layerToUpdate = currentLayersMap.get(layerId);
+
+		if (!layerToUpdate) {
+			console.warn(
+				`[setLayerOpacity] Layer ${layerId} not found in layers map`,
+			);
+			return;
+		}
+
+		const clampedOpacity = Math.min(1, Math.max(0, opacity));
+		layerToUpdate.olLayer?.setOpacity(clampedOpacity);
+
+		const updatedLayersMap = new Map(currentLayersMap);
+		updatedLayersMap.set(layerId, {
+			...layerToUpdate,
+			opacity: clampedOpacity,
+		});
+		set(() => ({ layers: updatedLayersMap }));
+	};

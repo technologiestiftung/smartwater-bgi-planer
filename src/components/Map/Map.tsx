@@ -9,7 +9,7 @@ import { useMapStore } from "@/store";
 import dynamic from "next/dynamic";
 import { FC } from "react";
 import { useShallow } from "zustand/react/shallow";
-import OpacityControl from "./Controls/OpacityControl";
+// import OpacityControl from "./Controls/OpacityControl";
 import MapFooter from "./MapFooter/MapFooter";
 
 const LazyOlMap = dynamic(() => import("./Initializer/OlMap/OlMap"), {
@@ -63,7 +63,7 @@ const Map: FC = () => {
 					minZoomForClick={0}
 					renderContent={renderContent}
 				/>
-				<OpacityControl />
+				{/* <OpacityControl /> */}
 				<MapFooter />
 			</LazyOlMap>
 		</div>
