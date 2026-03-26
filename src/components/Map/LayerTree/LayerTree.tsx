@@ -30,8 +30,6 @@ function getLayerDisplayName(layer: ManagedLayer): string {
 	);
 }
 
-// ─── Sub-components ───────────────────────────────────────────────────────────
-
 interface LayerCardProps {
 	layer: ManagedLayer;
 	onToggle: (id: string, visible: boolean) => void;
@@ -131,8 +129,6 @@ const LayerSection: FC<LayerSectionProps> = ({
 		</div>
 	</div>
 );
-
-// ─── Main Component ───────────────────────────────────────────────────────────
 
 function filterLayers(arr: ManagedLayer[], search: string): ManagedLayer[] {
 	if (!search.trim()) return arr;
