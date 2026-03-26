@@ -67,7 +67,7 @@ const FeatureDetailsModal: FC<FeatureDetailsModalProps> = ({
 					<h2 className="text-xl font-bold">
 						Bohrprofil{" "}
 						{externalLoading && (
-							<SpinnerIcon className="ml-2 inline animate-spin" size={16} />
+							<SpinnerIcon className="inline animate-spin" size={16} />
 						)}
 					</h2>
 
@@ -125,7 +125,7 @@ const FeatureDetailsModal: FC<FeatureDetailsModalProps> = ({
 					<Button onClick={() => handleClick("schlecht")}>
 						Schlecht Versickerungsfähig
 					</Button>
-					<Button className="ml-2" onClick={() => handleClick("gut")}>
+					<Button onClick={() => handleClick("gut")}>
 						Gut Versickerungsfähig
 					</Button>
 				</div>

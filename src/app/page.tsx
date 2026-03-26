@@ -85,7 +85,7 @@ export default function Home() {
 						<div className="hidden flex-wrap items-center justify-between gap-8 lg:flex">
 							<Button asChild className="grow" onClick={handleNewProjectClick}>
 								<Link href="/new">
-									<PlusSquareIcon className="mr-2" />
+									<PlusSquareIcon />
 									<p>Projekt anlegen</p>
 								</Link>
 							</Button>

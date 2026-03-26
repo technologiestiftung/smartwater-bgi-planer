@@ -31,8 +31,12 @@ const ProjectDownloadButton: FC<ProjectDownloadButtonProps> = ({
 	};
 
 	return (
-		<Button onClick={handleDownload} disabled={isDownloading}>
-			<DownloadIcon className="mr-2" />
+		<Button
+			onClick={handleDownload}
+			disabled={isDownloading}
+			className="w-full"
+		>
+			<DownloadIcon />
 			{isDownloading ? "Wird heruntergeladen..." : "Download und speichern"}
 		</Button>
 	);

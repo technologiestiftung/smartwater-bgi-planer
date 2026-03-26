@@ -19,9 +19,9 @@ interface ConfirmDialogProps {
 	content?: React.ReactNode;
 	onConfirm: () => void;
 	confirmText?: string;
-	confirmButton?: React.ReactNode; // Custom confirm button
+	confirmButton?: React.ReactNode;
 	cancelText?: string;
-	cancelButton?: React.ReactNode; // Custom cancel button
+	cancelButton?: React.ReactNode;
 	variant?: "default" | "destructive";
 	className?: string;
 	additionalButtons?: React.ReactNode;
