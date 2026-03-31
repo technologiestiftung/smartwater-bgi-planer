@@ -124,7 +124,9 @@ const BlockAreaSelector: FC = () => {
 		<div className="BlockAreaSelector-root">
 			<Button variant="outline" onClick={toggleSelectionMode}>
 				<CursorClickIcon />
-				{isActive ? "Stop BTF selektieren" : "BTF selektieren"}
+				{isActive
+					? "Stop Blockteilflächen selektieren"
+					: "Blockteilflächen selektieren"}
 			</Button>
 		</div>
 	);

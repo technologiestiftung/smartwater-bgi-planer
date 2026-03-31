@@ -48,7 +48,7 @@ const arthouseOwned = localFont({
 });
 
 export const metadata: Metadata = {
-	title: "Smartwater BGI Planer",
+	title: "Smartwater BGI-Planer",
 	description: "Technische Umsetzung von der Technologiestiftung Berlin",
 };
 

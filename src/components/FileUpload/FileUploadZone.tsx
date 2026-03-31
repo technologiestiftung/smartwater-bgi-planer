@@ -33,7 +33,7 @@ export function FileUploadZone({
 
 			if (!file.name.toLowerCase().endsWith(".zip")) {
 				setUploadError(
-					"Diese Datei ist nicht kompatibel mit dem BGI Planer. Bitte wählen Sie eine .zip Datei, der von BGI Planer erstellt wurde.",
+					"Diese Datei ist nicht kompatibel mit dem BGI-Planer. Bitte wählen Sie eine .zip Datei, der vom BGI-Planer erstellt wurde.",
 				);
 				return;
 			}
