@@ -53,7 +53,7 @@ const ProjectUploaderButton: FC<ProjectUploaderButtonProps> = ({
 
 			if (!projectFile) {
 				setUploadError(
-					"Diese Datei ist nicht kompatibel mit dem BGI-Planer. Bitte wählen Sie eine .zip Datei, der vom BGI-Planer erstellt wurde.",
+					"Diese Datei ist nicht kompatibel mit dem BGI-Planer. Bitte wählen Sie eine .zip-Datei, die vom BGI-Planer erstellt wurde.",
 				);
 				return;
 			}
