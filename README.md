@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="src/logos/smartwater-bgi-planer-logo.svg" alt="Smartwater BGI-Planer Logo" width="300" />
+  <img src="src/logos/SWLogo.svg" alt="Smartwater BGI-Planer Logo" width="300" />
 </div>
 
 <br>
