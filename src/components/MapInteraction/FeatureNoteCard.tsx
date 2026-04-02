@@ -90,7 +90,7 @@ const FeatureNoteCard: FC<FeatureNoteCardProps> = ({
 				<Textarea
 					value={note}
 					onChange={(e) => setNote(e.target.value)}
-					placeholder="This building will be under Denkmalschutz next year ..."
+					placeholder="Dieses Gebäude wird nächstes Jahr unter Denkmalschutz stehen..."
 					className="mb-4 min-h-[120px] resize-none"
 					rows={5}
 				/>

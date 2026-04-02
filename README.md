@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="src/logos/smartwater-bgi-planer-logo.svg" alt="Smartwater BGI Planer Logo" width="300" />
+  <img src="src/logos/SWLogo.svg" alt="Smartwater BGI-Planer Logo" width="300" />
 </div>
 
 <br>
@@ -13,7 +13,7 @@
 
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-# Smartwater BGI Planer
+# Smartwater BGI-Planer
 
 The BGI Planner is a map-based web application designed to support staff in Berlin’s planning departments at both Senate and district levels in integrating blue-green infrastructure measures into new and existing planning processes. The aim is to increase Berlin’s resilience to the impacts of climate change, such as heavy rainfall and heat. The tool is intended to facilitate strategic decision-making in early planning phases and to provide guidance for the implementation of concrete measures in later phases.
 

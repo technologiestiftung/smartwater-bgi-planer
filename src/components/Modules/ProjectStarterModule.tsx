@@ -174,8 +174,9 @@ function StepperFooter({
 					variant="ghost"
 					onClick={handleSkip}
 					disabled={!isLastStep && !canGoNext}
+					className={isLastStep ? "font-bold" : undefined}
 				>
-					Überspringen
+					{isLastStep ? "Abschließen" : "Überspringen"}
 					<ArrowRightIcon />
 				</Button>
 			</div>
