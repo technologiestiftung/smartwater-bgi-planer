@@ -12,6 +12,7 @@ import {
 	ThermometerHotIcon,
 	TreeIcon,
 	WallIcon,
+	JarIcon,
 } from "@phosphor-icons/react";
 
 export const iconMap: Record<string, Icon> = {
@@ -27,6 +28,7 @@ export const iconMap: Record<string, Icon> = {
 	Check: CheckSquareOffsetIcon,
 	File: FileMagnifyingGlassIcon,
 	List: ListMagnifyingGlassIcon,
+	Jar: JarIcon,
 };
 
 export function getIconComponent(iconName: string): Icon {
