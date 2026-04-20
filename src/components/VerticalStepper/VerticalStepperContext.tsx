@@ -136,8 +136,12 @@ export function VerticalStepperProvider({
 	);
 }
 
+export function useOptionalVerticalStepper() {
+	return useContext(VerticalStepperContext);
+}
+
 export function useVerticalStepper() {
-	const context = useContext(VerticalStepperContext);
+	const context = useOptionalVerticalStepper();
 	if (!context) {
 		throw new Error(
 			"useVerticalStepper must be used within VerticalStepperProvider",

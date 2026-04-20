@@ -3,7 +3,7 @@
 import { CheckIcon } from "@phosphor-icons/react";
 import { FC, useState } from "react";
 import { Button } from "../ui/button";
-import { useVerticalStepper } from "../VerticalStepper";
+import { useOptionalVerticalStepper } from "../VerticalStepper";
 
 interface ConfirmButtonProps {
 	onConfirm?: () => boolean | Promise<boolean>;
@@ -22,7 +22,7 @@ const ConfirmButton: FC<ConfirmButtonProps> = ({
 	buttonText = "Bestätigen",
 	disabled = false,
 }) => {
-	const { nextStep } = useVerticalStepper();
+	const stepper = useOptionalVerticalStepper();
 	const [isLoading, setIsLoading] = useState(false);
 
 	const isValid = validate ? validate() : true;
@@ -30,7 +30,7 @@ const ConfirmButton: FC<ConfirmButtonProps> = ({
 	const handleConfirm = async () => {
 		if (!onConfirm) {
 			if (autoAdvanceStep) {
-				nextStep();
+				stepper?.nextStep();
 			}
 			return;
 		}
@@ -40,7 +40,7 @@ const ConfirmButton: FC<ConfirmButtonProps> = ({
 			const result = await Promise.resolve(onConfirm());
 
 			if (result && autoAdvanceStep) {
-				nextStep();
+				stepper?.nextStep();
 			}
 		} catch (error) {
 			console.error("[ConfirmButton] Error during confirm:", error);

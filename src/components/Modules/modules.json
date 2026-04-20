@@ -97,7 +97,7 @@
 			"id": "measurePlaning",
 			"order": 3,
 			"title": "Modul 3: Maßnahmenplanung",
-			"description": "Planen Sie Ihre Maßnahmen im Detail",
+			"description": "",
 			"steps": [
 				{
 					"id": "greenRoof",

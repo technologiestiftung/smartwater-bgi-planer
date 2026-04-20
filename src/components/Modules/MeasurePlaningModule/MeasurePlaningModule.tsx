@@ -1,18 +1,9 @@
 "use client";
 
-import {
-	getModuleMetadata,
-	getModuleSteps,
-} from "@/components/Modules/shared/moduleConfig";
-import { ModuleFooter } from "@/components/Modules/shared/ModuleFooter";
-import { ModuleStepper } from "@/components/Modules/shared/ModuleStepper";
-import { useStepValid } from "@/lib/helpers/isStepValidUtil";
-import { SectionId } from "@/lib/helpers/sectionIds";
+import { getModuleMetadata } from "@/components/Modules/shared/moduleConfig";
 import { useUiStore } from "@/store/ui";
-import { LAYER_IDS } from "@/types/shared";
 import { useEffect } from "react";
-import { SectionContent } from "./SectionContent";
-import { SynthesisView } from "./SynthesisView";
+import { MeasurePlaningAccordion } from "./MeasurePlaningAccordion";
 
 interface MeasurePlaningModuleProps {
 	open: boolean;
@@ -23,16 +14,8 @@ interface MeasurePlaningModuleProps {
 export default function MeasurePlaningModule({
 	open,
 	onOpenChange,
-	projectId,
 }: MeasurePlaningModuleProps) {
-	const steps = getModuleSteps("measurePlaning");
 	const { title, description } = getModuleMetadata("measurePlaning");
-	const isStepValid = useStepValid({
-		stepName: "planingA",
-		starterQuestionId: "starter_question",
-		layerId: LAYER_IDS.PROJECT_BOUNDARY,
-		steps,
-	});
 
 	const resetModuleState = useUiStore((state) => state.resetModuleState);
 	useEffect(() => {
@@ -41,17 +24,11 @@ export default function MeasurePlaningModule({
 	}, []);
 
 	return (
-		<ModuleStepper<SectionId>
-			steps={steps}
-			SectionContent={(props) => <SectionContent {...props} />}
-			StepperFooter={ModuleFooter}
-			SynthesisView={SynthesisView}
+		<MeasurePlaningAccordion
 			open={open}
 			onOpenChange={onOpenChange}
 			title={title}
 			description={description}
-			projectId={projectId}
-			isStepValid={isStepValid}
 		/>
 	);
 }

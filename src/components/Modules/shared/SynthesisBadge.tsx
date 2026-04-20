@@ -43,7 +43,7 @@ export function SynthesisBadge({
 
 	return (
 		<div
-			className={`bg-neutral-light flex min-h-[24px] items-center gap-2 overflow-hidden rounded-sm text-sm font-medium transition-all hover:opacity-80`}
+			className={`bg-neutral-light flex min-h-6 items-center gap-2 overflow-hidden rounded-sm text-sm font-medium transition-all hover:opacity-80`}
 		>
 			{answer !== undefined && (
 				<button
