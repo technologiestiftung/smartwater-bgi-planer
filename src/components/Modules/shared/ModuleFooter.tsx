@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { useUiStore } from "@/store";
 import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
@@ -8,7 +9,6 @@ import {
 } from "@phosphor-icons/react";
 import { useCallback } from "react";
 import { Tutorial } from "../../Tutorials/Tutorial";
-import { useUiStore } from "@/store";
 
 interface ModuleFooterProps {
 	onClose: () => void;
@@ -60,7 +60,7 @@ export function ModuleFooter({
 				}}
 				variant="ghost"
 				disabled={isNextDisabled}
-				className="bg-secondary z-[101] flex h-full w-18 items-center justify-center rounded-none"
+				className="bg-secondary z-101 flex h-full w-18 items-center justify-center rounded-none"
 			>
 				<ListChecksIcon className="h-6 w-6 text-white" />
 			</Button>
