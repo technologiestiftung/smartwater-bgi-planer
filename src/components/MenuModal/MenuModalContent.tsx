@@ -117,9 +117,11 @@ export default function MenuModalContent({ projectId }: MenuModalProps) {
 					additionalInfo="Keine Fragen beantwortet"
 					buttonBottom={
 						<div>
-							<Button disabled>
-								Zum Modul
-								<ArrowCircleRightIcon className="size-6" />
+							<Button asChild>
+								<Link href={`/${projectId}/planung`}>
+									Zum Modul
+									<ArrowCircleRightIcon className="size-6" />
+								</Link>
 							</Button>
 						</div>
 					}
