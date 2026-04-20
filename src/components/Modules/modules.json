@@ -100,34 +100,34 @@
 			"description": "Planen Sie Ihre Maßnahmen im Detail",
 			"steps": [
 				{
-					"id": "planingA",
+					"id": "greenRoof",
 					"icon": "SolarRoof",
 					"title": "Gebäudebegrünung",
-					"questions": ["starter_question_planing"]
+					"questions": ["connected_area", "3G1", "3G2", "3G3", "3G4", "3G5"]
 				},
 				{
-					"id": "planingB",
+					"id": "unpvd",
 					"icon": "Wall",
 					"title": "Entsiegelung / Vermeidung von Versiegelung",
-					"questions": ["starter_question_planing"]
+					"questions": ["3E1", "3E2"]
 				},
 				{
-					"id": "planingC",
+					"id": "planting",
 					"icon": "Tree",
 					"title": "Begrünung / Bepflanzung",
-					"questions": ["starter_question_planing"]
+					"questions": ["3B1", "3B2", "3B3"]
 				},
 				{
-					"id": "planingD",
+					"id": "swale",
 					"icon": "Recycle",
 					"title": "Versickerung",
-					"questions": ["starter_question_planing"]
+					"questions": ["3V1", "3V2", "3V3", "3V4", "3V5", "3V6"]
 				},
 				{
-					"id": "planingE",
+					"id": "waterStorage",
 					"icon": "Jar",
 					"title": "Speicherung und Überflutungsvorsorge",
-					"questions": ["starter_question_planing"]
+					"questions": ["3S1", "3S2", "3S3", "3S4", "3S5"]
 				}
 			]
 		}

@@ -3,22 +3,22 @@
 
 import { SynthesisBadge } from "@/components/Modules/shared/SynthesisBadge";
 import { getModuleSteps } from "@/components/Modules/shared/moduleConfig";
-import { SectionId } from "@/lib/helpers/sectionIds";
 import { Button } from "@/components/ui/button";
-import { useProjectsStore } from "@/store";
 import { useMapReady } from "@/hooks/useMapReady";
 import { checkForQuestion } from "@/lib/helpers/questionCheck";
+import { SectionId } from "@/lib/helpers/sectionIds";
+import { useProjectsStore } from "@/store";
 import { useAnswersStore } from "@/store/answers";
 import { useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
 import {
 	EyeIcon,
 	EyeSlashIcon,
-	XIcon,
-	ShovelIcon,
 	PencilRulerIcon,
+	ShovelIcon,
+	XIcon,
 } from "@phosphor-icons/react";
-import { useRouter, useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useShallow } from "zustand/react/shallow";
 
@@ -226,7 +226,7 @@ export function SynthesisView({
 					<XIcon className="h-4 w-4" />
 					zu den Checkfragen
 				</Button>
-				<div className="w-[1px] self-stretch bg-white" />
+				<div className="w-px self-stretch bg-white" />
 				<Button
 					onClick={onNextModule}
 					className="text-md my-4 flex-1 text-white hover:text-white"
