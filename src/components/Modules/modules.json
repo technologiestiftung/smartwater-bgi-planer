@@ -101,15 +101,33 @@
 			"steps": [
 				{
 					"id": "planingA",
-					"icon": "Drop",
-					"title": "Maßnahmenplanung A",
-					"questions": ["starter_question"]
+					"icon": "SolarRoof",
+					"title": "Gebäudebegrünung",
+					"questions": ["starter_question_planing"]
 				},
 				{
 					"id": "planingB",
-					"icon": "RoadHorizon",
-					"title": "Maßnahmenplanung B",
-					"questions": ["starter_question"]
+					"icon": "Wall",
+					"title": "Entsiegelung / Vermeidung von Versiegelung",
+					"questions": ["starter_question_planing"]
+				},
+				{
+					"id": "planingC",
+					"icon": "Tree",
+					"title": "Begrünung / Bepflanzung",
+					"questions": ["starter_question_planing"]
+				},
+				{
+					"id": "planingD",
+					"icon": "Recycle",
+					"title": "Versickerung",
+					"questions": ["starter_question_planing"]
+				},
+				{
+					"id": "planingE",
+					"icon": "Jar",
+					"title": "Speicherung und Überflutungsvorsorge",
+					"questions": ["starter_question_planing"]
 				}
 			]
 		}

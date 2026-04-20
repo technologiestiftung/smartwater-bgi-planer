@@ -523,5 +523,11 @@
 		"canQueryFeatures": ["ua_entsiegelung:b_entsieg_klasse_teil"],
 		"legendSrc": "/legends/2e1.svg",
 		"legendTitle": "Entsiegelungspotential"
+	},
+	{
+		"id": "starter_question_planing",
+		"name": "Maßnahmenplanung Startfrage",
+		"drawLayerId": "project_boundary",
+		"visibleLayerIds": ["project_boundary"]
 	}
 ]
