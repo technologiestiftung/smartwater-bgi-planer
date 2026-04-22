@@ -4,7 +4,7 @@ import { SynthesisView } from "@/components/Modules/MeasurePlaningModule/Synthes
 import { getModuleSteps } from "@/components/Modules/shared/moduleConfig";
 import StepContent from "@/components/Modules/shared/StepContent";
 import { SideMenu } from "@/components/SideMenu";
-import { Tutorial } from "@/components/Tutorials/Tutorial";
+// import { Tutorial } from "@/components/Tutorials/Tutorial";
 import {
 	Accordion,
 	AccordionContent,
@@ -49,7 +49,7 @@ function MeasurePlaningFooter({
 			>
 				<ListChecksIcon className="h-6 w-6 text-white" />
 			</Button>
-			<Tutorial type="synthesis" />
+			{/* <Tutorial type="synthesis" /> */}
 			<Button
 				variant="ghost"
 				className="flex h-full justify-center rounded-none"
@@ -69,7 +69,6 @@ export function MeasurePlaningAccordion({
 	description,
 }: MeasurePlaningAccordionProps) {
 	const steps = getModuleSteps("measurePlaning");
-	const firstQuestionId = steps[0]?.questions?.[0];
 	const [expandedStepId, setExpandedStepId] = useState<string>(
 		steps[0]?.id ?? "",
 	);
@@ -151,15 +150,12 @@ export function MeasurePlaningAccordion({
 			layerConfig.length === 0
 		)
 			return;
-		if (firstQuestionId) {
-			applyConfigLayers(firstQuestionId, true);
-			hasInitializedRef.current = true;
-		}
+			applyConfigLayers("measure_start", true);
+		hasInitializedRef.current = true;
 	}, [
 		open,
 		isMapReady,
 		layerConfig.length,
-		firstQuestionId,
 		applyConfigLayers,
 	]);
 	const handleShowSynthesis = useCallback(() => {
@@ -168,7 +164,9 @@ export function MeasurePlaningAccordion({
 	const handleBackToQuestions = useCallback(() => {
 		setSelectedQuestionId(null);
 		setIsSynthesisMode(false);
-	}, [setIsSynthesisMode]);
+		resetDrawInteractions();
+		applyConfigLayers("measure_start", true);
+	}, [setIsSynthesisMode, resetDrawInteractions, applyConfigLayers]);
 
 	const handleBackToSpecificQuestion = useCallback(
 		(questionId: string, sectionId: SectionId) => {

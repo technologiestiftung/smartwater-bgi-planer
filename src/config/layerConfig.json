@@ -534,6 +534,12 @@
 		"id": "NOTE: MODULE 3"
 	},
 	{
+		"id": "measure_start",
+		"name": "Startfrage",
+		"drawLayerId": "",
+		"visibleLayerIds": []
+	},
+	{
 		"id": "3G1",
 		"name": "Extensive Dachbegrünung",
 		"description": "Leichtes Gründach mit dünner Vegetations- und Substratschicht (ca. 6-8 cm) für Flach- und leicht geneigte Dächer. Es hält Regenwasser zurück, verdunstet einen Teil und leitet den Rest verzögert ab; zusätzlich verbessert es Mikroklima, Luftqualität und Dachschutz. Geeignet für robuste Bepflanzung mit geringem Pflegebedarf und regelmäßiger Kontrolle.",
