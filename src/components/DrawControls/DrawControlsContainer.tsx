@@ -5,12 +5,14 @@ import {
 	DrawButton,
 	DrawNoteButton,
 	DrawProjectBoundaryButton,
+	DrawMeasureButton,
 } from "@/components/DrawControls";
 import UploadDrawLayerButton from "@/components/UploadControls/UploadDrawLayerButton/UploadDrawLayerButton";
 import { useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
 import { usePathname } from "next/navigation";
-import { Tutorial } from "@/components/Tutorials/Tutorial";
+
+// import { Tutorial } from "@/components/Tutorials/Tutorial";
 
 interface DrawControlsContainerProps {
 	projectId?: string;
@@ -27,7 +29,9 @@ export default function DrawControlsContainer({}: DrawControlsContainerProps) {
 
 	const isProjectStarter = pathname.includes("/project-starter");
 	const isModule =
-		pathname.includes("/handlungsbedarfe") || pathname.includes("/machbarkeit");
+		pathname.includes("/handlungsbedarfe") ||
+		pathname.includes("/machbarkeit") ||
+		pathname.includes("/planung");
 
 	let controls: React.ReactNode = null;
 
@@ -66,6 +70,9 @@ export default function DrawControlsContainer({}: DrawControlsContainerProps) {
 			if (currentQuestionConfig.canDrawBTF) {
 				controlsArray.push(<BlockAreaSelector key="btf" />);
 			}
+			if (currentQuestionConfig.canDrawMeasures) {
+				controlsArray.push(<DrawMeasureButton key="measure" />);
+			}
 
 			controls = <>{controlsArray}</>;
 		} else {
@@ -83,7 +90,7 @@ export default function DrawControlsContainer({}: DrawControlsContainerProps) {
 
 	return (
 		<div className="absolute right-4 bottom-8 z-52">
-			<Tutorial type="controls" />
+			{/* <Tutorial type="controls" /> */}
 			<div
 				className="relative mt-2 flex justify-center gap-2"
 				onClick={() => {

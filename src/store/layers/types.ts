@@ -106,6 +106,7 @@ export interface LayerConfigItem {
 	canDrawPolygons?: boolean;
 	canDrawBTF?: boolean;
 	canDrawNotes?: boolean;
+	canDrawMeasures?: boolean;
 	legendSrc?: string;
 	legendTitle?: string;
 	isIntro?: boolean;
