@@ -14,7 +14,20 @@ export interface Project {
 	updatedAt: number;
 }
 
+// todo fix types
+export interface InputFeature {
+	feature: any;
+	geometry: any;
+	properties: any;
+}
+
 export interface ProjectState {
+	// Abimo Map input data
+	totalArea: number;
+	inputFeatures: InputFeature[];
+	inputFeaturesCount: number;
+
+	// Project
 	project: Project | null;
 	hasHydrated: boolean;
 	lastPath?: string | null;

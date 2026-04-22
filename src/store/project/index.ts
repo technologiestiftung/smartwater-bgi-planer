@@ -11,6 +11,15 @@ import {
 import { ProjectActions, ProjectState } from "./types";
 
 const initialState: ProjectState = {
+	// Abimo Map input data
+	// total Area of all input features
+	totalArea: 0,
+	// features from Abimo Input 2025 (BTFs) -> amarex: selectedFeatures
+	inputFeatures: [],
+	// (Anzahl der BTFs die mit der Fläche überschnitten werden) -> amarex: featuresSelected
+	inputFeaturesCount: 0,
+
+	// Project
 	project: null,
 	hasHydrated: false,
 	lastPath: null,
