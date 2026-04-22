@@ -19,7 +19,7 @@ export const useClickControlConfig = () => {
 
 	const vectorLayerIds = useMemo(() => {
 		const ids: string[] = [];
-		ids.push("module1_notes");
+		ids.push("project_notes");
 
 		if (drawLayerId) {
 			ids.push(drawLayerId);
@@ -37,7 +37,7 @@ export const useClickControlConfig = () => {
 
 	const renderContent = useCallback(
 		(feature: any, layerId: string, onClose: () => void) => {
-			if (layerId === "module1_notes") {
+			if (layerId === "project_notes") {
 				return (
 					<FeatureNoteCard
 						features={feature}

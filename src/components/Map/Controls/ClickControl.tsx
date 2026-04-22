@@ -113,7 +113,7 @@ const ClickControl: FC<ClickControlProps> = ({
 					const id = layer?.get("id");
 					if (!id) return;
 
-					if (id === "module1_notes") {
+					if (id === "project_notes") {
 						const clusteredFeatures = feature.get("features");
 						if (clusteredFeatures && clusteredFeatures.length > 1) return;
 						return { feature, layerId: id };

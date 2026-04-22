@@ -16,6 +16,7 @@ interface DrawControlsContainerProps {
 	projectId?: string;
 }
 
+// eslint-disable-next-line complexity
 export default function DrawControlsContainer({}: DrawControlsContainerProps) {
 	const pathname = usePathname();
 	const currentStepId = useUiStore((state) => state.currentStepId);
@@ -56,7 +57,7 @@ export default function DrawControlsContainer({}: DrawControlsContainerProps) {
 
 			if (currentQuestionConfig.canDrawNotes) {
 				controlsArray.push(
-					<DrawNoteButton key="notes" layerId="module1_notes" />,
+					<DrawNoteButton key="notes" layerId="project_notes" />,
 				);
 			}
 			if (currentQuestionConfig.canDrawPolygons) {
@@ -70,7 +71,7 @@ export default function DrawControlsContainer({}: DrawControlsContainerProps) {
 		} else {
 			controls = (
 				<>
-					<DrawNoteButton layerId="module1_notes" />
+					<DrawNoteButton layerId="project_notes" />
 					<DrawButton />
 					<BlockAreaSelector />
 				</>
@@ -81,7 +82,7 @@ export default function DrawControlsContainer({}: DrawControlsContainerProps) {
 	if (!controls) return null;
 
 	return (
-		<div className="absolute right-4 bottom-8 z-[52]">
+		<div className="absolute right-4 bottom-8 z-52">
 			<Tutorial type="controls" />
 			<div
 				className="relative mt-2 flex justify-center gap-2"

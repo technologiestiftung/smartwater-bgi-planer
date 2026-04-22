@@ -152,7 +152,7 @@ const styleList = [
 		],
 	},
 	{
-		styleId: "module1Notes",
+		styleId: "projectNotes",
 		rules: [
 			{
 				style: {
@@ -181,30 +181,6 @@ const styleList = [
 				style: {
 					iconScale: 0.8,
 					icon: "/icons/check.svg",
-				},
-			},
-		],
-	},
-	{
-		styleId: "module2Notes",
-		rules: [
-			{
-				style: {
-					pointFillColor: [156, 39, 176, 0.8],
-					pointStrokeColor: [123, 31, 162, 1],
-					pointStrokeWidth: 2,
-				},
-			},
-		],
-	},
-	{
-		styleId: "module3Notes",
-		rules: [
-			{
-				style: {
-					pointFillColor: [76, 175, 80, 0.8],
-					pointStrokeColor: [56, 142, 60, 1],
-					pointStrokeWidth: 2,
 				},
 			},
 		],
