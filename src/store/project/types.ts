@@ -1,3 +1,6 @@
+import type Feature from "ol/Feature";
+import type Geometry from "ol/geom/Geometry";
+
 export enum UseCase {
 	Individual = "Individual area",
 	District = "District",
@@ -14,11 +17,10 @@ export interface Project {
 	updatedAt: number;
 }
 
-// todo fix types
 export interface InputFeature {
-	feature: any;
-	geometry: any;
-	properties: any;
+	feature: Feature<Geometry>;
+	geometry: Geometry | null;
+	properties: Record<string, unknown>;
 }
 
 export interface ProjectState {
@@ -38,6 +40,7 @@ export interface ProjectActions {
 	updateProject: (updates: Partial<Project>) => void;
 	deleteProject: () => void;
 	getProject: () => Project | null;
+	setInputFeatures: (features: InputFeature[]) => void;
 	setHasHydrated: (state: boolean) => void;
 	setLastPath: (path: string | null) => void;
 	getLastPath: () => string | null;

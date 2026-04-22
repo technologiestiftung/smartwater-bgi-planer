@@ -2,7 +2,7 @@ import { useAnswersStore } from "../answers";
 import { useFilesStore } from "../files";
 import { useMapStore } from "../map";
 import { useUiStore } from "../ui";
-import { Project, ProjectState } from "./types";
+import { InputFeature, Project, ProjectState } from "./types";
 
 type SetState = (fn: (state: ProjectState) => Partial<ProjectState>) => void;
 type GetState = () => ProjectState;
@@ -39,10 +39,17 @@ export const createDeleteProject = (set: SetState, get: GetState) => {
 	return async () => {
 		const state = get();
 		const projectId = state.project?.id;
-		set(() => ({ project: null }));
+		set(() => ({
+			project: null,
+			inputFeatures: [],
+			inputFeaturesCount: 0,
+			totalArea: 0,
+		}));
+
 		if (projectId) {
 			await useFilesStore.getState().deleteProjectFiles(projectId);
 		}
+
 		// Reset all answers and module state
 		useAnswersStore.getState().clearAnswers();
 		useUiStore.getState().resetModuleState();
@@ -54,6 +61,18 @@ export const createGetProject = (get: GetState) => {
 	return () => {
 		const state = get();
 		return state.project;
+	};
+};
+
+export const createSetInputFeatures = (set: SetState) => {
+	return (features: InputFeature[]) => {
+		console.log("[useProjectStore] inputFeatures updated", features);
+
+		set((state) => ({
+			...state,
+			inputFeatures: features,
+			inputFeaturesCount: features.length,
+		}));
 	};
 };
 

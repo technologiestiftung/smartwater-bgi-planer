@@ -5,6 +5,7 @@ import {
 	createDeleteProject,
 	createGetLastPath,
 	createGetProject,
+	createSetInputFeatures,
 	createSetLastPath,
 	createUpdateProject,
 } from "./actions";
@@ -33,6 +34,7 @@ export const useProjectStore = create<ProjectState & ProjectActions>()(
 			updateProject: createUpdateProject(set, get),
 			deleteProject: createDeleteProject(set, get),
 			getProject: createGetProject(get),
+			setInputFeatures: createSetInputFeatures(set),
 			setHasHydrated: (state) => set({ hasHydrated: state }),
 			setLastPath: createSetLastPath(set),
 			getLastPath: createGetLastPath(get),
