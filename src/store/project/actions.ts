@@ -64,18 +64,6 @@ export const createGetProject = (get: GetState) => {
 	};
 };
 
-export const createSetInputFeatures = (set: SetState) => {
-	return (features: InputFeature[]) => {
-		console.log("[useProjectStore] inputFeatures updated", features);
-
-		set((state) => ({
-			...state,
-			inputFeatures: features,
-			inputFeaturesCount: features.length,
-		}));
-	};
-};
-
 export const createSetLastPath = (set: SetState) => {
 	return (path: string | null) => {
 		set((state) => ({ ...state, lastPath: path }));
@@ -86,5 +74,19 @@ export const createGetLastPath = (get: GetState) => {
 	return () => {
 		const state = get();
 		return state.lastPath || null;
+	};
+};
+
+export const createSetInputFeatures = (set: SetState) => {
+	return (features: InputFeature[]) => {
+		console.log("[useProjectStore] inputFeatures updated", features);
+
+		// todo: calculate total area (run simulation for calculations)
+
+		set((state) => ({
+			...state,
+			inputFeatures: features,
+			inputFeaturesCount: features.length,
+		}));
 	};
 };
