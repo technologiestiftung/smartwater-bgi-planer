@@ -2,10 +2,10 @@ import { useAnswersStore } from "../answers";
 import { useFilesStore } from "../files";
 import { useMapStore } from "../map";
 import { useUiStore } from "../ui";
-import { Project, ProjectsState } from "./types";
+import { Project, ProjectState } from "./types";
 
-type SetState = (fn: (state: ProjectsState) => Partial<ProjectsState>) => void;
-type GetState = () => ProjectsState;
+type SetState = (fn: (state: ProjectState) => Partial<ProjectState>) => void;
+type GetState = () => ProjectState;
 
 export const createCreateProject = (set: SetState) => {
 	return (project: Omit<Project, "createdAt" | "updatedAt">) => {

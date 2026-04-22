@@ -1,6 +1,6 @@
 "use client";
 
-import { useProjectsStore } from "@/store/projects";
+import { useProjectStore } from "@/store/project";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
@@ -15,7 +15,7 @@ export default function ProjectGuard({
 	children,
 }: ProjectGuardProps) {
 	const router = useRouter();
-	const { getProject, hasHydrated: _hasHydrated } = useProjectsStore(
+	const { getProject, hasHydrated: _hasHydrated } = useProjectStore(
 		useShallow((state) => ({
 			getProject: state.getProject,
 			hasHydrated: state.hasHydrated,

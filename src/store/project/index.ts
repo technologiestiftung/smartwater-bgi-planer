@@ -8,15 +8,15 @@ import {
 	createSetLastPath,
 	createUpdateProject,
 } from "./actions";
-import { ProjectsActions, ProjectsState } from "./types";
+import { ProjectActions, ProjectState } from "./types";
 
-const initialState: ProjectsState = {
+const initialState: ProjectState = {
 	project: null,
 	hasHydrated: false,
 	lastPath: null,
 };
 
-export const useProjectsStore = create<ProjectsState & ProjectsActions>()(
+export const useProjectStore = create<ProjectState & ProjectActions>()(
 	persist(
 		(set, get) => ({
 			...initialState,
@@ -29,7 +29,7 @@ export const useProjectsStore = create<ProjectsState & ProjectsActions>()(
 			getLastPath: createGetLastPath(get),
 		}),
 		{
-			name: "projects-storage",
+			name: "project-storage",
 			onRehydrateStorage: () => (state) => {
 				state?.setHasHydrated(true);
 			},

@@ -2,7 +2,7 @@ import {
 	useAnswersStore,
 	useFilesStore,
 	useMapStore,
-	useProjectsStore,
+	useProjectStore,
 } from "@/store";
 import { getFileBlob, getProjectFileKeys } from "@/store/files/storage";
 import JSZip from "jszip";
@@ -59,7 +59,7 @@ const getFilesMetadata = (projectId: string) => {
 export const collectProjectData = async (
 	projectId: string,
 ): Promise<ProjectBackup> => {
-	const project = useProjectsStore.getState().project;
+	const project = useProjectStore.getState().project;
 
 	if (!project || project.id !== projectId) {
 		throw new Error(

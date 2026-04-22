@@ -5,7 +5,7 @@ import {
 	useAnswersStore,
 	useFilesStore,
 	useMapStore,
-	useProjectsStore,
+	useProjectStore,
 	useUiStore,
 } from "@/store";
 import { UploadIcon } from "@phosphor-icons/react";
@@ -25,7 +25,7 @@ const ProjectUploaderButton: FC<ProjectUploaderButtonProps> = ({
 	onToggle,
 	onComplete,
 }) => {
-	const { createProject } = useProjectsStore();
+	const { createProject } = useProjectStore();
 	const { setAnswer } = useAnswersStore();
 	const { updateConfig, setUserLocation } = useMapStore();
 	const { addFile } = useFilesStore();

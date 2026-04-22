@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { useMapReady } from "@/hooks/useMapReady";
 import { checkForQuestion } from "@/lib/helpers/questionCheck";
 import { SectionId } from "@/lib/helpers/sectionIds";
-import { useProjectsStore } from "@/store";
+import { useProjectStore } from "@/store";
 import { useAnswersStore } from "@/store/answers";
 import { useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
@@ -46,7 +46,7 @@ export function SynthesisView({
 	const hasInitialized = useRef(false);
 	const router = useRouter();
 	const params = useParams<{ projectId?: string }>();
-	const getProject = useProjectsStore((state) => state.getProject);
+	const getProject = useProjectStore((state) => state.getProject);
 	const project = getProject();
 	const projectId = params?.projectId ?? project?.id;
 	const { layerConfig, layers, setLayerVisibility, applyConfigLayers } =

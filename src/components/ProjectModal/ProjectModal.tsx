@@ -6,8 +6,8 @@ import ProjectModalContent, {
 } from "@/components/ProjectModal/ProjectModalContent";
 import { Button } from "@/components/ui/button";
 import Background from "@/images/background.svg";
-import { useProjectsStore } from "@/store/projects";
-import { UseCase } from "@/store/projects/types";
+import { useProjectStore } from "@/store/project";
+import { UseCase } from "@/store/project/types";
 import {
 	ArrowLeftIcon,
 	DownloadIcon,
@@ -29,7 +29,7 @@ export default function ProjectModalWrapper({
 }: ProjectModalWrapperProps) {
 	const router = useRouter();
 	const { createProject, updateProject, getProject, deleteProject } =
-		useProjectsStore();
+		useProjectStore();
 
 	const { ConfirmDialog, confirm } = useConfirmDialog({
 		title: "Projekt löschen",

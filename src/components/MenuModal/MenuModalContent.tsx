@@ -6,7 +6,7 @@ import ProjectDownloadButton from "@/components/ProjectDownloadButton/ProjectDow
 import { Button } from "@/components/ui/button";
 import { checkForQuestion } from "@/lib/helpers/questionCheck";
 import { useAnswersStore } from "@/store";
-import { useProjectsStore } from "@/store/projects";
+import { useProjectStore } from "@/store/project";
 import {
 	ArrowCircleRightIcon,
 	BookOpenTextIcon,
@@ -23,7 +23,7 @@ interface MenuModalProps {
 }
 
 export default function MenuModalContent({ projectId }: MenuModalProps) {
-	const getProject = useProjectsStore((state) => state.getProject);
+	const getProject = useProjectStore((state) => state.getProject);
 	const project = getProject();
 	const answers = useAnswersStore((state) => state.answers);
 

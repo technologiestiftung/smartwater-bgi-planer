@@ -14,13 +14,13 @@ export interface Project {
 	updatedAt: number;
 }
 
-export interface ProjectsState {
+export interface ProjectState {
 	project: Project | null;
 	hasHydrated: boolean;
 	lastPath?: string | null;
 }
 
-export interface ProjectsActions {
+export interface ProjectActions {
 	createProject: (project: Omit<Project, "createdAt" | "updatedAt">) => void;
 	updateProject: (updates: Partial<Project>) => void;
 	deleteProject: () => void;

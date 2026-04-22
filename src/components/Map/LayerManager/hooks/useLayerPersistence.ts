@@ -18,7 +18,7 @@ import { useLayersStore } from "@/store";
 import { useFilesStore } from "@/store/files";
 import { LayerService } from "@/store/layers/types";
 import { useMapStore } from "@/store/map";
-import { useProjectsStore } from "@/store/projects";
+import { useProjectStore } from "@/store/project";
 import { Map } from "ol";
 import GeoJSON from "ol/format/GeoJSON";
 import VectorLayer from "ol/layer/Vector";
@@ -38,7 +38,7 @@ export const useLayerPersistence = (
 	const { debounceDelay = 1000, autoSave = true, autoRestore = true } = options;
 	const map = useMapStore((state) => state.map);
 	const mapReady = useMapStore((state) => state.isReady);
-	const getProject = useProjectsStore((state) => state.getProject);
+	const getProject = useProjectStore((state) => state.getProject);
 	const { addFile, getFile, deleteFile, getAllProjectFiles } = useFilesStore();
 	const filesHydrated = useFilesStore((state) => state.hasHydrated);
 	const { layers, addLayer } = useLayersStore();

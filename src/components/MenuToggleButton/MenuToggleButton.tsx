@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import SWLogo from "@/logos/SWLogo.svg";
-import { useLayersStore, useProjectsStore, useUiStore } from "@/store";
+import { useLayersStore, useProjectStore, useUiStore } from "@/store";
 import { InfoIcon, ListIcon } from "@phosphor-icons/react";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -13,7 +13,7 @@ interface MenuToggleButtonProps {
 export function MenuToggleButton({ projectId }: MenuToggleButtonProps) {
 	const router = useRouter();
 	const pathname = usePathname();
-	const setLastPath = useProjectsStore((state) => state.setLastPath);
+	const setLastPath = useProjectStore((state) => state.setLastPath);
 
 	const showTutorial = useUiStore((state) => state.showTutorial);
 	const setTutorialState = useUiStore((state) => state.setTutorialState);
