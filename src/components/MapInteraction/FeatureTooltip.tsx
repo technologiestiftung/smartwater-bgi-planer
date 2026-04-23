@@ -21,7 +21,7 @@ const FeatureTooltip: FC<FeatureTooltipProps> = ({ attributes, onClose }) => {
 					<XCircleIcon />
 				</button>
 			</div>
-			<div className="max-h-[184px] overflow-y-scroll p-3">
+			<div className="max-h-46 overflow-y-scroll p-3">
 				{Object.keys(attributes).length === 0 ? (
 					<p className="text-sm text-gray-600">No attributes found</p>
 				) : (

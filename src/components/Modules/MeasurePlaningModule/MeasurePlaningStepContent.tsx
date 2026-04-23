@@ -37,12 +37,9 @@ export function MeasurePlaningStepContent({
 
 			{showLegendAccordion && (
 				<div className="mt-auto pt-6 pb-4">
-					<Accordion
-						type="multiple"
-						defaultValue={layerConfig.legendSrc ? ["legend"] : ["measures"]}
-					>
+					<Accordion type="multiple">
 						<AccordionItem value="legend" className="border-neutral-mid px-4">
-							<AccordionTrigger className="text-primary font-medium hover:no-underline">
+							<AccordionTrigger className="text-primary font-bold hover:no-underline">
 								{layerConfig.legendTitle || "Legende"}
 							</AccordionTrigger>
 							<AccordionContent className="pb-4">
@@ -67,7 +64,9 @@ export function MeasurePlaningStepContent({
 								value="measures"
 								className="border-neutral-mid px-4"
 							>
-								<AccordionTrigger className="">Maßnahmen</AccordionTrigger>
+								<AccordionTrigger className="text-primary font-bold hover:no-underline">
+									Maßnahmen
+								</AccordionTrigger>
 								<AccordionContent>
 									{layerConfig.measurementSrc ? (
 										<Image
