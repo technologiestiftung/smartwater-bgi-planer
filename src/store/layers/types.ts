@@ -109,6 +109,7 @@ export interface LayerConfigItem {
 	canDrawMeasures?: boolean;
 	legendSrc?: string;
 	legendTitle?: string;
+	measurementSrc?: string;
 	isIntro?: boolean;
 	moduleNumber?: number;
 	moduleName?: string;

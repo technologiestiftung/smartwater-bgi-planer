@@ -1,6 +1,12 @@
 "use client";
 
 import { RichTextWithLinks } from "@/components/RichTextWithLinks/RichTextWithLinks";
+import {
+	Accordion,
+	AccordionContent,
+	AccordionItem,
+	AccordionTrigger,
+} from "@/components/ui/accordion";
 import { LayerConfigItem } from "@/store/layers/types";
 import Image from "next/image";
 
@@ -11,6 +17,9 @@ interface MeasurePlaningStepContentProps {
 export function MeasurePlaningStepContent({
 	layerConfig,
 }: MeasurePlaningStepContentProps) {
+	const showLegendAccordion =
+		Boolean(layerConfig.legendSrc) || Boolean(layerConfig.canDrawMeasures);
+
 	return (
 		<div className="flex min-h-0 flex-1 flex-col">
 			<div className="mt-4">
@@ -26,18 +35,57 @@ export function MeasurePlaningStepContent({
 				</div>
 			</div>
 
-			{layerConfig.legendSrc && (
+			{showLegendAccordion && (
 				<div className="mt-auto pt-6 pb-4">
-					<h5 className="mb-2 text-sm font-medium">
-						{layerConfig.legendTitle || "Legende"}
-					</h5>
-					<Image
-						src={layerConfig.legendSrc}
-						alt="Legende für die Karte"
-						width={400}
-						height={200}
-						className="h-auto max-w-full rounded border"
-					/>
+					<Accordion
+						type="multiple"
+						defaultValue={layerConfig.legendSrc ? ["legend"] : ["measures"]}
+					>
+						<AccordionItem value="legend" className="border-neutral-mid px-4">
+							<AccordionTrigger className="text-primary font-medium hover:no-underline">
+								{layerConfig.legendTitle || "Legende"}
+							</AccordionTrigger>
+							<AccordionContent className="pb-4">
+								{layerConfig.legendSrc ? (
+									<Image
+										src={layerConfig.legendSrc}
+										alt="Legende für die Karte"
+										width={620}
+										height={260}
+										className="h-auto max-w-full"
+									/>
+								) : (
+									<p className="text-muted-foreground text-sm">
+										Keine Legende verfügbar.
+									</p>
+								)}
+							</AccordionContent>
+						</AccordionItem>
+
+						{layerConfig.canDrawMeasures && (
+							<AccordionItem
+								value="measures"
+								className="border-neutral-mid px-4"
+							>
+								<AccordionTrigger className="">Maßnahmen</AccordionTrigger>
+								<AccordionContent>
+									{layerConfig.measurementSrc ? (
+										<Image
+											src={layerConfig.measurementSrc}
+											alt="Legende für Maßnahmen"
+											width={620}
+											height={260}
+											className="h-auto max-w-full"
+										/>
+									) : (
+										<p className="text-muted-foreground text-sm">
+											Keine Maßnahmenlegende verfügbar.
+										</p>
+									)}
+								</AccordionContent>
+							</AccordionItem>
+						)}
+					</Accordion>
 				</div>
 			)}
 		</div>

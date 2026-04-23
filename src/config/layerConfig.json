@@ -544,7 +544,9 @@
 		"name": "Extensive Dachbegrünung",
 		"description": "Leichtes Gründach mit dünner Vegetations- und Substratschicht (ca. 6-8 cm) für Flach- und leicht geneigte Dächer. Es hält Regenwasser zurück, verdunstet einen Teil und leitet den Rest verzögert ab; zusätzlich verbessert es Mikroklima, Luftqualität und Dachschutz. Geeignet für robuste Bepflanzung mit geringem Pflegebedarf und regelmäßiger Kontrolle.",
 		"drawLayerId": "module_3_3G1_draw",
-		"visibleLayerIds": [],
+		"visibleLayerIds": [
+			"potenziale_regenwasserbewirtschaftung:ca_dachbegruenungspotenzial"
+		],
 		"canDrawMeasures": true
 	},
 	{
@@ -552,7 +554,9 @@
 		"name": "Intensive Dachbegrünung",
 		"description": "Nutzbares Gründach mit dicker Substratschicht (ab ca. 15 cm bis mehrere Meter) für Dachgärten und vielfältige Vegetation. Es bietet hohe Regenwasserrückhaltung, verbessert das Stadtklima und schafft Aufenthaltsflächen. Benötigt hohe Tragfähigkeit, geringe Dachneigung und regelmäßige Pflege.",
 		"drawLayerId": "module_3_3G2_draw",
-		"visibleLayerIds": [],
+		"visibleLayerIds": [
+			"potenziale_regenwasserbewirtschaftung:ca_dachbegruenungspotenzial"
+		],
 		"canDrawMeasures": true
 	},
 	{
@@ -560,7 +564,9 @@
 		"name": "Retentionsgründach extensiv",
 		"description": "Extensives Gründach mit zusätzlichen Retentionselementen zur Zwischenspeicherung und gedrosselten Ableitung von Regenwasser. Es entlastet Kanalisation und Gewässer, unterstützt Verdunstung und verbessert die Wasserversorgung der Vegetation in Trockenphasen. Geeignet für tragfähige Flachdächer mit Wartung der Drosselelemente.",
 		"drawLayerId": "module_3_3G3_draw",
-		"visibleLayerIds": [],
+		"visibleLayerIds": [
+			"potenziale_regenwasserbewirtschaftung:ca_dachbegruenungspotenzial"
+		],
 		"canDrawMeasures": true
 	},
 	{
@@ -568,7 +574,9 @@
 		"name": "Retentionsgründach intensiv",
 		"description": "Intensives Retentionsdach mit großer Speicherleistung und vielfältiger Begrünung bis hin zu nutzbaren Dachgärten. Es verzögert Abflüsse, steigert Verdunstung und schafft ökologische sowie soziale Mehrwerte. Erfordert hohe statische Reserven, geringe Dachneigung und regelmäßige Wartung.",
 		"drawLayerId": "module_3_3G4_draw",
-		"visibleLayerIds": [],
+		"visibleLayerIds": [
+			"potenziale_regenwasserbewirtschaftung:ca_dachbegruenungspotenzial"
+		],
 		"canDrawMeasures": true
 	},
 	{
@@ -584,32 +592,40 @@
 		"name": "Teilversiegelte Oberflächen",
 		"description": "Ersatz vollversiegelter Beläge durch teildurchlässige Oberflächen wie Sickerpflaster oder Rasengitter. Dadurch kann Regenwasser lokal versickern, Abflüsse werden reduziert und das Stadtklima verbessert. Die Wirksamkeit hängt von Boden, Gefälle und Wartung gegen Verstopfung ab.",
 		"drawLayerId": "module_3_3E1_draw",
-		"visibleLayerIds": [],
-		"canDrawMeasures": true
+		"visibleLayerIds": ["ua_entsiegelung:b_entsieg_klasse_teil"],
+		"canDrawMeasures": true,
+		"legendSrc": "/legends/2e1.svg",
+		"measurementSrc": "/legends/2e1.svg"
 	},
 	{
 		"id": "3E2",
 		"name": "Komplette Entsiegelung",
 		"description": "Vollständiger Rückbau versiegelter Schichten mit Bodenlockerung und Rekultivierung zur Wiederherstellung natürlicher Bodenfunktionen. Fördert Versickerung, Grundwasserneubildung, Biodiversität und Klimaanpassung. Wirksam, aber mit hohem Aufwand und Kosten verbunden.",
 		"drawLayerId": "module_3_3E2_draw",
-		"visibleLayerIds": [],
-		"canDrawMeasures": true
+		"visibleLayerIds": ["ua_entsiegelung:b_entsieg_klasse_teil"],
+		"canDrawMeasures": true,
+		"legendSrc": "/legends/2e1.svg",
+		"measurementSrc": "/legends/2e1.svg"
 	},
 	{
 		"id": "3B1",
 		"name": "Grünflächen",
 		"description": "Grünflächen und Grünanlagen sind zentrale urbane Freiräume mit hoher ökologischer und sozialer Wirkung. Sie fördern Verdunstung, Kühlung, Biodiversität, Luftqualität und Regenwasserrückhalt im Sinne der Schwammstadt. Erfordern Flächenverfügbarkeit sowie kontinuierliche Planung und Pflege.",
 		"drawLayerId": "module_3_3B1_draw",
-		"visibleLayerIds": [],
-		"canDrawMeasures": true
+		"visibleLayerIds": ["ua_entsiegelung:b_entsieg_klasse_teil"],
+		"canDrawMeasures": true,
+		"legendSrc": "/legends/2e1.svg",
+		"measurementSrc": "/legends/2e1.svg"
 	},
 	{
 		"id": "3B2",
 		"name": "Bäume",
 		"description": "Stadtbäume speichern und verdunsten Wasser, spenden Schatten und reduzieren Hitzeinseln. Sie verbessern Luftqualität, fördern Biodiversität und entlasten die Kanalisation durch verzögerten Abfluss. Für langfristige Vitalität sind ausreichend Wurzelraum, geeignete Substrate und Pflege entscheidend.",
 		"drawLayerId": "module_3_3B2_draw",
-		"visibleLayerIds": [],
-		"canDrawMeasures": true
+		"visibleLayerIds": ["ua_entsiegelung:b_entsieg_klasse_teil"],
+		"canDrawMeasures": true,
+		"legendSrc": "/legends/2e1.svg",
+		"measurementSrc": "/legends/2e1.svg"
 	},
 	{
 		"id": "3B3",
@@ -672,8 +688,10 @@
 		"name": "(Künstliche) Wasserflächen",
 		"description": "Offene Wasserflächen wie Teiche oder Gräben zur Sammlung, Rückhaltung und ggf. Aufbereitung von Niederschlagswasser. Sie reduzieren Abflussspitzen, können Freiräume aufwerten und Biodiversität fördern. Planung und Betrieb erfordern abgestimmte Vorreinigung, Überläufe und Pflege.",
 		"drawLayerId": "module_3_3S1_draw",
-		"visibleLayerIds": [],
-		"canDrawMeasures": true
+		"visibleLayerIds": ["ua_entsiegelung:b_entsieg_klasse_teil"],
+		"canDrawMeasures": true,
+		"legendSrc": "/legends/2e1.svg",
+		"measurementSrc": "/legends/2e1.svg"
 	},
 	{
 		"id": "3S2",
@@ -696,16 +714,20 @@
 		"name": "Retentionsfläche",
 		"description": "Temporäre Rückhaltefläche für Starkregen, häufig als multifunktionaler Freiraum wie Park oder Sportfläche ausgebildet. Sie schützt vor Überflutung, kann städtebauliche Qualität erhöhen und mit anderen Klimaanpassungsmaßnahmen kombiniert werden. Erfordert sichere Zu- und Ableitungsstrukturen.",
 		"drawLayerId": "module_3_3S4_draw",
-		"visibleLayerIds": [],
-		"canDrawMeasures": true
+		"visibleLayerIds": ["ua_entsiegelung:b_entsieg_klasse_teil"],
+		"canDrawMeasures": true,
+		"legendSrc": "/legends/2e1.svg",
+		"measurementSrc": "/legends/2e1.svg"
 	},
 	{
 		"id": "3S5",
 		"name": "Verdunstungsbeet",
 		"description": "Abgedichtetes Beet zur Rückhaltung von Regenwasser mit Fokus auf Verdunstung statt Versickerung. Es reduziert Abflussspitzen, stärkt den lokalen Wasserkreislauf und kann gestalterisch in den Straßenraum integriert werden. Geeignet bei begrenzter Versickerungsmöglichkeit und hohem Rückhaltebedarf.",
 		"drawLayerId": "module_3_3S5_draw",
-		"visibleLayerIds": [],
-		"canDrawMeasures": true
+		"visibleLayerIds": ["ua_entsiegelung:b_entsieg_klasse_teil"],
+		"canDrawMeasures": true,
+		"legendSrc": "/legends/2e1.svg",
+		"measurementSrc": "/legends/2e1.svg"
 	},
 	{
 		"id": "connected_area",

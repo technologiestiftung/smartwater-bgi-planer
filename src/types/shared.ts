@@ -43,8 +43,18 @@ export interface ModuleStepConfig {
 	id: string;
 	icon: string;
 	title: string;
-	questions: string[];
+	questions?: string[];
+	measurements?: ModuleMeasurementConfig[];
 	displayInSynthesis?: boolean;
+}
+
+export interface ModuleMeasurementConfig {
+	id: string;
+	layerConfigId?: string;
+	title?: string;
+	metricIcons?: string[];
+	infoLayerConfigId?: string;
+	steps?: string[];
 }
 
 export interface ModuleConfig {

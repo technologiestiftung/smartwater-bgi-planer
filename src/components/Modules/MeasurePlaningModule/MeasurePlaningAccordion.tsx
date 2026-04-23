@@ -13,10 +13,11 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { useMapReady } from "@/hooks/useMapReady";
+import { getIconComponent } from "@/lib/helpers/iconMap";
 import { SectionId } from "@/lib/helpers/sectionIds";
 import { cn } from "@/lib/utils";
 import { useLayersStore, useUiStore } from "@/store";
-import { ArrowLeftIcon, ListChecksIcon } from "@phosphor-icons/react";
+import { ArrowLeftIcon, InfoIcon, ListChecksIcon } from "@phosphor-icons/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 
@@ -197,34 +198,93 @@ export function MeasurePlaningAccordion({
 					onValueChange={(value) => setExpandedStepId(value || "")}
 				>
 					{steps.map((step) => (
-						<AccordionItem key={step.id} value={step.id}>
-							<AccordionTrigger className="text-primary py-5 text-2xl font-semibold hover:no-underline">
+						<AccordionItem
+							key={step.id}
+							value={step.id}
+							className="border-neutral-mid"
+						>
+							<AccordionTrigger className="text-primary py-5 text-xl font-semibold hover:no-underline">
 								<div className="flex items-center gap-3">
-									<div className="text-primary [&_svg]:size-6">{step.icon}</div>
+									{/* <div className="text-primary [&_svg]:size-6">{step.icon}</div> */}
 									<span>{step.title}</span>
 								</div>
 							</AccordionTrigger>
 							<AccordionContent className="pb-5">
-								<div className="space-y-2">
-									{(step.questions ?? []).map((questionId) => {
-										const config = layerConfigById.get(questionId);
+								<div className="space-y-1">
+									{(
+										step.measurements?.map((measurement) => ({
+											id: measurement.id,
+											questionId: measurement.layerConfigId ?? measurement.id,
+											infoQuestionId: measurement.infoLayerConfigId,
+											title: measurement.title,
+											metricIcons: measurement.metricIcons ?? [],
+										})) ??
+										(step.questions ?? []).map((questionId) => ({
+											id: questionId,
+											questionId,
+											infoQuestionId: undefined,
+											title: undefined,
+											metricIcons: [],
+										}))
+									).map((item) => {
+										const config = layerConfigById.get(item.questionId);
 										const label =
-											config?.name || config?.question || questionId;
-										const isConnectedArea = questionId === "connected_area";
+											item.title ||
+											config?.name ||
+											config?.question ||
+											item.questionId;
+										const isConnectedArea =
+											item.questionId === "connected_area";
 
 										return (
-											<button
-												key={questionId}
-												type="button"
-												onClick={() => activateQuestion(step.id, questionId)}
-												className={cn(
-													"border-muted hover:border-primary flex w-full items-center justify-between rounded-md border px-3 py-2 text-left transition-colors",
-													isConnectedArea &&
-														"bg-primary text-primary-foreground hover:bg-primary/90",
+											<div key={item.id} className="flex items-center gap-2">
+												<button
+													type="button"
+													onClick={() =>
+														activateQuestion(step.id, item.questionId)
+													}
+													className={cn(
+														"border-muted hover:bg-light flex flex-1 items-center justify-between rounded-md px-3 py-2 text-left transition-colors",
+														isConnectedArea &&
+															"bg-primary text-primary-foreground hover:bg-primary/90",
+													)}
+												>
+													<div className="flex items-center gap-2">
+														<span className="font-medium">{label}</span>
+														{item.metricIcons.length > 0 && (
+															<div className="flex items-center gap-1">
+																{item.metricIcons.map((iconName) => {
+																	const MetricIcon = getIconComponent(iconName);
+																	return (
+																		<span
+																			key={`${item.id}-${iconName}`}
+																			className={cn(
+																				"border-primary inline-flex items-center justify-center rounded-full border p-1",
+																				isConnectedArea &&
+																					"border-primary-foreground",
+																			)}
+																		>
+																			<MetricIcon className="h-4 w-4" />
+																		</span>
+																	);
+																})}
+															</div>
+														)}
+													</div>
+												</button>
+												{item.infoQuestionId && (
+													<button
+														type="button"
+														onClick={() =>
+															activateQuestion(step.id, item.infoQuestionId!)
+														}
+														className="text-primary hover:text-primary/80 inline-flex h-9 w-9 items-center justify-center rounded-full"
+														aria-label={`Informationen zu ${label}`}
+													>
+														<InfoIcon className="h-5 w-5" />
+													</button>
 												)}
-											>
-												<span className="font-medium">{label}</span>
-											</button>
+											</div>
 										);
 									})}
 								</div>

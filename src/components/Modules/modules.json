@@ -103,31 +103,195 @@
 					"id": "greenRoof",
 					"icon": "SolarRoof",
 					"title": "Gebäudebegrünung",
-					"questions": ["connected_area", "3G1", "3G2", "3G3", "3G4", "3G5"]
+					"questions": ["connected_area", "3G1", "3G2", "3G3", "3G4", "3G5"],
+					"measurements": [
+						{
+							"id": "connected_area",
+							"layerConfigId": "connected_area",
+							"title": "Zusammenhängende Fläche",
+							"metricIcons": ["List"],
+							"infoLayerConfigId": "connected_area_info"
+						},
+						{
+							"id": "3G1",
+							"layerConfigId": "3G1",
+							"title": "Extensive Dachbegrünung",
+							"metricIcons": ["Tree", "Drop", "ThermometerHot"],
+							"infoLayerConfigId": "3G1_info"
+						},
+						{
+							"id": "3G2",
+							"layerConfigId": "3G2",
+							"title": "Intensive Dachbegrünung",
+							"metricIcons": ["Tree", "Drop", "ThermometerHot"],
+							"infoLayerConfigId": "3G2_info"
+						},
+						{
+							"id": "3G3",
+							"layerConfigId": "3G3",
+							"title": "Retentionsgründach extensiv",
+							"metricIcons": ["Tree", "ThermometerHot"],
+							"infoLayerConfigId": "3G3_info"
+						},
+						{
+							"id": "3G4",
+							"layerConfigId": "3G4",
+							"title": "Retentionsgründach intensiv",
+							"metricIcons": ["Tree", "ThermometerHot"],
+							"infoLayerConfigId": "3G4_info"
+						},
+						{
+							"id": "3G5",
+							"layerConfigId": "3G5",
+							"title": "Erdgebundene Fassadenbegrünung",
+							"metricIcons": ["Drop", "ThermometerHot"],
+							"infoLayerConfigId": "3G5_info"
+						}
+					]
 				},
 				{
 					"id": "unpvd",
 					"icon": "Wall",
 					"title": "Entsiegelung / Vermeidung von Versiegelung",
-					"questions": ["3E1", "3E2"]
+					"questions": ["3E1", "3E2"],
+					"measurements": [
+						{
+							"id": "3E1",
+							"layerConfigId": "3E1",
+							"title": "Teilversiegelte Oberflächen",
+							"metricIcons": ["Drop", "ThermometerHot"],
+							"infoLayerConfigId": "3E1_info"
+						},
+						{
+							"id": "3E2",
+							"layerConfigId": "3E2",
+							"title": "Komplette Entsiegelung",
+							"metricIcons": ["RoadHorizon", "Drop"],
+							"infoLayerConfigId": "3E2_info"
+						}
+					]
 				},
 				{
 					"id": "planting",
 					"icon": "Tree",
 					"title": "Begrünung / Bepflanzung",
-					"questions": ["3B1", "3B2", "3B3"]
+					"questions": ["3B1", "3B2", "3B3"],
+					"measurements": [
+						{
+							"id": "3B1",
+							"layerConfigId": "3B1",
+							"title": "Grünflächen",
+							"metricIcons": ["Tree", "ThermometerHot"],
+							"infoLayerConfigId": "3B1_info"
+						},
+						{
+							"id": "3B2",
+							"layerConfigId": "3B2",
+							"title": "Bäume",
+							"metricIcons": ["Tree"],
+							"infoLayerConfigId": "3B2_info"
+						},
+						{
+							"id": "3B3",
+							"layerConfigId": "3B3",
+							"title": "Gleisbettbegrünung",
+							"metricIcons": ["Tree", "Drop"],
+							"infoLayerConfigId": "3B3_info"
+						}
+					]
 				},
 				{
 					"id": "swale",
 					"icon": "Recycle",
 					"title": "Versickerung",
-					"questions": ["3V1", "3V2", "3V3", "3V4", "3V5", "3V6"]
+					"questions": ["3V1", "3V2", "3V3", "3V4", "3V5", "3V6"],
+					"measurements": [
+						{
+							"id": "3V1",
+							"layerConfigId": "3V1",
+							"title": "Mulde",
+							"metricIcons": ["Tree", "ThermometerHot", "Drop"],
+							"infoLayerConfigId": "3V1_info"
+						},
+						{
+							"id": "3V2",
+							"layerConfigId": "3V2",
+							"title": "Flächenversickerung",
+							"metricIcons": ["Tree", "ThermometerHot", "Drop"],
+							"infoLayerConfigId": "3V2_info"
+						},
+						{
+							"id": "3V3",
+							"layerConfigId": "3V3",
+							"title": "Mulden-Rigolen-Element",
+							"metricIcons": ["Tree", "Drop"],
+							"infoLayerConfigId": "3V3_info"
+						},
+						{
+							"id": "3V4",
+							"layerConfigId": "3V4",
+							"title": "Tiefbeet-Rigole",
+							"metricIcons": ["Tree"],
+							"infoLayerConfigId": "3V4_info"
+						},
+						{
+							"id": "3V5",
+							"layerConfigId": "3V5",
+							"title": "Optimierter Baumstandort (Baum mit unterirdischer Versickerung kombiniert)",
+							"metricIcons": ["ThermometerHot", "RoadHorizon"],
+							"infoLayerConfigId": "3V5_info"
+						},
+						{
+							"id": "3V6",
+							"layerConfigId": "3V6",
+							"title": "Rigole",
+							"metricIcons": ["Tree", "Drop"],
+							"infoLayerConfigId": "3V6_info"
+						}
+					]
 				},
 				{
 					"id": "waterStorage",
 					"icon": "Jar",
 					"title": "Speicherung und Überflutungsvorsorge",
-					"questions": ["3S1", "3S2", "3S3", "3S4", "3S5"]
+					"questions": ["3S1", "3S2", "3S3", "3S4", "3S5"],
+					"measurements": [
+						{
+							"id": "3S1",
+							"layerConfigId": "3S1",
+							"title": "(Künstliche) Wasserflächen",
+							"metricIcons": ["Drop", "RoadHorizon"],
+							"infoLayerConfigId": "3S1_info"
+						},
+						{
+							"id": "3S2",
+							"layerConfigId": "3S2",
+							"title": "Zisterne für Bewässerung",
+							"metricIcons": ["Drop"],
+							"infoLayerConfigId": "3S2_info"
+						},
+						{
+							"id": "3S3",
+							"layerConfigId": "3S3",
+							"title": "Zisterne für gebäudeinterne Nutzung",
+							"metricIcons": ["Drop", "Jar"],
+							"infoLayerConfigId": "3S3_info"
+						},
+						{
+							"id": "3S4",
+							"layerConfigId": "3S4",
+							"title": "Retentionsfläche",
+							"metricIcons": ["RoadHorizon", "Drop"],
+							"infoLayerConfigId": "3S4_info"
+						},
+						{
+							"id": "3S5",
+							"layerConfigId": "3S5",
+							"title": "Verdunstungsbeet",
+							"metricIcons": ["Drop", "File"],
+							"infoLayerConfigId": "3S5_info"
+						}
+					]
 				}
 			]
 		}
