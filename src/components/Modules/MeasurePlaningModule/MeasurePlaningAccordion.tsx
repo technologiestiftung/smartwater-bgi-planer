@@ -1,8 +1,8 @@
 "use client";
 
+import { MeasurePlaningStepContent } from "@/components/Modules/MeasurePlaningModule/MeasurePlaningStepContent";
 import { SynthesisView } from "@/components/Modules/MeasurePlaningModule/SynthesisView";
 import { getModuleSteps } from "@/components/Modules/shared/moduleConfig";
-import StepContent from "@/components/Modules/shared/StepContent";
 import { SideMenu } from "@/components/SideMenu";
 // import { Tutorial } from "@/components/Tutorials/Tutorial";
 import {
@@ -16,13 +16,7 @@ import { useMapReady } from "@/hooks/useMapReady";
 import { SectionId } from "@/lib/helpers/sectionIds";
 import { cn } from "@/lib/utils";
 import { useLayersStore, useUiStore } from "@/store";
-import { useAnswersStore } from "@/store/answers";
-import { LayerConfigItem } from "@/store/layers/types";
-import {
-	ArrowLeftIcon,
-	CheckCircleIcon,
-	ListChecksIcon,
-} from "@phosphor-icons/react";
+import { ArrowLeftIcon, ListChecksIcon } from "@phosphor-icons/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 
@@ -36,9 +30,11 @@ interface MeasurePlaningAccordionProps {
 function MeasurePlaningFooter({
 	onShowSynthesis,
 	onBackToQuestions,
+	showBackToQuestions,
 }: {
 	onShowSynthesis: () => void;
 	onBackToQuestions: () => void;
+	showBackToQuestions: boolean;
 }) {
 	return (
 		<div className="border-muted flex h-full w-full border-t">
@@ -50,14 +46,16 @@ function MeasurePlaningFooter({
 				<ListChecksIcon className="h-6 w-6 text-white" />
 			</Button>
 			{/* <Tutorial type="synthesis" /> */}
-			<Button
-				variant="ghost"
-				className="flex h-full justify-center rounded-none"
-				onClick={onBackToQuestions}
-			>
-				<ArrowLeftIcon />
-				Zurück
-			</Button>
+			{showBackToQuestions && (
+				<Button
+					variant="ghost"
+					className="flex h-full justify-center rounded-none"
+					onClick={onBackToQuestions}
+				>
+					<ArrowLeftIcon />
+					Zurück
+				</Button>
+			)}
 		</div>
 	);
 }
@@ -77,9 +75,6 @@ export function MeasurePlaningAccordion({
 	);
 	const hasInitializedRef = useRef(false);
 	const isMapReady = useMapReady();
-
-	const setAnswer = useAnswersStore((state) => state.setAnswer);
-	const answers = useAnswersStore((state) => state.answers);
 
 	const { layerConfig, applyConfigLayers } = useLayersStore(
 		useShallow((state) => ({
@@ -150,17 +145,14 @@ export function MeasurePlaningAccordion({
 			layerConfig.length === 0
 		)
 			return;
-			applyConfigLayers("measure_start", true);
+		applyConfigLayers("measure_start", true);
 		hasInitializedRef.current = true;
-	}, [
-		open,
-		isMapReady,
-		layerConfig.length,
-		applyConfigLayers,
-	]);
+	}, [open, isMapReady, layerConfig.length, applyConfigLayers]);
+
 	const handleShowSynthesis = useCallback(() => {
 		setIsSynthesisMode(true);
 	}, [setIsSynthesisMode]);
+
 	const handleBackToQuestions = useCallback(() => {
 		setSelectedQuestionId(null);
 		setIsSynthesisMode(false);
@@ -175,19 +167,6 @@ export function MeasurePlaningAccordion({
 		},
 		[activateQuestion, setIsSynthesisMode],
 	);
-
-	const handleQuestionAnswer = useCallback(
-		(answer: boolean) => {
-			if (!selectedQuestionId) return;
-			setAnswer(selectedQuestionId, answer);
-		},
-		[selectedQuestionId, setAnswer],
-	);
-
-	const handleQuestionSkip = useCallback(() => {
-		if (!selectedQuestionId) return;
-		setAnswer(selectedQuestionId, null);
-	}, [selectedQuestionId, setAnswer]);
 
 	let content: React.ReactNode;
 
@@ -204,11 +183,7 @@ export function MeasurePlaningAccordion({
 				<h3 className="text-primary shrink-0 text-xl font-semibold">
 					{selectedQuestionConfig.name || selectedQuestionId}
 				</h3>
-				<StepContent
-					layerConfig={selectedQuestionConfig as LayerConfigItem}
-					onAnswer={handleQuestionAnswer}
-					onSkip={handleQuestionSkip}
-				/>
+				<MeasurePlaningStepContent layerConfig={selectedQuestionConfig} />
 			</div>
 		);
 	} else {
@@ -235,7 +210,6 @@ export function MeasurePlaningAccordion({
 										const config = layerConfigById.get(questionId);
 										const label =
 											config?.name || config?.question || questionId;
-										const isAnswered = answers[questionId] !== undefined;
 										const isConnectedArea = questionId === "connected_area";
 
 										return (
@@ -250,16 +224,6 @@ export function MeasurePlaningAccordion({
 												)}
 											>
 												<span className="font-medium">{label}</span>
-												{isAnswered && (
-													<CheckCircleIcon
-														className={cn(
-															"h-5 w-5",
-															isConnectedArea
-																? "text-primary-foreground"
-																: "text-primary",
-														)}
-													/>
-												)}
 											</button>
 										);
 									})}
@@ -283,6 +247,7 @@ export function MeasurePlaningAccordion({
 					<MeasurePlaningFooter
 						onShowSynthesis={handleShowSynthesis}
 						onBackToQuestions={handleBackToQuestions}
+						showBackToQuestions={Boolean(selectedQuestionConfig)}
 					/>
 				)
 			}
