@@ -1,3 +1,4 @@
+import { simulationEngine } from "@/lib/simulation/simulationEngine";
 import { useAnswersStore } from "../answers";
 import { useFilesStore } from "../files";
 import { useMapStore } from "../map";
@@ -81,12 +82,14 @@ export const createSetInputFeatures = (set: SetState) => {
 	return (features: InputFeature[]) => {
 		console.log("[useProjectStore] inputFeatures updated", features);
 
-		// todo: calculate total area (run simulation for calculations)
+		const stats = simulationEngine.preprocessInput(features);
+		console.log("[useProjectStore] area stats", stats);
 
 		set((state) => ({
 			...state,
 			inputFeatures: features,
 			inputFeaturesCount: features.length,
+			totalArea: stats.totalArea,
 		}));
 	};
 };

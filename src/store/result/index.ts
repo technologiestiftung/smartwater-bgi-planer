@@ -15,3 +15,14 @@ export const useResultStore = create<ResultState & ResultActions>(
 		getResult: createGetResult(get),
 	}),
 );
+
+// resultStore = {
+//   results: [
+//     {
+//       code: "BTF1",
+//       runoff: 123,
+//       evaporation: 456,
+//       infiltration: 789
+//     }
+//   ]
+// }
