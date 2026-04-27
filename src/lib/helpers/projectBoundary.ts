@@ -1,4 +1,5 @@
 import { getLayerById } from "@/lib/helpers/ol";
+import type { InputFeature } from "@/store/project/types";
 import { LAYER_IDS } from "@/types/shared";
 import booleanIntersects from "@turf/boolean-intersects";
 import { GeoJSON } from "ol/format";
@@ -94,5 +95,30 @@ export const performProjectBoundaryIntersection = (map: Map | null) => {
 		} catch (error) {
 			console.warn("Error processing feature:", error);
 		}
+	});
+};
+
+export const getInputFeatures = (map: Map | null): InputFeature[] => {
+	if (!map) return [];
+
+	const planningSource = getLayerById(
+		map,
+		LAYER_IDS.PROJECT_BTF_PLANNING,
+	)?.getSource();
+
+	if (!planningSource) return [];
+
+	return planningSource.getFeatures().map((feature) => {
+		const properties = { ...feature.getProperties() } as Record<
+			string,
+			unknown
+		>;
+		delete properties.geometry;
+
+		return {
+			feature,
+			geometry: feature.getGeometry() ?? null,
+			properties,
+		};
 	});
 };

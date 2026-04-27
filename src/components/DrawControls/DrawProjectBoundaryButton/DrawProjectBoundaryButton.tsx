@@ -3,10 +3,12 @@
 import { Button } from "@/components/ui/button";
 import { useLayerReady } from "@/hooks/useLayerReady";
 import { getLayerById } from "@/lib/helpers/ol";
-import { performProjectBoundaryIntersection } from "@/lib/helpers/projectBoundary";
+import {
+	getInputFeatures,
+	performProjectBoundaryIntersection,
+} from "@/lib/helpers/projectBoundary";
 import { useMapStore } from "@/store/map";
 import { useProjectStore } from "@/store/project";
-import type { InputFeature } from "@/store/project/types";
 import { useUiStore } from "@/store/ui";
 import { LAYER_IDS } from "@/types/shared";
 import { PolygonIcon } from "@phosphor-icons/react";
@@ -30,35 +32,7 @@ const DrawProjectBoundaryButton: FC = () => {
 		useLayerReady("rabimo_input_2025");
 
 	const syncPlanningLayerFeatures = useCallback(() => {
-		if (!map) return;
-
-		const planningSource = getLayerById(
-			map,
-			LAYER_IDS.PROJECT_BTF_PLANNING,
-		)?.getSource();
-
-		if (!planningSource) {
-			setInputFeatures([]);
-			return;
-		}
-
-		const inputFeatures: InputFeature[] = planningSource
-			.getFeatures()
-			.map((feature) => {
-				const properties = { ...feature.getProperties() } as Record<
-					string,
-					unknown
-				>;
-				delete properties.geometry;
-
-				return {
-					feature,
-					geometry: feature.getGeometry() ?? null,
-					properties,
-				};
-			});
-
-		setInputFeatures(inputFeatures);
+		setInputFeatures(getInputFeatures(map));
 	}, [map, setInputFeatures]);
 
 	const performIntersection = useCallback(() => {

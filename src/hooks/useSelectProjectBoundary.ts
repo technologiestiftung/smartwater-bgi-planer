@@ -1,19 +1,24 @@
 "use client";
 
-import { useCallback, useRef } from "react";
 import { getLayerById } from "@/lib/helpers/ol";
-import { useMapStore } from "@/store/map";
+import {
+	getInputFeatures,
+	performProjectBoundaryIntersection,
+} from "@/lib/helpers/projectBoundary";
+import { useUiStore } from "@/store";
 import { useLayersStore } from "@/store/layers";
-import VectorSource from "ol/source/Vector";
-import Modify from "ol/interaction/Modify";
+import { useMapStore } from "@/store/map";
+import { useProjectStore } from "@/store/project";
 import { LAYER_IDS } from "@/types/shared";
 import Draw from "ol/interaction/Draw.js";
-import { useUiStore } from "@/store";
-import { performProjectBoundaryIntersection } from "@/lib/helpers/projectBoundary";
+import Modify from "ol/interaction/Modify";
+import VectorSource from "ol/source/Vector";
+import { useCallback, useRef } from "react";
 
 export function useSelectProjectBoundary() {
 	const map = useMapStore((state) => state.map);
 	const drawLayerId = useLayersStore((state) => state.drawLayerId);
+	const setInputFeatures = useProjectStore((state) => state.setInputFeatures);
 	const setIsDrawing = useUiStore((state) => state.setIsDrawing);
 	const resetDrawInteractions = useUiStore(
 		(state) => state.resetDrawInteractions,
@@ -23,7 +28,8 @@ export function useSelectProjectBoundary() {
 
 	const performIntersection = useCallback(() => {
 		performProjectBoundaryIntersection(map);
-	}, [map]);
+		setInputFeatures(getInputFeatures(map));
+	}, [map, setInputFeatures]);
 
 	const removeInteractions = useCallback(() => {
 		if (drawRef.current) {

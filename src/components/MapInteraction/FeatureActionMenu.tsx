@@ -1,17 +1,23 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { performProjectBoundaryIntersection } from "@/lib/helpers/projectBoundary";
+import {
+	getInputFeatures,
+	performProjectBoundaryIntersection,
+} from "@/lib/helpers/projectBoundary";
 import { useMapStore } from "@/store/map";
+import { useProjectStore } from "@/store/project";
 import { LAYER_IDS } from "@/types/shared";
 import { TrashIcon, XCircleIcon } from "@phosphor-icons/react";
+import type Feature from "ol/Feature";
+import type { Geometry } from "ol/geom";
 import VectorLayer from "ol/layer/Vector.js";
 import { Vector as VectorSource } from "ol/source.js";
 import { FC, useState } from "react";
 
 interface FeatureActionMenuProps {
 	layerId?: string;
-	features?: any;
+	features?: Feature<Geometry>;
 	onClose?: () => void;
 }
 
@@ -21,6 +27,8 @@ const FeatureActionMenu: FC<FeatureActionMenuProps> = ({
 	onClose,
 }) => {
 	const map = useMapStore((state) => state.map);
+	const setInputFeatures = useProjectStore((state) => state.setInputFeatures);
+
 	const [isDeleting, setIsDeleting] = useState(false);
 
 	const handleDelete = async () => {
@@ -40,6 +48,7 @@ const FeatureActionMenu: FC<FeatureActionMenuProps> = ({
 				if (layerId === LAYER_IDS.PROJECT_BOUNDARY) {
 					setTimeout(() => {
 						performProjectBoundaryIntersection(map);
+						setInputFeatures(getInputFeatures(map));
 					}, 10);
 				}
 			}
