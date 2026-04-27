@@ -1,7 +1,9 @@
+import type { InputFeature } from "@/store/project/types";
+import type { Result as StoreResult } from "@/store/result/types";
 import type Feature from "ol/Feature";
 import type { Geometry } from "ol/geom";
 
-// OpenLayers feature used by simulation utils.
+// OpenLayers feature used by simulation modules.
 export type OLFeature = Feature<Geometry>;
 
 // Supported measure kinds.
@@ -29,7 +31,7 @@ export type Measure = {
 	connectedArea?: number;
 };
 
-// Raw area properties read from OL features (input features).
+// Raw area properties read from OL features.
 export type AreaValues = {
 	total_area: number;
 	roof: number;
@@ -189,35 +191,50 @@ export type MeasureStats = {
 	greenRoofMeasuresAmount: number;
 	unpavedMeasuresAmount: number;
 	swaleMeasuresAmount: number;
-
 	totalGreenRoofArea: number;
 	totalUnpavedArea: number;
 	totalSwaleArea: number;
 	totalSwaleVolume: number;
 	totalSwaleConnectedArea: number;
-
 	newGreenRoof: number | null;
 	newGreenRoofToRoof: number | null;
 	newUnpvd: number | null;
 	newToSwale: number | null;
-
 	pvd_neu: number | null;
 	pvd_neu_area: number | null;
 	newPvdToTotalArea: number | null;
 	totalUnpavedToTotalArea: number | null;
-
-	// Only populated when measures are provided
 	Ag_0?: number;
 	Ag_max?: number;
 	Ag_neu?: number;
 	Agt?: number;
-
 	Ae_0?: number;
 	Ae_max?: number;
 	Ae_neu?: number;
 	Aet?: number;
-
 	Am_0?: number;
 	Am_max?: number;
 	Amt?: number;
+};
+
+// Full data payload returned by simulationEngine.run.
+export type SimulationRunResult = StoreResult["data"] & {
+	areaStats: AccumulatedAbimoStats;
+	measureStats: MeasureStats;
+	resultStats: ResultStats;
+	reportPayload: ReportPayload;
+};
+
+// Input object consumed by simulationEngine.run.
+export type SimulationRunOptions = {
+	scenarioId?: string;
+	baseInput: InputFeature[];
+	measures?: Measure[];
+	resultData?: ResultItem[];
+	preComputedStats?: ResultStats;
+	areaTypesData?: AreaType[];
+	reportOptions?: {
+		isMeasurePlanning?: boolean;
+		allMeasuredStats?: MeasureStats | null;
+	};
 };

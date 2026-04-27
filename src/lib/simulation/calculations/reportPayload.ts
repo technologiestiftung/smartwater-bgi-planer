@@ -9,7 +9,7 @@ import type {
 	SurfaceAreaStrings,
 	WaterBalanceResult,
 	WaterBalanceStatusQuo,
-} from "./types";
+} from "../types";
 
 /**
  * Utility functions for calculations and formatting

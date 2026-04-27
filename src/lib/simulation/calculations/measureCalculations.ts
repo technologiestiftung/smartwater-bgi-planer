@@ -1,5 +1,4 @@
-import areaCalc from "./areaCalculations";
-import Constants from "./constants";
+import Constants from "../constants";
 import type {
 	Measure,
 	MeasureDimension,
@@ -7,7 +6,8 @@ import type {
 	MeasureStats,
 	MeasureType,
 	OLFeature,
-} from "./types";
+} from "../types";
+import areaCalc from "./areaCalculations";
 
 function getMeasureDimension(
 	type: MeasureType,

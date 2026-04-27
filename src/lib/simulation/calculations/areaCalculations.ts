@@ -4,7 +4,7 @@ import type {
 	OLFeature,
 	ResultItem,
 	ResultStats,
-} from "./types";
+} from "../types";
 
 function getValues(area: OLFeature): AreaValues {
 	return (area as unknown as { values_: AreaValues }).values_;

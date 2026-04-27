@@ -1,4 +1,9 @@
-import type { MeasureDimension, MeasureSize, MeasureType } from "./types";
+import type {
+	MeasureDimension,
+	MeasureSize,
+	MeasureStats,
+	MeasureType,
+} from "./types";
 
 const MEASURE_DIMENSIONS: Record<
 	MeasureType,
@@ -42,8 +47,28 @@ const MEASURE_DIMENSIONS: Record<
 	},
 };
 
+const EMPTY_MEASURE_STATS: MeasureStats = {
+	greenRoofMeasuresAmount: 0,
+	unpavedMeasuresAmount: 0,
+	swaleMeasuresAmount: 0,
+	totalGreenRoofArea: 0,
+	totalUnpavedArea: 0,
+	totalSwaleArea: 0,
+	totalSwaleVolume: 0,
+	totalSwaleConnectedArea: 0,
+	newGreenRoof: null,
+	newGreenRoofToRoof: null,
+	newUnpvd: null,
+	newToSwale: null,
+	pvd_neu: null,
+	pvd_neu_area: null,
+	newPvdToTotalArea: null,
+	totalUnpavedToTotalArea: null,
+};
+
 const constants = {
 	MEASURE_DIMENSIONS,
+	EMPTY_MEASURE_STATS,
 };
 
 export default constants;

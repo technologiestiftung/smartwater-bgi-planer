@@ -1,37 +1,68 @@
-import areaCalculations from "@/lib/simulation/utils/areaCalculations";
+import areaCalculations from "@/lib/simulation/calculations/areaCalculations";
+import measureCalculations from "@/lib/simulation/calculations/measureCalculations";
+import reportPayload from "@/lib/simulation/calculations/reportPayload";
+import Constants from "@/lib/simulation/constants";
+import type {
+	AccumulatedAbimoStats,
+	AreaType,
+	Measure,
+	MeasureStats,
+	ReportPayload,
+	ResultItem,
+	ResultStats,
+	SimulationRunOptions,
+} from "@/lib/simulation/types";
 import type { InputFeature } from "@/store/project/types";
 
-type SimulationResult = {
-	id: string;
-	scenarioId: string;
-	timestamp: number;
-	data: Record<string, unknown>;
+const getOlFeatures = (inputFeatures: InputFeature[]) =>
+	inputFeatures.map((inputFeature) => inputFeature.feature);
+
+const preprocessInput = (
+	inputFeatures: InputFeature[],
+	newUnpvd = 0,
+): AccumulatedAbimoStats =>
+	areaCalculations.calculateAllStats(getOlFeatures(inputFeatures), newUnpvd);
+
+const applyMeasures = (
+	inputFeatures: InputFeature[],
+	measures: Measure[],
+): MeasureStats => {
+	if (inputFeatures.length === 0 || measures.length === 0) {
+		return Constants.EMPTY_MEASURE_STATS;
+	}
+
+	return measureCalculations.calculateAllMeasureStats(
+		getOlFeatures(inputFeatures),
+		measures,
+	);
 };
 
-const preprocessInput = (inputFeatures: InputFeature[]) => {
-	const olFeatures = inputFeatures.map((f) => f.feature);
-	return areaCalculations.calculateAllStats(olFeatures, 0);
-};
+const computeResults = (data: ResultItem[]): ResultStats =>
+	areaCalculations.calculateResultStats(data);
 
-const applyMeasures = <T>(input: T, _measures: any[]) => input;
+const buildReportPayload = (
+	accumulatedAbimoStats: AccumulatedAbimoStats,
+	areaTypesData: AreaType[],
+	accumulatedMeasureStats: MeasureStats | null,
+	resultAbimoStats: ResultStats,
+	preComputedStats: ResultStats,
+	options: SimulationRunOptions["reportOptions"] = {},
+): ReportPayload =>
+	reportPayload.getReportPayload(
+		accumulatedAbimoStats,
+		areaTypesData,
+		accumulatedMeasureStats,
+		resultAbimoStats,
+		preComputedStats,
+		options,
+	);
 
-const computeResults = (_data: unknown): Record<string, unknown> => ({});
-
-const createResultId = () =>
-	`result-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+// const createResultId = () =>
+// 	`result-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 
 export const simulationEngine = {
 	preprocessInput,
-	run(baseInput: unknown, measures: any[]): SimulationResult {
-		const preprocessedInput = preprocessInput(baseInput as InputFeature[]);
-		const adjustedInput = applyMeasures(preprocessedInput, measures);
-		const data = computeResults(adjustedInput);
-
-		return {
-			id: createResultId(),
-			scenarioId: "",
-			timestamp: Date.now(),
-			data,
-		};
-	},
+	applyMeasures,
+	computeResults,
+	buildReportPayload,
 };
