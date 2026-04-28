@@ -3,12 +3,14 @@ import type { SectionId } from "@/lib/helpers/sectionIds";
 export interface UiState {
 	isLayerTreeOpen: boolean;
 	openLegendLayerId: string;
+	openMeasureCardIds: string[];
 	currentStepId: string | null;
 	uploadError: string | null;
 	uploadSuccess: string | null;
 	isDrawing: boolean;
 	isBlockAreaSelecting: boolean;
 	isDrawingNote: boolean;
+	isDrawingMeasure: boolean;
 	isLayerTreeVisible: boolean;
 	showStepper: boolean;
 	moduleCurrentSectionId: SectionId;
@@ -25,6 +27,9 @@ export interface UiState {
 export interface UiActions {
 	setIsLayerTreeOpen: (isOpen: boolean) => void;
 	setOpenLegendLayerId: (layerId: string) => void;
+	openMeasureCard: (measureId: string) => void;
+	closeMeasureCard: (measureId: string) => void;
+	closeAllMeasureCards: () => void;
 	setCurrentStepId: (stepId: string | null) => void;
 	setUploadError: (error: string | null) => void;
 	setUploadSuccess: (success: string | null) => void;

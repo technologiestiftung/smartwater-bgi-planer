@@ -19,6 +19,7 @@ const getInitialModuleQuestionIndices = () => {
 const initialState: UiState = {
 	isLayerTreeOpen: false,
 	openLegendLayerId: "",
+	openMeasureCardIds: [],
 	currentStepId: null,
 	uploadError: null,
 	uploadSuccess: null,
@@ -26,6 +27,7 @@ const initialState: UiState = {
 	isBlockAreaSelecting: false,
 	isDrawingNote: false,
 	isLayerTreeVisible: false,
+	isDrawingMeasure: false,
 	showStepper: true,
 	moduleCurrentSectionId: "heavyRain",
 	moduleQuestionIndices: getInitialModuleQuestionIndices(),
@@ -39,6 +41,19 @@ export const useUiStore = create<UiState & UiActions>((set, get) => ({
 	...initialState,
 	setIsLayerTreeOpen: (isOpen) => set({ isLayerTreeOpen: isOpen }),
 	setOpenLegendLayerId: (layerId) => set({ openLegendLayerId: layerId }),
+	openMeasureCard: (measureId) =>
+		set((state) => ({
+			openMeasureCardIds: state.openMeasureCardIds.includes(measureId)
+				? state.openMeasureCardIds
+				: [...state.openMeasureCardIds, measureId],
+		})),
+	closeMeasureCard: (measureId) =>
+		set((state) => ({
+			openMeasureCardIds: state.openMeasureCardIds.filter(
+				(id) => id !== measureId,
+			),
+		})),
+	closeAllMeasureCards: () => set({ openMeasureCardIds: [] }),
 	setCurrentStepId: (stepId) => set({ currentStepId: stepId }),
 	setUploadError: (error) => set({ uploadError: error, uploadSuccess: null }),
 	setUploadSuccess: (success) =>
@@ -56,6 +71,7 @@ export const useUiStore = create<UiState & UiActions>((set, get) => ({
 		}),
 	setIsLayerTreeVisible: (isVisible) => set({ isLayerTreeVisible: isVisible }),
 	setShowStepper: (show) => set({ showStepper: show }),
+
 	// Module navigation actions
 	setModuleCurrentSection: (sectionId) =>
 		set({ moduleCurrentSectionId: sectionId }),

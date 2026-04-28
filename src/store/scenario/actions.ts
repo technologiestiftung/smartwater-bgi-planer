@@ -1,4 +1,4 @@
-import { ScenarioState } from "./types";
+import { ScenarioMeasure, ScenarioMeasureValue, ScenarioState } from "./types";
 
 type SetState = (fn: (state: ScenarioState) => Partial<ScenarioState>) => void;
 
@@ -15,6 +15,7 @@ export const createCreateScenario = (set: SetState) => {
 				[id]: {
 					id,
 					name,
+					BTFMeasures: [],
 					measures: [],
 				},
 			},
@@ -43,7 +44,7 @@ export const createUpdateScenarioName = (set: SetState) => {
 };
 
 export const createAddMeasure = (set: SetState) => {
-	return (id: string, measure: any) => {
+	return (id: string, measure: ScenarioMeasure) => {
 		set((state) => {
 			const scenario = state.scenarios[id];
 			if (!scenario) return state;
@@ -54,6 +55,60 @@ export const createAddMeasure = (set: SetState) => {
 					[id]: {
 						...scenario,
 						measures: [...scenario.measures, measure],
+					},
+				},
+			};
+		});
+	};
+};
+
+export const createRemoveMeasure = (set: SetState) => {
+	return (scenarioId: string, measureId: string) => {
+		set((state) => {
+			const scenario = state.scenarios[scenarioId];
+			if (!scenario) return state;
+
+			return {
+				scenarios: {
+					...state.scenarios,
+					[scenarioId]: {
+						...scenario,
+						measures: scenario.measures.filter(
+							(measure) => measure.id !== measureId,
+						),
+					},
+				},
+			};
+		});
+	};
+};
+
+export const createUpdateMeasureValues = (set: SetState) => {
+	return (
+		scenarioId: string,
+		measureId: string,
+		values: Record<string, ScenarioMeasureValue>,
+	) => {
+		set((state) => {
+			const scenario = state.scenarios[scenarioId];
+			if (!scenario) return state;
+
+			return {
+				scenarios: {
+					...state.scenarios,
+					[scenarioId]: {
+						...scenario,
+						measures: scenario.measures.map((measure) =>
+							measure.id === measureId
+								? {
+										...measure,
+										values: {
+											...measure.values,
+											...values,
+										},
+									}
+								: measure,
+						),
 					},
 				},
 			};

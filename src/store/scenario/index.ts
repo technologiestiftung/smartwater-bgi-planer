@@ -2,7 +2,9 @@ import { create } from "zustand";
 import {
 	createAddMeasure,
 	createCreateScenario,
+	createRemoveMeasure,
 	createSetActiveScenario,
+	createUpdateMeasureValues,
 	createUpdateScenarioName,
 } from "./actions";
 import { ScenarioActions, ScenarioState } from "./types";
@@ -19,6 +21,8 @@ export const useScenarioStore = create<ScenarioState & ScenarioActions>(
 		createScenario: createCreateScenario(set),
 		updateScenarioName: createUpdateScenarioName(set),
 		addMeasure: createAddMeasure(set),
+		removeMeasure: createRemoveMeasure(set),
+		updateMeasureValues: createUpdateMeasureValues(set),
 		setActiveScenario: createSetActiveScenario(set),
 	}),
 );
