@@ -1,0 +1,383 @@
+[
+	{
+		"id": "3G1",
+		"key": "extensiveGreenRoof",
+		"parameters": [
+			{
+				"key": "area",
+				"type": "number",
+				"unit": "m2",
+				"role": "area",
+				"source": "drawn",
+				"required": true,
+				"requiredFor": ["ABIMO"]
+			}
+		]
+	},
+
+	{
+		"id": "3G2",
+		"key": "intensiveGreenRoof",
+		"parameters": [
+			{
+				"key": "area",
+				"type": "number",
+				"unit": "m2",
+				"role": "area",
+				"source": "drawn",
+				"required": true,
+				"requiredFor": ["ABIMO"]
+			}
+		]
+	},
+
+	{
+		"id": "3G3",
+		"key": "extensiveRetentionRoof",
+		"parameters": [
+			{
+				"key": "area",
+				"type": "number",
+				"unit": "m2",
+				"role": "area",
+				"source": "drawn"
+			}
+		]
+	},
+
+	{
+		"id": "3G4",
+		"key": "intensiveRetentionRoof",
+		"parameters": [
+			{
+				"key": "area",
+				"type": "number",
+				"unit": "m2",
+				"role": "area",
+				"source": "drawn"
+			}
+		]
+	},
+
+	{
+		"id": "3G5",
+		"key": "groundBasedFacadeGreening",
+		"parameters": [
+			{
+				"key": "facadeArea",
+				"type": "number",
+				"unit": "m2",
+				"role": "area",
+				"source": "drawn",
+				"required": true
+			}
+		]
+	},
+
+	{
+		"id": "3E1",
+		"key": "permeableSurfaces",
+		"parameters": [
+			{
+				"key": "area",
+				"type": "number",
+				"unit": "m2",
+				"role": "area",
+				"source": "drawn",
+				"required": true,
+				"requiredFor": ["ABIMO"]
+			}
+		]
+	},
+
+	{
+		"id": "3E2",
+		"key": "deSealing",
+		"parameters": [
+			{
+				"key": "area",
+				"type": "number",
+				"unit": "m2",
+				"role": "area",
+				"source": "drawn",
+				"required": true,
+				"requiredFor": ["ABIMO"]
+			}
+		]
+	},
+
+	{
+		"id": "3B1",
+		"key": "greenSpaces",
+		"parameters": [
+			{
+				"key": "area",
+				"type": "number",
+				"unit": "m2",
+				"role": "area",
+				"source": "drawn",
+				"required": true,
+				"requiredFor": ["ABIMO"]
+			}
+		]
+	},
+
+	{
+		"id": "3B2",
+		"key": "trees",
+		"parameters": [
+			{
+				"key": "count",
+				"type": "integer",
+				"role": "count",
+				"source": "input",
+				"required": true
+			},
+			{
+				"key": "treeHeight",
+				"type": "number",
+				"unit": "m",
+				"role": "height",
+				"source": "input"
+			},
+			{
+				"key": "rootDepth",
+				"type": "number",
+				"unit": "m",
+				"role": "depth",
+				"source": "input"
+			},
+			{
+				"key": "greenVolume",
+				"type": "number",
+				"unit": "m3",
+				"role": "volume",
+				"source": "input"
+			},
+			{
+				"key": "species",
+				"type": "string",
+				"role": "vegetation",
+				"source": "input"
+			}
+		]
+	},
+
+	{
+		"id": "3B3",
+		"key": "trackGreening",
+		"parameters": [
+			{
+				"key": "area",
+				"type": "number",
+				"unit": "m2",
+				"role": "area",
+				"source": "drawn",
+				"required": true
+			}
+		]
+	},
+
+	{
+		"id": "3V1",
+		"key": "swale",
+		"parameters": [
+			{
+				"key": "area",
+				"type": "number",
+				"unit": "m2",
+				"role": "area",
+				"source": "drawn"
+			},
+			{
+				"key": "connectedArea",
+				"type": "number",
+				"unit": "m2",
+				"role": "area",
+				"source": "input",
+				"required": true,
+				"requiredFor": ["ABIMO"]
+			}
+		]
+	},
+
+	{
+		"id": "3V2",
+		"key": "surfaceInfiltration",
+		"parameters": [
+			{
+				"key": "area",
+				"type": "number",
+				"unit": "m2",
+				"role": "area",
+				"source": "drawn"
+			},
+			{
+				"key": "connectedArea",
+				"type": "number",
+				"unit": "m2",
+				"role": "area",
+				"source": "input",
+				"required": true,
+				"requiredFor": ["ABIMO"]
+			}
+		]
+	},
+	{
+		"id": "3V3",
+		"key": "swaleTrenchSystem",
+		"parameters": [
+			{
+				"key": "area",
+				"type": "number",
+				"unit": "m2",
+				"role": "area",
+				"source": "drawn"
+			},
+			{
+				"key": "connectedArea",
+				"type": "number",
+				"unit": "m2",
+				"role": "area",
+				"source": "input",
+				"required": true,
+				"requiredFor": ["ABIMO"]
+			}
+		]
+	},
+
+	{
+		"id": "3V4",
+		"key": "sunkenBedTrench",
+		"parameters": [
+			{
+				"key": "connectedArea",
+				"type": "number",
+				"unit": "m2",
+				"role": "area",
+				"source": "input",
+				"required": true
+			},
+			{
+				"key": "storageVolume",
+				"type": "number",
+				"unit": "m3",
+				"role": "volume",
+				"source": "derived"
+			}
+		]
+	},
+
+	{
+		"id": "3V5",
+		"key": "enhancedTreePit",
+		"parameters": [
+			{ "key": "count", "type": "integer", "role": "count", "source": "input" },
+			{
+				"key": "connectedArea",
+				"type": "number",
+				"unit": "m2",
+				"role": "area",
+				"source": "input",
+				"required": true
+			}
+		]
+	},
+
+	{
+		"id": "3V6",
+		"key": "infiltrationTrench",
+		"parameters": [
+			{
+				"key": "storageVolume",
+				"type": "number",
+				"unit": "m3",
+				"role": "volume",
+				"source": "derived"
+			},
+			{
+				"key": "connectedArea",
+				"type": "number",
+				"unit": "m2",
+				"role": "area",
+				"source": "input",
+				"required": true,
+				"requiredFor": ["ABIMO"]
+			}
+		]
+	},
+
+	{
+		"id": "3S1",
+		"key": "waterBodies",
+		"parameters": [
+			{
+				"key": "area",
+				"type": "number",
+				"unit": "m2",
+				"role": "area",
+				"source": "drawn"
+			}
+		]
+	},
+
+	{
+		"id": "3S2",
+		"key": "irrigationCistern",
+		"parameters": [
+			{
+				"key": "storageVolume",
+				"type": "number",
+				"unit": "m3",
+				"role": "volume",
+				"source": "input",
+				"required": true
+			}
+		]
+	},
+
+	{
+		"id": "3S3",
+		"key": "internalUseCistern",
+		"parameters": [
+			{
+				"key": "storageVolume",
+				"type": "number",
+				"unit": "m3",
+				"role": "volume",
+				"source": "input",
+				"required": true
+			}
+		]
+	},
+
+	{
+		"id": "3S4",
+		"key": "retentionArea",
+		"parameters": [
+			{
+				"key": "area",
+				"type": "number",
+				"unit": "m2",
+				"role": "area",
+				"source": "drawn",
+				"required": true
+			}
+		]
+	},
+
+	{
+		"id": "3S5",
+		"key": "evaporationBed",
+		"parameters": [
+			{
+				"key": "area",
+				"type": "number",
+				"unit": "m2",
+				"role": "area",
+				"source": "drawn",
+				"required": true
+			}
+		]
+	}
+]
