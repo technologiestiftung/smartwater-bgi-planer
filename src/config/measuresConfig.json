@@ -2,6 +2,7 @@
 	{
 		"id": "3G1",
 		"key": "extensiveGreenRoof",
+		"geometryType": "Polygon",
 		"parameters": [
 			{
 				"key": "area",
@@ -18,6 +19,7 @@
 	{
 		"id": "3G2",
 		"key": "intensiveGreenRoof",
+		"geometryType": "Polygon",
 		"parameters": [
 			{
 				"key": "area",
@@ -34,6 +36,7 @@
 	{
 		"id": "3G3",
 		"key": "extensiveRetentionRoof",
+		"geometryType": "Polygon",
 		"parameters": [
 			{
 				"key": "area",
@@ -48,6 +51,7 @@
 	{
 		"id": "3G4",
 		"key": "intensiveRetentionRoof",
+		"geometryType": "Polygon",
 		"parameters": [
 			{
 				"key": "area",
@@ -62,6 +66,7 @@
 	{
 		"id": "3G5",
 		"key": "groundBasedFacadeGreening",
+		"geometryType": "Polygon",
 		"parameters": [
 			{
 				"key": "facadeArea",
@@ -77,6 +82,7 @@
 	{
 		"id": "3E1",
 		"key": "permeableSurfaces",
+		"geometryType": "Polygon",
 		"parameters": [
 			{
 				"key": "area",
@@ -93,6 +99,7 @@
 	{
 		"id": "3E2",
 		"key": "deSealing",
+		"geometryType": "Polygon",
 		"parameters": [
 			{
 				"key": "area",
@@ -109,6 +116,7 @@
 	{
 		"id": "3B1",
 		"key": "greenSpaces",
+		"geometryType": "Polygon",
 		"parameters": [
 			{
 				"key": "area",
@@ -125,6 +133,7 @@
 	{
 		"id": "3B2",
 		"key": "trees",
+		"geometryType": "Point",
 		"parameters": [
 			{
 				"key": "count",
@@ -166,6 +175,7 @@
 	{
 		"id": "3B3",
 		"key": "trackGreening",
+		"geometryType": "Polygon",
 		"parameters": [
 			{
 				"key": "area",
@@ -181,6 +191,7 @@
 	{
 		"id": "3V1",
 		"key": "swale",
+		"geometryType": "Polygon",
 		"parameters": [
 			{
 				"key": "area",
@@ -204,6 +215,7 @@
 	{
 		"id": "3V2",
 		"key": "surfaceInfiltration",
+		"geometryType": "Polygon",
 		"parameters": [
 			{
 				"key": "area",
@@ -226,6 +238,7 @@
 	{
 		"id": "3V3",
 		"key": "swaleTrenchSystem",
+		"geometryType": "Polygon",
 		"parameters": [
 			{
 				"key": "area",
@@ -249,6 +262,7 @@
 	{
 		"id": "3V4",
 		"key": "sunkenBedTrench",
+		"geometryType": "Polygon",
 		"parameters": [
 			{
 				"key": "connectedArea",
@@ -271,6 +285,7 @@
 	{
 		"id": "3V5",
 		"key": "enhancedTreePit",
+		"geometryType": "Point",
 		"parameters": [
 			{ "key": "count", "type": "integer", "role": "count", "source": "input" },
 			{
@@ -287,6 +302,7 @@
 	{
 		"id": "3V6",
 		"key": "infiltrationTrench",
+		"geometryType": "Polygon",
 		"parameters": [
 			{
 				"key": "storageVolume",
@@ -310,6 +326,7 @@
 	{
 		"id": "3S1",
 		"key": "waterBodies",
+		"geometryType": "Polygon",
 		"parameters": [
 			{
 				"key": "area",
@@ -324,6 +341,7 @@
 	{
 		"id": "3S2",
 		"key": "irrigationCistern",
+		"geometryType": "Point",
 		"parameters": [
 			{
 				"key": "storageVolume",
@@ -339,6 +357,7 @@
 	{
 		"id": "3S3",
 		"key": "internalUseCistern",
+		"geometryType": "Point",
 		"parameters": [
 			{
 				"key": "storageVolume",
@@ -354,6 +373,7 @@
 	{
 		"id": "3S4",
 		"key": "retentionArea",
+		"geometryType": "Polygon",
 		"parameters": [
 			{
 				"key": "area",
@@ -369,6 +389,7 @@
 	{
 		"id": "3S5",
 		"key": "evaporationBed",
+		"geometryType": "Polygon",
 		"parameters": [
 			{
 				"key": "area",
