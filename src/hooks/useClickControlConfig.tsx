@@ -4,7 +4,12 @@ import FeatureActionMenu from "@/components/MapInteraction/FeatureActionMenu";
 import FeatureDetailsModal from "@/components/MapInteraction/FeatureDetailsModal";
 import FeatureNoteCard from "@/components/MapInteraction/FeatureNoteCard";
 import FeatureTooltip from "@/components/MapInteraction/FeatureTooltip";
+import MeasureDetailsCard from "@/components/MapInteraction/MeasureDetailsCard";
+import { getFeatureAttributes } from "@/lib/helpers/ol/feature";
+import { resolveMeasureId } from "@/lib/helpers/ol/measureFeature";
 import { useLayersStore } from "@/store/layers";
+import type Feature from "ol/Feature";
+import type { Geometry } from "ol/geom";
 import { useCallback, useMemo } from "react";
 
 export const useClickControlConfig = () => {
@@ -36,11 +41,18 @@ export const useClickControlConfig = () => {
 	}, [vectorLayerIds, wmsLayerIds]);
 
 	const renderContent = useCallback(
-		(feature: any, layerId: string, onClose: () => void) => {
+		(
+			feature: Feature<Geometry> | null,
+			layerId: string,
+			onClose: () => void,
+		) => {
+			const normalizedFeature = feature ?? undefined;
+			const attributes = getFeatureAttributes(normalizedFeature);
+
 			if (layerId === "project_notes") {
 				return (
 					<FeatureNoteCard
-						features={feature}
+						features={normalizedFeature}
 						layerId={layerId}
 						onClose={onClose}
 					/>
@@ -48,9 +60,22 @@ export const useClickControlConfig = () => {
 			}
 
 			if (drawLayerId && layerId === drawLayerId) {
+				const measureId = resolveMeasureId(normalizedFeature);
+
+				if (measureId) {
+					return (
+						<MeasureDetailsCard
+							measureId={measureId}
+							feature={normalizedFeature}
+							layerId={layerId}
+							onClose={onClose}
+						/>
+					);
+				}
+
 				return (
 					<FeatureActionMenu
-						features={feature}
+						features={normalizedFeature}
 						layerId={layerId}
 						onClose={onClose}
 					/>
@@ -61,9 +86,7 @@ export const useClickControlConfig = () => {
 				if (currentConfig.featureDisplay === "modal") {
 					return (
 						<FeatureDetailsModal
-							attributes={
-								feature?.getProperties ? feature.getProperties() : feature
-							}
+							attributes={attributes}
 							layerId={layerId}
 							onClose={onClose}
 						/>
@@ -72,9 +95,7 @@ export const useClickControlConfig = () => {
 
 				return (
 					<FeatureTooltip
-						attributes={
-							feature?.getProperties ? feature.getProperties() : feature
-						}
+						attributes={attributes ?? {}}
 						layerId={layerId}
 						onClose={onClose}
 					/>

@@ -2,6 +2,7 @@
 
 import ClickControl from "@/components/Map/Controls/ClickControl";
 import MapNavigationContainer from "@/components/Map/Controls/MapNavigation/MapNavigationContainer";
+import MeasureDetailsCardStack from "@/components/MapInteraction/MeasureDetailsCardStack";
 import { Spinner } from "@/components/ui/spinner";
 import { useClickControlConfig } from "@/hooks/useClickControlConfig";
 import { useMapReady } from "@/hooks/useMapReady";
@@ -65,6 +66,7 @@ const Map: FC = () => {
 				/>
 				{/* <OpacityControl /> */}
 				<MapFooter />
+				<MeasureDetailsCardStack />
 			</LazyOlMap>
 		</div>
 	);
