@@ -7,6 +7,7 @@ import {
 	AccordionItem,
 	AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
 import { LayerConfigItem } from "@/store/layers/types";
 import Image from "next/image";
 
@@ -32,6 +33,11 @@ export function MeasurePlaningStepContent({
 							<RichTextWithLinks text={layerConfig.description} />
 						</div>
 					)}
+
+					{/* todo : add confirm button logic */}
+					<div className="mt-6">
+						<Button>Bestätigen</Button>
+					</div>
 				</div>
 			</div>
 
