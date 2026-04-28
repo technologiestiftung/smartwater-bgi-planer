@@ -4,15 +4,17 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useMapStore } from "@/store/map";
 import { CheckIcon, TrashIcon, XCircleIcon } from "@phosphor-icons/react";
+import type Feature from "ol/Feature";
+import type { Geometry } from "ol/geom";
 import { FC, useEffect, useState } from "react";
 
 interface FeatureNoteCardProps {
 	layerId?: string;
-	features?: any;
+	features?: Feature<Geometry>;
 	onClose?: () => void;
 }
 
-const getFeatureData = (feature: any) => {
+const getFeatureData = (feature: Feature) => {
 	const properties = feature.getProperties();
 
 	if (properties.features && properties.features.length > 0) {
@@ -91,7 +93,7 @@ const FeatureNoteCard: FC<FeatureNoteCardProps> = ({
 					value={note}
 					onChange={(e) => setNote(e.target.value)}
 					placeholder="Dieses Gebäude wird nächstes Jahr unter Denkmalschutz stehen..."
-					className="mb-4 min-h-[120px] resize-none"
+					className="mb-4 min-h-30 resize-none"
 					rows={5}
 				/>
 				<div className="flex w-full gap-2">
