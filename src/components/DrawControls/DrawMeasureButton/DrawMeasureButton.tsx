@@ -28,6 +28,7 @@ import Polygon from "ol/geom/Polygon.js";
 import Draw from "ol/interaction/Draw.js";
 import VectorLayer from "ol/layer/Vector.js";
 import { Vector as VectorSource } from "ol/source.js";
+import { getArea } from "ol/sphere.js";
 import CircleStyle from "ol/style/Circle.js";
 import Fill from "ol/style/Fill.js";
 import Stroke from "ol/style/Stroke.js";
@@ -209,7 +210,9 @@ const DrawMeasureButton: FC = () => {
 	const openMeasureCard = useUiStore((state) => state.openMeasureCard);
 	const createScenario = useScenarioStore((state) => state.createScenario);
 	const addMeasure = useScenarioStore((state) => state.addMeasure);
+	const addConnectedArea = useScenarioStore((state) => state.addConnectedArea);
 	const activeScenarioId = useScenarioStore((state) => state.activeScenarioId);
+	const isConnectedArea = layerConfigId === "connected_area";
 	const measureConfig = layerConfigId
 		? measureConfigById.get(layerConfigId)
 		: null;
@@ -376,23 +379,42 @@ const DrawMeasureButton: FC = () => {
 				}
 
 				const geojson = new GeoJSON();
-				clippedFeatures.forEach((clippedFeature, index) => {
-					const payload = createMeasurePayload({
-						feature: clippedFeature,
-						index,
-						geojson,
-						projection,
-						geometryType,
-						drawLayerId: drawLayerId ?? null,
-						layerConfigId: layerConfigId ?? null,
-						layerConfig: currentLayerConfig,
-						measureConfig: measureConfig ?? null,
-					});
 
-					stampMeasureProperties(clippedFeature, payload);
-					source.addFeature(clippedFeature);
-					addMeasure(scenarioId, payload);
-					openMeasureCard(payload.id);
+				clippedFeatures.forEach((clippedFeature, index) => {
+					if (isConnectedArea) {
+						const geometry = clippedFeature.getGeometry();
+						const area = geometry ? Number(getArea(geometry).toFixed(2)) : 0;
+						const connectedAreaPayload = {
+							id: `connected-area-${Date.now()}-${index}-${Math.random().toString(36).slice(2, 9)}`,
+							createdAt: Date.now(),
+							feature: geojson.writeFeatureObject(clippedFeature, {
+								featureProjection: projection,
+								dataProjection: "EPSG:4326",
+							}),
+							area,
+						};
+
+						clippedFeature.set("connectedAreaId", connectedAreaPayload.id);
+						source.addFeature(clippedFeature);
+						addConnectedArea(scenarioId, connectedAreaPayload);
+					} else {
+						const payload = createMeasurePayload({
+							feature: clippedFeature,
+							index,
+							geojson,
+							projection,
+							geometryType,
+							drawLayerId: drawLayerId ?? null,
+							layerConfigId: layerConfigId ?? null,
+							layerConfig: currentLayerConfig,
+							measureConfig: measureConfig ?? null,
+						});
+
+						stampMeasureProperties(clippedFeature, payload);
+						source.addFeature(clippedFeature);
+						addMeasure(scenarioId, payload);
+						openMeasureCard(payload.id);
+					}
 				});
 			};
 
@@ -409,11 +431,17 @@ const DrawMeasureButton: FC = () => {
 		setIsDrawing(true);
 	};
 
+	const getDrawButtonLabel = () => {
+		if (isDrawing) return "Stop Zeichnen";
+		if (isConnectedArea) return "Angeschlossene Fläche zeichnen";
+		return "Maßnahme zeichnen";
+	};
+
 	return (
 		<div className="relative">
 			<Button variant="outline" onClick={toggleDraw}>
 				<PolygonIcon />
-				{isDrawing ? "Stop Zeichnen" : "Maßnahme zeichnen"}
+				{getDrawButtonLabel()}
 			</Button>
 			{isDrawing && liveMeasureInfo && geometryType === "Polygon" && (
 				<div className="bg-background border-primary text-primary absolute right-0 bottom-full z-10 mb-2 w-64 border-2 p-2 text-xs shadow-lg">

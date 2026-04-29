@@ -14,10 +14,18 @@ export interface ScenarioMeasure {
 	values: Record<string, ScenarioMeasureValue>;
 }
 
+export interface ConnectedArea {
+	id: string;
+	createdAt: number;
+	feature: GeoJSONFeature<Geometry>;
+	area: number;
+}
+
 export interface Scenario {
 	id: string;
 	name: string;
 	measures: ScenarioMeasure[];
+	connectedAreas: ConnectedArea[];
 	// it should save the BTFs here with the measurements
 	BTFMeasures: BTFMeasureRow[];
 }
@@ -47,5 +55,7 @@ export interface ScenarioActions {
 		measureId: string,
 		values: Record<string, ScenarioMeasureValue>,
 	) => void;
+	addConnectedArea: (scenarioId: string, connectedArea: ConnectedArea) => void;
+	removeConnectedArea: (scenarioId: string, connectedAreaId: string) => void;
 	setActiveScenario: (id: string) => void;
 }

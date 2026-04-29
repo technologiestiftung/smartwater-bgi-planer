@@ -1,4 +1,9 @@
-import { ScenarioMeasure, ScenarioMeasureValue, ScenarioState } from "./types";
+import {
+	ConnectedArea,
+	ScenarioMeasure,
+	ScenarioMeasureValue,
+	ScenarioState,
+} from "./types";
 
 type SetState = (fn: (state: ScenarioState) => Partial<ScenarioState>) => void;
 
@@ -16,6 +21,7 @@ export const createCreateScenario = (set: SetState) => {
 					id,
 					name,
 					BTFMeasures: [],
+					connectedAreas: [],
 					measures: [],
 				},
 			},
@@ -122,6 +128,46 @@ export const createSetActiveScenario = (set: SetState) => {
 			if (!state.scenarios[id]) return state;
 
 			return { activeScenarioId: id };
+		});
+	};
+};
+
+export const createAddConnectedArea = (set: SetState) => {
+	return (scenarioId: string, connectedArea: ConnectedArea) => {
+		set((state) => {
+			const scenario = state.scenarios[scenarioId];
+			if (!scenario) return state;
+
+			return {
+				scenarios: {
+					...state.scenarios,
+					[scenarioId]: {
+						...scenario,
+						connectedAreas: [...scenario.connectedAreas, connectedArea],
+					},
+				},
+			};
+		});
+	};
+};
+
+export const createRemoveConnectedArea = (set: SetState) => {
+	return (scenarioId: string, connectedAreaId: string) => {
+		set((state) => {
+			const scenario = state.scenarios[scenarioId];
+			if (!scenario) return state;
+
+			return {
+				scenarios: {
+					...state.scenarios,
+					[scenarioId]: {
+						...scenario,
+						connectedAreas: scenario.connectedAreas.filter(
+							(ca) => ca.id !== connectedAreaId,
+						),
+					},
+				},
+			};
 		});
 	};
 };

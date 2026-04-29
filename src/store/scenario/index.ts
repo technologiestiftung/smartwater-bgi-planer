@@ -1,7 +1,9 @@
 import { create } from "zustand";
 import {
+	createAddConnectedArea,
 	createAddMeasure,
 	createCreateScenario,
+	createRemoveConnectedArea,
 	createRemoveMeasure,
 	createSetActiveScenario,
 	createUpdateMeasureValues,
@@ -23,6 +25,8 @@ export const useScenarioStore = create<ScenarioState & ScenarioActions>(
 		addMeasure: createAddMeasure(set),
 		removeMeasure: createRemoveMeasure(set),
 		updateMeasureValues: createUpdateMeasureValues(set),
+		addConnectedArea: createAddConnectedArea(set),
+		removeConnectedArea: createRemoveConnectedArea(set),
 		setActiveScenario: createSetActiveScenario(set),
 	}),
 );
