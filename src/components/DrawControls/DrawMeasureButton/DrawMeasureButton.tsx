@@ -2,15 +2,18 @@
 
 import { Button } from "@/components/ui/button";
 import measuresConfig from "@/config/measuresConfig.json";
-import { createMeasureConfigMap } from "@/lib/helpers/measures/config";
+import {
+	createMeasureConfigMap,
+	normalizeMeasureGeometryType,
+} from "@/lib/helpers/measures/config";
 import { getInitialMeasureValues } from "@/lib/helpers/measures/values";
-import { getLayerById } from "@/lib/helpers/ol";
+import { getLayerById, getSegmentLabelStyles } from "@/lib/helpers/ol";
 import { formatArea, formatLength } from "@/lib/helpers/ol/format";
 import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";
 import { useScenarioStore } from "@/store/scenario";
 import { useUiStore } from "@/store/ui";
-import type { MeasureConfig } from "@/types/measures";
+import type { MeasureConfig, MeasureGeometryType } from "@/types/measures";
 import { LAYER_IDS } from "@/types/shared";
 import { PolygonIcon } from "@phosphor-icons/react";
 import booleanIntersects from "@turf/boolean-intersects";
@@ -29,180 +32,168 @@ import CircleStyle from "ol/style/Circle.js";
 import Fill from "ol/style/Fill.js";
 import Stroke from "ol/style/Stroke.js";
 import Style from "ol/style/Style.js";
-import Text from "ol/style/Text.js";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 
 const measureConfigById = createMeasureConfigMap(
 	measuresConfig as MeasureConfig[],
 );
 
-const resolveMeasureLayerConfigId = (
-	layerConfigId: string | null,
-	drawLayerId: string | null,
-	index: number,
-) => layerConfigId ?? drawLayerId ?? `measure-${index}`;
+type LayerConfigItem = ReturnType<
+	typeof useLayersStore.getState
+>["layerConfig"][number];
 
-const resolveMeasureTitle = (
-	currentLayerConfig:
-		| ReturnType<typeof useLayersStore.getState>["layerConfig"][number]
-		| undefined,
-) => currentLayerConfig?.name ?? currentLayerConfig?.question ?? "Maßnahme";
-
-const resolveMeasureKey = (
-	measureConfig: MeasureConfig | null,
-	currentLayerConfig:
-		| ReturnType<typeof useLayersStore.getState>["layerConfig"][number]
-		| undefined,
-) => measureConfig?.key ?? currentLayerConfig?.name ?? "measure";
-
-const getMeasureFeatureObject = (
-	geojson: GeoJSON,
-	clippedFeature: Feature<Geometry>,
-	projection: any,
-) =>
-	geojson.writeFeatureObject(clippedFeature, {
-		featureProjection: projection,
-		dataProjection: "EPSG:4326",
-	});
+// --- Measure payload ---
 
 const createMeasurePayload = ({
-	clippedFeature,
+	feature,
 	index,
 	geojson,
 	projection,
 	geometryType,
 	drawLayerId,
 	layerConfigId,
-	currentLayerConfig,
+	layerConfig,
 	measureConfig,
 }: {
-	clippedFeature: Feature<Geometry>;
+	feature: Feature<Geometry>;
 	index: number;
 	geojson: GeoJSON;
 	projection: any;
-	geometryType: "Point" | "LineString" | "Polygon" | "Circle";
+	geometryType: MeasureGeometryType;
 	drawLayerId: string | null;
 	layerConfigId: string | null;
-	currentLayerConfig:
-		| ReturnType<typeof useLayersStore.getState>["layerConfig"][number]
-		| undefined;
+	layerConfig: LayerConfigItem | undefined;
 	measureConfig: MeasureConfig | null;
-}) => {
-	const resolvedLayerConfigId = resolveMeasureLayerConfigId(
-		layerConfigId,
-		drawLayerId,
-		index,
-	);
-	const title = resolveMeasureTitle(currentLayerConfig);
-	const measureKey = resolveMeasureKey(measureConfig, currentLayerConfig);
-	const feature = getMeasureFeatureObject(geojson, clippedFeature, projection);
+}) => ({
+	id: `measure-${Date.now()}-${index}-${Math.random().toString(36).slice(2, 9)}`,
+	createdAt: Date.now(),
+	geometryType,
+	drawLayerId,
+	layerConfigId: layerConfigId ?? drawLayerId ?? `measure-${index}`,
+	measureKey: measureConfig?.key ?? layerConfig?.name ?? "measure",
+	title: layerConfig?.name ?? layerConfig?.question ?? "Maßnahme",
+	feature: geojson.writeFeatureObject(feature, {
+		featureProjection: projection,
+		dataProjection: "EPSG:4326",
+	}),
+	values: measureConfig ? getInitialMeasureValues(measureConfig, feature) : {},
+});
 
-	return {
-		id: `measure-${Date.now()}-${index}-${Math.random().toString(36).slice(2, 9)}`,
-		createdAt: Date.now(),
-		geometryType,
-		drawLayerId,
-		layerConfigId: resolvedLayerConfigId,
-		measureKey,
-		title,
-		feature,
-		values: measureConfig
-			? getInitialMeasureValues(measureConfig, clippedFeature)
-			: {},
+const stampMeasureProperties = (
+	feature: Feature<Geometry>,
+	payload: ReturnType<typeof createMeasurePayload>,
+) => {
+	feature.set("measureId", payload.id);
+	feature.set("measureLayerConfigId", payload.layerConfigId);
+	feature.set("measureKey", payload.measureKey);
+	feature.set("measureTitle", payload.title);
+	for (const [key, value] of Object.entries(payload.values)) {
+		if (value !== null && value !== undefined && value !== "") {
+			feature.set(key, value);
+		}
+	}
+};
+
+// --- BTF planning validation ---
+
+const clipFeaturesToPlanningLayer = ({
+	drawnFeature,
+	planningFeatures,
+	projection,
+	isPoint,
+}: {
+	drawnFeature: Feature<Geometry>;
+	planningFeatures: Feature<Geometry>[];
+	projection: any;
+	isPoint: boolean;
+}): Feature<Geometry>[] => {
+	const geometry = drawnFeature.getGeometry()!;
+
+	if (isPoint) {
+		const coord = (geometry as Point).getCoordinates();
+		const isInside = planningFeatures.some((f) =>
+			f.getGeometry()!.intersectsCoordinate(coord),
+		);
+		return isInside ? [drawnFeature] : [];
+	}
+
+	const geojson = new GeoJSON();
+	const measureGeoJSON = geojson.writeFeatureObject(drawnFeature, {
+		featureProjection: projection,
+		dataProjection: "EPSG:4326",
+	});
+
+	const clipped: Feature<Geometry>[] = [];
+
+	for (const planningFeature of planningFeatures) {
+		const planningGeometry = planningFeature.getGeometry()!;
+		if (!planningGeometry.intersectsExtent(geometry.getExtent())) continue;
+
+		const planningGeoJSON = geojson.writeFeatureObject(planningFeature, {
+			featureProjection: projection,
+			dataProjection: "EPSG:4326",
+		});
+		if (!booleanIntersects(measureGeoJSON, planningGeoJSON)) continue;
+
+		const intersection = intersect({
+			type: "FeatureCollection",
+			features: [measureGeoJSON, planningGeoJSON],
+		} as any);
+		if (!intersection) continue;
+
+		clipped.push(
+			...geojson.readFeatures(intersection, {
+				dataProjection: "EPSG:4326",
+				featureProjection: projection,
+			}),
+		);
+	}
+
+	return clipped;
+};
+
+// --- Scenario ---
+
+const resolveScenarioId = (): string | null => {
+	let id = useScenarioStore.getState().activeScenarioId;
+	if (!id) {
+		useScenarioStore.getState().createScenario("Default Scenario");
+		id = useScenarioStore.getState().activeScenarioId;
+	}
+	return id;
+};
+
+// --- Draw styles ---
+
+const defaultDrawStyle = new Style({
+	fill: new Fill({ color: "rgba(0, 153, 255, 0.1)" }),
+	stroke: new Stroke({ color: "rgba(0, 153, 255, 1)", width: 2 }),
+	image: new CircleStyle({
+		radius: 5,
+		fill: new Fill({ color: "rgba(0, 153, 255, 1)" }),
+		stroke: new Stroke({ color: "#fff", width: 1.5 }),
+	}),
+});
+
+const getMeasureDrawStyles = (geometryType: MeasureGeometryType) => {
+	if (geometryType !== "Polygon") return undefined;
+
+	return (feature: FeatureLike) => {
+		if (!(feature instanceof Feature)) return [defaultDrawStyle];
+		const geometry = feature.getGeometry();
+		if (!(geometry instanceof Polygon)) return [defaultDrawStyle];
+		return [defaultDrawStyle, ...getSegmentLabelStyles(geometry)];
 	};
 };
 
-interface DrawMeasureButtonProps {
-	geometryType?: "Point" | "LineString" | "Polygon" | "Circle";
-}
+// --- Component ---
 
 interface LiveMeasureInfo {
 	area: string;
 	segmentLengths: string[];
 }
 
-const getSegmentLabelStyles = (polygon: Polygon) => {
-	const ring = polygon.getCoordinates()[0] || [];
-	const segmentStyles: Style[] = [];
-
-	for (let index = 0; index < ring.length - 1; index++) {
-		const start = ring[index];
-		const end = ring[index + 1];
-		const segment = new LineString([start, end]);
-		const midpoint: [number, number] = [
-			(start[0] + end[0]) / 2,
-			(start[1] + end[1]) / 2,
-		];
-
-		segmentStyles.push(
-			new Style({
-				geometry: new Point(midpoint),
-				text: new Text({
-					text: formatLength(segment),
-					font: "400 12px sans-serif",
-					padding: [2, 4, 2, 4],
-					fill: new Fill({ color: "#111827" }),
-					backgroundFill: new Fill({ color: "rgba(255, 255, 255, 0.9)" }),
-				}),
-			}),
-		);
-	}
-
-	return segmentStyles;
-};
-
-const getPolygonDrawStyles = (polygon: Polygon) => {
-	const ring = polygon.getCoordinates()[0] || [];
-	const vertexStyles = ring.slice(0, -1).map(
-		(coordinate) =>
-			new Style({
-				geometry: new Point(coordinate),
-				image: new CircleStyle({
-					radius: 5,
-					fill: new Fill({ color: "#0ea5e9" }),
-					stroke: new Stroke({ color: "#ffffff", width: 2 }),
-				}),
-			}),
-	);
-
-	return [
-		new Style({
-			fill: new Fill({ color: "rgba(14, 165, 233, 0.25)" }),
-			stroke: new Stroke({
-				color: "rgba(14, 165, 233, 0.95)",
-				width: 3,
-				lineDash: [6, 6],
-			}),
-		}),
-		...vertexStyles,
-		...getSegmentLabelStyles(polygon),
-	];
-};
-
-const getMeasureDrawStyles = (
-	geometryType: DrawMeasureButtonProps["geometryType"],
-) => {
-	if (geometryType !== "Polygon") {
-		return undefined;
-	}
-
-	return (feature: FeatureLike) => {
-		if (!(feature instanceof Feature)) {
-			return [];
-		}
-
-		const geometry = feature.getGeometry();
-		if (!(geometry instanceof Polygon)) {
-			return [];
-		}
-
-		return getPolygonDrawStyles(geometry);
-	};
-};
-
-const DrawMeasureButton: FC<DrawMeasureButtonProps> = ({
-	geometryType = "Polygon",
-}) => {
+const DrawMeasureButton: FC = () => {
 	const map = useMapStore((state) => state.map);
 	const drawLayerId = useLayersStore((state) => state.drawLayerId);
 	const layerConfig = useLayersStore((state) => state.layerConfig);
@@ -219,33 +210,34 @@ const DrawMeasureButton: FC<DrawMeasureButtonProps> = ({
 	const createScenario = useScenarioStore((state) => state.createScenario);
 	const addMeasure = useScenarioStore((state) => state.addMeasure);
 	const activeScenarioId = useScenarioStore((state) => state.activeScenarioId);
+	const measureConfig = layerConfigId
+		? measureConfigById.get(layerConfigId)
+		: null;
+	const geometryType = normalizeMeasureGeometryType(
+		measureConfig?.geometryType,
+	);
 	const [liveMeasureInfo, setLiveMeasureInfo] =
 		useState<LiveMeasureInfo | null>(null);
 
 	const drawRef = useRef<Draw | null>(null);
 	const sketchGeometryRef = useRef<Geometry | null>(null);
-	const sketchGeometryChangeHandlerRef = useRef<(() => void) | null>(null);
+	const sketchChangeRef = useRef<(() => void) | null>(null);
 
-	const removeSketchGeometryListener = useCallback(() => {
-		if (sketchGeometryRef.current && sketchGeometryChangeHandlerRef.current) {
-			sketchGeometryRef.current.un(
-				"change",
-				sketchGeometryChangeHandlerRef.current,
-			);
+	const removeSketchListener = useCallback(() => {
+		if (sketchGeometryRef.current && sketchChangeRef.current) {
+			sketchGeometryRef.current.un("change", sketchChangeRef.current);
 		}
-
 		sketchGeometryRef.current = null;
-		sketchGeometryChangeHandlerRef.current = null;
+		sketchChangeRef.current = null;
 	}, []);
 
-	const clearLiveMeasureInfo = useCallback(() => {
-		removeSketchGeometryListener();
+	const clearLiveMeasure = useCallback(() => {
+		removeSketchListener();
 		setLiveMeasureInfo(null);
-	}, [removeSketchGeometryListener]);
+	}, [removeSketchListener]);
 
 	useEffect(() => {
 		if (!map || !drawLayerId) return;
-
 		setLayerVisibility(drawLayerId, true);
 		setLayerVisibility(LAYER_IDS.PROJECT_BTF_PLANNING, true);
 	}, [map, drawLayerId, setLayerVisibility]);
@@ -253,38 +245,34 @@ const DrawMeasureButton: FC<DrawMeasureButtonProps> = ({
 	useEffect(() => {
 		if (!map || !drawLayerId) return;
 
-		const removeDrawInteraction = () => {
-			clearLiveMeasureInfo();
+		const cleanup = () => {
+			clearLiveMeasure();
 			if (drawRef.current) {
 				map.removeInteraction(drawRef.current);
 				drawRef.current = null;
 			}
 		};
-		removeDrawInteraction();
-
-		return () => {
-			removeDrawInteraction();
-		};
-	}, [map, drawLayerId, clearLiveMeasureInfo]);
+		cleanup();
+		return cleanup;
+	}, [map, drawLayerId, clearLiveMeasure]);
 
 	useEffect(() => {
 		if (!isDrawing && drawRef.current && map) {
-			clearLiveMeasureInfo();
+			removeSketchListener();
 			map.removeInteraction(drawRef.current);
 			drawRef.current = null;
 		}
-	}, [isDrawing, map, clearLiveMeasureInfo]);
+	}, [isDrawing, map, removeSketchListener]);
 
 	useEffect(() => {
-		if (activeScenarioId) return;
-		createScenario("Default Scenario");
+		if (!activeScenarioId) createScenario("Default Scenario");
 	}, [activeScenarioId, createScenario]);
 
 	const toggleDraw = () => {
 		if (!map) return;
 
 		if (drawRef.current) {
-			clearLiveMeasureInfo();
+			clearLiveMeasure();
 			map.removeInteraction(drawRef.current);
 			drawRef.current = null;
 			setIsDrawing(false);
@@ -296,228 +284,125 @@ const DrawMeasureButton: FC<DrawMeasureButtonProps> = ({
 		const layer = map
 			.getAllLayers()
 			.find((l) => l.get("id") === drawLayerId) as VectorLayer<VectorSource>;
+		const source = layer?.getSource();
 
-		if (!layer || !(layer.getSource() instanceof VectorSource)) {
-			console.error("Layer not found or is not a vector layer");
+		if (!source || !(source instanceof VectorSource)) {
+			console.error("[DrawMeasureButton] Layer or source not found");
 			return;
 		}
 
 		drawRef.current = new Draw({
-			source: layer.getSource()!,
+			source,
 			type: geometryType,
 			style: getMeasureDrawStyles(geometryType),
 		});
 
-		drawRef.current.on("drawstart", (event) => {
-			if (geometryType !== "Polygon") {
-				return;
-			}
+		if (geometryType === "Polygon") {
+			drawRef.current.on("drawstart", (event) => {
+				const geometry = event.feature.getGeometry();
+				if (!(geometry instanceof Polygon)) return;
 
-			const geometry = event.feature.getGeometry();
-			if (!(geometry instanceof Polygon)) {
-				return;
-			}
+				removeSketchListener();
+				sketchGeometryRef.current = geometry;
 
-			removeSketchGeometryListener();
-			sketchGeometryRef.current = geometry;
+				const update = () => {
+					if (!(geometry instanceof Polygon)) {
+						setLiveMeasureInfo(null);
+						return;
+					}
+					const ring = geometry.getCoordinates()[0] || [];
+					if (ring.length < 2) {
+						setLiveMeasureInfo(null);
+						return;
+					}
+					const segments = ring.slice(0, -1).map((_, i) => {
+						const segment = new LineString([ring[i], ring[i + 1]]);
+						return `Kante ${i + 1}: ${formatLength(segment)}`;
+					});
+					setLiveMeasureInfo({
+						area: formatArea(geometry),
+						segmentLengths: segments,
+					});
+				};
 
-			const updateLiveMeasureInfo = () => {
-				if (!(geometry instanceof Polygon)) {
-					setLiveMeasureInfo(null);
-					return;
-				}
-
-				const ring = geometry.getCoordinates()[0] || [];
-				if (ring.length < 2) {
-					setLiveMeasureInfo(null);
-					return;
-				}
-
-				const segments: string[] = [];
-				for (let index = 0; index < ring.length - 1; index++) {
-					const segment = new LineString([ring[index], ring[index + 1]]);
-					segments.push(`Kante ${index + 1}: ${formatLength(segment)}`);
-				}
-
-				setLiveMeasureInfo({
-					area: formatArea(geometry),
-					segmentLengths: segments,
-				});
-			};
-
-			sketchGeometryChangeHandlerRef.current = updateLiveMeasureInfo;
-			geometry.on("change", updateLiveMeasureInfo);
-			updateLiveMeasureInfo();
-		});
+				sketchChangeRef.current = update;
+				geometry.on("change", update);
+				update();
+			});
+		}
 
 		drawRef.current.on("drawend", (event) => {
-			clearLiveMeasureInfo();
-			console.log("[DrawMeasureButton] drawend", {
-				drawLayerId,
-				geometryType,
-			});
+			clearLiveMeasure();
 
-			let scenarioId = useScenarioStore.getState().activeScenarioId;
-
-			if (!scenarioId) {
-				useScenarioStore.getState().createScenario("Default Scenario");
-				scenarioId = useScenarioStore.getState().activeScenarioId;
-			}
-
+			const scenarioId = resolveScenarioId();
 			if (!scenarioId) return;
 
-			console.log("[DrawMeasureButton] active scenario resolved", {
-				scenarioId,
-			});
-
 			const currentLayerConfig = layerConfig.find(
-				(config) => config.id === layerConfigId,
+				(c) => c.id === layerConfigId,
 			);
-			const measureConfig = layerConfigId
-				? measureConfigById.get(layerConfigId)
-				: null;
-
-			const source = layer.getSource();
-			if (!source) return;
 			const drawnFeature = event.feature;
 
-			const processDrawnFeature = () => {
+			const process = () => {
 				const planningLayer = getLayerById(
 					map,
 					LAYER_IDS.PROJECT_BTF_PLANNING,
 				) as VectorLayer<VectorSource> | null;
-				const planningSource = planningLayer?.getSource();
-				if (!planningSource) {
-					source.removeFeature(drawnFeature);
-					return;
-				}
+				const planningFeatures =
+					planningLayer?.getSource()?.getFeatures() ?? [];
 
-				const planningFeatures = planningSource.getFeatures();
 				if (planningFeatures.length === 0) {
 					source.removeFeature(drawnFeature);
 					console.warn(
-						"[DrawMeasureButton] draw rejected: no BTF planning features available",
+						"[DrawMeasureButton] draw rejected: no BTF planning features",
 					);
 					return;
 				}
 
-				console.log("[DrawMeasureButton] planning features", {
-					count: planningFeatures.length,
-				});
-
 				const projection = map.getView().getProjection();
-				const geojson = new GeoJSON();
-				const measureGeoJSON = geojson.writeFeatureObject(drawnFeature, {
-					featureProjection: projection,
-					dataProjection: "EPSG:4326",
-				});
-
-				const clippedFeatures: Feature<Geometry>[] = [];
-
-				let intersectedPlanningFeatures = 0;
-
-				planningFeatures.forEach((planningFeature) => {
-					const planningGeometry = planningFeature.getGeometry();
-					const measureGeometry = drawnFeature.getGeometry();
-
-					if (!planningGeometry || !measureGeometry) return;
-					if (!planningGeometry.intersectsExtent(measureGeometry.getExtent())) {
-						return;
-					}
-
-					const planningGeoJSON = geojson.writeFeatureObject(planningFeature, {
-						featureProjection: projection,
-						dataProjection: "EPSG:4326",
-					});
-
-					if (!booleanIntersects(measureGeoJSON, planningGeoJSON)) return;
-					intersectedPlanningFeatures++;
-
-					const clipped = intersect({
-						type: "FeatureCollection",
-						features: [measureGeoJSON, planningGeoJSON],
-					} as any);
-
-					if (!clipped) return;
-
-					const clippedFeatureList = geojson.readFeatures(clipped, {
-						dataProjection: "EPSG:4326",
-						featureProjection: projection,
-					});
-
-					clippedFeatures.push(...clippedFeatureList);
+				const clippedFeatures = clipFeaturesToPlanningLayer({
+					drawnFeature,
+					planningFeatures,
+					projection,
+					isPoint: geometryType === "Point",
 				});
 
 				source.removeFeature(drawnFeature);
 
-				console.log("[DrawMeasureButton] splitting result", {
-					intersectedPlanningFeatures,
-					clippedFeatureCount: clippedFeatures.length,
-				});
-
 				if (clippedFeatures.length === 0) {
 					console.warn(
-						"[DrawMeasureButton] draw rejected: geometry is outside BTF planning layer",
+						"[DrawMeasureButton] draw rejected: outside BTF planning layer",
 					);
 					return;
 				}
 
+				const geojson = new GeoJSON();
 				clippedFeatures.forEach((clippedFeature, index) => {
-					const measurePayload = createMeasurePayload({
-						clippedFeature,
+					const payload = createMeasurePayload({
+						feature: clippedFeature,
 						index,
 						geojson,
 						projection,
 						geometryType,
 						drawLayerId: drawLayerId ?? null,
 						layerConfigId: layerConfigId ?? null,
-						currentLayerConfig,
+						layerConfig: currentLayerConfig,
 						measureConfig: measureConfig ?? null,
 					});
 
-					clippedFeature.set("measureId", measurePayload.id);
-					clippedFeature.set(
-						"measureLayerConfigId",
-						measurePayload.layerConfigId,
-					);
-					clippedFeature.set("measureKey", measurePayload.measureKey);
-					clippedFeature.set("measureTitle", measurePayload.title);
-					Object.entries(measurePayload.values).forEach(([key, value]) => {
-						if (value !== null && value !== undefined && value !== "") {
-							clippedFeature.set(key, value);
-						}
-					});
+					stampMeasureProperties(clippedFeature, payload);
 					source.addFeature(clippedFeature);
-
-					console.log("[DrawMeasureButton] addMeasure payload", {
-						scenarioId,
-						measureId: measurePayload.id,
-						createdAt: measurePayload.createdAt,
-						geometryType: measurePayload.geometryType,
-						drawLayerId: measurePayload.drawLayerId,
-						featureType: measurePayload.feature.geometry?.type,
-					});
-
-					addMeasure(scenarioId, measurePayload);
-					openMeasureCard(measurePayload.id);
+					addMeasure(scenarioId, payload);
+					openMeasureCard(payload.id);
 				});
 			};
 
 			if (source.getFeatures().includes(drawnFeature)) {
-				processDrawnFeature();
-				return;
+				process();
+			} else {
+				setTimeout(() => {
+					if (source.getFeatures().includes(drawnFeature)) process();
+				}, 0);
 			}
-
-			setTimeout(() => {
-				if (!source.getFeatures().includes(drawnFeature)) {
-					console.warn(
-						"[DrawMeasureButton] drawn feature was not found in source after drawend",
-					);
-					return;
-				}
-
-				processDrawnFeature();
-			}, 0);
 		});
 
 		map.addInteraction(drawRef.current);
@@ -525,7 +410,7 @@ const DrawMeasureButton: FC<DrawMeasureButtonProps> = ({
 	};
 
 	const visibleSegments = liveMeasureInfo?.segmentLengths.slice(0, 4) || [];
-	const hiddenSegmentsCount = Math.max(
+	const hiddenCount = Math.max(
 		0,
 		(liveMeasureInfo?.segmentLengths.length || 0) - visibleSegments.length,
 	);
@@ -544,9 +429,7 @@ const DrawMeasureButton: FC<DrawMeasureButtonProps> = ({
 							{visibleSegments.map((segment) => (
 								<p key={segment}>{segment}</p>
 							))}
-							{hiddenSegmentsCount > 0 && (
-								<p>+ {hiddenSegmentsCount} weitere Kanten</p>
-							)}
+							{hiddenCount > 0 && <p>+ {hiddenCount} weitere Kanten</p>}
 						</div>
 					)}
 				</div>

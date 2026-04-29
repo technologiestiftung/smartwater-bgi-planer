@@ -1,8 +1,13 @@
 import styleList from "@/config/resources/style";
+import { formatLength } from "@/lib/helpers/ol/format";
 import { FeatureLike } from "ol/Feature";
+import LineString from "ol/geom/LineString.js";
+import Point from "ol/geom/Point.js";
+import Polygon from "ol/geom/Polygon.js";
 import VectorLayer from "ol/layer/Vector";
 import { Vector as VectorSource } from "ol/source";
 import { Circle, Fill, Icon, Stroke, Style } from "ol/style";
+import Text from "ol/style/Text.js";
 
 // --- Types ---
 interface StyleConfig {
@@ -133,4 +138,34 @@ export const applyStyleToLayer = (
 	}
 
 	return true;
+};
+
+export const getSegmentLabelStyles = (polygon: Polygon) => {
+	const ring = polygon.getCoordinates()[0] || [];
+	const segmentStyles: Style[] = [];
+
+	for (let index = 0; index < ring.length - 1; index++) {
+		const start = ring[index];
+		const end = ring[index + 1];
+		const segment = new LineString([start, end]);
+		const midpoint: [number, number] = [
+			(start[0] + end[0]) / 2,
+			(start[1] + end[1]) / 2,
+		];
+
+		segmentStyles.push(
+			new Style({
+				geometry: new Point(midpoint),
+				text: new Text({
+					text: formatLength(segment),
+					font: "400 12px sans-serif",
+					padding: [2, 4, 2, 4],
+					fill: new Fill({ color: "rgba(17, 24, 39, 0.9)" }),
+					backgroundFill: new Fill({ color: "rgba(255, 255, 255, 0.5)" }),
+				}),
+			}),
+		);
+	}
+
+	return segmentStyles;
 };
