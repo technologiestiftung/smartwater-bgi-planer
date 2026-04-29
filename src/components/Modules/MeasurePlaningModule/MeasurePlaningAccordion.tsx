@@ -244,7 +244,7 @@ export function MeasurePlaningAccordion({
 														activateQuestion(step.id, item.questionId)
 													}
 													className={cn(
-														"border-muted hover:bg-light flex flex-1 items-center justify-between rounded-md px-3 py-2 text-left transition-colors",
+														"border-muted hover:bg-light flex flex-1 items-center justify-between px-3 py-2 text-left transition-colors",
 														isConnectedArea &&
 															"bg-primary text-primary-foreground hover:bg-primary/90",
 													)}

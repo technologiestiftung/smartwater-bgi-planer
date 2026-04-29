@@ -106,13 +106,6 @@
 					"questions": ["connected_area", "3G1", "3G2", "3G3", "3G4", "3G5"],
 					"measurements": [
 						{
-							"id": "connected_area",
-							"layerConfigId": "connected_area",
-							"title": "Zusammenhängende Fläche",
-							"metricIcons": ["List"],
-							"infoLayerConfigId": "connected_area_info"
-						},
-						{
 							"id": "3G1",
 							"layerConfigId": "3G1",
 							"title": "Extensive Dachbegrünung",
@@ -206,6 +199,11 @@
 					"title": "Versickerung",
 					"questions": ["3V1", "3V2", "3V3", "3V4", "3V5", "3V6"],
 					"measurements": [
+						{
+							"id": "connected_area",
+							"layerConfigId": "connected_area",
+							"title": "Angeschlossene Fläche zeichnen"
+						},
 						{
 							"id": "3V1",
 							"layerConfigId": "3V1",

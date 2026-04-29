@@ -246,13 +246,6 @@ const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
 				</div>
 			</div>
 			<div className="flex flex-col gap-3 p-3">
-				<div>
-					<p className="text-sm font-semibold">Konfiguration</p>
-					<p className="text-muted-foreground text-xs">
-						{measure.measureKey} · {measure.layerConfigId}
-					</p>
-				</div>
-
 				{measureConfig.parameters.map((parameter) => {
 					const isReadOnly = parameter.source === "drawn";
 					const value = displayValues[parameter.key] ?? "";

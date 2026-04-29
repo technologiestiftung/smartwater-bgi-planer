@@ -1,5 +1,21 @@
 [
 	{
+		"id": "connected_area",
+		"key": "connected_area",
+		"geometryType": "Polygon",
+		"parameters": [
+			{
+				"key": "area",
+				"type": "number",
+				"unit": "m2",
+				"role": "area",
+				"source": "drawn",
+				"required": true,
+				"requiredFor": ["ABIMO"]
+			}
+		]
+	},
+	{
 		"id": "3G1",
 		"key": "extensiveGreenRoof",
 		"geometryType": "Polygon",
@@ -15,7 +31,6 @@
 			}
 		]
 	},
-
 	{
 		"id": "3G2",
 		"key": "intensiveGreenRoof",
@@ -32,7 +47,6 @@
 			}
 		]
 	},
-
 	{
 		"id": "3G3",
 		"key": "extensiveRetentionRoof",
@@ -47,7 +61,6 @@
 			}
 		]
 	},
-
 	{
 		"id": "3G4",
 		"key": "intensiveRetentionRoof",
@@ -62,7 +75,6 @@
 			}
 		]
 	},
-
 	{
 		"id": "3G5",
 		"key": "groundBasedFacadeGreening",
@@ -78,7 +90,6 @@
 			}
 		]
 	},
-
 	{
 		"id": "3E1",
 		"key": "permeableSurfaces",
@@ -95,7 +106,6 @@
 			}
 		]
 	},
-
 	{
 		"id": "3E2",
 		"key": "deSealing",
@@ -112,7 +122,6 @@
 			}
 		]
 	},
-
 	{
 		"id": "3B1",
 		"key": "greenSpaces",
@@ -129,7 +138,6 @@
 			}
 		]
 	},
-
 	{
 		"id": "3B2",
 		"key": "trees",
@@ -171,7 +179,6 @@
 			}
 		]
 	},
-
 	{
 		"id": "3B3",
 		"key": "trackGreening",
@@ -187,7 +194,6 @@
 			}
 		]
 	},
-
 	{
 		"id": "3V1",
 		"key": "swale",
@@ -211,7 +217,6 @@
 			}
 		]
 	},
-
 	{
 		"id": "3V2",
 		"key": "surfaceInfiltration",
@@ -258,7 +263,6 @@
 			}
 		]
 	},
-
 	{
 		"id": "3V4",
 		"key": "sunkenBedTrench",
@@ -281,7 +285,6 @@
 			}
 		]
 	},
-
 	{
 		"id": "3V5",
 		"key": "enhancedTreePit",
@@ -298,7 +301,6 @@
 			}
 		]
 	},
-
 	{
 		"id": "3V6",
 		"key": "infiltrationTrench",
@@ -322,7 +324,6 @@
 			}
 		]
 	},
-
 	{
 		"id": "3S1",
 		"key": "waterBodies",
@@ -337,7 +338,6 @@
 			}
 		]
 	},
-
 	{
 		"id": "3S2",
 		"key": "irrigationCistern",
@@ -353,7 +353,6 @@
 			}
 		]
 	},
-
 	{
 		"id": "3S3",
 		"key": "internalUseCistern",
@@ -369,7 +368,6 @@
 			}
 		]
 	},
-
 	{
 		"id": "3S4",
 		"key": "retentionArea",
@@ -385,7 +383,6 @@
 			}
 		]
 	},
-
 	{
 		"id": "3S5",
 		"key": "evaporationBed",
