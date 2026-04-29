@@ -2,7 +2,10 @@
 
 import { MeasurePlaningStepContent } from "@/components/Modules/MeasurePlaningModule/MeasurePlaningStepContent";
 import { SynthesisView } from "@/components/Modules/MeasurePlaningModule/SynthesisView";
-import { getModuleSteps } from "@/components/Modules/shared/moduleConfig";
+import {
+	getModuleSteps,
+	type ModuleStepViewConfig,
+} from "@/components/Modules/shared/moduleConfig";
 import { SideMenu } from "@/components/SideMenu";
 // import { Tutorial } from "@/components/Tutorials/Tutorial";
 import {
@@ -12,14 +15,55 @@ import {
 	AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import { useLayerFeatures } from "@/hooks/useLayerFeatures";
 import { useMapReady } from "@/hooks/useMapReady";
 import { getIconComponent } from "@/lib/helpers/iconMap";
-import { SectionId } from "@/lib/helpers/sectionIds";
+import type { SectionId } from "@/lib/helpers/sectionIds";
 import { cn } from "@/lib/utils";
 import { useLayersStore, useUiStore } from "@/store";
+import type { LayerConfigItem } from "@/store/layers/types";
+import type { ModuleMeasurementConfig } from "@/types/shared";
+import { LAYER_IDS } from "@/types/shared";
 import { ArrowLeftIcon, InfoIcon, ListChecksIcon } from "@phosphor-icons/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
+
+interface StepItem {
+	id: string;
+	questionId: string;
+	infoQuestionId?: string;
+	title?: string;
+	metricIcons: string[];
+}
+
+function toStepItems(step: ModuleStepViewConfig): StepItem[] {
+	if (step.measurements) {
+		return step.measurements.map((m: ModuleMeasurementConfig) => ({
+			id: m.id,
+			questionId: m.layerConfigId ?? m.id,
+			infoQuestionId: m.infoLayerConfigId,
+			title: m.title,
+			metricIcons: m.metricIcons ?? [],
+		}));
+	}
+	return (step.questions ?? []).map((qId: string) => ({
+		id: qId,
+		questionId: qId,
+		metricIcons: [],
+	}));
+}
+
+function getItemLabel(
+	item: StepItem,
+	configMap: Map<string, LayerConfigItem>,
+): string {
+	const config = configMap.get(item.questionId);
+	return item.title || config?.name || config?.question || item.questionId;
+}
+
+function stepRequiresConnectedArea(step: ModuleStepViewConfig): boolean {
+	return step.measurements?.some((m) => m.id === "connected_area") ?? false;
+}
 
 interface MeasurePlaningAccordionProps {
 	open: boolean;
@@ -61,6 +105,70 @@ function MeasurePlaningFooter({
 	);
 }
 
+function MeasureListItem({
+	item,
+	label,
+	isConnectedArea,
+	isDisabled,
+	stepId,
+	onActivate,
+}: {
+	item: StepItem;
+	label: string;
+	isConnectedArea: boolean;
+	isDisabled: boolean;
+	stepId: string;
+	onActivate: (stepId: string, questionId: string) => void;
+}) {
+	return (
+		<div className="flex items-center gap-2">
+			<button
+				type="button"
+				onClick={() => !isDisabled && onActivate(stepId, item.questionId)}
+				disabled={isDisabled}
+				className={cn(
+					"border-muted hover:bg-light flex flex-1 items-center justify-between px-3 py-2 text-left transition-colors",
+					isConnectedArea &&
+						"bg-primary text-primary-foreground hover:bg-primary/90",
+					isDisabled && "cursor-not-allowed opacity-50 hover:bg-transparent",
+				)}
+			>
+				<div className="flex items-center gap-2">
+					<span className="font-medium">{label}</span>
+					{item.metricIcons.length > 0 && (
+						<div className="flex items-center gap-1">
+							{item.metricIcons.map((iconName) => {
+								const MetricIcon = getIconComponent(iconName);
+								return (
+									<span
+										key={`${item.id}-${iconName}`}
+										className={cn(
+											"border-primary inline-flex items-center justify-center rounded-full border p-1",
+											isConnectedArea && "border-primary-foreground",
+										)}
+									>
+										<MetricIcon className="h-4 w-4" />
+									</span>
+								);
+							})}
+						</div>
+					)}
+				</div>
+			</button>
+			{item.infoQuestionId && (
+				<button
+					type="button"
+					onClick={() => onActivate(stepId, item.infoQuestionId!)}
+					className="text-primary hover:text-primary/80 inline-flex h-9 w-9 items-center justify-center rounded-full"
+					aria-label={`Informationen zu ${label}`}
+				>
+					<InfoIcon className="h-5 w-5" />
+				</button>
+			)}
+		</div>
+	);
+}
+
 export function MeasurePlaningAccordion({
 	open,
 	onOpenChange,
@@ -68,9 +176,10 @@ export function MeasurePlaningAccordion({
 	description,
 }: MeasurePlaningAccordionProps) {
 	const steps = getModuleSteps("measurePlaning");
-	const [expandedStepId, setExpandedStepId] = useState<string>(
-		steps[0]?.id ?? "",
+	const { hasFeatures: hasConnectedArea } = useLayerFeatures(
+		LAYER_IDS.CONNECTED_AREA_DRAW,
 	);
+	const [expandedStepId, setExpandedStepId] = useState(steps[0]?.id ?? "");
 	const [selectedQuestionId, setSelectedQuestionId] = useState<string | null>(
 		null,
 	);
@@ -144,23 +253,6 @@ export function MeasurePlaningAccordion({
 		[onOpenChange, setIsSynthesisMode],
 	);
 
-	useEffect(() => {
-		setShowStepper(false);
-		return () => setShowStepper(true);
-	}, [setShowStepper]);
-
-	useEffect(() => {
-		if (
-			!open ||
-			hasInitializedRef.current ||
-			!isMapReady ||
-			layerConfig.length === 0
-		)
-			return;
-		applyConfigLayers("measure_start", true);
-		hasInitializedRef.current = true;
-	}, [open, isMapReady, layerConfig.length, applyConfigLayers]);
-
 	const handleShowSynthesis = useCallback(() => {
 		setIsSynthesisMode(true);
 	}, [setIsSynthesisMode]);
@@ -179,6 +271,23 @@ export function MeasurePlaningAccordion({
 		},
 		[activateQuestion, setIsSynthesisMode],
 	);
+
+	useEffect(() => {
+		setShowStepper(false);
+		return () => setShowStepper(true);
+	}, [setShowStepper]);
+
+	useEffect(() => {
+		if (
+			!open ||
+			hasInitializedRef.current ||
+			!isMapReady ||
+			layerConfig.length === 0
+		)
+			return;
+		applyConfigLayers("measure_start", true);
+		hasInitializedRef.current = true;
+	}, [open, isMapReady, layerConfig.length, applyConfigLayers]);
 
 	let content: React.ReactNode;
 
@@ -211,100 +320,49 @@ export function MeasurePlaningAccordion({
 					value={expandedStepId}
 					onValueChange={(value) => setExpandedStepId(value || "")}
 				>
-					{steps.map((step) => (
-						<AccordionItem
-							key={step.id}
-							value={step.id}
-							className="border-neutral-mid"
-						>
-							<AccordionTrigger className="text-primary py-5 text-xl font-semibold hover:no-underline">
-								<div className="flex items-center gap-3">
-									{/* <div className="text-primary [&_svg]:size-6">{step.icon}</div> */}
-									<span>{step.title}</span>
-								</div>
-							</AccordionTrigger>
-							<AccordionContent className="pb-5">
-								<div className="space-y-1">
-									{(
-										step.measurements?.map((measurement) => ({
-											id: measurement.id,
-											questionId: measurement.layerConfigId ?? measurement.id,
-											infoQuestionId: measurement.infoLayerConfigId,
-											title: measurement.title,
-											metricIcons: measurement.metricIcons ?? [],
-										})) ??
-										(step.questions ?? []).map((questionId) => ({
-											id: questionId,
-											questionId,
-											infoQuestionId: undefined,
-											title: undefined,
-											metricIcons: [],
-										}))
-									).map((item) => {
-										const config = layerConfigById.get(item.questionId);
-										const label =
-											item.title ||
-											config?.name ||
-											config?.question ||
-											item.questionId;
-										const isConnectedArea =
-											item.questionId === "connected_area";
+					{steps.map((step) => {
+						const items = toStepItems(step);
+						const needsConnectedArea = stepRequiresConnectedArea(step);
 
-										return (
-											<div key={item.id} className="flex items-center gap-2">
-												<button
-													type="button"
-													onClick={() =>
-														activateQuestion(step.id, item.questionId)
-													}
-													className={cn(
-														"border-muted hover:bg-light flex flex-1 items-center justify-between px-3 py-2 text-left transition-colors",
-														isConnectedArea &&
-															"bg-primary text-primary-foreground hover:bg-primary/90",
-													)}
-												>
-													<div className="flex items-center gap-2">
-														<span className="font-medium">{label}</span>
-														{item.metricIcons.length > 0 && (
-															<div className="flex items-center gap-1">
-																{item.metricIcons.map((iconName) => {
-																	const MetricIcon = getIconComponent(iconName);
-																	return (
-																		<span
-																			key={`${item.id}-${iconName}`}
-																			className={cn(
-																				"border-primary inline-flex items-center justify-center rounded-full border p-1",
-																				isConnectedArea &&
-																					"border-primary-foreground",
-																			)}
-																		>
-																			<MetricIcon className="h-4 w-4" />
-																		</span>
-																	);
-																})}
-															</div>
-														)}
-													</div>
-												</button>
-												{item.infoQuestionId && (
-													<button
-														type="button"
-														onClick={() =>
-															activateQuestion(step.id, item.infoQuestionId!)
-														}
-														className="text-primary hover:text-primary/80 inline-flex h-9 w-9 items-center justify-center rounded-full"
-														aria-label={`Informationen zu ${label}`}
-													>
-														<InfoIcon className="h-5 w-5" />
-													</button>
-												)}
-											</div>
-										);
-									})}
-								</div>
-							</AccordionContent>
-						</AccordionItem>
-					))}
+						return (
+							<AccordionItem
+								key={step.id}
+								value={step.id}
+								className="border-neutral-mid"
+							>
+								<AccordionTrigger className="text-primary py-5 text-xl font-semibold hover:no-underline">
+									<div className="flex items-center gap-3">
+										{/* <div className="text-primary [&_svg]:size-6">{step.icon}</div> */}
+										<span>{step.title}</span>
+									</div>
+								</AccordionTrigger>
+								<AccordionContent className="pb-5">
+									<div className="space-y-1">
+										{items.map((item) => {
+											const isConnectedArea =
+												item.questionId === "connected_area";
+											const isDisabled =
+												needsConnectedArea &&
+												!isConnectedArea &&
+												!hasConnectedArea;
+
+											return (
+												<MeasureListItem
+													key={item.id}
+													item={item}
+													label={getItemLabel(item, layerConfigById)}
+													isConnectedArea={isConnectedArea}
+													isDisabled={isDisabled}
+													stepId={step.id}
+													onActivate={activateQuestion}
+												/>
+											);
+										})}
+									</div>
+								</AccordionContent>
+							</AccordionItem>
+						);
+					})}
 				</Accordion>
 			</div>
 		);
