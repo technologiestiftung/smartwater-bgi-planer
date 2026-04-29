@@ -1,6 +1,6 @@
 "use client";
 
-import MeasureDetailsCard from "@/components/MapInteraction/MeasureDetailsCard";
+import MeasureDetailsCard from "@/components/FeatureDetailViews/MeasureDetailsCard/MeasureDetailsCard";
 import { useUiStore } from "@/store/ui";
 import { FC } from "react";
 

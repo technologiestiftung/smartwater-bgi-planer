@@ -1,13 +1,12 @@
 "use client";
 
-import FeatureDetailsModal from "@/components/MapInteraction/FeatureDetailsModal";
+import FeatureDetailsModal from "@/components/FeatureDetailViews/FeatureDetailsModal/FeatureDetailsModal";
 import { fetchFeatureInfo } from "@/lib/helpers/wmsFeatureInfo";
 import { useMapStore } from "@/store/map";
 import { useUiStore } from "@/store/ui";
 import Overlay, { Options } from "ol/Overlay.js";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 
-// --- Typen & Konstanten ---
 interface ClickControlProps {
 	layerIds: string[];
 	vectorLayerIds: string[];

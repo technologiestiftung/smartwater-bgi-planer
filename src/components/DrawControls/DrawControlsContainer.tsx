@@ -11,7 +11,6 @@ import UploadDrawLayerButton from "@/components/UploadControls/UploadDrawLayerBu
 import { useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
 import { usePathname } from "next/navigation";
-
 // import { Tutorial } from "@/components/Tutorials/Tutorial";
 
 interface DrawControlsContainerProps {
