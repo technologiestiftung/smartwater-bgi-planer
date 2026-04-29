@@ -1,5 +1,6 @@
 "use client";
 
+import { MetricIconBadges } from "@/components/MetricIconBadges/MetricIconBadges";
 import { RichTextWithLinks } from "@/components/RichTextWithLinks/RichTextWithLinks";
 import {
 	Accordion,
@@ -8,30 +9,8 @@ import {
 	AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { getIconComponent, metricIconLabelMap } from "@/lib/helpers/iconMap";
 import { LayerConfigItem } from "@/store/layers/types";
 import Image from "next/image";
-
-function MetricIconBadges({ metricIcons }: { metricIcons: string[] }) {
-	if (metricIcons.length === 0) return null;
-	return (
-		<div className="mb-3 flex flex-wrap gap-2">
-			{metricIcons.map((iconName) => {
-				const MetricIcon = getIconComponent(iconName);
-				const label = metricIconLabelMap[iconName] ?? iconName;
-				return (
-					<span
-						key={iconName}
-						className="bg-primary text-primary-foreground inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-medium"
-					>
-						<MetricIcon className="h-4 w-4" />
-						{label}
-					</span>
-				);
-			})}
-		</div>
-	);
-}
 
 interface MeasurePlaningStepContentProps {
 	layerConfig: LayerConfigItem;
@@ -44,7 +23,7 @@ export function MeasurePlaningStepContent({
 }: MeasurePlaningStepContentProps) {
 	const showLegendAccordion =
 		Boolean(layerConfig.legendSrc) || Boolean(layerConfig.canDrawMeasures);
-	
+
 	return (
 		<div className="flex min-h-0 flex-1 flex-col">
 			<div className="mt-4">
