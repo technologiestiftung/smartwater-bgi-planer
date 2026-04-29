@@ -111,6 +111,17 @@ export function MeasurePlaningAccordion({
 		[selectedQuestionId, layerConfigById],
 	);
 
+	const selectedMetricIcons = useMemo(() => {
+		if (!selectedQuestionId) return [];
+		for (const step of steps) {
+			const measurement = step.measurements?.find(
+				(m) => (m.layerConfigId ?? m.id) === selectedQuestionId,
+			);
+			if (measurement?.metricIcons) return measurement.metricIcons;
+		}
+		return [];
+	}, [selectedQuestionId, steps]);
+
 	const activateQuestion = useCallback(
 		(stepId: string, questionId: string) => {
 			setExpandedStepId(stepId);
@@ -184,7 +195,10 @@ export function MeasurePlaningAccordion({
 				<h3 className="text-primary shrink-0 text-xl font-semibold">
 					{selectedQuestionConfig.name || selectedQuestionId}
 				</h3>
-				<MeasurePlaningStepContent layerConfig={selectedQuestionConfig} />
+				<MeasurePlaningStepContent
+					layerConfig={selectedQuestionConfig}
+					metricIcons={selectedMetricIcons}
+				/>
 			</div>
 		);
 	} else {

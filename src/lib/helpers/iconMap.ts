@@ -31,6 +31,18 @@ export const iconMap: Record<string, Icon> = {
 	Jar: JarIcon,
 };
 
+export const metricIconLabelMap: Record<string, string> = {
+	CloudRain: "Starkregen",
+	ThermometerHot: "Hitze",
+	RoadHorizon: "Versiegelung",
+	Drop: "Wasserhaushalt",
+	Fish: "Gewässerschutz",
+	Tree: "Begrünung",
+	Jar: "Speicherung",
+	Recycle: "Versickerung",
+	File: "Potentiale",
+};
+
 export function getIconComponent(iconName: string): Icon {
 	const IconComponent = iconMap[iconName];
 	if (!IconComponent) {
