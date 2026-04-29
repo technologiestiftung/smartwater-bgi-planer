@@ -640,7 +640,7 @@
 		"name": "Mulde",
 		"description": "Flache, bepflanzte Bodenvertiefung zur temporären Speicherung und Versickerung von Niederschlagswasser. Mulden reduzieren Überflutungsrisiken, fördern Grundwasserneubildung und unterstützen Verdunstungskühlung. Voraussetzung sind geeignete Bodenverhältnisse sowie regelmäßige Pflege.",
 		"drawLayerId": "module_3_3V1_draw",
-		"visibleLayerIds": ["connected_area"],
+		"visibleLayerIds": ["module_3_connected_area_draw"],
 		"canDrawMeasures": true
 	},
 	{
@@ -648,7 +648,7 @@
 		"name": "Flächenversickerung",
 		"description": "Ableitung von Regenwasser von befestigten Flächen in angrenzende bewachsene Flächen zur oberflächennahen Versickerung. Entlastet die Kanalisation, fördert Grundwasserneubildung und nutzt die Reinigungswirkung der belebten Bodenzone. Erfordert durchlässige Böden und ausreichende Flächen.",
 		"drawLayerId": "module_3_3V2_draw",
-		"visibleLayerIds": ["connected_area"],
+		"visibleLayerIds": ["module_3_connected_area_draw"],
 		"canDrawMeasures": true
 	},
 	{
@@ -656,7 +656,7 @@
 		"name": "Mulden-Rigolen-Element",
 		"description": "Kombination aus oberirdischer Mulde und unterirdischer Rigole zur Zwischenspeicherung, Vorreinigung und Versickerung von Regenwasser. Bei Bedarf ist eine gedrosselte Ableitung möglich. Besonders geeignet bei begrenztem Platz oder mäßig durchlässigen Böden.",
 		"drawLayerId": "module_3_3V3_draw",
-		"visibleLayerIds": ["connected_area"],
+		"visibleLayerIds": ["module_3_connected_area_draw"],
 		"canDrawMeasures": true
 	},
 	{
@@ -664,7 +664,7 @@
 		"name": "Tiefbeet-Rigole",
 		"description": "Kompaktes Mulden-Rigolen-System für dichte urbane Räume mit geringem Flächenangebot. Es bietet hohe Rückhalte- und Reinigungsleistung und kann in Straßenräume integriert werden. Geeignet bei schwierigen Bodenverhältnissen, jedoch mit erhöhtem Planungs- und Pflegeaufwand.",
 		"drawLayerId": "module_3_3V4_draw",
-		"visibleLayerIds": ["connected_area"],
+		"visibleLayerIds": ["module_3_connected_area_draw"],
 		"canDrawMeasures": true
 	},
 	{
@@ -672,7 +672,7 @@
 		"name": "Optimierter Baumstandort (Baum mit unterirdischer Versickerung kombiniert)",
 		"description": "Kombiniert Regenwasserbewirtschaftung mit verbesserten Wuchsbedingungen für Stadtbäume durch unterirdische Speicher- und Substraträume. Reduziert Oberflächenabfluss, stärkt Baumvitalität und verbessert das Stadtklima. Benötigt sorgfältige Planung von Einleitung, Substrat und Leitungsabständen.",
 		"drawLayerId": "module_3_3V5_draw",
-		"visibleLayerIds": ["connected_area"],
+		"visibleLayerIds": ["module_3_connected_area_draw"],
 		"canDrawMeasures": true
 	},
 	{
@@ -680,7 +680,7 @@
 		"name": "Rigole",
 		"description": "Unterirdisches Speicher- und Versickerungselement aus Kies, Lavagranulat oder Hohlkörpersystemen. Es ermöglicht zeitverzögerte Versickerung und bei Bedarf gedrosselte Ableitung. Ohne Vorbehandlung nur für gering belastete Abflüsse geeignet; regelmäßige Wartung erforderlich.",
 		"drawLayerId": "module_3_3V6_draw",
-		"visibleLayerIds": ["connected_area"],
+		"visibleLayerIds": ["module_3_connected_area_draw"],
 		"canDrawMeasures": true
 	},
 	{
