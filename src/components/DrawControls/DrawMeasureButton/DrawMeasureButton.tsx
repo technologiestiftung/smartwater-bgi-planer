@@ -409,12 +409,6 @@ const DrawMeasureButton: FC = () => {
 		setIsDrawing(true);
 	};
 
-	const visibleSegments = liveMeasureInfo?.segmentLengths.slice(0, 4) || [];
-	const hiddenCount = Math.max(
-		0,
-		(liveMeasureInfo?.segmentLengths.length || 0) - visibleSegments.length,
-	);
-
 	return (
 		<div className="relative">
 			<Button variant="outline" onClick={toggleDraw}>
@@ -422,16 +416,8 @@ const DrawMeasureButton: FC = () => {
 				{isDrawing ? "Stop Zeichnen" : "Maßnahme zeichnen"}
 			</Button>
 			{isDrawing && liveMeasureInfo && geometryType === "Polygon" && (
-				<div className="bg-background border-primary absolute right-0 bottom-full z-10 mb-2 w-64 border p-2 text-xs shadow-lg">
+				<div className="bg-background border-primary text-primary absolute right-0 bottom-full z-10 mb-2 w-64 border-2 p-2 text-xs shadow-lg">
 					<p className="font-semibold">Fläche: {liveMeasureInfo.area}</p>
-					{visibleSegments.length > 0 && (
-						<div className="text-muted-foreground mt-1 space-y-0.5">
-							{visibleSegments.map((segment) => (
-								<p key={segment}>{segment}</p>
-							))}
-							{hiddenCount > 0 && <p>+ {hiddenCount} weitere Kanten</p>}
-						</div>
-					)}
 				</div>
 			)}
 		</div>
