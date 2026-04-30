@@ -12,6 +12,8 @@ import {
 	getBaseUrl,
 	getLayerById,
 	getLayerIdsFromFolder,
+	getLayerSource,
+	getVectorLayer,
 	importLayerFromGeoJSON,
 } from "@/lib/helpers/ol";
 import { useLayersStore } from "@/store";
@@ -39,15 +41,20 @@ export const useLayerPersistence = (
 	const map = useMapStore((state) => state.map);
 	const mapReady = useMapStore((state) => state.isReady);
 	const getProject = useProjectStore((state) => state.getProject);
-	const { addFile, getFile, deleteFile, getAllProjectFiles } = useFilesStore();
+	const addFile = useFilesStore((state) => state.addFile);
+	const getFile = useFilesStore((state) => state.getFile);
+	const deleteFile = useFilesStore((state) => state.deleteFile);
+	const getAllProjectFiles = useFilesStore((state) => state.getAllProjectFiles);
 	const filesHydrated = useFilesStore((state) => state.hasHydrated);
-	const { layers, addLayer } = useLayersStore();
+	const addLayer = useLayersStore((state) => state.addLayer);
+	const layers = useLayersStore((state) => state.layers);
 
 	const debounceTimersRef = useRef<
 		Record<string, ReturnType<typeof setTimeout>>
 	>({});
 	const layerListenersRef = useRef<Record<string, () => void>>({});
 	const hasRestoredRef = useRef(false);
+	const isRestoringRef = useRef(false);
 
 	const saveWmsLayer = useCallback(
 		async (layerId: string, project: any) => {
@@ -97,7 +104,7 @@ export const useLayerPersistence = (
 	// Save a single layer
 	const saveLayer = useCallback(
 		async (layerId: string) => {
-			if (!map) return;
+			if (!map || isRestoringRef.current) return;
 
 			const project = getProject();
 			if (!project) return;
@@ -119,6 +126,14 @@ export const useLayerPersistence = (
 						visibility,
 						...(displayName && { displayFileName: displayName }),
 					};
+				}
+
+				if (!isUploadedLayer) {
+					const layer = getVectorLayer(map, layerId);
+					const source = layer ? getLayerSource(layer) : null;
+					if (source && source.getFeatures().length === 0) {
+						return;
+					}
 				}
 
 				const geoJsonFile = exportLayerAsGeoJSON(map, layerId, metadata);
@@ -145,11 +160,13 @@ export const useLayerPersistence = (
 	// Debounced save
 	const saveLayerDebounced = useCallback(
 		(layerId: string) => {
-			if (!autoSave) return;
+			if (!autoSave || isRestoringRef.current) return;
 
 			clearTimeout(debounceTimersRef.current[layerId]);
 			debounceTimersRef.current[layerId] = setTimeout(() => {
-				saveLayer(layerId);
+				if (!isRestoringRef.current) {
+					saveLayer(layerId);
+				}
 				delete debounceTimersRef.current[layerId];
 			}, debounceDelay);
 		},
@@ -446,8 +463,13 @@ export const useLayerPersistence = (
 		if (!project) return;
 
 		(async () => {
-			await restoreDrawLayers();
-			await restoreUploadedLayers();
+			isRestoringRef.current = true;
+			try {
+				await restoreDrawLayers();
+				await restoreUploadedLayers();
+			} finally {
+				isRestoringRef.current = false;
+			}
 			hasRestoredRef.current = true;
 			setupAutoSave();
 		})();
@@ -473,6 +495,16 @@ export const useLayerPersistence = (
 		};
 	}, []);
 
+	const flushPendingSaves = useCallback(() => {
+		const timers = debounceTimersRef.current;
+		const layerIds = Object.keys(timers);
+		layerIds.forEach((layerId) => {
+			clearTimeout(timers[layerId]);
+			delete timers[layerId];
+			saveLayer(layerId);
+		});
+	}, [saveLayer]);
+
 	return {
 		saveLayer,
 		saveAllDrawLayers,
@@ -480,5 +512,6 @@ export const useLayerPersistence = (
 		setupAutoSave,
 		saveAllUploadedLayers,
 		restoreUploadedLayers,
+		flushPendingSaves,
 	};
 };

@@ -3,8 +3,10 @@
 import ConfirmButton from "@/components/ConfirmButton/ConfirmButton";
 import { RichTextWithLinks } from "@/components/RichTextWithLinks/RichTextWithLinks";
 import { Button } from "@/components/ui/button";
+import { useDeselectAllFeatures } from "@/hooks/useDeselectAllFeatures";
 import { useLayerArea } from "@/hooks/useLayerArea";
 import { useLayerFeatures } from "@/hooks/useLayerFeatures";
+import { useSelectProjectBoundary } from "@/hooks/useSelectProjectBoundary";
 import { LayerConfigItem } from "@/store/layers/types";
 import { LAYER_IDS } from "@/types/shared";
 import {
@@ -15,8 +17,6 @@ import {
 import Image from "next/image";
 import { FC } from "react";
 import ScenarioDisplay from "../FeasibilityModule/ScenarioDisplay";
-import { useDeselectAllFeatures } from "@/hooks/useDeselectAllFeatures";
-import { useSelectProjectBoundary } from "@/hooks/useSelectProjectBoundary";
 
 interface StepContentProps {
 	layerConfig: LayerConfigItem;
@@ -32,7 +32,7 @@ const StepContent: FC<StepContentProps> = ({
 }) => {
 	const { hasFeatures } = useLayerFeatures(layerConfig.drawLayerId);
 	const { formattedArea, area } = useLayerArea(layerConfig.drawLayerId);
-	const { deselectAllFeatures } = useDeselectAllFeatures();
+	const { clearDrawLayerFeatures } = useDeselectAllFeatures();
 	const { selectProjectBoundary } = useSelectProjectBoundary();
 	const { hasFeatures: hasProjectBoundary } = useLayerFeatures(
 		LAYER_IDS.PROJECT_BOUNDARY,
@@ -46,7 +46,7 @@ const StepContent: FC<StepContentProps> = ({
 
 	const handleNotApplicable = (): boolean => {
 		if (area > 0) {
-			deselectAllFeatures();
+			clearDrawLayerFeatures();
 			setTimeout(() => {
 				onAnswer(false);
 			}, 500);
