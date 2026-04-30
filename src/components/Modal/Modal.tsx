@@ -3,14 +3,14 @@
 import {
 	Dialog,
 	DialogContent,
-	DialogTitle,
 	DialogDescription,
 	DialogPortal,
+	DialogTitle,
 } from "@/components/ui/dialog";
-import { ModalHeader } from "./ModalHeader";
-import { ModalFooter } from "./ModalFooter";
 import { cn } from "@/lib/utils";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
+import { ModalFooter } from "./ModalFooter";
+import { ModalHeader } from "./ModalHeader";
 
 interface PageModalProps {
 	open: boolean;
@@ -24,7 +24,7 @@ interface PageModalProps {
 	customBackdrop?: React.ReactNode;
 }
 
-export function Modal({
+export function PageModal({
 	open,
 	onOpenChange,
 	title,
