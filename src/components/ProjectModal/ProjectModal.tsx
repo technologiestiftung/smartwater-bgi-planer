@@ -19,15 +19,12 @@ import {
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-interface ProjectModalWrapperProps {
+interface ProjectModalProps {
 	mode: "new" | "edit";
 	projectId?: string;
 }
 
-export function ProjectModalWrapper({
-	mode,
-	projectId,
-}: ProjectModalWrapperProps) {
+export function ProjectModal({ mode, projectId }: ProjectModalProps) {
 	const router = useRouter();
 	const { createProject, updateProject, getProject, deleteProject } =
 		useProjectStore();

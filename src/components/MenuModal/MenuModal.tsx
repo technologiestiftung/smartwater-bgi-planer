@@ -4,11 +4,11 @@ import { PageModal } from "@/components/Modal";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-interface MenuModalWrapperProps {
+interface MenuModalProps {
 	projectId: string;
 }
 
-export function MenuModalWrapper({ projectId }: MenuModalWrapperProps) {
+export function MenuModal({ projectId }: MenuModalProps) {
 	const router = useRouter();
 	const [isOpen, setIsOpen] = useState(true);
 
