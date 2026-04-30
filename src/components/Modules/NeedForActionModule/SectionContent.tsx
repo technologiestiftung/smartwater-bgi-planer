@@ -1,7 +1,7 @@
 "use client";
 
 import { getModuleSteps } from "@/components/Modules/shared/moduleConfig";
-import StepContent from "@/components/Modules/shared/StepContent";
+import { StepContent } from "@/components/Modules/shared/StepContent";
 import { useModuleNavigation } from "@/components/Modules/shared/useModuleNavigation";
 import { Spinner } from "@/components/ui/spinner";
 import { useVerticalStepper } from "@/components/VerticalStepper";

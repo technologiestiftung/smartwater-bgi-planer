@@ -20,7 +20,7 @@ interface FeatureDetailsModalProps {
 	isLoading?: boolean;
 }
 
-const FeatureDetailsModal: FC<FeatureDetailsModalProps> = ({
+export const FeatureDetailsModal: FC<FeatureDetailsModalProps> = ({
 	attributes,
 	coordinate,
 	onClose,
@@ -133,5 +133,3 @@ const FeatureDetailsModal: FC<FeatureDetailsModalProps> = ({
 		</div>
 	);
 };
-
-export default FeatureDetailsModal;

@@ -1,6 +1,6 @@
 "use client";
 
-import MeasurePlanningModule from "@/components/Modules/MeasurePlanningModule/MeasurePlanningModule";
+import { MeasurePlanningModule } from "@/components/Modules/MeasurePlanningModule/MeasurePlanningModule";
 import { useRouter } from "next/navigation";
 import { use } from "react";
 

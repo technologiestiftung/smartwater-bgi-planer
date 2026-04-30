@@ -42,7 +42,7 @@ const toLabel = (value: string) =>
 		.replace(/_/g, " ")
 		.replace(/^./, (char) => char.toUpperCase());
 
-const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
+export const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
 	measureId,
 	feature,
 	layerId,
@@ -297,5 +297,3 @@ const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
 		</div>
 	);
 };
-
-export default MeasureDetailsCard;

@@ -22,7 +22,7 @@ interface FeatureActionMenuProps {
 	onClose?: () => void;
 }
 
-const FeatureActionMenu: FC<FeatureActionMenuProps> = ({
+export const FeatureActionMenu: FC<FeatureActionMenuProps> = ({
 	layerId,
 	features,
 	onClose,
@@ -109,5 +109,3 @@ const FeatureActionMenu: FC<FeatureActionMenuProps> = ({
 		</div>
 	);
 };
-
-export default FeatureActionMenu;

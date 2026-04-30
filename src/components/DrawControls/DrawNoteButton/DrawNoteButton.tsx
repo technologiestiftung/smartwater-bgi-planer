@@ -15,7 +15,7 @@ interface DrawNoteButtonProps {
 	layerId: string;
 }
 
-const DrawNoteButton: FC<DrawNoteButtonProps> = ({ layerId }) => {
+export const DrawNoteButton: FC<DrawNoteButtonProps> = ({ layerId }) => {
 	const map = useMapStore((state) => state.map);
 	const setLayerVisibility = useLayersStore(
 		(state) => state.setLayerVisibility,
@@ -115,5 +115,3 @@ const DrawNoteButton: FC<DrawNoteButtonProps> = ({ layerId }) => {
 		</Button>
 	);
 };
-
-export default DrawNoteButton;

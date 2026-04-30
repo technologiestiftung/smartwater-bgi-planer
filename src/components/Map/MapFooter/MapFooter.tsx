@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-const MapFooter: FC = () => {
+export const MapFooter: FC = () => {
 	return (
 		<div className="absolute right-0 bottom-0 z-9 flex items-center gap-2 bg-white/60 px-4 select-none">
 			<p className="text-xs">
@@ -31,5 +31,3 @@ const MapFooter: FC = () => {
 		</div>
 	);
 };
-
-export default MapFooter;

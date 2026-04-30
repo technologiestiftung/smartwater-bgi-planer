@@ -10,10 +10,7 @@ interface ProjectGuardProps {
 	children: React.ReactNode;
 }
 
-export default function ProjectGuard({
-	projectId,
-	children,
-}: ProjectGuardProps) {
+export function ProjectGuard({ projectId, children }: ProjectGuardProps) {
 	const router = useRouter();
 	const { getProject, hasHydrated: _hasHydrated } = useProjectStore(
 		useShallow((state) => ({

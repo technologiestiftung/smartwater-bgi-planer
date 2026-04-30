@@ -14,7 +14,7 @@ interface ConfirmButtonProps {
 	disabled?: boolean;
 }
 
-const ConfirmButton: FC<ConfirmButtonProps> = ({
+export const ConfirmButton: FC<ConfirmButtonProps> = ({
 	onConfirm,
 	validate,
 	displayText,
@@ -64,5 +64,3 @@ const ConfirmButton: FC<ConfirmButtonProps> = ({
 		</div>
 	);
 };
-
-export default ConfirmButton;

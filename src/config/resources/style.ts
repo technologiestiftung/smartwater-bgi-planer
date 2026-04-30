@@ -8,7 +8,7 @@ const resultStroke = {
 	polygonStrokeColor: [36, 65, 209, 1], // default, can be overridden
 };
 
-const styleList = [
+export const styleList = [
 	{
 		styleId: "default",
 		rules: [
@@ -271,5 +271,3 @@ const styleList = [
 		],
 	},
 ];
-
-export default styleList;

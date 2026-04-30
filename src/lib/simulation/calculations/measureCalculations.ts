@@ -1,4 +1,4 @@
-import Constants from "../constants";
+import { constants } from "../constants";
 import type {
 	Measure,
 	MeasureDimension,
@@ -14,13 +14,13 @@ function getMeasureDimension(
 	size: MeasureSize,
 ): MeasureDimension | null {
 	if (
-		!Constants.MEASURE_DIMENSIONS[type] ||
-		!Constants.MEASURE_DIMENSIONS[type][size]
+		!constants.MEASURE_DIMENSIONS[type] ||
+		!constants.MEASURE_DIMENSIONS[type][size]
 	) {
 		console.warn(`Invalid measure type or size: ${type}, ${size}`);
 		return null;
 	}
-	return Constants.MEASURE_DIMENSIONS[type][size];
+	return constants.MEASURE_DIMENSIONS[type][size];
 }
 
 function calculateTotalMeasureArea(measures: Array<{ area?: number }>): number {

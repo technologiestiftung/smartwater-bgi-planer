@@ -14,7 +14,9 @@ interface DrawButtonProps {
 	geometryType?: "Point" | "LineString" | "Polygon" | "Circle";
 }
 
-const DrawButton: FC<DrawButtonProps> = ({ geometryType = "Polygon" }) => {
+export const DrawButton: FC<DrawButtonProps> = ({
+	geometryType = "Polygon",
+}) => {
 	const map = useMapStore((state) => state.map);
 	const drawLayerId = useLayersStore((state) => state.drawLayerId);
 	const setLayerVisibility = useLayersStore(
@@ -94,5 +96,3 @@ const DrawButton: FC<DrawButtonProps> = ({ geometryType = "Polygon" }) => {
 		</Button>
 	);
 };
-
-export default DrawButton;

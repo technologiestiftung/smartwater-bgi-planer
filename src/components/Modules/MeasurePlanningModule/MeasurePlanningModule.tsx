@@ -11,7 +11,7 @@ interface MeasurePlanningModuleProps {
 	projectId: string;
 }
 
-export default function MeasurePlanningModule({
+export function MeasurePlanningModule({
 	open,
 	onOpenChange,
 }: MeasurePlanningModuleProps) {

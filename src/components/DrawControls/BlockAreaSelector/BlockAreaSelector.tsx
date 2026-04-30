@@ -13,7 +13,7 @@ import Select from "ol/interaction/Select.js";
 import { Vector as VectorSource } from "ol/source.js";
 import { FC, useCallback, useEffect, useRef } from "react";
 
-const BlockAreaSelector: FC = () => {
+export const BlockAreaSelector: FC = () => {
 	const map = useMapStore((state) => state.map);
 	const drawLayerId = useLayersStore((state) => state.drawLayerId);
 	const isActive = useUiStore((state) => state.isBlockAreaSelecting);
@@ -131,5 +131,3 @@ const BlockAreaSelector: FC = () => {
 		</div>
 	);
 };
-
-export default BlockAreaSelector;

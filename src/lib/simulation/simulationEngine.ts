@@ -1,7 +1,7 @@
 import areaCalculations from "@/lib/simulation/calculations/areaCalculations";
 import measureCalculations from "@/lib/simulation/calculations/measureCalculations";
 import reportPayload from "@/lib/simulation/calculations/reportPayload";
-import Constants from "@/lib/simulation/constants";
+import { constants } from "@/lib/simulation/constants";
 import type {
 	AccumulatedAbimoStats,
 	AreaType,
@@ -28,7 +28,7 @@ const applyMeasures = (
 	measures: Measure[],
 ): MeasureStats => {
 	if (inputFeatures.length === 0 || measures.length === 0) {
-		return Constants.EMPTY_MEASURE_STATS;
+		return constants.EMPTY_MEASURE_STATS;
 	}
 
 	return measureCalculations.calculateAllMeasureStats(

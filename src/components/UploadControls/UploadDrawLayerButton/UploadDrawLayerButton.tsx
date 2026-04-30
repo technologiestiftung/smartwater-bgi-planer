@@ -15,7 +15,7 @@ import { Feature } from "ol";
 import { intersects } from "ol/extent";
 import { FC, useCallback, useRef } from "react";
 
-const UploadDrawLayerButton: FC = () => {
+export const UploadDrawLayerButton: FC = () => {
 	const map = useMapStore((state) => state.map);
 	const drawLayerId = useLayersStore((state) => state.drawLayerId);
 	const fileInputRef = useRef<HTMLInputElement>(null);
@@ -126,5 +126,3 @@ const UploadDrawLayerButton: FC = () => {
 		</div>
 	);
 };
-
-export default UploadDrawLayerButton;

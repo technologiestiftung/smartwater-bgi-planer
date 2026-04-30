@@ -21,7 +21,7 @@ interface ProjectModalProps {
 	deleted?: boolean;
 }
 
-export default function ProjectModalContent({
+export function ProjectModalContent({
 	onFormChange,
 	initialData,
 	deleted = false,

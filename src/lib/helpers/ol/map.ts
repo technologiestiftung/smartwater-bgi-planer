@@ -1,4 +1,4 @@
-import Config from "@/config/config";
+import { Config } from "@/config/config";
 import VectorLayer from "ol/layer/Vector";
 import Map from "ol/Map";
 import { register } from "ol/proj/proj4";

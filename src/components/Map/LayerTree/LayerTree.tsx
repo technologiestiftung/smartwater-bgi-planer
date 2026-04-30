@@ -138,7 +138,7 @@ function filterLayers(arr: ManagedLayer[], search: string): ManagedLayer[] {
 }
 
 // eslint-disable-next-line complexity
-const LayerTree: FC = () => {
+export const LayerTree: FC = () => {
 	const {
 		layers,
 		setLayerVisibility,
@@ -243,5 +243,3 @@ const LayerTree: FC = () => {
 		</div>
 	);
 };
-
-export default LayerTree;

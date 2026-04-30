@@ -1,6 +1,6 @@
 "use client";
 
-import ConfirmButton from "@/components/ConfirmButton/ConfirmButton";
+import { ConfirmButton } from "@/components/ConfirmButton/ConfirmButton";
 import { RichTextWithLinks } from "@/components/RichTextWithLinks/RichTextWithLinks";
 import { Button } from "@/components/ui/button";
 import { useDeselectAllFeatures } from "@/hooks/useDeselectAllFeatures";
@@ -16,7 +16,7 @@ import {
 } from "@phosphor-icons/react";
 import Image from "next/image";
 import { FC } from "react";
-import ScenarioDisplay from "../FeasibilityModule/ScenarioDisplay";
+import { ScenarioDisplay } from "../FeasibilityModule/ScenarioDisplay";
 
 interface StepContentProps {
 	layerConfig: LayerConfigItem;
@@ -25,7 +25,7 @@ interface StepContentProps {
 	onShowPotentialMaps?: () => void;
 }
 
-const StepContent: FC<StepContentProps> = ({
+export const StepContent: FC<StepContentProps> = ({
 	layerConfig,
 	onAnswer,
 	onSkip: _onSkip,
@@ -154,5 +154,3 @@ const StepContent: FC<StepContentProps> = ({
 		</div>
 	);
 };
-
-export default StepContent;

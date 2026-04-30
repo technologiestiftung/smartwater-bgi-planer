@@ -20,7 +20,7 @@ interface FeasibilityModuleProps {
 	projectId: string;
 }
 
-export default function FeasibilityModule({
+export function FeasibilityModule({
 	open,
 	onOpenChange,
 	projectId,

@@ -16,7 +16,7 @@ import Draw from "ol/interaction/Draw.js";
 import Modify from "ol/interaction/Modify.js";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 
-const DrawProjectBoundaryButton: FC = () => {
+export const DrawProjectBoundaryButton: FC = () => {
 	const map = useMapStore((state) => state.map);
 	const setInputFeatures = useProjectStore((state) => state.setInputFeatures);
 	const setIsDrawing = useUiStore((state) => state.setIsDrawing);
@@ -136,5 +136,3 @@ const DrawProjectBoundaryButton: FC = () => {
 		</Button>
 	);
 };
-
-export default DrawProjectBoundaryButton;

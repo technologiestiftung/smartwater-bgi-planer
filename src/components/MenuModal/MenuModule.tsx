@@ -8,7 +8,7 @@ interface MenuModuleProps {
 	buttonBottom?: ReactNode;
 }
 
-const MenuModule: FC<MenuModuleProps> = ({
+export const MenuModule: FC<MenuModuleProps> = ({
 	title,
 	description,
 	sideElements,
@@ -36,5 +36,3 @@ const MenuModule: FC<MenuModuleProps> = ({
 		</div>
 	);
 };
-
-export default MenuModule;

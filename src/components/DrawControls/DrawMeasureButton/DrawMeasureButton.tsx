@@ -194,7 +194,7 @@ interface LiveMeasureInfo {
 	segmentLengths: string[];
 }
 
-const DrawMeasureButton: FC = () => {
+export const DrawMeasureButton: FC = () => {
 	const map = useMapStore((state) => state.map);
 	const drawLayerId = useLayersStore((state) => state.drawLayerId);
 	const layerConfig = useLayersStore((state) => state.layerConfig);
@@ -451,5 +451,3 @@ const DrawMeasureButton: FC = () => {
 		</div>
 	);
 };
-
-export default DrawMeasureButton;

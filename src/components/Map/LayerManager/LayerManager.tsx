@@ -4,7 +4,7 @@ import { useLayerPersistence } from "@/components/Map/LayerManager/hooks/useLaye
 import { useMapReady } from "@/hooks/useMapReady";
 import { FC, useEffect } from "react";
 
-const LayerManager: FC = () => {
+export const LayerManager: FC = () => {
 	const isMapReady = useMapReady();
 
 	const {
@@ -51,5 +51,3 @@ const LayerManager: FC = () => {
 
 	return null;
 };
-
-export default LayerManager;

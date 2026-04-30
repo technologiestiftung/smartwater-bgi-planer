@@ -66,9 +66,7 @@ const EMPTY_MEASURE_STATS: MeasureStats = {
 	totalUnpavedToTotalArea: null,
 };
 
-const constants = {
+export const constants = {
 	MEASURE_DIMENSIONS,
 	EMPTY_MEASURE_STATS,
 };
-
-export default constants;

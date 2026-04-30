@@ -1,5 +1,5 @@
 "use client";
-import MenuModalContent from "@/components/MenuModal/MenuModalContent";
+import { MenuModalContent } from "@/components/MenuModal/MenuModalContent";
 import { PageModal } from "@/components/Modal";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -8,7 +8,7 @@ interface MenuModalWrapperProps {
 	projectId: string;
 }
 
-export default function MenuModalWrapper({ projectId }: MenuModalWrapperProps) {
+export function MenuModalWrapper({ projectId }: MenuModalWrapperProps) {
 	const router = useRouter();
 	const [isOpen, setIsOpen] = useState(true);
 

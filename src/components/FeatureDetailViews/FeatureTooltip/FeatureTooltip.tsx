@@ -7,7 +7,10 @@ interface FeatureTooltipProps {
 	onClose: () => void;
 }
 
-const FeatureTooltip: FC<FeatureTooltipProps> = ({ attributes, onClose }) => {
+export const FeatureTooltip: FC<FeatureTooltipProps> = ({
+	attributes,
+	onClose,
+}) => {
 	return (
 		<div className="FeatureTooltip-root bg-background w-[409px] shadow-lg">
 			<div className="border-muted flex h-8 w-full items-center justify-between border-b pl-2">
@@ -43,5 +46,3 @@ const FeatureTooltip: FC<FeatureTooltipProps> = ({ attributes, onClose }) => {
 		</div>
 	);
 };
-
-export default FeatureTooltip;

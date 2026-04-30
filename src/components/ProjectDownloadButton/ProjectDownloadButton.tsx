@@ -10,7 +10,7 @@ interface ProjectDownloadButtonProps {
 	projectId: string;
 }
 
-const ProjectDownloadButton: FC<ProjectDownloadButtonProps> = ({
+export const ProjectDownloadButton: FC<ProjectDownloadButtonProps> = ({
 	projectId,
 }) => {
 	const [isDownloading, setIsDownloading] = useState(false);
@@ -41,5 +41,3 @@ const ProjectDownloadButton: FC<ProjectDownloadButtonProps> = ({
 		</Button>
 	);
 };
-
-export default ProjectDownloadButton;

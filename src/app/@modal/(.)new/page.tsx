@@ -1,5 +1,5 @@
-import ProjectModal from "@/components/ProjectModal/ProjectModal";
+import { ProjectModalWrapper } from "@/components/ProjectModal/ProjectModal";
 
 export default function NewProjectModalPage() {
-	return <ProjectModal mode="new" />;
+	return <ProjectModalWrapper mode="new" />;
 }

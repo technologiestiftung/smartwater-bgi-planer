@@ -10,7 +10,7 @@ interface OlMapProps {
 	children?: React.ReactNode;
 }
 
-const OlMap: FC<OlMapProps> = ({ children }) => {
+export const OlMap: FC<OlMapProps> = ({ children }) => {
 	const isConfigReady = useMapStore((state) => state.isConfigReady);
 	const resetId = useMapStore((state) => state.resetId);
 	const mapId = useRef<HTMLDivElement>(null);
@@ -80,5 +80,3 @@ const OlMap: FC<OlMapProps> = ({ children }) => {
 		</div>
 	);
 };
-
-export default OlMap;

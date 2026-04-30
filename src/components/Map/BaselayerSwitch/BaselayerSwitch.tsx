@@ -5,7 +5,7 @@ import Image from "next/image";
 import { FC, useCallback, useMemo } from "react";
 
 // eslint-disable-next-line complexity
-const BaselayerSwitch: FC = () => {
+export const BaselayerSwitch: FC = () => {
 	const layersMap = useLayersStore((state) => state.layers);
 	const setLayerVisibility = useLayersStore(
 		(state) => state.setLayerVisibility,
@@ -73,5 +73,3 @@ const BaselayerSwitch: FC = () => {
 		</button>
 	);
 };
-
-export default BaselayerSwitch;

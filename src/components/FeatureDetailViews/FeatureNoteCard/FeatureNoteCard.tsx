@@ -24,7 +24,7 @@ const getFeatureData = (feature: Feature) => {
 	return properties;
 };
 
-const FeatureNoteCard: FC<FeatureNoteCardProps> = ({
+export const FeatureNoteCard: FC<FeatureNoteCardProps> = ({
 	layerId,
 	features,
 	onClose,
@@ -110,5 +110,3 @@ const FeatureNoteCard: FC<FeatureNoteCardProps> = ({
 		</div>
 	);
 };
-
-export default FeatureNoteCard;

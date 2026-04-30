@@ -7,7 +7,7 @@ import {
 	DrawProjectBoundaryButton,
 	DrawMeasureButton,
 } from "@/components/DrawControls";
-import UploadDrawLayerButton from "@/components/UploadControls/UploadDrawLayerButton/UploadDrawLayerButton";
+import { UploadDrawLayerButton } from "@/components/UploadControls/UploadDrawLayerButton/UploadDrawLayerButton";
 import { useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
 import { usePathname } from "next/navigation";
@@ -18,7 +18,7 @@ interface DrawControlsContainerProps {
 }
 
 // eslint-disable-next-line complexity
-export default function DrawControlsContainer({}: DrawControlsContainerProps) {
+export function DrawControlsContainer({}: DrawControlsContainerProps) {
 	const pathname = usePathname();
 	const currentStepId = useUiStore((state) => state.currentStepId);
 	const showTutorial = useUiStore((state) => state.showTutorial);

@@ -1,4 +1,4 @@
-import MenuModal from "@/components/MenuModal/MenuModal";
+import { MenuModalWrapper } from "@/components/MenuModal/MenuModal";
 
 interface MenuPageProps {
 	params: Promise<{
@@ -8,5 +8,5 @@ interface MenuPageProps {
 
 export default async function MenuPage({ params }: MenuPageProps) {
 	const { id } = await params;
-	return <MenuModal projectId={id} />;
+	return <MenuModalWrapper projectId={id} />;
 }

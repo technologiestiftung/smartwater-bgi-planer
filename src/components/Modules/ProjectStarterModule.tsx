@@ -1,10 +1,10 @@
 "use client";
 
-import ConfirmButton from "@/components/ConfirmButton/ConfirmButton";
+import { ConfirmButton } from "@/components/ConfirmButton/ConfirmButton";
 import { SideMenu } from "@/components/SideMenu";
 import { Button } from "@/components/ui/button";
-import AddWMSButton from "@/components/UploadControls/AddWMSButton/AddWMSButton";
-import UploadVectorLayersButton from "@/components/UploadControls/UploadVectorLayersButton/UploadVectorLayersButton";
+import { AddWMSButton } from "@/components/UploadControls/AddWMSButton/AddWMSButton";
+import { UploadVectorLayersButton } from "@/components/UploadControls/UploadVectorLayersButton/UploadVectorLayersButton";
 import {
 	StepConfig,
 	StepContainer,
@@ -361,7 +361,7 @@ function AdditionalMapsStep({ projectId }: { projectId: string }) {
 	);
 }
 
-export default function ProjectStarterModule({
+export function ProjectStarterModule({
 	open,
 	onOpenChange,
 	onComplete,

@@ -9,7 +9,7 @@ import { FC, useCallback } from "react";
 
 interface ProjectBoundaryControlProps {}
 
-const ProjectBoundaryControl: FC<ProjectBoundaryControlProps> = ({}) => {
+export const ProjectBoundaryControl: FC<ProjectBoundaryControlProps> = ({}) => {
 	const map = useMapStore((state) => state.map);
 
 	const handleBoundaryLocate = useCallback(() => {
@@ -39,5 +39,3 @@ const ProjectBoundaryControl: FC<ProjectBoundaryControlProps> = ({}) => {
 		</div>
 	);
 };
-
-export default ProjectBoundaryControl;

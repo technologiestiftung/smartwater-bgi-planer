@@ -1,10 +1,10 @@
 "use client";
 
-import MeasureDetailsCard from "@/components/FeatureDetailViews/MeasureDetailsCard/MeasureDetailsCard";
+import { MeasureDetailsCard } from "@/components/FeatureDetailViews/MeasureDetailsCard/MeasureDetailsCard";
 import { useUiStore } from "@/store/ui";
 import { FC } from "react";
 
-const MeasureDetailsCardStack: FC = () => {
+export const MeasureDetailsCardStack: FC = () => {
 	const openMeasureCardIds = useUiStore((state) => state.openMeasureCardIds);
 	const closeMeasureCard = useUiStore((state) => state.closeMeasureCard);
 
@@ -25,5 +25,3 @@ const MeasureDetailsCardStack: FC = () => {
 		</div>
 	);
 };
-
-export default MeasureDetailsCardStack;

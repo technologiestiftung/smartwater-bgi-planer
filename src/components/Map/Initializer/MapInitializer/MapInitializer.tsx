@@ -67,7 +67,7 @@ function createEnrichedConfig(rawConfig: MapConfig): MapConfig {
 	};
 }
 
-const MapInitializer: FC = () => {
+export const MapInitializer: FC = () => {
 	const hasHydrated = useMapStore((state) => state.hasHydrated);
 	const isConfigReady = useMapStore((state) => state.isConfigReady);
 	const resetId = useMapStore((state) => state.resetId);
@@ -122,5 +122,3 @@ const MapInitializer: FC = () => {
 
 	return null;
 };
-
-export default MapInitializer;

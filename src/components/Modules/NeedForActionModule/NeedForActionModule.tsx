@@ -20,7 +20,7 @@ interface NeedForActionModuleProps {
 	projectId: string;
 }
 
-export default function NeedForActionModule({
+export function NeedForActionModule({
 	open,
 	onOpenChange,
 	projectId,

@@ -24,7 +24,7 @@ function calculateZIndex(
 	return Z_INDEX.SUBJECT + index;
 }
 
-const LayerInitializer: FC = () => {
+export const LayerInitializer: FC = () => {
 	const initialConfig = useMapStore((state) => state.initialConfig);
 	const map = useMapStore((state) => state.map);
 	const resetId = useMapStore((state) => state.resetId);
@@ -149,5 +149,3 @@ const LayerInitializer: FC = () => {
 
 	return null;
 };
-
-export default LayerInitializer;

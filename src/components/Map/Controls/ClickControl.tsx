@@ -1,6 +1,6 @@
 "use client";
 
-import FeatureDetailsModal from "@/components/FeatureDetailViews/FeatureDetailsModal/FeatureDetailsModal";
+import { FeatureDetailsModal } from "@/components/FeatureDetailViews/FeatureDetailsModal/FeatureDetailsModal";
 import { fetchFeatureInfo } from "@/lib/helpers/wmsFeatureInfo";
 import { useMapStore } from "@/store/map";
 import { useUiStore } from "@/store/ui";
@@ -41,7 +41,7 @@ const POSITION_OFFSETS: Record<OverlayPositioning, [number, number]> = {
 	"bottom-right": [-15, -5],
 };
 
-const ClickControl: FC<ClickControlProps> = ({
+export const ClickControl: FC<ClickControlProps> = ({
 	vectorLayerIds,
 	wmsLayerIds,
 	currentConfig,
@@ -338,5 +338,3 @@ const ClickControl: FC<ClickControlProps> = ({
 		</>
 	);
 };
-
-export default ClickControl;

@@ -1,4 +1,4 @@
-const Config = {
+export const Config = {
 	namedProjections: [
 		[
 			"EPSG:25833",
@@ -10,5 +10,3 @@ const Config = {
 		],
 	],
 };
-
-export default Config;

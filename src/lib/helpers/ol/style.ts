@@ -1,4 +1,4 @@
-import styleList from "@/config/resources/style";
+import { styleList } from "@/config/resources/style";
 import { formatLength } from "@/lib/helpers/ol/format";
 import { FeatureLike } from "ol/Feature";
 import LineString from "ol/geom/LineString.js";

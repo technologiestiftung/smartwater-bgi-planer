@@ -1,8 +1,9 @@
 "use client";
 import { useConfirmDialog } from "@/components/ConfirmDialog";
 import { PageModal } from "@/components/Modal";
-import ProjectModalContent, {
-	ProjectFormData,
+import {
+	ProjectModalContent,
+	type ProjectFormData,
 } from "@/components/ProjectModal/ProjectModalContent";
 import { Button } from "@/components/ui/button";
 import Background from "@/images/background.svg";
@@ -23,7 +24,7 @@ interface ProjectModalWrapperProps {
 	projectId?: string;
 }
 
-export default function ProjectModalWrapper({
+export function ProjectModalWrapper({
 	mode,
 	projectId,
 }: ProjectModalWrapperProps) {

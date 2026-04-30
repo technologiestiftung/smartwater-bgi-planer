@@ -1,4 +1,4 @@
-import ProjectModal from "@/components/ProjectModal/ProjectModal";
+import { ProjectModalWrapper } from "@/components/ProjectModal/ProjectModal";
 
 interface EditProjectModalPageProps {
 	params: Promise<{
@@ -10,5 +10,5 @@ export default async function EditProjectModalPage({
 	params,
 }: EditProjectModalPageProps) {
 	const { id } = await params;
-	return <ProjectModal mode="edit" projectId={id} />;
+	return <ProjectModalWrapper mode="edit" projectId={id} />;
 }

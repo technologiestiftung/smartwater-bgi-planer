@@ -1,8 +1,8 @@
 "use client";
 
-import MenuModule from "@/components/MenuModal/MenuModule";
+import { MenuModule } from "@/components/MenuModal/MenuModule";
 import modulesData from "@/components/Modules/modules.json";
-import ProjectDownloadButton from "@/components/ProjectDownloadButton/ProjectDownloadButton";
+import { ProjectDownloadButton } from "@/components/ProjectDownloadButton/ProjectDownloadButton";
 import { Button } from "@/components/ui/button";
 import { checkForQuestion } from "@/lib/helpers/questionCheck";
 import { useAnswersStore } from "@/store";
@@ -22,7 +22,7 @@ interface MenuModalProps {
 	projectId: string;
 }
 
-export default function MenuModalContent({ projectId }: MenuModalProps) {
+export function MenuModalContent({ projectId }: MenuModalProps) {
 	const getProject = useProjectStore((state) => state.getProject);
 	const project = getProject();
 	const answers = useAnswersStore((state) => state.answers);

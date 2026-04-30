@@ -1,6 +1,6 @@
 "use client";
 
-import StepContent from "@/components/Modules/shared/StepContent";
+import { StepContent } from "@/components/Modules/shared/StepContent";
 import { getModuleSteps } from "@/components/Modules/shared/moduleConfig";
 import { useModuleNavigation } from "@/components/Modules/shared/useModuleNavigation";
 import { useVerticalStepper } from "@/components/VerticalStepper";

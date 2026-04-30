@@ -19,7 +19,7 @@ interface ProjectUploaderButtonProps {
 	onComplete: (uploadedProject: any) => void;
 }
 
-const ProjectUploaderButton: FC<ProjectUploaderButtonProps> = ({
+export const ProjectUploaderButton: FC<ProjectUploaderButtonProps> = ({
 	isUploadZoneVisible,
 	files,
 	onToggle,
@@ -123,5 +123,3 @@ const ProjectUploaderButton: FC<ProjectUploaderButtonProps> = ({
 		</Button>
 	);
 };
-
-export default ProjectUploaderButton;

@@ -15,7 +15,7 @@ import { UploadIcon } from "@phosphor-icons/react";
 import { Feature } from "ol";
 import { FC, useCallback, useRef } from "react";
 
-const UploadVectorLayersButton: FC = () => {
+export const UploadVectorLayersButton: FC = () => {
 	const map = useMapStore((state) => state.map);
 	const addLayer = useLayersStore((state) => state.addLayer);
 	const fileInputRef = useRef<HTMLInputElement>(null);
@@ -74,5 +74,3 @@ const UploadVectorLayersButton: FC = () => {
 		</div>
 	);
 };
-
-export default UploadVectorLayersButton;

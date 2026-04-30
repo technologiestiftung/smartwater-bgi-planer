@@ -15,7 +15,9 @@ interface GeolocationControlProps {
 	onGeolocate?: () => void;
 }
 
-const GeolocationControl: FC<GeolocationControlProps> = ({ onGeolocate }) => {
+export const GeolocationControl: FC<GeolocationControlProps> = ({
+	onGeolocate,
+}) => {
 	const userLocationLayerRef = useRef<VectorLayer<VectorSource> | null>(null);
 	const map = useMapStore((state) => state.map);
 	const setUserLocation = useMapStore((state) => state.setUserLocation);
@@ -123,5 +125,3 @@ const GeolocationControl: FC<GeolocationControlProps> = ({ onGeolocate }) => {
 		</Button>
 	);
 };
-
-export default GeolocationControl;
