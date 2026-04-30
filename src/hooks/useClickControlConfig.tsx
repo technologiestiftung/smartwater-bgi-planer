@@ -8,6 +8,7 @@ import MeasureDetailsCard from "@/components/FeatureDetailViews/MeasureDetailsCa
 import { getFeatureAttributes } from "@/lib/helpers/ol/feature";
 import { resolveMeasureId } from "@/lib/helpers/ol/measureFeature";
 import { useLayersStore } from "@/store/layers";
+import { LAYER_IDS } from "@/types/shared";
 import type Feature from "ol/Feature";
 import type { Geometry } from "ol/geom";
 import { useCallback, useMemo } from "react";
@@ -29,8 +30,17 @@ export const useClickControlConfig = () => {
 		if (drawLayerId) {
 			ids.push(drawLayerId);
 		}
+
+		const connectedAreaDrawId = LAYER_IDS.CONNECTED_AREA_DRAW;
+		if (
+			currentConfig?.visibleLayerIds?.includes(connectedAreaDrawId) &&
+			!ids.includes(connectedAreaDrawId)
+		) {
+			ids.push(connectedAreaDrawId);
+		}
+
 		return ids;
-	}, [drawLayerId]);
+	}, [drawLayerId, currentConfig]);
 
 	const wmsLayerIds = useMemo(() => {
 		return currentConfig?.canQueryFeatures || [];
@@ -73,6 +83,16 @@ export const useClickControlConfig = () => {
 					);
 				}
 
+				return (
+					<FeatureActionMenu
+						features={normalizedFeature}
+						layerId={layerId}
+						onClose={onClose}
+					/>
+				);
+			}
+
+			if (layerId === LAYER_IDS.CONNECTED_AREA_DRAW) {
 				return (
 					<FeatureActionMenu
 						features={normalizedFeature}
