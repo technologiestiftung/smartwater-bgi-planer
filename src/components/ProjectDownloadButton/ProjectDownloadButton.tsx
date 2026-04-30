@@ -1,6 +1,6 @@
 "use client";
 
-import { downloadProject } from "@/components/ProjectDownloadButton/projectExport";
+import { downloadProject } from "@/components/ProjectDownloadButton/ProjectExport";
 import { Button } from "@/components/ui/button";
 import { useProjectStore } from "@/store";
 import { DownloadIcon } from "@phosphor-icons/react";
