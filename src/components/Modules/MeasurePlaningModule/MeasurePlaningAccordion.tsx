@@ -20,7 +20,7 @@ import { useMapReady } from "@/hooks/useMapReady";
 import { getIconComponent } from "@/lib/helpers/iconMap";
 import type { SectionId } from "@/lib/helpers/sectionIds";
 import { cn } from "@/lib/utils";
-import { useLayersStore, useUiStore } from "@/store";
+import { useLayersStore, useScenarioStore, useUiStore } from "@/store";
 import type { LayerConfigItem } from "@/store/layers/types";
 import type { ModuleMeasurementConfig } from "@/types/shared";
 import { LAYER_IDS } from "@/types/shared";
@@ -110,6 +110,7 @@ function MeasureListItem({
 	label,
 	isConnectedArea,
 	isDisabled,
+	hasPlacedMeasure,
 	stepId,
 	onActivate,
 }: {
@@ -117,6 +118,7 @@ function MeasureListItem({
 	label: string;
 	isConnectedArea: boolean;
 	isDisabled: boolean;
+	hasPlacedMeasure: boolean;
 	stepId: string;
 	onActivate: (stepId: string, questionId: string) => void;
 }) {
@@ -134,7 +136,9 @@ function MeasureListItem({
 				)}
 			>
 				<div className="flex items-center gap-2">
-					<span className="font-medium">{label}</span>
+					<span className={hasPlacedMeasure ? "font-bold" : "font-medium"}>
+						{label}
+					</span>
 					{item.metricIcons.length > 0 && (
 						<div className="flex items-center gap-1">
 							{item.metricIcons.map((iconName) => {
@@ -178,6 +182,17 @@ export function MeasurePlaningAccordion({
 	const steps = getModuleSteps("measurePlaning");
 	const { hasFeatures: hasConnectedArea } = useLayerFeatures(
 		LAYER_IDS.CONNECTED_AREA_DRAW,
+	);
+
+	const placedMeasureIds = useScenarioStore(
+		useShallow((state) => {
+			const scenario = state.activeScenarioId
+				? state.scenarios[state.activeScenarioId]
+				: null;
+			if (!scenario) return new Set<string>();
+
+			return new Set(scenario.measures.map((m) => m.layerConfigId));
+		}),
 	);
 	const [expandedStepId, setExpandedStepId] = useState(steps[0]?.id ?? "");
 	const [selectedQuestionId, setSelectedQuestionId] = useState<string | null>(
@@ -353,6 +368,9 @@ export function MeasurePlaningAccordion({
 													label={getItemLabel(item, layerConfigById)}
 													isConnectedArea={isConnectedArea}
 													isDisabled={isDisabled}
+													hasPlacedMeasure={placedMeasureIds.has(
+														item.questionId,
+													)}
 													stepId={step.id}
 													onActivate={activateQuestion}
 												/>
