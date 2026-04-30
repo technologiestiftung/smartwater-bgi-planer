@@ -7,7 +7,7 @@ import {
 	type ModuleStepViewConfig,
 } from "@/components/Modules/shared/moduleConfig";
 import { SideMenu } from "@/components/SideMenu";
-// import { Tutorial } from "@/components/Tutorials/Tutorial";
+// import { Tutorial } from "@/components/Tutorial/Tutorial";
 import {
 	Accordion,
 	AccordionContent,
