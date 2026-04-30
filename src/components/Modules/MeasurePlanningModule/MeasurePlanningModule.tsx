@@ -3,19 +3,19 @@
 import { getModuleMetadata } from "@/components/Modules/shared/moduleConfig";
 import { useUiStore } from "@/store/ui";
 import { useEffect } from "react";
-import { MeasurePlaningAccordion } from "./MeasurePlaningAccordion";
+import { MeasurePlanningAccordion } from "./MeasurePlanningAccordion";
 
-interface MeasurePlaningModuleProps {
+interface MeasurePlanningModuleProps {
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
 	projectId: string;
 }
 
-export default function MeasurePlaningModule({
+export default function MeasurePlanningModule({
 	open,
 	onOpenChange,
-}: MeasurePlaningModuleProps) {
-	const { title, description } = getModuleMetadata("measurePlaning");
+}: MeasurePlanningModuleProps) {
+	const { title, description } = getModuleMetadata("measurePlanning");
 
 	const resetModuleState = useUiStore((state) => state.resetModuleState);
 	useEffect(() => {
@@ -24,7 +24,7 @@ export default function MeasurePlaningModule({
 	}, []);
 
 	return (
-		<MeasurePlaningAccordion
+		<MeasurePlanningAccordion
 			open={open}
 			onOpenChange={onOpenChange}
 			title={title}

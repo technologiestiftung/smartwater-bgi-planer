@@ -15,7 +15,7 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 	const applyConfigLayers = useLayersStore((state) => state.applyConfigLayers);
 
 	useEffect(() => {
-		applyConfigLayers("measure_planing_synthesis_view", true);
+		applyConfigLayers("measure_planning_synthesis_view", true);
 	}, [applyConfigLayers]);
 
 	return (

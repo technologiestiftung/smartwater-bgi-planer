@@ -12,15 +12,15 @@ import { Button } from "@/components/ui/button";
 import { LayerConfigItem } from "@/store/layers/types";
 import Image from "next/image";
 
-interface MeasurePlaningStepContentProps {
+interface MeasurePlanningStepContentProps {
 	layerConfig: LayerConfigItem;
 	metricIcons?: string[];
 }
 
-export function MeasurePlaningStepContent({
+export function MeasurePlanningStepContent({
 	layerConfig,
 	metricIcons = [],
-}: MeasurePlaningStepContentProps) {
+}: MeasurePlanningStepContentProps) {
 	const showLegendAccordion =
 		Boolean(layerConfig.legendSrc) || Boolean(layerConfig.canDrawMeasures);
 

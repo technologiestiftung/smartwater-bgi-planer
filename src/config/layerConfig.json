@@ -737,7 +737,7 @@
 		"canDrawMeasures": true
 	},
 	{
-		"id": "measure_planing_synthesis_view",
+		"id": "measure_planning_synthesis_view",
 		"name": "Effektbewertung",
 		"drawLayerId": "",
 		"visibleLayerIds": [

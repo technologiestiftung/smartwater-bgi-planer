@@ -1,7 +1,7 @@
 "use client";
 
-import { MeasurePlaningStepContent } from "@/components/Modules/MeasurePlaningModule/MeasurePlaningStepContent";
-import { SynthesisView } from "@/components/Modules/MeasurePlaningModule/SynthesisView";
+import { MeasurePlanningStepContent } from "@/components/Modules/MeasurePlanningModule/MeasurePlanningStepContent";
+import { SynthesisView } from "@/components/Modules/MeasurePlanningModule/SynthesisView";
 import {
 	getModuleSteps,
 	type ModuleStepViewConfig,
@@ -65,14 +65,14 @@ function stepRequiresConnectedArea(step: ModuleStepViewConfig): boolean {
 	return step.measurements?.some((m) => m.id === "connected_area") ?? false;
 }
 
-interface MeasurePlaningAccordionProps {
+interface MeasurePlanningAccordionProps {
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
 	title: string;
 	description: string;
 }
 
-function MeasurePlaningFooter({
+function MeasurePlanningFooter({
 	onShowSynthesis,
 	onBackToQuestions,
 	showBackToQuestions,
@@ -173,13 +173,13 @@ function MeasureListItem({
 	);
 }
 
-export function MeasurePlaningAccordion({
+export function MeasurePlanningAccordion({
 	open,
 	onOpenChange,
 	title,
 	description,
-}: MeasurePlaningAccordionProps) {
-	const steps = getModuleSteps("measurePlaning");
+}: MeasurePlanningAccordionProps) {
+	const steps = getModuleSteps("measurePlanning");
 	const { hasFeatures: hasConnectedArea } = useLayerFeatures(
 		LAYER_IDS.CONNECTED_AREA_DRAW,
 	);
@@ -319,7 +319,7 @@ export function MeasurePlaningAccordion({
 				<h3 className="text-primary shrink-0 text-xl font-semibold">
 					{selectedQuestionConfig.name || selectedQuestionId}
 				</h3>
-				<MeasurePlaningStepContent
+				<MeasurePlanningStepContent
 					layerConfig={selectedQuestionConfig}
 					metricIcons={selectedMetricIcons}
 				/>
@@ -394,7 +394,7 @@ export function MeasurePlaningAccordion({
 			description={description}
 			footer={
 				isSynthesisMode ? null : (
-					<MeasurePlaningFooter
+					<MeasurePlanningFooter
 						onShowSynthesis={handleShowSynthesis}
 						onBackToQuestions={handleBackToQuestions}
 						showBackToQuestions={Boolean(selectedQuestionConfig)}

@@ -6,9 +6,9 @@ const getInitialModuleQuestionIndices = () => {
 	const indices: Record<string, number> = {};
 	const needForActionSteps = getModuleSteps("needForAction");
 	const feasibilitySteps = getModuleSteps("feasibility");
-	const measurePlaningSteps = getModuleSteps("measurePlaning");
+	const measurePlanningSteps = getModuleSteps("measurePlanning");
 
-	[...needForActionSteps, ...feasibilitySteps, ...measurePlaningSteps].forEach(
+	[...needForActionSteps, ...feasibilitySteps, ...measurePlanningSteps].forEach(
 		(step) => {
 			indices[step.id] = 0;
 		},
