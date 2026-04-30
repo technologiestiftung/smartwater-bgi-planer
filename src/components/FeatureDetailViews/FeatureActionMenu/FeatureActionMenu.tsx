@@ -7,6 +7,7 @@ import {
 } from "@/lib/helpers/projectBoundary";
 import { useMapStore } from "@/store/map";
 import { useProjectStore } from "@/store/project";
+import { useScenarioStore } from "@/store/scenario";
 import { LAYER_IDS } from "@/types/shared";
 import { TrashIcon, XCircleIcon } from "@phosphor-icons/react";
 import type Feature from "ol/Feature";
@@ -28,6 +29,11 @@ const FeatureActionMenu: FC<FeatureActionMenuProps> = ({
 }) => {
 	const map = useMapStore((state) => state.map);
 	const setInputFeatures = useProjectStore((state) => state.setInputFeatures);
+	const activeScenarioId = useScenarioStore((state) => state.activeScenarioId);
+	const removeMeasure = useScenarioStore((state) => state.removeMeasure);
+	const removeConnectedArea = useScenarioStore(
+		(state) => state.removeConnectedArea,
+	);
 
 	const [isDeleting, setIsDeleting] = useState(false);
 
@@ -44,6 +50,20 @@ const FeatureActionMenu: FC<FeatureActionMenuProps> = ({
 				const source = layer.getSource()!;
 				source.removeFeature(features);
 				source.changed();
+
+				if (activeScenarioId) {
+					const measureId = features.get("measureId") as string | undefined;
+					const connectedAreaId = features.get("connectedAreaId") as
+						| string
+						| undefined;
+
+					if (measureId) {
+						removeMeasure(activeScenarioId, measureId);
+					}
+					if (connectedAreaId) {
+						removeConnectedArea(activeScenarioId, connectedAreaId);
+					}
+				}
 
 				if (layerId === LAYER_IDS.PROJECT_BOUNDARY) {
 					setTimeout(() => {
