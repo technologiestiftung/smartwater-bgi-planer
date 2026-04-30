@@ -43,6 +43,7 @@ export interface ScenarioState {
 	scenarios: Record<string, Scenario>;
 	activeScenarioId: string | null;
 	comparisonIds: string[];
+	hasHydrated: boolean;
 }
 
 export interface ScenarioActions {
@@ -58,4 +59,5 @@ export interface ScenarioActions {
 	addConnectedArea: (scenarioId: string, connectedArea: ConnectedArea) => void;
 	removeConnectedArea: (scenarioId: string, connectedAreaId: string) => void;
 	setActiveScenario: (id: string) => void;
+	setHasHydrated: (state: boolean) => void;
 }
