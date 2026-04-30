@@ -2,7 +2,9 @@
 
 import { Button } from "@/components/ui/button";
 import { SectionId } from "@/lib/helpers/sectionIds";
+import { useLayersStore } from "@/store";
 import { DownloadSimpleIcon, XIcon } from "@phosphor-icons/react";
+import { useEffect } from "react";
 
 interface SynthesisViewProps {
 	onBackToQuestions: () => void;
@@ -10,6 +12,12 @@ interface SynthesisViewProps {
 }
 
 export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
+	const applyConfigLayers = useLayersStore((state) => state.applyConfigLayers);
+
+	useEffect(() => {
+		applyConfigLayers("measure_planing_synthesis_view", true);
+	}, [applyConfigLayers]);
+
 	return (
 		<div className="flex h-full w-full flex-col">
 			<div className="flex-1 overflow-y-auto px-6 pb-6">
