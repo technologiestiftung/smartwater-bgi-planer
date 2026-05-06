@@ -129,7 +129,11 @@ export function SynthesisView({
 		relevantLayers.forEach((l) => setLayerVisibility(l.id!, !anyVisible));
 	};
 
-	const onNextModule = () => router.push(`/${projectId}/machbarkeit`);
+	const onNextModule = () => {
+		const nextModulePath =
+			moduleId === "needForAction" ? "machbarkeit" : "planung";
+		router.push(`/${projectId}/${nextModulePath}`);
+	};
 
 	return (
 		<div className="flex h-full w-full flex-col">
@@ -232,7 +236,6 @@ export function SynthesisView({
 					className="text-md my-4 flex-1 text-white hover:text-white"
 					size="lg"
 					variant="ghost"
-					disabled={moduleId === "feasibility"}
 				>
 					{moduleId === "needForAction" ? (
 						<ShovelIcon className="h-4 w-4" />
