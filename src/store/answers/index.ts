@@ -1,5 +1,6 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { devtools, persist } from "zustand/middleware";
+import { immer } from "zustand/middleware/immer";
 import { AnswersActions, AnswersState, AnswersStore } from "./types";
 
 const initialState: AnswersState = {
@@ -33,14 +34,19 @@ const createAnswersActions = (
 });
 
 export const useAnswersStore = create<AnswersStore>()(
-	persist(
-		(set, get) => ({
-			...initialState,
-			...createAnswersActions(set, get),
-		}),
-		{
-			name: "answers-store",
-			partialize: (state) => ({ answers: state.answers }),
-		},
+	devtools(
+		immer(
+			persist(
+				(set, get) => ({
+					...initialState,
+					...createAnswersActions(set, get),
+				}),
+				{
+					name: "answers-store",
+					partialize: (state) => ({ answers: state.answers }),
+				},
+			),
+		),
+		{ name: "answersStore" },
 	),
 );

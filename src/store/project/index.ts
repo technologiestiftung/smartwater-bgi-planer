@@ -1,5 +1,6 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { devtools, persist } from "zustand/middleware";
+import { immer } from "zustand/middleware/immer";
 import {
 	createCreateProject,
 	createDeleteProject,
@@ -27,23 +28,28 @@ const initialState: ProjectState = {
 };
 
 export const useProjectStore = create<ProjectState & ProjectActions>()(
-	persist(
-		(set, get) => ({
-			...initialState,
-			createProject: createCreateProject(set),
-			updateProject: createUpdateProject(set, get),
-			deleteProject: createDeleteProject(set, get),
-			getProject: createGetProject(get),
-			setInputFeatures: createSetInputFeatures(set),
-			setHasHydrated: (state) => set({ hasHydrated: state }),
-			setLastPath: createSetLastPath(set),
-			getLastPath: createGetLastPath(get),
-		}),
-		{
-			name: "project-storage",
-			onRehydrateStorage: () => (state) => {
-				state?.setHasHydrated(true);
-			},
-		},
+	devtools(
+		immer(
+			persist(
+				(set, get) => ({
+					...initialState,
+					createProject: createCreateProject(set),
+					updateProject: createUpdateProject(set, get),
+					deleteProject: createDeleteProject(set, get),
+					getProject: createGetProject(get),
+					setInputFeatures: createSetInputFeatures(set),
+					setHasHydrated: (state) => set({ hasHydrated: state }),
+					setLastPath: createSetLastPath(set),
+					getLastPath: createGetLastPath(get),
+				}),
+				{
+					name: "project-storage",
+					onRehydrateStorage: () => (state) => {
+						state?.setHasHydrated(true);
+					},
+				},
+			),
+		),
+		{ name: "projectStore" },
 	),
 );
