@@ -4,11 +4,13 @@ export interface UiState {
 	isLayerTreeOpen: boolean;
 	openLegendLayerId: string;
 	openMeasureCardIds: string[];
+	selectedConnectedAreaId: string | null;
 	currentStepId: string | null;
 	uploadError: string | null;
 	uploadSuccess: string | null;
 	isDrawing: boolean;
 	isBlockAreaSelecting: boolean;
+	isConnectedAreaSelecting: boolean;
 	isDrawingNote: boolean;
 	isDrawingMeasure: boolean;
 	isLayerTreeVisible: boolean;
@@ -30,12 +32,14 @@ export interface UiActions {
 	openMeasureCard: (measureId: string) => void;
 	closeMeasureCard: (measureId: string) => void;
 	closeAllMeasureCards: () => void;
+	setSelectedConnectedArea: (connectedAreaId: string | null) => void;
 	setCurrentStepId: (stepId: string | null) => void;
 	setUploadError: (error: string | null) => void;
 	setUploadSuccess: (success: string | null) => void;
 	clearUploadStatus: () => void;
 	setIsDrawing: (isDrawing: boolean) => void;
 	setIsBlockAreaSelecting: (isSelecting: boolean) => void;
+	setIsConnectedAreaSelecting: (isSelecting: boolean) => void;
 	setIsDrawingNote: (isDrawing: boolean) => void;
 	resetDrawInteractions: () => void;
 	setShowStepper: (show: boolean) => void;

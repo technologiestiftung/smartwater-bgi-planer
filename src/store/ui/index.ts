@@ -20,11 +20,13 @@ const initialState: UiState = {
 	isLayerTreeOpen: false,
 	openLegendLayerId: "",
 	openMeasureCardIds: [],
+	selectedConnectedAreaId: null,
 	currentStepId: null,
 	uploadError: null,
 	uploadSuccess: null,
 	isDrawing: false,
 	isBlockAreaSelecting: false,
+	isConnectedAreaSelecting: false,
 	isDrawingNote: false,
 	isLayerTreeVisible: false,
 	isDrawingMeasure: false,
@@ -54,6 +56,8 @@ export const useUiStore = create<UiState & UiActions>((set, get) => ({
 			),
 		})),
 	closeAllMeasureCards: () => set({ openMeasureCardIds: [] }),
+	setSelectedConnectedArea: (connectedAreaId) =>
+		set({ selectedConnectedAreaId: connectedAreaId }),
 	setCurrentStepId: (stepId) => set({ currentStepId: stepId }),
 	setUploadError: (error) => set({ uploadError: error, uploadSuccess: null }),
 	setUploadSuccess: (success) =>
@@ -62,11 +66,14 @@ export const useUiStore = create<UiState & UiActions>((set, get) => ({
 	setIsDrawing: (isDrawing) => set({ isDrawing }),
 	setIsBlockAreaSelecting: (isSelecting) =>
 		set({ isBlockAreaSelecting: isSelecting }),
+	setIsConnectedAreaSelecting: (isSelecting) =>
+		set({ isConnectedAreaSelecting: isSelecting }),
 	setIsDrawingNote: (isDrawing) => set({ isDrawingNote: isDrawing }),
 	resetDrawInteractions: () =>
 		set({
 			isDrawing: false,
 			isBlockAreaSelecting: false,
+			isConnectedAreaSelecting: false,
 			isDrawingNote: false,
 		}),
 	setIsLayerTreeVisible: (isVisible) => set({ isLayerTreeVisible: isVisible }),
