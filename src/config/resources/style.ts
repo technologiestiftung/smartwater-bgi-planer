@@ -152,6 +152,18 @@ export const styleList = [
 		],
 	},
 	{
+		styleId: "connectedArea",
+		rules: [
+			{
+				style: {
+					polygonStrokeWidth: 2,
+					polygonStrokeColor: [255, 175, 80, 1],
+					polygonFillColor: [200, 175, 80, 0.5],
+				},
+			},
+		],
+	},
+	{
 		styleId: "projectNotes",
 		rules: [
 			{

@@ -661,7 +661,7 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "measuresLayers"
+		"styleId": "connectedArea"
 	},
 	{
 		"id": "THEME MAPS"
