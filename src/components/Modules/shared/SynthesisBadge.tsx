@@ -1,11 +1,11 @@
 "use client";
 
+import type { SectionId } from "@/lib/helpers/sectionIds";
 import { cn } from "@/lib/utils";
 import { useLayersStore } from "@/store/layers";
 import { EyeIcon, EyeSlashIcon } from "@phosphor-icons/react";
-import { getModuleSteps } from "./moduleConfig";
-import type { SectionId } from "@/lib/helpers/sectionIds";
 import { usePathname } from "next/navigation";
+import { getModuleSteps } from "./moduleConfig";
 
 interface SynthesisBadgeProps {
 	questionId: string;
@@ -15,6 +15,7 @@ interface SynthesisBadgeProps {
 	onBackToSpecificQuestion: (questionId: string, sectionId: SectionId) => void;
 }
 
+// eslint-disable-next-line complexity
 export function SynthesisBadge({
 	questionId,
 	answer,
@@ -25,11 +26,15 @@ export function SynthesisBadge({
 	const layerConfig = useLayersStore((state) => state.layerConfig);
 	const questionConfig = layerConfig.find((config) => config.id === questionId);
 	const pathname = usePathname();
+	// eslint-disable-next-line no-nested-ternary
 	const moduleId = pathname.includes("/handlungsbedarfe")
 		? "needForAction"
 		: pathname.includes("/machbarkeit")
 			? "feasibility"
 			: null;
+
+	if (!moduleId) return null;
+
 	const steps = getModuleSteps(moduleId as "needForAction" | "feasibility");
 
 	if (!questionConfig) return null;
