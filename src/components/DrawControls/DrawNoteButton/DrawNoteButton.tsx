@@ -17,6 +17,7 @@ interface DrawNoteButtonProps {
 
 export const DrawNoteButton: FC<DrawNoteButtonProps> = ({ layerId }) => {
 	const map = useMapStore((state) => state.map);
+	const hasLayer = useLayersStore((state) => state.layers.has(layerId));
 	const setLayerVisibility = useLayersStore(
 		(state) => state.setLayerVisibility,
 	);
@@ -29,10 +30,10 @@ export const DrawNoteButton: FC<DrawNoteButtonProps> = ({ layerId }) => {
 	const drawRef = useRef<Draw | null>(null);
 
 	useEffect(() => {
-		if (!map || !layerId) return;
+		if (!map || !layerId || !hasLayer) return;
 
 		setLayerVisibility(layerId, true);
-	}, [layerId, map, setLayerVisibility]);
+	}, [layerId, map, hasLayer, setLayerVisibility]);
 
 	useEffect(() => {
 		return () => {
