@@ -103,7 +103,6 @@
 					"id": "greenRoof",
 					"icon": "SolarRoof",
 					"title": "Gebäudebegrünung",
-					"questions": ["connected_area", "3G1", "3G2", "3G3", "3G4", "3G5"],
 					"measurements": [
 						{
 							"id": "3G1",
@@ -146,7 +145,6 @@
 					"id": "unpvd",
 					"icon": "Wall",
 					"title": "Entsiegelung / Vermeidung von Versiegelung",
-					"questions": ["3E1", "3E2"],
 					"measurements": [
 						{
 							"id": "3E1",
@@ -168,7 +166,6 @@
 					"id": "planting",
 					"icon": "Tree",
 					"title": "Begrünung / Bepflanzung",
-					"questions": ["3B1", "3B2", "3B3"],
 					"measurements": [
 						{
 							"id": "3B1",
@@ -197,7 +194,6 @@
 					"id": "swale",
 					"icon": "Recycle",
 					"title": "Versickerung",
-					"questions": ["3V1", "3V2", "3V3", "3V4", "3V5", "3V6"],
 					"measurements": [
 						{
 							"id": "connected_area",
@@ -252,7 +248,6 @@
 					"id": "waterStorage",
 					"icon": "Jar",
 					"title": "Speicherung und Überflutungsvorsorge",
-					"questions": ["3S1", "3S2", "3S3", "3S4", "3S5"],
 					"measurements": [
 						{
 							"id": "3S1",
