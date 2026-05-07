@@ -8,9 +8,11 @@ import {
 import { useMapStore } from "@/store/map";
 import { useProjectStore } from "@/store/project";
 import { useScenarioStore } from "@/store/scenario";
+import { useUiStore } from "@/store/ui";
 import { LAYER_IDS } from "@/types/shared";
 import { TrashIcon, XCircleIcon } from "@phosphor-icons/react";
 import type Feature from "ol/Feature";
+import GeoJSON from "ol/format/GeoJSON";
 import type { Geometry } from "ol/geom";
 import VectorLayer from "ol/layer/Vector.js";
 import { Vector as VectorSource } from "ol/source.js";
@@ -34,9 +36,61 @@ export const FeatureActionMenu: FC<FeatureActionMenuProps> = ({
 	const removeConnectedArea = useScenarioStore(
 		(state) => state.removeConnectedArea,
 	);
+	const selectedConnectedAreaId = useUiStore(
+		(state) => state.selectedConnectedAreaId,
+	);
+	const setSelectedConnectedArea = useUiStore(
+		(state) => state.setSelectedConnectedArea,
+	);
 
 	const [isDeleting, setIsDeleting] = useState(false);
 
+	const resolveMeasureIdFallback = (): string | null => {
+		if (!features || !map || !activeScenarioId) return null;
+		const geometry = features.getGeometry();
+		if (!geometry) return null;
+
+		const scenario = useScenarioStore.getState().scenarios[activeScenarioId];
+		if (!scenario) return null;
+
+		const format = new GeoJSON();
+		const normalizedGeometry = format.writeGeometryObject(geometry, {
+			featureProjection: map.getView().getProjection(),
+			dataProjection: "EPSG:4326",
+		});
+		const normalizedGeometryString = JSON.stringify(normalizedGeometry);
+
+		const match = scenario.measures.find(
+			(measure) =>
+				JSON.stringify(measure.feature.geometry) === normalizedGeometryString,
+		);
+		return match?.id ?? null;
+	};
+
+	const resolveConnectedAreaIdFallback = (): string | null => {
+		if (!features || !map || !activeScenarioId) return null;
+		const geometry = features.getGeometry();
+		if (!geometry) return null;
+
+		const scenario = useScenarioStore.getState().scenarios[activeScenarioId];
+		if (!scenario) return null;
+
+		const format = new GeoJSON();
+		const normalizedGeometry = format.writeGeometryObject(geometry, {
+			featureProjection: map.getView().getProjection(),
+			dataProjection: "EPSG:4326",
+		});
+		const normalizedGeometryString = JSON.stringify(normalizedGeometry);
+
+		const match = scenario.connectedAreas.find(
+			(connectedArea) =>
+				JSON.stringify(connectedArea.feature.geometry) ===
+				normalizedGeometryString,
+		);
+		return match?.id ?? null;
+	};
+
+	/* eslint-disable complexity, max-depth */
 	const handleDelete = async () => {
 		if (!features || !map || !layerId || isDeleting) return;
 
@@ -52,16 +106,23 @@ export const FeatureActionMenu: FC<FeatureActionMenuProps> = ({
 				source.changed();
 
 				if (activeScenarioId) {
-					const measureId = features.get("measureId") as string | undefined;
-					const connectedAreaId = features.get("connectedAreaId") as
-						| string
-						| undefined;
+					const measureId =
+						(features.get("measureId") as string | undefined) ??
+						resolveMeasureIdFallback() ??
+						undefined;
+					const connectedAreaId =
+						(features.get("connectedAreaId") as string | undefined) ??
+						resolveConnectedAreaIdFallback() ??
+						undefined;
 
 					if (measureId) {
 						removeMeasure(activeScenarioId, measureId);
 					}
 					if (connectedAreaId) {
 						removeConnectedArea(activeScenarioId, connectedAreaId);
+						if (selectedConnectedAreaId === connectedAreaId) {
+							setSelectedConnectedArea(null);
+						}
 					}
 				}
 
@@ -79,11 +140,12 @@ export const FeatureActionMenu: FC<FeatureActionMenuProps> = ({
 			onClose?.();
 		}
 	};
+	/* eslint-enable complexity, max-depth */
 
 	if (!features) return null;
 
 	return (
-		<div className="FeatureActionMenu-root bg-background w-[250px] shadow-lg">
+		<div className="FeatureActionMenu-root bg-background w-62.5 shadow-lg">
 			<div className="border-muted flex h-8 w-full items-center justify-between border-b pl-2">
 				<h3 className="text-sm font-semibold">Feature bearbeiten</h3>
 				<div className="bg-secondary h-8 w-8 text-white">

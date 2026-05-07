@@ -6,6 +6,7 @@ import {
 	createMeasureConfigMap,
 	normalizeMeasureGeometryType,
 } from "@/lib/helpers/measures/config";
+import { isSwaleLayerConfigId } from "@/lib/helpers/measures/swale";
 import { getInitialMeasureValues } from "@/lib/helpers/measures/values";
 import { getLayerById, getSegmentLabelStyles } from "@/lib/helpers/ol";
 import { formatArea, formatLength } from "@/lib/helpers/ol/format";
@@ -44,7 +45,9 @@ type LayerConfigItem = ReturnType<
 >["layerConfig"][number];
 
 // --- Measure payload ---
+// todo: add type for payload for readability
 
+/* eslint-disable complexity */
 const createMeasurePayload = ({
 	feature,
 	index,
@@ -55,6 +58,7 @@ const createMeasurePayload = ({
 	layerConfigId,
 	layerConfig,
 	measureConfig,
+	valueOverrides,
 }: {
 	feature: Feature<Geometry>;
 	index: number;
@@ -65,20 +69,38 @@ const createMeasurePayload = ({
 	layerConfigId: string | null;
 	layerConfig: LayerConfigItem | undefined;
 	measureConfig: MeasureConfig | null;
-}) => ({
-	id: `measure-${Date.now()}-${index}-${Math.random().toString(36).slice(2, 9)}`,
-	createdAt: Date.now(),
-	geometryType,
-	drawLayerId,
-	layerConfigId: layerConfigId ?? drawLayerId ?? `measure-${index}`,
-	measureKey: measureConfig?.key ?? layerConfig?.name ?? "measure",
-	title: layerConfig?.name ?? layerConfig?.question ?? "Maßnahme",
-	feature: geojson.writeFeatureObject(feature, {
-		featureProjection: projection,
-		dataProjection: "EPSG:4326",
-	}),
-	values: measureConfig ? getInitialMeasureValues(measureConfig, feature) : {},
-});
+	valueOverrides?: Record<string, number | string | null>;
+}) => {
+	const resolvedLayerConfigId =
+		layerConfigId || drawLayerId || `measure-${index}`;
+	const resolvedMeasureKey =
+		measureConfig?.key || layerConfig?.name || "measure";
+	const resolvedTitle =
+		layerConfig?.name || layerConfig?.question || "Maßnahme";
+	const baseValues = measureConfig
+		? getInitialMeasureValues(measureConfig, feature)
+		: {};
+	const values = {
+		...baseValues,
+		...(valueOverrides || {}),
+	};
+
+	return {
+		id: `measure-${Date.now()}-${index}-${Math.random().toString(36).slice(2, 9)}`,
+		createdAt: Date.now(),
+		geometryType,
+		drawLayerId,
+		layerConfigId: resolvedLayerConfigId,
+		measureKey: resolvedMeasureKey,
+		title: resolvedTitle,
+		feature: geojson.writeFeatureObject(feature, {
+			featureProjection: projection,
+			dataProjection: "EPSG:4326",
+		}),
+		values,
+	};
+};
+/* eslint-enable complexity */
 
 const stampMeasureProperties = (
 	feature: Feature<Geometry>,
@@ -96,7 +118,6 @@ const stampMeasureProperties = (
 };
 
 // --- BTF planning validation ---
-
 const clipFeaturesToPlanningLayer = ({
 	drawnFeature,
 	planningFeatures,
@@ -207,15 +228,29 @@ export const DrawMeasureButton: FC = () => {
 	const resetDrawInteractions = useUiStore(
 		(state) => state.resetDrawInteractions,
 	);
+	const setUploadError = useUiStore((state) => state.setUploadError);
 	const openMeasureCard = useUiStore((state) => state.openMeasureCard);
+	const selectedConnectedAreaId = useUiStore(
+		(state) => state.selectedConnectedAreaId,
+	);
 	const createScenario = useScenarioStore((state) => state.createScenario);
 	const addMeasure = useScenarioStore((state) => state.addMeasure);
 	const addConnectedArea = useScenarioStore((state) => state.addConnectedArea);
+	const connectedAreas = useScenarioStore((state) => {
+		if (!state.activeScenarioId) return [];
+		return state.scenarios[state.activeScenarioId]?.connectedAreas ?? [];
+	});
 	const activeScenarioId = useScenarioStore((state) => state.activeScenarioId);
 	const isConnectedArea = layerConfigId === "connected_area";
+	const isSwaleMeasure = isSwaleLayerConfigId(layerConfigId);
 	const measureConfig = layerConfigId
 		? measureConfigById.get(layerConfigId)
 		: null;
+	const selectedConnectedArea = connectedAreas.find(
+		(area) => area.id === selectedConnectedAreaId,
+	);
+	const canDrawSelectedMeasure =
+		!isSwaleMeasure || Boolean(selectedConnectedArea);
 	const geometryType = normalizeMeasureGeometryType(
 		measureConfig?.geometryType,
 	);
@@ -279,6 +314,13 @@ export const DrawMeasureButton: FC = () => {
 			map.removeInteraction(drawRef.current);
 			drawRef.current = null;
 			setIsDrawing(false);
+			return;
+		}
+
+		if (!canDrawSelectedMeasure) {
+			setUploadError(
+				"Bitte zuerst eine angeschlossene Flaeche fuer die Versickerungsmassnahme auswaehlen.",
+			);
 			return;
 		}
 
@@ -408,6 +450,13 @@ export const DrawMeasureButton: FC = () => {
 							layerConfigId: layerConfigId ?? null,
 							layerConfig: currentLayerConfig,
 							measureConfig: measureConfig ?? null,
+							valueOverrides:
+								isSwaleMeasure && selectedConnectedArea
+									? {
+											connectedArea: selectedConnectedArea.area,
+											connectedAreaId: selectedConnectedArea.id,
+										}
+									: undefined,
 						});
 
 						stampMeasureProperties(clippedFeature, payload);
@@ -434,12 +483,19 @@ export const DrawMeasureButton: FC = () => {
 	const getDrawButtonLabel = () => {
 		if (isDrawing) return "Stop Zeichnen";
 		if (isConnectedArea) return "Angeschlossene Fläche zeichnen";
+		if (isSwaleMeasure && !canDrawSelectedMeasure) {
+			return "Erst angeschlossene Flaeche auswaehlen";
+		}
 		return "Maßnahme zeichnen";
 	};
 
 	return (
 		<div className="relative">
-			<Button variant="outline" onClick={toggleDraw}>
+			<Button
+				variant="outline"
+				onClick={toggleDraw}
+				disabled={!isDrawing && !canDrawSelectedMeasure}
+			>
 				<PolygonIcon />
 				{getDrawButtonLabel()}
 			</Button>
