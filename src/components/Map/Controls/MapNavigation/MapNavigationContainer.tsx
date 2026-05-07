@@ -2,6 +2,7 @@
 
 import { BaselayerSwitch } from "@/components/Map/BaselayerSwitch/BaselayerSwitch";
 import { GeolocationControl } from "@/components/Map/Controls/MapNavigation/GeolocationControl";
+import { RabimoTestControl } from "@/components/Map/Controls/MapNavigation/RabimoTestControl";
 import { ZoomControl } from "@/components/Map/Controls/MapNavigation/ZoomControl";
 import { LayerTree } from "@/components/Map/LayerTree/LayerTree";
 import { useUiStore } from "@/store/ui";
@@ -50,6 +51,7 @@ export const MapNavigationContainer: FC<MapNavigationContainerProps> = ({
 	return (
 		<div className="absolute bottom-6 left-4 z-20 flex items-end gap-2">
 			<div className="flex flex-col gap-2">
+				<RabimoTestControl />
 				<ProjectBoundaryControl />
 				<GeolocationControl onGeolocate={onGeolocate} />
 				<ZoomControl />

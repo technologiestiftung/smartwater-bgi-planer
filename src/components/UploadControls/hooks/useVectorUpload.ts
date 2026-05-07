@@ -1,6 +1,6 @@
 "use client";
 
-import { convertShapefile } from "@/lib/serverActions/convertShapefile";
+import { convertShapefile } from "@/server/actions/convertShapefile";
 import { useMapStore } from "@/store/map";
 import { useUiStore } from "@/store/ui";
 import { Feature } from "ol";

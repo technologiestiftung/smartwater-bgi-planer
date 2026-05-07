@@ -2,7 +2,7 @@
 
 import { Input } from "@/components/ui/input";
 import { sanitizeAddressInput } from "@/lib/helpers/sanitizer";
-import { searchAddresses } from "@/lib/serverActions/searchAddresses";
+import { searchAddresses } from "@/server/actions/searchAddresses";
 import { useMapStore } from "@/store";
 import { AddressFeature } from "@/types/shared";
 import {
