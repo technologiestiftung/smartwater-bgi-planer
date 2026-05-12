@@ -18,8 +18,11 @@ const initialState: ProjectState = {
 	totalArea: 0,
 	// features from Abimo Input 2025 (BTFs) -> amarex: selectedFeatures
 	inputFeatures: [],
-	// (Anzahl der BTFs die mit der Fläche überschnitten werden) -> amarex: featuresSelected
 	inputFeaturesCount: 0,
+	// Derived m² values per BTF (Ist-Zustand) — parallel to inputFeatures
+	computedAreas: [],
+	// Available m² per measure per BTF (Potential) — parallel to inputFeatures
+	areaPotentials: [],
 
 	// Project
 	project: null,

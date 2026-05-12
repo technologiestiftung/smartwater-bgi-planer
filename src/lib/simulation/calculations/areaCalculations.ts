@@ -1,13 +1,45 @@
 import type {
-	AreaStats,
+	AreaPotential,
 	AreaValues,
+	ComputedArea,
 	OLFeature,
+	PreprocessedFeatures,
 	ResultItem,
 	ResultStats,
 } from "../types";
 
+type RabimoLikeAreaValues = AreaValues & {
+	srf1_pvd: number;
+	srf2_pvd: number;
+	srf3_pvd: number;
+	srf4_pvd: number;
+	srf5_pvd: number;
+};
+
 function getValues(area: OLFeature): AreaValues {
 	return (area as unknown as { values_: AreaValues }).values_;
+}
+
+function getRabimoLikeValues(area: OLFeature): RabimoLikeAreaValues {
+	return getValues(area) as RabimoLikeAreaValues;
+}
+
+function getFeatureCode(area: OLFeature, index: number): string {
+	const featureLike = area as unknown as {
+		get?: (key: string) => unknown;
+		values_?: Record<string, unknown>;
+	};
+	const codeFromGet = featureLike.get?.("code");
+	if (typeof codeFromGet === "string" && codeFromGet.length > 0) {
+		return codeFromGet;
+	}
+
+	const codeFromValues = featureLike.values_?.code;
+	if (typeof codeFromValues === "string" && codeFromValues.length > 0) {
+		return codeFromValues;
+	}
+
+	return `feature_${index + 1}`;
 }
 
 function calculatePrecisely(value: number, precision = 9): number {
@@ -15,161 +47,197 @@ function calculatePrecisely(value: number, precision = 9): number {
 	return Math.round(value * factor) / factor;
 }
 
-function createTotalCalculator(
-	attribute: keyof AreaValues,
-): (areas: OLFeature[]) => number {
-	return (areas) =>
-		calculatePrecisely(
-			areas.reduce((sum, area) => sum + Number(getValues(area)[attribute]), 0),
-		);
-}
+// R: update_calculated_fields
+function updateCalculatedFields(areas: ComputedArea): ComputedArea {
+	const pvd =
+		areas.pvd_1 + areas.pvd_2 + areas.pvd_3 + areas.pvd_4 + areas.pvd_na;
+	const sealed = pvd + areas.roof;
 
-function createWeightedTotalCalculator(
-	attributes: (keyof AreaValues)[],
-): (areas: OLFeature[]) => number {
-	return (areas) =>
-		calculatePrecisely(
-			areas.reduce(
-				(sum: number, area) =>
-					sum +
-					attributes.reduce(
-						(prod: number, attr) => prod * Number(getValues(area)[attr]),
-						Number(getValues(area).total_area),
-					),
-				0,
-			),
-		);
-}
-
-// Total
-const getTotalArea = createTotalCalculator("total_area");
-const getTotalRoofArea = createWeightedTotalCalculator(["roof"]);
-const getTotalGreenRoofArea = createWeightedTotalCalculator([
-	"roof",
-	"green_roof",
-]);
-const getTotalPavedArea = createWeightedTotalCalculator(["pvd"]);
-const getTotalUnpavedArea = (areas: OLFeature[]): number =>
-	calculatePrecisely(
-		getTotalArea(areas) - getTotalRoofArea(areas) - getTotalPavedArea(areas),
-	);
-const getTotalSwaleConnectedArea = createWeightedTotalCalculator([
-	"roof",
-	"pvd",
-	"to_swale",
-]);
-function getTotalSealedArea(areas: OLFeature[]): number {
-	return calculatePrecisely(getTotalRoofArea(areas) + getTotalPavedArea(areas));
-}
-
-// Mean
-function createMeanCalculator(
-	totalCalculator: (areas: OLFeature[]) => number,
-): (areas: OLFeature[]) => number {
-	return (areas) => {
-		const totalArea = getTotalArea(areas);
-		return totalArea
-			? calculatePrecisely(totalCalculator(areas) / totalArea)
-			: 0;
+	return {
+		...areas,
+		pvd: calculatePrecisely(pvd),
+		sealed: calculatePrecisely(sealed),
+		unsealed: calculatePrecisely(areas.total - sealed),
 	};
 }
-const getMeanRoof = createMeanCalculator(getTotalRoofArea);
-const getMeanGreenRoof = createMeanCalculator(getTotalGreenRoofArea);
-const getMeanPaved = createMeanCalculator(getTotalPavedArea);
-const getMeanUnpaved = createMeanCalculator(getTotalUnpavedArea);
-const getMeanSwaleConnected = createMeanCalculator(getTotalSwaleConnectedArea);
 
-// Max
-const getMaxGreenRoof = getMeanRoof;
-const getMaxUnpaved = (areas: OLFeature[]): number =>
-	calculatePrecisely(1 - getMeanRoof(areas));
-const getMaxUnpavedArea = (areas: OLFeature[]): number =>
-	getMaxUnpaved(areas) * getTotalArea(areas);
+// R: rabimo_block_to_partial_areas_m2
+function toComputedArea(area: OLFeature): ComputedArea {
+	const values = getRabimoLikeValues(area);
+	const total = Number(values.total_area);
+	const roof = total * Number(values.roof);
+	const pvd = total * Number(values.pvd);
 
-const getMaxSwaleConnected = (
-	areas: OLFeature[],
-	newUnpvd: number = 0,
-): number => {
-	const meanUnpaved = getMeanUnpaved(areas);
-	const pavedFromMean = calculatePrecisely(1 - meanUnpaved);
+	const current: ComputedArea = {
+		total: calculatePrecisely(total),
+		roof: calculatePrecisely(roof),
+		pvd: 0,
+		pvd_1: calculatePrecisely(Number(values.srf1_pvd) * pvd),
+		pvd_2: calculatePrecisely(Number(values.srf2_pvd) * pvd),
+		pvd_3: calculatePrecisely(Number(values.srf3_pvd) * pvd),
+		pvd_4: calculatePrecisely(Number(values.srf4_pvd) * pvd),
+		pvd_na: calculatePrecisely(Number(values.srf5_pvd) * pvd),
+		sealed: 0,
+		unsealed: 0,
+		green_roof_ext: calculatePrecisely(roof * Number(values.green_roof)),
+		green_roof_int: 0,
+		to_inf_mulde: calculatePrecisely(Number(values.to_swale)),
+		to_inf_rigole: 0,
+		to_inf_mulde_rigole: 0,
+		to_retention: 0,
+	};
 
-	if (newUnpvd > 0) {
-		const pavedFromNew = calculatePrecisely(1 - newUnpvd);
-		return Math.min(pavedFromNew, pavedFromMean);
-	}
-	return pavedFromMean;
-};
-const getMaxSwaleConnectedArea = (areas: OLFeature[]): number =>
-	getMaxSwaleConnected(areas) * getTotalArea(areas);
+	return updateCalculatedFields(current);
+}
 
-// All Stats
-function calculateAllStats(
-	selectedFeatures: OLFeature[],
-	newUnpvd: number,
-): AreaStats {
-	if (!selectedFeatures || selectedFeatures.length === 0) {
+// R: get_available_m2
+function toAreaPotential(areas: ComputedArea): AreaPotential {
+	const availableGreenRoof =
+		areas.roof - areas.green_roof_ext - areas.green_roof_int;
+
+	return {
+		green_roof_ext: calculatePrecisely(availableGreenRoof),
+		green_roof_int: calculatePrecisely(availableGreenRoof),
+		unpaving: calculatePrecisely(areas.pvd),
+		permeable_paving: calculatePrecisely(areas.pvd - areas.pvd_4),
+		to_inf_mulde: calculatePrecisely(areas.sealed),
+		to_inf_rigole: calculatePrecisely(areas.sealed),
+		to_inf_mulde_rigole: calculatePrecisely(areas.sealed),
+		to_retention: calculatePrecisely(areas.sealed),
+	};
+}
+
+function createEmptyComputedArea(): ComputedArea {
+	return {
+		total: 0,
+		roof: 0,
+		pvd: 0,
+		pvd_1: 0,
+		pvd_2: 0,
+		pvd_3: 0,
+		pvd_4: 0,
+		pvd_na: 0,
+		sealed: 0,
+		unsealed: 0,
+		green_roof_ext: 0,
+		green_roof_int: 0,
+		to_inf_mulde: 0,
+		to_inf_rigole: 0,
+		to_inf_mulde_rigole: 0,
+		to_retention: 0,
+	};
+}
+
+function createEmptyAreaPotential(): AreaPotential {
+	return {
+		green_roof_ext: 0,
+		green_roof_int: 0,
+		unpaving: 0,
+		permeable_paving: 0,
+		to_inf_mulde: 0,
+		to_inf_rigole: 0,
+		to_inf_mulde_rigole: 0,
+		to_retention: 0,
+	};
+}
+
+function addComputedAreas(
+	acc: ComputedArea,
+	value: ComputedArea,
+): ComputedArea {
+	return {
+		total: calculatePrecisely(acc.total + value.total),
+		roof: calculatePrecisely(acc.roof + value.roof),
+		pvd: calculatePrecisely(acc.pvd + value.pvd),
+		pvd_1: calculatePrecisely(acc.pvd_1 + value.pvd_1),
+		pvd_2: calculatePrecisely(acc.pvd_2 + value.pvd_2),
+		pvd_3: calculatePrecisely(acc.pvd_3 + value.pvd_3),
+		pvd_4: calculatePrecisely(acc.pvd_4 + value.pvd_4),
+		pvd_na: calculatePrecisely(acc.pvd_na + value.pvd_na),
+		sealed: calculatePrecisely(acc.sealed + value.sealed),
+		unsealed: calculatePrecisely(acc.unsealed + value.unsealed),
+		green_roof_ext: calculatePrecisely(
+			acc.green_roof_ext + value.green_roof_ext,
+		),
+		green_roof_int: calculatePrecisely(
+			acc.green_roof_int + value.green_roof_int,
+		),
+		to_inf_mulde: calculatePrecisely(acc.to_inf_mulde + value.to_inf_mulde),
+		to_inf_rigole: calculatePrecisely(acc.to_inf_rigole + value.to_inf_rigole),
+		to_inf_mulde_rigole: calculatePrecisely(
+			acc.to_inf_mulde_rigole + value.to_inf_mulde_rigole,
+		),
+		to_retention: calculatePrecisely(acc.to_retention + value.to_retention),
+	};
+}
+
+function addAreaPotentials(
+	acc: AreaPotential,
+	value: AreaPotential,
+): AreaPotential {
+	return {
+		green_roof_ext: calculatePrecisely(
+			acc.green_roof_ext + value.green_roof_ext,
+		),
+		green_roof_int: calculatePrecisely(
+			acc.green_roof_int + value.green_roof_int,
+		),
+		unpaving: calculatePrecisely(acc.unpaving + value.unpaving),
+		permeable_paving: calculatePrecisely(
+			acc.permeable_paving + value.permeable_paving,
+		),
+		to_inf_mulde: calculatePrecisely(acc.to_inf_mulde + value.to_inf_mulde),
+		to_inf_rigole: calculatePrecisely(acc.to_inf_rigole + value.to_inf_rigole),
+		to_inf_mulde_rigole: calculatePrecisely(
+			acc.to_inf_mulde_rigole + value.to_inf_mulde_rigole,
+		),
+		to_retention: calculatePrecisely(acc.to_retention + value.to_retention),
+	};
+}
+
+// R: no single equivalent; iterates all selected blocks and combines
+// rabimo_block_to_partial_areas_m2 + get_available_m2 per feature.
+function preprocessAllFeatures(features: OLFeature[]): PreprocessedFeatures {
+	const emptyComputedArea = createEmptyComputedArea();
+	const emptyAreaPotential = createEmptyAreaPotential();
+
+	if (!features || features.length === 0) {
 		return {
-			totalArea: 0,
 			featuresSelected: 0,
-
-			totalRoofArea: 0,
-			totalPavedArea: 0,
-			totalUnpavedArea: 0,
-
-			// Other Values
-			totalGreenRoofArea: 0,
-			totalSwaleConnectedArea: 0,
-			maxUnpavedArea: 0,
-			maxSwaleConnectedArea: 0,
-			totalSealedArea: 0,
-
-			meanRoof: 0,
-			meanUnpaved: 0,
-			meanGreenRoof: 0,
-			meanPaved: 0,
-			meanSwaleConnected: 0,
-
-			maxGreenRoof: 0,
-			maxUnpaved: 0,
-			maxSwaleConnected: 0,
-			maxGreenRoofToRoof: 0,
-			maxSwaleConnectedToPvd: 0,
+			totalArea: 0,
+			computedArea: emptyComputedArea,
+			areaPotential: emptyAreaPotential,
+			features: [],
 		};
 	}
 
-	const totalArea = getTotalArea(selectedFeatures);
-	const totalRoofArea = getTotalRoofArea(selectedFeatures);
-	const totalPavedArea = getTotalPavedArea(selectedFeatures);
+	const perFeature = features.map((feature, index) => {
+		const code = getFeatureCode(feature, index);
+		const computedArea = toComputedArea(feature);
+		const areaPotential = toAreaPotential(computedArea);
+
+		return {
+			code,
+			computedArea,
+			areaPotential,
+		};
+	});
+
+	const computedArea = perFeature.reduce(
+		(acc, item) => addComputedAreas(acc, item.computedArea),
+		emptyComputedArea,
+	);
+	const areaPotential = perFeature.reduce(
+		(acc, item) => addAreaPotentials(acc, item.areaPotential),
+		emptyAreaPotential,
+	);
 
 	return {
-		totalArea,
-		featuresSelected: selectedFeatures.length,
-
-		totalRoofArea,
-		totalPavedArea,
-		totalUnpavedArea: getTotalUnpavedArea(selectedFeatures),
-
-		totalGreenRoofArea: getTotalGreenRoofArea(selectedFeatures),
-		totalSwaleConnectedArea: getTotalSwaleConnectedArea(selectedFeatures),
-		maxUnpavedArea: getMaxUnpavedArea(selectedFeatures),
-		maxSwaleConnectedArea: getMaxSwaleConnectedArea(selectedFeatures),
-		totalSealedArea: getTotalSealedArea(selectedFeatures),
-
-		meanRoof: getMeanRoof(selectedFeatures),
-		meanUnpaved: getMeanUnpaved(selectedFeatures),
-		meanGreenRoof: getMeanGreenRoof(selectedFeatures),
-		meanPaved: getMeanPaved(selectedFeatures),
-		meanSwaleConnected: getMeanSwaleConnected(selectedFeatures),
-
-		maxGreenRoof: getMaxGreenRoof(selectedFeatures),
-		maxUnpaved: getMaxUnpaved(selectedFeatures),
-		maxSwaleConnected: getMaxSwaleConnected(selectedFeatures, newUnpvd),
-		maxGreenRoofToRoof: totalRoofArea
-			? getTotalGreenRoofArea(selectedFeatures) / totalRoofArea
-			: 0,
-		maxSwaleConnectedToPvd: totalPavedArea
-			? getTotalSwaleConnectedArea(selectedFeatures) / totalPavedArea
-			: 0,
+		featuresSelected: features.length,
+		totalArea: computedArea.total,
+		computedArea,
+		areaPotential,
+		features: perFeature,
 	};
 }
 
@@ -191,6 +259,7 @@ function calculateResultStats(data: ResultItem[]): ResultStats {
 		);
 		return totalArea ? weightedSum / totalArea : 0;
 	};
+
 	return {
 		deltaW: getWeightedAverage("delta_w"),
 		runoff: getWeightedAverage("runoff"),
@@ -200,22 +269,10 @@ function calculateResultStats(data: ResultItem[]): ResultStats {
 }
 
 const areaCalculations = {
-	getTotalArea,
-	getTotalRoofArea,
-	getTotalGreenRoofArea,
-	getTotalPavedArea,
-	getTotalUnpavedArea,
-	getTotalSwaleConnectedArea,
-	getTotalSealedArea,
-	getMeanRoof,
-	getMeanGreenRoof,
-	getMeanPaved,
-	getMeanUnpaved,
-	getMeanSwaleConnected,
-	getMaxGreenRoof,
-	getMaxUnpaved,
-	getMaxSwaleConnected,
-	calculateAllStats,
+	toComputedArea,
+	updateCalculatedFields,
+	toAreaPotential,
+	preprocessAllFeatures,
 	calculateResultStats,
 	calculatePrecisely,
 };

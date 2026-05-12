@@ -1,3 +1,4 @@
+import type { AreaPotential, ComputedArea } from "@/lib/simulation/types";
 import type Feature from "ol/Feature";
 import type Geometry from "ol/geom/Geometry";
 
@@ -26,8 +27,13 @@ export interface InputFeature {
 export interface ProjectState {
 	// Abimo Map input data
 	totalArea: number;
+	// Raw OL features from the map selection
 	inputFeatures: InputFeature[];
 	inputFeaturesCount: number;
+	// Derived m² values per BTF (Ist-Zustand)
+	computedAreas: ComputedArea[];
+	// Available m² per measure per BTF (Potential)
+	areaPotentials: AreaPotential[];
 
 	// Project
 	project: Project | null;

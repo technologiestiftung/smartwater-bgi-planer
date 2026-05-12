@@ -3,10 +3,10 @@ import { useAnswersStore } from "../answers";
 import { useFilesStore } from "../files";
 import { useMapStore } from "../map";
 import { useUiStore } from "../ui";
-import { InputFeature, Project, ProjectState } from "./types";
+import { InputFeature, Project, ProjectActions, ProjectState } from "./types";
 
-type SetState = (fn: (state: ProjectState) => Partial<ProjectState>) => void;
-type GetState = () => ProjectState;
+type SetState = (partial: Partial<ProjectState & ProjectActions>) => void;
+type GetState = () => ProjectState & ProjectActions;
 
 export const createCreateProject = (set: SetState) => {
 	return (project: Omit<Project, "createdAt" | "updatedAt">) => {
@@ -17,7 +17,7 @@ export const createCreateProject = (set: SetState) => {
 			updatedAt: now,
 		};
 
-		set(() => ({ project: newProject }));
+		set({ project: newProject });
 	};
 };
 
@@ -26,13 +26,13 @@ export const createUpdateProject = (set: SetState, get: GetState) => {
 		const state = get();
 		if (!state.project) return;
 
-		set(() => ({
+		set({
 			project: {
 				...state.project,
 				...updates,
 				updatedAt: Date.now(),
 			} as Project,
-		}));
+		});
 	};
 };
 
@@ -40,12 +40,14 @@ export const createDeleteProject = (set: SetState, get: GetState) => {
 	return async () => {
 		const state = get();
 		const projectId = state.project?.id;
-		set(() => ({
+		set({
 			project: null,
 			inputFeatures: [],
 			inputFeaturesCount: 0,
 			totalArea: 0,
-		}));
+			computedAreas: [],
+			areaPotentials: [],
+		});
 
 		if (projectId) {
 			await useFilesStore.getState().deleteProjectFiles(projectId);
@@ -67,7 +69,7 @@ export const createGetProject = (get: GetState) => {
 
 export const createSetLastPath = (set: SetState) => {
 	return (path: string | null) => {
-		set((state) => ({ ...state, lastPath: path }));
+		set({ lastPath: path });
 	};
 };
 
@@ -83,13 +85,14 @@ export const createSetInputFeatures = (set: SetState) => {
 		console.log("[useProjectStore] inputFeatures updated", features);
 
 		const stats = simulationEngine.preprocessInput(features);
-		console.log("[useProjectStore] area stats", stats);
+		console.log("[useProjectStore] preprocessed stats", stats);
 
-		set((state) => ({
-			...state,
+		set({
 			inputFeatures: features,
 			inputFeaturesCount: features.length,
 			totalArea: stats.totalArea,
-		}));
+			computedAreas: stats.features.map((f) => f.computedArea),
+			areaPotentials: stats.features.map((f) => f.areaPotential),
+		});
 	};
 };

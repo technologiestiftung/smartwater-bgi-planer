@@ -1,5 +1,3 @@
-import type { InputFeature } from "@/store/project/types";
-import type { Result as StoreResult } from "@/store/result/types";
 import type Feature from "ol/Feature";
 import type { Geometry } from "ol/geom";
 
@@ -8,8 +6,6 @@ export type OLFeature = Feature<Geometry>;
 
 // Supported measure kinds.
 export type MeasureType = "greenRoof" | "unpaved" | "swale";
-// Supported measure sizes.
-export type MeasureSize = "small" | "medium" | "large";
 
 // Geometry-independent size data for a measure.
 export type MeasureDimension = {
@@ -25,7 +21,6 @@ export type MeasureDimension = {
 // User-selected measure input.
 export type Measure = {
 	type: MeasureType;
-	size: MeasureSize;
 	area?: number;
 	volume?: number;
 	connectedArea?: number;
@@ -41,28 +36,57 @@ export type AreaValues = {
 	[key: string]: number;
 };
 
-// Aggregated area statistics.
-export type AreaStats = {
-	totalArea: number;
+// Derived partial areas in m2 for one block part.
+export type ComputedArea = {
+	total: number;
+	roof: number;
+	pvd: number;
+	pvd_1: number;
+	pvd_2: number;
+	pvd_3: number;
+	pvd_4: number;
+	pvd_na: number;
+	sealed: number;
+	unsealed: number;
+	green_roof_ext: number;
+	green_roof_int: number;
+	to_inf_mulde: number;
+	to_inf_rigole: number;
+	to_inf_mulde_rigole: number;
+	to_retention: number;
+};
+
+// Available m2 by measure for one block part.
+export type AreaPotential = {
+	green_roof_ext: number;
+	green_roof_int: number;
+	unpaving: number;
+	permeable_paving: number;
+	to_inf_mulde: number;
+	to_inf_rigole: number;
+	to_inf_mulde_rigole: number;
+	to_retention: number;
+};
+
+// Preprocessed per-feature output.
+export type PreprocessedFeature = {
+	code: string;
+	computedArea: ComputedArea;
+	areaPotential: AreaPotential;
+};
+
+// Payload-compatible per-feature state.
+export type FeatureState = {
+	code: string;
+} & ComputedArea;
+
+// Preprocessed aggregate output for all selected features.
+export type PreprocessedFeatures = {
 	featuresSelected: number;
-	totalRoofArea: number;
-	totalPavedArea: number;
-	totalUnpavedArea: number;
-	totalGreenRoofArea: number;
-	totalSwaleConnectedArea: number;
-	maxUnpavedArea: number;
-	maxSwaleConnectedArea: number;
-	totalSealedArea: number;
-	meanRoof: number;
-	meanUnpaved: number;
-	meanGreenRoof: number;
-	meanPaved: number;
-	meanSwaleConnected: number;
-	maxGreenRoof: number;
-	maxUnpaved: number;
-	maxSwaleConnected: number;
-	maxGreenRoofToRoof: number;
-	maxSwaleConnectedToPvd: number;
+	totalArea: number;
+	computedArea: ComputedArea;
+	areaPotential: AreaPotential;
+	features: PreprocessedFeature[];
 };
 
 // Single simulation result row.
@@ -82,159 +106,13 @@ export type ResultStats = {
 	infiltration: number;
 };
 
-// Configured area type entry.
-export type AreaType = {
-	id: string;
-	max: number;
-	name?: string;
-};
-
-// Area stats plus target values.
-export type AccumulatedAbimoStats = AreaStats & {
-	targetValueGreenRoof?: number;
-	targetValueUnsealed?: number;
-};
-
-// Derived base values for report building.
-export type BaseAreas = {
-	totalArea: number;
-	unpavedRatio: number;
-	roofRatio: number;
-	pavedRatio: number;
-	targetGreenRoofPct: number;
-	targetUnpavedPct: number;
-	greenRoofToRoofRatio: number;
-	roofArea: number;
-	targetUnpavedArea: number;
-	targetPavedArea: number;
-};
-
-// Final percentages shown for measure planning.
-export type MeasurePlanningValues = {
-	greenRoofPct: number;
-	unpavedPct: number;
-	swaleConnectedPct: number;
-};
-
-// Formatted area strings for status quo and simulation.
-export type SurfaceAreaStrings = {
-	statusQuo: Record<string, string>;
-	simulation: Record<string, string>;
-};
-
-// Rounded water balance results.
-export type WaterBalanceResult = {
-	runoff: number;
-	infiltration: number;
-	evaporation: number;
-	total: number;
-	deltaW: number;
-	runoffPct: number;
-	infiltrationPct: number;
-	evaporationPct: number;
-};
-
-// Rounded and formatted status quo water balance.
-export type WaterBalanceStatusQuo = {
-	runoff: number;
-	infiltration: number;
-	evaporation: number;
-	total: number;
-	deltaW: number;
-	runoffFormatted: string;
-	infiltrationFormatted: string;
-	evaporationFormatted: string;
-};
-
 // Final payload passed to report generation.
 export type ReportPayload = {
 	totalArea: number;
-	isMeasurePlanning: boolean;
-	surfaceAreas: {
-		roof: string;
-		greenRoofStatusQuo: string;
-		greenRoofSimulation: string;
-		unpavedStatusQuo: string;
-		unpavedSimulation: string;
-		pavedStatusQuo: string;
-		pavedSimulation: string;
-	};
-	measures: {
-		selectedFeaturesCount: number;
-		swaleConnectedPct: number;
-		greenRoofPct: number;
-		unpavedPct: number;
-	};
-	waterBalanceStatusQuo: {
-		runoff: number;
-		infiltration: number;
-		evaporation: number;
-		deltaW: number;
-		runoffFormatted: string;
-		infiltrationFormatted: string;
-		evaporationFormatted: string;
-	};
-	abimoResult: {
-		runoff: number;
-		runoffPct: number;
-		infiltration: number;
-		infiltrationPct: number;
-		evaporation: number;
-		evaporationPct: number;
-		deltaW: number;
-	};
-	cisternCalculatorLink: null;
 };
 
 // Aggregated stats for selected measures.
 export type MeasureStats = {
-	greenRoofMeasuresAmount: number;
-	unpavedMeasuresAmount: number;
-	swaleMeasuresAmount: number;
-	totalGreenRoofArea: number;
-	totalUnpavedArea: number;
-	totalSwaleArea: number;
-	totalSwaleVolume: number;
-	totalSwaleConnectedArea: number;
-	newGreenRoof: number | null;
-	newGreenRoofToRoof: number | null;
-	newUnpvd: number | null;
-	newToSwale: number | null;
-	pvd_neu: number | null;
-	pvd_neu_area: number | null;
-	newPvdToTotalArea: number | null;
-	totalUnpavedToTotalArea: number | null;
-	Ag_0?: number;
-	Ag_max?: number;
-	Ag_neu?: number;
-	Agt?: number;
-	Ae_0?: number;
-	Ae_max?: number;
-	Ae_neu?: number;
-	Aet?: number;
-	Am_0?: number;
-	Am_max?: number;
-	Amt?: number;
-};
-
-// Full data payload returned by simulationEngine.run.
-export type SimulationRunResult = StoreResult["data"] & {
-	areaStats: AccumulatedAbimoStats;
-	measureStats: MeasureStats;
-	resultStats: ResultStats;
-	reportPayload: ReportPayload;
-};
-
-// Input object consumed by simulationEngine.run.
-export type SimulationRunOptions = {
-	scenarioId?: string;
-	baseInput: InputFeature[];
-	measures?: Measure[];
-	resultData?: ResultItem[];
-	preComputedStats?: ResultStats;
-	areaTypesData?: AreaType[];
-	reportOptions?: {
-		isMeasurePlanning?: boolean;
-		allMeasuredStats?: MeasureStats | null;
-	};
+	// todo: add types
+	total_measure_area: number | null;
 };
