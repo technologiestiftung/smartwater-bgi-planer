@@ -1,6 +1,7 @@
 import "server-only";
 
 import { RabimoPayload } from "@/server/rabimo/types";
+import http from "http";
 import https from "https";
 
 /**
@@ -13,14 +14,15 @@ export async function getRabimo(payload: RabimoPayload) {
 		throw new Error("API_URL is not configured");
 	}
 
-	const isHttps = apiUrl.startsWith("https");
+	const url = new URL(apiUrl);
+	const isHttps = url.protocol === "https:";
 	const isDev = process.env.NODE_ENV !== "production";
+	const transport = isHttps ? https : http;
+
+	const basePath = url.pathname.replace(/\/$/, "");
+	const path = `${basePath}/calculate_multiblock`;
 
 	return new Promise((resolve, reject) => {
-		const url = new URL(apiUrl);
-		const basePath = url.pathname || "";
-		const path = `${basePath}/calculate_multiblock`;
-
 		const options = {
 			hostname: url.hostname,
 			port: url.port,
@@ -32,16 +34,26 @@ export async function getRabimo(payload: RabimoPayload) {
 			...(isHttps && isDev && { rejectUnauthorized: false }),
 		};
 
-		const req = https.request(options, (res) => {
+		const req = transport.request(options, (res) => {
 			let data = "";
 			res.on("data", (chunk) => {
 				data += chunk;
 			});
 			res.on("end", () => {
 				if (!res.statusCode || res.statusCode >= 400) {
-					reject(new Error(`BGI API error ${res.statusCode}: ${data}`));
-				} else {
+					reject(
+						new Error(`BGI API error ${res.statusCode}: ${data.slice(0, 500)}`),
+					);
+					return;
+				}
+				try {
 					resolve(JSON.parse(data));
+				} catch {
+					reject(
+						new Error(
+							`BGI API returned invalid JSON (status ${res.statusCode}): ${data.slice(0, 500)}`,
+						),
+					);
 				}
 			});
 		});
