@@ -25,15 +25,14 @@ export interface InputFeature {
 }
 
 export interface ProjectState {
-	// Abimo Map input data
 	totalArea: number;
-	// Raw OL features from the map selection
 	inputFeatures: InputFeature[];
 	inputFeaturesCount: number;
-	// Derived m² values per BTF (Ist-Zustand)
 	computedAreas: ComputedArea[];
-	// Available m² per measure per BTF (Potential)
 	areaPotentials: AreaPotential[];
+	areaPotential: AreaPotential | null;
+	activeAreaPotential: AreaPotential | null;
+	activeAreaId: string | null;
 
 	// Project
 	project: Project | null;

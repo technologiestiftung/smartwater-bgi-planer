@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { LayerConfigItem } from "@/store/layers/types";
 import Image from "next/image";
 import { ConnectedAreaSelection } from "./ConnectedAreaSelection";
+import PotentialsContent from "./PotentialsContent";
 
 interface MeasurePlanningStepContentProps {
 	layerConfig: LayerConfigItem;
@@ -80,6 +81,7 @@ export function MeasurePlanningStepContent({
 }: MeasurePlanningStepContentProps) {
 	const showLegendAccordion =
 		Boolean(layerConfig.legendSrc) || Boolean(layerConfig.canDrawMeasures);
+	// todo: display areaPotentials from store
 
 	return (
 		<div className="flex min-h-0 flex-1 flex-col">
@@ -94,6 +96,7 @@ export function MeasurePlanningStepContent({
 							<RichTextWithLinks text={layerConfig.description} />
 						</div>
 					)}
+					<PotentialsContent layerConfig={layerConfig}  />
 					<ConnectedAreaSelection
 						layerConfigId={layerConfig.id}
 						drawLayerId={layerConfig.drawLayerId}

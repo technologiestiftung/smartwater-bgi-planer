@@ -91,6 +91,7 @@ export const createSetInputFeatures = (set: SetState) => {
 			inputFeatures: features,
 			inputFeaturesCount: features.length,
 			totalArea: stats.totalArea,
+			areaPotential: stats.areaPotential,
 			computedAreas: stats.features.map((f) => f.computedArea),
 			areaPotentials: stats.features.map((f) => f.areaPotential),
 		});

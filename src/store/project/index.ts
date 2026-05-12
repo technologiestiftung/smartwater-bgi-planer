@@ -21,8 +21,13 @@ const initialState: ProjectState = {
 	inputFeaturesCount: 0,
 	// Derived m² values per BTF (Ist-Zustand) — parallel to inputFeatures
 	computedAreas: [],
+	// Potential m² values for entire project BTF area
+	areaPotential: null,
 	// Available m² per measure per BTF (Potential) — parallel to inputFeatures
 	areaPotentials: [],
+	// Active BTF
+	activeAreaPotential: null,
+	activeAreaId: null,
 
 	// Project
 	project: null,
