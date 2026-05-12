@@ -1,6 +1,5 @@
 import areaCalculations from "@/lib/simulation/calculations/areaCalculations";
 import measureCalculations from "@/lib/simulation/calculations/measureCalculations";
-import { constants } from "@/lib/simulation/constants";
 import type {
 	Measure,
 	MeasureStats,
@@ -32,12 +31,13 @@ const applyMeasures = (
 ): MeasureStats => {
 	// function to calculate measure stats
 	// updatePreComputedStats
-
 	// accumulatedStats (currentState)? -> Update das bei jedem setzten einer Maßnahme passieren muss um zu bestimmen wie viel Fläche wir zur Verfügung haben
 	// -> muss am Anfang aufgerufen werden um potentialfläche anzuzeigen (available) (jedes mal wenn eine BTF geklickt wird, muss die potentielle fläche für die maßnhame angezeigt werden)
 	// 2. get_available_m2
 	if (inputFeatures.length === 0 || measures.length === 0) {
-		return constants.EMPTY_MEASURE_STATS;
+		return {
+			total_measure_area: null,
+		};
 	}
 
 	return measureCalculations.calculateAllMeasureStats(
