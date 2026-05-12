@@ -14,6 +14,7 @@ export async function getRabimo(payload: RabimoPayload) {
 	}
 
 	const isHttps = apiUrl.startsWith("https");
+	const isDev = process.env.NODE_ENV !== "production";
 
 	return new Promise((resolve, reject) => {
 		const url = new URL(apiUrl);
@@ -28,7 +29,7 @@ export async function getRabimo(payload: RabimoPayload) {
 			headers: {
 				"Content-Type": "application/json",
 			},
-			...(isHttps && { rejectUnauthorized: false }),
+			...(isHttps && isDev && { rejectUnauthorized: false }),
 		};
 
 		const req = https.request(options, (res) => {
