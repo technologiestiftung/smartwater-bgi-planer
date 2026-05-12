@@ -11,11 +11,24 @@ import {
 	createUpdateMeasureValues,
 	createUpdateScenarioName,
 } from "./actions";
-import { ScenarioActions, ScenarioState } from "./types";
+import { Scenario, ScenarioActions, ScenarioState } from "./types";
+
+const DEFAULT_SCENARIO_ID = "default-scenario";
+const DEFAULT_SCENARIO_NAME = "Default Scenario";
+
+const createDefaultScenario = (): Scenario => ({
+	id: DEFAULT_SCENARIO_ID,
+	name: DEFAULT_SCENARIO_NAME,
+	BTFMeasures: [],
+	connectedAreas: [],
+	measures: [],
+});
 
 const initialState: ScenarioState = {
-	scenarios: {},
-	activeScenarioId: null,
+	scenarios: {
+		[DEFAULT_SCENARIO_ID]: createDefaultScenario(),
+	},
+	activeScenarioId: DEFAULT_SCENARIO_ID,
 	comparisonIds: [],
 	hasHydrated: false,
 };
@@ -39,6 +52,13 @@ export const useScenarioStore = create<ScenarioState & ScenarioActions>()(
 				{
 					name: "scenario-storage",
 					onRehydrateStorage: () => (state) => {
+						if (
+							state &&
+							(Object.keys(state.scenarios).length === 0 ||
+								!state.activeScenarioId)
+						) {
+							state.createScenario(DEFAULT_SCENARIO_NAME);
+						}
 						state?.setHasHydrated(true);
 					},
 				},

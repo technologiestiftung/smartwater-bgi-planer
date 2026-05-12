@@ -65,7 +65,6 @@ export const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
 	);
 	const removeMeasure = useScenarioStore((state) => state.removeMeasure);
 	const addMeasure = useScenarioStore((state) => state.addMeasure);
-	const createScenario = useScenarioStore((state) => state.createScenario);
 	const layerConfigs = useLayersStore((state) => state.layerConfig);
 	const map = useMapStore((state) => state.map);
 
@@ -74,11 +73,7 @@ export const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
 			return;
 		}
 
-		let scenarioId = useScenarioStore.getState().activeScenarioId;
-		if (!scenarioId) {
-			createScenario("Default Scenario");
-			scenarioId = useScenarioStore.getState().activeScenarioId;
-		}
+		const scenarioId = useScenarioStore.getState().activeScenarioId;
 
 		if (!scenarioId) {
 			return;
@@ -151,16 +146,7 @@ export const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
 		});
 
 		addMeasure(scenarioId, payload);
-	}, [
-		addMeasure,
-		createScenario,
-		feature,
-		layerConfigs,
-		layerId,
-		map,
-		measure,
-		measureId,
-	]);
+	}, [addMeasure, feature, layerConfigs, layerId, map, measure, measureId]);
 
 	const measureConfig = useMemo(() => {
 		if (!measure) {
