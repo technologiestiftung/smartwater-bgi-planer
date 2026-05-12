@@ -36,14 +36,33 @@ import Stroke from "ol/style/Stroke.js";
 import Style from "ol/style/Style.js";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 
-const measureConfigById = createMeasureConfigMap(
-	measuresConfig as MeasureConfig[],
-);
-
 type FeatureProjection = Projection | string;
+
+type MeasureData = {
+	id: string;
+	values: Record<string, string | number | null>;
+};
+
+type PersistClippedFeatureParams = {
+	clippedFeature: Feature<Geometry>;
+	index: number;
+	scenarioId: string;
+	source: VectorSource;
+	geojson: GeoJSON;
+	projection: FeatureProjection;
+};
+
+interface LiveMeasureInfo {
+	area: string;
+	segmentLengths: string[];
+}
 
 const createEntityId = (prefix: string, index: number) =>
 	`${prefix}-${Date.now()}-${index}-${Math.random().toString(36).slice(2, 9)}`;
+
+const measureConfigById = createMeasureConfigMap(
+	measuresConfig as MeasureConfig[],
+);
 
 const writeFeatureGeoJSON = (
 	geojson: GeoJSON,
@@ -70,92 +89,34 @@ const buildPolygonLiveInfo = (geometry: Polygon): LiveMeasureInfo | null => {
 	};
 };
 
-// --- Measure payload ---
-// todo: add type for payload for readability
-type CreateMeasurePayloadParams = {
-	feature: Feature<Geometry>;
-	index: number;
-	geojson: GeoJSON;
-	projection: FeatureProjection;
-	geometryType: MeasureGeometryType;
-	drawLayerId: string | null;
-	layerConfigId: string | null;
-};
-
-type MeasurePayload = {
-	id: string;
-	createdAt: number;
-	geometryType: MeasureGeometryType;
-	drawLayerId: string | null;
-	layerConfigId: string;
-	measureKey: string;
-	title: string;
-	feature: ReturnType<GeoJSON["writeFeatureObject"]>;
-	values: Record<string, string | number | null>;
-};
-
-type PersistClippedFeatureParams = {
-	clippedFeature: Feature<Geometry>;
-	index: number;
-	scenarioId: string;
-	source: VectorSource;
-	geojson: GeoJSON;
-	projection: FeatureProjection;
-};
-
-type ClipFeaturesToPlanningLayerParams = {
-	drawnFeature: Feature<Geometry>;
-	planningFeatures: Feature<Geometry>[];
-	projection: FeatureProjection;
-	isPoint: boolean;
-};
-
-const createMeasurePayload = ({
-	feature,
-	index,
-	geojson,
-	projection,
-	geometryType,
-	drawLayerId,
-	layerConfigId,
-}: CreateMeasurePayloadParams): MeasurePayload => {
-	const resolvedLayerConfigId = layerConfigId || drawLayerId || "measure";
-
-	return {
-		id: createEntityId("measure", index),
-		createdAt: Date.now(),
-		geometryType,
-		drawLayerId,
-		layerConfigId: resolvedLayerConfigId,
-		measureKey: resolvedLayerConfigId,
-		title: "Massnahme",
-		feature: writeFeatureGeoJSON(geojson, feature, projection),
-		values: {},
-	};
-};
+const createMeasure = (index: number): MeasureData => ({
+	id: createEntityId("measure", index),
+	values: {},
+});
 
 const stampMeasureProperties = (
 	feature: Feature<Geometry>,
-	payload: MeasurePayload,
+	measureData: MeasureData,
 ) => {
-	feature.set("measureId", payload.id);
-	feature.set("measureLayerConfigId", payload.layerConfigId);
-	feature.set("measureKey", payload.measureKey);
-	feature.set("measureTitle", payload.title);
-	for (const [key, value] of Object.entries(payload.values)) {
+	feature.set("measureId", measureData.id);
+	for (const [key, value] of Object.entries(measureData.values)) {
 		if (value !== null && value !== undefined && value !== "") {
 			feature.set(key, value);
 		}
 	}
 };
 
-// --- BTF planning validation ---
 const clipFeaturesToPlanningLayer = ({
 	drawnFeature,
 	planningFeatures,
 	projection,
 	isPoint,
-}: ClipFeaturesToPlanningLayerParams): Feature<Geometry>[] => {
+}: {
+	drawnFeature: Feature<Geometry>;
+	planningFeatures: Feature<Geometry>[];
+	projection: FeatureProjection;
+	isPoint: boolean;
+}): Feature<Geometry>[] => {
 	const geometry = drawnFeature.getGeometry()!;
 
 	if (isPoint) {
@@ -200,8 +161,6 @@ const clipFeaturesToPlanningLayer = ({
 	return clipped;
 };
 
-// --- Draw styles ---
-
 const defaultDrawStyle = new Style({
 	fill: new Fill({ color: "rgba(0, 153, 255, 0.1)" }),
 	stroke: new Stroke({ color: "rgba(0, 153, 255, 1)", width: 2 }),
@@ -224,12 +183,6 @@ const getMeasureDrawStyles = (geometryType: MeasureGeometryType) => {
 };
 
 // --- Component ---
-
-interface LiveMeasureInfo {
-	area: string;
-	segmentLengths: string[];
-}
-
 export const DrawMeasureButton: FC = () => {
 	// state
 	const map = useMapStore((state) => state.map);
@@ -248,7 +201,6 @@ export const DrawMeasureButton: FC = () => {
 	const selectedConnectedAreaId = useUiStore(
 		(state) => state.selectedConnectedAreaId,
 	);
-	const addMeasure = useScenarioStore((state) => state.addMeasure);
 	const addConnectedArea = useScenarioStore((state) => state.addConnectedArea);
 	const connectedAreas = useScenarioStore((state) => {
 		if (!state.activeScenarioId) return [];
@@ -271,6 +223,7 @@ export const DrawMeasureButton: FC = () => {
 	const [liveMeasureInfo, setLiveMeasureInfo] =
 		useState<LiveMeasureInfo | null>(null);
 
+	// refs
 	const drawRef = useRef<Draw | null>(null);
 	const sketchGeometryRef = useRef<Geometry | null>(null);
 	const sketchChangeRef = useRef<(() => void) | null>(null);
@@ -308,43 +261,27 @@ export const DrawMeasureButton: FC = () => {
 			if (isConnectedArea) {
 				const geometry = clippedFeature.getGeometry();
 				const area = geometry ? Number(getArea(geometry).toFixed(2)) : 0;
-				const connectedAreaPayload = {
+				const connectedArea = {
 					id: createEntityId("connected-area", index),
 					createdAt: Date.now(),
 					feature: writeFeatureGeoJSON(geojson, clippedFeature, projection),
 					area,
 				};
 
-				clippedFeature.set("connectedAreaId", connectedAreaPayload.id);
+				clippedFeature.set("connectedAreaId", connectedArea.id);
 				source.addFeature(clippedFeature);
-				addConnectedArea(scenarioId, connectedAreaPayload);
+				addConnectedArea(scenarioId, connectedArea);
 				return;
 			}
 
-			const payload = createMeasurePayload({
-				feature: clippedFeature,
-				index,
-				geojson,
-				projection,
-				geometryType,
-				drawLayerId: drawLayerId ?? null,
-				layerConfigId: layerConfigId ?? null,
-			});
+			const measure = createMeasure(index);
 
-			stampMeasureProperties(clippedFeature, payload);
+			clippedFeature.set("measureLayerConfigId", layerConfigId ?? "");
+			stampMeasureProperties(clippedFeature, measure);
 			source.addFeature(clippedFeature);
-			addMeasure(scenarioId, payload);
-			openMeasureCard(payload.id);
+			openMeasureCard(measure.id);
 		},
-		[
-			addConnectedArea,
-			addMeasure,
-			drawLayerId,
-			geometryType,
-			isConnectedArea,
-			layerConfigId,
-			openMeasureCard,
-		],
+		[addConnectedArea, isConnectedArea, layerConfigId, openMeasureCard],
 	);
 
 	useEffect(() => {

@@ -120,7 +120,7 @@ export const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
 			dataProjection: "EPSG:4326",
 		});
 
-		const payload = {
+		const measureToAdd = {
 			id: measureId,
 			createdAt: Date.now(),
 			geometryType: normalizeMeasureGeometryType(
@@ -135,17 +135,17 @@ export const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
 			values,
 		};
 
-		feature.set("measureId", payload.id);
-		feature.set("measureLayerConfigId", payload.layerConfigId);
-		feature.set("measureKey", payload.measureKey);
-		feature.set("measureTitle", payload.title);
+		feature.set("measureId", measureToAdd.id);
+		feature.set("measureLayerConfigId", measureToAdd.layerConfigId);
+		feature.set("measureKey", measureToAdd.measureKey);
+		feature.set("measureTitle", measureToAdd.title);
 		Object.entries(values).forEach(([key, value]) => {
 			if (value !== null && value !== undefined && value !== "") {
 				feature.set(key, value);
 			}
 		});
 
-		addMeasure(scenarioId, payload);
+		addMeasure(scenarioId, measureToAdd);
 	}, [addMeasure, feature, layerConfigs, layerId, map, measure, measureId]);
 
 	const measureConfig = useMemo(() => {
