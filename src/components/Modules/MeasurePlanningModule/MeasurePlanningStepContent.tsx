@@ -96,7 +96,7 @@ export function MeasurePlanningStepContent({
 							<RichTextWithLinks text={layerConfig.description} />
 						</div>
 					)}
-					<PotentialsContent layerConfig={layerConfig}  />
+					<PotentialsContent layerConfig={layerConfig} />
 					<ConnectedAreaSelection
 						layerConfigId={layerConfig.id}
 						drawLayerId={layerConfig.drawLayerId}
