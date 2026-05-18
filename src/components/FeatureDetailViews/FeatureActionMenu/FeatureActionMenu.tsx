@@ -46,25 +46,7 @@ export const FeatureActionMenu: FC<FeatureActionMenuProps> = ({
 	const [isDeleting, setIsDeleting] = useState(false);
 
 	const resolveMeasureIdFallback = (): string | null => {
-		if (!features || !map || !activeScenarioId) return null;
-		const geometry = features.getGeometry();
-		if (!geometry) return null;
-
-		const scenario = useScenarioStore.getState().scenarios[activeScenarioId];
-		if (!scenario) return null;
-
-		const format = new GeoJSON();
-		const normalizedGeometry = format.writeGeometryObject(geometry, {
-			featureProjection: map.getView().getProjection(),
-			dataProjection: "EPSG:4326",
-		});
-		const normalizedGeometryString = JSON.stringify(normalizedGeometry);
-
-		const match = scenario.measures.find(
-			(measure) =>
-				JSON.stringify(measure.feature.geometry) === normalizedGeometryString,
-		);
-		return match?.id ?? null;
+		return null;
 	};
 
 	const resolveConnectedAreaIdFallback = (): string | null => {

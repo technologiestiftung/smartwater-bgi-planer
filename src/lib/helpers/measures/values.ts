@@ -1,4 +1,4 @@
-import type { ScenarioMeasureValue } from "@/store/scenario/types";
+import type { MeasureValue } from "@/store/scenario/types";
 import type { MeasureConfig, MeasureParameterConfig } from "@/types/measures";
 import type Feature from "ol/Feature";
 import type Geometry from "ol/geom/Geometry";
@@ -9,13 +9,13 @@ const roundGeometryValue = (value: number) => Number(value.toFixed(2));
 export const getDrawnValue = (
 	parameter: MeasureParameterConfig,
 	feature: Feature<Geometry>,
-): ScenarioMeasureValue => {
+): MeasureValue => {
 	const geometry = feature.getGeometry();
 	if (!geometry) {
 		return parameter.default ?? null;
 	}
 
-	if (parameter.key === "count" || parameter.role === "count") {
+	if (parameter.key === "count") {
 		return 1;
 	}
 
@@ -35,7 +35,7 @@ export const getInitialMeasureValues = (
 	measureConfig: MeasureConfig,
 	feature: Feature<Geometry>,
 ) =>
-	measureConfig.parameters.reduce<Record<string, ScenarioMeasureValue>>(
+	measureConfig.parameters.reduce<Record<string, MeasureValue>>(
 		(accumulator, parameter) => {
 			accumulator[parameter.key] =
 				parameter.source === "drawn"
@@ -46,7 +46,7 @@ export const getInitialMeasureValues = (
 		{},
 	);
 
-export const formatMeasureValue = (value: ScenarioMeasureValue) => {
+export const formatMeasureValue = (value: MeasureValue) => {
 	if (typeof value === "number") {
 		return Number.isInteger(value) ? String(value) : value.toFixed(2);
 	}
@@ -57,7 +57,7 @@ export const formatMeasureValue = (value: ScenarioMeasureValue) => {
 export const parseMeasureValue = (
 	rawValue: string,
 	parameter: MeasureParameterConfig,
-): ScenarioMeasureValue => {
+): MeasureValue => {
 	if (parameter.type === "string") {
 		return rawValue;
 	}

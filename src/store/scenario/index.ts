@@ -19,7 +19,6 @@ const DEFAULT_SCENARIO_NAME = "Default Scenario";
 const createDefaultScenario = (): Scenario => ({
 	id: DEFAULT_SCENARIO_ID,
 	name: DEFAULT_SCENARIO_NAME,
-	BTFMeasures: [],
 	connectedAreas: [],
 	measures: [],
 });
@@ -29,7 +28,6 @@ const initialState: ScenarioState = {
 		[DEFAULT_SCENARIO_ID]: createDefaultScenario(),
 	},
 	activeScenarioId: DEFAULT_SCENARIO_ID,
-	comparisonIds: [],
 	hasHydrated: false,
 };
 

@@ -23,7 +23,7 @@ interface ConnectedAreaSelectionProps {
 
 const EMPTY_CONNECTED_AREAS: Array<{ id: string; area: number }> = [];
 const EMPTY_MEASURES: Array<{
-	layerConfigId: string;
+	configId: string;
 	drawLayerId: string | null;
 	values: Record<string, number | string | null>;
 }> = [];
@@ -71,8 +71,8 @@ export function ConnectedAreaSelection({
 		() =>
 			measures.filter((measure) => {
 				// Keep summary strictly scoped to the currently open measurement step.
-				if (measure.layerConfigId === layerConfigId) return true;
-				if (measure.layerConfigId === drawLayerId) return true;
+				if (measure.configId === layerConfigId) return true;
+				if (measure.configId === drawLayerId) return true;
 				if (measure.drawLayerId === drawLayerId) return true;
 				return false;
 			}),

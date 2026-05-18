@@ -1,64 +1,54 @@
 [
 	{
 		"id": "connected_area",
-		"key": "connected_area",
 		"geometryType": "Polygon",
 		"parameters": [
 			{
 				"key": "area",
 				"type": "number",
 				"unit": "m2",
-				"role": "area",
 				"source": "drawn",
 				"required": true,
-				"requiredFor": ["ABIMO"]
+				"isCalculationInput": true
 			}
 		]
 	},
 	{
 		"id": "3G1",
-		"key": "green_roof_ext",
 		"geometryType": "Polygon",
-		"areaPotentialDisplay": ["green_roof_ext"],
 		"parameters": [
 			{
 				"key": "area",
 				"type": "number",
 				"unit": "m2",
-				"role": "area",
 				"source": "drawn",
 				"required": true,
-				"requiredFor": ["ABIMO"]
+				"isCalculationInput": true
 			}
 		]
 	},
 	{
 		"id": "3G2",
-		"key": "green_roof_int",
 		"geometryType": "Polygon",
-		"areaPotentialDisplay": ["green_roof_int"],
 		"parameters": [
 			{
 				"key": "area",
 				"type": "number",
 				"unit": "m2",
-				"role": "area",
 				"source": "drawn",
 				"required": true,
-				"requiredFor": ["ABIMO"]
+				"isCalculationInput": true
 			}
 		]
 	},
 	{
 		"id": "3G5",
-		"key": "groundBasedFacadeGreening",
 		"geometryType": "Polygon",
 		"parameters": [
 			{
 				"key": "facadeArea",
 				"type": "number",
 				"unit": "m2",
-				"role": "area",
 				"source": "drawn",
 				"required": true
 			}
@@ -66,65 +56,53 @@
 	},
 	{
 		"id": "3E1",
-		"key": "permeable_paving",
 		"geometryType": "Polygon",
-		"simulationMeasureName": "permeable_paving",
-		"areaPotentialDisplay": ["permeable_paving"],
 		"parameters": [
 			{
 				"key": "area",
 				"type": "number",
 				"unit": "m2",
-				"role": "area",
 				"source": "drawn",
 				"required": true,
-				"requiredFor": ["ABIMO"]
+				"isCalculationInput": true
 			}
 		]
 	},
 	{
 		"id": "3E2",
-		"key": "unpaving",
 		"geometryType": "Polygon",
-		"simulationMeasureName": "unpaving",
-		"areaPotentialDisplay": ["unpaving"],
 		"parameters": [
 			{
 				"key": "area",
 				"type": "number",
 				"unit": "m2",
-				"role": "area",
 				"source": "drawn",
 				"required": true,
-				"requiredFor": ["ABIMO"]
+				"isCalculationInput": true
 			}
 		]
 	},
 	{
 		"id": "3B1",
-		"key": "greenSpaces",
 		"geometryType": "Polygon",
 		"parameters": [
 			{
 				"key": "area",
 				"type": "number",
 				"unit": "m2",
-				"role": "area",
 				"source": "drawn",
 				"required": true,
-				"requiredFor": ["ABIMO"]
+				"isCalculationInput": true
 			}
 		]
 	},
 	{
 		"id": "3B2",
-		"key": "trees",
 		"geometryType": "Point",
 		"parameters": [
 			{
 				"key": "count",
 				"type": "integer",
-				"role": "count",
 				"source": "input",
 				"required": true
 			},
@@ -132,41 +110,35 @@
 				"key": "treeHeight",
 				"type": "number",
 				"unit": "m",
-				"role": "height",
 				"source": "input"
 			},
 			{
 				"key": "rootDepth",
 				"type": "number",
 				"unit": "m",
-				"role": "depth",
 				"source": "input"
 			},
 			{
 				"key": "greenVolume",
 				"type": "number",
 				"unit": "m3",
-				"role": "volume",
 				"source": "input"
 			},
 			{
 				"key": "species",
 				"type": "string",
-				"role": "vegetation",
 				"source": "input"
 			}
 		]
 	},
 	{
 		"id": "3B3",
-		"key": "trackGreening",
 		"geometryType": "Polygon",
 		"parameters": [
 			{
 				"key": "area",
 				"type": "number",
 				"unit": "m2",
-				"role": "area",
 				"source": "drawn",
 				"required": true
 			}
@@ -174,87 +146,72 @@
 	},
 	{
 		"id": "3V1",
-		"key": "swale",
 		"geometryType": "Polygon",
-		"simulationMeasureName": "to_inf_mulde",
-		"areaPotentialDisplay": ["to_inf_mulde"],
 		"parameters": [
 			{
 				"key": "area",
 				"type": "number",
 				"unit": "m2",
-				"role": "area",
 				"source": "drawn"
 			},
 			{
 				"key": "connectedArea",
 				"type": "number",
 				"unit": "m2",
-				"role": "area",
 				"source": "input",
 				"required": true,
-				"requiredFor": ["ABIMO"]
+				"isCalculationInput": true
 			}
 		]
 	},
 	{
 		"id": "3V2",
-		"key": "surfaceInfiltration",
 		"geometryType": "Polygon",
 		"parameters": [
 			{
 				"key": "area",
 				"type": "number",
 				"unit": "m2",
-				"role": "area",
 				"source": "drawn"
 			},
 			{
 				"key": "connectedArea",
 				"type": "number",
 				"unit": "m2",
-				"role": "area",
 				"source": "input",
 				"required": true,
-				"requiredFor": ["ABIMO"]
+				"isCalculationInput": true
 			}
 		]
 	},
 	{
 		"id": "3V3",
-		"key": "swaleTrenchSystem",
 		"geometryType": "Polygon",
-		"simulationMeasureName": "to_inf_mulde_rigole",
-		"areaPotentialDisplay": ["to_inf_mulde_rigole"],
 		"parameters": [
 			{
 				"key": "area",
 				"type": "number",
 				"unit": "m2",
-				"role": "area",
 				"source": "drawn"
 			},
 			{
 				"key": "connectedArea",
 				"type": "number",
 				"unit": "m2",
-				"role": "area",
 				"source": "input",
 				"required": true,
-				"requiredFor": ["ABIMO"]
+				"isCalculationInput": true
 			}
 		]
 	},
 	{
 		"id": "3V4",
-		"key": "sunkenBedTrench",
 		"geometryType": "Polygon",
 		"parameters": [
 			{
 				"key": "connectedArea",
 				"type": "number",
 				"unit": "m2",
-				"role": "area",
 				"source": "input",
 				"required": true
 			},
@@ -262,22 +219,23 @@
 				"key": "storageVolume",
 				"type": "number",
 				"unit": "m3",
-				"role": "volume",
 				"source": "derived"
 			}
 		]
 	},
 	{
 		"id": "3V5",
-		"key": "enhancedTreePit",
 		"geometryType": "Point",
 		"parameters": [
-			{ "key": "count", "type": "integer", "role": "count", "source": "input" },
+			{
+				"key": "count",
+				"type": "integer",
+				"source": "input"
+			},
 			{
 				"key": "connectedArea",
 				"type": "number",
 				"unit": "m2",
-				"role": "area",
 				"source": "input",
 				"required": true
 			}
@@ -285,53 +243,44 @@
 	},
 	{
 		"id": "3V6",
-		"key": "infiltrationTrench",
 		"geometryType": "Polygon",
-		"simulationMeasureName": "to_inf_rigole",
-		"areaPotentialDisplay": ["to_inf_rigole"],
 		"parameters": [
 			{
 				"key": "storageVolume",
 				"type": "number",
 				"unit": "m3",
-				"role": "volume",
 				"source": "derived"
 			},
 			{
 				"key": "connectedArea",
 				"type": "number",
 				"unit": "m2",
-				"role": "area",
 				"source": "input",
 				"required": true,
-				"requiredFor": ["ABIMO"]
+				"isCalculationInput": true
 			}
 		]
 	},
 	{
 		"id": "3S1",
-		"key": "waterBodies",
 		"geometryType": "Polygon",
 		"parameters": [
 			{
 				"key": "area",
 				"type": "number",
 				"unit": "m2",
-				"role": "area",
 				"source": "drawn"
 			}
 		]
 	},
 	{
 		"id": "3S2",
-		"key": "irrigationCistern",
 		"geometryType": "Point",
 		"parameters": [
 			{
 				"key": "storageVolume",
 				"type": "number",
 				"unit": "m3",
-				"role": "volume",
 				"source": "input",
 				"required": true
 			}
@@ -339,14 +288,12 @@
 	},
 	{
 		"id": "3S3",
-		"key": "internalUseCistern",
 		"geometryType": "Point",
 		"parameters": [
 			{
 				"key": "storageVolume",
 				"type": "number",
 				"unit": "m3",
-				"role": "volume",
 				"source": "input",
 				"required": true
 			}
@@ -354,15 +301,12 @@
 	},
 	{
 		"id": "3S4",
-		"key": "retentionArea",
 		"geometryType": "Polygon",
-		"simulationMeasureName": "to_retention",
 		"parameters": [
 			{
 				"key": "area",
 				"type": "number",
 				"unit": "m2",
-				"role": "area",
 				"source": "drawn",
 				"required": true
 			}
@@ -370,14 +314,12 @@
 	},
 	{
 		"id": "3S5",
-		"key": "evaporationBed",
 		"geometryType": "Polygon",
 		"parameters": [
 			{
 				"key": "area",
 				"type": "number",
 				"unit": "m2",
-				"role": "area",
 				"source": "drawn",
 				"required": true
 			}

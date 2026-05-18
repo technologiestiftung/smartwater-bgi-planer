@@ -1,7 +1,7 @@
 import {
 	ConnectedArea,
-	ScenarioMeasure,
-	ScenarioMeasureValue,
+	MeasureValue,
+	PlacedMeasure,
 	ScenarioState,
 } from "./types";
 
@@ -50,7 +50,7 @@ export const createUpdateScenarioName = (set: SetState) => {
 };
 
 export const createAddMeasure = (set: SetState) => {
-	return (id: string, measure: ScenarioMeasure) => {
+	return (id: string, measure: PlacedMeasure) => {
 		set((state) => {
 			const scenario = state.scenarios[id];
 			if (!scenario) return state;
@@ -93,7 +93,7 @@ export const createUpdateMeasureValues = (set: SetState) => {
 	return (
 		scenarioId: string,
 		measureId: string,
-		values: Record<string, ScenarioMeasureValue>,
+		values: Record<string, MeasureValue>,
 	) => {
 		set((state) => {
 			const scenario = state.scenarios[scenarioId];

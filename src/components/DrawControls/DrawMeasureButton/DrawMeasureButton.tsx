@@ -7,12 +7,14 @@ import {
 	normalizeMeasureGeometryType,
 } from "@/lib/helpers/measures/config";
 import { isSwaleLayerConfigId } from "@/lib/helpers/measures/swale";
+import { getDrawnValue } from "@/lib/helpers/measures/values";
 import { getLayerById, getSegmentLabelStyles } from "@/lib/helpers/ol";
 import { formatArea, formatLength } from "@/lib/helpers/ol/format";
 import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";
 import { useProjectStore } from "@/store/project";
 import { useScenarioStore } from "@/store/scenario";
+import type { MeasureValue } from "@/store/scenario/types";
 import { useUiStore } from "@/store/ui";
 import type { MeasureConfig, MeasureGeometryType } from "@/types/measures";
 import { LAYER_IDS } from "@/types/shared";
@@ -36,11 +38,6 @@ import Style from "ol/style/Style.js";
 import { FC, RefObject, useCallback, useEffect, useRef, useState } from "react";
 
 type FeatureProjection = Projection | string;
-
-type MeasureData = {
-	id: string;
-	values: Record<string, string | number | null>;
-};
 
 interface LiveMeasureInfo {
 	area: string;
@@ -77,23 +74,6 @@ const buildPolygonLiveInfo = (geometry: Polygon): LiveMeasureInfo | null => {
 		area: formatArea(geometry),
 		segmentLengths,
 	};
-};
-
-const createMeasure = (index: number): MeasureData => ({
-	id: createEntityId("measure", index),
-	values: {},
-});
-
-const stampMeasureProperties = (
-	feature: Feature<Geometry>,
-	measureData: MeasureData,
-) => {
-	feature.set("measureId", measureData.id);
-	for (const [key, value] of Object.entries(measureData.values)) {
-		if (value !== null && value !== undefined && value !== "") {
-			feature.set(key, value);
-		}
-	}
 };
 
 // function returns boolean true if btf feature was found and
@@ -148,27 +128,34 @@ const getMeasureDrawStyles = (geometryType: MeasureGeometryType) => {
 export const DrawMeasureButton: FC = () => {
 	// state
 	const map = useMapStore((state) => state.map);
+
+	// layer state
 	const drawLayerId = useLayersStore((state) => state.drawLayerId);
 	const layerConfigId = useLayersStore((state) => state.layerConfigId);
 	const setLayerVisibility = useLayersStore(
 		(state) => state.setLayerVisibility,
 	);
+
+	// UI state
 	const isDrawing = useUiStore((state) => state.isDrawing);
 	const setIsDrawing = useUiStore((state) => state.setIsDrawing);
 	const resetDrawInteractions = useUiStore(
 		(state) => state.resetDrawInteractions,
 	);
 	const setUploadError = useUiStore((state) => state.setUploadError);
-	const openMeasureCard = useUiStore((state) => state.openMeasureCard);
 	const selectedConnectedAreaId = useUiStore(
 		(state) => state.selectedConnectedAreaId,
 	);
+
+	// scenario state
 	const addConnectedArea = useScenarioStore((state) => state.addConnectedArea);
 	const connectedAreas = useScenarioStore((state) => {
 		if (!state.activeScenarioId) return [];
 		return state.scenarios[state.activeScenarioId]?.connectedAreas ?? [];
 	});
 	const activeScenarioId = useScenarioStore((state) => state.activeScenarioId);
+
+	// local state
 	const isConnectedArea = layerConfigId === "connected_area";
 	const isSwaleMeasure = isSwaleLayerConfigId(layerConfigId);
 	const measureConfig = layerConfigId
@@ -341,6 +328,40 @@ export const DrawMeasureButton: FC = () => {
 			if (!scenarioId) return;
 			const drawnFeature = event.feature;
 
+			const processMeasure = () => {
+				const activeAreaId = useProjectStore.getState().activeAreaId;
+				const config = measureConfigById.get(layerConfigId ?? "");
+				if (!config) return;
+
+				const values: Record<string, MeasureValue> = {};
+				for (const param of config.parameters) {
+					values[param.key] =
+						param.source === "drawn"
+							? (getDrawnValue(param, drawnFeature) as MeasureValue)
+							: (param.default ?? "");
+				}
+
+				const measure = {
+					id: createEntityId("measure", 0),
+					createdAt: Date.now(),
+					areaCode: activeAreaId ?? null,
+					configId: layerConfigId ?? "",
+					drawLayerId: drawLayerId ?? null,
+					values,
+				};
+
+				drawnFeature.set("measureId", measure.id);
+				
+				Object.entries(values).forEach(([key, value]) => {
+					if (value !== null && value !== undefined && value !== "") {
+						drawnFeature.set(key, value);
+					}
+				});
+
+				console.log("[DrawMeasureButton] measure::", measure);
+				useScenarioStore.getState().addMeasure(scenarioId, measure);
+			};
+
 			const process = () => {
 				const projection = map.getView().getProjection();
 				const geojson = new GeoJSON();
@@ -357,10 +378,7 @@ export const DrawMeasureButton: FC = () => {
 					drawnFeature.set("connectedAreaId", connectedArea.id);
 					addConnectedArea(scenarioId, connectedArea);
 				} else {
-					const measure = createMeasure(0);
-					drawnFeature.set("measureLayerConfigId", layerConfigId ?? "");
-					stampMeasureProperties(drawnFeature, measure);
-					openMeasureCard(measure.id);
+					processMeasure();
 				}
 			};
 
