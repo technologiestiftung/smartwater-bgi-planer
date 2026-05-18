@@ -29,7 +29,7 @@ export const DrawProjectBoundaryButton: FC = () => {
 
 	// Check if the BTF planning layer is ready
 	const { isReady: isBTFLayerReady, isLoading: isBTFLayerLoading } =
-		useLayerReady("rabimo_input_2025");
+		useLayerReady(LAYER_IDS.INPUT);
 
 	const syncPlanningLayerFeatures = useCallback(() => {
 		setInputFeatures(getInputFeatures(map));

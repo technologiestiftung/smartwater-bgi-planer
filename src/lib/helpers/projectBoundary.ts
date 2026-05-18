@@ -28,7 +28,7 @@ export const performProjectBoundaryIntersection = (map: Map | null) => {
 		return;
 	}
 
-	const rabimoLayer = getLayerById(map, LAYER_IDS.RABIMO_INPUT_2025);
+	const rabimoLayer = getLayerById(map, LAYER_IDS.INPUT);
 	if (!rabimoLayer?.getSource()) {
 		console.warn("Rabimo Input Layer not found.");
 		return;

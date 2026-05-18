@@ -242,7 +242,7 @@ function ProjectBoundaryStep() {
 }
 
 function NewDevelopmentStep() {
-	const { formattedArea } = useLayerArea("project_new_development");
+	const { formattedArea } = useLayerArea(LAYER_IDS.PROJECT_NEW_DEVELOPMENT);
 	const { uploadError, uploadSuccess } = useUploadStatusAutoHide();
 
 	return (

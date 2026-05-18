@@ -37,7 +37,7 @@ export const UploadDrawLayerButton: FC = () => {
 
 		if (boundaryFeatures.length === 0) return;
 
-		const rabimoLayer = getLayerById(map, LAYER_IDS.RABIMO_INPUT_2025);
+		const rabimoLayer = getLayerById(map, LAYER_IDS.INPUT);
 		if (!rabimoLayer?.getSource()) return;
 
 		const addedIds = new Set<string>();
