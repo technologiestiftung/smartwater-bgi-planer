@@ -30,7 +30,8 @@ const PotentialsContent: FC<PotentialsContentProps> = ({ layerConfig }) => {
 			<p>Gesamt: {Number(areaPotential[measureKey].toFixed(2))} m²</p>
 			{activeAreaPotential && (
 				<p>
-					Aktive Fläche: {Number(activeAreaPotential[measureKey].toFixed(2))} m²
+					Potentialfläche: {Number(activeAreaPotential[measureKey].toFixed(2))}{" "}
+					m²
 				</p>
 			)}
 		</div>

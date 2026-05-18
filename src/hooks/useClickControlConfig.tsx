@@ -73,14 +73,7 @@ export const useClickControlConfig = () => {
 				const measureId = resolveMeasureId(normalizedFeature);
 
 				if (measureId) {
-					return (
-						<MeasureDetailsCard
-							measureId={measureId}
-							feature={normalizedFeature}
-							layerId={layerId}
-							onClose={onClose}
-						/>
-					);
+					return <MeasureDetailsCard measureId={measureId} onClose={onClose} />;
 				}
 
 				return (

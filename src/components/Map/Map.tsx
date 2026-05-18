@@ -1,6 +1,5 @@
 "use client";
 
-import { MeasureDetailsCardStack } from "@/components/FeatureDetailViews/MeasureDetailsCard/MeasureDetailsCardStack";
 import { ClickControl } from "@/components/Map/Controls/ClickControl";
 import { MapNavigationContainer } from "@/components/Map/Controls/MapNavigation/MapNavigationContainer";
 import { Spinner } from "@/components/ui/spinner";
@@ -70,7 +69,6 @@ export const Map: FC = () => {
 				/>
 				{/* <OpacityControl /> */}
 				<MapFooter />
-				<MeasureDetailsCardStack />
 			</LazyOlMap>
 		</div>
 	);

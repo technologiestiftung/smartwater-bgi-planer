@@ -1,9 +1,13 @@
 "use client";
 
 import { FeatureDetailsModal } from "@/components/FeatureDetailViews/FeatureDetailsModal/FeatureDetailsModal";
+import { resolveMeasureId } from "@/lib/helpers/ol/measureFeature";
 import { fetchFeatureInfo } from "@/lib/helpers/wmsFeatureInfo";
 import { useMapStore } from "@/store/map";
+import { useProjectStore } from "@/store/project";
+import { useScenarioStore } from "@/store/scenario";
 import { useUiStore } from "@/store/ui";
+import Feature from "ol/Feature";
 import Overlay, { Options } from "ol/Overlay.js";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 
@@ -51,6 +55,13 @@ export const ClickControl: FC<ClickControlProps> = ({
 }) => {
 	const map = useMapStore((state) => state.map);
 	const { isDrawing, isBlockAreaSelecting, isDrawingNote } = useUiStore();
+	const activeScenarioId = useScenarioStore((state) => state.activeScenarioId);
+	const measures = useScenarioStore((state) => {
+		if (!state.activeScenarioId) {
+			return [];
+		}
+		return state.scenarios[state.activeScenarioId]?.measures ?? [];
+	});
 
 	const [selection, setSelection] = useState<Selection | null>(null);
 	const [cardPosition, setCardPosition] =
@@ -159,6 +170,22 @@ export const ClickControl: FC<ClickControlProps> = ({
 		[map, wmsLayerIds],
 	);
 
+	const setActiveAreaFromCode = useCallback((code: string | null) => {
+		if (!code) {
+			return;
+		}
+
+		const { inputFeatures, areaPotentials } = useProjectStore.getState();
+		const idx = inputFeatures.findIndex(
+			(feature) => feature.properties.code === code,
+		);
+
+		useProjectStore.setState({
+			activeAreaId: code,
+			activeAreaPotential: idx !== -1 ? (areaPotentials[idx] ?? null) : null,
+		});
+	}, []);
+
 	useEffect(() => {
 		if (!map || !overlayRef.current) return;
 
@@ -188,6 +215,25 @@ export const ClickControl: FC<ClickControlProps> = ({
 			const vectorMatch = findVectorFeature(evt.pixel);
 
 			if (vectorMatch) {
+				const clickedFeature =
+					vectorMatch.feature instanceof Feature
+						? vectorMatch.feature
+						: undefined;
+
+				let areaCode = clickedFeature?.get("code") as string | undefined;
+
+				if (!areaCode) {
+					const measureId = resolveMeasureId(clickedFeature);
+					if (measureId && activeScenarioId) {
+						const clickedMeasure = measures.find(
+							(item) => item.id === measureId,
+						);
+						areaCode = clickedMeasure?.areaCode ?? undefined;
+					}
+				}
+
+				setActiveAreaFromCode(areaCode ?? null);
+
 				clearTimeouts();
 				setCardPosition(calculatePositioning(evt.pixel));
 				setSelection({
@@ -251,6 +297,9 @@ export const ClickControl: FC<ClickControlProps> = ({
 		minZoomForClick,
 		findVectorFeature,
 		findWmsFeature,
+		activeScenarioId,
+		measures,
+		setActiveAreaFromCode,
 		calculatePositioning,
 		currentConfig,
 		wmsLayerIds,
