@@ -584,8 +584,8 @@
 		"styleId": "measuresLayers"
 	},
 	{
-		"id": "module_3_3G3_draw",
-		"name": "Retentionsgründach extensiv",
+		"id": "module_3_3G2_draw",
+		"name": "Intensive Dachbegrünung",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",

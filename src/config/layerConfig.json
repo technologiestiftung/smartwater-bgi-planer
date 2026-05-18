@@ -550,10 +550,10 @@
 		"canDrawMeasures": true
 	},
 	{
-		"id": "3G3",
-		"name": "Retentionsgründach extensiv",
-		"description": "Extensives Gründach mit zusätzlichen Retentionselementen zur Zwischenspeicherung und gedrosselten Ableitung von Regenwasser. Es entlastet Kanalisation und Gewässer, unterstützt Verdunstung und verbessert die Wasserversorgung der Vegetation in Trockenphasen. Geeignet für tragfähige Flachdächer mit Wartung der Drosselelemente.",
-		"drawLayerId": "module_3_3G3_draw",
+		"id": "3G2",
+		"name": "Intensive Dachbegrünung",
+		"description": "Nutzbares Gründach mit dicker Substratschicht (ab ca. 15 cm bis mehrere Meter) für Dachgärten und vielfältige Vegetation. Es bietet hohe Regenwasserrückhaltung, verbessert das Stadtklima und schafft Aufenthaltsflächen. Benötigt hohe Tragfähigkeit, geringe Dachneigung und regelmäßige Pflege.",
+		"drawLayerId": "module_3_3G2_draw",
 		"visibleLayerIds": [
 			"potenziale_regenwasserbewirtschaftung:ca_dachbegruenungspotenzial"
 		],
@@ -724,7 +724,7 @@
 			"project_boundary",
 			"module_3_connected_area_draw",
 			"module_3_3G1_draw",
-			"module_3_3G3_draw",
+			"module_3_3G2_draw",
 			"module_3_3G5_draw",
 			"module_3_3E1_draw",
 			"module_3_3E2_draw",

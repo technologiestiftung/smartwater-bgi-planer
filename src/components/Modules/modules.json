@@ -112,11 +112,11 @@
 							"infoLayerConfigId": "3G1_info"
 						},
 						{
-							"id": "3G3",
-							"layerConfigId": "3G3",
-							"title": "Retentionsgründach extensiv",
-							"metricIcons": ["Tree", "ThermometerHot"],
-							"infoLayerConfigId": "3G3_info"
+							"id": "3G2",
+							"layerConfigId": "3G2",
+							"title": "Intensive Dachbegrünung",
+							"metricIcons": ["Tree", "Drop", "ThermometerHot"],
+							"infoLayerConfigId": "3G2_info"
 						},
 						{
 							"id": "3G5",

@@ -17,9 +17,8 @@
 	},
 	{
 		"id": "3G1",
-		"key": "extensiveGreenRoof",
+		"key": "green_roof_ext",
 		"geometryType": "Polygon",
-		"simulationMeasureName": "green_roof_ext",
 		"areaPotentialDisplay": ["green_roof_ext"],
 		"parameters": [
 			{
@@ -34,16 +33,19 @@
 		]
 	},
 	{
-		"id": "3G3",
-		"key": "extensiveRetentionRoof",
+		"id": "3G2",
+		"key": "green_roof_int",
 		"geometryType": "Polygon",
+		"areaPotentialDisplay": ["green_roof_int"],
 		"parameters": [
 			{
 				"key": "area",
 				"type": "number",
 				"unit": "m2",
 				"role": "area",
-				"source": "drawn"
+				"source": "drawn",
+				"required": true,
+				"requiredFor": ["ABIMO"]
 			}
 		]
 	},
@@ -64,7 +66,7 @@
 	},
 	{
 		"id": "3E1",
-		"key": "permeableSurfaces",
+		"key": "permeable_paving",
 		"geometryType": "Polygon",
 		"simulationMeasureName": "permeable_paving",
 		"areaPotentialDisplay": ["permeable_paving"],
@@ -82,7 +84,7 @@
 	},
 	{
 		"id": "3E2",
-		"key": "deSealing",
+		"key": "unpaving",
 		"geometryType": "Polygon",
 		"simulationMeasureName": "unpaving",
 		"areaPotentialDisplay": ["unpaving"],
