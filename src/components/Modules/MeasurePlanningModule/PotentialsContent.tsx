@@ -1,8 +1,14 @@
 "use client";
 
+import measuresConfig from "@/config/measuresConfig.json";
 import { useProjectStore } from "@/store";
 import { LayerConfigItem } from "@/store/layers/types";
-import { FC, useEffect } from "react";
+import type { MeasureConfig } from "@/types/measures";
+import { FC } from "react";
+
+const measureConfigById = new Map(
+	(measuresConfig as MeasureConfig[]).map((item) => [item.id, item]),
+);
 
 interface PotentialsContentProps {
 	layerConfig: LayerConfigItem;
@@ -10,26 +16,22 @@ interface PotentialsContentProps {
 
 const PotentialsContent: FC<PotentialsContentProps> = ({ layerConfig }) => {
 	const areaPotential = useProjectStore((state) => state.areaPotential);
+	const activeAreaPotential = useProjectStore(
+		(state) => state.activeAreaPotential,
+	);
+	const measureKey = measureConfigById.get(layerConfig.id)?.measureKey;
 
-	console.log("[PotentialsContent] layerConfig::", layerConfig);
-
-	useEffect(() => {
-		console.log("[MeasurePlanningStepContent] areaPotentials", areaPotential);
-	}, [areaPotential]);
+	if (!areaPotential || !measureKey) {
+		return null;
+	}
 
 	return (
-		<div className="PotentialsContent-root">
-			{areaPotential && (
-				<div>
-					<p>{Number(areaPotential.green_roof_ext.toFixed(2))} m²</p>
-					<p>{Number(areaPotential.green_roof_int.toFixed(2))} m²</p>
-					<p>{Number(areaPotential.unpaving.toFixed(2))} m²</p>
-					<p>{Number(areaPotential.permeable_paving.toFixed(2))} m²</p>
-					<p>{Number(areaPotential.to_inf_mulde.toFixed(2))} m²</p>
-					<p>{Number(areaPotential.to_inf_rigole.toFixed(2))} m²</p>
-					<p>{Number(areaPotential.to_inf_mulde_rigole.toFixed(2))} m²</p>
-					<p>{Number(areaPotential.to_retention.toFixed(2))} m²</p>
-				</div>
+		<div className="PotentialsContent-root mt-4">
+			<p>Gesamt: {Number(areaPotential[measureKey].toFixed(2))} m²</p>
+			{activeAreaPotential && (
+				<p>
+					Aktive Fläche: {Number(activeAreaPotential[measureKey].toFixed(2))} m²
+				</p>
 			)}
 		</div>
 	);

@@ -351,7 +351,7 @@ export const DrawMeasureButton: FC = () => {
 				};
 
 				drawnFeature.set("measureId", measure.id);
-				
+
 				Object.entries(values).forEach(([key, value]) => {
 					if (value !== null && value !== undefined && value !== "") {
 						drawnFeature.set(key, value);

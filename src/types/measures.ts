@@ -20,6 +20,7 @@ export type MeasureCalculationName =
 
 export type MeasureConfig = {
 	id: string;
+	measureKey?: MeasureCalculationName;
 	geometryType?: "Polygon" | "Point" | "LineString" | "Circle";
 	parameters: MeasureParameterConfig[];
 };

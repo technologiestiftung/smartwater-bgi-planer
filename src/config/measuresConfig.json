@@ -15,6 +15,7 @@
 	},
 	{
 		"id": "3G1",
+		"measureKey": "green_roof_ext",
 		"geometryType": "Polygon",
 		"parameters": [
 			{
@@ -29,6 +30,7 @@
 	},
 	{
 		"id": "3G2",
+		"measureKey": "green_roof_int",
 		"geometryType": "Polygon",
 		"parameters": [
 			{
@@ -56,6 +58,7 @@
 	},
 	{
 		"id": "3E1",
+		"measureKey": "permeable_paving",
 		"geometryType": "Polygon",
 		"parameters": [
 			{
@@ -70,6 +73,7 @@
 	},
 	{
 		"id": "3E2",
+		"measureKey": "unpaving",
 		"geometryType": "Polygon",
 		"parameters": [
 			{
@@ -146,6 +150,7 @@
 	},
 	{
 		"id": "3V1",
+		"measureKey": "to_inf_mulde",
 		"geometryType": "Polygon",
 		"parameters": [
 			{
@@ -186,6 +191,7 @@
 	},
 	{
 		"id": "3V3",
+		"measureKey": "to_inf_mulde_rigole",
 		"geometryType": "Polygon",
 		"parameters": [
 			{
@@ -243,6 +249,7 @@
 	},
 	{
 		"id": "3V6",
+		"measureKey": "to_inf_rigole",
 		"geometryType": "Polygon",
 		"parameters": [
 			{
@@ -301,6 +308,7 @@
 	},
 	{
 		"id": "3S4",
+		"measureKey": "to_retention",
 		"geometryType": "Polygon",
 		"parameters": [
 			{
