@@ -584,24 +584,8 @@
 		"styleId": "measuresLayers"
 	},
 	{
-		"id": "module_3_3G2_draw",
-		"name": "Intensive Dachbegrünung",
-		"crs": "urn:ogc:def:crs:EPSG::25833",
-		"typ": "GEOJSON",
-		"gfiAttributes": "showAll",
-		"styleId": "measuresLayers"
-	},
-	{
 		"id": "module_3_3G3_draw",
 		"name": "Retentionsgründach extensiv",
-		"crs": "urn:ogc:def:crs:EPSG::25833",
-		"typ": "GEOJSON",
-		"gfiAttributes": "showAll",
-		"styleId": "measuresLayers"
-	},
-	{
-		"id": "module_3_3G4_draw",
-		"name": "Retentionsgründach intensiv",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",

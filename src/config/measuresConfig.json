@@ -19,22 +19,8 @@
 		"id": "3G1",
 		"key": "extensiveGreenRoof",
 		"geometryType": "Polygon",
-		"parameters": [
-			{
-				"key": "area",
-				"type": "number",
-				"unit": "m2",
-				"role": "area",
-				"source": "drawn",
-				"required": true,
-				"requiredFor": ["ABIMO"]
-			}
-		]
-	},
-	{
-		"id": "3G2",
-		"key": "intensiveGreenRoof",
-		"geometryType": "Polygon",
+		"simulationMeasureName": "green_roof_ext",
+		"areaPotentialDisplay": ["green_roof_ext"],
 		"parameters": [
 			{
 				"key": "area",
@@ -50,20 +36,6 @@
 	{
 		"id": "3G3",
 		"key": "extensiveRetentionRoof",
-		"geometryType": "Polygon",
-		"parameters": [
-			{
-				"key": "area",
-				"type": "number",
-				"unit": "m2",
-				"role": "area",
-				"source": "drawn"
-			}
-		]
-	},
-	{
-		"id": "3G4",
-		"key": "intensiveRetentionRoof",
 		"geometryType": "Polygon",
 		"parameters": [
 			{
@@ -94,6 +66,8 @@
 		"id": "3E1",
 		"key": "permeableSurfaces",
 		"geometryType": "Polygon",
+		"simulationMeasureName": "permeable_paving",
+		"areaPotentialDisplay": ["permeable_paving"],
 		"parameters": [
 			{
 				"key": "area",
@@ -110,6 +84,8 @@
 		"id": "3E2",
 		"key": "deSealing",
 		"geometryType": "Polygon",
+		"simulationMeasureName": "unpaving",
+		"areaPotentialDisplay": ["unpaving"],
 		"parameters": [
 			{
 				"key": "area",
@@ -198,6 +174,8 @@
 		"id": "3V1",
 		"key": "swale",
 		"geometryType": "Polygon",
+		"simulationMeasureName": "to_inf_mulde",
+		"areaPotentialDisplay": ["to_inf_mulde"],
 		"parameters": [
 			{
 				"key": "area",
@@ -244,6 +222,8 @@
 		"id": "3V3",
 		"key": "swaleTrenchSystem",
 		"geometryType": "Polygon",
+		"simulationMeasureName": "to_inf_mulde_rigole",
+		"areaPotentialDisplay": ["to_inf_mulde_rigole"],
 		"parameters": [
 			{
 				"key": "area",
@@ -305,6 +285,8 @@
 		"id": "3V6",
 		"key": "infiltrationTrench",
 		"geometryType": "Polygon",
+		"simulationMeasureName": "to_inf_rigole",
+		"areaPotentialDisplay": ["to_inf_rigole"],
 		"parameters": [
 			{
 				"key": "storageVolume",
@@ -372,6 +354,7 @@
 		"id": "3S4",
 		"key": "retentionArea",
 		"geometryType": "Polygon",
+		"simulationMeasureName": "to_retention",
 		"parameters": [
 			{
 				"key": "area",
