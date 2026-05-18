@@ -11,19 +11,18 @@ import { getLayerById, getSegmentLabelStyles } from "@/lib/helpers/ol";
 import { formatArea, formatLength } from "@/lib/helpers/ol/format";
 import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";
+import { useProjectStore } from "@/store/project";
 import { useScenarioStore } from "@/store/scenario";
 import { useUiStore } from "@/store/ui";
 import type { MeasureConfig, MeasureGeometryType } from "@/types/measures";
 import { LAYER_IDS } from "@/types/shared";
 import { PolygonIcon } from "@phosphor-icons/react";
-import booleanIntersects from "@turf/boolean-intersects";
-import intersect from "@turf/intersect";
+import type { Condition } from "ol/events/condition.js";
 import type { FeatureLike } from "ol/Feature";
 import Feature from "ol/Feature";
 import GeoJSON from "ol/format/GeoJSON.js";
 import type Geometry from "ol/geom/Geometry";
 import LineString from "ol/geom/LineString.js";
-import Point from "ol/geom/Point.js";
 import Polygon from "ol/geom/Polygon.js";
 import Draw from "ol/interaction/Draw.js";
 import VectorLayer from "ol/layer/Vector.js";
@@ -34,22 +33,13 @@ import CircleStyle from "ol/style/Circle.js";
 import Fill from "ol/style/Fill.js";
 import Stroke from "ol/style/Stroke.js";
 import Style from "ol/style/Style.js";
-import { FC, useCallback, useEffect, useRef, useState } from "react";
+import { FC, RefObject, useCallback, useEffect, useRef, useState } from "react";
 
 type FeatureProjection = Projection | string;
 
 type MeasureData = {
 	id: string;
 	values: Record<string, string | number | null>;
-};
-
-type PersistClippedFeatureParams = {
-	clippedFeature: Feature<Geometry>;
-	index: number;
-	scenarioId: string;
-	source: VectorSource;
-	geojson: GeoJSON;
-	projection: FeatureProjection;
 };
 
 interface LiveMeasureInfo {
@@ -106,59 +96,31 @@ const stampMeasureProperties = (
 	}
 };
 
-const clipFeaturesToPlanningLayer = ({
-	drawnFeature,
-	planningFeatures,
-	projection,
-	isPoint,
-}: {
-	drawnFeature: Feature<Geometry>;
-	planningFeatures: Feature<Geometry>[];
-	projection: FeatureProjection;
-	isPoint: boolean;
-}): Feature<Geometry>[] => {
-	const geometry = drawnFeature.getGeometry()!;
+// function returns boolean true if btf feature was found and
+// updates store to set the activeAreaPotential and activeAreaId
+const handleFirstBtfClick = (
+	coord: number[],
+	planningFeatures: Feature<Geometry>[],
+	activeBtfFeatureRef: RefObject<Feature<Geometry> | null>,
+): boolean => {
+	const btfFeature = planningFeatures.find((f) =>
+		f.getGeometry()?.intersectsCoordinate(coord),
+	);
+	if (!btfFeature) return false;
 
-	if (isPoint) {
-		const coord = (geometry as Point).getCoordinates();
-		const isInside = planningFeatures.some((f) =>
-			f.getGeometry()!.intersectsCoordinate(coord),
-		);
-		return isInside ? [drawnFeature] : [];
+	activeBtfFeatureRef.current = btfFeature;
+
+	const code = btfFeature.get("code") as string | undefined;
+	if (code) {
+		const { inputFeatures, areaPotentials } = useProjectStore.getState();
+		const idx = inputFeatures.findIndex((f) => f.properties.code === code);
+		useProjectStore.setState({
+			activeAreaId: code,
+			activeAreaPotential: idx !== -1 ? (areaPotentials[idx] ?? null) : null,
+		});
 	}
 
-	const geojson = new GeoJSON();
-	const measureGeoJSON = writeFeatureGeoJSON(geojson, drawnFeature, projection);
-
-	const clipped: Feature<Geometry>[] = [];
-
-	for (const planningFeature of planningFeatures) {
-		const planningGeometry = planningFeature.getGeometry()!;
-		if (!planningGeometry.intersectsExtent(geometry.getExtent())) continue;
-
-		const planningGeoJSON = writeFeatureGeoJSON(
-			geojson,
-			planningFeature,
-			projection,
-		);
-		if (!booleanIntersects(measureGeoJSON, planningGeoJSON)) continue;
-
-		const intersectionInput = {
-			type: "FeatureCollection",
-			features: [measureGeoJSON, planningGeoJSON],
-		} as Parameters<typeof intersect>[0];
-		const intersection = intersect(intersectionInput);
-		if (!intersection) continue;
-
-		clipped.push(
-			...geojson.readFeatures(intersection, {
-				dataProjection: "EPSG:4326",
-				featureProjection: projection,
-			}),
-		);
-	}
-
-	return clipped;
+	return true;
 };
 
 const defaultDrawStyle = new Style({
@@ -227,6 +189,7 @@ export const DrawMeasureButton: FC = () => {
 	const drawRef = useRef<Draw | null>(null);
 	const sketchGeometryRef = useRef<Geometry | null>(null);
 	const sketchChangeRef = useRef<(() => void) | null>(null);
+	const activeBtfFeatureRef = useRef<Feature<Geometry> | null>(null);
 
 	// functions
 	const removeSketchListener = useCallback(() => {
@@ -247,42 +210,8 @@ export const DrawMeasureButton: FC = () => {
 		clearLiveMeasure();
 		map.removeInteraction(drawRef.current);
 		drawRef.current = null;
+		activeBtfFeatureRef.current = null;
 	}, [map, clearLiveMeasure]);
-
-	const persistClippedFeature = useCallback(
-		({
-			clippedFeature,
-			index,
-			scenarioId,
-			source,
-			geojson,
-			projection,
-		}: PersistClippedFeatureParams) => {
-			if (isConnectedArea) {
-				const geometry = clippedFeature.getGeometry();
-				const area = geometry ? Number(getArea(geometry).toFixed(2)) : 0;
-				const connectedArea = {
-					id: createEntityId("connected-area", index),
-					createdAt: Date.now(),
-					feature: writeFeatureGeoJSON(geojson, clippedFeature, projection),
-					area,
-				};
-
-				clippedFeature.set("connectedAreaId", connectedArea.id);
-				source.addFeature(clippedFeature);
-				addConnectedArea(scenarioId, connectedArea);
-				return;
-			}
-
-			const measure = createMeasure(index);
-
-			clippedFeature.set("measureLayerConfigId", layerConfigId ?? "");
-			stampMeasureProperties(clippedFeature, measure);
-			source.addFeature(clippedFeature);
-			openMeasureCard(measure.id);
-		},
-		[addConnectedArea, isConnectedArea, layerConfigId, openMeasureCard],
-	);
 
 	useEffect(() => {
 		if (!map || !drawLayerId) return;
@@ -348,10 +277,38 @@ export const DrawMeasureButton: FC = () => {
 			return;
 		}
 
+		// function that handles the first click on the BTF planning layer
+		// it checks if activeBtfFeatureRef.current is set and calls handleFirstBtfClick
+		// it returns a boolean, true if a BTF feature was found and false otherwise
+		const btfDrawCondition: Condition = (mapBrowserEvent) => {
+			const coord = mapBrowserEvent.coordinate;
+			const planningLayer = getLayerById(
+				map,
+				LAYER_IDS.PROJECT_BTF_PLANNING,
+			) as VectorLayer<VectorSource> | null;
+			const planningFeatures = planningLayer?.getSource()?.getFeatures() ?? [];
+
+			if (!activeBtfFeatureRef.current) {
+				return handleFirstBtfClick(
+					coord,
+					planningFeatures,
+					activeBtfFeatureRef,
+				);
+			}
+
+			return (
+				activeBtfFeatureRef.current
+					.getGeometry()
+					?.intersectsCoordinate(coord) ?? false
+			);
+		};
+
 		drawRef.current = new Draw({
 			source,
 			type: geometryType,
 			style: getMeasureDrawStyles(geometryType),
+			// condition to draw only on BTF feature
+			condition: btfDrawCondition,
 		});
 
 		if (geometryType === "Polygon") {
@@ -378,56 +335,33 @@ export const DrawMeasureButton: FC = () => {
 
 		drawRef.current.on("drawend", (event) => {
 			clearLiveMeasure();
+			activeBtfFeatureRef.current = null;
 
 			const scenarioId = activeScenarioId;
 			if (!scenarioId) return;
 			const drawnFeature = event.feature;
 
 			const process = () => {
-				const planningLayer = getLayerById(
-					map,
-					LAYER_IDS.PROJECT_BTF_PLANNING,
-				) as VectorLayer<VectorSource> | null;
-				const planningFeatures =
-					planningLayer?.getSource()?.getFeatures() ?? [];
-
-				if (planningFeatures.length === 0) {
-					source.removeFeature(drawnFeature);
-					console.warn(
-						"[DrawMeasureButton] draw rejected: no BTF planning features",
-					);
-					return;
-				}
-
 				const projection = map.getView().getProjection();
-				const clippedFeatures = clipFeaturesToPlanningLayer({
-					drawnFeature,
-					planningFeatures,
-					projection,
-					isPoint: geometryType === "Point",
-				});
-
-				source.removeFeature(drawnFeature);
-
-				if (clippedFeatures.length === 0) {
-					console.warn(
-						"[DrawMeasureButton] draw rejected: outside BTF planning layer",
-					);
-					return;
-				}
-
 				const geojson = new GeoJSON();
 
-				clippedFeatures.forEach((clippedFeature, index) => {
-					persistClippedFeature({
-						clippedFeature,
-						index,
-						scenarioId,
-						source,
-						geojson,
-						projection,
-					});
-				});
+				if (isConnectedArea) {
+					const geometry = drawnFeature.getGeometry();
+					const area = geometry ? Number(getArea(geometry).toFixed(2)) : 0;
+					const connectedArea = {
+						id: createEntityId("connected-area", 0),
+						createdAt: Date.now(),
+						feature: writeFeatureGeoJSON(geojson, drawnFeature, projection),
+						area,
+					};
+					drawnFeature.set("connectedAreaId", connectedArea.id);
+					addConnectedArea(scenarioId, connectedArea);
+				} else {
+					const measure = createMeasure(0);
+					drawnFeature.set("measureLayerConfigId", layerConfigId ?? "");
+					stampMeasureProperties(drawnFeature, measure);
+					openMeasureCard(measure.id);
+				}
 			};
 
 			if (source.getFeatures().includes(drawnFeature)) {
