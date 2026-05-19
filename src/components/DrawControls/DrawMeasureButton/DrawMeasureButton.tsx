@@ -307,7 +307,6 @@ export const DrawMeasureButton: FC = () => {
 	}, [map, drawLayerId, removeSketchListener]);
 
 	useEffect(() => {
-		
 		if (!isDrawing) {
 			removeSketchListener();
 			if (drawRef.current && map) {
