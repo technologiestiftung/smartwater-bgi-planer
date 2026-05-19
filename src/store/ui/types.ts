@@ -4,6 +4,7 @@ export interface UiState {
 	isLayerTreeOpen: boolean;
 	openLegendLayerId: string;
 	openMeasureCardIds: string[];
+	placedMeasureIds: Set<string>;
 	selectedConnectedAreaId: string | null;
 	currentStepId: string | null;
 	uploadError: string | null;
@@ -32,6 +33,7 @@ export interface UiActions {
 	openMeasureCard: (measureId: string) => void;
 	closeMeasureCard: (measureId: string) => void;
 	closeAllMeasureCards: () => void;
+	setPlacedMeasureIds: (ids: Set<string>) => void;
 	setSelectedConnectedArea: (connectedAreaId: string | null) => void;
 	setCurrentStepId: (stepId: string | null) => void;
 	setUploadError: (error: string | null) => void;

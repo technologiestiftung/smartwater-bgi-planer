@@ -22,6 +22,7 @@ const initialState: UiState = {
 	isLayerTreeOpen: false,
 	openLegendLayerId: "",
 	openMeasureCardIds: [],
+	placedMeasureIds: new Set<string>(),
 	selectedConnectedAreaId: null,
 	currentStepId: null,
 	uploadError: null,
@@ -53,6 +54,7 @@ export const useUiStore = create<UiState & UiActions>()(
 						? state.openMeasureCardIds
 						: [...state.openMeasureCardIds, measureId],
 				})),
+			setPlacedMeasureIds: (ids) => set({ placedMeasureIds: new Set(ids) }),
 			closeMeasureCard: (measureId) =>
 				set((state) => ({
 					openMeasureCardIds: state.openMeasureCardIds.filter(

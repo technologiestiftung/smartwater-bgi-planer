@@ -20,7 +20,7 @@ import { useMapReady } from "@/hooks/useMapReady";
 import { getIconComponent } from "@/lib/helpers/iconMap";
 import type { SectionId } from "@/lib/helpers/sectionIds";
 import { cn } from "@/lib/utils";
-import { useLayersStore, useScenarioStore, useUiStore } from "@/store";
+import { useLayersStore, useUiStore } from "@/store";
 import type { LayerConfigItem } from "@/store/layers/types";
 import type { ModuleMeasurementConfig } from "@/types/shared";
 import { LAYER_IDS } from "@/types/shared";
@@ -183,17 +183,7 @@ export function MeasurePlanningAccordion({
 	const { hasFeatures: hasConnectedArea } = useLayerFeatures(
 		LAYER_IDS.CONNECTED_AREA_DRAW,
 	);
-
-	const placedMeasureIds = useScenarioStore(
-		useShallow((state) => {
-			const scenario = state.activeScenarioId
-				? state.scenarios[state.activeScenarioId]
-				: null;
-			if (!scenario) return new Set<string>();
-
-			return new Set(scenario.measures.map((m) => m.layerConfigId));
-		}),
-	);
+	const placedMeasureIds = useUiStore((state) => state.placedMeasureIds);
 	const [expandedStepId, setExpandedStepId] = useState(steps[0]?.id ?? "");
 	const [selectedQuestionId, setSelectedQuestionId] = useState<string | null>(
 		null,
@@ -303,6 +293,13 @@ export function MeasurePlanningAccordion({
 		applyConfigLayers("measure_start", true);
 		hasInitializedRef.current = true;
 	}, [open, isMapReady, layerConfig.length, applyConfigLayers]);
+
+	useEffect(() => {
+		console.log(
+			"[MeasurePlanningAccordion] placedMeasureIds::",
+			placedMeasureIds,
+		);
+	}, [placedMeasureIds]);
 
 	let content: React.ReactNode;
 
