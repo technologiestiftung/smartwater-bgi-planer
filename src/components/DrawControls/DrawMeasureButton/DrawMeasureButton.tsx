@@ -36,6 +36,7 @@ import Stroke from "ol/style/Stroke.js";
 import Style from "ol/style/Style.js";
 import { FC, RefObject, useCallback, useEffect, useRef, useState } from "react";
 
+// todo: update LiveMeasureInfo with new Potential after applyMeasure is called
 interface LiveMeasureInfo {
 	area: string;
 	segmentLengths: string[];
@@ -243,6 +244,8 @@ export const DrawMeasureButton: FC = () => {
 	const geometryType = normalizeMeasureGeometryType(
 		measureConfig?.geometryType,
 	);
+
+	// todo: update liveMeasureInfo when applyMeasure is called
 	const [liveMeasureInfo, setLiveMeasureInfo] =
 		useState<LiveMeasureInfo | null>(null);
 
@@ -270,6 +273,7 @@ export const DrawMeasureButton: FC = () => {
 
 	const removeDrawInteraction = useCallback(() => {
 		if (!map || !drawRef.current) return;
+
 		clearLiveMeasure();
 		map.removeInteraction(drawRef.current);
 		drawRef.current = null;
@@ -303,6 +307,7 @@ export const DrawMeasureButton: FC = () => {
 	}, [map, drawLayerId, removeSketchListener]);
 
 	useEffect(() => {
+		
 		if (!isDrawing) {
 			removeSketchListener();
 			if (drawRef.current && map) {

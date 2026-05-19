@@ -42,6 +42,10 @@ const applyMeasures = (
 	};
 };
 
+// todo: clean up simulation engine functions
+// remove computeRemainingPotential
+// when applyMeasure is called, computeRemainingPotential should be called
+
 const applyMeasure = (
 	area: ComputedArea,
 	measure: Measure,

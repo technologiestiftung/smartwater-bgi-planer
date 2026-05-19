@@ -4,20 +4,6 @@ import type { Geometry } from "ol/geom";
 // OpenLayers feature used by simulation modules.
 export type OLFeature = Feature<Geometry>;
 
-// Supported measure kinds.
-export type MeasureType = "greenRoof" | "unpaved" | "swale";
-
-// Geometry-independent size data for a measure.
-export type MeasureDimension = {
-	length: number;
-	width: number;
-	area: number;
-	height?: number;
-	depth?: number;
-	volume?: number;
-	connectedArea?: number;
-};
-
 // Raw area properties read from OL features.
 export type AreaValues = {
 	total_area: number;
