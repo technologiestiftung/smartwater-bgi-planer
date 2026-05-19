@@ -1,33 +1,20 @@
-import type { Measure, MeasureStats, OLFeature } from "../types";
+import type { ComputedArea, Measure } from "../types";
 import areaCalc from "./areaCalculations";
 
-function calculateTotalMeasureArea(measures: Array<{ area?: number }>): number {
-	return areaCalc.calculatePrecisely(
-		measures.reduce((sum, measure) => sum + (measure.area || 0), 0),
-	);
-}
+function calculateApplyMeasure(area: ComputedArea, measure: Measure) {
+	console.log("[measureCalculations] area::", area);
+	console.log("[measureCalculations] measure::", measure);
 
-function calculateAllMeasureStats(
-	selectedFeatures: OLFeature[],
-	selectedMeasures: Measure[],
-): MeasureStats {
-	if (!selectedMeasures || selectedMeasures.length === 0) {
-		return {
-			total_measure_area: null,
-		};
-	}
-
-	console.log("[measureCalculations] selectedFeatures::", selectedFeatures);
-	console.log("[measureCalculations] selectedMeasures::", selectedMeasures);
+	console.log("[measureCalculations] areaCalc::", areaCalc);
+	// areaCalc.addComputedAreas();
 
 	return {
-		total_measure_area: calculateTotalMeasureArea(selectedMeasures),
+		total_measure_area: 0,
 	};
 }
 
 const measureCalculations = {
-	calculateAllMeasureStats,
-	calculateTotalMeasureArea,
+	calculateApplyMeasure,
 };
 
 export default measureCalculations;

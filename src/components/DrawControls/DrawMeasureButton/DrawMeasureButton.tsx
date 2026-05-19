@@ -10,6 +10,7 @@ import { isSwaleLayerConfigId } from "@/lib/helpers/measures/swale";
 import { getDrawnValue } from "@/lib/helpers/measures/values";
 import { getLayerById, getSegmentLabelStyles } from "@/lib/helpers/ol";
 import { formatArea, formatLength } from "@/lib/helpers/ol/format";
+import { simulationEngine } from "@/lib/simulation/simulationEngine";
 import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";
 import { useProjectStore } from "@/store/project";
@@ -22,13 +23,11 @@ import { PolygonIcon } from "@phosphor-icons/react";
 import type { Condition } from "ol/events/condition.js";
 import type { FeatureLike } from "ol/Feature";
 import Feature from "ol/Feature";
-import GeoJSON from "ol/format/GeoJSON.js";
 import type Geometry from "ol/geom/Geometry";
 import LineString from "ol/geom/LineString.js";
 import Polygon from "ol/geom/Polygon.js";
 import Draw from "ol/interaction/Draw.js";
 import VectorLayer from "ol/layer/Vector.js";
-import type Projection from "ol/proj/Projection";
 import { Vector as VectorSource } from "ol/source.js";
 import { getArea } from "ol/sphere.js";
 import CircleStyle from "ol/style/Circle.js";
@@ -37,11 +36,10 @@ import Stroke from "ol/style/Stroke.js";
 import Style from "ol/style/Style.js";
 import { FC, RefObject, useCallback, useEffect, useRef, useState } from "react";
 
-type FeatureProjection = Projection | string;
-
 interface LiveMeasureInfo {
 	area: string;
 	segmentLengths: string[];
+	isOverPotential?: boolean;
 }
 
 const createEntityId = (prefix: string, index: number) =>
@@ -51,15 +49,17 @@ const measureConfigById = createMeasureConfigMap(
 	measuresConfig as MeasureConfig[],
 );
 
-const writeFeatureGeoJSON = (
-	geojson: GeoJSON,
-	feature: Feature<Geometry>,
-	projection: FeatureProjection,
-) =>
-	geojson.writeFeatureObject(feature, {
-		featureProjection: projection,
-		dataProjection: "EPSG:4326",
-	});
+const getMeasureArea = (values: Record<string, MeasureValue>): number => {
+	if (typeof values.area === "number") {
+		return values.area;
+	}
+
+	if (typeof values.connectedArea === "number") {
+		return values.connectedArea;
+	}
+
+	return 0;
+};
 
 const buildPolygonLiveInfo = (geometry: Polygon): LiveMeasureInfo | null => {
 	const ring = geometry.getCoordinates()[0] || [];
@@ -74,6 +74,76 @@ const buildPolygonLiveInfo = (geometry: Polygon): LiveMeasureInfo | null => {
 		area: formatArea(geometry),
 		segmentLengths,
 	};
+};
+
+const shouldBlockClosingClick = ({
+	map,
+	sketchGeometry,
+	pixel,
+	isOverPotential,
+}: {
+	map: ReturnType<typeof useMapStore.getState>["map"];
+	sketchGeometry: Geometry | null;
+	pixel: number[];
+	isOverPotential: boolean;
+}): boolean => {
+	if (!isOverPotential || !map || !(sketchGeometry instanceof Polygon)) {
+		return false;
+	}
+
+	const ring = sketchGeometry.getCoordinates()[0] ?? [];
+	const firstVertex = ring[0];
+	if (!firstVertex) {
+		return false;
+	}
+
+	const firstPixel = map.getPixelFromCoordinate(firstVertex);
+	const dx = pixel[0] - firstPixel[0];
+	const dy = pixel[1] - firstPixel[1];
+	return Math.sqrt(dx * dx + dy * dy) <= 10;
+};
+
+const getActiveMeasurePotential = ({
+	layerConfigId,
+	measures,
+	projectState,
+}: {
+	layerConfigId: string | null;
+	measures: ReturnType<
+		typeof useScenarioStore.getState
+	>["scenarios"][string]["measures"];
+	projectState: ReturnType<typeof useProjectStore.getState>;
+}): number | null => {
+	const config = measureConfigById.get(layerConfigId ?? "");
+	const measureKey = config?.measureKey;
+	if (!measureKey) {
+		return null;
+	}
+
+	const activeAreaId = projectState.activeAreaId;
+	const activeAreaIndex = projectState.inputFeatures.findIndex(
+		(item) => item.properties.code === activeAreaId,
+	);
+	if (activeAreaIndex === -1) {
+		return null;
+	}
+
+	const baseComputedArea = projectState.computedFeatures.find(
+		(item) => item.code === activeAreaId,
+	)?.computedArea;
+	if (!baseComputedArea) {
+		return null;
+	}
+
+	const measuresInActiveArea = measures.filter(
+		(item) => item.code && item.code === activeAreaId,
+	);
+	const remainingPotential = simulationEngine.computeRemainingPotential(
+		baseComputedArea,
+		measuresInActiveArea,
+	);
+
+	return remainingPotential[measureKey];
 };
 
 // function returns boolean true if btf feature was found and
@@ -92,11 +162,11 @@ const handleFirstBtfClick = (
 
 	const code = btfFeature.get("code") as string | undefined;
 	if (code) {
-		const { inputFeatures, areaPotentials } = useProjectStore.getState();
-		const idx = inputFeatures.findIndex((f) => f.properties.code === code);
+		const { computedFeatures } = useProjectStore.getState();
+		const computedFeature = computedFeatures.find((item) => item.code === code);
 		useProjectStore.setState({
 			activeAreaId: code,
-			activeAreaPotential: idx !== -1 ? (areaPotentials[idx] ?? null) : null,
+			activeAreaPotential: computedFeature?.areaPotential ?? null,
 		});
 	}
 
@@ -154,6 +224,10 @@ export const DrawMeasureButton: FC = () => {
 		return state.scenarios[state.activeScenarioId]?.connectedAreas ?? [];
 	});
 	const activeScenarioId = useScenarioStore((state) => state.activeScenarioId);
+	const measures = useScenarioStore((state) => {
+		if (!state.activeScenarioId) return [];
+		return state.scenarios[state.activeScenarioId]?.measures ?? [];
+	});
 
 	// local state
 	const isConnectedArea = layerConfigId === "connected_area";
@@ -177,6 +251,7 @@ export const DrawMeasureButton: FC = () => {
 	const sketchGeometryRef = useRef<Geometry | null>(null);
 	const sketchChangeRef = useRef<(() => void) | null>(null);
 	const activeBtfFeatureRef = useRef<Feature<Geometry> | null>(null);
+	const isOverPotentialRef = useRef(false);
 
 	// functions
 	const removeSketchListener = useCallback(() => {
@@ -189,6 +264,7 @@ export const DrawMeasureButton: FC = () => {
 
 	const clearLiveMeasure = useCallback(() => {
 		removeSketchListener();
+		isOverPotentialRef.current = false;
 		setLiveMeasureInfo(null);
 	}, [removeSketchListener]);
 
@@ -269,6 +345,18 @@ export const DrawMeasureButton: FC = () => {
 		// it returns a boolean, true if a BTF feature was found and false otherwise
 		const btfDrawCondition: Condition = (mapBrowserEvent) => {
 			const coord = mapBrowserEvent.coordinate;
+
+			if (
+				shouldBlockClosingClick({
+					map,
+					sketchGeometry: sketchGeometryRef.current,
+					pixel: mapBrowserEvent.pixel,
+					isOverPotential: isOverPotentialRef.current,
+				})
+			) {
+				return false;
+			}
+
 			const planningLayer = getLayerById(
 				map,
 				LAYER_IDS.PROJECT_BTF_PLANNING,
@@ -308,10 +396,30 @@ export const DrawMeasureButton: FC = () => {
 
 				const update = () => {
 					if (!(geometry instanceof Polygon)) {
+						isOverPotentialRef.current = false;
 						setLiveMeasureInfo(null);
 						return;
 					}
-					setLiveMeasureInfo(buildPolygonLiveInfo(geometry));
+
+					const info = buildPolygonLiveInfo(geometry);
+					if (!info) {
+						isOverPotentialRef.current = false;
+						setLiveMeasureInfo(null);
+						return;
+					}
+					const projectState = useProjectStore.getState();
+					const activePotential = getActiveMeasurePotential({
+						layerConfigId,
+						measures,
+						projectState,
+					});
+					const currentArea = Number(getArea(geometry).toFixed(2));
+					const isOverPotential =
+						typeof activePotential === "number" &&
+						currentArea > activePotential;
+
+					isOverPotentialRef.current = isOverPotential;
+					setLiveMeasureInfo({ ...info, isOverPotential });
 				};
 
 				sketchChangeRef.current = update;
@@ -344,10 +452,11 @@ export const DrawMeasureButton: FC = () => {
 				const measure = {
 					id: createEntityId("measure", 0),
 					createdAt: Date.now(),
-					areaCode: activeAreaId ?? null,
+					code: activeAreaId ?? null,
+					name: config.measureKey ?? config.id,
+					area: getMeasureArea(values),
 					configId: layerConfigId ?? "",
 					drawLayerId: drawLayerId ?? null,
-					values,
 				};
 
 				drawnFeature.set("measureId", measure.id);
@@ -363,16 +472,14 @@ export const DrawMeasureButton: FC = () => {
 			};
 
 			const process = () => {
-				const projection = map.getView().getProjection();
-				const geojson = new GeoJSON();
-
 				if (isConnectedArea) {
 					const geometry = drawnFeature.getGeometry();
 					const area = geometry ? Number(getArea(geometry).toFixed(2)) : 0;
+					const activeAreaId = useProjectStore.getState().activeAreaId;
 					const connectedArea = {
 						id: createEntityId("connected-area", 0),
 						createdAt: Date.now(),
-						feature: writeFeatureGeoJSON(geojson, drawnFeature, projection),
+						code: activeAreaId ?? null,
 						area,
 					};
 					drawnFeature.set("connectedAreaId", connectedArea.id);
@@ -416,7 +523,13 @@ export const DrawMeasureButton: FC = () => {
 			</Button>
 			{isDrawing && liveMeasureInfo && geometryType === "Polygon" && (
 				<div className="bg-background border-primary text-primary absolute right-0 bottom-full z-10 mb-2 w-64 border-2 p-2 text-xs shadow-lg">
-					<p className="font-semibold">Fläche: {liveMeasureInfo.area}</p>
+					<p
+						className={`font-semibold ${
+							liveMeasureInfo.isOverPotential ? "text-destructive" : ""
+						}`}
+					>
+						Fläche: {liveMeasureInfo.area}
+					</p>
 				</div>
 			)}
 		</div>

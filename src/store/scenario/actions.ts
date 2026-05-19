@@ -20,7 +20,6 @@ export const createCreateScenario = (set: SetState) => {
 				[id]: {
 					id,
 					name,
-					BTFMeasures: [],
 					connectedAreas: [],
 					measures: [],
 				},
@@ -99,6 +98,14 @@ export const createUpdateMeasureValues = (set: SetState) => {
 			const scenario = state.scenarios[scenarioId];
 			if (!scenario) return state;
 
+			const nextAreaValue = values.area ?? values.connectedArea;
+			let nextArea: number | undefined;
+			if (typeof nextAreaValue === "number") {
+				nextArea = nextAreaValue;
+			} else if (typeof nextAreaValue === "string") {
+				nextArea = Number(nextAreaValue) || 0;
+			}
+
 			return {
 				scenarios: {
 					...state.scenarios,
@@ -108,10 +115,7 @@ export const createUpdateMeasureValues = (set: SetState) => {
 							measure.id === measureId
 								? {
 										...measure,
-										values: {
-											...measure.values,
-											...values,
-										},
+										area: nextArea ?? measure.area,
 									}
 								: measure,
 						),

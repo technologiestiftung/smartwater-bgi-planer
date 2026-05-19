@@ -9,22 +9,17 @@ import {
 	createSetInputFeatures,
 	createSetLastPath,
 	createUpdateProject,
+	emptyAccumulatedStats,
 } from "./actions";
 import { ProjectActions, ProjectState } from "./types";
 
 const initialState: ProjectState = {
-	// Abimo Map input data
-	// total Area of all input features
-	totalArea: 0,
-	// features from Abimo Input 2025 (BTFs) -> amarex: selectedFeatures
+	// features from rabimo_input_2025 (BTFs) -> amarex: selectedFeatures
 	inputFeatures: [],
-	inputFeaturesCount: 0,
-	// Derived m² values per BTF (Ist-Zustand) — parallel to inputFeatures
-	computedAreas: [],
-	// Potential m² values for entire project BTF area
-	areaPotential: null,
-	// Available m² per measure per BTF (Potential) — parallel to inputFeatures
-	areaPotentials: [],
+	// stats for the entire BTF project area
+	accumulatedStats: emptyAccumulatedStats,
+	// stats for each BTF
+	computedFeatures: [],
 	// Active BTF
 	activeAreaPotential: null,
 	activeAreaId: null,

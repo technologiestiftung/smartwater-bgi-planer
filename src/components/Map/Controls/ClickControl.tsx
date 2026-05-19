@@ -175,14 +175,14 @@ export const ClickControl: FC<ClickControlProps> = ({
 			return;
 		}
 
-		const { inputFeatures, areaPotentials } = useProjectStore.getState();
-		const idx = inputFeatures.findIndex(
-			(feature) => feature.properties.code === code,
+		const { computedFeatures } = useProjectStore.getState();
+		const computedFeature = computedFeatures.find(
+			(feature) => feature.code === code,
 		);
 
 		useProjectStore.setState({
 			activeAreaId: code,
-			activeAreaPotential: idx !== -1 ? (areaPotentials[idx] ?? null) : null,
+			activeAreaPotential: computedFeature?.areaPotential ?? null,
 		});
 	}, []);
 
@@ -220,19 +220,19 @@ export const ClickControl: FC<ClickControlProps> = ({
 						? vectorMatch.feature
 						: undefined;
 
-				let areaCode = clickedFeature?.get("code") as string | undefined;
+				let code = clickedFeature?.get("code") as string | undefined;
 
-				if (!areaCode) {
+				if (!code) {
 					const measureId = resolveMeasureId(clickedFeature);
 					if (measureId && activeScenarioId) {
 						const clickedMeasure = measures.find(
 							(item) => item.id === measureId,
 						);
-						areaCode = clickedMeasure?.areaCode ?? undefined;
+						code = clickedMeasure?.code ?? undefined;
 					}
 				}
 
-				setActiveAreaFromCode(areaCode ?? null);
+				setActiveAreaFromCode(code ?? null);
 
 				clearTimeouts();
 				setCardPosition(calculatePositioning(evt.pixel));

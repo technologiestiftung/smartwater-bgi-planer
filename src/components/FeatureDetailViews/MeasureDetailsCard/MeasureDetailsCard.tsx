@@ -64,6 +64,8 @@ export const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
 		return null;
 	}
 
+	const measureValues: Record<string, MeasureValue> = { area: measure.area };
+
 	const handleSave = () => {
 		const nextValues = measureConfig.parameters.reduce<
 			Record<string, MeasureValue>
@@ -133,7 +135,7 @@ export const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
 							type={param.type === "string" ? "text" : "number"}
 							value={
 								draftValues[param.key] ??
-								formatMeasureValue(measure.values[param.key])
+								formatMeasureValue(measureValues[param.key])
 							}
 							readOnly={param.source === "drawn"}
 							disabled={param.source === "drawn"}

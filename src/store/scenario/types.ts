@@ -1,20 +1,20 @@
-import type { Feature as GeoJSONFeature, Geometry } from "geojson";
-
 export type MeasureValue = number | string | null;
 
 export interface PlacedMeasure {
 	id: string;
 	createdAt: number;
-	areaCode: string | null;
+	code: string | null;
+	name: string;
+	area: number;
 	configId: string;
 	drawLayerId: string | null;
-	values: Record<string, MeasureValue>;
+	values?: Record<string, MeasureValue>;
 }
 
 export interface ConnectedArea {
 	id: string;
 	createdAt: number;
-	feature: GeoJSONFeature<Geometry>;
+	code: string | null;
 	area: number;
 }
 

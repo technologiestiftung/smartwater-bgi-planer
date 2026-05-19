@@ -24,13 +24,25 @@ export interface InputFeature {
 	properties: Record<string, unknown>;
 }
 
-export interface ProjectState {
+export interface AccumulatedStats {
 	totalArea: number;
-	inputFeatures: InputFeature[];
 	inputFeaturesCount: number;
-	computedAreas: ComputedArea[];
-	areaPotentials: AreaPotential[];
-	areaPotential: AreaPotential | null;
+	areaPotential: AreaPotential;
+	computedArea: ComputedArea;
+}
+
+export interface ComputedFeatures {
+	code: string;
+	computedArea: ComputedArea;
+	areaPotential: AreaPotential;
+}
+
+export interface ProjectState {
+	accumulatedStats: AccumulatedStats;
+	inputFeatures: InputFeature[];
+	computedFeatures: ComputedFeatures[];
+
+	// Active§
 	activeAreaPotential: AreaPotential | null;
 	activeAreaId: string | null;
 

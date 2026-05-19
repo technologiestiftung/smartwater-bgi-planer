@@ -12,7 +12,6 @@ import { useUiStore } from "@/store/ui";
 import { LAYER_IDS } from "@/types/shared";
 import { TrashIcon, XCircleIcon } from "@phosphor-icons/react";
 import type Feature from "ol/Feature";
-import GeoJSON from "ol/format/GeoJSON";
 import type { Geometry } from "ol/geom";
 import VectorLayer from "ol/layer/Vector.js";
 import { Vector as VectorSource } from "ol/source.js";
@@ -45,33 +44,6 @@ export const FeatureActionMenu: FC<FeatureActionMenuProps> = ({
 
 	const [isDeleting, setIsDeleting] = useState(false);
 
-	const resolveMeasureIdFallback = (): string | null => {
-		return null;
-	};
-
-	const resolveConnectedAreaIdFallback = (): string | null => {
-		if (!features || !map || !activeScenarioId) return null;
-		const geometry = features.getGeometry();
-		if (!geometry) return null;
-
-		const scenario = useScenarioStore.getState().scenarios[activeScenarioId];
-		if (!scenario) return null;
-
-		const format = new GeoJSON();
-		const normalizedGeometry = format.writeGeometryObject(geometry, {
-			featureProjection: map.getView().getProjection(),
-			dataProjection: "EPSG:4326",
-		});
-		const normalizedGeometryString = JSON.stringify(normalizedGeometry);
-
-		const match = scenario.connectedAreas.find(
-			(connectedArea) =>
-				JSON.stringify(connectedArea.feature.geometry) ===
-				normalizedGeometryString,
-		);
-		return match?.id ?? null;
-	};
-
 	/* eslint-disable complexity, max-depth */
 	const handleDelete = async () => {
 		if (!features || !map || !layerId || isDeleting) return;
@@ -88,14 +60,10 @@ export const FeatureActionMenu: FC<FeatureActionMenuProps> = ({
 				source.changed();
 
 				if (activeScenarioId) {
-					const measureId =
-						(features.get("measureId") as string | undefined) ??
-						resolveMeasureIdFallback() ??
-						undefined;
-					const connectedAreaId =
-						(features.get("connectedAreaId") as string | undefined) ??
-						resolveConnectedAreaIdFallback() ??
-						undefined;
+					const measureId = features.get("measureId") as string | undefined;
+					const connectedAreaId = features.get("connectedAreaId") as
+						| string
+						| undefined;
 
 					if (measureId) {
 						removeMeasure(activeScenarioId, measureId);

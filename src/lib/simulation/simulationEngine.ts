@@ -1,12 +1,30 @@
+import measuresConfig from "@/config/measuresConfig.json";
+import { createMeasureConfigMap } from "@/lib/helpers/measures/config";
 import areaCalculations from "@/lib/simulation/calculations/areaCalculations";
 import measureCalculations from "@/lib/simulation/calculations/measureCalculations";
 import type {
+	AreaPotential,
+	ComputedArea,
 	Measure,
 	MeasureStats,
-	ResultItem,
-	ResultStats,
 } from "@/lib/simulation/types";
 import type { InputFeature } from "@/store/project/types";
+import type { PlacedMeasure } from "@/store/scenario/types";
+import type { MeasureCalculationName, MeasureConfig } from "@/types/measures";
+
+const measureConfigById = createMeasureConfigMap(
+	measuresConfig as MeasureConfig[],
+);
+
+const getMeasureAmount = (measure: PlacedMeasure): number => {
+	return Number.isFinite(measure.area) ? measure.area : 0;
+};
+
+const getMeasureName = (
+	measure: PlacedMeasure,
+): MeasureCalculationName | null => {
+	return measureConfigById.get(measure.configId)?.measureKey ?? null;
+};
 
 const getOlFeatures = (inputFeatures: InputFeature[]) =>
 	inputFeatures.map((inputFeature) => inputFeature.feature);
@@ -25,32 +43,38 @@ const preprocessInput = (inputFeatures: InputFeature[], _newUnpvd = 0) => {
 	return preprocessed;
 };
 
-const applyMeasures = (
-	inputFeatures: InputFeature[],
-	measures: Measure[],
-): MeasureStats => {
-	// function to calculate measure stats
-	// updatePreComputedStats
-	// accumulatedStats (currentState)? -> Update das bei jedem setzten einer Maßnahme passieren muss um zu bestimmen wie viel Fläche wir zur Verfügung haben
-	// -> muss am Anfang aufgerufen werden um potentialfläche anzuzeigen (available) (jedes mal wenn eine BTF geklickt wird, muss die potentielle fläche für die maßnhame angezeigt werden)
-	// 2. get_available_m2
-	if (inputFeatures.length === 0 || measures.length === 0) {
-		return {
-			total_measure_area: null,
-		};
-	}
+const applyMeasure = (area: ComputedArea, measure: Measure): MeasureStats => {
+	const result = measureCalculations.calculateApplyMeasure(area, measure);
 
-	return measureCalculations.calculateAllMeasureStats(
-		getOlFeatures(inputFeatures),
-		measures,
-	);
+	console.log("[simulationEngine] result::", result);
+	return {
+		total_measure_area: result.total_measure_area,
+	};
 };
 
-const computeResults = (data: ResultItem[]): ResultStats =>
-	areaCalculations.calculateResultStats(data);
+const computeRemainingPotential = (
+	baseComputedArea: ComputedArea,
+	measures: PlacedMeasure[],
+): AreaPotential => {
+	const nextComputedArea = measures.reduce((currentArea, measure) => {
+		const measureName = getMeasureName(measure);
+		const amount = getMeasureAmount(measure);
+		if (!measureName || amount <= 0) {
+			return currentArea;
+		}
+
+		return areaCalculations.applyMeasureToComputedArea(
+			currentArea,
+			measureName,
+			amount,
+		);
+	}, baseComputedArea);
+
+	return areaCalculations.toAreaPotential(nextComputedArea);
+};
 
 export const simulationEngine = {
 	preprocessInput,
-	applyMeasures,
-	computeResults,
+	applyMeasure,
+	computeRemainingPotential,
 };

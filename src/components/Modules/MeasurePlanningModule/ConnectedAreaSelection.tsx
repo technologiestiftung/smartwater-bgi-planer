@@ -23,9 +23,9 @@ interface ConnectedAreaSelectionProps {
 
 const EMPTY_CONNECTED_AREAS: Array<{ id: string; area: number }> = [];
 const EMPTY_MEASURES: Array<{
+	area: number;
 	configId: string;
 	drawLayerId: string | null;
-	values: Record<string, number | string | null>;
 }> = [];
 
 export function ConnectedAreaSelection({
@@ -87,16 +87,10 @@ export function ConnectedAreaSelection({
 	);
 
 	const summary = useMemo(() => {
-		const count = measureRows.reduce((sum, measure) => {
-			const value = measure.values.count;
-			if (typeof value === "number") {
-				return sum + value;
-			}
-			return sum + 1;
-		}, 0);
+		const count = measureRows.length;
 
 		const measureArea = measureRows.reduce((sum, measure) => {
-			const area = measure.values.area;
+			const area = measure.area;
 			return typeof area === "number" ? sum + area : sum;
 		}, 0);
 

@@ -3,10 +3,50 @@ import { useAnswersStore } from "../answers";
 import { useFilesStore } from "../files";
 import { useMapStore } from "../map";
 import { useUiStore } from "../ui";
-import { InputFeature, Project, ProjectActions, ProjectState } from "./types";
+import {
+	AccumulatedStats,
+	ComputedFeatures,
+	InputFeature,
+	Project,
+	ProjectActions,
+	ProjectState,
+} from "./types";
 
 type SetState = (partial: Partial<ProjectState & ProjectActions>) => void;
 type GetState = () => ProjectState & ProjectActions;
+
+export const emptyAccumulatedStats: AccumulatedStats = {
+	totalArea: 0,
+	inputFeaturesCount: 0,
+	areaPotential: {
+		green_roof_ext: 0,
+		green_roof_int: 0,
+		unpaving: 0,
+		permeable_paving: 0,
+		to_inf_mulde: 0,
+		to_inf_rigole: 0,
+		to_inf_mulde_rigole: 0,
+		to_retention: 0,
+	},
+	computedArea: {
+		total: 0,
+		roof: 0,
+		pvd: 0,
+		pvd_1: 0,
+		pvd_2: 0,
+		pvd_3: 0,
+		pvd_4: 0,
+		pvd_na: 0,
+		sealed: 0,
+		unsealed: 0,
+		green_roof_ext: 0,
+		green_roof_int: 0,
+		to_inf_mulde: 0,
+		to_inf_rigole: 0,
+		to_inf_mulde_rigole: 0,
+		to_retention: 0,
+	},
+};
 
 export const createCreateProject = (set: SetState) => {
 	return (project: Omit<Project, "createdAt" | "updatedAt">) => {
@@ -43,10 +83,10 @@ export const createDeleteProject = (set: SetState, get: GetState) => {
 		set({
 			project: null,
 			inputFeatures: [],
-			inputFeaturesCount: 0,
-			totalArea: 0,
-			computedAreas: [],
-			areaPotentials: [],
+			accumulatedStats: emptyAccumulatedStats,
+			computedFeatures: [],
+			activeAreaPotential: null,
+			activeAreaId: null,
 		});
 
 		if (projectId) {
@@ -87,13 +127,21 @@ export const createSetInputFeatures = (set: SetState) => {
 		const stats = simulationEngine.preprocessInput(features);
 		console.log("[useProjectStore] preprocessed stats", stats);
 
+		const computedFeatures: ComputedFeatures[] = stats.features.map((item) => ({
+			code: item.code,
+			computedArea: item.computedArea,
+			areaPotential: item.areaPotential,
+		}));
+
 		set({
 			inputFeatures: features,
-			inputFeaturesCount: features.length,
-			totalArea: stats.totalArea,
-			areaPotential: stats.areaPotential,
-			computedAreas: stats.features.map((f) => f.computedArea),
-			areaPotentials: stats.features.map((f) => f.areaPotential),
+			accumulatedStats: {
+				totalArea: stats.totalArea,
+				inputFeaturesCount: features.length,
+				areaPotential: stats.areaPotential,
+				computedArea: stats.computedArea,
+			},
+			computedFeatures,
 		});
 	};
 };
