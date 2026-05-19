@@ -1,4 +1,3 @@
-import type { MeasureCalculationName } from "@/types/measures";
 import type {
 	AreaPotential,
 	AreaValues,
@@ -46,6 +45,7 @@ function calculatePrecisely(value: number, precision = 9): number {
 }
 
 // R: update_calculated_fields
+// updates area fields with pvd, sealed and unsealed
 function updateCalculatedFields(areas: ComputedArea): ComputedArea {
 	const pvd =
 		areas.pvd_1 + areas.pvd_2 + areas.pvd_3 + areas.pvd_4 + areas.pvd_na;
@@ -89,6 +89,7 @@ function toComputedArea(area: OLFeature): ComputedArea {
 }
 
 // R: get_available_m2
+// Get available area for each measure, based on current "state" -> potential
 function toAreaPotential(areas: ComputedArea): AreaPotential {
 	const availableGreenRoof =
 		areas.roof - areas.green_roof_ext - areas.green_roof_int;
@@ -103,74 +104,6 @@ function toAreaPotential(areas: ComputedArea): AreaPotential {
 		to_inf_mulde_rigole: calculatePrecisely(areas.sealed),
 		to_retention: calculatePrecisely(areas.sealed),
 	};
-}
-
-// R: is_no_op
-function isNoOpMeasure(name: MeasureCalculationName | null): boolean {
-	return (
-		name === null ||
-		name === "to_inf_mulde" ||
-		name === "to_inf_rigole" ||
-		name === "to_inf_mulde_rigole" ||
-		name === "to_retention"
-	);
-}
-
-// R: apply_measure
-// Applies one measure to one BTF state and then refreshes derived fields.
-function applyMeasureToComputedArea(
-	areas: ComputedArea,
-	measureName: MeasureCalculationName | null,
-	measureArea: number,
-): ComputedArea {
-	const amount = calculatePrecisely(measureArea);
-
-	if (measureName === "green_roof_ext" || measureName === "green_roof_int") {
-		const nextGreenRoofExt =
-			measureName === "green_roof_ext"
-				? calculatePrecisely(areas.green_roof_ext + amount)
-				: areas.green_roof_ext;
-		const nextGreenRoofInt =
-			measureName === "green_roof_int"
-				? calculatePrecisely(areas.green_roof_int + amount)
-				: areas.green_roof_int;
-
-		return updateCalculatedFields({
-			...areas,
-			green_roof_ext: nextGreenRoofExt,
-			green_roof_int: nextGreenRoofInt,
-		});
-	}
-
-	if (measureName === "unpaving") {
-		const newPvd = calculatePrecisely(areas.pvd - amount);
-		const scalingFactor = areas.pvd === 0 ? 0 : newPvd / areas.pvd;
-
-		return updateCalculatedFields({
-			...areas,
-			pvd_1: calculatePrecisely(areas.pvd_1 * scalingFactor),
-			pvd_2: calculatePrecisely(areas.pvd_2 * scalingFactor),
-			pvd_3: calculatePrecisely(areas.pvd_3 * scalingFactor),
-			pvd_4: calculatePrecisely(areas.pvd_4 * scalingFactor),
-			pvd_na: calculatePrecisely(areas.pvd_na * scalingFactor),
-		});
-	}
-
-	if (isNoOpMeasure(measureName)) {
-		return updateCalculatedFields(areas);
-	}
-
-	const pvdNot4 = areas.pvd_1 + areas.pvd_2 + areas.pvd_3 + areas.pvd_na;
-	const scalingFactor = pvdNot4 === 0 ? 0 : 1 - (1 / pvdNot4) * amount;
-
-	return updateCalculatedFields({
-		...areas,
-		pvd_4: calculatePrecisely(areas.pvd_4 + amount),
-		pvd_1: calculatePrecisely(areas.pvd_1 * scalingFactor),
-		pvd_2: calculatePrecisely(areas.pvd_2 * scalingFactor),
-		pvd_3: calculatePrecisely(areas.pvd_3 * scalingFactor),
-		pvd_na: calculatePrecisely(areas.pvd_na * scalingFactor),
-	});
 }
 
 function createEmptyComputedArea(): ComputedArea {
@@ -338,7 +271,6 @@ const areaCalculations = {
 	toComputedArea,
 	updateCalculatedFields,
 	toAreaPotential,
-	applyMeasureToComputedArea,
 	preprocessAllFeatures,
 	calculateResultStats,
 	calculatePrecisely,

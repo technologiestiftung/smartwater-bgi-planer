@@ -1,29 +1,12 @@
-import measuresConfig from "@/config/measuresConfig.json";
-import { createMeasureConfigMap } from "@/lib/helpers/measures/config";
 import areaCalculations from "@/lib/simulation/calculations/areaCalculations";
 import measureCalculations from "@/lib/simulation/calculations/measureCalculations";
-import type {
-	AreaPotential,
-	ComputedArea,
-	Measure,
-	MeasureStats,
-} from "@/lib/simulation/types";
+import type { AreaPotential, ComputedArea } from "@/lib/simulation/types";
 import type { InputFeature } from "@/store/project/types";
-import type { PlacedMeasure } from "@/store/scenario/types";
-import type { MeasureCalculationName, MeasureConfig } from "@/types/measures";
+import { Measure } from "@/store/scenario/types";
 
-const measureConfigById = createMeasureConfigMap(
-	measuresConfig as MeasureConfig[],
-);
-
-const getMeasureAmount = (measure: PlacedMeasure): number => {
-	return Number.isFinite(measure.area) ? measure.area : 0;
-};
-
-const getMeasureName = (
-	measure: PlacedMeasure,
-): MeasureCalculationName | null => {
-	return measureConfigById.get(measure.configId)?.measureKey ?? null;
+type ApplyMeasuresResult = {
+	computedArea: ComputedArea;
+	areaPotential: AreaPotential;
 };
 
 const getOlFeatures = (inputFeatures: InputFeature[]) =>
@@ -43,38 +26,44 @@ const preprocessInput = (inputFeatures: InputFeature[], _newUnpvd = 0) => {
 	return preprocessed;
 };
 
-const applyMeasure = (area: ComputedArea, measure: Measure): MeasureStats => {
-	const result = measureCalculations.calculateApplyMeasure(area, measure);
+const applyMeasures = (
+	baseComputedArea: ComputedArea,
+	measures: Measure[],
+): ApplyMeasuresResult => {
+	const computedArea = measures.reduce((currentArea, measure) => {
+		return measureCalculations.calculateApplyMeasure(currentArea, measure);
+	}, baseComputedArea);
+
+	const areaPotential = areaCalculations.toAreaPotential(computedArea);
+
+	return {
+		computedArea,
+		areaPotential,
+	};
+};
+
+const applyMeasure = (
+	area: ComputedArea,
+	measure: Measure,
+): ApplyMeasuresResult => {
+	const result = applyMeasures(area, [measure]);
 
 	console.log("[simulationEngine] result::", result);
 	return {
-		total_measure_area: result.total_measure_area,
+		...result,
 	};
 };
 
 const computeRemainingPotential = (
 	baseComputedArea: ComputedArea,
-	measures: PlacedMeasure[],
+	measures: Measure[],
 ): AreaPotential => {
-	const nextComputedArea = measures.reduce((currentArea, measure) => {
-		const measureName = getMeasureName(measure);
-		const amount = getMeasureAmount(measure);
-		if (!measureName || amount <= 0) {
-			return currentArea;
-		}
-
-		return areaCalculations.applyMeasureToComputedArea(
-			currentArea,
-			measureName,
-			amount,
-		);
-	}, baseComputedArea);
-
-	return areaCalculations.toAreaPotential(nextComputedArea);
+	return applyMeasures(baseComputedArea, measures).areaPotential;
 };
 
 export const simulationEngine = {
 	preprocessInput,
+	applyMeasures,
 	applyMeasure,
 	computeRemainingPotential,
 };

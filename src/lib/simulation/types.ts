@@ -18,14 +18,6 @@ export type MeasureDimension = {
 	connectedArea?: number;
 };
 
-// User-selected measure input.
-export type Measure = {
-	type: MeasureType;
-	area?: number;
-	volume?: number;
-	connectedArea?: number;
-};
-
 // Raw area properties read from OL features.
 export type AreaValues = {
 	total_area: number;
@@ -114,5 +106,5 @@ export type ReportPayload = {
 // Aggregated stats for selected measures.
 export type MeasureStats = {
 	// todo: add types
-	total_measure_area: number | null;
+	// total_measure_area: number | null;
 };

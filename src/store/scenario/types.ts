@@ -1,6 +1,6 @@
 export type MeasureValue = number | string | null;
 
-export interface PlacedMeasure {
+export interface Measure {
 	id: string;
 	createdAt: number;
 	code: string | null;
@@ -21,7 +21,7 @@ export interface ConnectedArea {
 export interface Scenario {
 	id: string;
 	name: string;
-	measures: PlacedMeasure[];
+	measures: Measure[];
 	connectedAreas: ConnectedArea[];
 }
 
@@ -34,7 +34,7 @@ export interface ScenarioState {
 export interface ScenarioActions {
 	createScenario: (name: string) => void;
 	updateScenarioName: (id: string, name: string) => void;
-	addMeasure: (id: string, measure: PlacedMeasure) => void;
+	addMeasure: (id: string, measure: Measure) => void;
 	removeMeasure: (scenarioId: string, measureId: string) => void;
 	updateMeasureValues: (
 		scenarioId: string,
