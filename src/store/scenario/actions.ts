@@ -1,9 +1,4 @@
-import {
-	ConnectedArea,
-	MeasureValue,
-	PlacedMeasure,
-	ScenarioState,
-} from "./types";
+import { ConnectedArea, MeasureValue, Measure, ScenarioState } from "./types";
 
 type SetState = (fn: (state: ScenarioState) => Partial<ScenarioState>) => void;
 
@@ -49,7 +44,7 @@ export const createUpdateScenarioName = (set: SetState) => {
 };
 
 export const createAddMeasure = (set: SetState) => {
-	return (id: string, measure: PlacedMeasure) => {
+	return (id: string, measure: Measure) => {
 		set((state) => {
 			const scenario = state.scenarios[id];
 			if (!scenario) return state;
