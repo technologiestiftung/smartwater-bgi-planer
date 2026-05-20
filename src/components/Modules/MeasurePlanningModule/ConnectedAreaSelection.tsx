@@ -7,12 +7,12 @@ import { useMapStore } from "@/store/map";
 import { useScenarioStore } from "@/store/scenario";
 import { useUiStore } from "@/store/ui";
 import { LAYER_IDS } from "@/types/shared";
-import { never, singleClick } from "ol/events/condition.js";
+import { never, singleClick } from "ol/events/condition";
 import type Feature from "ol/Feature";
 import type Geometry from "ol/geom/Geometry";
-import Select from "ol/interaction/Select.js";
-import VectorLayer from "ol/layer/Vector.js";
-import { Vector as VectorSource } from "ol/source.js";
+import Select from "ol/interaction/Select";
+import VectorLayer from "ol/layer/Vector";
+import { Vector as VectorSource } from "ol/source";
 import { useEffect, useMemo, useRef } from "react";
 
 interface ConnectedAreaSelectionProps {

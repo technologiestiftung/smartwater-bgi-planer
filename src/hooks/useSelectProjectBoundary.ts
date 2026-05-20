@@ -10,7 +10,7 @@ import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";
 import { useProjectStore } from "@/store/project";
 import { LAYER_IDS } from "@/types/shared";
-import Draw from "ol/interaction/Draw.js";
+import Draw from "ol/interaction/Draw";
 import Modify from "ol/interaction/Modify";
 import VectorSource from "ol/source/Vector";
 import { useCallback, useRef } from "react";

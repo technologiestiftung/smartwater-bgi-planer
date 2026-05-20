@@ -3,9 +3,9 @@ import type { InputFeature } from "@/store/project/types";
 import { LAYER_IDS } from "@/types/shared";
 import booleanIntersects from "@turf/boolean-intersects";
 import { GeoJSON } from "ol/format";
-import VectorLayer from "ol/layer/Vector.js";
-import type Map from "ol/Map.js";
-import { Vector as VectorSource } from "ol/source.js";
+import VectorLayer from "ol/layer/Vector";
+import type Map from "ol/Map";
+import { Vector as VectorSource } from "ol/source";
 
 /**
  * Performs intersection between project boundary and rabimo input layer

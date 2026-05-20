@@ -12,8 +12,8 @@ import { useProjectStore } from "@/store/project";
 import { useUiStore } from "@/store/ui";
 import { LAYER_IDS } from "@/types/shared";
 import { PolygonIcon } from "@phosphor-icons/react";
-import Draw from "ol/interaction/Draw.js";
-import Modify from "ol/interaction/Modify.js";
+import Draw from "ol/interaction/Draw";
+import Modify from "ol/interaction/Modify";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 
 export const DrawProjectBoundaryButton: FC = () => {

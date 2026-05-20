@@ -1,13 +1,13 @@
 import { styleList } from "@/config/resources/style";
 import { formatLength } from "@/lib/helpers/ol/format";
 import { FeatureLike } from "ol/Feature";
-import LineString from "ol/geom/LineString.js";
-import Point from "ol/geom/Point.js";
-import Polygon from "ol/geom/Polygon.js";
+import LineString from "ol/geom/LineString";
+import Point from "ol/geom/Point";
+import Polygon from "ol/geom/Polygon";
 import VectorLayer from "ol/layer/Vector";
 import { Vector as VectorSource } from "ol/source";
 import { Circle, Fill, Icon, Stroke, Style } from "ol/style";
-import Text from "ol/style/Text.js";
+import Text from "ol/style/Text";
 
 // --- Types ---
 interface StyleConfig {

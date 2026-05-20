@@ -13,8 +13,8 @@ import { LAYER_IDS } from "@/types/shared";
 import { TrashIcon, XCircleIcon } from "@phosphor-icons/react";
 import type Feature from "ol/Feature";
 import type { Geometry } from "ol/geom";
-import VectorLayer from "ol/layer/Vector.js";
-import { Vector as VectorSource } from "ol/source.js";
+import VectorLayer from "ol/layer/Vector";
+import { Vector as VectorSource } from "ol/source";
 import { FC, useState } from "react";
 
 interface FeatureActionMenuProps {

@@ -5,9 +5,9 @@ import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";
 import { useUiStore } from "@/store/ui";
 import { PolygonIcon } from "@phosphor-icons/react";
-import Draw from "ol/interaction/Draw.js";
-import VectorLayer from "ol/layer/Vector.js";
-import { Vector as VectorSource } from "ol/source.js";
+import Draw from "ol/interaction/Draw";
+import VectorLayer from "ol/layer/Vector";
+import { Vector as VectorSource } from "ol/source";
 import { FC, useEffect, useRef } from "react";
 
 interface DrawButtonProps {

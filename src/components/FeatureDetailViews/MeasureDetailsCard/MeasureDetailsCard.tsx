@@ -14,8 +14,8 @@ import { useScenarioStore } from "@/store/scenario";
 import type { MeasureValue } from "@/store/scenario/types";
 import type { MeasureConfig } from "@/types/measures";
 import { CheckIcon, TrashIcon, XCircleIcon } from "@phosphor-icons/react";
-import VectorLayer from "ol/layer/Vector.js";
-import { Vector as VectorSource } from "ol/source.js";
+import VectorLayer from "ol/layer/Vector";
+import { Vector as VectorSource } from "ol/source";
 import { FC, useState } from "react";
 
 const measureConfigById = createMeasureConfigMap(

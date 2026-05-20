@@ -2,7 +2,7 @@ import type { MeasureValue } from "@/store/scenario/types";
 import type { MeasureConfig, MeasureParameterConfig } from "@/types/measures";
 import type Feature from "ol/Feature";
 import type Geometry from "ol/geom/Geometry";
-import { getArea, getLength } from "ol/sphere.js";
+import { getArea, getLength } from "ol/sphere";
 
 const roundGeometryValue = (value: number) => Number(value.toFixed(2));
 

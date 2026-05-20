@@ -8,7 +8,7 @@ import { useProjectStore } from "@/store/project";
 import { useScenarioStore } from "@/store/scenario";
 import { useUiStore } from "@/store/ui";
 import Feature from "ol/Feature";
-import Overlay, { Options } from "ol/Overlay.js";
+import Overlay, { Options } from "ol/Overlay";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 
 interface ClickControlProps {
