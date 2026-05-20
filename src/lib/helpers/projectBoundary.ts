@@ -1,5 +1,5 @@
 import { getLayerById } from "@/lib/helpers/ol";
-import type { InputFeature } from "@/store/project/types";
+import type { AreaProps, InputFeature } from "@/store/project/types";
 import { LAYER_IDS } from "@/types/shared";
 import booleanIntersects from "@turf/boolean-intersects";
 import { GeoJSON } from "ol/format";
@@ -56,6 +56,7 @@ export const performProjectBoundaryIntersection = (map: Map | null) => {
 
 	rabimoLayer.getSource()!.forEachFeature((rabimoFeature) => {
 		processed++;
+
 		if (processed % 1000 === 0) {
 			console.log(
 				`Processed ${processed} features, found ${intersections} intersections`,
@@ -109,10 +110,8 @@ export const getInputFeatures = (map: Map | null): InputFeature[] => {
 	if (!planningSource) return [];
 
 	return planningSource.getFeatures().map((feature) => {
-		const properties = { ...feature.getProperties() } as Record<
-			string,
-			unknown
-		>;
+		const properties = { ...feature.getProperties() } as AreaProps;
+
 		delete properties.geometry;
 
 		return {

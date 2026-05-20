@@ -18,10 +18,40 @@ export interface Project {
 	updatedAt: number;
 }
 
+// Raw area properties read from OL features.
+export type AreaProps = {
+	code: string;
+	prec_yr: number;
+	prec_s: number;
+	epot_yr: number;
+	epot_s: number;
+	district: string;
+	total_area: number;
+	roof: number;
+	green_roof: number;
+	swg_roof: number;
+	pvd: number;
+	swg_pvd: number;
+	srf1_pvd: number;
+	srf2_pvd: number;
+	srf3_pvd: number;
+	srf4_pvd: number;
+	srf5_pvd: number;
+	to_swale: number;
+	gw_dist: number;
+	ufc30: number;
+	ufc150: number;
+	land_type: string;
+	veg_class: number;
+	irrigation: number;
+	block_type: string;
+	geometry?: Geometry;
+};
+
 export interface InputFeature {
 	feature: Feature<Geometry>;
 	geometry: Geometry | null;
-	properties: Record<string, unknown>;
+	properties: AreaProps;
 }
 
 export interface AccumulatedStats {

@@ -1,6 +1,6 @@
+import { AreaProps } from "@/store/project/types";
 import type {
 	AreaPotential,
-	AreaValues,
 	ComputedArea,
 	OLFeature,
 	PreprocessedFeatures,
@@ -8,7 +8,7 @@ import type {
 	ResultStats,
 } from "../types";
 
-type RabimoLikeAreaValues = AreaValues & {
+type RabimoLikeAreaValues = AreaProps & {
 	srf1_pvd: number;
 	srf2_pvd: number;
 	srf3_pvd: number;
@@ -16,8 +16,8 @@ type RabimoLikeAreaValues = AreaValues & {
 	srf5_pvd: number;
 };
 
-function getValues(area: OLFeature): AreaValues {
-	return (area as unknown as { values_: AreaValues }).values_;
+function getValues(area: OLFeature): AreaProps {
+	return (area as unknown as { values_: AreaProps }).values_;
 }
 
 function getRabimoLikeValues(area: OLFeature): RabimoLikeAreaValues {

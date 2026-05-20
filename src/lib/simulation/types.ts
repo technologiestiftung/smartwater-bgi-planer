@@ -4,16 +4,6 @@ import type { Geometry } from "ol/geom";
 // OpenLayers feature used by simulation modules.
 export type OLFeature = Feature<Geometry>;
 
-// Raw area properties read from OL features.
-export type AreaValues = {
-	total_area: number;
-	roof: number;
-	green_roof: number;
-	pvd: number;
-	to_swale: number;
-	[key: string]: number;
-};
-
 // Derived partial areas in m2 for one block part.
 export type ComputedArea = {
 	total: number;
