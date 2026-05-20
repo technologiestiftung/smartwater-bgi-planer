@@ -72,7 +72,7 @@ export interface ProjectState {
 	inputFeatures: InputFeature[];
 	computedFeatures: ComputedFeatures[];
 
-	// Active§
+	// Active
 	activeAreaPotential: AreaPotential | null;
 	activeAreaId: string | null;
 
