@@ -122,10 +122,7 @@ export const createGetLastPath = (get: GetState) => {
 
 export const createSetInputFeatures = (set: SetState) => {
 	return (features: InputFeature[]) => {
-		console.log("[useProjectStore] inputFeatures updated", features);
-
 		const stats = simulationEngine.preprocessInput(features);
-		console.log("[useProjectStore] preprocessed stats", stats);
 
 		const computedFeatures: ComputedFeatures[] = stats.features.map((item) => ({
 			code: item.code,

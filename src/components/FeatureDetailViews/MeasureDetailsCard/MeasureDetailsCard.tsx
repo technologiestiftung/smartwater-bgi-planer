@@ -74,8 +74,6 @@ export const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
 			return acc;
 		}, {});
 
-		console.log("[MeasureDetailsCard] nextValues::", nextValues);
-
 		updateMeasureValues(activeScenarioId, measure.id, nextValues);
 		onClose?.();
 	};

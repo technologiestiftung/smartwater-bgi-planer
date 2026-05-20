@@ -294,13 +294,6 @@ export function MeasurePlanningAccordion({
 		hasInitializedRef.current = true;
 	}, [open, isMapReady, layerConfig.length, applyConfigLayers]);
 
-	useEffect(() => {
-		console.log(
-			"[MeasurePlanningAccordion] placedMeasureIds::",
-			placedMeasureIds,
-		);
-	}, [placedMeasureIds]);
-
 	let content: React.ReactNode;
 
 	if (isSynthesisMode) {

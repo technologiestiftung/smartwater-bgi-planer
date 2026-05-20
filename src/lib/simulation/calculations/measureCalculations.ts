@@ -8,11 +8,6 @@ function calculateApplyMeasure(
 	area: ComputedArea,
 	measure: Measure,
 ): ComputedArea {
-	console.log("[measureCalculations] area::", area);
-	console.log("[measureCalculations] measure::", measure);
-	console.log("[measureCalculations] areaCalc::", areaCalc);
-	// areaCalc.addComputedAreas();
-
 	const amount = areaCalc.calculatePrecisely(measure.area);
 
 	if (measure.name === "green_roof_ext" || measure.name === "green_roof_int") {

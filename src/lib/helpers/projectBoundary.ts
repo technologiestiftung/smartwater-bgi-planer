@@ -51,18 +51,8 @@ export const performProjectBoundaryIntersection = (map: Map | null) => {
 	planningSource.clear();
 
 	const format = new GeoJSON();
-	let processed = 0;
-	let intersections = 0;
 
 	rabimoLayer.getSource()!.forEachFeature((rabimoFeature) => {
-		processed++;
-
-		if (processed % 1000 === 0) {
-			console.log(
-				`Processed ${processed} features, found ${intersections} intersections`,
-			);
-		}
-
 		const rabimoGeometry = rabimoFeature.getGeometry();
 		if (!rabimoGeometry) return;
 
@@ -90,7 +80,6 @@ export const performProjectBoundaryIntersection = (map: Map | null) => {
 			});
 
 			if (intersectsAny) {
-				intersections++;
 				planningSource.addFeature(rabimoFeature.clone());
 			}
 		} catch (error) {

@@ -38,8 +38,6 @@ export async function POST(request: NextRequest) {
 	try {
 		const result = await getRabimo(body);
 
-		console.log("[route] result::", result);
-
 		return NextResponse.json(result);
 	} catch (error) {
 		const message =
