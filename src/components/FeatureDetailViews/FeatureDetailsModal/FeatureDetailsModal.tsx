@@ -85,7 +85,7 @@ export const FeatureDetailsModal: FC<FeatureDetailsModalProps> = ({
 					<div className="flex flex-col gap-4 lg:flex-row">
 						{profilUrl && (
 							<div className="relative flex w-full flex-col gap-2">
-								<div className="min-h-75] flex items-center justify-center rounded-md bg-white">
+								<div className="flex min-h-75 items-center justify-center rounded-md bg-white">
 									{isImageLoading && !imageError && (
 										<div className="absolute inset-0 z-10 flex items-center justify-center bg-white">
 											<SpinnerIcon className="animate-spin" />
