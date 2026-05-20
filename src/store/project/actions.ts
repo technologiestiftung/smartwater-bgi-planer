@@ -142,3 +142,29 @@ export const createSetInputFeatures = (set: SetState) => {
 		});
 	};
 };
+
+export const createSetActiveArea = (set: SetState, get: GetState) => {
+	return (
+		code: string | null,
+		potential: ProjectState["activeAreaPotential"] = null,
+	) => {
+		if (!code) {
+			set({
+				activeAreaId: null,
+				activeAreaPotential: null,
+			});
+			return;
+		}
+
+		const resolvedPotential =
+			potential ??
+			get().computedFeatures.find((feature) => feature.code === code)
+				?.areaPotential ??
+			null;
+
+		set({
+			activeAreaId: code,
+			activeAreaPotential: resolvedPotential,
+		});
+	};
+};

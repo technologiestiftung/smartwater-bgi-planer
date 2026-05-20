@@ -55,6 +55,7 @@ export const ClickControl: FC<ClickControlProps> = ({
 }) => {
 	const map = useMapStore((state) => state.map);
 	const { isDrawing, isBlockAreaSelecting, isDrawingNote } = useUiStore();
+	const setActiveArea = useProjectStore((state) => state.setActiveArea);
 	const activeScenarioId = useScenarioStore((state) => state.activeScenarioId);
 	const measures = useScenarioStore((state) => {
 		if (!state.activeScenarioId) {
@@ -170,21 +171,12 @@ export const ClickControl: FC<ClickControlProps> = ({
 		[map, wmsLayerIds],
 	);
 
-	const setActiveAreaFromCode = useCallback((code: string | null) => {
-		if (!code) {
-			return;
-		}
-
-		const { computedFeatures } = useProjectStore.getState();
-		const computedFeature = computedFeatures.find(
-			(feature) => feature.code === code,
-		);
-
-		useProjectStore.setState({
-			activeAreaId: code,
-			activeAreaPotential: computedFeature?.areaPotential ?? null,
-		});
-	}, []);
+	const setActiveAreaFromCode = useCallback(
+		(code: string | null) => {
+			setActiveArea(code);
+		},
+		[setActiveArea],
+	);
 
 	useEffect(() => {
 		if (!map || !overlayRef.current) return;

@@ -88,6 +88,10 @@ export interface ProjectActions {
 	deleteProject: () => void;
 	getProject: () => Project | null;
 	setInputFeatures: (features: InputFeature[]) => void;
+	setActiveArea: (
+		code: string | null,
+		potential?: AreaPotential | null,
+	) => void;
 	setHasHydrated: (state: boolean) => void;
 	setLastPath: (path: string | null) => void;
 	getLastPath: () => string | null;
