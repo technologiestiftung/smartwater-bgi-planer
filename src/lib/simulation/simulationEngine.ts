@@ -21,8 +21,6 @@ const preprocessInput = (inputFeatures: InputFeature[], _newUnpvd = 0) => {
 	const features = getOlFeatures(inputFeatures);
 	const preprocessed = areaCalculations.preprocessAllFeatures(features);
 
-	console.log("[simulationEngine] preprocessed::", preprocessed);
-
 	return preprocessed;
 };
 
