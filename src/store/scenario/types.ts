@@ -6,8 +6,10 @@ export interface Measure {
 	code: string | null;
 	name: string;
 	area: number;
+	connectedArea?: number;
 	configId: string;
 	drawLayerId: string | null;
+	// get rid off values?
 	values?: Record<string, MeasureValue>;
 }
 

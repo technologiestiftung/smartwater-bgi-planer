@@ -1,9 +1,54 @@
+import areaCalculations from "@/lib/simulation/calculations/areaCalculations";
+import { simulationEngine } from "@/lib/simulation/simulationEngine";
+import { useProjectStore } from "@/store/project";
+import { ComputedFeatures } from "@/store/project/types";
 import { ConnectedArea, MeasureValue, Measure, ScenarioState } from "./types";
 
 type SetState = (fn: (state: ScenarioState) => Partial<ScenarioState>) => void;
 
 const createScenarioId = () =>
 	`scenario-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+
+const syncProjectDerivedSimulation = (measures: Measure[]) => {
+	const { inputFeatures, activeAreaId } = useProjectStore.getState();
+	const stats = simulationEngine.preprocessInput(inputFeatures);
+
+	const computedFeatures: ComputedFeatures[] = stats.features.map((item) => {
+		const result = simulationEngine.applyMeasures(
+			item.computedArea,
+			measures.filter((measure) => measure.code === item.code),
+		);
+
+		return {
+			code: item.code,
+			computedArea: result.computedArea,
+			areaPotential: result.areaPotential,
+		};
+	});
+
+	const computedArea = computedFeatures.reduce(
+		(acc, item) => areaCalculations.addComputedAreas(acc, item.computedArea),
+		areaCalculations.createEmptyComputedArea(),
+	);
+	const areaPotential = computedFeatures.reduce(
+		(acc, item) => areaCalculations.addAreaPotentials(acc, item.areaPotential),
+		areaCalculations.createEmptyAreaPotential(),
+	);
+
+	useProjectStore.setState({
+		computedFeatures,
+		accumulatedStats: {
+			totalArea: stats.totalArea,
+			inputFeaturesCount: inputFeatures.length,
+			computedArea,
+			areaPotential,
+		},
+		activeAreaPotential: activeAreaId
+			? (computedFeatures.find((item) => item.code === activeAreaId)
+					?.areaPotential ?? null)
+			: null,
+	});
+};
 
 export const createCreateScenario = (set: SetState) => {
 	return (name: string) => {
@@ -45,41 +90,59 @@ export const createUpdateScenarioName = (set: SetState) => {
 
 export const createAddMeasure = (set: SetState) => {
 	return (id: string, measure: Measure) => {
+		let nextMeasures: Measure[] | null = null;
+
+		// todo run simulation.addMeasure
+		// update all areas in store
+		// 
+
 		set((state) => {
 			const scenario = state.scenarios[id];
 			if (!scenario) return state;
+			nextMeasures = [...scenario.measures, measure];
 
 			return {
 				scenarios: {
 					...state.scenarios,
 					[id]: {
 						...scenario,
-						measures: [...scenario.measures, measure],
+						measures: nextMeasures,
 					},
 				},
 			};
 		});
+
+		if (nextMeasures) {
+			syncProjectDerivedSimulation(nextMeasures);
+		}
 	};
 };
 
 export const createRemoveMeasure = (set: SetState) => {
 	return (scenarioId: string, measureId: string) => {
+		let nextMeasures: Measure[] | null = null;
+
 		set((state) => {
 			const scenario = state.scenarios[scenarioId];
 			if (!scenario) return state;
+			nextMeasures = scenario.measures.filter(
+				(measure) => measure.id !== measureId,
+			);
 
 			return {
 				scenarios: {
 					...state.scenarios,
 					[scenarioId]: {
 						...scenario,
-						measures: scenario.measures.filter(
-							(measure) => measure.id !== measureId,
-						),
+						measures: nextMeasures,
 					},
 				},
 			};
 		});
+
+		if (nextMeasures) {
+			syncProjectDerivedSimulation(nextMeasures);
+		}
 	};
 };
 
@@ -89,6 +152,8 @@ export const createUpdateMeasureValues = (set: SetState) => {
 		measureId: string,
 		values: Record<string, MeasureValue>,
 	) => {
+		let nextMeasures: Measure[] | null = null;
+
 		set((state) => {
 			const scenario = state.scenarios[scenarioId];
 			if (!scenario) return state;
@@ -101,33 +166,47 @@ export const createUpdateMeasureValues = (set: SetState) => {
 				nextArea = Number(nextAreaValue) || 0;
 			}
 
+			nextMeasures = scenario.measures.map((measure) =>
+				measure.id === measureId
+					? {
+							...measure,
+							area: nextArea ?? measure.area,
+						}
+					: measure,
+			);
+
 			return {
 				scenarios: {
 					...state.scenarios,
 					[scenarioId]: {
 						...scenario,
-						measures: scenario.measures.map((measure) =>
-							measure.id === measureId
-								? {
-										...measure,
-										area: nextArea ?? measure.area,
-									}
-								: measure,
-						),
+						measures: nextMeasures,
 					},
 				},
 			};
 		});
+
+		if (nextMeasures) {
+			syncProjectDerivedSimulation(nextMeasures);
+		}
 	};
 };
 
 export const createSetActiveScenario = (set: SetState) => {
 	return (id: string) => {
+		let nextMeasures: Measure[] | null = null;
+
 		set((state) => {
-			if (!state.scenarios[id]) return state;
+			const scenario = state.scenarios[id];
+			if (!scenario) return state;
+			nextMeasures = scenario.measures;
 
 			return { activeScenarioId: id };
 		});
+
+		if (nextMeasures) {
+			syncProjectDerivedSimulation(nextMeasures);
+		}
 	};
 };
 
