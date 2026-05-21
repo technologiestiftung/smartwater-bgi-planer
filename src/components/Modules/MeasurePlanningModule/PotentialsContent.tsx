@@ -1,10 +1,8 @@
 "use client";
 
 import measuresConfig from "@/config/measuresConfig.json";
-import { simulationEngine } from "@/lib/simulation/simulationEngine";
 import { useProjectStore } from "@/store";
 import { LayerConfigItem } from "@/store/layers/types";
-import { useScenarioStore } from "@/store/scenario";
 import type { MeasureConfig } from "@/types/measures";
 import { FC } from "react";
 
@@ -25,25 +23,13 @@ const PotentialsContent: FC<PotentialsContentProps> = ({ layerConfig }) => {
 	);
 	const computedFeatures = useProjectStore((state) => state.computedFeatures);
 	const activeAreaId = useProjectStore((state) => state.activeAreaId);
-	const measures = useScenarioStore((state) => {
-		if (!state.activeScenarioId) return [];
-		return state.scenarios[state.activeScenarioId]?.measures ?? [];
-	});
 	const measureKey = measureConfigById.get(layerConfig.id)?.measureKey;
 
 	if (!areaPotential || !measureKey) {
 		return null;
 	}
 
-	const remainingTotal = computedFeatures.reduce((sum, item) => {
-		const code = item.code;
-		const areaMeasures = measures.filter((measure) => measure.code === code);
-		const remaining = simulationEngine.computeRemainingPotential(
-			item.computedArea,
-			areaMeasures,
-		);
-		return sum + remaining[measureKey];
-	}, 0);
+	const remainingTotal = areaPotential[measureKey];
 
 	const activeRemaining = (() => {
 		if (!activeAreaPotential || !activeAreaId) {
@@ -57,11 +43,7 @@ const PotentialsContent: FC<PotentialsContentProps> = ({ layerConfig }) => {
 			return activeAreaPotential[measureKey];
 		}
 
-		const remaining = simulationEngine.computeRemainingPotential(
-			activeFeature.computedArea,
-			measures.filter((measure) => measure.code === activeAreaId),
-		);
-		return remaining[measureKey];
+		return activeFeature.areaPotential[measureKey];
 	})();
 
 	return (

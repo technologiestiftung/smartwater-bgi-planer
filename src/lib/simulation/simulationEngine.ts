@@ -34,38 +34,15 @@ const applyMeasures = (
 
 	const areaPotential = areaCalculations.toAreaPotential(computedArea);
 
+	// todo: I need to update the store with the new values!
+
 	return {
 		computedArea,
 		areaPotential,
 	};
 };
 
-// todo: clean up simulation engine functions
-// remove computeRemainingPotential
-// when applyMeasure is called, computeRemainingPotential should be called
-
-const applyMeasure = (
-	area: ComputedArea,
-	measure: Measure,
-): ApplyMeasuresResult => {
-	const result = applyMeasures(area, [measure]);
-
-	console.log("[simulationEngine] result::", result);
-	return {
-		...result,
-	};
-};
-
-const computeRemainingPotential = (
-	baseComputedArea: ComputedArea,
-	measures: Measure[],
-): AreaPotential => {
-	return applyMeasures(baseComputedArea, measures).areaPotential;
-};
-
 export const simulationEngine = {
 	preprocessInput,
 	applyMeasures,
-	applyMeasure,
-	computeRemainingPotential,
 };

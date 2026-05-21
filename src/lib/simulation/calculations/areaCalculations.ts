@@ -274,6 +274,10 @@ const areaCalculations = {
 	preprocessAllFeatures,
 	calculateResultStats,
 	calculatePrecisely,
+	addComputedAreas,
+	addAreaPotentials,
+	createEmptyComputedArea,
+	createEmptyAreaPotential,
 };
 
 export default areaCalculations;
