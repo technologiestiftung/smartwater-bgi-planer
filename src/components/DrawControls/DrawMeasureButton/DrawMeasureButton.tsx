@@ -126,6 +126,9 @@ export const DrawMeasureButton: FC = () => {
 	const canDraw =
 		!isSwaleMeasure ||
 		Boolean(connectedAreas.find((a) => a.id === selectedConnectedAreaId));
+	const selectedConnectedArea = connectedAreas.find(
+		(area) => area.id === selectedConnectedAreaId,
+	);
 
 	const [_liveMeasureInfo, setLiveMeasureInfo] =
 		useState<LiveMeasureInfo | null>(null);
@@ -203,11 +206,13 @@ export const DrawMeasureButton: FC = () => {
 			.getAllLayers()
 			.find((l) => l.get("id") === drawLayerId) as VectorLayer<VectorSource>;
 		const source = layer?.getSource();
+
 		if (!(source instanceof VectorSource)) {
 			console.error("[DrawMeasureButton] Layer or source not found");
 			return;
 		}
 
+		// get features from BTF planning
 		const getPlanningFeatures = (): Feature<Geometry>[] =>
 			(
 				getLayerById(
@@ -218,6 +223,7 @@ export const DrawMeasureButton: FC = () => {
 				?.getSource()
 				?.getFeatures() ?? [];
 
+		// draw condition
 		const drawCondition: Condition = ({ coordinate: coord, pixel }) => {
 			// block closing click when over potential
 			if (
@@ -283,16 +289,23 @@ export const DrawMeasureButton: FC = () => {
 				const update = () => {
 					const info =
 						geometry instanceof Polygon ? buildPolygonLiveInfo(geometry) : null;
+
 					if (!info) {
 						isOverPotentialRef.current = false;
 						setLiveMeasureInfo(null);
 						return;
 					}
+
 					const potential = activeMeasurePotentialRef.current;
 					const currentArea = Number(getArea(geometry).toFixed(2));
+
+					// check if over potential
 					const isOverPotential =
 						typeof potential === "number" && currentArea > potential;
 					isOverPotentialRef.current = isOverPotential;
+
+					console.log("[DrawMeasureButton] info::", info);
+
 					setLiveMeasureInfo({ ...info, isOverPotential });
 				};
 
@@ -332,7 +345,9 @@ export const DrawMeasureButton: FC = () => {
 						p.key,
 						p.source === "drawn"
 							? (getDrawnValue(p, drawnFeature) as MeasureValue)
-							: (p.default ?? ""),
+							: p.key === "connectedArea"
+								? (selectedConnectedArea?.area ?? p.default ?? "")
+								: (p.default ?? ""),
 					]),
 				);
 
@@ -344,11 +359,16 @@ export const DrawMeasureButton: FC = () => {
 					code: activeAreaId ?? null,
 					name: config.measureKey ?? config.id,
 					area: getMeasureArea(values),
+					connectedArea:
+						typeof values.connectedArea === "number"
+							? values.connectedArea
+							: undefined,
 					configId: layerConfigId ?? "",
 					drawLayerId: drawLayerId ?? null,
 				};
 
 				drawnFeature.set("measureId", measure.id);
+
 				Object.entries(values).forEach(([k, v]) => {
 					if (v !== null && v !== undefined && v !== "") drawnFeature.set(k, v);
 				});

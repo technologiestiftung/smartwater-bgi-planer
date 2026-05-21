@@ -1,6 +1,46 @@
+import { Measure } from "@/store/scenario/types";
 import type { ComputedArea } from "../types";
 import areaCalc from "./areaCalculations";
-import { Measure } from "@/store/scenario/types";
+
+const connectedAreaFieldByMeasure = {
+	to_inf_mulde: "to_inf_mulde",
+	to_inf_mulde_rigole: "to_inf_mulde_rigole",
+	to_inf_rigole: "to_inf_rigole",
+	to_retention: "to_retention",
+} as const;
+
+type ConnectedAreaMeasureName = keyof typeof connectedAreaFieldByMeasure;
+
+const getConnectedAreaField = (
+	name: string | null,
+): (typeof connectedAreaFieldByMeasure)[ConnectedAreaMeasureName] | null => {
+	if (!name) return null;
+	if (name in connectedAreaFieldByMeasure) {
+		return connectedAreaFieldByMeasure[name as ConnectedAreaMeasureName];
+	}
+	return null;
+};
+
+const applyGreenRoofMeasure = (
+	area: ComputedArea,
+	measure: Measure,
+	amount: number,
+): ComputedArea => {
+	const nextGreenRoofExt =
+		measure.name === "green_roof_ext"
+			? areaCalc.calculatePrecisely(area.green_roof_ext + amount)
+			: area.green_roof_ext;
+	const nextGreenRoofInt =
+		measure.name === "green_roof_int"
+			? areaCalc.calculatePrecisely(area.green_roof_int + amount)
+			: area.green_roof_int;
+
+	return areaCalc.updateCalculatedFields({
+		...area,
+		green_roof_ext: nextGreenRoofExt,
+		green_roof_int: nextGreenRoofInt,
+	});
+};
 
 // R: apply_measure
 // Applies one measure to one BTF state and then refreshes derived fields.
@@ -11,20 +51,7 @@ function calculateApplyMeasure(
 	const amount = areaCalc.calculatePrecisely(measure.area);
 
 	if (measure.name === "green_roof_ext" || measure.name === "green_roof_int") {
-		const nextGreenRoofExt =
-			measure.name === "green_roof_ext"
-				? areaCalc.calculatePrecisely(area.green_roof_ext + amount)
-				: area.green_roof_ext;
-		const nextGreenRoofInt =
-			measure.name === "green_roof_int"
-				? areaCalc.calculatePrecisely(area.green_roof_int + amount)
-				: area.green_roof_int;
-
-		return areaCalc.updateCalculatedFields({
-			...area,
-			green_roof_ext: nextGreenRoofExt,
-			green_roof_int: nextGreenRoofInt,
-		});
+		return applyGreenRoofMeasure(area, measure, amount);
 	}
 
 	if (measure.name === "unpaving") {
@@ -38,6 +65,19 @@ function calculateApplyMeasure(
 			pvd_3: areaCalc.calculatePrecisely(area.pvd_3 * scalingFactor),
 			pvd_4: areaCalc.calculatePrecisely(area.pvd_4 * scalingFactor),
 			pvd_na: areaCalc.calculatePrecisely(area.pvd_na * scalingFactor),
+		});
+	}
+
+	const connectedAreaField = getConnectedAreaField(measure.name);
+	if (connectedAreaField) {
+		const input = areaCalc.calculatePrecisely(
+			measure.connectedArea ?? measure.area,
+		);
+		return areaCalc.updateCalculatedFields({
+			...area,
+			[connectedAreaField]: areaCalc.calculatePrecisely(
+				area[connectedAreaField] + input,
+			),
 		});
 	}
 
@@ -60,13 +100,7 @@ function calculateApplyMeasure(
 
 // R: is_no_op
 function isNoOpMeasure(name: string | null): boolean {
-	return (
-		name === null ||
-		name === "to_inf_mulde" ||
-		name === "to_inf_rigole" ||
-		name === "to_inf_mulde_rigole" ||
-		name === "to_retention"
-	);
+	return name === null;
 }
 
 const measureCalculations = {

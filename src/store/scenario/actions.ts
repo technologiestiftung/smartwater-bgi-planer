@@ -92,10 +92,6 @@ export const createAddMeasure = (set: SetState) => {
 	return (id: string, measure: Measure) => {
 		let nextMeasures: Measure[] | null = null;
 
-		// todo run simulation.addMeasure
-		// update all areas in store
-		// 
-
 		set((state) => {
 			const scenario = state.scenarios[id];
 			if (!scenario) return state;
@@ -166,11 +162,21 @@ export const createUpdateMeasureValues = (set: SetState) => {
 				nextArea = Number(nextAreaValue) || 0;
 			}
 
+			let nextConnectedArea: number | undefined;
+			if (typeof values.connectedArea === "number") {
+				nextConnectedArea = values.connectedArea;
+			} else if (typeof values.connectedArea === "string") {
+				nextConnectedArea = Number(values.connectedArea) || undefined;
+			}
+
 			nextMeasures = scenario.measures.map((measure) =>
 				measure.id === measureId
 					? {
 							...measure,
 							area: nextArea ?? measure.area,
+							...(nextConnectedArea !== undefined && {
+								connectedArea: nextConnectedArea,
+							}),
 						}
 					: measure,
 			);

@@ -1,11 +1,14 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import measuresConfig from "@/config/measuresConfig.json";
 import { isSwaleLayerConfigId } from "@/lib/helpers/measures/swale";
 import { getLayerById } from "@/lib/helpers/ol";
 import { useMapStore } from "@/store/map";
+import { useProjectStore } from "@/store/project";
 import { useScenarioStore } from "@/store/scenario";
 import { useUiStore } from "@/store/ui";
+import type { MeasureConfig } from "@/types/measures";
 import { LAYER_IDS } from "@/types/shared";
 import { never, singleClick } from "ol/events/condition";
 import type Feature from "ol/Feature";
@@ -13,6 +16,9 @@ import type Geometry from "ol/geom/Geometry";
 import Select from "ol/interaction/Select";
 import VectorLayer from "ol/layer/Vector";
 import { Vector as VectorSource } from "ol/source";
+import Fill from "ol/style/Fill";
+import Stroke from "ol/style/Stroke";
+import Style from "ol/style/Style";
 import { useEffect, useMemo, useRef } from "react";
 
 interface ConnectedAreaSelectionProps {
@@ -21,12 +27,27 @@ interface ConnectedAreaSelectionProps {
 	layerName: string;
 }
 
-const EMPTY_CONNECTED_AREAS: Array<{ id: string; area: number }> = [];
+const EMPTY_CONNECTED_AREAS: Array<{
+	id: string;
+	area: number;
+	code: string | null;
+}> = [];
+
 const EMPTY_MEASURES: Array<{
 	area: number;
+	code: string | null;
 	configId: string;
 	drawLayerId: string | null;
 }> = [];
+
+const measureConfigById = new Map(
+	(measuresConfig as MeasureConfig[]).map((item) => [item.id, item]),
+);
+
+const selectedConnectedAreaStyle = new Style({
+	fill: new Fill({ color: "rgba(0, 153, 255, 0.1)" }),
+	stroke: new Stroke({ color: "rgba(0, 153, 255, 1)", width: 2 }),
+});
 
 export function ConnectedAreaSelection({
 	layerConfigId,
@@ -63,6 +84,7 @@ export function ConnectedAreaSelection({
 		if (!state.activeScenarioId) return EMPTY_MEASURES;
 		return state.scenarios[state.activeScenarioId]?.measures ?? EMPTY_MEASURES;
 	});
+	const computedFeatures = useProjectStore((state) => state.computedFeatures);
 
 	const selectInteractionRef = useRef<Select | null>(null);
 	const isSwaleMeasure = isSwaleLayerConfigId(layerConfigId);
@@ -85,21 +107,36 @@ export function ConnectedAreaSelection({
 			null,
 		[connectedAreas, selectedConnectedAreaId],
 	);
+	const measureKey = measureConfigById.get(layerConfigId)?.measureKey;
 
 	const summary = useMemo(() => {
 		const count = measureRows.length;
+		const selectedCode = selectedConnectedArea?.code ?? null;
+		const selectedMeasureRows =
+			selectedCode === null
+				? measureRows
+				: measureRows.filter((measure) => measure.code === selectedCode);
 
-		const measureArea = measureRows.reduce((sum, measure) => {
+		const measureArea = selectedMeasureRows.reduce((sum, measure) => {
 			const area = measure.area;
 			return typeof area === "number" ? sum + area : sum;
 		}, 0);
 
+		const potentialArea = (() => {
+			if (!measureKey || !selectedCode) return 0;
+			const selectedFeature = computedFeatures.find(
+				(feature) => feature.code === selectedCode,
+			);
+			return selectedFeature?.areaPotential[measureKey] ?? 0;
+		})();
+
 		return {
 			count,
 			measureArea,
+			potentialArea,
 			connectedArea: selectedConnectedArea?.area ?? 0,
 		};
-	}, [measureRows, selectedConnectedArea]);
+	}, [computedFeatures, measureKey, measureRows, selectedConnectedArea]);
 
 	useEffect(() => {
 		if (!isSwaleMeasure) return;
@@ -114,6 +151,29 @@ export function ConnectedAreaSelection({
 		selectedConnectedAreaId,
 		setSelectedConnectedArea,
 	]);
+
+	// Highlight selected connected area
+	useEffect(() => {
+		if (!map) return;
+
+		const connectedAreaLayer = getLayerById(
+			map,
+			LAYER_IDS.CONNECTED_AREA_DRAW,
+		) as VectorLayer<VectorSource> | null;
+		if (!connectedAreaLayer) return;
+
+		const features = connectedAreaLayer.getSource()?.getFeatures() ?? [];
+		features.forEach((feature) => {
+			const connectedAreaId = feature.get("connectedAreaId") as
+				| string
+				| undefined;
+			feature.setStyle(
+				connectedAreaId && connectedAreaId === selectedConnectedAreaId
+					? selectedConnectedAreaStyle
+					: undefined,
+			);
+		});
+	}, [map, selectedConnectedAreaId]);
 
 	useEffect(() => {
 		if (!map) return;
@@ -238,10 +298,10 @@ export function ConnectedAreaSelection({
 				<div className="border-muted rounded-sm border p-2 text-sm">
 					<p className="mb-1 font-semibold">{layerName}</p>
 					<div className="grid grid-cols-[1fr_auto] gap-x-4 gap-y-1">
-						<span>Anzahl</span>
-						<span>{summary.count}</span>
 						<span>Angeschlossene Fläche</span>
 						<span>{areaFormatter.format(summary.connectedArea)} m²</span>
+						<span>Potentialfläche</span>
+						<span>{areaFormatter.format(summary.potentialArea)} m²</span>
 						<span>Maßnahmenfläche</span>
 						<span>{areaFormatter.format(summary.measureArea)} m²</span>
 					</div>
