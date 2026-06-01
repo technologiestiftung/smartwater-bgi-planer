@@ -11,7 +11,7 @@ export function SideMenuFooter({ children, className }: SideMenuFooterProps) {
 	return (
 		<div
 			className={cn(
-				"SideMenuFooter-root border-muted flex h-16 flex-shrink-0 items-center justify-end gap-2 border-t",
+				"SideMenuFooter-root border-muted flex h-16 shrink-0 items-center justify-end gap-2 border-t",
 				className,
 			)}
 		>

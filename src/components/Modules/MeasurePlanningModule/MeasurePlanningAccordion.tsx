@@ -123,13 +123,13 @@ function MeasureListItem({
 	onActivate: (stepId: string, questionId: string) => void;
 }) {
 	return (
-		<div className="flex items-center gap-2">
+		<div className="hover:bg-light flex items-center gap-2">
 			<button
 				type="button"
 				onClick={() => !isDisabled && onActivate(stepId, item.questionId)}
 				disabled={isDisabled}
 				className={cn(
-					"border-muted hover:bg-light flex flex-1 items-center justify-between px-3 py-2 text-left transition-colors",
+					"border-muted flex flex-1 items-center justify-between px-3 py-2 text-left transition-colors",
 					isConnectedArea &&
 						"bg-primary text-primary-foreground hover:bg-primary/90",
 					isDisabled && "cursor-not-allowed opacity-50 hover:bg-transparent",
