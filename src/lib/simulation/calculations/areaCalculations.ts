@@ -83,6 +83,10 @@ function toComputedArea(area: OLFeature): ComputedArea {
 		to_inf_rigole: 0,
 		to_inf_mulde_rigole: 0,
 		to_retention: 0,
+
+		// todo: add correct calculation
+		to_surf_infil: 0,
+		to_tree_pit: 0,
 	};
 
 	return updateCalculatedFields(current);
@@ -103,6 +107,9 @@ function toAreaPotential(areas: ComputedArea): AreaPotential {
 		to_inf_rigole: calculatePrecisely(areas.sealed),
 		to_inf_mulde_rigole: calculatePrecisely(areas.sealed),
 		to_retention: calculatePrecisely(areas.sealed),
+		// todo: add correct calculation
+		to_surf_infil: calculatePrecisely(areas.sealed),
+		to_tree_pit: calculatePrecisely(areas.sealed),
 	};
 }
 
@@ -124,6 +131,8 @@ function createEmptyComputedArea(): ComputedArea {
 		to_inf_rigole: 0,
 		to_inf_mulde_rigole: 0,
 		to_retention: 0,
+		to_surf_infil: 0,
+		to_tree_pit: 0,
 	};
 }
 
@@ -137,6 +146,8 @@ function createEmptyAreaPotential(): AreaPotential {
 		to_inf_rigole: 0,
 		to_inf_mulde_rigole: 0,
 		to_retention: 0,
+		to_surf_infil: 0,
+		to_tree_pit: 0,
 	};
 }
 
@@ -167,6 +178,10 @@ function addComputedAreas(
 			acc.to_inf_mulde_rigole + value.to_inf_mulde_rigole,
 		),
 		to_retention: calculatePrecisely(acc.to_retention + value.to_retention),
+
+		// todo: add correct calculation
+		to_surf_infil: calculatePrecisely(acc.to_surf_infil + value.to_surf_infil),
+		to_tree_pit: calculatePrecisely(acc.to_tree_pit + value.to_tree_pit),
 	};
 }
 
@@ -191,6 +206,10 @@ function addAreaPotentials(
 			acc.to_inf_mulde_rigole + value.to_inf_mulde_rigole,
 		),
 		to_retention: calculatePrecisely(acc.to_retention + value.to_retention),
+
+		// todo: add correct calculation
+		to_surf_infil: calculatePrecisely(acc.to_surf_infil + value.to_surf_infil),
+		to_tree_pit: calculatePrecisely(acc.to_tree_pit + value.to_tree_pit),
 	};
 }
 

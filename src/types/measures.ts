@@ -17,9 +17,9 @@ export type MeasureKey =
 	| "to_inf_rigole"
 	| "to_inf_mulde_rigole"
 	| "to_retention"
-	| "trees_sm"
-	| "trees_md"
-	| "trees_lg"
+	// | "trees_sm"
+	// | "trees_md"
+	// | "trees_lg"
 	| "to_surf_infil"
 	| "to_tree_pit";
 

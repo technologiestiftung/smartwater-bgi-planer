@@ -27,6 +27,8 @@ export const emptyAccumulatedStats: AccumulatedStats = {
 		to_inf_rigole: 0,
 		to_inf_mulde_rigole: 0,
 		to_retention: 0,
+		to_surf_infil: 0,
+		to_tree_pit: 0,
 	},
 	computedArea: {
 		total: 0,
@@ -45,6 +47,8 @@ export const emptyAccumulatedStats: AccumulatedStats = {
 		to_inf_rigole: 0,
 		to_inf_mulde_rigole: 0,
 		to_retention: 0,
+		to_surf_infil: 0,
+		to_tree_pit: 0,
 	},
 };
 

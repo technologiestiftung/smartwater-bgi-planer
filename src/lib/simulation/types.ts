@@ -4,6 +4,14 @@ import type { Geometry } from "ol/geom";
 // OpenLayers feature used by simulation modules.
 export type OLFeature = Feature<Geometry>;
 
+// "permeable_paving": 123, Teilentsiegelung
+// "unpaving": 123, Entsiegelung + Grünflächen (Schnittmenge, nicht doppelt gezählt)
+// "trees_sm": 12, (Anzahl)
+// "trees_md": 12,
+// "trees_lg": 12,
+// "to_surf_infil": 123, Flächenversickerung
+// "to_tree_pit": 123 optimierter Baumstandort
+
 // Derived partial areas in m2 for one block part.
 export type ComputedArea = {
 	total: number;
@@ -22,6 +30,8 @@ export type ComputedArea = {
 	to_inf_rigole: number;
 	to_inf_mulde_rigole: number;
 	to_retention: number;
+	to_surf_infil: number;
+	to_tree_pit: number;
 };
 
 // Available m2 by measure for one block part.
@@ -34,6 +44,8 @@ export type AreaPotential = {
 	to_inf_rigole: number;
 	to_inf_mulde_rigole: number;
 	to_retention: number;
+	to_surf_infil: number;
+	to_tree_pit: number;
 };
 
 // Preprocessed per-feature output.
