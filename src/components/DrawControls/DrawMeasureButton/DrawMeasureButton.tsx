@@ -46,9 +46,11 @@ const measureConfigById = createMeasureConfigMap(
 	measuresConfig as MeasureConfig[],
 );
 
+// Creates a unique ID with a given prefix using timestamp + random suffix
 const createEntityId = (prefix: string) =>
 	`${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 
+// Extracts the numeric area value from a measure's values record
 const getMeasureArea = (values: Record<string, MeasureValue>): number =>
 	typeof values.area === "number"
 		? values.area
@@ -66,6 +68,7 @@ const defaultDrawStyle = new Style({
 	}),
 });
 
+// Returns the draw style for the given geometry type; adds segment labels for polygons
 const getDrawStyle = (geometryType: MeasureGeometryType) =>
 	geometryType !== "Polygon"
 		? undefined
@@ -77,6 +80,7 @@ const getDrawStyle = (geometryType: MeasureGeometryType) =>
 					: [defaultDrawStyle];
 			};
 
+// Computes live area and per-edge lengths from the current polygon sketch
 const buildPolygonLiveInfo = (geometry: Polygon): LiveMeasureInfo | null => {
 	const ring = geometry.getCoordinates()[0] ?? [];
 	if (ring.length < 2) return null;
@@ -91,6 +95,7 @@ const buildPolygonLiveInfo = (geometry: Polygon): LiveMeasureInfo | null => {
 	};
 };
 
+// Finds the first BTF planning feature whose geometry contains the given coordinate
 const findBtfFeature = (
 	coord: number[],
 	planningFeatures: Feature<Geometry>[],
@@ -141,6 +146,7 @@ export const DrawMeasureButton: FC = () => {
 	const isOverPotentialRef = useRef(false);
 	const activeMeasurePotentialRef = useRef<number | null>(null);
 
+	// Detaches the geometry change listener from the current sketch
 	const removeSketchListener = useCallback(() => {
 		if (sketchGeometryRef.current && sketchListenerRef.current) {
 			sketchGeometryRef.current.un("change", sketchListenerRef.current);
@@ -149,6 +155,7 @@ export const DrawMeasureButton: FC = () => {
 		sketchListenerRef.current = null;
 	}, []);
 
+	// Resets all per-draw-cycle state (listener, potential flags, active BTF feature)
 	const clearDrawCycleState = useCallback(() => {
 		removeSketchListener();
 		isOverPotentialRef.current = false;
@@ -156,6 +163,7 @@ export const DrawMeasureButton: FC = () => {
 		activeBtfFeatureRef.current = null;
 	}, [removeSketchListener]);
 
+	// Removes the OL draw interaction from the map and clears cycle state
 	const stopDraw = useCallback(() => {
 		if (!map || !drawRef.current) return;
 		clearDrawCycleState();
@@ -163,21 +171,21 @@ export const DrawMeasureButton: FC = () => {
 		drawRef.current = null;
 	}, [clearDrawCycleState, map]);
 
-	// show draw layers on mount
+	// Show draw layers on mount
 	useEffect(() => {
 		if (!map || !drawLayerId) return;
 		setLayerVisibility(drawLayerId, true);
 		setLayerVisibility(LAYER_IDS.PROJECT_BTF_PLANNING, true);
 	}, [map, drawLayerId, setLayerVisibility]);
 
-	// sync interaction when layer changes or unmounts
+	// Stop and restart the interaction whenever the active layer changes; clean up on unmount
 	useEffect(() => {
 		if (!map || !drawLayerId) return;
 		stopDraw();
 		return () => stopDraw();
 	}, [map, drawLayerId]); // eslint-disable-line react-hooks/exhaustive-deps
 
-	// sync when isDrawing is reset externally
+	// Sync OL interaction when isDrawing is reset from outside this component
 	useEffect(() => {
 		if (!isDrawing) stopDraw();
 	}, [isDrawing, stopDraw]);
@@ -185,6 +193,7 @@ export const DrawMeasureButton: FC = () => {
 	const toggleDraw = () => {
 		if (!map) return;
 
+		// Stop drawing if already active
 		if (drawRef.current) {
 			stopDraw();
 			setLiveMeasureInfo(null);
@@ -192,6 +201,7 @@ export const DrawMeasureButton: FC = () => {
 			return;
 		}
 
+		// Guard: swale measures require a connected area to be selected first
 		if (!canDraw) {
 			setUploadError(
 				"Bitte zuerst eine angeschlossene Flaeche fuer die Versickerungsmassnahme auswaehlen.",
@@ -212,7 +222,7 @@ export const DrawMeasureButton: FC = () => {
 			return;
 		}
 
-		// get features from BTF planning
+		// Returns all features currently on the BTF planning layer
 		const getPlanningFeatures = (): Feature<Geometry>[] =>
 			(
 				getLayerById(
@@ -223,9 +233,11 @@ export const DrawMeasureButton: FC = () => {
 				?.getSource()
 				?.getFeatures() ?? [];
 
-		// draw condition
+		// Decides whether a click should be accepted:
+		// blocks the closing click when the sketch exceeds the potential area,
+		// and restricts drawing to within a single BTF planning feature
 		const drawCondition: Condition = ({ coordinate: coord, pixel }) => {
-			// block closing click when over potential
+			// Block closing click when drawn area exceeds the potential
 			if (
 				isOverPotentialRef.current &&
 				sketchGeometryRef.current instanceof Polygon
@@ -239,6 +251,7 @@ export const DrawMeasureButton: FC = () => {
 				}
 			}
 
+			// On the first click, lock onto the BTF feature under the cursor and resolve its potential
 			if (!activeBtfFeatureRef.current) {
 				const feature = findBtfFeature(coord, getPlanningFeatures());
 				if (!feature) return false;
@@ -264,6 +277,7 @@ export const DrawMeasureButton: FC = () => {
 				return true;
 			}
 
+			// Subsequent clicks: only allow if still within the locked BTF feature
 			return (
 				activeBtfFeatureRef.current
 					.getGeometry()
@@ -279,6 +293,8 @@ export const DrawMeasureButton: FC = () => {
 		});
 
 		if (geometryType === "Polygon") {
+			// On each drawstart, attach a change listener to the sketch geometry
+			// to keep liveMeasureInfo and the over-potential flag in sync
 			drawRef.current.on("drawstart", ({ feature }) => {
 				const geometry = feature.getGeometry();
 				if (!(geometry instanceof Polygon)) return;
@@ -299,12 +315,10 @@ export const DrawMeasureButton: FC = () => {
 					const potential = activeMeasurePotentialRef.current;
 					const currentArea = Number(getArea(geometry).toFixed(2));
 
-					// check if over potential
+					// Flag whether the sketch area exceeds the BTF potential
 					const isOverPotential =
 						typeof potential === "number" && currentArea > potential;
 					isOverPotentialRef.current = isOverPotential;
-
-					console.log("[DrawMeasureButton] info::", info);
 
 					setLiveMeasureInfo({ ...info, isOverPotential });
 				};
@@ -315,6 +329,7 @@ export const DrawMeasureButton: FC = () => {
 			});
 		}
 
+		// On drawend, persist the finished feature as either a connected area or a measure
 		drawRef.current.on("drawend", ({ feature: drawnFeature }) => {
 			clearDrawCycleState();
 			setLiveMeasureInfo(null);
@@ -324,6 +339,7 @@ export const DrawMeasureButton: FC = () => {
 			const process = () => {
 				const activeAreaId = useProjectStore.getState().activeAreaId;
 
+				// Connected-area path: just store the drawn area
 				if (isConnectedArea) {
 					const area = Number(getArea(drawnFeature.getGeometry()!).toFixed(2));
 					const connectedArea = {
@@ -337,10 +353,11 @@ export const DrawMeasureButton: FC = () => {
 					return;
 				}
 
+				// Measure path: resolve parameter values then add measure to the scenario
 				const config = measureConfigById.get(layerConfigId ?? "");
 				if (!config) return;
 
-				const values: Record<string, MeasureValue> = Object.fromEntries(
+				const values = Object.fromEntries(
 					config.parameters.map((p) => [
 						p.key,
 						p.source === "drawn"
@@ -352,6 +369,9 @@ export const DrawMeasureButton: FC = () => {
 				);
 
 				console.log("[DrawMeasureButton] values::", values);
+
+				// hier müsste ich theoretisch die connected Area hinzufügen aus der aktiven
+				// connectedArea dann (wenn die maßnahme das erfordert)
 
 				const measure = {
 					id: createEntityId("measure"),
@@ -369,6 +389,7 @@ export const DrawMeasureButton: FC = () => {
 
 				drawnFeature.set("measureId", measure.id);
 
+				// Copy resolved parameter values onto the OL feature
 				Object.entries(values).forEach(([k, v]) => {
 					if (v !== null && v !== undefined && v !== "") drawnFeature.set(k, v);
 				});
@@ -377,7 +398,7 @@ export const DrawMeasureButton: FC = () => {
 				useScenarioStore.getState().addMeasure(activeScenarioId, measure);
 			};
 
-			// OL sometimes fires drawend before the feature is in the source
+			// OL sometimes fires drawend before the feature lands in the source; defer if needed
 			if (source.getFeatures().includes(drawnFeature)) {
 				process();
 			} else {

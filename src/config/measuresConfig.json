@@ -89,6 +89,7 @@
 	{
 		"id": "3B1",
 		"geometryType": "Polygon",
+		"measureKey": "unpaving",
 		"parameters": [
 			{
 				"key": "area",
@@ -108,42 +109,6 @@
 				"key": "count",
 				"type": "integer",
 				"source": "input",
-				"required": true
-			},
-			{
-				"key": "treeHeight",
-				"type": "number",
-				"unit": "m",
-				"source": "input"
-			},
-			{
-				"key": "rootDepth",
-				"type": "number",
-				"unit": "m",
-				"source": "input"
-			},
-			{
-				"key": "greenVolume",
-				"type": "number",
-				"unit": "m3",
-				"source": "input"
-			},
-			{
-				"key": "species",
-				"type": "string",
-				"source": "input"
-			}
-		]
-	},
-	{
-		"id": "3B3",
-		"geometryType": "Polygon",
-		"parameters": [
-			{
-				"key": "area",
-				"type": "number",
-				"unit": "m2",
-				"source": "drawn",
 				"required": true
 			}
 		]
@@ -172,6 +137,7 @@
 	{
 		"id": "3V2",
 		"geometryType": "Polygon",
+		"measureKey": "to_surf_infil",
 		"parameters": [
 			{
 				"key": "area",
@@ -232,6 +198,7 @@
 	{
 		"id": "3V5",
 		"geometryType": "Point",
+		"measureKey": "to_tree_pit",
 		"parameters": [
 			{
 				"key": "count",
@@ -283,6 +250,7 @@
 	{
 		"id": "3S2",
 		"geometryType": "Point",
+		"measureKey": "to_retention",
 		"parameters": [
 			{
 				"key": "storageVolume",
@@ -290,6 +258,14 @@
 				"unit": "m3",
 				"source": "input",
 				"required": true
+			},
+			{
+				"key": "connectedArea",
+				"type": "number",
+				"unit": "m2",
+				"source": "input",
+				"required": true,
+				"isCalculationInput": true
 			}
 		]
 	},
@@ -308,7 +284,6 @@
 	},
 	{
 		"id": "3S4",
-		"measureKey": "to_retention",
 		"geometryType": "Polygon",
 		"parameters": [
 			{

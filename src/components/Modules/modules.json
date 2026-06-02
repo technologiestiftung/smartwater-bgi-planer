@@ -142,7 +142,7 @@
 						{
 							"id": "3E2",
 							"layerConfigId": "3E2",
-							"title": "Komplette Entsiegelung",
+							"title": "Vollständige Entsiegelung",
 							"metricIcons": ["RoadHorizon", "Drop"],
 							"infoLayerConfigId": "3E2_info"
 						}

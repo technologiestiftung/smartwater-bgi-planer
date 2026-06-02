@@ -105,6 +105,16 @@ function MeasurePlanningFooter({
 	);
 }
 
+interface MeasureListItemProps {
+	item: StepItem;
+	label: string;
+	isConnectedArea: boolean;
+	isDisabled: boolean;
+	hasPlacedMeasure: boolean;
+	stepId: string;
+	onActivate: (stepId: string, questionId: string) => void;
+}
+
 function MeasureListItem({
 	item,
 	label,
@@ -113,15 +123,7 @@ function MeasureListItem({
 	hasPlacedMeasure,
 	stepId,
 	onActivate,
-}: {
-	item: StepItem;
-	label: string;
-	isConnectedArea: boolean;
-	isDisabled: boolean;
-	hasPlacedMeasure: boolean;
-	stepId: string;
-	onActivate: (stepId: string, questionId: string) => void;
-}) {
+}: MeasureListItemProps) {
 	return (
 		<div className="hover:bg-light flex items-center gap-2">
 			<button
@@ -337,7 +339,6 @@ export function MeasurePlanningAccordion({
 							>
 								<AccordionTrigger className="text-primary py-5 text-xl font-semibold hover:no-underline">
 									<div className="flex items-center gap-3">
-										{/* <div className="text-primary [&_svg]:size-6">{step.icon}</div> */}
 										<span>{step.title}</span>
 									</div>
 								</AccordionTrigger>
