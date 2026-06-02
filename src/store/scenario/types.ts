@@ -30,7 +30,6 @@ export interface Scenario {
 export interface ScenarioState {
 	scenarios: Record<string, Scenario>;
 	activeScenarioId: string | null;
-	activeConnectedAreaId: string | null;
 	hasHydrated: boolean;
 }
 

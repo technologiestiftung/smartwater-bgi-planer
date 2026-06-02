@@ -28,7 +28,6 @@ const initialState: ScenarioState = {
 		[DEFAULT_SCENARIO_ID]: createDefaultScenario(),
 	},
 	activeScenarioId: DEFAULT_SCENARIO_ID,
-	activeConnectedAreaId: null,
 	hasHydrated: false,
 };
 

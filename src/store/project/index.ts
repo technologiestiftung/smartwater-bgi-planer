@@ -17,6 +17,8 @@ import { ProjectActions, ProjectState } from "./types";
 const initialState: ProjectState = {
 	// features from rabimo_input_2025 (BTFs) -> amarex: selectedFeatures
 	inputFeatures: [],
+	// preprocessed base simulation stats derived from inputFeatures
+	preprocessedStats: null,
 	// stats for the entire BTF project area
 	accumulatedStats: emptyAccumulatedStats,
 	// stats for each BTF

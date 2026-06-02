@@ -1,4 +1,8 @@
-import type { AreaPotential, ComputedArea } from "@/lib/simulation/types";
+import type {
+	AreaPotential,
+	ComputedArea,
+	PreprocessedFeatures,
+} from "@/lib/simulation/types";
 import type Feature from "ol/Feature";
 import type Geometry from "ol/geom/Geometry";
 
@@ -70,6 +74,7 @@ export interface ComputedFeatures {
 export interface ProjectState {
 	accumulatedStats: AccumulatedStats;
 	inputFeatures: InputFeature[];
+	preprocessedStats: PreprocessedFeatures | null;
 	computedFeatures: ComputedFeatures[];
 
 	// Active

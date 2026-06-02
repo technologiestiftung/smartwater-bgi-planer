@@ -83,6 +83,7 @@ export const createDeleteProject = (set: SetState, get: GetState) => {
 		set({
 			project: null,
 			inputFeatures: [],
+			preprocessedStats: null,
 			accumulatedStats: emptyAccumulatedStats,
 			computedFeatures: [],
 			activeAreaPotential: null,
@@ -132,6 +133,7 @@ export const createSetInputFeatures = (set: SetState) => {
 
 		set({
 			inputFeatures: features,
+			preprocessedStats: stats,
 			accumulatedStats: {
 				totalArea: stats.totalArea,
 				inputFeaturesCount: features.length,

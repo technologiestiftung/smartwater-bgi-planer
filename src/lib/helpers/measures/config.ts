@@ -7,7 +7,6 @@ export const normalizeMeasureGeometryType = (
 	geometryType: string | undefined,
 ): MeasureGeometryType => {
 	if (geometryType === "Point") return "Point";
-	if (geometryType === "LineString") return "LineString";
 	if (geometryType === "Circle") return "Circle";
 	return "Polygon";
 };

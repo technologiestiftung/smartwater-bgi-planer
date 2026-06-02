@@ -8,7 +8,7 @@ export type MeasureParameterConfig = {
 	default?: number | string;
 };
 
-export type MeasureCalculationName =
+export type MeasureKey =
 	| "green_roof_ext"
 	| "green_roof_int"
 	| "unpaving"
@@ -16,13 +16,18 @@ export type MeasureCalculationName =
 	| "to_inf_mulde"
 	| "to_inf_rigole"
 	| "to_inf_mulde_rigole"
-	| "to_retention";
+	| "to_retention"
+	| "trees_sm"
+	| "trees_md"
+	| "trees_lg"
+	| "to_surf_infil"
+	| "to_tree_pit";
+
+export type MeasureGeometryType = "Point" | "Polygon" | "Circle";
 
 export type MeasureConfig = {
 	id: string;
-	measureKey?: MeasureCalculationName;
-	geometryType?: "Polygon" | "Point" | "LineString" | "Circle";
+	measureKey?: MeasureKey;
+	geometryType?: MeasureGeometryType;
 	parameters: MeasureParameterConfig[];
 };
-
-export type MeasureGeometryType = "Point" | "LineString" | "Polygon" | "Circle";

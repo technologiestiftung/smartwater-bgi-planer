@@ -2,7 +2,7 @@ import areaCalculations from "@/lib/simulation/calculations/areaCalculations";
 import { simulationEngine } from "@/lib/simulation/simulationEngine";
 import { useProjectStore } from "@/store/project";
 import { ComputedFeatures } from "@/store/project/types";
-import { ConnectedArea, MeasureValue, Measure, ScenarioState } from "./types";
+import { ConnectedArea, Measure, MeasureValue, ScenarioState } from "./types";
 
 type SetState = (fn: (state: ScenarioState) => Partial<ScenarioState>) => void;
 
@@ -10,8 +10,14 @@ const createScenarioId = () =>
 	`scenario-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 
 const syncProjectDerivedSimulation = (measures: Measure[]) => {
-	const { inputFeatures, activeAreaId } = useProjectStore.getState();
-	const stats = simulationEngine.preprocessInput(inputFeatures);
+	const { inputFeatures, activeAreaId, preprocessedStats } =
+		useProjectStore.getState();
+	const stats =
+		preprocessedStats ?? simulationEngine.preprocessInput(inputFeatures);
+
+	if (!preprocessedStats) {
+		useProjectStore.setState({ preprocessedStats: stats });
+	}
 
 	const computedFeatures: ComputedFeatures[] = stats.features.map((item) => {
 		const result = simulationEngine.applyMeasures(
