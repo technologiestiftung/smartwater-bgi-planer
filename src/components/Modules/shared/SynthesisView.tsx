@@ -236,6 +236,7 @@ export function SynthesisView({
 					className="text-md my-4 flex-1 text-white hover:text-white"
 					size="lg"
 					variant="ghost"
+					disabled={moduleId === "feasibility"}
 				>
 					{moduleId === "needForAction" ? (
 						<ShovelIcon className="h-4 w-4" />
