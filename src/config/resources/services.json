@@ -568,14 +568,6 @@
 		"styleId": "measuresLayers"
 	},
 	{
-		"id": "module_3_3B3_draw",
-		"name": "Gleisbettbegrünung",
-		"crs": "urn:ogc:def:crs:EPSG::25833",
-		"typ": "GEOJSON",
-		"gfiAttributes": "showAll",
-		"styleId": "measuresLayers"
-	},
-	{
 		"id": "module_3_3G1_draw",
 		"name": "Extensive Dachbegrünung",
 		"crs": "urn:ogc:def:crs:EPSG::25833",

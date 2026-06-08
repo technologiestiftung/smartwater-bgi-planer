@@ -166,13 +166,6 @@
 							"title": "Bäume",
 							"metricIcons": ["Tree"],
 							"infoLayerConfigId": "3B2_info"
-						},
-						{
-							"id": "3B3",
-							"layerConfigId": "3B3",
-							"title": "Gleisbettbegrünung",
-							"metricIcons": ["Tree", "Drop"],
-							"infoLayerConfigId": "3B3_info"
 						}
 					]
 				},

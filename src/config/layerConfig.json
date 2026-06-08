@@ -604,14 +604,6 @@
 		"measurementSrc": "/legends/2e1.svg"
 	},
 	{
-		"id": "3B3",
-		"name": "Gleisbettbegrünung",
-		"description": "Begrünung von Straßenbahngleisen statt Schotter oder fester Eindeckung als zusätzliche innerstädtische Grünfläche. Sie verbessert Mikroklima, bindet Feinstaub, reduziert Lärm und kann Regenwasser zurückhalten. Besonders geeignet für versiegelte Straßenräume mit durchgehenden Trassen.",
-		"drawLayerId": "module_3_3B3_draw",
-		"visibleLayerIds": [],
-		"canDrawMeasures": true
-	},
-	{
 		"id": "3V1",
 		"name": "Mulde",
 		"description": "Flache, bepflanzte Bodenvertiefung zur temporären Speicherung und Versickerung von Niederschlagswasser. Mulden reduzieren Überflutungsrisiken, fördern Grundwasserneubildung und unterstützen Verdunstungskühlung. Voraussetzung sind geeignete Bodenverhältnisse sowie regelmäßige Pflege.",
@@ -726,7 +718,6 @@
 			"module_3_3E2_draw",
 			"module_3_3B1_draw",
 			"module_3_3B2_draw",
-			"module_3_3B3_draw",
 			"module_3_3V1_draw",
 			"module_3_3V2_draw",
 			"module_3_3V3_draw",
