@@ -1,4 +1,4 @@
-import { LayerConfig } from "@/store/layers/types";
+import { MapLayerConfig } from "@/store/layers/types";
 import OLMap from "ol/Map";
 
 // Map View
@@ -28,7 +28,7 @@ export interface PortalConfig {
 
 export interface MapConfig {
 	portalConfig: PortalConfig;
-	layerConfig: LayerConfig;
+	layerConfig: MapLayerConfig;
 }
 
 // State

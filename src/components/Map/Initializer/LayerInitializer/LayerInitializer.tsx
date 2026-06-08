@@ -53,12 +53,12 @@ export const LayerInitializer: FC = () => {
 			initialConfig.layerConfig.baselayer.elements.map((el) => el.id),
 		);
 
-		flattenedLayerElements.forEach((layerConfig, index) => {
-			const { service: serviceConfig } = layerConfig;
+		flattenedLayerElements.forEach((layerElement, index) => {
+			const { service: serviceConfig } = layerElement;
 
 			if (!serviceConfig) {
 				console.warn(
-					`[LayerInitializer] Layer ${layerConfig.id} has no service config. Skipping.`,
+					`[LayerInitializer] Layer ${layerElement.id} has no service config. Skipping.`,
 				);
 				return;
 			}
@@ -73,12 +73,12 @@ export const LayerInitializer: FC = () => {
 			});
 
 			if (!olLayer) {
-				newManagedLayersMap.set(layerConfig.id, {
-					id: layerConfig.id,
-					config: layerConfig,
+				newManagedLayersMap.set(layerElement.id, {
+					id: layerElement.id,
+					config: layerElement,
 					olLayer: null,
 					status: "error",
-					visibility: layerConfig.visibility,
+					visibility: layerElement.visibility,
 					opacity: 1,
 					zIndex: 0,
 					layerType: "subject",
@@ -87,28 +87,28 @@ export const LayerInitializer: FC = () => {
 				return;
 			}
 
-			const isBaseLayer = baseLayerIds.has(layerConfig.id);
-			const isDrawLayer = drawLayerIds.includes(layerConfig.id);
+			const isBaseLayer = baseLayerIds.has(layerElement.id);
+			const isDrawLayer = drawLayerIds.includes(layerElement.id);
 			const zIndex = calculateZIndex(isBaseLayer, isDrawLayer, index);
 
 			olLayer.setZIndex(zIndex);
-			olLayer.setVisible(layerConfig.visibility);
+			olLayer.setVisible(layerElement.visibility);
 			olLayer.setOpacity(1);
-			olLayer.set("id", layerConfig.id);
+			olLayer.set("id", layerElement.id);
 
 			const managedLayer: ManagedLayer = {
-				id: layerConfig.id,
-				config: layerConfig,
+				id: layerElement.id,
+				config: layerElement,
 				olLayer,
 				status,
-				visibility: layerConfig.visibility,
+				visibility: layerElement.visibility,
 				opacity: 1,
 				zIndex,
 				layerType: isBaseLayer ? "base" : "subject",
 				error,
 			};
 
-			newManagedLayersMap.set(layerConfig.id, managedLayer);
+			newManagedLayersMap.set(layerElement.id, managedLayer);
 			map.addLayer(olLayer);
 		});
 

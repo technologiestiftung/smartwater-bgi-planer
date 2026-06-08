@@ -87,7 +87,7 @@ export interface VectorTileStyle {
 	defaultStyle: boolean;
 }
 
-export interface LayerConfig {
+export interface MapLayerConfig {
 	baselayer: {
 		elements: LayerElement[];
 	};
