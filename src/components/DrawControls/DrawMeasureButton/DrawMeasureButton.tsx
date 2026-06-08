@@ -33,6 +33,7 @@ import Fill from "ol/style/Fill";
 import Stroke from "ol/style/Stroke";
 import Style from "ol/style/Style";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
+import { useShallow } from "zustand/react/shallow";
 
 interface LiveMeasureInfo {
 	area: string;
@@ -40,11 +41,9 @@ interface LiveMeasureInfo {
 	isOverPotential?: boolean;
 }
 
-// Creates a unique ID with a given prefix using timestamp + random suffix
 const createEntityId = (prefix: string) =>
 	`${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 
-// Extracts the numeric area value from a measure's values record
 const getMeasureArea = (values: Record<string, MeasureValue>): number =>
 	typeof values.area === "number"
 		? values.area
@@ -62,7 +61,6 @@ const defaultDrawStyle = new Style({
 	}),
 });
 
-// Returns the draw style for the given geometry type; adds segment labels for polygons
 const getDrawStyle = (geometryType: MeasureGeometryType) =>
 	geometryType !== "Polygon"
 		? undefined
@@ -74,7 +72,6 @@ const getDrawStyle = (geometryType: MeasureGeometryType) =>
 					: [defaultDrawStyle];
 			};
 
-// Computes live area and per-edge lengths from the current polygon sketch
 const buildPolygonLiveInfo = (geometry: Polygon): LiveMeasureInfo | null => {
 	const ring = geometry.getCoordinates()[0] ?? [];
 	if (ring.length < 2) return null;
@@ -89,30 +86,43 @@ const buildPolygonLiveInfo = (geometry: Polygon): LiveMeasureInfo | null => {
 	};
 };
 
-// Finds the first BTF planning feature whose geometry contains the given coordinate
-const findBtfFeature = (
-	coord: number[],
-	planningFeatures: Feature<Geometry>[],
-): Feature<Geometry> | undefined =>
-	planningFeatures.find((f) => f.getGeometry()?.intersectsCoordinate(coord));
+const findBtfFeature = (coord: number[], features: Feature<Geometry>[]) =>
+	features.find((f) => f.getGeometry()?.intersectsCoordinate(coord));
 
 export const DrawMeasureButton: FC = () => {
 	const map = useMapStore((s) => s.map);
-	const drawLayerId = useLayersStore((s) => s.drawLayerId);
-	const layerConfigId = useLayersStore((s) => s.layerConfigId);
-	const setLayerVisibility = useLayersStore((s) => s.setLayerVisibility);
-	const isDrawing = useUiStore((s) => s.isDrawing);
-	const setIsDrawing = useUiStore((s) => s.setIsDrawing);
-	const resetDrawInteractions = useUiStore((s) => s.resetDrawInteractions);
-	const setUploadError = useUiStore((s) => s.setUploadError);
-	const selectedConnectedAreaId = useUiStore((s) => s.selectedConnectedAreaId);
-	const addConnectedArea = useScenarioStore((s) => s.addConnectedArea);
-	const activeScenarioId = useScenarioStore((s) => s.activeScenarioId);
-	const connectedAreas = useScenarioStore((s) =>
-		s.activeScenarioId
-			? (s.scenarios[s.activeScenarioId]?.connectedAreas ?? [])
-			: [],
+	const { drawLayerId, layerConfigId, setLayerVisibility } = useLayersStore(
+		useShallow((s) => ({
+			drawLayerId: s.drawLayerId,
+			layerConfigId: s.layerConfigId,
+			setLayerVisibility: s.setLayerVisibility,
+		})),
 	);
+	const {
+		isDrawing,
+		setIsDrawing,
+		resetDrawInteractions,
+		setUploadError,
+		selectedConnectedAreaId,
+	} = useUiStore(
+		useShallow((s) => ({
+			isDrawing: s.isDrawing,
+			setIsDrawing: s.setIsDrawing,
+			resetDrawInteractions: s.resetDrawInteractions,
+			setUploadError: s.setUploadError,
+			selectedConnectedAreaId: s.selectedConnectedAreaId,
+		})),
+	);
+	const { addConnectedArea, activeScenarioId, connectedAreas } =
+		useScenarioStore(
+			useShallow((s) => ({
+				addConnectedArea: s.addConnectedArea,
+				activeScenarioId: s.activeScenarioId,
+				connectedAreas: s.activeScenarioId
+					? (s.scenarios[s.activeScenarioId]?.connectedAreas ?? [])
+					: [],
+			})),
+		);
 
 	const isConnectedArea = layerConfigId === "connected_area";
 	const isSwaleMeasure = isSwaleLayerConfigId(layerConfigId);
@@ -122,12 +132,11 @@ export const DrawMeasureButton: FC = () => {
 	const geometryType = normalizeMeasureGeometryType(
 		measureConfig?.geometryType,
 	);
-	const canDraw =
-		!isSwaleMeasure ||
-		Boolean(connectedAreas.find((a) => a.id === selectedConnectedAreaId));
+
 	const selectedConnectedArea = connectedAreas.find(
-		(area) => area.id === selectedConnectedAreaId,
+		(a) => a.id === selectedConnectedAreaId,
 	);
+	const canDraw = !isSwaleMeasure || Boolean(selectedConnectedArea);
 
 	const [_liveMeasureInfo, setLiveMeasureInfo] =
 		useState<LiveMeasureInfo | null>(null);
@@ -140,16 +149,13 @@ export const DrawMeasureButton: FC = () => {
 	const isOverPotentialRef = useRef(false);
 	const activeMeasurePotentialRef = useRef<number | null>(null);
 
-	// Detaches the geometry change listener from the current sketch
 	const removeSketchListener = useCallback(() => {
-		if (sketchGeometryRef.current && sketchListenerRef.current) {
+		if (sketchGeometryRef.current && sketchListenerRef.current)
 			sketchGeometryRef.current.un("change", sketchListenerRef.current);
-		}
 		sketchGeometryRef.current = null;
 		sketchListenerRef.current = null;
 	}, []);
 
-	// Resets all per-draw-cycle state (listener, potential flags, active BTF feature)
 	const clearDrawCycleState = useCallback(() => {
 		removeSketchListener();
 		isOverPotentialRef.current = false;
@@ -157,7 +163,6 @@ export const DrawMeasureButton: FC = () => {
 		activeBtfFeatureRef.current = null;
 	}, [removeSketchListener]);
 
-	// Removes the OL draw interaction from the map and clears cycle state
 	const stopDraw = useCallback(() => {
 		if (!map || !drawRef.current) return;
 		clearDrawCycleState();
@@ -165,21 +170,18 @@ export const DrawMeasureButton: FC = () => {
 		drawRef.current = null;
 	}, [clearDrawCycleState, map]);
 
-	// Show draw layers on mount
 	useEffect(() => {
 		if (!map || !drawLayerId) return;
 		setLayerVisibility(drawLayerId, true);
 		setLayerVisibility(LAYER_IDS.PROJECT_BTF_PLANNING, true);
 	}, [map, drawLayerId, setLayerVisibility]);
 
-	// Stop and restart the interaction whenever the active layer changes; clean up on unmount
 	useEffect(() => {
 		if (!map || !drawLayerId) return;
 		stopDraw();
 		return () => stopDraw();
 	}, [map, drawLayerId]); // eslint-disable-line react-hooks/exhaustive-deps
 
-	// Sync OL interaction when isDrawing is reset from outside this component
 	useEffect(() => {
 		if (!isDrawing) stopDraw();
 	}, [isDrawing, stopDraw]);
@@ -187,7 +189,6 @@ export const DrawMeasureButton: FC = () => {
 	const toggleDraw = () => {
 		if (!map) return;
 
-		// Stop drawing if already active
 		if (drawRef.current) {
 			stopDraw();
 			setLiveMeasureInfo(null);
@@ -195,7 +196,6 @@ export const DrawMeasureButton: FC = () => {
 			return;
 		}
 
-		// Guard: swale measures require a connected area to be selected first
 		if (!canDraw) {
 			setUploadError(
 				"Bitte zuerst eine angeschlossene Flaeche fuer die Versickerungsmassnahme auswaehlen.",
@@ -210,13 +210,12 @@ export const DrawMeasureButton: FC = () => {
 			.getAllLayers()
 			.find((l) => l.get("id") === drawLayerId) as VectorLayer<VectorSource>;
 		const source = layer?.getSource();
-
 		if (!(source instanceof VectorSource)) {
 			console.error("[DrawMeasureButton] Layer or source not found");
 			return;
 		}
 
-		// Returns all features currently on the BTF planning layer
+		// In toggleDraw, direkt vor drawCondition:
 		const getPlanningFeatures = (): Feature<Geometry>[] =>
 			(
 				getLayerById(
@@ -227,11 +226,7 @@ export const DrawMeasureButton: FC = () => {
 				?.getSource()
 				?.getFeatures() ?? [];
 
-		// Decides whether a click should be accepted:
-		// blocks the closing click when the sketch exceeds the potential area,
-		// and restricts drawing to within a single BTF planning feature
 		const drawCondition: Condition = ({ coordinate: coord, pixel }) => {
-			// Block closing click when drawn area exceeds the potential
 			if (
 				isOverPotentialRef.current &&
 				sketchGeometryRef.current instanceof Polygon
@@ -245,13 +240,11 @@ export const DrawMeasureButton: FC = () => {
 				}
 			}
 
-			// On the first click, lock onto the BTF feature under the cursor and resolve its potential
 			if (!activeBtfFeatureRef.current) {
 				const feature = findBtfFeature(coord, getPlanningFeatures());
 				if (!feature) return false;
 				activeBtfFeatureRef.current = feature;
 				const code = feature.get("code");
-
 				if (code) {
 					const { computedFeatures } = useProjectStore.getState();
 					const computedFeature = computedFeatures.find((f) => f.code === code);
@@ -260,7 +253,6 @@ export const DrawMeasureButton: FC = () => {
 						measureKey && computedFeature
 							? computedFeature.areaPotential[measureKey]
 							: null;
-
 					useProjectStore.setState({
 						activeAreaId: code,
 						activeAreaPotential: computedFeature?.areaPotential ?? null,
@@ -271,7 +263,6 @@ export const DrawMeasureButton: FC = () => {
 				return true;
 			}
 
-			// Subsequent clicks: only allow if still within the locked BTF feature
 			return (
 				activeBtfFeatureRef.current
 					.getGeometry()
@@ -287,8 +278,6 @@ export const DrawMeasureButton: FC = () => {
 		});
 
 		if (geometryType === "Polygon") {
-			// On each drawstart, attach a change listener to the sketch geometry
-			// to keep liveMeasureInfo and the over-potential flag in sync
 			drawRef.current.on("drawstart", ({ feature }) => {
 				const geometry = feature.getGeometry();
 				if (!(geometry instanceof Polygon)) return;
@@ -299,21 +288,16 @@ export const DrawMeasureButton: FC = () => {
 				const update = () => {
 					const info =
 						geometry instanceof Polygon ? buildPolygonLiveInfo(geometry) : null;
-
 					if (!info) {
 						isOverPotentialRef.current = false;
 						setLiveMeasureInfo(null);
 						return;
 					}
-
 					const potential = activeMeasurePotentialRef.current;
 					const currentArea = Number(getArea(geometry).toFixed(2));
-
-					// Flag whether the sketch area exceeds the BTF potential
 					const isOverPotential =
 						typeof potential === "number" && currentArea > potential;
 					isOverPotentialRef.current = isOverPotential;
-
 					setLiveMeasureInfo({ ...info, isOverPotential });
 				};
 
@@ -323,17 +307,14 @@ export const DrawMeasureButton: FC = () => {
 			});
 		}
 
-		// On drawend, persist the finished feature as either a connected area or a measure
 		drawRef.current.on("drawend", ({ feature: drawnFeature }) => {
 			clearDrawCycleState();
 			setLiveMeasureInfo(null);
-
 			if (!activeScenarioId) return;
 
 			const process = () => {
 				const activeAreaId = useProjectStore.getState().activeAreaId;
 
-				// Connected-area path: just store the drawn area
 				if (isConnectedArea) {
 					const area = Number(getArea(drawnFeature.getGeometry()!).toFixed(2));
 					const connectedArea = {
@@ -347,7 +328,6 @@ export const DrawMeasureButton: FC = () => {
 					return;
 				}
 
-				// Measure path: resolve parameter values then add measure to the scenario
 				const config = measureConfigById.get(layerConfigId ?? "");
 				if (!config) return;
 
@@ -361,11 +341,6 @@ export const DrawMeasureButton: FC = () => {
 								: (p.default ?? ""),
 					]),
 				);
-
-				console.log("[DrawMeasureButton] values::", values);
-
-				// hier müsste ich theoretisch die connected Area hinzufügen aus der aktiven
-				// connectedArea dann (wenn die maßnahme das erfordert)
 
 				const measure = {
 					id: createEntityId("measure"),
@@ -382,24 +357,18 @@ export const DrawMeasureButton: FC = () => {
 				};
 
 				drawnFeature.set("measureId", measure.id);
-
-				// Copy resolved parameter values onto the OL feature
 				Object.entries(values).forEach(([k, v]) => {
 					if (v !== null && v !== undefined && v !== "") drawnFeature.set(k, v);
 				});
 
-				console.log("[DrawMeasureButton] measure::", measure);
 				useScenarioStore.getState().addMeasure(activeScenarioId, measure);
 			};
 
-			// OL sometimes fires drawend before the feature lands in the source; defer if needed
-			if (source.getFeatures().includes(drawnFeature)) {
-				process();
-			} else {
+			if (source.getFeatures().includes(drawnFeature)) process();
+			else
 				setTimeout(() => {
 					if (source.getFeatures().includes(drawnFeature)) process();
 				}, 0);
-			}
 		});
 
 		map.addInteraction(drawRef.current);

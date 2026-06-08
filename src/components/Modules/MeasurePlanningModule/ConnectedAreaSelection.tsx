@@ -1,12 +1,10 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { measureConfigById } from "@/config/measuresConfig";
+import { useConnectedAreaSelection } from "@/hooks/useConnectedAreaSelection";
 import { isSwaleLayerConfigId } from "@/lib/helpers/measures/swale";
 import { getLayerById } from "@/lib/helpers/ol";
 import { useMapStore } from "@/store/map";
-import { useProjectStore } from "@/store/project";
-import { useScenarioStore } from "@/store/scenario";
 import { useUiStore } from "@/store/ui";
 import { LAYER_IDS } from "@/types/shared";
 import { never, singleClick } from "ol/events/condition";
@@ -18,7 +16,8 @@ import { Vector as VectorSource } from "ol/source";
 import Fill from "ol/style/Fill";
 import Stroke from "ol/style/Stroke";
 import Style from "ol/style/Style";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useRef } from "react";
+import { useShallow } from "zustand/react/shallow";
 
 interface ConnectedAreaSelectionProps {
 	layerConfigId: string;
@@ -26,22 +25,13 @@ interface ConnectedAreaSelectionProps {
 	layerName: string;
 }
 
-const EMPTY_CONNECTED_AREAS: Array<{
-	id: string;
-	area: number;
-	code: string | null;
-}> = [];
-
-const EMPTY_MEASURES: Array<{
-	area: number;
-	code: string | null;
-	configId: string;
-	drawLayerId: string | null;
-}> = [];
-
 const selectedConnectedAreaStyle = new Style({
 	fill: new Fill({ color: "rgba(0, 153, 255, 0.1)" }),
 	stroke: new Stroke({ color: "rgba(0, 153, 255, 1)", width: 2 }),
+});
+
+const areaFormatter = new Intl.NumberFormat("de-DE", {
+	maximumFractionDigits: 2,
 });
 
 export function ConnectedAreaSelection({
@@ -50,95 +40,34 @@ export function ConnectedAreaSelection({
 	layerName,
 }: ConnectedAreaSelectionProps) {
 	const map = useMapStore((state) => state.map);
-	const isConnectedAreaSelecting = useUiStore(
-		(state) => state.isConnectedAreaSelecting,
+	const {
+		isConnectedAreaSelecting,
+		setIsConnectedAreaSelecting,
+		selectedConnectedAreaId,
+		setSelectedConnectedArea,
+		resetDrawInteractions,
+		setIsBlockAreaSelecting,
+	} = useUiStore(
+		useShallow((state) => ({
+			isConnectedAreaSelecting: state.isConnectedAreaSelecting,
+			setIsConnectedAreaSelecting: state.setIsConnectedAreaSelecting,
+			selectedConnectedAreaId: state.selectedConnectedAreaId,
+			setSelectedConnectedArea: state.setSelectedConnectedArea,
+			resetDrawInteractions: state.resetDrawInteractions,
+			setIsBlockAreaSelecting: state.setIsBlockAreaSelecting,
+		})),
 	);
-	const setIsConnectedAreaSelecting = useUiStore(
-		(state) => state.setIsConnectedAreaSelecting,
-	);
-	const selectedConnectedAreaId = useUiStore(
-		(state) => state.selectedConnectedAreaId,
-	);
-	const setSelectedConnectedArea = useUiStore(
-		(state) => state.setSelectedConnectedArea,
-	);
-	const resetDrawInteractions = useUiStore(
-		(state) => state.resetDrawInteractions,
-	);
-	const setIsBlockAreaSelecting = useUiStore(
-		(state) => state.setIsBlockAreaSelecting,
-	);
-	const connectedAreas = useScenarioStore((state) => {
-		if (!state.activeScenarioId) return EMPTY_CONNECTED_AREAS;
-		return (
-			state.scenarios[state.activeScenarioId]?.connectedAreas ??
-			EMPTY_CONNECTED_AREAS
-		);
-	});
-	const measures = useScenarioStore((state) => {
-		if (!state.activeScenarioId) return EMPTY_MEASURES;
-		return state.scenarios[state.activeScenarioId]?.measures ?? EMPTY_MEASURES;
-	});
-	const computedFeatures = useProjectStore((state) => state.computedFeatures);
 
 	const selectInteractionRef = useRef<Select | null>(null);
 	const isSwaleMeasure = isSwaleLayerConfigId(layerConfigId);
-
-	const measureRows = useMemo(
-		() =>
-			measures.filter((measure) => {
-				// Keep summary strictly scoped to the currently open measurement step.
-				if (measure.configId === layerConfigId) return true;
-				if (measure.configId === drawLayerId) return true;
-				if (measure.drawLayerId === drawLayerId) return true;
-				return false;
-			}),
-		[measures, layerConfigId, drawLayerId],
-	);
-
-	const selectedConnectedArea = useMemo(
-		() =>
-			connectedAreas.find((area) => area.id === selectedConnectedAreaId) ??
-			null,
-		[connectedAreas, selectedConnectedAreaId],
-	);
-	const measureKey = measureConfigById.get(layerConfigId)?.measureKey;
-
-	const summary = useMemo(() => {
-		const count = measureRows.length;
-		const selectedCode = selectedConnectedArea?.code ?? null;
-		const selectedMeasureRows =
-			selectedCode === null
-				? measureRows
-				: measureRows.filter((measure) => measure.code === selectedCode);
-
-		const measureArea = selectedMeasureRows.reduce((sum, measure) => {
-			const area = measure.area;
-			return typeof area === "number" ? sum + area : sum;
-		}, 0);
-
-		const potentialArea = (() => {
-			if (!measureKey || !selectedCode) return 0;
-			const selectedFeature = computedFeatures.find(
-				(feature) => feature.code === selectedCode,
-			);
-			return selectedFeature?.areaPotential[measureKey] ?? 0;
-		})();
-
-		return {
-			count,
-			measureArea,
-			potentialArea,
-			connectedArea: selectedConnectedArea?.area ?? 0,
-		};
-	}, [computedFeatures, measureKey, measureRows, selectedConnectedArea]);
+	const { selectedConnectedArea, connectedAreas, summary } =
+		useConnectedAreaSelection(layerConfigId, drawLayerId);
 
 	useEffect(() => {
-		if (!isSwaleMeasure) return;
-		if (selectedConnectedAreaId && selectedConnectedArea) return;
-		if (connectedAreas.length === 1) {
+		if (!isSwaleMeasure || (selectedConnectedAreaId && selectedConnectedArea))
+			return;
+		if (connectedAreas.length === 1)
 			setSelectedConnectedArea(connectedAreas[0].id);
-		}
 	}, [
 		connectedAreas,
 		isSwaleMeasure,
@@ -147,87 +76,72 @@ export function ConnectedAreaSelection({
 		setSelectedConnectedArea,
 	]);
 
-	// Highlight selected connected area
 	useEffect(() => {
 		if (!map) return;
-
-		const connectedAreaLayer = getLayerById(
+		const layer = getLayerById(
 			map,
 			LAYER_IDS.CONNECTED_AREA_DRAW,
 		) as VectorLayer<VectorSource> | null;
-		if (!connectedAreaLayer) return;
-
-		const features = connectedAreaLayer.getSource()?.getFeatures() ?? [];
-		features.forEach((feature) => {
-			const connectedAreaId = feature.get("connectedAreaId") as
-				| string
-				| undefined;
-			feature.setStyle(
-				connectedAreaId && connectedAreaId === selectedConnectedAreaId
-					? selectedConnectedAreaStyle
-					: undefined,
-			);
-		});
+		layer
+			?.getSource()
+			?.getFeatures()
+			.forEach((feature) => {
+				const id = feature.get("connectedAreaId") as string | undefined;
+				feature.setStyle(
+					id && id === selectedConnectedAreaId
+						? selectedConnectedAreaStyle
+						: undefined,
+				);
+			});
 	}, [map, selectedConnectedAreaId]);
 
 	useEffect(() => {
-		if (!map) return;
-		if (!isConnectedAreaSelecting) return;
-
-		const connectedAreaLayer = getLayerById(
+		if (!map || !isConnectedAreaSelecting) return;
+		const layer = getLayerById(
 			map,
 			LAYER_IDS.CONNECTED_AREA_DRAW,
 		) as VectorLayer<VectorSource> | null;
-		if (!connectedAreaLayer) return;
+		if (!layer) return;
 
 		const select = new Select({
-			layers: [connectedAreaLayer],
+			layers: [layer],
 			condition: singleClick,
 			addCondition: singleClick,
 			removeCondition: singleClick,
-			// Disable the default toggle behavior
 			toggleCondition: never,
 			multi: false,
 		});
 
 		const handleSelect = (event: { selected: Feature<Geometry>[] }) => {
-			const feature = event.selected[0];
-			if (!feature) return;
-
-			const connectedAreaId = feature.get("connectedAreaId") as
+			const id = event.selected[0]?.get("connectedAreaId") as
 				| string
 				| undefined;
-			if (!connectedAreaId) return;
-
-			setSelectedConnectedArea(connectedAreaId);
+			if (id) setSelectedConnectedArea(id);
 		};
 
 		select.on("select", handleSelect as any);
 		map.addInteraction(select);
 
 		if (selectedConnectedAreaId) {
-			const preselectedFeature = connectedAreaLayer
+			const preselected = layer
 				.getSource()
 				?.getFeatures()
 				.find(
-					(feature) =>
-						(feature.get("connectedAreaId") as string | undefined) ===
+					(f) =>
+						(f.get("connectedAreaId") as string | undefined) ===
 						selectedConnectedAreaId,
 				);
-			if (preselectedFeature) {
+			if (preselected) {
 				select.getFeatures().clear();
-				select.getFeatures().push(preselectedFeature);
+				select.getFeatures().push(preselected);
 			}
 		}
 
 		selectInteractionRef.current = select;
-
 		return () => {
-			if (selectInteractionRef.current) {
-				selectInteractionRef.current.un("select", handleSelect as any);
-				map.removeInteraction(selectInteractionRef.current);
-				selectInteractionRef.current = null;
-			}
+			select.un("select", handleSelect as any);
+			map.removeInteraction(select);
+			selectInteractionRef.current = null;
 		};
 	}, [
 		map,
@@ -243,24 +157,17 @@ export function ConnectedAreaSelection({
 		};
 	}, [setIsBlockAreaSelecting, setIsConnectedAreaSelecting]);
 
-	if (!isSwaleMeasure) {
-		return null;
-	}
-
-	const areaFormatter = new Intl.NumberFormat("de-DE", {
-		maximumFractionDigits: 2,
-	});
+	if (!isSwaleMeasure) return null;
 
 	const toggleConnectedAreaSelection = () => {
 		if (isConnectedAreaSelecting) {
 			setIsConnectedAreaSelecting(false);
 			setIsBlockAreaSelecting(false);
-			return;
+		} else {
+			resetDrawInteractions();
+			setIsConnectedAreaSelecting(true);
+			setIsBlockAreaSelecting(true);
 		}
-
-		resetDrawInteractions();
-		setIsConnectedAreaSelecting(true);
-		setIsBlockAreaSelecting(true);
 	};
 
 	return (
@@ -271,7 +178,6 @@ export function ConnectedAreaSelection({
 				ausgewählte Fläche wird markiert und ihr Wert in der Maßnahme
 				gespeichert.
 			</p>
-
 			<div className="mb-3">
 				<Button
 					type="button"
@@ -284,7 +190,6 @@ export function ConnectedAreaSelection({
 						: "Fläche auf Karte auswählen"}
 				</Button>
 			</div>
-
 			{connectedAreas.length === 0 ? (
 				<p className="text-muted-foreground text-xs">
 					Keine angeschlossene Fläche vorhanden.
