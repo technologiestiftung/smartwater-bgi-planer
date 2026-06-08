@@ -3,8 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import layerConfig from "@/config/layerConfig.json";
-import measuresConfig from "@/config/measuresConfig.json";
-import { createMeasureConfigMap } from "@/lib/helpers/measures/config";
+import { measureConfigById } from "@/config/measuresConfig";
 import {
 	formatMeasureValue,
 	parseMeasureValue,
@@ -12,15 +11,10 @@ import {
 import { useMapStore } from "@/store/map";
 import { useScenarioStore } from "@/store/scenario";
 import type { MeasureValue } from "@/store/scenario/types";
-import type { MeasureConfig } from "@/types/measures";
 import { CheckIcon, TrashIcon, XCircleIcon } from "@phosphor-icons/react";
 import VectorLayer from "ol/layer/Vector";
 import { Vector as VectorSource } from "ol/source";
 import { FC, useState } from "react";
-
-const measureConfigById = createMeasureConfigMap(
-	measuresConfig as MeasureConfig[],
-);
 
 const getDisplayName = (configId: string): string => {
 	const layer = (layerConfig as Array<{ id?: string; name?: string }>).find(

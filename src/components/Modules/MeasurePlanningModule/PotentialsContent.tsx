@@ -1,14 +1,9 @@
 "use client";
 
-import measuresConfig from "@/config/measuresConfig.json";
+import { measureConfigById } from "@/config/measuresConfig";
 import { useProjectStore } from "@/store";
 import { LayerConfigItem } from "@/store/layers/types";
-import type { MeasureConfig } from "@/types/measures";
 import { FC } from "react";
-
-const measureConfigById = new Map(
-	(measuresConfig as MeasureConfig[]).map((item) => [item.id, item]),
-);
 
 interface PotentialsContentProps {
 	layerConfig: LayerConfigItem;

@@ -3,11 +3,8 @@
 
 import MeasureInfos from "@/components/MeasureInfos/MeasureInfos";
 import { Button } from "@/components/ui/button";
-import measuresConfig from "@/config/measuresConfig.json";
-import {
-	createMeasureConfigMap,
-	normalizeMeasureGeometryType,
-} from "@/lib/helpers/measures/config";
+import { measureConfigById } from "@/config/measuresConfig";
+import { normalizeMeasureGeometryType } from "@/lib/helpers/measures/config";
 import { isSwaleLayerConfigId } from "@/lib/helpers/measures/swale";
 import { getDrawnValue } from "@/lib/helpers/measures/values";
 import { getLayerById, getSegmentLabelStyles } from "@/lib/helpers/ol";
@@ -18,7 +15,7 @@ import { useProjectStore } from "@/store/project";
 import { useScenarioStore } from "@/store/scenario";
 import type { MeasureValue } from "@/store/scenario/types";
 import { useUiStore } from "@/store/ui";
-import type { MeasureConfig, MeasureGeometryType } from "@/types/measures";
+import type { MeasureGeometryType } from "@/types/measures";
 import { LAYER_IDS } from "@/types/shared";
 import { PolygonIcon } from "@phosphor-icons/react";
 import type { Condition } from "ol/events/condition";
@@ -42,10 +39,6 @@ interface LiveMeasureInfo {
 	segmentLengths: string[];
 	isOverPotential?: boolean;
 }
-
-const measureConfigById = createMeasureConfigMap(
-	measuresConfig as MeasureConfig[],
-);
 
 // Creates a unique ID with a given prefix using timestamp + random suffix
 const createEntityId = (prefix: string) =>

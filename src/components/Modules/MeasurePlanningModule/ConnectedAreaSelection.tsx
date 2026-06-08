@@ -1,14 +1,13 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import measuresConfig from "@/config/measuresConfig.json";
+import { measureConfigById } from "@/config/measuresConfig";
 import { isSwaleLayerConfigId } from "@/lib/helpers/measures/swale";
 import { getLayerById } from "@/lib/helpers/ol";
 import { useMapStore } from "@/store/map";
 import { useProjectStore } from "@/store/project";
 import { useScenarioStore } from "@/store/scenario";
 import { useUiStore } from "@/store/ui";
-import type { MeasureConfig } from "@/types/measures";
 import { LAYER_IDS } from "@/types/shared";
 import { never, singleClick } from "ol/events/condition";
 import type Feature from "ol/Feature";
@@ -39,10 +38,6 @@ const EMPTY_MEASURES: Array<{
 	configId: string;
 	drawLayerId: string | null;
 }> = [];
-
-const measureConfigById = new Map(
-	(measuresConfig as MeasureConfig[]).map((item) => [item.id, item]),
-);
 
 const selectedConnectedAreaStyle = new Style({
 	fill: new Fill({ color: "rgba(0, 153, 255, 0.1)" }),
