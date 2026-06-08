@@ -87,17 +87,17 @@ export const createApplyConfigLayers =
 		getMapConfig: () => MapConfig | null;
 		getMapReady: () => boolean;
 	}) =>
-	(visibleLayerIds: string, hideOtherDrawLayers = false) => {
+	(configId: string, hideOtherDrawLayers = false) => {
 		const state = get();
 		const currentMapLayers = state.layers;
 
 		const layerConfigItem = state.layerConfig.find(
-			(item) => item.id === visibleLayerIds,
+			(item) => item.id === configId,
 		);
 
 		if (!layerConfigItem) {
 			console.warn(
-				`[applyConfigLayers] Layer config item with id ${visibleLayerIds} not found`,
+				`[applyConfigLayers] Layer config item with id ${configId} not found`,
 			);
 			return;
 		}

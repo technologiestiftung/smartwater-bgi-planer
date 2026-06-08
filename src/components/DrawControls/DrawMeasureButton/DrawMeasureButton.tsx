@@ -1,6 +1,7 @@
 /* eslint-disable no-nested-ternary */
 "use client";
 
+import MeasureInfos from "@/components/MeasureInfos/MeasureInfos";
 import { Button } from "@/components/ui/button";
 import measuresConfig from "@/config/measuresConfig.json";
 import {
@@ -431,13 +432,7 @@ export const DrawMeasureButton: FC = () => {
 				{label}
 			</Button>
 			{isDrawing && liveMeasureInfo && geometryType === "Polygon" && (
-				<div className="bg-background border-primary text-primary absolute right-0 bottom-full z-10 mb-2 w-64 border-2 p-2 text-xs shadow-lg">
-					<p
-						className={`font-semibold ${liveMeasureInfo.isOverPotential ? "text-destructive" : ""}`}
-					>
-						Fläche: {liveMeasureInfo.area}
-					</p>
-				</div>
+				<MeasureInfos liveMeasureInfo={liveMeasureInfo} />
 			)}
 		</div>
 	);

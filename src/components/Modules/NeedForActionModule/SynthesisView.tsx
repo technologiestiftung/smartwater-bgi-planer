@@ -5,7 +5,7 @@ import { SectionId } from "@/lib/helpers/sectionIds";
 
 interface SynthesisViewProps {
 	onBackToQuestions: () => void;
-	onBackToSpecificQuestion: (questionId: string, sectionId: SectionId) => void;
+	onBackToSpecificQuestion: (configId: string, sectionId: SectionId) => void;
 }
 
 export function SynthesisView({

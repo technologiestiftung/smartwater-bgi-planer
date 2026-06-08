@@ -1,9 +1,10 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { useLayersStore, useUiStore } from "@/store";
+import { useUiStore } from "@/store";
+import { selectActiveLayerConfig, useLayersStore } from "@/store/layers";
 import Image from "next/image";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 
 interface TutorialProps {
 	type: "synthesis" | "controls";
@@ -18,12 +19,7 @@ export function Tutorial({ type }: TutorialProps) {
 	const setTutorialOnFirstQuestionState = useUiStore(
 		(state) => state.setTutorialOnFirstQuestionState,
 	);
-	const layerConfigId = useLayersStore((state) => state.layerConfigId);
-	const layerConfig = useLayersStore((state) => state.layerConfig);
-	const currentQuestionConfig = useMemo(
-		() => layerConfig.find((config) => config.id === layerConfigId),
-		[layerConfig, layerConfigId],
-	);
+	const currentLayerConfig = useLayersStore(selectActiveLayerConfig);
 
 	const renderContent = () => {
 		if (type === "controls") {
@@ -80,18 +76,18 @@ export function Tutorial({ type }: TutorialProps) {
 	useEffect(() => {
 		if (type !== "controls") return;
 		if (
-			currentQuestionConfig &&
+			currentLayerConfig &&
 			!showTutorialOnFirstQuestion &&
-			(currentQuestionConfig.canDrawNotes ||
-				currentQuestionConfig.canDrawPolygons ||
-				currentQuestionConfig.canDrawBTF)
+			(currentLayerConfig.canDrawNotes ||
+				currentLayerConfig.canDrawPolygons ||
+				currentLayerConfig.canDrawBTF)
 		) {
 			setTutorialOnFirstQuestionState(true);
 			setTutorialState(true);
 		}
 	}, [
 		type,
-		currentQuestionConfig,
+		currentLayerConfig,
 		setTutorialState,
 		showTutorialOnFirstQuestion,
 		setTutorialOnFirstQuestionState,

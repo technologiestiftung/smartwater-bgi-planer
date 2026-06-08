@@ -46,9 +46,9 @@ export function useModuleNavigation({
 	const allQuestions = useMemo(
 		() =>
 			steps.flatMap((step: StepConfig) =>
-				(step.questions ?? []).map((questionId: string) => ({
+				(step.questions ?? []).map((configId: string) => ({
 					sectionId: step.id as SectionId,
-					questionId,
+					configId,
 				})),
 			),
 		[steps],
@@ -59,13 +59,12 @@ export function useModuleNavigation({
 		const currentSectionQuestions =
 			steps.find((s: StepConfig) => s.id === currentSectionId)?.questions ?? [];
 		const currentQuestionIndex = questionIndices[currentSectionId];
-		const currentQuestionId = currentSectionQuestions[currentQuestionIndex];
+		const currentConfigId = currentSectionQuestions[currentQuestionIndex];
 		const globalQuestionIndex = allQuestions.findIndex(
-			(q) =>
-				q.questionId === currentQuestionId && q.sectionId === currentSectionId,
+			(q) => q.configId === currentConfigId && q.sectionId === currentSectionId,
 		);
 		return {
-			currentQuestionId,
+			currentQuestionId: currentConfigId,
 			globalQuestionIndex,
 			isFirstQuestion: globalQuestionIndex === 0,
 			isLastQuestion: globalQuestionIndex === allQuestions.length - 1,
@@ -102,11 +101,11 @@ export function useModuleNavigation({
 			steps.find((s: StepConfig) => s.id === prevQuestion.sectionId)
 				?.questions ?? [];
 		const prevQuestionIndex = prevSectionQuestions.findIndex(
-			(q: string) => q === prevQuestion.questionId,
+			(q: string) => q === prevQuestion.configId,
 		);
 		setQuestionIndex(prevQuestion.sectionId, prevQuestionIndex);
 		resetDrawInteractions();
-		applyConfigLayers(prevQuestion.questionId, true);
+		applyConfigLayers(prevQuestion.configId, true);
 		return true;
 	}, [
 		getCurrentQuestionInfo,
@@ -131,11 +130,11 @@ export function useModuleNavigation({
 			steps.find((s: StepConfig) => s.id === nextQuestion.sectionId)
 				?.questions ?? [];
 		const nextQuestionIndex = nextSectionQuestions.findIndex(
-			(q: string) => q === nextQuestion.questionId,
+			(q: string) => q === nextQuestion.configId,
 		);
 		setQuestionIndex(nextQuestion.sectionId, nextQuestionIndex);
 		resetDrawInteractions();
-		applyConfigLayers(nextQuestion.questionId, true);
+		applyConfigLayers(nextQuestion.configId, true);
 		return true;
 	}, [
 		getCurrentQuestionInfo,
@@ -153,9 +152,9 @@ export function useModuleNavigation({
 			const sectionQuestions =
 				steps.find((s: StepConfig) => s.id === fromSectionId)?.questions ?? [];
 			const questionIndex = questionIndices[fromSectionId];
-			const questionId = sectionQuestions[questionIndex];
+			const configId = sectionQuestions[questionIndex];
 			const globalQuestionIndex = allQuestions.findIndex(
-				(q) => q.questionId === questionId && q.sectionId === fromSectionId,
+				(q) => q.configId === configId && q.sectionId === fromSectionId,
 			);
 			if (globalQuestionIndex === allQuestions.length - 1) {
 				return false;
@@ -168,11 +167,11 @@ export function useModuleNavigation({
 				steps.find((s: StepConfig) => s.id === nextQuestion.sectionId)
 					?.questions ?? [];
 			const nextQuestionIndex = nextSectionQuestions.findIndex(
-				(q: string) => q === nextQuestion.questionId,
+				(q: string) => q === nextQuestion.configId,
 			);
 			setQuestionIndex(nextQuestion.sectionId, nextQuestionIndex);
 			resetDrawInteractions();
-			applyConfigLayers(nextQuestion.questionId, true);
+			applyConfigLayers(nextQuestion.configId, true);
 			return true;
 		},
 		[
@@ -187,15 +186,15 @@ export function useModuleNavigation({
 	);
 
 	const navigateToQuestion = useCallback(
-		(questionId: string, sectionId?: SectionId) => {
+		(configId: string, sectionId?: SectionId) => {
 			const target = allQuestions.find((q) =>
 				sectionId
-					? q.questionId === questionId && q.sectionId === sectionId
-					: q.questionId === questionId,
+					? q.configId === configId && q.sectionId === sectionId
+					: q.configId === configId,
 			);
 
 			if (!target) {
-				console.warn("Question not found:", { questionId, sectionId });
+				console.warn("Question not found:", { configId, sectionId });
 				return false;
 			}
 
@@ -210,7 +209,7 @@ export function useModuleNavigation({
 				[];
 
 			const targetIndex = sectionQuestions.findIndex(
-				(q: string) => q === target.questionId,
+				(q: string) => q === target.configId,
 			);
 
 			if (targetIndex === -1) {
@@ -221,7 +220,7 @@ export function useModuleNavigation({
 			setQuestionIndex(targetSectionId, targetIndex);
 
 			resetDrawInteractions();
-			applyConfigLayers(target.questionId, true);
+			applyConfigLayers(target.configId, true);
 
 			return true;
 		},

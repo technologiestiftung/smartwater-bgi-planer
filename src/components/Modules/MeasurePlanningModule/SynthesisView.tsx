@@ -8,7 +8,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 interface SynthesisViewProps {
 	onBackToQuestions: () => void;
-	onBackToSpecificQuestion: (questionId: string, sectionId: SectionId) => void;
+	onBackToSpecificQuestion: (configId: string, sectionId: SectionId) => void;
 }
 type TestState = "idle" | "loading" | "success" | "error";
 

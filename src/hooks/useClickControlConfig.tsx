@@ -7,21 +7,15 @@ import { FeatureTooltip } from "@/components/FeatureDetailViews/FeatureTooltip/F
 import { MeasureDetailsCard } from "@/components/FeatureDetailViews/MeasureDetailsCard/MeasureDetailsCard";
 import { getFeatureAttributes } from "@/lib/helpers/ol/feature";
 import { resolveMeasureId } from "@/lib/helpers/ol/measureFeature";
-import { useLayersStore } from "@/store/layers";
+import { selectActiveLayerConfig, useLayersStore } from "@/store/layers";
 import { LAYER_IDS } from "@/types/shared";
 import type Feature from "ol/Feature";
 import type { Geometry } from "ol/geom";
 import { useCallback, useMemo } from "react";
 
 export const useClickControlConfig = () => {
-	const layerConfigId = useLayersStore((state) => state.layerConfigId);
-	const layerConfigs = useLayersStore((state) => state.layerConfig);
+	const currentConfig = useLayersStore(selectActiveLayerConfig);
 	const drawLayerId = useLayersStore((state) => state.drawLayerId);
-
-	const currentConfig = useMemo(
-		() => layerConfigs.find((c) => c.id === layerConfigId),
-		[layerConfigs, layerConfigId],
-	);
 
 	const vectorLayerIds = useMemo(() => {
 		const ids: string[] = [];

@@ -14,7 +14,7 @@ export function SynthesisView({
 	onBackToSpecificQuestion,
 }: {
 	onBackToQuestions: () => void;
-	onBackToSpecificQuestion: (questionId: string, sectionId: SectionId) => void;
+	onBackToSpecificQuestion: (configId: string, sectionId: SectionId) => void;
 }) {
 	const ORIGINAL_ID = "module_2_2V5_draw";
 	const FILTERED_ID = "module_2_2V5_draw_filtered";

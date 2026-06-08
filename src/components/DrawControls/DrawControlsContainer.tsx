@@ -8,7 +8,7 @@ import {
 	DrawProjectBoundaryButton,
 } from "@/components/DrawControls";
 import { UploadDrawLayerButton } from "@/components/UploadControls/UploadDrawLayerButton/UploadDrawLayerButton";
-import { useLayersStore } from "@/store/layers";
+import { selectActiveLayerConfig, useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
 import { usePathname } from "next/navigation";
 // import { Tutorial } from "@/components/Tutorial/Tutorial";
@@ -23,8 +23,7 @@ export function DrawControlsContainer({}: DrawControlsContainerProps) {
 	const currentStepId = useUiStore((state) => state.currentStepId);
 	const showTutorial = useUiStore((state) => state.showTutorial);
 	const setTutorialState = useUiStore((state) => state.setTutorialState);
-	const layerConfigId = useLayersStore((state) => state.layerConfigId);
-	const layerConfig = useLayersStore((state) => state.layerConfig);
+	const currentLayerConfig = useLayersStore(selectActiveLayerConfig);
 
 	const isProjectStarter = pathname.includes("/project-starter");
 	const isModule =
@@ -33,10 +32,6 @@ export function DrawControlsContainer({}: DrawControlsContainerProps) {
 		pathname.includes("/planung");
 
 	let controls: React.ReactNode = null;
-
-	const currentQuestionConfig = layerConfig.find(
-		(config) => config.id === layerConfigId,
-	);
 
 	if (isProjectStarter) {
 		if (currentStepId === "newDevelopment") {
@@ -55,21 +50,21 @@ export function DrawControlsContainer({}: DrawControlsContainerProps) {
 			);
 		}
 	} else if (isModule) {
-		if (currentQuestionConfig) {
+		if (currentLayerConfig) {
 			const controlsArray: React.ReactNode[] = [];
 
-			if (currentQuestionConfig.canDrawNotes) {
+			if (currentLayerConfig.canDrawNotes) {
 				controlsArray.push(
 					<DrawNoteButton key="notes" layerId="project_notes" />,
 				);
 			}
-			if (currentQuestionConfig.canDrawPolygons) {
+			if (currentLayerConfig.canDrawPolygons) {
 				controlsArray.push(<DrawButton key="draw" />);
 			}
-			if (currentQuestionConfig.canDrawBTF) {
+			if (currentLayerConfig.canDrawBTF) {
 				controlsArray.push(<BlockAreaSelector key="btf" />);
 			}
-			if (currentQuestionConfig.canDrawMeasures) {
+			if (currentLayerConfig.canDrawMeasures) {
 				controlsArray.push(<DrawMeasureButton key="measure" />);
 			}
 

@@ -28,7 +28,7 @@ interface SynthesisViewProps {
 	description: string;
 	onBackToQuestions: () => void;
 	layerOverrides?: Record<string, string>;
-	onBackToSpecificQuestion: (questionId: string, sectionId: SectionId) => void;
+	onBackToSpecificQuestion: (configId: string, sectionId: SectionId) => void;
 }
 
 export function SynthesisView({
@@ -63,6 +63,14 @@ export function SynthesisView({
 		() => moduleSteps.filter((step) => step.displayInSynthesis !== false),
 		[moduleSteps],
 	);
+	const layerConfigById = useMemo(
+		() => new Map(layerConfig.map((config) => [config.id, config])),
+		[layerConfig],
+	);
+	const getLayerConfig = useCallback(
+		(configId: string) => layerConfigById.get(configId),
+		[layerConfigById],
+	);
 
 	const getLayerData = useCallback(
 		(drawLayerId: string | undefined) => {
@@ -90,7 +98,7 @@ export function SynthesisView({
 			const step = moduleSteps.find((s) => s.id === moduleSavedState.sectionId);
 			step?.questions?.forEach((qId) => {
 				if (checkForQuestion(qId, true)) return;
-				const config = layerConfig.find((c) => c.id === qId);
+				const config = getLayerConfig(qId);
 				const { id } = getLayerData(config?.drawLayerId);
 
 				if (id && answers[qId] === true) {
@@ -104,25 +112,23 @@ export function SynthesisView({
 		synthesisViewId,
 		moduleSteps,
 		moduleSavedState,
-		layerConfig,
+		getLayerConfig,
 		setLayerVisibility,
 		getLayerData,
 		answers,
 	]);
 
-	const handleToggleLayer = (qId: string) => {
-		if (answers[qId] !== true) return;
-		const config = layerConfig.find((c) => c.id === qId);
+	const handleToggleLayer = (configId: string) => {
+		if (answers[configId] !== true) return;
+		const config = getLayerConfig(configId);
 		const { id, isVisible } = getLayerData(config?.drawLayerId);
 		if (id) setLayerVisibility(id, !isVisible);
 	};
 
-	const handleToggleStepLayers = (stepQuestions: string[]) => {
-		const relevantLayers = stepQuestions
-			.filter((qId) => answers[qId] === true)
-			.map((qId) =>
-				getLayerData(layerConfig.find((c) => c.id === qId)?.drawLayerId),
-			)
+	const handleToggleStepLayers = (stepConfigIds: string[]) => {
+		const relevantLayers = stepConfigIds
+			.filter((configId) => answers[configId] === true)
+			.map((configId) => getLayerData(getLayerConfig(configId)?.drawLayerId))
 			.filter((item) => item.id !== null);
 
 		const anyVisible = relevantLayers.some((l) => l.isVisible);
@@ -142,9 +148,7 @@ export function SynthesisView({
 				{visibleModuleStep.map((step) => {
 					const sectionQuestions = step.questions || [];
 					const anyLayerVisible = sectionQuestions.some(
-						(qId) =>
-							getLayerData(layerConfig.find((c) => c.id === qId)?.drawLayerId)
-								.isVisible,
+						(qId) => getLayerData(getLayerConfig(qId)?.drawLayerId).isVisible,
 					);
 
 					const sectionAnswers = sectionQuestions
@@ -199,17 +203,17 @@ export function SynthesisView({
 								</button>
 							</div>
 							<div className="flex flex-wrap gap-2">
-								{sectionQuestions.map((qId) => {
-									if (checkForQuestion(qId, true)) return null;
+								{sectionQuestions.map((configId) => {
+									if (checkForQuestion(configId, true)) return null;
 									const { isVisible } = getLayerData(
-										layerConfig.find((c) => c.id === qId)?.drawLayerId,
+										getLayerConfig(configId)?.drawLayerId,
 									);
 									return (
 										<SynthesisBadge
-											key={qId}
-											questionId={qId}
-											answer={answers[qId]}
-											onToggle={() => handleToggleLayer(qId)}
+											key={configId}
+											configId={configId}
+											answer={answers[configId]}
+											onToggle={() => handleToggleLayer(configId)}
 											isVisible={isVisible}
 											onBackToSpecificQuestion={onBackToSpecificQuestion}
 										/>

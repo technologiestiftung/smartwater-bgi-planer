@@ -498,8 +498,6 @@
 		"question": "",
 		"description": "Gründächer können als intensiv begrüntes, extensiv begrüntes oder als Retentionsgründach mit Drossel ausgeführt werden. Intensive Begrünung oder ein Retentionsgründach sind nur auf einem Flachdach (mit einer Dachneigung < 5°) möglich. Zusätzlich können Gründächer mit Solaranlagen kombiniert oder als Biodiversitätsgründächer ausgeführt werden. \nDie Machbarkeit und die Art der Dachbegrünung ist auch von der Statik des Gebäudes abhängig (Tragfähigkeit bei extensivem Gründach etwa 60 kg/m²; bei intensivem Gründach ab etwa 300kg/m²). Eine extensive Dachbegrünung ist in der Regel möglich, wenn es eine Dachstuhlerneuerung mit ausreichender Lastreserve gab oder bereits ein Kiesdach vorhanden ist. \nIn Ergänzung zu der angezeigten Dachbegrünungspotentialkarte sollte über das Luftbild nach weiteren bereits realisierten Dachbegrünungen oder Photovoltaikanlagen geschaut werden.",
 		"drawLayerId": "",
-		"canDrawPolygons": true,
-		"canDrawBTF": true,
 		"canDrawNotes": true,
 		"visibleLayerIds": [
 			"potenziale_regenwasserbewirtschaftung:ca_dachbegruenungspotenzial",
@@ -521,8 +519,6 @@
 		"question": "",
 		"description": "Vereinzelte Flächen mit Potenzial zur Entsiegelung wurden bereits auf Basis einer Befragung der Bezirksämter und der Berliner Forsten ermittelt. Dabei wurde das Potenzial zur Entsiegelung festgestellt, bewertet und priorisiert.",
 		"drawLayerId": "",
-		"canDrawPolygons": true,
-		"canDrawBTF": true,
 		"canDrawNotes": true,
 		"visibleLayerIds": ["ua_entsiegelung:b_entsieg_klasse_teil"],
 		"featureDisplay": "tooltip",

@@ -137,11 +137,9 @@ export interface LayersActions {
 	setLayerVisibility: (layerId: string, visible: boolean) => void;
 	setLayerStatus: (id: string, status: LayerStatus) => void;
 	getLayerStatus: (id: string) => LayerStatus | undefined;
+	getActiveLayerConfig: () => LayerConfigItem | null;
 	setLayerConfig: (config: LayerConfigItem[]) => void;
-	applyConfigLayers: (
-		visibleLayerIds: string,
-		hideOtherDrawLayers?: boolean,
-	) => void;
+	applyConfigLayers: (configId: string, hideOtherDrawLayers?: boolean) => void;
 	setDrawLayer: (layerId: string) => void;
 	setLayerConfigId: (layerConfigId: string) => void;
 	hideLayersByPattern: (pattern: string | string[]) => void;

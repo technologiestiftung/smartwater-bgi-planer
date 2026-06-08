@@ -30,8 +30,8 @@ import { useShallow } from "zustand/react/shallow";
 
 interface StepItem {
 	id: string;
-	questionId: string;
-	infoQuestionId?: string;
+	configId: string;
+	infoConfigId?: string;
 	title?: string;
 	metricIcons: string[];
 }
@@ -40,15 +40,15 @@ function toStepItems(step: ModuleStepViewConfig): StepItem[] {
 	if (step.measurements) {
 		return step.measurements.map((m: ModuleMeasurementConfig) => ({
 			id: m.id,
-			questionId: m.layerConfigId ?? m.id,
-			infoQuestionId: m.infoLayerConfigId,
+			configId: m.layerConfigId ?? m.id,
+			infoConfigId: m.infoLayerConfigId,
 			title: m.title,
 			metricIcons: m.metricIcons ?? [],
 		}));
 	}
 	return (step.questions ?? []).map((qId: string) => ({
 		id: qId,
-		questionId: qId,
+		configId: qId,
 		metricIcons: [],
 	}));
 }
@@ -57,8 +57,8 @@ function getItemLabel(
 	item: StepItem,
 	configMap: Map<string, LayerConfigItem>,
 ): string {
-	const config = configMap.get(item.questionId);
-	return item.title || config?.name || config?.question || item.questionId;
+	const config = configMap.get(item.configId);
+	return item.title || config?.name || config?.question || item.configId;
 }
 
 function stepRequiresConnectedArea(step: ModuleStepViewConfig): boolean {
@@ -112,7 +112,7 @@ interface MeasureListItemProps {
 	isDisabled: boolean;
 	hasPlacedMeasure: boolean;
 	stepId: string;
-	onActivate: (stepId: string, questionId: string) => void;
+	onActivate: (stepId: string, configId: string) => void;
 }
 
 function MeasureListItem({
@@ -128,7 +128,7 @@ function MeasureListItem({
 		<div className="hover:bg-light flex items-center gap-2">
 			<button
 				type="button"
-				onClick={() => !isDisabled && onActivate(stepId, item.questionId)}
+				onClick={() => !isDisabled && onActivate(stepId, item.configId)}
 				disabled={isDisabled}
 				className={cn(
 					"border-muted flex flex-1 items-center justify-between px-3 py-2 text-left transition-colors",
@@ -161,10 +161,10 @@ function MeasureListItem({
 					)}
 				</div>
 			</button>
-			{item.infoQuestionId && (
+			{item.infoConfigId && (
 				<button
 					type="button"
-					onClick={() => onActivate(stepId, item.infoQuestionId!)}
+					onClick={() => onActivate(stepId, item.infoConfigId!)}
 					className="text-primary hover:text-primary/80 inline-flex h-9 w-9 items-center justify-center rounded-full"
 					aria-label={`Informationen zu ${label}`}
 				>
@@ -187,9 +187,7 @@ export function MeasurePlanningAccordion({
 	);
 	const placedMeasureIds = useUiStore((state) => state.placedMeasureIds);
 	const [expandedStepId, setExpandedStepId] = useState(steps[0]?.id ?? "");
-	const [selectedQuestionId, setSelectedQuestionId] = useState<string | null>(
-		null,
-	);
+	const [selectedConfigId, setSelectedConfigId] = useState<string | null>(null);
 	const hasInitializedRef = useRef(false);
 	const isMapReady = useMapReady();
 
@@ -221,29 +219,27 @@ export function MeasurePlanningAccordion({
 
 	const selectedQuestionConfig = useMemo(
 		() =>
-			selectedQuestionId
-				? (layerConfigById.get(selectedQuestionId) ?? null)
-				: null,
-		[selectedQuestionId, layerConfigById],
+			selectedConfigId ? (layerConfigById.get(selectedConfigId) ?? null) : null,
+		[selectedConfigId, layerConfigById],
 	);
 
 	const selectedMetricIcons = useMemo(() => {
-		if (!selectedQuestionId) return [];
+		if (!selectedConfigId) return [];
 		for (const step of steps) {
 			const measurement = step.measurements?.find(
-				(m) => (m.layerConfigId ?? m.id) === selectedQuestionId,
+				(m) => (m.layerConfigId ?? m.id) === selectedConfigId,
 			);
 			if (measurement?.metricIcons) return measurement.metricIcons;
 		}
 		return [];
-	}, [selectedQuestionId, steps]);
+	}, [selectedConfigId, steps]);
 
 	const activateQuestion = useCallback(
-		(stepId: string, questionId: string) => {
+		(stepId: string, configId: string) => {
 			setExpandedStepId(stepId);
-			setSelectedQuestionId(questionId);
+			setSelectedConfigId(configId);
 			resetDrawInteractions();
-			applyConfigLayers(questionId, true);
+			applyConfigLayers(configId, true);
 		},
 		[resetDrawInteractions, applyConfigLayers],
 	);
@@ -252,7 +248,7 @@ export function MeasurePlanningAccordion({
 		(nextOpen: boolean) => {
 			if (!nextOpen) {
 				hasInitializedRef.current = false;
-				setSelectedQuestionId(null);
+				setSelectedConfigId(null);
 				setIsSynthesisMode(false);
 			}
 			onOpenChange(nextOpen);
@@ -265,15 +261,15 @@ export function MeasurePlanningAccordion({
 	}, [setIsSynthesisMode]);
 
 	const handleBackToQuestions = useCallback(() => {
-		setSelectedQuestionId(null);
+		setSelectedConfigId(null);
 		setIsSynthesisMode(false);
 		resetDrawInteractions();
 		applyConfigLayers("measure_start", true);
 	}, [setIsSynthesisMode, resetDrawInteractions, applyConfigLayers]);
 
 	const handleBackToSpecificQuestion = useCallback(
-		(questionId: string, sectionId: SectionId) => {
-			activateQuestion(sectionId, questionId);
+		(configId: string, sectionId: SectionId) => {
+			activateQuestion(sectionId, configId);
 			setIsSynthesisMode(false);
 		},
 		[activateQuestion, setIsSynthesisMode],
@@ -309,7 +305,7 @@ export function MeasurePlanningAccordion({
 		content = (
 			<div className="flex h-full flex-col p-6">
 				<h3 className="text-primary shrink-0 text-xl font-semibold">
-					{selectedQuestionConfig.name || selectedQuestionId}
+					{selectedQuestionConfig.name || selectedConfigId}
 				</h3>
 				<MeasurePlanningStepContent
 					layerConfig={selectedQuestionConfig}
@@ -346,7 +342,7 @@ export function MeasurePlanningAccordion({
 									<div className="space-y-1">
 										{items.map((item) => {
 											const isConnectedArea =
-												item.questionId === "connected_area";
+												item.configId === "connected_area";
 											const isDisabled =
 												needsConnectedArea &&
 												!isConnectedArea &&
@@ -359,9 +355,7 @@ export function MeasurePlanningAccordion({
 													label={getItemLabel(item, layerConfigById)}
 													isConnectedArea={isConnectedArea}
 													isDisabled={isDisabled}
-													hasPlacedMeasure={placedMeasureIds.has(
-														item.questionId,
-													)}
+													hasPlacedMeasure={placedMeasureIds.has(item.configId)}
 													stepId={step.id}
 													onActivate={activateQuestion}
 												/>

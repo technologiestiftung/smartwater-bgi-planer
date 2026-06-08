@@ -7,7 +7,8 @@ import { useVerticalStepper } from "@/components/VerticalStepper";
 import { SectionId } from "@/lib/helpers/sectionIds";
 import { useLayersStore } from "@/store";
 import { useAnswersStore } from "@/store/answers";
-import { useCallback, useMemo } from "react";
+import { selectLayerConfigById } from "@/store/layers";
+import { useCallback } from "react";
 
 interface SectionContentProps {
 	sectionId: SectionId;
@@ -18,7 +19,6 @@ export function SectionContent({
 	sectionId,
 	onShowPotentialMaps,
 }: SectionContentProps) {
-	const layerConfig = useLayersStore((state: any) => state.layerConfig);
 	const setAnswer = useAnswersStore((state: any) => state.setAnswer);
 	const feasibilitySteps = getModuleSteps("feasibility");
 
@@ -33,9 +33,8 @@ export function SectionContent({
 	});
 
 	const { currentStep, currentQuestionId } = getCurrentSectionInfo(sectionId);
-	const currentQuestionConfig = useMemo(
-		() => layerConfig.find((config: any) => config.id === currentQuestionId),
-		[layerConfig, currentQuestionId],
+	const currentLayerConfig = useLayersStore((state) =>
+		selectLayerConfigById(state, currentQuestionId),
 	);
 
 	const handleAnswer = useCallback(
@@ -54,7 +53,7 @@ export function SectionContent({
 		navigateToNextQuestion(sectionId);
 	}, [currentQuestionId, sectionId, setAnswer, navigateToNextQuestion]);
 
-	if (!currentQuestionConfig) {
+	if (!currentLayerConfig) {
 		return <div />;
 	}
 
@@ -62,7 +61,7 @@ export function SectionContent({
 		<div className="flex h-full flex-col">
 			<h3 className="text-primary shrink-0">{(currentStep as any)?.title}</h3>
 			<StepContent
-				layerConfig={currentQuestionConfig}
+				layerConfig={currentLayerConfig}
 				onAnswer={handleAnswer}
 				onSkip={handleSkip}
 				onShowPotentialMaps={onShowPotentialMaps}

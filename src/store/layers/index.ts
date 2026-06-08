@@ -12,6 +12,10 @@ import {
 	createUpdateFilteredLayer,
 	createUpdateLayer,
 } from "@/store/layers/actions";
+import {
+	selectActiveLayerConfig,
+	selectLayerConfigById,
+} from "@/store/layers/selectors";
 import { LayersActions, LayersState } from "@/store/layers/types";
 import { useMapStore } from "@/store/map";
 import { create } from "zustand";
@@ -38,6 +42,7 @@ export const useLayersStore = create<LayersState & LayersActions>()(
 			setLayerVisibility: createSetLayerVisibility(set, get),
 			setLayerStatus: createSetLayerStatus(set, get),
 			getLayerStatus: createGetLayerStatus(get),
+			getActiveLayerConfig: () => selectActiveLayerConfig(get()),
 			setLayerConfig: (config) => set({ layerConfig: config }),
 			applyConfigLayers: createApplyConfigLayers({
 				set,
@@ -56,3 +61,5 @@ export const useLayersStore = create<LayersState & LayersActions>()(
 		{ name: "layersStore" },
 	),
 );
+
+export { selectActiveLayerConfig, selectLayerConfigById };
