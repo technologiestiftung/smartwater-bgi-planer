@@ -365,7 +365,7 @@ export const DrawMeasureButton: FC = () => {
 		: isConnectedArea
 			? "Angeschlossene Fläche zeichnen"
 			: isSwaleMeasure && !canDraw
-				? "Erst angeschlossene Flaeche auswaehlen"
+				? "Erst angeschlossene Fläche auswählen"
 				: "Maßnahme zeichnen";
 
 	return (
