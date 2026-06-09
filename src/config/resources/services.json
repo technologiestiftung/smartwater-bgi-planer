@@ -392,14 +392,6 @@
 		"styleId": "impermeabilityHotspots"
 	},
 	{
-		"id": "need_impermeability_hotspots_q3",
-		"name": "Versiegelung Hotspots Q3",
-		"crs": "urn:ogc:def:crs:EPSG::25833",
-		"typ": "GEOJSON",
-		"gfiAttributes": "showAll",
-		"styleId": "impermeabilityHotspots"
-	},
-	{
 		"id": "need_groundwater_hotspots",
 		"name": "Gewässerschutz Hotspots",
 		"crs": "urn:ogc:def:crs:EPSG::25833",

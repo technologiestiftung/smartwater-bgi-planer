@@ -39,8 +39,7 @@
 					"questions": [
 						"sealing_starter_question",
 						"sealing_block_areas_high",
-						"sealing_green_volume_low",
-						"sealing_small_scale_high"
+						"sealing_green_volume_low"
 					]
 				},
 				{

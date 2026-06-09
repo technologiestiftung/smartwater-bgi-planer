@@ -366,10 +366,6 @@
 							"visibility": false
 						},
 						{
-							"id": "need_impermeability_hotspots_q3",
-							"visibility": false
-						},
-						{
 							"id": "need_waterbalance_hotspots_q1",
 							"visibility": false
 						},

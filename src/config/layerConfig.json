@@ -240,19 +240,6 @@
 		"legendSrc": "/legends/1v2.svg"
 	},
 	{
-		"id": "sealing_small_scale_high",
-		"name": "Kleinteilige Versiegelung",
-		"question": "Wo liegen Bereiche mit einem Versiegelungsgrad von 70 % oder höher? (Notieren Sie mögliche Veränderungen im Luftbild).",
-		"description": "Die Karte zeigt den Grad der Versiegelung (in einem Raster 10 m x 10 m) an. Darüber liegen die Gebäude und Bauwerke aus dem ALKIS. Diese Überlagerung ermöglicht die Identifizierung von stark versiegelten unbebauten Bereichen. \n Wichtig ist es, die Versiegelungskarte mit einem aktuellen Luftbild abzugleichen und Veränderungen zu notieren, insbesondere hinsichtlich der Schattenflächen.",
-		"drawLayerId": "need_impermeability_hotspots_q3",
-		"canDrawPolygons": true,
-		"canDrawBTF": true,
-		"canDrawNotes": true,
-		"visibleLayerIds": ["bgi-planer:ua_versiegelung_2021_raster"],
-		"legendSrc": "/legends/1v3.svg",
-		"legendTitle": "Anteil versiegelte Fläche"
-	},
-	{
 		"id": "waterBalance_starter_question",
 		"name": "",
 		"question": "Saubere Gewässer erhöhen die Aufenthaltsqualität unserer Stadt und bieten einen wichtigen Lebensraum für Flora und Fauna. Außerdem sind sie essenziell für den Berliner Wasserkreislauf und damit für die Trinkwasserversorgung.",
