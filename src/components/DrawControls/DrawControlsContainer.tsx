@@ -11,6 +11,7 @@ import { UploadDrawLayerButton } from "@/components/UploadControls/UploadDrawLay
 import { selectActiveLayerConfig, useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
 import { usePathname } from "next/navigation";
+import { DrawTreeMeasureButton } from "./DrawTreeMeasureButton/DrawTreeMeasureButton";
 // import { Tutorial } from "@/components/Tutorial/Tutorial";
 
 interface DrawControlsContainerProps {
@@ -66,6 +67,9 @@ export function DrawControlsContainer({}: DrawControlsContainerProps) {
 			}
 			if (currentLayerConfig.canDrawMeasures) {
 				controlsArray.push(<DrawMeasureButton key="measure" />);
+			}
+			if (currentLayerConfig.canDrawTrees) {
+				controlsArray.push(<DrawTreeMeasureButton key="treeMeasure" />);
 			}
 
 			controls = <>{controlsArray}</>;

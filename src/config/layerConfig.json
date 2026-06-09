@@ -599,7 +599,7 @@
 		"description": "Stadtbäume speichern und verdunsten Wasser, spenden Schatten und reduzieren Hitzeinseln. Sie verbessern Luftqualität, fördern Biodiversität und entlasten die Kanalisation durch verzögerten Abfluss. Für langfristige Vitalität sind ausreichend Wurzelraum, geeignete Substrate und Pflege entscheidend.",
 		"drawLayerId": "module_3_3B2_draw",
 		"visibleLayerIds": ["ua_entsiegelung:b_entsieg_klasse_teil"],
-		"canDrawMeasures": true,
+		"canDrawTrees": true,
 		"legendSrc": "/legends/2e1.svg",
 		"measurementSrc": "/legends/2e1.svg"
 	},
@@ -641,7 +641,7 @@
 		"description": "Kombiniert Regenwasserbewirtschaftung mit verbesserten Wuchsbedingungen für Stadtbäume durch unterirdische Speicher- und Substraträume. Reduziert Oberflächenabfluss, stärkt Baumvitalität und verbessert das Stadtklima. Benötigt sorgfältige Planung von Einleitung, Substrat und Leitungsabständen.",
 		"drawLayerId": "module_3_3V5_draw",
 		"visibleLayerIds": ["module_3_connected_area_draw"],
-		"canDrawMeasures": true
+		"canDrawTrees": true
 	},
 	{
 		"id": "3V6",
