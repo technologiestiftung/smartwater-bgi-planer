@@ -1,7 +1,7 @@
 export type MeasureParameterConfig = {
-	key: string;
 	type: "number" | "integer" | "string";
 	unit?: string;
+	key: string;
 	source: "drawn" | "input" | "derived";
 	required?: boolean;
 	isCalculationInput?: boolean;
@@ -31,3 +31,9 @@ export type MeasureConfig = {
 	geometryType?: MeasureGeometryType;
 	parameters: MeasureParameterConfig[];
 };
+
+export interface LiveMeasureInfo {
+	area: string;
+	segmentLengths: string[];
+	isOverPotential?: boolean;
+}

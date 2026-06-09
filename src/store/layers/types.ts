@@ -107,6 +107,7 @@ export interface LayerConfigItem {
 	canDrawBTF?: boolean;
 	canDrawNotes?: boolean;
 	canDrawMeasures?: boolean;
+	canDrawTrees?: boolean;
 	legendSrc?: string;
 	legendTitle?: string;
 	measurementSrc?: string;

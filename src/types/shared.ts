@@ -7,6 +7,7 @@ export const LAYER_IDS = {
 	INPUT: "rabimo_input_2025",
 	PROJECT_NEW_DEVELOPMENT: "project_new_development",
 	CONNECTED_AREA_DRAW: "module_3_connected_area_draw",
+	CONNECTED_AREA: "connected_area",
 } as const;
 
 export type LayerId = (typeof LAYER_IDS)[keyof typeof LAYER_IDS];

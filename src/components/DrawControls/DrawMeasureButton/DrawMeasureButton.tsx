@@ -4,10 +4,15 @@
 import MeasureInfos from "@/components/MeasureInfos/MeasureInfos";
 import { Button } from "@/components/ui/button";
 import { measureConfigById } from "@/config/measuresConfig";
+import { createEntityId } from "@/lib/helpers/common";
 import { normalizeMeasureGeometryType } from "@/lib/helpers/measures/config";
 import { isSwaleLayerConfigId } from "@/lib/helpers/measures/swale";
 import { getDrawnValue } from "@/lib/helpers/measures/values";
-import { getLayerById, getSegmentLabelStyles } from "@/lib/helpers/ol";
+import {
+	defaultDrawStyle,
+	getLayerById,
+	getSegmentLabelStyles,
+} from "@/lib/helpers/ol";
 import { formatArea, formatLength } from "@/lib/helpers/ol/format";
 import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";
@@ -15,7 +20,7 @@ import { useProjectStore } from "@/store/project";
 import { useScenarioStore } from "@/store/scenario";
 import type { MeasureValue } from "@/store/scenario/types";
 import { useUiStore } from "@/store/ui";
-import type { MeasureGeometryType } from "@/types/measures";
+import type { LiveMeasureInfo, MeasureGeometryType } from "@/types/measures";
 import { LAYER_IDS } from "@/types/shared";
 import { PolygonIcon } from "@phosphor-icons/react";
 import type { Condition } from "ol/events/condition";
@@ -28,21 +33,8 @@ import Draw from "ol/interaction/Draw";
 import VectorLayer from "ol/layer/Vector";
 import { Vector as VectorSource } from "ol/source";
 import { getArea } from "ol/sphere";
-import CircleStyle from "ol/style/Circle";
-import Fill from "ol/style/Fill";
-import Stroke from "ol/style/Stroke";
-import Style from "ol/style/Style";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
-
-interface LiveMeasureInfo {
-	area: string;
-	segmentLengths: string[];
-	isOverPotential?: boolean;
-}
-
-const createEntityId = (prefix: string) =>
-	`${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 
 const getMeasureArea = (values: Record<string, MeasureValue>): number =>
 	typeof values.area === "number"
@@ -50,16 +42,6 @@ const getMeasureArea = (values: Record<string, MeasureValue>): number =>
 		: typeof values.connectedArea === "number"
 			? values.connectedArea
 			: 0;
-
-const defaultDrawStyle = new Style({
-	fill: new Fill({ color: "rgba(0, 153, 255, 0.1)" }),
-	stroke: new Stroke({ color: "rgba(0, 153, 255, 1)", width: 2 }),
-	image: new CircleStyle({
-		radius: 5,
-		fill: new Fill({ color: "rgba(0, 153, 255, 1)" }),
-		stroke: new Stroke({ color: "#fff", width: 1.5 }),
-	}),
-});
 
 const getDrawStyle = (geometryType: MeasureGeometryType) =>
 	geometryType !== "Polygon"
@@ -89,6 +71,7 @@ const buildPolygonLiveInfo = (geometry: Polygon): LiveMeasureInfo | null => {
 const findBtfFeature = (coord: number[], features: Feature<Geometry>[]) =>
 	features.find((f) => f.getGeometry()?.intersectsCoordinate(coord));
 
+// MAIN COMPONENT
 export const DrawMeasureButton: FC = () => {
 	const map = useMapStore((s) => s.map);
 	const { drawLayerId, layerConfigId, setLayerVisibility } = useLayersStore(
@@ -124,7 +107,7 @@ export const DrawMeasureButton: FC = () => {
 			})),
 		);
 
-	const isConnectedArea = layerConfigId === "connected_area";
+	const isConnectedArea = layerConfigId === LAYER_IDS.CONNECTED_AREA;
 	const isSwaleMeasure = isSwaleLayerConfigId(layerConfigId);
 	const measureConfig = layerConfigId
 		? measureConfigById.get(layerConfigId)
@@ -132,7 +115,6 @@ export const DrawMeasureButton: FC = () => {
 	const geometryType = normalizeMeasureGeometryType(
 		measureConfig?.geometryType,
 	);
-
 	const selectedConnectedArea = connectedAreas.find(
 		(a) => a.id === selectedConnectedAreaId,
 	);
@@ -142,6 +124,7 @@ export const DrawMeasureButton: FC = () => {
 		useState<LiveMeasureInfo | null>(null);
 	const liveMeasureInfo = isDrawing ? _liveMeasureInfo : null;
 
+	// Refs
 	const drawRef = useRef<Draw | null>(null);
 	const sketchGeometryRef = useRef<Geometry | null>(null);
 	const sketchListenerRef = useRef<(() => void) | null>(null);
@@ -149,6 +132,7 @@ export const DrawMeasureButton: FC = () => {
 	const isOverPotentialRef = useRef(false);
 	const activeMeasurePotentialRef = useRef<number | null>(null);
 
+	// functions
 	const removeSketchListener = useCallback(() => {
 		if (sketchGeometryRef.current && sketchListenerRef.current)
 			sketchGeometryRef.current.un("change", sketchListenerRef.current);
@@ -170,6 +154,7 @@ export const DrawMeasureButton: FC = () => {
 		drawRef.current = null;
 	}, [clearDrawCycleState, map]);
 
+	// effects
 	useEffect(() => {
 		if (!map || !drawLayerId) return;
 		setLayerVisibility(drawLayerId, true);

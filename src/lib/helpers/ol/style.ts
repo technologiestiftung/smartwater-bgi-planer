@@ -7,6 +7,7 @@ import Polygon from "ol/geom/Polygon";
 import VectorLayer from "ol/layer/Vector";
 import { Vector as VectorSource } from "ol/source";
 import { Circle, Fill, Icon, Stroke, Style } from "ol/style";
+import CircleStyle from "ol/style/Circle";
 import Text from "ol/style/Text";
 
 // --- Types ---
@@ -32,6 +33,16 @@ const STYLE_CACHE = new Map<string, Style | Style[]>();
 export const DEFAULT_STYLE = new Style({
 	stroke: new Stroke({ color: "#3b82f6", width: 2 }),
 	fill: new Fill({ color: "rgba(59, 130, 246, 0.1)" }),
+});
+
+export const defaultDrawStyle = new Style({
+	fill: new Fill({ color: "rgba(0, 153, 255, 0.1)" }),
+	stroke: new Stroke({ color: "rgba(0, 153, 255, 1)", width: 2 }),
+	image: new CircleStyle({
+		radius: 5,
+		fill: new Fill({ color: "rgba(0, 153, 255, 1)" }),
+		stroke: new Stroke({ color: "#fff", width: 1.5 }),
+	}),
 });
 
 // --- Helper: Logic Matcher ---
@@ -79,6 +90,7 @@ export const createOLStyle = (config: StyleConfig): Style | Style[] => {
 					scale: iconScale,
 					color: pointFillColor as any,
 					anchor: [0.5, 0.5],
+					crossOrigin: "anonymous",
 				})
 			: new Circle({
 					radius: pointRadius,
