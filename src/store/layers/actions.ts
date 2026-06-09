@@ -1,36 +1,10 @@
 import { getLayerIdsInFolder } from "@/lib/helpers/ol";
 import { LayersState, ManagedLayer } from "@/store/layers/types";
 import { MapConfig } from "@/store/map/types";
-import { LayerStatus } from "@/types/shared";
+// import { LayerStatus } from "@/types/shared";
 
 type SetState = (fn: (state: LayersState) => Partial<LayersState>) => void;
 type GetState = () => LayersState;
-
-export const createSetLayerStatus =
-	(set: SetState, get: GetState) => (id: string, status: LayerStatus) => {
-		const currentLayersMap = get().layers;
-		const layerToUpdate = currentLayersMap.get(id);
-
-		if (layerToUpdate) {
-			const updatedLayersMap = new Map(currentLayersMap);
-			updatedLayersMap.set(id, { ...layerToUpdate, status });
-
-			set(() => ({ layers: updatedLayersMap }));
-		} else {
-			console.warn(
-				`[layerActions] Layer with id ${id} not found for status update.`,
-			);
-		}
-	};
-
-export const createGetLayerStatus =
-	(get: GetState) =>
-	(id: string): LayerStatus | undefined => {
-		const currentLayersMap = get().layers;
-		const layer = currentLayersMap.get(id);
-
-		return layer?.status;
-	};
 
 export const createAddLayer = (set: SetState) => (layer: ManagedLayer) =>
 	set((state) => {
@@ -45,17 +19,6 @@ export const createRemoveLayer = (set: SetState) => (layerId: string) =>
 		newLayers.delete(layerId);
 		return { layers: newLayers };
 	});
-
-export const createUpdateLayer =
-	(set: SetState) => (layerId: string, updates: Partial<ManagedLayer>) =>
-		set((state) => {
-			const newLayers = new Map(state.layers);
-			const layerToUpdate = newLayers.get(layerId);
-			if (layerToUpdate) {
-				newLayers.set(layerId, { ...layerToUpdate, ...updates });
-			}
-			return { layers: newLayers };
-		});
 
 export const createSetLayerVisibility =
 	(set: SetState, get: GetState) => (layerId: string, visible: boolean) => {
@@ -287,61 +250,6 @@ export const createFilteredLayer =
 		});
 
 		return newLayerId;
-	};
-
-export const createUpdateFilteredLayer =
-	(set: SetState, get: GetState) =>
-	(
-		originalLayerId: string,
-		filterFn: (feature: any) => boolean,
-		filteredLayerId?: string,
-	): void => {
-		const { useMapStore } = require("@/store/map");
-		const map = useMapStore.getState().map;
-		if (!map) return;
-
-		const layers = get().layers;
-		const originalLayer = layers.get(originalLayerId);
-		if (!originalLayer || !originalLayer.olLayer) return;
-
-		const targetFilteredLayerId =
-			filteredLayerId || `${originalLayerId}_filtered`;
-		const filteredLayer = layers.get(targetFilteredLayerId);
-		if (!filteredLayer || !filteredLayer.olLayer) return;
-
-		const originalOlLayer = originalLayer.olLayer as any;
-		const source = originalOlLayer.getSource?.();
-		if (!source) return;
-
-		const allFeatures = source.getFeatures();
-		const filteredFeatures = allFeatures.filter(filterFn);
-
-		const filteredOlLayer = filteredLayer.olLayer as any;
-		const filteredSource = filteredOlLayer.getSource?.();
-		if (filteredSource) {
-			filteredSource.clear();
-			filteredSource.addFeatures(filteredFeatures);
-		}
-	};
-
-export const createRemoveFilteredLayer =
-	(set: SetState, get: GetState) =>
-	(filteredLayerId: string): void => {
-		const { useMapStore } = require("@/store/map");
-		const map = useMapStore.getState().map;
-		if (!map) return;
-
-		const layers = get().layers;
-		const layer = layers.get(filteredLayerId);
-		if (layer?.olLayer) {
-			map.removeLayer(layer.olLayer);
-		}
-
-		set((state) => {
-			const newLayers = new Map(state.layers);
-			newLayers.delete(filteredLayerId);
-			return { layers: newLayers };
-		});
 	};
 
 export const createSetLayerOpacity =

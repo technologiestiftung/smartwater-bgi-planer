@@ -130,29 +130,14 @@ export interface LayersActions {
 	setFlattenedLayerElements: (elements: LayerElement[]) => void;
 	addLayer: (layer: ManagedLayer) => void;
 	removeLayer: (layerId: string) => void;
-	updateLayer: (
-		layerId: string,
-		updates: Partial<Omit<ManagedLayer, "id">>,
-	) => void;
 	setLayerVisibility: (layerId: string, visible: boolean) => void;
-	setLayerStatus: (id: string, status: LayerStatus) => void;
-	getLayerStatus: (id: string) => LayerStatus | undefined;
-	getActiveLayerConfig: () => LayerConfigItem | null;
 	setLayerConfig: (config: LayerConfigItem[]) => void;
 	applyConfigLayers: (configId: string, hideOtherDrawLayers?: boolean) => void;
-	setDrawLayer: (layerId: string) => void;
-	setLayerConfigId: (layerConfigId: string) => void;
 	hideLayersByPattern: (pattern: string | string[]) => void;
 	createFilteredLayer: (
 		layerId: string,
 		filterFn: (feature: any) => boolean,
 		filteredLayerId?: string,
 	) => string | null;
-	updateFilteredLayer: (
-		originalLayerId: string,
-		filterFn: (feature: any) => boolean,
-		filteredLayerId?: string,
-	) => void;
-	removeFilteredLayer: (filteredLayerId: string) => void;
 	setLayerOpacity: (layerId: string, opacity: number) => void;
 }
