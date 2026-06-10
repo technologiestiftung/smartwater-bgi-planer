@@ -16,7 +16,7 @@ import { Vector as VectorSource } from "ol/source";
 import Fill from "ol/style/Fill";
 import Stroke from "ol/style/Stroke";
 import Style from "ol/style/Style";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useShallow } from "zustand/react/shallow";
 
 interface ConnectedAreaSelectionProps {
@@ -28,6 +28,15 @@ interface ConnectedAreaSelectionProps {
 const selectedConnectedAreaStyle = new Style({
 	fill: new Fill({ color: "rgba(0, 153, 255, 0.1)" }),
 	stroke: new Stroke({ color: "rgba(0, 153, 255, 1)", width: 2 }),
+});
+
+const usedConnectedAreaStyle = new Style({
+	fill: new Fill({ color: "rgba(150, 150, 150, 0.15)" }),
+	stroke: new Stroke({
+		color: "rgba(150, 150, 150, 0.6)",
+		width: 1.5,
+		lineDash: [6, 4],
+	}),
 });
 
 const areaFormatter = new Intl.NumberFormat("de-DE", {
@@ -76,6 +85,11 @@ export function ConnectedAreaSelection({
 		setSelectedConnectedArea,
 	]);
 
+	const availableIds = useMemo(
+		() => new Set(connectedAreas.map((ca) => ca.id)),
+		[connectedAreas],
+	);
+
 	useEffect(() => {
 		if (!map) return;
 		const layer = getLayerById(
@@ -87,13 +101,15 @@ export function ConnectedAreaSelection({
 			?.getFeatures()
 			.forEach((feature) => {
 				const id = feature.get("connectedAreaId") as string | undefined;
-				feature.setStyle(
-					id && id === selectedConnectedAreaId
-						? selectedConnectedAreaStyle
-						: undefined,
-				);
+				if (id && id === selectedConnectedAreaId) {
+					feature.setStyle(selectedConnectedAreaStyle);
+				} else if (id && !availableIds.has(id)) {
+					feature.setStyle(usedConnectedAreaStyle);
+				} else {
+					feature.setStyle(undefined);
+				}
 			});
-	}, [map, selectedConnectedAreaId]);
+	}, [map, selectedConnectedAreaId, availableIds]);
 
 	useEffect(() => {
 		if (!map || !isConnectedAreaSelecting) return;
@@ -110,6 +126,10 @@ export function ConnectedAreaSelection({
 			removeCondition: singleClick,
 			toggleCondition: never,
 			multi: false,
+			filter: (feature) => {
+				const id = feature.get("connectedAreaId") as string | undefined;
+				return !!id && availableIds.has(id);
+			},
 		});
 
 		const handleSelect = (event: { selected: Feature<Geometry>[] }) => {
@@ -148,6 +168,7 @@ export function ConnectedAreaSelection({
 		isConnectedAreaSelecting,
 		selectedConnectedAreaId,
 		setSelectedConnectedArea,
+		availableIds,
 	]);
 
 	useEffect(() => {

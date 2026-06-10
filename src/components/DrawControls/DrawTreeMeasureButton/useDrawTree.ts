@@ -91,7 +91,10 @@ export const useDrawTree = () => {
 	useEffect(() => {
 		if (!map || !drawLayerId) return;
 		stopDraw();
-		return () => stopDraw();
+		return () => {
+			stopDraw();
+			useUiStore.getState().setSelectedConnectedArea(null);
+		};
 	}, [map, drawLayerId]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	// Stop draw if external isDrawing becomes false
@@ -154,6 +157,11 @@ export const useDrawTree = () => {
 			condition: ({ coordinate: coord }) => {
 				const feature = findBtfFeature(coord, getPlanningFeatures());
 				if (!feature) return false;
+
+				if (isTreePit && selectedConnectedArea) {
+					const featureCode = feature.get("code");
+					if (featureCode !== selectedConnectedArea.code) return false;
+				}
 
 				const code = feature.get("code");
 				if (code) {

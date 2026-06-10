@@ -131,12 +131,20 @@ export const createRemoveMeasure = (set: SetState) => {
 				(measure) => measure.id !== measureId,
 			);
 
+			// Free any ConnectedArea that was used by this measure
+			const nextConnectedAreas = scenario.connectedAreas.map((ca) =>
+				ca.usedByMeasureId === measureId
+					? { ...ca, usedByMeasureId: null }
+					: ca,
+			);
+
 			return {
 				scenarios: {
 					...state.scenarios,
 					[scenarioId]: {
 						...scenario,
 						measures: nextMeasures,
+						connectedAreas: nextConnectedAreas,
 					},
 				},
 			};
@@ -254,6 +262,33 @@ export const createRemoveConnectedArea = (set: SetState) => {
 						...scenario,
 						connectedAreas: scenario.connectedAreas.filter(
 							(ca) => ca.id !== connectedAreaId,
+						),
+					},
+				},
+			};
+		});
+	};
+};
+
+export const createMarkConnectedAreaUsed = (set: SetState) => {
+	return (
+		scenarioId: string,
+		connectedAreaId: string,
+		measureId: string | null,
+	) => {
+		set((state) => {
+			const scenario = state.scenarios[scenarioId];
+			if (!scenario) return state;
+
+			return {
+				scenarios: {
+					...state.scenarios,
+					[scenarioId]: {
+						...scenario,
+						connectedAreas: scenario.connectedAreas.map((ca) =>
+							ca.id === connectedAreaId
+								? { ...ca, usedByMeasureId: measureId }
+								: ca,
 						),
 					},
 				},

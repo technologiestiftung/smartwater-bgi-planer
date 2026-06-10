@@ -7,6 +7,7 @@ import { useUiStore } from "@/store/ui";
 import { useMemo } from "react";
 
 const EMPTY_CONNECTED_AREAS: Array<{
+	usedByMeasureId: string;
 	id: string;
 	area: number;
 	code: string | null;
@@ -27,11 +28,16 @@ export function useConnectedAreaSelection(
 		(state) => state.selectedConnectedAreaId,
 	);
 
-	const connectedAreas = useScenarioStore((state) =>
+	const allConnectedAreas = useScenarioStore((state) =>
 		state.activeScenarioId
 			? (state.scenarios[state.activeScenarioId]?.connectedAreas ??
 				EMPTY_CONNECTED_AREAS)
 			: EMPTY_CONNECTED_AREAS,
+	);
+
+	const connectedAreas = useMemo(
+		() => allConnectedAreas.filter((ca) => !ca.usedByMeasureId),
+		[allConnectedAreas],
 	);
 
 	const measures = useScenarioStore((state) =>

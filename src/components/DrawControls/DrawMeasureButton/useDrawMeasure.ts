@@ -13,10 +13,18 @@ import type { MeasureValue } from "@/store/scenario/types";
 import { useUiStore } from "@/store/ui";
 import type { LiveMeasureInfo } from "@/types/measures";
 import { LAYER_IDS } from "@/types/shared";
+import intersect from "@turf/intersect";
+import type {
+	Feature as GeoJSONFeature,
+	MultiPolygon as GeoJSONMultiPolygon,
+	Polygon as GeoJSONPolygon,
+} from "geojson";
 import type { Condition } from "ol/events/condition";
 import Feature from "ol/Feature";
+import GeoJSON from "ol/format/GeoJSON";
 import type Geometry from "ol/geom/Geometry";
 import LineString from "ol/geom/LineString";
+import MultiPolygon from "ol/geom/MultiPolygon";
 import Polygon from "ol/geom/Polygon";
 import Draw from "ol/interaction/Draw";
 import VectorLayer from "ol/layer/Vector";
@@ -50,6 +58,61 @@ const buildPolygonLiveInfo = (geometry: Polygon): LiveMeasureInfo | null => {
 
 const findBtfFeature = (coord: number[], features: Feature<Geometry>[]) =>
 	features.find((f) => f.getGeometry()?.intersectsCoordinate(coord));
+
+const geoJsonFormat = new GeoJSON();
+
+/**
+ * Clips a drawn polygon to the boundary of the active BTF feature.
+ * Returns the clipped OL Polygon, or null if there is no intersection.
+ */
+const clipToBtf = (
+	drawnGeometry: Polygon,
+	btfFeature: Feature<Geometry>,
+): Polygon | null => {
+	const btfGeometry = btfFeature.getGeometry();
+	if (!btfGeometry) return drawnGeometry;
+	if (
+		!(btfGeometry instanceof Polygon) &&
+		!(btfGeometry instanceof MultiPolygon)
+	) {
+		return drawnGeometry;
+	}
+
+	const drawnGeoJSON = geoJsonFormat.writeGeometryObject(
+		drawnGeometry,
+	) as GeoJSONPolygon;
+	const btfGeoJSON = geoJsonFormat.writeGeometryObject(btfGeometry) as
+		| GeoJSONPolygon
+		| GeoJSONMultiPolygon;
+
+	const drawnFeature: GeoJSONFeature<GeoJSONPolygon> = {
+		type: "Feature",
+		properties: {},
+		geometry: drawnGeoJSON,
+	};
+	const btfFeatureGJ: GeoJSONFeature<GeoJSONPolygon | GeoJSONMultiPolygon> = {
+		type: "Feature",
+		properties: {},
+		geometry: btfGeoJSON,
+	};
+
+	const clipped = intersect({
+		type: "FeatureCollection",
+		features: [drawnFeature, btfFeatureGJ],
+	} as any);
+	if (!clipped) return null;
+
+	// intersect can return Polygon or MultiPolygon – take the largest polygon
+	const clippedGeometry = geoJsonFormat.readGeometry(clipped.geometry);
+	if (clippedGeometry instanceof Polygon) return clippedGeometry;
+	if (clippedGeometry instanceof MultiPolygon) {
+		const polygons = clippedGeometry.getPolygons();
+		return polygons.reduce((largest, p) =>
+			getArea(p) > getArea(largest) ? p : largest,
+		);
+	}
+	return null;
+};
 
 // --- Hook ---
 
@@ -173,6 +236,13 @@ export const useDrawMeasure = () => {
 			if (!activeBtfFeatureRef.current) {
 				const feature = findBtfFeature(coord, getPlanningFeatures());
 				if (!feature) return false;
+
+				// For swale measures, only allow drawing in the BTF that contains the selected CA
+				if (isSwaleMeasure && selectedConnectedArea) {
+					const featureCode = feature.get("code");
+					if (featureCode !== selectedConnectedArea.code) return false;
+				}
+
 				activeBtfFeatureRef.current = feature;
 				const code = feature.get("code");
 
@@ -237,12 +307,25 @@ export const useDrawMeasure = () => {
 		drawnFeature: Feature<Geometry>,
 		source: VectorSource,
 	) => {
+		const btfFeature = activeBtfFeatureRef.current;
 		clearDrawCycleState();
 		setLiveMeasureInfo(null);
 		if (!activeScenarioId) return;
 
 		const process = () => {
 			const activeAreaId = useProjectStore.getState().activeAreaId;
+
+			// Clip drawn polygon to BTF boundary
+			const drawnGeometry = drawnFeature.getGeometry();
+			if (btfFeature && drawnGeometry instanceof Polygon) {
+				const clipped = clipToBtf(drawnGeometry, btfFeature);
+
+				if (!clipped) {
+					source.removeFeature(drawnFeature);
+					return;
+				}
+				drawnFeature.setGeometry(clipped);
+			}
 
 			if (isConnectedArea) {
 				const area = Number(getArea(drawnFeature.getGeometry()!).toFixed(2));
@@ -290,7 +373,27 @@ export const useDrawMeasure = () => {
 				if (v !== null && v !== undefined && v !== "") drawnFeature.set(k, v);
 			});
 
+			console.log("[useDrawMeasure] measure::", measure);
+
 			useScenarioStore.getState().addMeasure(activeScenarioId, measure);
+
+			// Mark the connected area as used by this measure (polygon measures only)
+			if (isSwaleMeasure && selectedConnectedAreaId) {
+				useScenarioStore
+					.getState()
+					.markConnectedAreaUsed(
+						activeScenarioId,
+						selectedConnectedAreaId,
+						measure.id,
+					);
+				useUiStore.getState().setSelectedConnectedArea(null);
+
+				// Stop drawing – only one measure per connected area
+				setTimeout(() => {
+					stopDraw();
+					setIsDrawing(false);
+				}, 0);
+			}
 		};
 
 		if (source.getFeatures().includes(drawnFeature)) process();

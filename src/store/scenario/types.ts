@@ -18,6 +18,7 @@ export interface ConnectedArea {
 	createdAt: number;
 	code: string | null;
 	area: number;
+	usedByMeasureId?: string | null;
 }
 
 export interface Scenario {
@@ -45,6 +46,11 @@ export interface ScenarioActions {
 	) => void;
 	addConnectedArea: (scenarioId: string, connectedArea: ConnectedArea) => void;
 	removeConnectedArea: (scenarioId: string, connectedAreaId: string) => void;
+	markConnectedAreaUsed: (
+		scenarioId: string,
+		connectedAreaId: string,
+		measureId: string | null,
+	) => void;
 	setActiveScenario: (id: string) => void;
 	setHasHydrated: (state: boolean) => void;
 }
