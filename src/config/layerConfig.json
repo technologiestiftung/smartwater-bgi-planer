@@ -367,8 +367,6 @@
 			"I.d.R. ist ein Abstand von ca. 1 m von der Sohle der Versickerungsanlage bis zum Bemessungsgrundwasserstand einzuhalten. Als Bemessungsgrundwasserstand innerhalb von Wasserschutzgebieten ist der zu erwartende höchste Grundwasserstand (zeHGW) heranzuziehen, außerhalb von Wasserschutzgebieten der zu erwartende mittlere höchste Grundwasserstand (zeMHGW). Sollten keine Daten vorliegen, können Informationen bei der Wasserbehörde eingeholt werden (Siehe Hinweisblatt 2)."
 		],
 		"drawLayerId": "",
-		"canDrawPolygons": true,
-		"canDrawBTF": true,
 		"canDrawNotes": true,
 		"featureDisplay": "tooltip",
 		"canQueryFeatures": [
