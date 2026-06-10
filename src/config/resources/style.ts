@@ -179,6 +179,65 @@ export const styleList = [
 		],
 	},
 	{
+		styleId: "trees",
+		rules: [
+			{
+				style: {
+					pointFillColor: [255, 255, 255, 1],
+					pointStrokeColor: [255, 255, 255, 1],
+					pointStrokeWidth: 2,
+					pointRadius: 14,
+					iconScale: 0.8,
+				},
+			},
+			{
+				conditions: {
+					properties: {
+						treeSize: "sm",
+					},
+				},
+				style: {
+					pointFillColor: [255, 255, 255, 1],
+					pointStrokeColor: [255, 255, 255, 1],
+					pointStrokeWidth: 2,
+					pointRadius: 14,
+					iconScale: 0.8,
+					icon: "/icons/leaf.svg",
+				},
+			},
+			{
+				conditions: {
+					properties: {
+						treeSize: "md",
+					},
+				},
+				style: {
+					pointFillColor: [255, 255, 255, 1],
+					pointStrokeColor: [255, 255, 255, 1],
+					pointStrokeWidth: 2,
+					pointRadius: 14,
+					iconScale: 0.8,
+					icon: "/icons/plant.svg",
+				},
+			},
+			{
+				conditions: {
+					properties: {
+						treeSize: "lg",
+					},
+				},
+				style: {
+					pointFillColor: [255, 255, 255, 1],
+					pointStrokeColor: [255, 255, 255, 1],
+					pointStrokeWidth: 2,
+					pointRadius: 14,
+					iconScale: 0.8,
+					icon: "/icons/tree.svg",
+				},
+			},
+		],
+	},
+	{
 		styleId: "2v5",
 		rules: [
 			{

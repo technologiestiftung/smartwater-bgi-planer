@@ -8,11 +8,7 @@ import { createEntityId } from "@/lib/helpers/common";
 import { normalizeMeasureGeometryType } from "@/lib/helpers/measures/config";
 import { isSwaleLayerConfigId } from "@/lib/helpers/measures/swale";
 import { getDrawnValue } from "@/lib/helpers/measures/values";
-import {
-	defaultDrawStyle,
-	getLayerById,
-	getSegmentLabelStyles,
-} from "@/lib/helpers/ol";
+import { getDrawStyle, getLayerById } from "@/lib/helpers/ol";
 import { formatArea, formatLength } from "@/lib/helpers/ol/format";
 import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";
@@ -20,11 +16,10 @@ import { useProjectStore } from "@/store/project";
 import { useScenarioStore } from "@/store/scenario";
 import type { MeasureValue } from "@/store/scenario/types";
 import { useUiStore } from "@/store/ui";
-import type { LiveMeasureInfo, MeasureGeometryType } from "@/types/measures";
+import type { LiveMeasureInfo } from "@/types/measures";
 import { LAYER_IDS } from "@/types/shared";
 import { PolygonIcon } from "@phosphor-icons/react";
 import type { Condition } from "ol/events/condition";
-import type { FeatureLike } from "ol/Feature";
 import Feature from "ol/Feature";
 import type Geometry from "ol/geom/Geometry";
 import LineString from "ol/geom/LineString";
@@ -42,17 +37,6 @@ const getMeasureArea = (values: Record<string, MeasureValue>): number =>
 		: typeof values.connectedArea === "number"
 			? values.connectedArea
 			: 0;
-
-const getDrawStyle = (geometryType: MeasureGeometryType) =>
-	geometryType !== "Polygon"
-		? undefined
-		: (feature: FeatureLike) => {
-				const geometry =
-					feature instanceof Feature ? feature.getGeometry() : null;
-				return geometry instanceof Polygon
-					? [defaultDrawStyle, ...getSegmentLabelStyles(geometry)]
-					: [defaultDrawStyle];
-			};
 
 const buildPolygonLiveInfo = (geometry: Polygon): LiveMeasureInfo | null => {
 	const ring = geometry.getCoordinates()[0] ?? [];

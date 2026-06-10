@@ -1,6 +1,7 @@
 import { styleList } from "@/config/resources/style";
 import { formatLength } from "@/lib/helpers/ol/format";
-import { FeatureLike } from "ol/Feature";
+import type { MeasureGeometryType } from "@/types/measures";
+import Feature, { FeatureLike } from "ol/Feature";
 import LineString from "ol/geom/LineString";
 import Point from "ol/geom/Point";
 import Polygon from "ol/geom/Polygon";
@@ -151,6 +152,17 @@ export const applyStyleToLayer = (
 
 	return true;
 };
+
+export const getDrawStyle = (geometryType: MeasureGeometryType) =>
+	geometryType !== "Polygon"
+		? undefined
+		: (feature: FeatureLike) => {
+				const geometry =
+					feature instanceof Feature ? feature.getGeometry() : null;
+				return geometry instanceof Polygon
+					? [defaultDrawStyle, ...getSegmentLabelStyles(geometry)]
+					: [defaultDrawStyle];
+			};
 
 export const getSegmentLabelStyles = (polygon: Polygon) => {
 	const ring = polygon.getCoordinates()[0] || [];
