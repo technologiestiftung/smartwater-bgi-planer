@@ -80,7 +80,6 @@ function toComputedArea(area: OLFeature): ComputedArea {
 		green_roof_ext: calculatePrecisely(roof * Number(values.green_roof)),
 		green_roof_int: 0,
 		to_inf_mulde: calculatePrecisely(Number(values.to_swale)),
-		to_inf_rigole: 0,
 		to_inf_mulde_rigole: 0,
 		to_retention: 0,
 
@@ -107,7 +106,6 @@ function toAreaPotential(areas: ComputedArea): AreaPotential {
 		unpaving: calculatePrecisely(areas.pvd),
 		permeable_paving: calculatePrecisely(areas.pvd - areas.pvd_4),
 		to_inf_mulde: calculatePrecisely(areas.sealed),
-		to_inf_rigole: calculatePrecisely(areas.sealed),
 		to_inf_mulde_rigole: calculatePrecisely(areas.sealed),
 		to_retention: calculatePrecisely(areas.sealed),
 		// todo: add correct calculation
@@ -131,7 +129,6 @@ function createEmptyComputedArea(): ComputedArea {
 		green_roof_ext: 0,
 		green_roof_int: 0,
 		to_inf_mulde: 0,
-		to_inf_rigole: 0,
 		to_inf_mulde_rigole: 0,
 		to_retention: 0,
 		to_surf_infil: 0,
@@ -149,7 +146,6 @@ function createEmptyAreaPotential(): AreaPotential {
 		unpaving: 0,
 		permeable_paving: 0,
 		to_inf_mulde: 0,
-		to_inf_rigole: 0,
 		to_inf_mulde_rigole: 0,
 		to_retention: 0,
 		to_surf_infil: 0,
@@ -179,7 +175,6 @@ function addComputedAreas(
 			acc.green_roof_int + value.green_roof_int,
 		),
 		to_inf_mulde: calculatePrecisely(acc.to_inf_mulde + value.to_inf_mulde),
-		to_inf_rigole: calculatePrecisely(acc.to_inf_rigole + value.to_inf_rigole),
 		to_inf_mulde_rigole: calculatePrecisely(
 			acc.to_inf_mulde_rigole + value.to_inf_mulde_rigole,
 		),
@@ -210,7 +205,6 @@ function addAreaPotentials(
 			acc.permeable_paving + value.permeable_paving,
 		),
 		to_inf_mulde: calculatePrecisely(acc.to_inf_mulde + value.to_inf_mulde),
-		to_inf_rigole: calculatePrecisely(acc.to_inf_rigole + value.to_inf_rigole),
 		to_inf_mulde_rigole: calculatePrecisely(
 			acc.to_inf_mulde_rigole + value.to_inf_mulde_rigole,
 		),

@@ -14,12 +14,8 @@ export type MeasureKey =
 	| "unpaving"
 	| "permeable_paving"
 	| "to_inf_mulde"
-	| "to_inf_rigole"
 	| "to_inf_mulde_rigole"
 	| "to_retention"
-	// | "trees_sm"
-	// | "trees_md"
-	// | "trees_lg"
 	| "to_surf_infil"
 	| "to_tree_pit";
 

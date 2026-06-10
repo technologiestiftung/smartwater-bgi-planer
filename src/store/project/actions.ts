@@ -24,7 +24,6 @@ export const emptyAccumulatedStats: AccumulatedStats = {
 		unpaving: 0,
 		permeable_paving: 0,
 		to_inf_mulde: 0,
-		to_inf_rigole: 0,
 		to_inf_mulde_rigole: 0,
 		to_retention: 0,
 		to_surf_infil: 0,
@@ -44,11 +43,13 @@ export const emptyAccumulatedStats: AccumulatedStats = {
 		green_roof_ext: 0,
 		green_roof_int: 0,
 		to_inf_mulde: 0,
-		to_inf_rigole: 0,
 		to_inf_mulde_rigole: 0,
 		to_retention: 0,
 		to_surf_infil: 0,
 		to_tree_pit: 0,
+		trees_sm: 0,
+		trees_md: 0,
+		trees_lg: 0,
 	},
 };
 

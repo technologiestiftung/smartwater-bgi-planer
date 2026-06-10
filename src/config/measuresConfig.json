@@ -108,8 +108,8 @@
 			{
 				"key": "count",
 				"type": "integer",
-				"source": "input",
-				"required": true
+				"source": "drawn",
+				"isCalculationInput": true
 			}
 		]
 	},
@@ -181,17 +181,10 @@
 		"geometryType": "Polygon",
 		"parameters": [
 			{
-				"key": "connectedArea",
+				"key": "area",
 				"type": "number",
 				"unit": "m2",
-				"source": "input",
-				"required": true
-			},
-			{
-				"key": "storageVolume",
-				"type": "number",
-				"unit": "m3",
-				"source": "derived"
+				"source": "drawn"
 			}
 		]
 	},
@@ -203,27 +196,8 @@
 			{
 				"key": "count",
 				"type": "integer",
-				"source": "input"
-			},
-			{
-				"key": "connectedArea",
-				"type": "number",
-				"unit": "m2",
 				"source": "input",
-				"required": true
-			}
-		]
-	},
-	{
-		"id": "3V6",
-		"measureKey": "to_inf_rigole",
-		"geometryType": "Polygon",
-		"parameters": [
-			{
-				"key": "storageVolume",
-				"type": "number",
-				"unit": "m3",
-				"source": "derived"
+				"isCalculationInput": true
 			},
 			{
 				"key": "connectedArea",
@@ -232,6 +206,18 @@
 				"source": "input",
 				"required": true,
 				"isCalculationInput": true
+			}
+		]
+	},
+	{
+		"id": "3V6",
+		"geometryType": "Polygon",
+		"parameters": [
+			{
+				"key": "area",
+				"type": "number",
+				"unit": "m2",
+				"source": "drawn"
 			}
 		]
 	},

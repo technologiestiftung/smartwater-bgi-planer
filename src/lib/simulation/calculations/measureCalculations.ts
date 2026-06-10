@@ -5,7 +5,6 @@ import areaCalc from "./areaCalculations";
 const connectedAreaFieldByMeasure = {
 	to_inf_mulde: "to_inf_mulde",
 	to_inf_mulde_rigole: "to_inf_mulde_rigole",
-	to_inf_rigole: "to_inf_rigole",
 	to_retention: "to_retention",
 	to_tree_pit: "to_tree_pit",
 } as const;
