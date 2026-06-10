@@ -7,6 +7,7 @@ const connectedAreaFieldByMeasure = {
 	to_inf_mulde_rigole: "to_inf_mulde_rigole",
 	to_inf_rigole: "to_inf_rigole",
 	to_retention: "to_retention",
+	to_tree_pit: "to_tree_pit",
 } as const;
 
 type ConnectedAreaMeasureName = keyof typeof connectedAreaFieldByMeasure;
@@ -44,6 +45,7 @@ const applyGreenRoofMeasure = (
 
 // R: apply_measure
 // Applies one measure to one BTF state and then refreshes derived fields.
+// eslint-disable-next-line complexity
 function calculateApplyMeasure(
 	area: ComputedArea,
 	measure: Measure,
@@ -83,10 +85,19 @@ function calculateApplyMeasure(
 
 	if (isTreeMeasure(measure.name)) {
 		const field = TREE_FIELDS[measure.name];
-		return areaCalc.updateCalculatedFields({
-			...area,
-			[field]: area[field] + 1,
-		});
+		const withTree = { ...area, [field]: area[field] + 1 };
+
+		// For 3V5 (to_tree_pit): also add connectedArea
+		if (
+			typeof measure.connectedArea === "number" &&
+			measure.connectedArea > 0
+		) {
+			withTree.to_tree_pit = areaCalc.calculatePrecisely(
+				withTree.to_tree_pit + measure.connectedArea,
+			);
+		}
+
+		return areaCalc.updateCalculatedFields(withTree);
 	}
 
 	if (isNoOpMeasure(measure.name)) {

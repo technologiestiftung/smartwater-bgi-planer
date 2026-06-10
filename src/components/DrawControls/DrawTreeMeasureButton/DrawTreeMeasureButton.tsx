@@ -12,15 +12,22 @@ const TREE_SIZES: { size: TreeSize; label: string; icon: typeof TreeIcon }[] = [
 ];
 
 export const DrawTreeMeasureButton: FC = () => {
-	const { isDrawing, activeSize, startDraw } = useDrawTree();
+	const { isDrawing, activeSize, canDraw, isTreePit, startDraw } =
+		useDrawTree();
 
 	return (
 		<div className="flex gap-2">
+			{isTreePit && !canDraw && (
+				<span className="text-muted-foreground text-sm">
+					Erst angeschlossene Fläche auswählen
+				</span>
+			)}
 			{TREE_SIZES.map(({ size, label, icon: Icon }) => (
 				<Button
 					key={size}
 					variant={isDrawing && activeSize === size ? "default" : "outline"}
 					onClick={() => startDraw(size)}
+					disabled={!canDraw && !(isDrawing && activeSize === size)}
 				>
 					<Icon />
 					{label}

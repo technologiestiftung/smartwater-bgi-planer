@@ -1,4 +1,5 @@
 import { createEntityId } from "@/lib/helpers/common";
+import { isSwaleLayerConfigId } from "@/lib/helpers/measures/swale";
 import { getLayerById } from "@/lib/helpers/ol";
 import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";
@@ -34,14 +35,35 @@ export const useDrawTree = () => {
 			setLayerVisibility: s.setLayerVisibility,
 		})),
 	);
-	const { isDrawing, setIsDrawing, resetDrawInteractions } = useUiStore(
+	const {
+		isDrawing,
+		setIsDrawing,
+		resetDrawInteractions,
+		setUploadError,
+		selectedConnectedAreaId,
+	} = useUiStore(
 		useShallow((s) => ({
 			isDrawing: s.isDrawing,
 			setIsDrawing: s.setIsDrawing,
 			resetDrawInteractions: s.resetDrawInteractions,
+			setUploadError: s.setUploadError,
+			selectedConnectedAreaId: s.selectedConnectedAreaId,
 		})),
 	);
-	const activeScenarioId = useScenarioStore((s) => s.activeScenarioId);
+	const { activeScenarioId, connectedAreas } = useScenarioStore(
+		useShallow((s) => ({
+			activeScenarioId: s.activeScenarioId,
+			connectedAreas: s.activeScenarioId
+				? (s.scenarios[s.activeScenarioId]?.connectedAreas ?? [])
+				: [],
+		})),
+	);
+
+	const isTreePit = isSwaleLayerConfigId(layerConfigId);
+	const selectedConnectedArea = connectedAreas.find(
+		(a) => a.id === selectedConnectedAreaId,
+	);
+	const canDraw = !isTreePit || Boolean(selectedConnectedArea);
 
 	const [activeSize, setActiveSize] = useState<TreeSize | null>(null);
 	const drawRef = useRef<Draw | null>(null);
@@ -89,6 +111,13 @@ export const useDrawTree = () => {
 			stopDraw();
 			setActiveSize(null);
 			setIsDrawing(false);
+			return;
+		}
+
+		if (!canDraw) {
+			setUploadError(
+				"Bitte zuerst eine angeschlossene Fläche für den optimierten Baumstandort auswählen.",
+			);
 			return;
 		}
 
@@ -149,10 +178,14 @@ export const useDrawTree = () => {
 					code: activeAreaId ?? null,
 					name: TREE_MEASURE_NAMES[currentSize],
 					area: 0,
+					connectedArea: isTreePit
+						? (selectedConnectedArea?.area ?? 0)
+						: undefined,
 					configId: layerConfigId ?? "3B2",
 					drawLayerId: drawLayerId ?? null,
 				};
 
+				console.log("[DrawTree] addMeasure", measure);
 				drawnFeature.set("measureId", measure.id);
 				useScenarioStore.getState().addMeasure(activeScenarioId, measure);
 			};
@@ -168,5 +201,5 @@ export const useDrawTree = () => {
 		setIsDrawing(true);
 	};
 
-	return { isDrawing, activeSize, startDraw };
+	return { isDrawing, activeSize, canDraw, isTreePit, startDraw };
 };
