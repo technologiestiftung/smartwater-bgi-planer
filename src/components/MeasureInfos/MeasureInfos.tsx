@@ -53,7 +53,7 @@ const MeasureInfos: FC<MeasureInfosProps> = ({ liveMeasureInfo }) => {
 				<p
 					className={`font-semibold ${liveMeasureInfo.isOverPotential ? "text-destructive" : ""}`}
 				>
-					Fläche: {liveMeasureInfo.area} {measureName}
+					{liveMeasureInfo.area} {measureName} geplant
 				</p>
 				{/* {remainingTotal !== null && (
 					<p>Gesamt: {Number(remainingTotal.toFixed(2))} m²</p>
