@@ -517,7 +517,7 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "measuresLayers"
+		"styleId": "trees"
 	},
 	{
 		"id": "module_3_3V6_draw",
@@ -557,7 +557,7 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "measuresLayers"
+		"styleId": "trees"
 	},
 	{
 		"id": "module_3_3G1_draw",
