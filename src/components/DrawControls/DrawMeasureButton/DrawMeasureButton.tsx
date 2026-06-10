@@ -5,7 +5,6 @@ import MeasureInfos from "@/components/MeasureInfos/MeasureInfos";
 import { Button } from "@/components/ui/button";
 import { measureConfigById } from "@/config/measuresConfig";
 import { createEntityId } from "@/lib/helpers/common";
-import { normalizeMeasureGeometryType } from "@/lib/helpers/measures/config";
 import { isSwaleLayerConfigId } from "@/lib/helpers/measures/swale";
 import { getDrawnValue } from "@/lib/helpers/measures/values";
 import { getDrawStyle, getLayerById } from "@/lib/helpers/ol";
@@ -96,9 +95,6 @@ export const DrawMeasureButton: FC = () => {
 	const measureConfig = layerConfigId
 		? measureConfigById.get(layerConfigId)
 		: null;
-	const geometryType = normalizeMeasureGeometryType(
-		measureConfig?.geometryType,
-	);
 	const selectedConnectedArea = connectedAreas.find(
 		(a) => a.id === selectedConnectedAreaId,
 	);
@@ -241,40 +237,38 @@ export const DrawMeasureButton: FC = () => {
 
 		drawRef.current = new Draw({
 			source,
-			type: geometryType,
-			style: getDrawStyle(geometryType),
+			type: "Polygon",
+			style: getDrawStyle("Polygon"),
 			condition: drawCondition,
 		});
 
-		if (geometryType === "Polygon") {
-			drawRef.current.on("drawstart", ({ feature }) => {
-				const geometry = feature.getGeometry();
-				if (!(geometry instanceof Polygon)) return;
+		drawRef.current.on("drawstart", ({ feature }) => {
+			const geometry = feature.getGeometry();
+			if (!(geometry instanceof Polygon)) return;
 
-				removeSketchListener();
-				sketchGeometryRef.current = geometry;
+			removeSketchListener();
+			sketchGeometryRef.current = geometry;
 
-				const update = () => {
-					const info =
-						geometry instanceof Polygon ? buildPolygonLiveInfo(geometry) : null;
-					if (!info) {
-						isOverPotentialRef.current = false;
-						setLiveMeasureInfo(null);
-						return;
-					}
-					const potential = activeMeasurePotentialRef.current;
-					const currentArea = Number(getArea(geometry).toFixed(2));
-					const isOverPotential =
-						typeof potential === "number" && currentArea > potential;
-					isOverPotentialRef.current = isOverPotential;
-					setLiveMeasureInfo({ ...info, isOverPotential });
-				};
+			const update = () => {
+				const info =
+					geometry instanceof Polygon ? buildPolygonLiveInfo(geometry) : null;
+				if (!info) {
+					isOverPotentialRef.current = false;
+					setLiveMeasureInfo(null);
+					return;
+				}
+				const potential = activeMeasurePotentialRef.current;
+				const currentArea = Number(getArea(geometry).toFixed(2));
+				const isOverPotential =
+					typeof potential === "number" && currentArea > potential;
+				isOverPotentialRef.current = isOverPotential;
+				setLiveMeasureInfo({ ...info, isOverPotential });
+			};
 
-				sketchListenerRef.current = update;
-				geometry.on("change", update);
-				update();
-			});
-		}
+			sketchListenerRef.current = update;
+			geometry.on("change", update);
+			update();
+		});
 
 		drawRef.current.on("drawend", ({ feature: drawnFeature }) => {
 			clearDrawCycleState();
@@ -362,7 +356,7 @@ export const DrawMeasureButton: FC = () => {
 				<PolygonIcon />
 				{label}
 			</Button>
-			{isDrawing && liveMeasureInfo && geometryType === "Polygon" && (
+			{isDrawing && liveMeasureInfo && (
 				<MeasureInfos liveMeasureInfo={liveMeasureInfo} />
 			)}
 		</div>
