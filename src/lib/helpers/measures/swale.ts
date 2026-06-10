@@ -1,9 +1,4 @@
-const SWALE_LAYER_CONFIG_IDS = new Set([
-	"3V1",
-	"3V2",
-	"3V3",
-	"3V5",
-]);
+const SWALE_LAYER_CONFIG_IDS = new Set(["3V1", "3V2", "3V3", "3V5"]);
 
 export const isSwaleLayerConfigId = (
 	layerConfigId: string | null | undefined,
