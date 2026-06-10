@@ -81,6 +81,14 @@ function calculateApplyMeasure(
 		});
 	}
 
+	if (isTreeMeasure(measure.name)) {
+		const field = TREE_FIELDS[measure.name];
+		return areaCalc.updateCalculatedFields({
+			...area,
+			[field]: area[field] + 1,
+		});
+	}
+
 	if (isNoOpMeasure(measure.name)) {
 		return areaCalc.updateCalculatedFields(area);
 	}
@@ -101,6 +109,18 @@ function calculateApplyMeasure(
 // R: is_no_op
 function isNoOpMeasure(name: string | null): boolean {
 	return name === null;
+}
+
+const TREE_FIELDS = {
+	trees_sm: "trees_sm",
+	trees_md: "trees_md",
+	trees_lg: "trees_lg",
+} as const;
+
+type TreeMeasureName = keyof typeof TREE_FIELDS;
+
+function isTreeMeasure(name: string | null): name is TreeMeasureName {
+	return name !== null && name in TREE_FIELDS;
 }
 
 const measureCalculations = {

@@ -32,6 +32,9 @@ export type ComputedArea = {
 	to_retention: number;
 	to_surf_infil: number;
 	to_tree_pit: number;
+	trees_sm: number;
+	trees_md: number;
+	trees_lg: number;
 };
 
 // Available m2 by measure for one block part.

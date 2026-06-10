@@ -182,26 +182,17 @@ export const styleList = [
 		styleId: "trees",
 		rules: [
 			{
-				style: {
-					pointFillColor: [255, 255, 255, 1],
-					pointStrokeColor: [255, 255, 255, 1],
-					pointStrokeWidth: 2,
-					pointRadius: 14,
-					iconScale: 0.8,
-				},
-			},
-			{
 				conditions: {
 					properties: {
 						treeSize: "sm",
 					},
 				},
 				style: {
-					pointFillColor: [255, 255, 255, 1],
-					pointStrokeColor: [255, 255, 255, 1],
+					pointFillColor: [68, 156, 118, 1],
+					pointStrokeColor: [68, 156, 118, 1],
 					pointStrokeWidth: 2,
-					pointRadius: 14,
-					iconScale: 0.8,
+					pointRadius: 10,
+					iconScale: 0.4,
 					icon: "/icons/leaf.svg",
 				},
 			},
@@ -212,11 +203,11 @@ export const styleList = [
 					},
 				},
 				style: {
-					pointFillColor: [255, 255, 255, 1],
-					pointStrokeColor: [255, 255, 255, 1],
+					pointFillColor: [68, 156, 118, 1],
+					pointStrokeColor: [68, 156, 118, 1],
 					pointStrokeWidth: 2,
-					pointRadius: 14,
-					iconScale: 0.8,
+					pointRadius: 12,
+					iconScale: 0.6,
 					icon: "/icons/plant.svg",
 				},
 			},
@@ -227,12 +218,21 @@ export const styleList = [
 					},
 				},
 				style: {
+					pointFillColor: [68, 156, 118, 1],
+					pointStrokeColor: [68, 156, 118, 1],
+					pointStrokeWidth: 2,
+					pointRadius: 14,
+					iconScale: 0.8,
+					icon: "/icons/tree.svg",
+				},
+			},
+			{
+				style: {
 					pointFillColor: [255, 255, 255, 1],
 					pointStrokeColor: [255, 255, 255, 1],
 					pointStrokeWidth: 2,
 					pointRadius: 14,
 					iconScale: 0.8,
-					icon: "/icons/tree.svg",
 				},
 			},
 		],

@@ -87,6 +87,9 @@ function toComputedArea(area: OLFeature): ComputedArea {
 		// todo: add correct calculation
 		to_surf_infil: 0,
 		to_tree_pit: 0,
+		trees_sm: 0,
+		trees_md: 0,
+		trees_lg: 0,
 	};
 
 	return updateCalculatedFields(current);
@@ -133,6 +136,9 @@ function createEmptyComputedArea(): ComputedArea {
 		to_retention: 0,
 		to_surf_infil: 0,
 		to_tree_pit: 0,
+		trees_sm: 0,
+		trees_md: 0,
+		trees_lg: 0,
 	};
 }
 
@@ -182,6 +188,9 @@ function addComputedAreas(
 		// todo: add correct calculation
 		to_surf_infil: calculatePrecisely(acc.to_surf_infil + value.to_surf_infil),
 		to_tree_pit: calculatePrecisely(acc.to_tree_pit + value.to_tree_pit),
+		trees_sm: acc.trees_sm + value.trees_sm,
+		trees_md: acc.trees_md + value.trees_md,
+		trees_lg: acc.trees_lg + value.trees_lg,
 	};
 }
 
