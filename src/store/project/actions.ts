@@ -2,6 +2,8 @@ import { simulationEngine } from "@/lib/simulation/simulationEngine";
 import { useAnswersStore } from "../answers";
 import { useFilesStore } from "../files";
 import { useMapStore } from "../map";
+import { useResultStore } from "../result";
+import { useScenarioStore } from "../scenario";
 import { useUiStore } from "../ui";
 import {
 	AccumulatedStats,
@@ -103,6 +105,8 @@ export const createDeleteProject = (set: SetState, get: GetState) => {
 		useAnswersStore.getState().clearAnswers();
 		useUiStore.getState().resetModuleState();
 		useMapStore.getState().resetMapState();
+		useScenarioStore.getState().resetScenarioState();
+		useResultStore.getState().resetResultState();
 	};
 };
 

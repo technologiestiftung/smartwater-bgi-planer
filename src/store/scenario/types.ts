@@ -53,4 +53,5 @@ export interface ScenarioActions {
 	) => void;
 	setActiveScenario: (id: string) => void;
 	setHasHydrated: (state: boolean) => void;
+	resetScenarioState: () => void;
 }

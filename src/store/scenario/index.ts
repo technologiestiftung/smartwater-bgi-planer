@@ -48,6 +48,12 @@ export const useScenarioStore = create<ScenarioState & ScenarioActions>()(
 					markConnectedAreaUsed: createMarkConnectedAreaUsed(set),
 					setActiveScenario: createSetActiveScenario(set),
 					setHasHydrated: (state) => set({ hasHydrated: state }),
+					resetScenarioState: () => {
+						set({
+							...initialState,
+							hasHydrated: true,
+						});
+					},
 				}),
 				{
 					name: "scenario-storage",

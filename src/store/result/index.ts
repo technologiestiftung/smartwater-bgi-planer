@@ -20,6 +20,9 @@ export const useResultStore = create<ResultState & ResultActions>()(
 					setStatus: createSetStatus(set),
 					getResult: createGetResult(get),
 					setHasHydrated: (state) => set({ hasHydrated: state }),
+					resetResultState: () => {
+						set({ ...initialState, hasHydrated: true });
+					},
 				}),
 				{
 					name: "result-storage",

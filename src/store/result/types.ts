@@ -18,4 +18,5 @@ export interface ResultActions {
 	setStatus: (scenarioId: string, status: ResultStatus) => void;
 	getResult: (scenarioId: string) => Result | undefined;
 	setHasHydrated: (state: boolean) => void;
+	resetResultState: () => void;
 }
