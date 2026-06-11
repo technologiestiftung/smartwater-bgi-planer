@@ -197,6 +197,12 @@ export const ClickControl: FC<ClickControlProps> = ({
 	}, [map, overlayOptions]);
 
 	useEffect(() => {
+		if (isDrawing || isBlockAreaSelecting || isDrawingNote) {
+			handleClose();
+		}
+	}, [isDrawing, isBlockAreaSelecting, isDrawingNote, handleClose]);
+
+	useEffect(() => {
 		if (!map) return;
 
 		const handleClick = async (evt: any) => {
