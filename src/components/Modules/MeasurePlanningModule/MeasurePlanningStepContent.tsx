@@ -20,7 +20,7 @@ import VectorLayer from "ol/layer/Vector";
 import { Vector as VectorSource } from "ol/source";
 import { useCallback, useEffect, useRef } from "react";
 import { ConnectedAreaSelection } from "./ConnectedAreaSelection";
-import PotentialsContent from "./PotentialsContent";
+// import PotentialsContent from "./PotentialsContent";
 
 interface MeasurePlanningStepContentProps {
 	layerConfig: LayerConfigItem;
@@ -191,7 +191,7 @@ export function MeasurePlanningStepContent({
 							<RichTextWithLinks text={layerConfig.description} />
 						</div>
 					)}
-					<PotentialsContent layerConfig={layerConfig} />
+					{/* <PotentialsContent layerConfig={layerConfig} /> */}
 					<ConnectedAreaSelection
 						layerConfigId={layerConfig.id}
 						drawLayerId={layerConfig.drawLayerId}
