@@ -53,7 +53,6 @@ export function ConnectedAreaSelection({
 		setIsConnectedAreaSelecting,
 		selectedConnectedAreaId,
 		setSelectedConnectedArea,
-		setIsBlockAreaSelecting,
 		isDrawing,
 	} = useUiStore(
 		useShallow((state) => ({
@@ -61,7 +60,6 @@ export function ConnectedAreaSelection({
 			setIsConnectedAreaSelecting: state.setIsConnectedAreaSelecting,
 			selectedConnectedAreaId: state.selectedConnectedAreaId,
 			setSelectedConnectedArea: state.setSelectedConnectedArea,
-			setIsBlockAreaSelecting: state.setIsBlockAreaSelecting,
 			isDrawing: state.isDrawing,
 		})),
 	);
@@ -74,17 +72,10 @@ export function ConnectedAreaSelection({
 	useEffect(() => {
 		if (!isDrawing && connectedAreas.length > 0) {
 			setIsConnectedAreaSelecting(true);
-			setIsBlockAreaSelecting(true);
 		} else if (connectedAreas.length === 0) {
 			setIsConnectedAreaSelecting(false);
-			setIsBlockAreaSelecting(false);
 		}
-	}, [
-		connectedAreas.length,
-		isDrawing,
-		setIsConnectedAreaSelecting,
-		setIsBlockAreaSelecting,
-	]);
+	}, [connectedAreas.length, isDrawing, setIsConnectedAreaSelecting]);
 
 	useEffect(() => {
 		if (!isSwaleMeasure || (selectedConnectedAreaId && selectedConnectedArea))
@@ -188,9 +179,8 @@ export function ConnectedAreaSelection({
 	useEffect(() => {
 		return () => {
 			setIsConnectedAreaSelecting(false);
-			setIsBlockAreaSelecting(false);
 		};
-	}, [setIsBlockAreaSelecting, setIsConnectedAreaSelecting]);
+	}, [setIsConnectedAreaSelecting]);
 
 	if (!isSwaleMeasure) return null;
 

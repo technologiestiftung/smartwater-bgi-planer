@@ -73,7 +73,29 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 	// }, []);
 
 	if (process.env.NODE_ENV !== "development") {
-		return null;
+		<div className="flex h-full w-full flex-col">
+			<div className="border-muted bg-secondary flex shrink-0 border-t px-4">
+				<Button
+					onClick={onBackToQuestions}
+					className="text-md my-4 flex-1 text-white hover:text-white"
+					size="lg"
+					variant="ghost"
+				>
+					<XIcon className="h-4 w-4" />
+					Zu den Maßnahmen
+				</Button>
+				<div className="w-px self-stretch bg-white" />
+				<Button
+					onClick={() => undefined}
+					className="text-md my-4 flex-1 text-white hover:text-white"
+					size="lg"
+					variant="ghost"
+				>
+					<DownloadSimpleIcon className="h-4 w-4" />
+					Exportieren
+				</Button>
+			</div>
+		</div>;
 	}
 
 	return (
