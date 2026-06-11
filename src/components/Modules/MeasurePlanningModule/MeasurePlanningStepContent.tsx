@@ -10,14 +10,14 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { getLayerById } from "@/lib/helpers/ol";
+import { LayerConfigItem } from "@/store/layers/types";
 import { useMapStore } from "@/store/map";
 import { useScenarioStore } from "@/store/scenario";
 import { useUiStore } from "@/store/ui";
 import { LAYER_IDS } from "@/types/shared";
-import { LayerConfigItem } from "@/store/layers/types";
+import Image from "next/image";
 import VectorLayer from "ol/layer/Vector";
 import { Vector as VectorSource } from "ol/source";
-import Image from "next/image";
 import { useCallback, useEffect, useRef } from "react";
 import { ConnectedAreaSelection } from "./ConnectedAreaSelection";
 import PotentialsContent from "./PotentialsContent";
