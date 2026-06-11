@@ -38,7 +38,7 @@ export const DrawTreeMeasureButton: FC = () => {
 					{label}
 				</Button>
 			))}
-			{isDrawing && (
+			{isDrawing && isTreePit && (
 				<Button variant="destructive" onClick={stopSession}>
 					<CheckIcon />
 					Fertig
