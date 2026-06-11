@@ -127,16 +127,32 @@ export const createRemoveMeasure = (set: SetState) => {
 		set((state) => {
 			const scenario = state.scenarios[scenarioId];
 			if (!scenario) return state;
+
+			const removedMeasure = scenario.measures.find((m) => m.id === measureId);
 			nextMeasures = scenario.measures.filter(
 				(measure) => measure.id !== measureId,
 			);
 
-			// Free any ConnectedArea that was used by this measure
-			const nextConnectedAreas = scenario.connectedAreas.map((ca) =>
+			// Free any ConnectedArea that was used by this measure (polygon measures)
+			let nextConnectedAreas = scenario.connectedAreas.map((ca) =>
 				ca.usedByMeasureId === measureId
 					? { ...ca, usedByMeasureId: null }
 					: ca,
 			);
+
+			// For tree measures: free CA if no remaining trees share the same code
+			if (removedMeasure?.name.startsWith("trees_") && removedMeasure.code) {
+				const hasRemainingTrees = nextMeasures.some(
+					(m) => m.name.startsWith("trees_") && m.code === removedMeasure.code,
+				);
+				if (!hasRemainingTrees) {
+					nextConnectedAreas = nextConnectedAreas.map((ca) =>
+						ca.usedByMeasureId === "trees" && ca.code === removedMeasure.code
+							? { ...ca, usedByMeasureId: null }
+							: ca,
+					);
+				}
+			}
 
 			return {
 				scenarios: {
