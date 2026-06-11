@@ -40,6 +40,8 @@ const initialState: UiState = {
 	isSynthesisMode: false,
 	showTutorial: false,
 	showTutorialOnFirstQuestion: false,
+	draftMeasureIds: [],
+	draftConnectedAreaIds: [],
 };
 
 export const useUiStore = create<UiState & UiActions>()(
@@ -139,6 +141,21 @@ export const useUiStore = create<UiState & UiActions>()(
 				set({
 					showTutorialOnFirstQuestion,
 				}),
+			addDraftMeasureId: (measureId) =>
+				set((state) => ({
+					draftMeasureIds: [...state.draftMeasureIds, measureId],
+				})),
+			addDraftConnectedAreaId: (connectedAreaId) =>
+				set((state) => ({
+					draftConnectedAreaIds: [
+						...state.draftConnectedAreaIds,
+						connectedAreaId,
+					],
+				})),
+			confirmDraftMeasures: () =>
+				set({ draftMeasureIds: [], draftConnectedAreaIds: [] }),
+			clearDraftMeasures: () =>
+				set({ draftMeasureIds: [], draftConnectedAreaIds: [] }),
 		})),
 		{ name: "uiStore" },
 	),

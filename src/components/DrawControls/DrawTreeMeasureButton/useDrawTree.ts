@@ -221,6 +221,7 @@ export const useDrawTree = () => {
 				console.log("[DrawTree] addMeasure", measure);
 				drawnFeature.set("measureId", measure.id);
 				useScenarioStore.getState().addMeasure(activeScenarioId, measure);
+				useUiStore.getState().addDraftMeasureId(measure.id);
 				hasDrawnOnCurrentCARef.current = true;
 			};
 

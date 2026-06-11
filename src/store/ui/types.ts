@@ -25,6 +25,8 @@ export interface UiState {
 	isSynthesisMode: boolean;
 	showTutorial: boolean;
 	showTutorialOnFirstQuestion: boolean;
+	draftMeasureIds: string[];
+	draftConnectedAreaIds: string[];
 }
 
 export interface UiActions {
@@ -63,4 +65,8 @@ export interface UiActions {
 	setTutorialOnFirstQuestionState: (
 		showTutorialOnFirstQuestion: boolean,
 	) => void;
+	addDraftMeasureId: (measureId: string) => void;
+	addDraftConnectedAreaId: (connectedAreaId: string) => void;
+	confirmDraftMeasures: () => void;
+	clearDraftMeasures: () => void;
 }

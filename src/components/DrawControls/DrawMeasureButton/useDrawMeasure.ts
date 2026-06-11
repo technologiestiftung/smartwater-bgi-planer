@@ -337,6 +337,7 @@ export const useDrawMeasure = () => {
 				};
 				drawnFeature.set("connectedAreaId", connectedArea.id);
 				addConnectedArea(activeScenarioId, connectedArea);
+				useUiStore.getState().addDraftConnectedAreaId(connectedArea.id);
 				return;
 			}
 
@@ -376,6 +377,7 @@ export const useDrawMeasure = () => {
 			console.log("[useDrawMeasure] measure::", measure);
 
 			useScenarioStore.getState().addMeasure(activeScenarioId, measure);
+			useUiStore.getState().addDraftMeasureId(measure.id);
 
 			// Mark the connected area as used by this measure (polygon measures only)
 			if (isSwaleMeasure && selectedConnectedAreaId) {
