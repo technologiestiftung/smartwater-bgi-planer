@@ -1,7 +1,12 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { LeafIcon, PlantIcon, TreeIcon } from "@phosphor-icons/react";
+import {
+	CheckIcon,
+	LeafIcon,
+	PlantIcon,
+	TreeIcon,
+} from "@phosphor-icons/react";
 import { FC } from "react";
 import { type TreeSize, useDrawTree } from "./useDrawTree";
 
@@ -12,7 +17,7 @@ const TREE_SIZES: { size: TreeSize; label: string; icon: typeof TreeIcon }[] = [
 ];
 
 export const DrawTreeMeasureButton: FC = () => {
-	const { isDrawing, activeSize, canDraw, isTreePit, startDraw } =
+	const { isDrawing, activeSize, canDraw, isTreePit, startDraw, stopSession } =
 		useDrawTree();
 
 	return (
@@ -27,12 +32,18 @@ export const DrawTreeMeasureButton: FC = () => {
 					key={size}
 					variant={isDrawing && activeSize === size ? "default" : "outline"}
 					onClick={() => startDraw(size)}
-					disabled={!canDraw && !(isDrawing && activeSize === size)}
+					disabled={!canDraw && !isDrawing}
 				>
 					<Icon />
 					{label}
 				</Button>
 			))}
+			{isDrawing && (
+				<Button variant="destructive" onClick={stopSession}>
+					<CheckIcon />
+					Fertig
+				</Button>
+			)}
 		</div>
 	);
 };

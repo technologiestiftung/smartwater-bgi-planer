@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { useConnectedAreaSelection } from "@/hooks/useConnectedAreaSelection";
 import { isSwaleLayerConfigId } from "@/lib/helpers/measures/swale";
 import { getLayerById } from "@/lib/helpers/ol";
@@ -54,16 +53,16 @@ export function ConnectedAreaSelection({
 		setIsConnectedAreaSelecting,
 		selectedConnectedAreaId,
 		setSelectedConnectedArea,
-		resetDrawInteractions,
 		setIsBlockAreaSelecting,
+		isDrawing,
 	} = useUiStore(
 		useShallow((state) => ({
 			isConnectedAreaSelecting: state.isConnectedAreaSelecting,
 			setIsConnectedAreaSelecting: state.setIsConnectedAreaSelecting,
 			selectedConnectedAreaId: state.selectedConnectedAreaId,
 			setSelectedConnectedArea: state.setSelectedConnectedArea,
-			resetDrawInteractions: state.resetDrawInteractions,
 			setIsBlockAreaSelecting: state.setIsBlockAreaSelecting,
+			isDrawing: state.isDrawing,
 		})),
 	);
 
@@ -71,6 +70,21 @@ export function ConnectedAreaSelection({
 	const isSwaleMeasure = isSwaleLayerConfigId(layerConfigId);
 	const { selectedConnectedArea, connectedAreas, summary } =
 		useConnectedAreaSelection(layerConfigId, drawLayerId);
+
+	useEffect(() => {
+		if (!isDrawing && connectedAreas.length > 0) {
+			setIsConnectedAreaSelecting(true);
+			setIsBlockAreaSelecting(true);
+		} else if (connectedAreas.length === 0) {
+			setIsConnectedAreaSelecting(false);
+			setIsBlockAreaSelecting(false);
+		}
+	}, [
+		connectedAreas.length,
+		isDrawing,
+		setIsConnectedAreaSelecting,
+		setIsBlockAreaSelecting,
+	]);
 
 	useEffect(() => {
 		if (!isSwaleMeasure || (selectedConnectedAreaId && selectedConnectedArea))
@@ -180,17 +194,6 @@ export function ConnectedAreaSelection({
 
 	if (!isSwaleMeasure) return null;
 
-	const toggleConnectedAreaSelection = () => {
-		if (isConnectedAreaSelecting) {
-			setIsConnectedAreaSelecting(false);
-			setIsBlockAreaSelecting(false);
-		} else {
-			resetDrawInteractions();
-			setIsConnectedAreaSelecting(true);
-			setIsBlockAreaSelecting(true);
-		}
-	};
-
 	return (
 		<div className="border-muted mb-4 rounded-sm border p-3">
 			<p className="text-sm font-semibold">Angeschlossene Fläche auswählen</p>
@@ -199,18 +202,6 @@ export function ConnectedAreaSelection({
 				ausgewählte Fläche wird markiert und ihr Wert in der Maßnahme
 				gespeichert.
 			</p>
-			<div className="mb-3">
-				<Button
-					type="button"
-					variant={isConnectedAreaSelecting ? "default" : "outline"}
-					onClick={toggleConnectedAreaSelection}
-					disabled={connectedAreas.length === 0}
-				>
-					{isConnectedAreaSelecting
-						? "Auswahl beenden"
-						: "Fläche auf Karte auswählen"}
-				</Button>
-			</div>
 			{connectedAreas.length === 0 ? (
 				<p className="text-muted-foreground text-xs">
 					Keine angeschlossene Fläche vorhanden.

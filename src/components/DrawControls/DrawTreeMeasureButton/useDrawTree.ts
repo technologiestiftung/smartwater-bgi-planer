@@ -68,6 +68,7 @@ export const useDrawTree = () => {
 	const [activeSize, setActiveSize] = useState<TreeSize | null>(null);
 	const drawRef = useRef<Draw | null>(null);
 	const activeSizeRef = useRef<TreeSize | null>(null);
+	const hasDrawnOnCurrentCARef = useRef(false);
 
 	// Keep ref in sync with state
 	useEffect(() => {
@@ -87,11 +88,30 @@ export const useDrawTree = () => {
 		drawRef.current = null;
 	}, [map]);
 
+	const consumeCurrentCA = useCallback(() => {
+		if (
+			isTreePit &&
+			hasDrawnOnCurrentCARef.current &&
+			selectedConnectedAreaId &&
+			activeScenarioId
+		) {
+			useScenarioStore
+				.getState()
+				.markConnectedAreaUsed(
+					activeScenarioId,
+					selectedConnectedAreaId,
+					"trees",
+				);
+			hasDrawnOnCurrentCARef.current = false;
+		}
+	}, [isTreePit, selectedConnectedAreaId, activeScenarioId]);
+
 	// Cleanup on unmount or layer change
 	useEffect(() => {
 		if (!map || !drawLayerId) return;
 		stopDraw();
 		return () => {
+			consumeCurrentCA();
 			stopDraw();
 			useUiStore.getState().setSelectedConnectedArea(null);
 		};
@@ -106,14 +126,19 @@ export const useDrawTree = () => {
 		}
 	}, [isDrawing, stopDraw]);
 
+	const stopSession = useCallback(() => {
+		consumeCurrentCA();
+		stopDraw();
+		setActiveSize(null);
+		setIsDrawing(false);
+		useUiStore.getState().setSelectedConnectedArea(null);
+	}, [consumeCurrentCA, stopDraw, setIsDrawing]);
+
 	const startDraw = (size: TreeSize) => {
 		if (!map) return;
 
-		// If same size clicked again → stop
+		// If same size clicked again → do nothing (already active)
 		if (drawRef.current && activeSizeRef.current === size) {
-			stopDraw();
-			setActiveSize(null);
-			setIsDrawing(false);
 			return;
 		}
 
@@ -196,6 +221,7 @@ export const useDrawTree = () => {
 				console.log("[DrawTree] addMeasure", measure);
 				drawnFeature.set("measureId", measure.id);
 				useScenarioStore.getState().addMeasure(activeScenarioId, measure);
+				hasDrawnOnCurrentCARef.current = true;
 			};
 
 			if (source.getFeatures().includes(drawnFeature)) process();
@@ -209,5 +235,5 @@ export const useDrawTree = () => {
 		setIsDrawing(true);
 	};
 
-	return { isDrawing, activeSize, canDraw, isTreePit, startDraw };
+	return { isDrawing, activeSize, canDraw, isTreePit, startDraw, stopSession };
 };
