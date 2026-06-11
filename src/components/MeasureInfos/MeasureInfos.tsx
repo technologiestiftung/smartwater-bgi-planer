@@ -1,8 +1,11 @@
 "use client";
 
 import { measureConfigById } from "@/config/measuresConfig";
+import { isSwaleLayerConfigId } from "@/lib/helpers/measures/swale";
 import { useProjectStore } from "@/store";
 import { selectActiveLayerConfig, useLayersStore } from "@/store/layers";
+import { useScenarioStore } from "@/store/scenario";
+import { useUiStore } from "@/store/ui";
 import { FC } from "react";
 
 interface MeasureInfosProps {
@@ -20,6 +23,7 @@ const getPotentialValue = (
 
 const MeasureInfos: FC<MeasureInfosProps> = ({ liveMeasureInfo }) => {
 	const layerConfig = useLayersStore((state) => selectActiveLayerConfig(state));
+	const layerConfigId = useLayersStore((state) => state.layerConfigId);
 	const areaPotential = useProjectStore(
 		(state) => state.accumulatedStats.areaPotential,
 	);
@@ -28,6 +32,19 @@ const MeasureInfos: FC<MeasureInfosProps> = ({ liveMeasureInfo }) => {
 	);
 	const computedFeatures = useProjectStore((state) => state.computedFeatures);
 	const activeAreaId = useProjectStore((state) => state.activeAreaId);
+	const selectedConnectedAreaId = useUiStore(
+		(state) => state.selectedConnectedAreaId,
+	);
+	const connectedAreas = useScenarioStore((state) =>
+		state.activeScenarioId
+			? (state.scenarios[state.activeScenarioId]?.connectedAreas ?? [])
+			: [],
+	);
+
+	const isSwaleMeasure = isSwaleLayerConfigId(layerConfigId);
+	const selectedConnectedArea = connectedAreas.find(
+		(a) => a.id === selectedConnectedAreaId,
+	);
 
 	const measureKey = layerConfig?.id
 		? measureConfigById.get(layerConfig.id)?.measureKey
@@ -35,8 +52,6 @@ const MeasureInfos: FC<MeasureInfosProps> = ({ liveMeasureInfo }) => {
 	const measureName = layerConfig?.name?.trim() || measureKey || "Maßnahme";
 
 	if (!areaPotential) return null;
-
-	// const remainingTotal = getPotentialValue(areaPotential, measureKey);
 
 	const activeFeature = computedFeatures.find((f) => f.code === activeAreaId);
 	const activeRemaining =
@@ -55,11 +70,13 @@ const MeasureInfos: FC<MeasureInfosProps> = ({ liveMeasureInfo }) => {
 				>
 					{liveMeasureInfo.area} {measureName} geplant
 				</p>
-				{/* {remainingTotal !== null && (
-					<p>Gesamt: {Number(remainingTotal.toFixed(2))} m²</p>
-				)} */}
 				{activeRemaining !== null && (
-					<p>{Number(activeRemaining.toFixed(2))} m² Kapazität</p>
+					<p>{Math.round(activeRemaining)} m² Kapazität</p>
+				)}
+				{isSwaleMeasure && selectedConnectedArea && (
+					<p>
+						{Math.round(selectedConnectedArea.area)} m² angeschlossene Fläche
+					</p>
 				)}
 			</div>
 		</div>
