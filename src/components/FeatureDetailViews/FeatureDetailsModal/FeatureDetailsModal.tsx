@@ -121,7 +121,7 @@ export const FeatureDetailsModal: FC<FeatureDetailsModalProps> = ({
 					</div>
 				</div>
 
-				<div className="bg-muted/10 border-muted flex justify-end border-t p-4">
+				<div className="bg-muted/10 border-muted flex justify-end gap-2 border-t p-4">
 					<Button onClick={() => handleClick("schlecht")}>
 						Schlecht Versickerungsfähig
 					</Button>

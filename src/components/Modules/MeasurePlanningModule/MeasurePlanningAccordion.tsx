@@ -82,7 +82,7 @@ function MeasurePlanningFooter({
 	showBackToQuestions: boolean;
 }) {
 	return (
-		<div className="border-muted flex h-full w-full border-t">
+		<div className="MeasurePlanningFooter-root border-muted flex h-full w-full border-t">
 			<Button
 				onClick={onShowSynthesis}
 				variant="ghost"
