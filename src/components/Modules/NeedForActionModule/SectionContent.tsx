@@ -1,21 +1,21 @@
 "use client";
 
 import { getModuleSteps } from "@/components/Modules/shared/moduleConfig";
-import StepContent from "@/components/Modules/shared/StepContent";
+import { StepContent } from "@/components/Modules/shared/StepContent";
 import { useModuleNavigation } from "@/components/Modules/shared/useModuleNavigation";
 import { Spinner } from "@/components/ui/spinner";
 import { useVerticalStepper } from "@/components/VerticalStepper";
 import { SectionId } from "@/lib/helpers/sectionIds";
 import { useLayersStore } from "@/store";
+import { selectLayerConfigById } from "@/store/layers";
 import { useAnswersStore } from "@/store/answers";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 
 interface SectionContentProps {
 	sectionId: SectionId;
 }
 
 export function SectionContent({ sectionId }: SectionContentProps) {
-	const layerConfig = useLayersStore((state) => state.layerConfig);
 	const setAnswer = useAnswersStore((state) => state.setAnswer);
 	const needForActionSteps = getModuleSteps("needForAction");
 	const { getCurrentSectionInfo, navigateToNext, handleShowSynthesis } =
@@ -25,10 +25,8 @@ export function SectionContent({ sectionId }: SectionContentProps) {
 		});
 
 	const { currentStep, currentQuestionId } = getCurrentSectionInfo(sectionId);
-
-	const currentQuestionConfig = useMemo(
-		() => layerConfig.find((config: any) => config.id === currentQuestionId),
-		[layerConfig, currentQuestionId],
+	const currentQuestionConfig = useLayersStore((state) =>
+		selectLayerConfigById(state, currentQuestionId),
 	);
 
 	const title = currentQuestionConfig?.isIntro

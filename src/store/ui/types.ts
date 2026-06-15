@@ -3,12 +3,17 @@ import type { SectionId } from "@/lib/helpers/sectionIds";
 export interface UiState {
 	isLayerTreeOpen: boolean;
 	openLegendLayerId: string;
+	openMeasureCardIds: string[];
+	placedMeasureIds: Set<string>;
+	selectedConnectedAreaId: string | null;
 	currentStepId: string | null;
 	uploadError: string | null;
 	uploadSuccess: string | null;
 	isDrawing: boolean;
 	isBlockAreaSelecting: boolean;
+	isConnectedAreaSelecting: boolean;
 	isDrawingNote: boolean;
+	isDrawingMeasure: boolean;
 	isLayerTreeVisible: boolean;
 	showStepper: boolean;
 	moduleCurrentSectionId: SectionId;
@@ -20,17 +25,25 @@ export interface UiState {
 	isSynthesisMode: boolean;
 	showTutorial: boolean;
 	showTutorialOnFirstQuestion: boolean;
+	draftMeasureIds: string[];
+	draftConnectedAreaIds: string[];
 }
 
 export interface UiActions {
 	setIsLayerTreeOpen: (isOpen: boolean) => void;
 	setOpenLegendLayerId: (layerId: string) => void;
+	openMeasureCard: (measureId: string) => void;
+	closeMeasureCard: (measureId: string) => void;
+	closeAllMeasureCards: () => void;
+	setPlacedMeasureIds: (ids: Set<string>) => void;
+	setSelectedConnectedArea: (connectedAreaId: string | null) => void;
 	setCurrentStepId: (stepId: string | null) => void;
 	setUploadError: (error: string | null) => void;
 	setUploadSuccess: (success: string | null) => void;
 	clearUploadStatus: () => void;
 	setIsDrawing: (isDrawing: boolean) => void;
 	setIsBlockAreaSelecting: (isSelecting: boolean) => void;
+	setIsConnectedAreaSelecting: (isSelecting: boolean) => void;
 	setIsDrawingNote: (isDrawing: boolean) => void;
 	resetDrawInteractions: () => void;
 	setShowStepper: (show: boolean) => void;
@@ -52,4 +65,8 @@ export interface UiActions {
 	setTutorialOnFirstQuestionState: (
 		showTutorialOnFirstQuestion: boolean,
 	) => void;
+	addDraftMeasureId: (measureId: string) => void;
+	addDraftConnectedAreaId: (connectedAreaId: string) => void;
+	confirmDraftMeasures: () => void;
+	clearDraftMeasures: () => void;
 }

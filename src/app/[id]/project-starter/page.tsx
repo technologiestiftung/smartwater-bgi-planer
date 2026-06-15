@@ -1,6 +1,6 @@
 "use client";
 
-import ProjectStarterModule from "@/components/Modules/ProjectStarterModule";
+import { ProjectStarterModule } from "@/components/Modules/ProjectStarterModule";
 import { useRouter } from "next/navigation";
 import { use } from "react";
 

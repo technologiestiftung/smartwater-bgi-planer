@@ -5,18 +5,19 @@ import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";
 import { useUiStore } from "@/store/ui";
 import { NoteIcon } from "@phosphor-icons/react";
-import Draw from "ol/interaction/Draw.js";
-import VectorLayer from "ol/layer/Vector.js";
-import MapBrowserEvent from "ol/MapBrowserEvent.js";
-import { Vector as VectorSource } from "ol/source.js";
+import Draw from "ol/interaction/Draw";
+import VectorLayer from "ol/layer/Vector";
+import MapBrowserEvent from "ol/MapBrowserEvent";
+import { Vector as VectorSource } from "ol/source";
 import { FC, useEffect, useRef } from "react";
 
 interface DrawNoteButtonProps {
 	layerId: string;
 }
 
-const DrawNoteButton: FC<DrawNoteButtonProps> = ({ layerId }) => {
+export const DrawNoteButton: FC<DrawNoteButtonProps> = ({ layerId }) => {
 	const map = useMapStore((state) => state.map);
+	const hasLayer = useLayersStore((state) => state.layers.has(layerId));
 	const setLayerVisibility = useLayersStore(
 		(state) => state.setLayerVisibility,
 	);
@@ -29,10 +30,10 @@ const DrawNoteButton: FC<DrawNoteButtonProps> = ({ layerId }) => {
 	const drawRef = useRef<Draw | null>(null);
 
 	useEffect(() => {
-		if (!map || !layerId) return;
+		if (!map || !layerId || !hasLayer) return;
 
 		setLayerVisibility(layerId, true);
-	}, [layerId, map, setLayerVisibility]);
+	}, [layerId, map, hasLayer, setLayerVisibility]);
 
 	useEffect(() => {
 		return () => {
@@ -115,5 +116,3 @@ const DrawNoteButton: FC<DrawNoteButtonProps> = ({ layerId }) => {
 		</Button>
 	);
 };
-
-export default DrawNoteButton;

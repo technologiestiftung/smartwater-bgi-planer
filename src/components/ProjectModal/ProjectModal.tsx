@@ -1,13 +1,14 @@
 "use client";
 import { useConfirmDialog } from "@/components/ConfirmDialog";
 import { PageModal } from "@/components/Modal";
-import ProjectModalContent, {
-	ProjectFormData,
+import {
+	ProjectModalContent,
+	type ProjectFormData,
 } from "@/components/ProjectModal/ProjectModalContent";
 import { Button } from "@/components/ui/button";
 import Background from "@/images/background.svg";
-import { useProjectsStore } from "@/store/projects";
-import { UseCase } from "@/store/projects/types";
+import { useProjectStore } from "@/store/project";
+import { UseCase } from "@/store/project/types";
 import {
 	ArrowLeftIcon,
 	DownloadIcon,
@@ -18,18 +19,15 @@ import {
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-interface ProjectModalWrapperProps {
+interface ProjectModalProps {
 	mode: "new" | "edit";
 	projectId?: string;
 }
 
-export default function ProjectModalWrapper({
-	mode,
-	projectId,
-}: ProjectModalWrapperProps) {
+export function ProjectModal({ mode, projectId }: ProjectModalProps) {
 	const router = useRouter();
 	const { createProject, updateProject, getProject, deleteProject } =
-		useProjectsStore();
+		useProjectStore();
 
 	const { ConfirmDialog, confirm } = useConfirmDialog({
 		title: "Projekt löschen",

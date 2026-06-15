@@ -1,6 +1,6 @@
 "use client";
 
-import MeasurePlaningModule from "@/components/Modules/MeasurePlaningModule/MeasurePlaningModule";
+import { MeasurePlanningModule } from "@/components/Modules/MeasurePlanningModule/MeasurePlanningModule";
 import { useRouter } from "next/navigation";
 import { use } from "react";
 
@@ -21,7 +21,7 @@ export default function MaßnahmenplanungPage({
 	};
 
 	return (
-		<MeasurePlaningModule
+		<MeasurePlanningModule
 			open={true}
 			onOpenChange={(open) => !open && handleClose()}
 			projectId={id}

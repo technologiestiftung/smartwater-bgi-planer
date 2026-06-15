@@ -4,15 +4,19 @@ import { useLayerPersistence } from "@/components/Map/LayerManager/hooks/useLaye
 import { useMapReady } from "@/hooks/useMapReady";
 import { FC, useEffect } from "react";
 
-const LayerManager: FC = () => {
+export const LayerManager: FC = () => {
 	const isMapReady = useMapReady();
 
-	const { saveAllDrawLayers, setupAutoSave, saveAllUploadedLayers } =
-		useLayerPersistence({
-			debounceDelay: 1000,
-			autoSave: true,
-			autoRestore: true,
-		});
+	const {
+		saveAllDrawLayers,
+		setupAutoSave,
+		saveAllUploadedLayers,
+		flushPendingSaves,
+	} = useLayerPersistence({
+		debounceDelay: 1000,
+		autoSave: true,
+		autoRestore: true,
+	});
 
 	useEffect(() => {
 		if (!isMapReady) return;
@@ -20,17 +24,30 @@ const LayerManager: FC = () => {
 		setupAutoSave();
 
 		const handleBeforeUnload = () => {
-			saveAllDrawLayers();
-			saveAllUploadedLayers();
+			flushPendingSaves();
+		};
+
+		const handleVisibilityChange = () => {
+			if (document.visibilityState === "hidden") {
+				flushPendingSaves();
+				saveAllDrawLayers();
+				saveAllUploadedLayers();
+			}
 		};
 
 		window.addEventListener("beforeunload", handleBeforeUnload);
+		document.addEventListener("visibilitychange", handleVisibilityChange);
 		return () => {
 			window.removeEventListener("beforeunload", handleBeforeUnload);
+			document.removeEventListener("visibilitychange", handleVisibilityChange);
 		};
-	}, [isMapReady, setupAutoSave, saveAllDrawLayers, saveAllUploadedLayers]);
+	}, [
+		isMapReady,
+		setupAutoSave,
+		saveAllDrawLayers,
+		saveAllUploadedLayers,
+		flushPendingSaves,
+	]);
 
 	return null;
 };
-
-export default LayerManager;

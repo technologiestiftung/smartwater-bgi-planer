@@ -1,8 +1,8 @@
 "use client";
 
-import { downloadProject } from "@/components/ProjectDownloadButton/projectExport";
+import { downloadProject } from "@/components/ProjectDownloadButton/ProjectExport";
 import { Button } from "@/components/ui/button";
-import { useProjectsStore } from "@/store";
+import { useProjectStore } from "@/store";
 import { DownloadIcon } from "@phosphor-icons/react";
 import { FC, useState } from "react";
 
@@ -10,11 +10,11 @@ interface ProjectDownloadButtonProps {
 	projectId: string;
 }
 
-const ProjectDownloadButton: FC<ProjectDownloadButtonProps> = ({
+export const ProjectDownloadButton: FC<ProjectDownloadButtonProps> = ({
 	projectId,
 }) => {
 	const [isDownloading, setIsDownloading] = useState(false);
-	const getProject = useProjectsStore((state) => state.getProject);
+	const getProject = useProjectStore((state) => state.getProject);
 
 	const handleDownload = async () => {
 		if (isDownloading) return;
@@ -41,5 +41,3 @@ const ProjectDownloadButton: FC<ProjectDownloadButtonProps> = ({
 		</Button>
 	);
 };
-
-export default ProjectDownloadButton;

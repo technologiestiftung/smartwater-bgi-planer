@@ -3,17 +3,22 @@
 import { Button } from "@/components/ui/button";
 import { useLayerReady } from "@/hooks/useLayerReady";
 import { getLayerById } from "@/lib/helpers/ol";
-import { performProjectBoundaryIntersection } from "@/lib/helpers/projectBoundary";
+import {
+	getInputFeatures,
+	performProjectBoundaryIntersection,
+} from "@/lib/helpers/projectBoundary";
 import { useMapStore } from "@/store/map";
+import { useProjectStore } from "@/store/project";
 import { useUiStore } from "@/store/ui";
 import { LAYER_IDS } from "@/types/shared";
 import { PolygonIcon } from "@phosphor-icons/react";
-import Draw from "ol/interaction/Draw.js";
-import Modify from "ol/interaction/Modify.js";
+import Draw from "ol/interaction/Draw";
+import Modify from "ol/interaction/Modify";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 
-const DrawProjectBoundaryButton: FC = () => {
+export const DrawProjectBoundaryButton: FC = () => {
 	const map = useMapStore((state) => state.map);
+	const setInputFeatures = useProjectStore((state) => state.setInputFeatures);
 	const setIsDrawing = useUiStore((state) => state.setIsDrawing);
 	const resetDrawInteractions = useUiStore(
 		(state) => state.resetDrawInteractions,
@@ -24,11 +29,16 @@ const DrawProjectBoundaryButton: FC = () => {
 
 	// Check if the BTF planning layer is ready
 	const { isReady: isBTFLayerReady, isLoading: isBTFLayerLoading } =
-		useLayerReady("rabimo_input_2025");
+		useLayerReady(LAYER_IDS.INPUT);
+
+	const syncPlanningLayerFeatures = useCallback(() => {
+		setInputFeatures(getInputFeatures(map));
+	}, [map, setInputFeatures]);
 
 	const performIntersection = useCallback(() => {
 		performProjectBoundaryIntersection(map);
-	}, [map]);
+		syncPlanningLayerFeatures();
+	}, [map, syncPlanningLayerFeatures]);
 
 	const removeInteractions = useCallback(() => {
 		if (drawRef.current) {
@@ -126,5 +136,3 @@ const DrawProjectBoundaryButton: FC = () => {
 		</Button>
 	);
 };
-
-export default DrawProjectBoundaryButton;

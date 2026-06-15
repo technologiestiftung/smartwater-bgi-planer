@@ -17,7 +17,7 @@ const ZOOM_OPACITY_MAP: Record<number, number> = {
 	4: 0.5,
 };
 
-const OpacityControl = () => {
+export const OpacityControl = () => {
 	const map = useMapStore((state) => state.map);
 	const layers = useLayersStore((state) => state.layers);
 
@@ -49,5 +49,3 @@ const OpacityControl = () => {
 
 	return null;
 };
-
-export default OpacityControl;

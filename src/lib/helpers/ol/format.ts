@@ -1,5 +1,5 @@
-import { LineString, Polygon } from "ol/geom.js";
-import { getArea, getLength } from "ol/sphere.js";
+import { LineString, Polygon } from "ol/geom";
+import { getArea, getLength } from "ol/sphere";
 
 /**
  * Format area measurement for display

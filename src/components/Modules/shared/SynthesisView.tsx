@@ -3,22 +3,22 @@
 
 import { SynthesisBadge } from "@/components/Modules/shared/SynthesisBadge";
 import { getModuleSteps } from "@/components/Modules/shared/moduleConfig";
-import { SectionId } from "@/lib/helpers/sectionIds";
 import { Button } from "@/components/ui/button";
-import { useProjectsStore } from "@/store";
 import { useMapReady } from "@/hooks/useMapReady";
 import { checkForQuestion } from "@/lib/helpers/questionCheck";
+import { SectionId } from "@/lib/helpers/sectionIds";
+import { useProjectStore } from "@/store";
 import { useAnswersStore } from "@/store/answers";
 import { useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
 import {
 	EyeIcon,
 	EyeSlashIcon,
-	XIcon,
-	ShovelIcon,
 	PencilRulerIcon,
+	ShovelIcon,
+	XIcon,
 } from "@phosphor-icons/react";
-import { useRouter, useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useShallow } from "zustand/react/shallow";
 
@@ -28,7 +28,7 @@ interface SynthesisViewProps {
 	description: string;
 	onBackToQuestions: () => void;
 	layerOverrides?: Record<string, string>;
-	onBackToSpecificQuestion: (questionId: string, sectionId: SectionId) => void;
+	onBackToSpecificQuestion: (configId: string, sectionId: SectionId) => void;
 }
 
 export function SynthesisView({
@@ -46,7 +46,7 @@ export function SynthesisView({
 	const hasInitialized = useRef(false);
 	const router = useRouter();
 	const params = useParams<{ projectId?: string }>();
-	const getProject = useProjectsStore((state) => state.getProject);
+	const getProject = useProjectStore((state) => state.getProject);
 	const project = getProject();
 	const projectId = params?.projectId ?? project?.id;
 	const { layerConfig, layers, setLayerVisibility, applyConfigLayers } =
@@ -62,6 +62,14 @@ export function SynthesisView({
 	const visibleModuleStep = useMemo(
 		() => moduleSteps.filter((step) => step.displayInSynthesis !== false),
 		[moduleSteps],
+	);
+	const layerConfigById = useMemo(
+		() => new Map(layerConfig.map((config) => [config.id, config])),
+		[layerConfig],
+	);
+	const getLayerConfig = useCallback(
+		(configId: string) => layerConfigById.get(configId),
+		[layerConfigById],
 	);
 
 	const getLayerData = useCallback(
@@ -90,7 +98,7 @@ export function SynthesisView({
 			const step = moduleSteps.find((s) => s.id === moduleSavedState.sectionId);
 			step?.questions?.forEach((qId) => {
 				if (checkForQuestion(qId, true)) return;
-				const config = layerConfig.find((c) => c.id === qId);
+				const config = getLayerConfig(qId);
 				const { id } = getLayerData(config?.drawLayerId);
 
 				if (id && answers[qId] === true) {
@@ -104,32 +112,34 @@ export function SynthesisView({
 		synthesisViewId,
 		moduleSteps,
 		moduleSavedState,
-		layerConfig,
+		getLayerConfig,
 		setLayerVisibility,
 		getLayerData,
 		answers,
 	]);
 
-	const handleToggleLayer = (qId: string) => {
-		if (answers[qId] !== true) return;
-		const config = layerConfig.find((c) => c.id === qId);
+	const handleToggleLayer = (configId: string) => {
+		if (answers[configId] !== true) return;
+		const config = getLayerConfig(configId);
 		const { id, isVisible } = getLayerData(config?.drawLayerId);
 		if (id) setLayerVisibility(id, !isVisible);
 	};
 
-	const handleToggleStepLayers = (stepQuestions: string[]) => {
-		const relevantLayers = stepQuestions
-			.filter((qId) => answers[qId] === true)
-			.map((qId) =>
-				getLayerData(layerConfig.find((c) => c.id === qId)?.drawLayerId),
-			)
+	const handleToggleStepLayers = (stepConfigIds: string[]) => {
+		const relevantLayers = stepConfigIds
+			.filter((configId) => answers[configId] === true)
+			.map((configId) => getLayerData(getLayerConfig(configId)?.drawLayerId))
 			.filter((item) => item.id !== null);
 
 		const anyVisible = relevantLayers.some((l) => l.isVisible);
 		relevantLayers.forEach((l) => setLayerVisibility(l.id!, !anyVisible));
 	};
 
-	const onNextModule = () => router.push(`/${projectId}/machbarkeit`);
+	const onNextModule = () => {
+		const nextModulePath =
+			moduleId === "needForAction" ? "machbarkeit" : "planung";
+		router.push(`/${projectId}/${nextModulePath}`);
+	};
 
 	return (
 		<div className="flex h-full w-full flex-col">
@@ -138,9 +148,7 @@ export function SynthesisView({
 				{visibleModuleStep.map((step) => {
 					const sectionQuestions = step.questions || [];
 					const anyLayerVisible = sectionQuestions.some(
-						(qId) =>
-							getLayerData(layerConfig.find((c) => c.id === qId)?.drawLayerId)
-								.isVisible,
+						(qId) => getLayerData(getLayerConfig(qId)?.drawLayerId).isVisible,
 					);
 
 					const sectionAnswers = sectionQuestions
@@ -195,17 +203,17 @@ export function SynthesisView({
 								</button>
 							</div>
 							<div className="flex flex-wrap gap-2">
-								{sectionQuestions.map((qId) => {
-									if (checkForQuestion(qId, true)) return null;
+								{sectionQuestions.map((configId) => {
+									if (checkForQuestion(configId, true)) return null;
 									const { isVisible } = getLayerData(
-										layerConfig.find((c) => c.id === qId)?.drawLayerId,
+										getLayerConfig(configId)?.drawLayerId,
 									);
 									return (
 										<SynthesisBadge
-											key={qId}
-											questionId={qId}
-											answer={answers[qId]}
-											onToggle={() => handleToggleLayer(qId)}
+											key={configId}
+											configId={configId}
+											answer={answers[configId]}
+											onToggle={() => handleToggleLayer(configId)}
 											isVisible={isVisible}
 											onBackToSpecificQuestion={onBackToSpecificQuestion}
 										/>
@@ -226,13 +234,12 @@ export function SynthesisView({
 					<XIcon className="h-4 w-4" />
 					zu den Checkfragen
 				</Button>
-				<div className="w-[1px] self-stretch bg-white" />
+				<div className="w-px self-stretch bg-white" />
 				<Button
 					onClick={onNextModule}
 					className="text-md my-4 flex-1 text-white hover:text-white"
 					size="lg"
 					variant="ghost"
-					disabled={moduleId === "feasibility"}
 				>
 					{moduleId === "needForAction" ? (
 						<ShovelIcon className="h-4 w-4" />

@@ -8,12 +8,12 @@ import { useUiStore } from "@/store/ui";
 import { CursorClickIcon } from "@phosphor-icons/react";
 import { Feature } from "ol";
 import { CollectionEvent } from "ol/Collection";
-import { click } from "ol/events/condition.js";
-import Select from "ol/interaction/Select.js";
-import { Vector as VectorSource } from "ol/source.js";
+import { click } from "ol/events/condition";
+import Select from "ol/interaction/Select";
+import { Vector as VectorSource } from "ol/source";
 import { FC, useCallback, useEffect, useRef } from "react";
 
-const BlockAreaSelector: FC = () => {
+export const BlockAreaSelector: FC = () => {
 	const map = useMapStore((state) => state.map);
 	const drawLayerId = useLayersStore((state) => state.drawLayerId);
 	const isActive = useUiStore((state) => state.isBlockAreaSelecting);
@@ -131,5 +131,3 @@ const BlockAreaSelector: FC = () => {
 		</div>
 	);
 };
-
-export default BlockAreaSelector;

@@ -1,38 +1,44 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import { useLayersStore } from "@/store/layers";
-import { EyeIcon, EyeSlashIcon } from "@phosphor-icons/react";
-import { getModuleSteps } from "./moduleConfig";
 import type { SectionId } from "@/lib/helpers/sectionIds";
+import { cn } from "@/lib/utils";
+import { selectLayerConfigById, useLayersStore } from "@/store/layers";
+import { EyeIcon, EyeSlashIcon } from "@phosphor-icons/react";
 import { usePathname } from "next/navigation";
+import { getModuleSteps } from "./moduleConfig";
 
 interface SynthesisBadgeProps {
-	questionId: string;
+	configId: string;
 	answer: boolean | null;
 	onToggle: () => void;
 	isVisible: boolean;
-	onBackToSpecificQuestion: (questionId: string, sectionId: SectionId) => void;
+	onBackToSpecificQuestion: (configId: string, sectionId: SectionId) => void;
 }
 
+// eslint-disable-next-line complexity
 export function SynthesisBadge({
-	questionId,
+	configId,
 	answer,
 	onToggle,
 	isVisible,
 	onBackToSpecificQuestion,
 }: SynthesisBadgeProps) {
-	const layerConfig = useLayersStore((state) => state.layerConfig);
-	const questionConfig = layerConfig.find((config) => config.id === questionId);
+	const config = useLayersStore((state) =>
+		selectLayerConfigById(state, configId),
+	);
 	const pathname = usePathname();
+	// eslint-disable-next-line no-nested-ternary
 	const moduleId = pathname.includes("/handlungsbedarfe")
 		? "needForAction"
 		: pathname.includes("/machbarkeit")
 			? "feasibility"
 			: null;
+
+	if (!moduleId) return null;
+
 	const steps = getModuleSteps(moduleId as "needForAction" | "feasibility");
 
-	if (!questionConfig) return null;
+	if (!config) return null;
 
 	const getBackgroundColor = () => {
 		if (answer === null || answer === undefined) return "bg-neutral-light";
@@ -43,7 +49,7 @@ export function SynthesisBadge({
 
 	return (
 		<div
-			className={`bg-neutral-light flex min-h-[24px] items-center gap-2 overflow-hidden rounded-sm text-sm font-medium transition-all hover:opacity-80`}
+			className={`bg-neutral-light flex min-h-6 items-center gap-2 overflow-hidden rounded-sm text-sm font-medium transition-all hover:opacity-80`}
 		>
 			{answer !== undefined && (
 				<button
@@ -75,13 +81,13 @@ export function SynthesisBadge({
 				)}
 				onClick={() => {
 					const findStep = steps.find((step) =>
-						step.questions?.some((q) => q === questionId),
+						step.questions?.some((q) => q === configId),
 					);
 					if (!findStep?.id) return;
-					onBackToSpecificQuestion(questionId, findStep.id);
+					onBackToSpecificQuestion(configId, findStep.id);
 				}}
 			>
-				{questionConfig.name}
+				{config.name}
 			</button>
 		</div>
 	);

@@ -1,6 +1,6 @@
 "use client";
 
-import NeedForActionModule from "@/components/Modules/NeedForActionModule/NeedForActionModule";
+import { NeedForActionModule } from "@/components/Modules/NeedForActionModule/NeedForActionModule";
 import { useRouter } from "next/navigation";
 import { use } from "react";
 

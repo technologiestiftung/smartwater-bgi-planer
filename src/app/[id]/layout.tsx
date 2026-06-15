@@ -1,10 +1,10 @@
 import { AddressSearch } from "@/components/AddressSearch/AddressSearch";
 import { DrawControlsContainer } from "@/components/DrawControls";
-import ConfigManager from "@/components/Map/ConfigManager/ConfigManager";
-import LayerManager from "@/components/Map/LayerManager/LayerManager";
-import Map from "@/components/Map/Map";
+import { ConfigManager } from "@/components/Map/ConfigManager/ConfigManager";
+import { LayerManager } from "@/components/Map/LayerManager/LayerManager";
+import { Map } from "@/components/Map/Map";
 import { MenuToggleButton } from "@/components/MenuToggleButton/MenuToggleButton";
-import ProjectGuard from "@/components/ProjectGuard/ProjectGuard";
+import { ProjectGuard } from "@/components/ProjectGuard/ProjectGuard";
 
 interface ProjectLayoutProps {
 	children: React.ReactNode;

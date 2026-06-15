@@ -13,40 +13,74 @@ interface RichTextWithLinksProps {
 	className?: string;
 }
 
+function renderLink(href: string, label: string, key: React.Key) {
+	const isExternal = href.startsWith("http://") || href.startsWith("https://");
+
+	if (isExternal) {
+		return (
+			<a
+				key={key}
+				href={href}
+				target="_blank"
+				rel="noopener noreferrer"
+				className="text-primary hover:text-primary-dark break-all underline"
+			>
+				{label}
+			</a>
+		);
+	}
+
+	return (
+		<Link
+			key={key}
+			href={href}
+			className="text-primary hover:text-primary-dark break-all underline"
+		>
+			{label}
+		</Link>
+	);
+}
+
 function renderTextWithLinks(text: string, key?: React.Key) {
-	const urlRegex = /(https?:\/\/[^\s)]+)/g;
-	const parts = text.split(urlRegex);
+	const linkRegex = /\[([^\]]+)\]\(([^)\s]+)\)|(https?:\/\/[^\s)]+)/g;
+	const parts: React.ReactNode[] = [];
+	let lastIndex = 0;
+	let match: RegExpExecArray | null;
+
+	while ((match = linkRegex.exec(text)) !== null) {
+		if (match.index > lastIndex) {
+			parts.push(text.slice(lastIndex, match.index));
+		}
+
+		const fullMatch = match[0];
+		const markdownLabel = match[1];
+		const markdownHref = match[2];
+		const plainUrl = match[3];
+
+		if (markdownLabel && markdownHref) {
+			parts.push(
+				renderLink(markdownHref, markdownLabel, `md-link-${match.index}`),
+			);
+		} else if (plainUrl) {
+			parts.push(renderLink(plainUrl, plainUrl, `url-link-${match.index}`));
+		} else {
+			parts.push(fullMatch);
+		}
+
+		lastIndex = match.index + fullMatch.length;
+	}
+
+	if (lastIndex < text.length) {
+		parts.push(text.slice(lastIndex));
+	}
+
+	if (parts.length === 0) {
+		parts.push(text);
+	}
+
 	return (
 		<span className="wrap-break-word" key={key}>
-			{parts.map((part, i) => {
-				if (part.match(urlRegex)) {
-					const isExternal =
-						part.startsWith("http://") || part.startsWith("https://");
-					if (isExternal) {
-						return (
-							<a
-								key={i}
-								href={part}
-								target="_blank"
-								rel="noopener noreferrer"
-								className="text-primary hover:text-primary-dark break-all underline"
-							>
-								{part}
-							</a>
-						);
-					}
-					return (
-						<Link
-							key={i}
-							href={part}
-							className="text-primary hover:text-primary-dark break-all underline"
-						>
-							{part}
-						</Link>
-					);
-				}
-				return part;
-			})}
+			{parts}
 		</span>
 	);
 }

@@ -8,7 +8,7 @@ const resultStroke = {
 	polygonStrokeColor: [36, 65, 209, 1], // default, can be overridden
 };
 
-const styleList = [
+export const styleList = [
 	{
 		styleId: "default",
 		rules: [
@@ -152,7 +152,19 @@ const styleList = [
 		],
 	},
 	{
-		styleId: "module1Notes",
+		styleId: "connectedArea",
+		rules: [
+			{
+				style: {
+					polygonStrokeWidth: 2,
+					polygonStrokeColor: [255, 175, 80, 1],
+					polygonFillColor: [200, 175, 80, 0.5],
+				},
+			},
+		],
+	},
+	{
+		styleId: "projectNotes",
 		rules: [
 			{
 				style: {
@@ -162,6 +174,65 @@ const styleList = [
 					pointRadius: 14,
 					iconScale: 0.8,
 					icon: "/icons/note.svg",
+				},
+			},
+		],
+	},
+	{
+		styleId: "trees",
+		rules: [
+			{
+				conditions: {
+					properties: {
+						treeSize: "sm",
+					},
+				},
+				style: {
+					pointFillColor: [68, 156, 118, 1],
+					pointStrokeColor: [68, 156, 118, 1],
+					pointStrokeWidth: 2,
+					pointRadius: 10,
+					iconScale: 0.4,
+					icon: "/icons/leaf.svg",
+				},
+			},
+			{
+				conditions: {
+					properties: {
+						treeSize: "md",
+					},
+				},
+				style: {
+					pointFillColor: [68, 156, 118, 1],
+					pointStrokeColor: [68, 156, 118, 1],
+					pointStrokeWidth: 2,
+					pointRadius: 12,
+					iconScale: 0.6,
+					icon: "/icons/plant.svg",
+				},
+			},
+			{
+				conditions: {
+					properties: {
+						treeSize: "lg",
+					},
+				},
+				style: {
+					pointFillColor: [68, 156, 118, 1],
+					pointStrokeColor: [68, 156, 118, 1],
+					pointStrokeWidth: 2,
+					pointRadius: 14,
+					iconScale: 0.8,
+					icon: "/icons/tree.svg",
+				},
+			},
+			{
+				style: {
+					pointFillColor: [255, 255, 255, 1],
+					pointStrokeColor: [255, 255, 255, 1],
+					pointStrokeWidth: 2,
+					pointRadius: 14,
+					iconScale: 0.8,
 				},
 			},
 		],
@@ -181,30 +252,6 @@ const styleList = [
 				style: {
 					iconScale: 0.8,
 					icon: "/icons/check.svg",
-				},
-			},
-		],
-	},
-	{
-		styleId: "module2Notes",
-		rules: [
-			{
-				style: {
-					pointFillColor: [156, 39, 176, 0.8],
-					pointStrokeColor: [123, 31, 162, 1],
-					pointStrokeWidth: 2,
-				},
-			},
-		],
-	},
-	{
-		styleId: "module3Notes",
-		rules: [
-			{
-				style: {
-					pointFillColor: [76, 175, 80, 0.8],
-					pointStrokeColor: [56, 142, 60, 1],
-					pointStrokeWidth: 2,
 				},
 			},
 		],
@@ -295,5 +342,3 @@ const styleList = [
 		],
 	},
 ];
-
-export default styleList;

@@ -1,4 +1,4 @@
-import MenuModal from "@/components/MenuModal/MenuModal";
+import { MenuModal } from "@/components/MenuModal/MenuModal";
 
 interface MenuModalPageProps {
 	params: Promise<{

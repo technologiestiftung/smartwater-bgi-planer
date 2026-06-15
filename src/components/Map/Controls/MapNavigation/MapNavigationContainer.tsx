@@ -1,18 +1,18 @@
 "use client";
 
-import BaselayerSwitch from "@/components/Map/BaselayerSwitch/BaselayerSwitch";
-import GeolocationControl from "@/components/Map/Controls/MapNavigation/GeolocationControl";
-import ZoomControl from "@/components/Map/Controls/MapNavigation/ZoomControl";
-import LayerTree from "@/components/Map/LayerTree/LayerTree";
+import { BaselayerSwitch } from "@/components/Map/BaselayerSwitch/BaselayerSwitch";
+import { GeolocationControl } from "@/components/Map/Controls/MapNavigation/GeolocationControl";
+import { ZoomControl } from "@/components/Map/Controls/MapNavigation/ZoomControl";
+import { LayerTree } from "@/components/Map/LayerTree/LayerTree";
 import { useUiStore } from "@/store/ui";
 import { FC, useCallback, useRef } from "react";
-import ProjectBoundaryControl from "./ProjectBoundaryControl";
+import { ProjectBoundaryControl } from "./ProjectBoundaryControl";
 
 interface MapNavigationContainerProps {
 	onGeolocate?: () => void;
 }
 
-const MapNavigationContainer: FC<MapNavigationContainerProps> = ({
+export const MapNavigationContainer: FC<MapNavigationContainerProps> = ({
 	onGeolocate,
 }) => {
 	const setIsLayerTreeVisible = useUiStore(
@@ -65,4 +65,3 @@ const MapNavigationContainer: FC<MapNavigationContainerProps> = ({
 		</div>
 	);
 };
-export default MapNavigationContainer;

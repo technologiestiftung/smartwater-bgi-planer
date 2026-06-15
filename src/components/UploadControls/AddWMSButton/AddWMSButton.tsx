@@ -107,7 +107,7 @@ const createWMSLayer = (params: {
 	return wmsLayer;
 };
 
-const AddWMSButton: FC = () => {
+export const AddWMSButton: FC = () => {
 	const map = useMapStore((state) => state.map);
 	const addLayer = useLayersStore((state) => state.addLayer);
 	const { setUploadError, setUploadSuccess, clearUploadStatus } = useUiStore(
@@ -393,5 +393,3 @@ const AddWMSButton: FC = () => {
 		</Dialog>
 	);
 };
-
-export default AddWMSButton;

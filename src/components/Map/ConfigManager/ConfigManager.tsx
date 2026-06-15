@@ -5,7 +5,7 @@ import { FC, useEffect } from "react";
 
 interface ConfigManagerProps {}
 
-const ConfigManager: FC<ConfigManagerProps> = ({}) => {
+export const ConfigManager: FC<ConfigManagerProps> = ({}) => {
 	const updateConfig = useMapStore((state) => state.updateConfig);
 	const map = useMapStore((state) => state.map);
 	const setMapView = useMapStore((state) => state.setMapView);
@@ -44,5 +44,3 @@ const ConfigManager: FC<ConfigManagerProps> = ({}) => {
 
 	return null;
 };
-
-export default ConfigManager;

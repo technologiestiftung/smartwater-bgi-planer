@@ -1,10 +1,12 @@
 "use client";
 
-import ConfirmButton from "@/components/ConfirmButton/ConfirmButton";
+import { ConfirmButton } from "@/components/ConfirmButton/ConfirmButton";
 import { RichTextWithLinks } from "@/components/RichTextWithLinks/RichTextWithLinks";
 import { Button } from "@/components/ui/button";
+import { useDeselectAllFeatures } from "@/hooks/useDeselectAllFeatures";
 import { useLayerArea } from "@/hooks/useLayerArea";
 import { useLayerFeatures } from "@/hooks/useLayerFeatures";
+import { useSelectProjectBoundary } from "@/hooks/useSelectProjectBoundary";
 import { LayerConfigItem } from "@/store/layers/types";
 import { LAYER_IDS } from "@/types/shared";
 import {
@@ -14,9 +16,7 @@ import {
 } from "@phosphor-icons/react";
 import Image from "next/image";
 import { FC } from "react";
-import ScenarioDisplay from "../FeasibilityModule/ScenarioDisplay";
-import { useDeselectAllFeatures } from "@/hooks/useDeselectAllFeatures";
-import { useSelectProjectBoundary } from "@/hooks/useSelectProjectBoundary";
+import { ScenarioDisplay } from "../FeasibilityModule/ScenarioDisplay";
 
 interface StepContentProps {
 	layerConfig: LayerConfigItem;
@@ -25,14 +25,14 @@ interface StepContentProps {
 	onShowPotentialMaps?: () => void;
 }
 
-const StepContent: FC<StepContentProps> = ({
+export const StepContent: FC<StepContentProps> = ({
 	layerConfig,
 	onAnswer,
 	onSkip: _onSkip,
 }) => {
 	const { hasFeatures } = useLayerFeatures(layerConfig.drawLayerId);
 	const { formattedArea, area } = useLayerArea(layerConfig.drawLayerId);
-	const { deselectAllFeatures } = useDeselectAllFeatures();
+	const { clearDrawLayerFeatures } = useDeselectAllFeatures();
 	const { selectProjectBoundary } = useSelectProjectBoundary();
 	const { hasFeatures: hasProjectBoundary } = useLayerFeatures(
 		LAYER_IDS.PROJECT_BOUNDARY,
@@ -46,7 +46,7 @@ const StepContent: FC<StepContentProps> = ({
 
 	const handleNotApplicable = (): boolean => {
 		if (area > 0) {
-			deselectAllFeatures();
+			clearDrawLayerFeatures();
 			setTimeout(() => {
 				onAnswer(false);
 			}, 500);
@@ -154,5 +154,3 @@ const StepContent: FC<StepContentProps> = ({
 		</div>
 	);
 };
-
-export default StepContent;

@@ -3,36 +3,36 @@
 import {
 	BlockAreaSelector,
 	DrawButton,
+	DrawMeasureButton,
 	DrawNoteButton,
 	DrawProjectBoundaryButton,
 } from "@/components/DrawControls";
-import UploadDrawLayerButton from "@/components/UploadControls/UploadDrawLayerButton/UploadDrawLayerButton";
-import { useLayersStore } from "@/store/layers";
+import { UploadDrawLayerButton } from "@/components/UploadControls/UploadDrawLayerButton/UploadDrawLayerButton";
+import { selectActiveLayerConfig, useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
 import { usePathname } from "next/navigation";
-import { Tutorial } from "@/components/Tutorials/Tutorial";
+import { DrawTreeMeasureButton } from "./DrawTreeMeasureButton/DrawTreeMeasureButton";
+// import { Tutorial } from "@/components/Tutorial/Tutorial";
 
 interface DrawControlsContainerProps {
 	projectId?: string;
 }
 
-export default function DrawControlsContainer({}: DrawControlsContainerProps) {
+// eslint-disable-next-line complexity
+export function DrawControlsContainer({}: DrawControlsContainerProps) {
 	const pathname = usePathname();
 	const currentStepId = useUiStore((state) => state.currentStepId);
 	const showTutorial = useUiStore((state) => state.showTutorial);
 	const setTutorialState = useUiStore((state) => state.setTutorialState);
-	const layerConfigId = useLayersStore((state) => state.layerConfigId);
-	const layerConfig = useLayersStore((state) => state.layerConfig);
+	const currentLayerConfig = useLayersStore(selectActiveLayerConfig);
 
 	const isProjectStarter = pathname.includes("/project-starter");
 	const isModule =
-		pathname.includes("/handlungsbedarfe") || pathname.includes("/machbarkeit");
+		pathname.includes("/handlungsbedarfe") ||
+		pathname.includes("/machbarkeit") ||
+		pathname.includes("/planung");
 
 	let controls: React.ReactNode = null;
-
-	const currentQuestionConfig = layerConfig.find(
-		(config) => config.id === layerConfigId,
-	);
 
 	if (isProjectStarter) {
 		if (currentStepId === "newDevelopment") {
@@ -51,26 +51,32 @@ export default function DrawControlsContainer({}: DrawControlsContainerProps) {
 			);
 		}
 	} else if (isModule) {
-		if (currentQuestionConfig) {
+		if (currentLayerConfig) {
 			const controlsArray: React.ReactNode[] = [];
 
-			if (currentQuestionConfig.canDrawNotes) {
+			if (currentLayerConfig.canDrawNotes) {
 				controlsArray.push(
-					<DrawNoteButton key="notes" layerId="module1_notes" />,
+					<DrawNoteButton key="notes" layerId="project_notes" />,
 				);
 			}
-			if (currentQuestionConfig.canDrawPolygons) {
+			if (currentLayerConfig.canDrawPolygons) {
 				controlsArray.push(<DrawButton key="draw" />);
 			}
-			if (currentQuestionConfig.canDrawBTF) {
+			if (currentLayerConfig.canDrawBTF) {
 				controlsArray.push(<BlockAreaSelector key="btf" />);
+			}
+			if (currentLayerConfig.canDrawMeasures) {
+				controlsArray.push(<DrawMeasureButton key="measure" />);
+			}
+			if (currentLayerConfig.canDrawTrees) {
+				controlsArray.push(<DrawTreeMeasureButton key="treeMeasure" />);
 			}
 
 			controls = <>{controlsArray}</>;
 		} else {
 			controls = (
 				<>
-					<DrawNoteButton layerId="module1_notes" />
+					<DrawNoteButton layerId="project_notes" />
 					<DrawButton />
 					<BlockAreaSelector />
 				</>
@@ -81,8 +87,8 @@ export default function DrawControlsContainer({}: DrawControlsContainerProps) {
 	if (!controls) return null;
 
 	return (
-		<div className="absolute right-4 bottom-8 z-[52]">
-			<Tutorial type="controls" />
+		<div className="absolute right-4 bottom-8 z-52">
+			{/* <Tutorial type="controls" /> */}
 			<div
 				className="relative mt-2 flex justify-center gap-2"
 				onClick={() => {

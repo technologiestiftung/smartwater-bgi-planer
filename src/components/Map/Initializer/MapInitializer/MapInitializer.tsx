@@ -1,7 +1,7 @@
 "use client";
 
 import mapConfig from "@/config/config.json";
-import layerConfig from "@/config/layerConfig.json";
+import viewLayerConfig from "@/config/layerConfig.json";
 import services from "@/config/resources/services.json";
 import { initializeProjections } from "@/lib/helpers/ol";
 import { useLayersStore } from "@/store/layers";
@@ -67,7 +67,7 @@ function createEnrichedConfig(rawConfig: MapConfig): MapConfig {
 	};
 }
 
-const MapInitializer: FC = () => {
+export const MapInitializer: FC = () => {
 	const hasHydrated = useMapStore((state) => state.hasHydrated);
 	const isConfigReady = useMapStore((state) => state.isConfigReady);
 	const resetId = useMapStore((state) => state.resetId);
@@ -106,7 +106,7 @@ const MapInitializer: FC = () => {
 
 		setConfig(fullyEnrichedConfig);
 		if (!initialConfig) setInitialConfig(fullyEnrichedConfig);
-		setLayerConfig(layerConfig as LayerConfigItem[]);
+		setLayerConfig(viewLayerConfig as LayerConfigItem[]);
 		setFlattenedLayerElements(allLayers);
 		setIsConfigReady(true);
 	}, [
@@ -122,5 +122,3 @@ const MapInitializer: FC = () => {
 
 	return null;
 };
-
-export default MapInitializer;

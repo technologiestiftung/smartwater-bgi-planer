@@ -1,0 +1,29 @@
+{
+	"scenarios": {
+		"default-scenario": {
+			"id": "default-scenario",
+			"name": "Default Scenario",
+			"connectedAreas": [
+				{
+					"id": "connected-area-1779192024289-0-ke2gd7c",
+					"createdAt": 1779192024289,
+					"code": "0000000007000815",
+					"area": 47.94
+				}
+			],
+			"measures": [
+				{
+					"id": "measure-1779191814955-0-6cw3gua",
+					"createdAt": 1779191814955,
+					"configId": "3G1",
+					"drawLayerId": "module_3_3G1_draw",
+					"code": "0000000007000815",
+					"name": "green_roof_ext",
+					"area": 6.28
+				}
+			]
+		}
+	},
+	"activeScenarioId": "default-scenario",
+	"hasHydrated": true
+}

@@ -1,5 +1,5 @@
-import LayerInitializer from "@/components/Map/Initializer/LayerInitializer/LayerInitializer";
-import MapInitializer from "@/components/Map/Initializer/MapInitializer/MapInitializer";
+import { LayerInitializer } from "@/components/Map/Initializer/LayerInitializer/LayerInitializer";
+import { MapInitializer } from "@/components/Map/Initializer/MapInitializer/MapInitializer";
 import Background from "@/images/background.svg";
 import type { Metadata } from "next";
 import localFont from "next/font/local";

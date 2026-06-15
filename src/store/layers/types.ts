@@ -87,7 +87,7 @@ export interface VectorTileStyle {
 	defaultStyle: boolean;
 }
 
-export interface LayerConfig {
+export interface MapLayerConfig {
 	baselayer: {
 		elements: LayerElement[];
 	};
@@ -106,8 +106,11 @@ export interface LayerConfigItem {
 	canDrawPolygons?: boolean;
 	canDrawBTF?: boolean;
 	canDrawNotes?: boolean;
+	canDrawMeasures?: boolean;
+	canDrawTrees?: boolean;
 	legendSrc?: string;
 	legendTitle?: string;
+	measurementSrc?: string;
 	isIntro?: boolean;
 	moduleNumber?: number;
 	moduleName?: string;
@@ -128,31 +131,14 @@ export interface LayersActions {
 	setFlattenedLayerElements: (elements: LayerElement[]) => void;
 	addLayer: (layer: ManagedLayer) => void;
 	removeLayer: (layerId: string) => void;
-	updateLayer: (
-		layerId: string,
-		updates: Partial<Omit<ManagedLayer, "id">>,
-	) => void;
 	setLayerVisibility: (layerId: string, visible: boolean) => void;
-	setLayerStatus: (id: string, status: LayerStatus) => void;
-	getLayerStatus: (id: string) => LayerStatus | undefined;
 	setLayerConfig: (config: LayerConfigItem[]) => void;
-	applyConfigLayers: (
-		visibleLayerIds: string,
-		hideOtherDrawLayers?: boolean,
-	) => void;
-	setDrawLayer: (layerId: string) => void;
-	setLayerConfigId: (layerConfigId: string) => void;
+	applyConfigLayers: (configId: string, hideOtherDrawLayers?: boolean) => void;
 	hideLayersByPattern: (pattern: string | string[]) => void;
 	createFilteredLayer: (
 		layerId: string,
 		filterFn: (feature: any) => boolean,
 		filteredLayerId?: string,
 	) => string | null;
-	updateFilteredLayer: (
-		originalLayerId: string,
-		filterFn: (feature: any) => boolean,
-		filteredLayerId?: string,
-	) => void;
-	removeFilteredLayer: (filteredLayerId: string) => void;
 	setLayerOpacity: (layerId: string, opacity: number) => void;
 }

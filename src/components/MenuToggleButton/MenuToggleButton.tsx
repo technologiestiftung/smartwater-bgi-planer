@@ -2,7 +2,8 @@
 
 import { Button } from "@/components/ui/button";
 import SWLogo from "@/logos/SWLogo.svg";
-import { useLayersStore, useProjectsStore, useUiStore } from "@/store";
+import { useProjectStore, useUiStore } from "@/store";
+import { selectActiveLayerConfig, useLayersStore } from "@/store/layers";
 import { InfoIcon, ListIcon } from "@phosphor-icons/react";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -10,21 +11,18 @@ interface MenuToggleButtonProps {
 	projectId: string;
 }
 
+// eslint-disable-next-line complexity
 export function MenuToggleButton({ projectId }: MenuToggleButtonProps) {
 	const router = useRouter();
 	const pathname = usePathname();
-	const setLastPath = useProjectsStore((state) => state.setLastPath);
+	const setLastPath = useProjectStore((state) => state.setLastPath);
 
 	const showTutorial = useUiStore((state) => state.showTutorial);
 	const setTutorialState = useUiStore((state) => state.setTutorialState);
 
-	const layerConfigId = useLayersStore((state) => state.layerConfigId);
-	const layerConfig = useLayersStore((state) => state.layerConfig);
+	const currentLayerConfig = useLayersStore(selectActiveLayerConfig);
 	const isModule =
 		pathname.includes("/handlungsbedarfe") || pathname.includes("/machbarkeit");
-	const currentQuestionConfig = layerConfig.find(
-		(config) => config.id === layerConfigId,
-	);
 
 	const handleToggle = () => {
 		if (pathname.includes("/menu")) {
@@ -38,9 +36,9 @@ export function MenuToggleButton({ projectId }: MenuToggleButtonProps) {
 	return (
 		<div className="fixed top-4 right-4 z-[51] flex items-center gap-3">
 			{isModule &&
-				(currentQuestionConfig?.canDrawNotes ||
-					currentQuestionConfig?.canDrawPolygons ||
-					currentQuestionConfig?.canDrawBTF) && (
+				(currentLayerConfig?.canDrawNotes ||
+					currentLayerConfig?.canDrawPolygons ||
+					currentLayerConfig?.canDrawBTF) && (
 					<div className="relative inline-flex">
 						{showTutorial && (
 							<span className="bg-accent/80 absolute inset-0 animate-ping rounded-full [animation-duration:1s] [animation-fill-mode:forwards] [animation-iteration-count:3]" />

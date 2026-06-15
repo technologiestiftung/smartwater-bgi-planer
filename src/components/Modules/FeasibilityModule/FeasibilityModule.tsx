@@ -6,7 +6,7 @@ import {
 } from "@/components/Modules/shared/moduleConfig";
 import { ModuleFooter } from "@/components/Modules/shared/ModuleFooter";
 import { ModuleStepper } from "@/components/Modules/shared/ModuleStepper";
-import { useStepValid } from "@/lib/helpers/isStepValidUtil";
+import { useStepValid } from "@/hooks/useStepValid";
 import { SectionId } from "@/lib/helpers/sectionIds";
 import { useUiStore } from "@/store/ui";
 import { LAYER_IDS } from "@/types/shared";
@@ -20,7 +20,7 @@ interface FeasibilityModuleProps {
 	projectId: string;
 }
 
-export default function FeasibilityModule({
+export function FeasibilityModule({
 	open,
 	onOpenChange,
 	projectId,

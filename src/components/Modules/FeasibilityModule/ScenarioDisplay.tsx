@@ -34,7 +34,7 @@ const SCENARIOS = [
 	},
 ];
 
-const ScenarioDisplay: FC<ScenarioDisplayProps> = ({}) => {
+export const ScenarioDisplay: FC<ScenarioDisplayProps> = ({}) => {
 	const [selectedScenario, setSelectedScenario] = useState("2V1");
 	const [currentZoom, setCurrentZoom] = useState(0);
 	const applyConfigLayers = useLayersStore((state) => state.applyConfigLayers);
@@ -110,5 +110,3 @@ const ScenarioDisplay: FC<ScenarioDisplayProps> = ({}) => {
 		</div>
 	);
 };
-
-export default ScenarioDisplay;

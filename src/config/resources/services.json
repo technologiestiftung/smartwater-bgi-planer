@@ -272,12 +272,12 @@
 		"gfiAttributes": "showAll"
 	},
 	{
-		"id": "module1_notes",
+		"id": "project_notes",
 		"name": "Notizen",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "module1Notes"
+		"styleId": "projectNotes"
 	},
 	{
 		"id": "need_flooding_hotspots",
@@ -392,14 +392,6 @@
 		"styleId": "impermeabilityHotspots"
 	},
 	{
-		"id": "need_impermeability_hotspots_q3",
-		"name": "Versiegelung Hotspots Q3",
-		"crs": "urn:ogc:def:crs:EPSG::25833",
-		"typ": "GEOJSON",
-		"gfiAttributes": "showAll",
-		"styleId": "impermeabilityHotspots"
-	},
-	{
 		"id": "need_groundwater_hotspots",
 		"name": "Gewässerschutz Hotspots",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
@@ -488,52 +480,156 @@
 		"styleId": "feasibilityLayers"
 	},
 	{
-		"id": "measures_seepage",
-		"name": "Maßnahmen - Versickerung",
+		"id": "module_3_3V1_draw",
+		"name": "Mulde",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
 		"styleId": "measuresLayers"
 	},
 	{
-		"id": "measures_permeability",
-		"name": "Maßnahmen - Entsiegelung",
+		"id": "module_3_3V2_draw",
+		"name": "Flächenversickerung",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
 		"styleId": "measuresLayers"
 	},
 	{
-		"id": "measures_greening",
-		"name": "Maßnahmen - Bepflanzung",
+		"id": "module_3_3V3_draw",
+		"name": "Mulden-Rigolen-Element",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
 		"styleId": "measuresLayers"
 	},
 	{
-		"id": "measures_building_greening",
-		"name": "Maßnahmen - Gebäudebegrünung",
+		"id": "module_3_3V4_draw",
+		"name": "Tiefbeet-Rigole",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
 		"styleId": "measuresLayers"
 	},
 	{
-		"id": "measures_retention",
-		"name": "Maßnahmen - Speicherung",
+		"id": "module_3_3V5_draw",
+		"name": "Optimierter Baumstandort (Baum mit unterirdischer Versickerung kombiniert)",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "trees"
+	},
+	{
+		"id": "module_3_3V6_draw",
+		"name": "Rigole",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
 		"styleId": "measuresLayers"
 	},
 	{
-		"id": "measures_connected_areas",
-		"name": "Angeschlossene Flächen",
+		"id": "module_3_3E1_draw",
+		"name": "Teilversiegelte Oberflächen",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
 		"styleId": "measuresLayers"
+	},
+	{
+		"id": "module_3_3E2_draw",
+		"name": "Komplette Entsiegelung",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "measuresLayers"
+	},
+	{
+		"id": "module_3_3B1_draw",
+		"name": "Grünflächen",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "measuresLayers"
+	},
+	{
+		"id": "module_3_3B2_draw",
+		"name": "Bäume",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "trees"
+	},
+	{
+		"id": "module_3_3G1_draw",
+		"name": "Extensive Dachbegrünung",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "measuresLayers"
+	},
+	{
+		"id": "module_3_3G2_draw",
+		"name": "Intensive Dachbegrünung",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "measuresLayers"
+	},
+	{
+		"id": "module_3_3G5_draw",
+		"name": "Erdgebundene Fassadenbegrünung",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "measuresLayers"
+	},
+	{
+		"id": "module_3_3S1_draw",
+		"name": "(Künstliche) Wasserflächen",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "measuresLayers"
+	},
+	{
+		"id": "module_3_3S2_draw",
+		"name": "Zisterne für Bewässerung",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "measuresLayers"
+	},
+	{
+		"id": "module_3_3S3_draw",
+		"name": "Zisterne für gebäudeinterne Nutzung",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "measuresLayers"
+	},
+	{
+		"id": "module_3_3S4_draw",
+		"name": "Retentionsfläche",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "measuresLayers"
+	},
+	{
+		"id": "module_3_3S5_draw",
+		"name": "Verdunstungsbeet",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "measuresLayers"
+	},
+	{
+		"id": "module_3_connected_area_draw",
+		"name": "Angeschlossene Fläche",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "connectedArea"
 	},
 	{
 		"id": "THEME MAPS"

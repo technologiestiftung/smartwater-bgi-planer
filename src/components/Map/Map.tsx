@@ -1,7 +1,7 @@
 "use client";
 
-import ClickControl from "@/components/Map/Controls/ClickControl";
-import MapNavigationContainer from "@/components/Map/Controls/MapNavigation/MapNavigationContainer";
+import { ClickControl } from "@/components/Map/Controls/ClickControl";
+import { MapNavigationContainer } from "@/components/Map/Controls/MapNavigation/MapNavigationContainer";
 import { Spinner } from "@/components/ui/spinner";
 import { useClickControlConfig } from "@/hooks/useClickControlConfig";
 import { useMapReady } from "@/hooks/useMapReady";
@@ -10,14 +10,18 @@ import dynamic from "next/dynamic";
 import { FC } from "react";
 import { useShallow } from "zustand/react/shallow";
 // import OpacityControl from "./Controls/OpacityControl";
-import MapFooter from "./MapFooter/MapFooter";
+import { MapFooter } from "./MapFooter/MapFooter";
 
-const LazyOlMap = dynamic(() => import("./Initializer/OlMap/OlMap"), {
-	ssr: false,
-	loading: () => null,
-});
+const LazyOlMap = dynamic(
+	() =>
+		import("./Initializer/OlMap/OlMap").then((mod) => ({ default: mod.OlMap })),
+	{
+		ssr: false,
+		loading: () => null,
+	},
+);
 
-const Map: FC = () => {
+export const Map: FC = () => {
 	const isMapReady = useMapReady();
 	const { hasMapError, errorMessage } = useMapStore(
 		useShallow((state) => ({
@@ -69,4 +73,3 @@ const Map: FC = () => {
 		</div>
 	);
 };
-export default Map;

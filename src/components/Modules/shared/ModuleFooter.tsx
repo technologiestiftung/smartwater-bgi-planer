@@ -1,5 +1,6 @@
 "use client";
 
+import { Tutorial } from "@/components/Tutorial/Tutorial";
 import { Button } from "@/components/ui/button";
 import { useUiStore } from "@/store";
 import {
@@ -8,7 +9,6 @@ import {
 	ListChecksIcon,
 } from "@phosphor-icons/react";
 import { useCallback } from "react";
-import { Tutorial } from "../../Tutorials/Tutorial";
 
 interface ModuleFooterProps {
 	onClose: () => void;

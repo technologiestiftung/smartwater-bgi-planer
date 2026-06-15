@@ -7,7 +7,7 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { useLayersStore } from "@/store/layers";
+import { selectActiveLayerConfig, useLayersStore } from "@/store/layers";
 import { ManagedLayer } from "@/store/layers/types";
 import { useUiStore } from "@/store/ui";
 import { EyeIcon, EyeSlashIcon } from "@phosphor-icons/react";
@@ -138,22 +138,16 @@ function filterLayers(arr: ManagedLayer[], search: string): ManagedLayer[] {
 }
 
 // eslint-disable-next-line complexity
-const LayerTree: FC = () => {
-	const {
-		layers,
-		setLayerVisibility,
-		setLayerOpacity,
-		layerConfig,
-		layerConfigId,
-	} = useLayersStore(
-		useShallow((state) => ({
-			layers: state.layers,
-			setLayerVisibility: state.setLayerVisibility,
-			setLayerOpacity: state.setLayerOpacity,
-			layerConfig: state.layerConfig,
-			layerConfigId: state.layerConfigId,
-		})),
-	);
+export const LayerTree: FC = () => {
+	const { layers, setLayerVisibility, setLayerOpacity, activeLayerConfig } =
+		useLayersStore(
+			useShallow((state) => ({
+				layers: state.layers,
+				setLayerVisibility: state.setLayerVisibility,
+				setLayerOpacity: state.setLayerOpacity,
+				activeLayerConfig: selectActiveLayerConfig(state),
+			})),
+		);
 	const isLayerTreeVisible = useUiStore((state) => state.isLayerTreeVisible);
 	const [search, setSearch] = useState("");
 
@@ -168,10 +162,9 @@ const LayerTree: FC = () => {
 	);
 
 	const currentVisibleLayerIds = useMemo(() => {
-		if (!layerConfigId) return null;
-		const item = layerConfig.find((c) => c.id === layerConfigId);
-		return item ? new Set(item.visibleLayerIds) : null;
-	}, [layerConfig, layerConfigId]);
+		if (!activeLayerConfig) return null;
+		return new Set(activeLayerConfig.visibleLayerIds);
+	}, [activeLayerConfig]);
 
 	const subjectLayers = useMemo(
 		() =>
@@ -243,5 +236,3 @@ const LayerTree: FC = () => {
 		</div>
 	);
 };
-
-export default LayerTree;

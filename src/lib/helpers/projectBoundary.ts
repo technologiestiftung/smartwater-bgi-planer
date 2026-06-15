@@ -1,10 +1,11 @@
 import { getLayerById } from "@/lib/helpers/ol";
+import type { AreaProps, InputFeature } from "@/store/project/types";
 import { LAYER_IDS } from "@/types/shared";
 import booleanIntersects from "@turf/boolean-intersects";
 import { GeoJSON } from "ol/format";
-import VectorLayer from "ol/layer/Vector.js";
-import type Map from "ol/Map.js";
-import { Vector as VectorSource } from "ol/source.js";
+import VectorLayer from "ol/layer/Vector";
+import type Map from "ol/Map";
+import { Vector as VectorSource } from "ol/source";
 
 /**
  * Performs intersection between project boundary and rabimo input layer
@@ -27,7 +28,7 @@ export const performProjectBoundaryIntersection = (map: Map | null) => {
 		return;
 	}
 
-	const rabimoLayer = getLayerById(map, LAYER_IDS.RABIMO_INPUT_2025);
+	const rabimoLayer = getLayerById(map, LAYER_IDS.INPUT);
 	if (!rabimoLayer?.getSource()) {
 		console.warn("Rabimo Input Layer not found.");
 		return;
@@ -50,17 +51,8 @@ export const performProjectBoundaryIntersection = (map: Map | null) => {
 	planningSource.clear();
 
 	const format = new GeoJSON();
-	let processed = 0;
-	let intersections = 0;
 
 	rabimoLayer.getSource()!.forEachFeature((rabimoFeature) => {
-		processed++;
-		if (processed % 1000 === 0) {
-			console.log(
-				`Processed ${processed} features, found ${intersections} intersections`,
-			);
-		}
-
 		const rabimoGeometry = rabimoFeature.getGeometry();
 		if (!rabimoGeometry) return;
 
@@ -88,11 +80,33 @@ export const performProjectBoundaryIntersection = (map: Map | null) => {
 			});
 
 			if (intersectsAny) {
-				intersections++;
 				planningSource.addFeature(rabimoFeature.clone());
 			}
 		} catch (error) {
 			console.warn("Error processing feature:", error);
 		}
+	});
+};
+
+export const getInputFeatures = (map: Map | null): InputFeature[] => {
+	if (!map) return [];
+
+	const planningSource = getLayerById(
+		map,
+		LAYER_IDS.PROJECT_BTF_PLANNING,
+	)?.getSource();
+
+	if (!planningSource) return [];
+
+	return planningSource.getFeatures().map((feature) => {
+		const properties = { ...feature.getProperties() } as AreaProps;
+
+		delete properties.geometry;
+
+		return {
+			feature,
+			geometry: feature.getGeometry() ?? null,
+			properties,
+		};
 	});
 };

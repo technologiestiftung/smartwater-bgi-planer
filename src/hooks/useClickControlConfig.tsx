@@ -1,31 +1,40 @@
 "use client";
 
-import FeatureActionMenu from "@/components/MapInteraction/FeatureActionMenu";
-import FeatureDetailsModal from "@/components/MapInteraction/FeatureDetailsModal";
-import FeatureNoteCard from "@/components/MapInteraction/FeatureNoteCard";
-import FeatureTooltip from "@/components/MapInteraction/FeatureTooltip";
-import { useLayersStore } from "@/store/layers";
+import { FeatureActionMenu } from "@/components/FeatureDetailViews/FeatureActionMenu/FeatureActionMenu";
+import { FeatureDetailsModal } from "@/components/FeatureDetailViews/FeatureDetailsModal/FeatureDetailsModal";
+import { FeatureNoteCard } from "@/components/FeatureDetailViews/FeatureNoteCard/FeatureNoteCard";
+import { FeatureTooltip } from "@/components/FeatureDetailViews/FeatureTooltip/FeatureTooltip";
+import { MeasureDetailsCard } from "@/components/FeatureDetailViews/MeasureDetailsCard/MeasureDetailsCard";
+import { getFeatureAttributes } from "@/lib/helpers/ol/feature";
+import { resolveMeasureId } from "@/lib/helpers/ol/measureFeature";
+import { selectActiveLayerConfig, useLayersStore } from "@/store/layers";
+import { LAYER_IDS } from "@/types/shared";
+import type Feature from "ol/Feature";
+import type { Geometry } from "ol/geom";
 import { useCallback, useMemo } from "react";
 
 export const useClickControlConfig = () => {
-	const layerConfigId = useLayersStore((state) => state.layerConfigId);
-	const layerConfigs = useLayersStore((state) => state.layerConfig);
+	const currentConfig = useLayersStore(selectActiveLayerConfig);
 	const drawLayerId = useLayersStore((state) => state.drawLayerId);
-
-	const currentConfig = useMemo(
-		() => layerConfigs.find((c) => c.id === layerConfigId),
-		[layerConfigs, layerConfigId],
-	);
 
 	const vectorLayerIds = useMemo(() => {
 		const ids: string[] = [];
-		ids.push("module1_notes");
+		ids.push("project_notes");
 
 		if (drawLayerId) {
 			ids.push(drawLayerId);
 		}
+
+		const connectedAreaDrawId = LAYER_IDS.CONNECTED_AREA_DRAW;
+		if (
+			currentConfig?.visibleLayerIds?.includes(connectedAreaDrawId) &&
+			!ids.includes(connectedAreaDrawId)
+		) {
+			ids.push(connectedAreaDrawId);
+		}
+
 		return ids;
-	}, [drawLayerId]);
+	}, [drawLayerId, currentConfig]);
 
 	const wmsLayerIds = useMemo(() => {
 		return currentConfig?.canQueryFeatures || [];
@@ -36,11 +45,18 @@ export const useClickControlConfig = () => {
 	}, [vectorLayerIds, wmsLayerIds]);
 
 	const renderContent = useCallback(
-		(feature: any, layerId: string, onClose: () => void) => {
-			if (layerId === "module1_notes") {
+		(
+			feature: Feature<Geometry> | null,
+			layerId: string,
+			onClose: () => void,
+		) => {
+			const normalizedFeature = feature ?? undefined;
+			const attributes = getFeatureAttributes(normalizedFeature);
+
+			if (layerId === "project_notes") {
 				return (
 					<FeatureNoteCard
-						features={feature}
+						features={normalizedFeature}
 						layerId={layerId}
 						onClose={onClose}
 					/>
@@ -48,9 +64,25 @@ export const useClickControlConfig = () => {
 			}
 
 			if (drawLayerId && layerId === drawLayerId) {
+				const measureId = resolveMeasureId(normalizedFeature);
+
+				if (measureId) {
+					return <MeasureDetailsCard measureId={measureId} onClose={onClose} />;
+				}
+
 				return (
 					<FeatureActionMenu
-						features={feature}
+						features={normalizedFeature}
+						layerId={layerId}
+						onClose={onClose}
+					/>
+				);
+			}
+
+			if (layerId === LAYER_IDS.CONNECTED_AREA_DRAW) {
+				return (
+					<FeatureActionMenu
+						features={normalizedFeature}
 						layerId={layerId}
 						onClose={onClose}
 					/>
@@ -61,9 +93,7 @@ export const useClickControlConfig = () => {
 				if (currentConfig.featureDisplay === "modal") {
 					return (
 						<FeatureDetailsModal
-							attributes={
-								feature?.getProperties ? feature.getProperties() : feature
-							}
+							attributes={attributes}
 							layerId={layerId}
 							onClose={onClose}
 						/>
@@ -72,9 +102,7 @@ export const useClickControlConfig = () => {
 
 				return (
 					<FeatureTooltip
-						attributes={
-							feature?.getProperties ? feature.getProperties() : feature
-						}
+						attributes={attributes ?? {}}
 						layerId={layerId}
 						onClose={onClose}
 					/>

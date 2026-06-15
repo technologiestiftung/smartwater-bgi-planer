@@ -3,12 +3,12 @@ import { getModuleSteps } from "@/components/Modules/shared/moduleConfig";
 export function getSectionIds() {
 	const needForActionSteps = getModuleSteps("needForAction");
 	const feasibilitySteps = getModuleSteps("feasibility");
-	const measurePlaningSteps = getModuleSteps("measurePlaning");
+	const measurePlanningSteps = getModuleSteps("measurePlanning");
 
 	return [
 		...needForActionSteps,
 		...feasibilitySteps,
-		...measurePlaningSteps,
+		...measurePlanningSteps,
 	].map((step) => step.id);
 }
 

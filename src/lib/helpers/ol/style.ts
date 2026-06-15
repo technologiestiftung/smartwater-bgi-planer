@@ -1,8 +1,15 @@
-import styleList from "@/config/resources/style";
-import { FeatureLike } from "ol/Feature";
+import { styleList } from "@/config/resources/style";
+import { formatLength } from "@/lib/helpers/ol/format";
+import type { MeasureGeometryType } from "@/types/measures";
+import Feature, { FeatureLike } from "ol/Feature";
+import LineString from "ol/geom/LineString";
+import Point from "ol/geom/Point";
+import Polygon from "ol/geom/Polygon";
 import VectorLayer from "ol/layer/Vector";
 import { Vector as VectorSource } from "ol/source";
 import { Circle, Fill, Icon, Stroke, Style } from "ol/style";
+import CircleStyle from "ol/style/Circle";
+import Text from "ol/style/Text";
 
 // --- Types ---
 interface StyleConfig {
@@ -27,6 +34,16 @@ const STYLE_CACHE = new Map<string, Style | Style[]>();
 export const DEFAULT_STYLE = new Style({
 	stroke: new Stroke({ color: "#3b82f6", width: 2 }),
 	fill: new Fill({ color: "rgba(59, 130, 246, 0.1)" }),
+});
+
+export const defaultDrawStyle = new Style({
+	fill: new Fill({ color: "rgba(0, 153, 255, 0.1)" }),
+	stroke: new Stroke({ color: "rgba(0, 153, 255, 1)", width: 2 }),
+	image: new CircleStyle({
+		radius: 5,
+		fill: new Fill({ color: "rgba(0, 153, 255, 1)" }),
+		stroke: new Stroke({ color: "#fff", width: 1.5 }),
+	}),
 });
 
 // --- Helper: Logic Matcher ---
@@ -74,6 +91,7 @@ export const createOLStyle = (config: StyleConfig): Style | Style[] => {
 					scale: iconScale,
 					color: pointFillColor as any,
 					anchor: [0.5, 0.5],
+					crossOrigin: "anonymous",
 				})
 			: new Circle({
 					radius: pointRadius,
@@ -133,4 +151,45 @@ export const applyStyleToLayer = (
 	}
 
 	return true;
+};
+
+export const getDrawStyle = (geometryType: MeasureGeometryType) =>
+	geometryType !== "Polygon"
+		? undefined
+		: (feature: FeatureLike) => {
+				const geometry =
+					feature instanceof Feature ? feature.getGeometry() : null;
+				return geometry instanceof Polygon
+					? [defaultDrawStyle, ...getSegmentLabelStyles(geometry)]
+					: [defaultDrawStyle];
+			};
+
+export const getSegmentLabelStyles = (polygon: Polygon) => {
+	const ring = polygon.getCoordinates()[0] || [];
+	const segmentStyles: Style[] = [];
+
+	for (let index = 0; index < ring.length - 1; index++) {
+		const start = ring[index];
+		const end = ring[index + 1];
+		const segment = new LineString([start, end]);
+		const midpoint: [number, number] = [
+			(start[0] + end[0]) / 2,
+			(start[1] + end[1]) / 2,
+		];
+
+		segmentStyles.push(
+			new Style({
+				geometry: new Point(midpoint),
+				text: new Text({
+					text: formatLength(segment),
+					font: "400 12px sans-serif",
+					padding: [2, 4, 2, 4],
+					fill: new Fill({ color: "rgba(17, 24, 39, 0.9)" }),
+					backgroundFill: new Fill({ color: "rgba(255, 255, 255, 0.5)" }),
+				}),
+			}),
+		);
+	}
+
+	return segmentStyles;
 };

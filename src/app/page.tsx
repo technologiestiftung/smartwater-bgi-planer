@@ -1,13 +1,13 @@
 "use client";
 
 import { FileUploadZone } from "@/components/FileUpload/FileUploadZone";
-import ProjectUploaderButton from "@/components/ProjectUploaderButton/ProjectUploaderButton";
+import { ProjectUploaderButton } from "@/components/ProjectUploaderButton/ProjectUploaderButton";
 import { Button } from "@/components/ui/button";
 import { CarouselWithIndicators } from "@/components/ui/carousel-with-indicators";
 import Funding from "@/logos/gdb_logo.svg";
 import SmartWaterLogo from "@/logos/SmartWater-Logo.svg";
 import SWLogo from "@/logos/SWLogo.svg";
-import { useProjectsStore } from "@/store/projects";
+import { useProjectStore } from "@/store/project";
 import { useUiStore } from "@/store/ui";
 import {
 	GithubLogoIcon,
@@ -23,8 +23,8 @@ export default function Home() {
 	const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
 
 	const router = useRouter();
-	const { getProject, hasHydrated, getLastPath } = useProjectsStore();
-	const projectName = useProjectsStore((state) => state.project?.name);
+	const { getProject, hasHydrated, getLastPath } = useProjectStore();
+	const projectName = useProjectStore((state) => state.project?.name);
 	const uploadError = useUiStore((state) => state.uploadError);
 	const clearUploadStatus = useUiStore((state) => state.clearUploadStatus);
 	const show: "buttons" | "loading" | "none" = !hasHydrated

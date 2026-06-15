@@ -1,0 +1,268 @@
+{
+	"state": {
+		"inputFeatures": [
+			{
+				"feature": {
+					"disposed": false,
+					"pendingRemovals_": {},
+					"dispatching_": {},
+					"listeners_": {
+						"change:geometry": [null],
+						"change": [null],
+						"propertychange": [null]
+					},
+					"revision_": 3,
+					"ol_uid": "925",
+					"values_": {
+						"geometry": {
+							"disposed": false,
+							"pendingRemovals_": null,
+							"dispatching_": null,
+							"listeners_": {
+								"change": [null]
+							},
+							"revision_": 0,
+							"ol_uid": "926",
+							"values_": null,
+							"extent_": [387436.2112, 5816581.6264, 387467.8583, 5816693.8467],
+							"extentRevision_": 0,
+							"simplifiedGeometryMaxMinSquaredTolerance": 0.0012250000000000002,
+							"simplifiedGeometryRevision": 0,
+							"layout": "XY",
+							"stride": 2,
+							"endss_": [[14]],
+							"flatInteriorPointsRevision_": -1,
+							"flatInteriorPoints_": null,
+							"maxDelta_": -1,
+							"maxDeltaRevision_": -1,
+							"orientedRevision_": 0,
+							"orientedFlatCoordinates_": [
+								387459.7695, 5816681.6424, 387467.8583, 5816591.6953,
+								387457.2992, 5816581.6264, 387442.8653, 5816591.9706,
+								387436.2112, 5816678.4907, 387446.7561, 5816693.8467,
+								387459.7695, 5816681.6424
+							],
+							"flatCoordinates": [
+								387459.7695, 5816681.6424, 387467.8583, 5816591.6953,
+								387457.2992, 5816581.6264, 387442.8653, 5816591.9706,
+								387436.2112, 5816678.4907, 387446.7561, 5816693.8467,
+								387459.7695, 5816681.6424
+							]
+						},
+						"code": "0000000007000815",
+						"prec_yr": 626,
+						"prec_s": 333,
+						"epot_yr": 668,
+						"epot_s": 510,
+						"district": "11",
+						"total_area": 2445.3027432404,
+						"roof": 0.002673796713352,
+						"green_roof": 0,
+						"swg_roof": 1,
+						"pvd": 0.938836288452148,
+						"swg_pvd": 1,
+						"srf1_pvd": 0.41,
+						"srf2_pvd": 0.18,
+						"srf3_pvd": 0.19,
+						"srf4_pvd": 0,
+						"srf5_pvd": 0.22,
+						"to_swale": 0,
+						"gw_dist": 7.3,
+						"ufc30": 14,
+						"ufc150": 11,
+						"land_type": "urban",
+						"veg_class": 8.7,
+						"irrigation": 0,
+						"block_type": "300_road"
+					},
+					"geometryName_": "geometry",
+					"style_": null,
+					"geometryChangeKey_": {
+						"target": {
+							"disposed": false,
+							"pendingRemovals_": null,
+							"dispatching_": null,
+							"listeners_": {
+								"change": [null]
+							},
+							"revision_": 0,
+							"ol_uid": "926",
+							"values_": null,
+							"extent_": [387436.2112, 5816581.6264, 387467.8583, 5816693.8467],
+							"extentRevision_": 0,
+							"simplifiedGeometryMaxMinSquaredTolerance": 0.0012250000000000002,
+							"simplifiedGeometryRevision": 0,
+							"layout": "XY",
+							"stride": 2,
+							"endss_": [[14]],
+							"flatInteriorPointsRevision_": -1,
+							"flatInteriorPoints_": null,
+							"maxDelta_": -1,
+							"maxDeltaRevision_": -1,
+							"orientedRevision_": 0,
+							"orientedFlatCoordinates_": [
+								387459.7695, 5816681.6424, 387467.8583, 5816591.6953,
+								387457.2992, 5816581.6264, 387442.8653, 5816591.9706,
+								387436.2112, 5816678.4907, 387446.7561, 5816693.8467,
+								387459.7695, 5816681.6424
+							],
+							"flatCoordinates": [
+								387459.7695, 5816681.6424, 387467.8583, 5816591.6953,
+								387457.2992, 5816581.6264, 387442.8653, 5816591.9706,
+								387436.2112, 5816678.4907, 387446.7561, 5816693.8467,
+								387459.7695, 5816681.6424
+							]
+						},
+						"type": "change"
+					}
+				},
+				"geometry": {
+					"disposed": false,
+					"pendingRemovals_": null,
+					"dispatching_": null,
+					"listeners_": {
+						"change": [null]
+					},
+					"revision_": 0,
+					"ol_uid": "926",
+					"values_": null,
+					"extent_": [387436.2112, 5816581.6264, 387467.8583, 5816693.8467],
+					"extentRevision_": 0,
+					"simplifiedGeometryMaxMinSquaredTolerance": 0.0012250000000000002,
+					"simplifiedGeometryRevision": 0,
+					"layout": "XY",
+					"stride": 2,
+					"endss_": [[14]],
+					"flatInteriorPointsRevision_": -1,
+					"flatInteriorPoints_": null,
+					"maxDelta_": -1,
+					"maxDeltaRevision_": -1,
+					"orientedRevision_": 0,
+					"orientedFlatCoordinates_": [
+						387459.7695, 5816681.6424, 387467.8583, 5816591.6953, 387457.2992,
+						5816581.6264, 387442.8653, 5816591.9706, 387436.2112, 5816678.4907,
+						387446.7561, 5816693.8467, 387459.7695, 5816681.6424
+					],
+					"flatCoordinates": [
+						387459.7695, 5816681.6424, 387467.8583, 5816591.6953, 387457.2992,
+						5816581.6264, 387442.8653, 5816591.9706, 387436.2112, 5816678.4907,
+						387446.7561, 5816693.8467, 387459.7695, 5816681.6424
+					]
+				},
+				"properties": {
+					"code": "0000000007000815",
+					"prec_yr": 626,
+					"prec_s": 333,
+					"epot_yr": 668,
+					"epot_s": 510,
+					"district": "11",
+					"total_area": 2445.3027432404,
+					"roof": 0.002673796713352,
+					"green_roof": 0,
+					"swg_roof": 1,
+					"pvd": 0.938836288452148,
+					"swg_pvd": 1,
+					"srf1_pvd": 0.41,
+					"srf2_pvd": 0.18,
+					"srf3_pvd": 0.19,
+					"srf4_pvd": 0,
+					"srf5_pvd": 0.22,
+					"to_swale": 0,
+					"gw_dist": 7.3,
+					"ufc30": 14,
+					"ufc150": 11,
+					"land_type": "urban",
+					"veg_class": 8.7,
+					"irrigation": 0,
+					"block_type": "300_road"
+				}
+			}
+		],
+		"accumulatedStats": {
+			"totalArea": 2445.30274324,
+			"inputFeaturesCount": 1,
+			"areaPotential": {
+				"green_roof_ext": 6.538242438,
+				"green_roof_int": 6.538242438,
+				"unpaving": 2295.738951605,
+				"permeable_paving": 2295.738951605,
+				"to_inf_mulde": 2302.277194043,
+				"to_inf_rigole": 2302.277194043,
+				"to_inf_mulde_rigole": 2302.277194043,
+				"to_retention": 2302.277194043
+			},
+			"computedArea": {
+				"total": 2445.30274324,
+				"roof": 6.538242438,
+				"pvd": 2295.738951605,
+				"pvd_1": 941.252970158,
+				"pvd_2": 413.233011289,
+				"pvd_3": 436.190400805,
+				"pvd_4": 0,
+				"pvd_na": 505.062569353,
+				"sealed": 2302.277194043,
+				"unsealed": 143.025549197,
+				"green_roof_ext": 0,
+				"green_roof_int": 0,
+				"to_inf_mulde": 0,
+				"to_inf_rigole": 0,
+				"to_inf_mulde_rigole": 0,
+				"to_retention": 0
+			}
+		},
+		"computedFeatures": [
+			{
+				"code": "0000000007000815",
+				"computedArea": {
+					"total": 2445.30274324,
+					"roof": 6.538242438,
+					"pvd": 2295.738951605,
+					"pvd_1": 941.252970158,
+					"pvd_2": 413.233011289,
+					"pvd_3": 436.190400805,
+					"pvd_4": 0,
+					"pvd_na": 505.062569353,
+					"sealed": 2302.277194043,
+					"unsealed": 143.025549197,
+					"green_roof_ext": 0,
+					"green_roof_int": 0,
+					"to_inf_mulde": 0,
+					"to_inf_rigole": 0,
+					"to_inf_mulde_rigole": 0,
+					"to_retention": 0
+				},
+				"areaPotential": {
+					"green_roof_ext": 6.538242438,
+					"green_roof_int": 6.538242438,
+					"unpaving": 2295.738951605,
+					"permeable_paving": 2295.738951605,
+					"to_inf_mulde": 2302.277194043,
+					"to_inf_rigole": 2302.277194043,
+					"to_inf_mulde_rigole": 2302.277194043,
+					"to_retention": 2302.277194043
+				}
+			}
+		],
+		"activeAreaPotential": {
+			"green_roof_ext": 6.538242438,
+			"green_roof_int": 6.538242438,
+			"unpaving": 2295.738951605,
+			"permeable_paving": 2295.738951605,
+			"to_inf_mulde": 2302.277194043,
+			"to_inf_rigole": 2302.277194043,
+			"to_inf_mulde_rigole": 2302.277194043,
+			"to_retention": 2302.277194043
+		},
+		"activeAreaId": "0000000007000815",
+		"project": {
+			"id": "20260518_jijij",
+			"name": "jijij",
+			"description": "",
+			"useCase": "Individual area",
+			"createdAt": 1779112016898,
+			"updatedAt": 1779112016898
+		},
+		"hasHydrated": true,
+		"lastPath": "/20260518_jijij/planung"
+	}
+}

@@ -22,10 +22,7 @@ interface ModuleStepperProps<TSectionId extends SectionId> {
 	StepperFooter: React.ComponentType<any>;
 	SynthesisView: React.ComponentType<{
 		onBackToQuestions: () => void;
-		onBackToSpecificQuestion: (
-			questionId: string,
-			sectionId: TSectionId,
-		) => void;
+		onBackToSpecificQuestion: (configId: string, sectionId: TSectionId) => void;
 	}>;
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
@@ -122,12 +119,12 @@ function ModuleStepperContent<TSectionId extends SectionId>({
 	]);
 
 	const onBackToSpecificQuestion = useCallback(
-		(questionId: string, sectionId?: SectionId) => {
-			const success = navigateToQuestion(questionId, sectionId);
+		(configId: string, sectionId?: SectionId) => {
+			const success = navigateToQuestion(configId, sectionId);
 
 			if (!success) {
 				console.warn("Failed to navigate to specific question", {
-					questionId,
+					configId,
 					sectionId,
 				});
 			}

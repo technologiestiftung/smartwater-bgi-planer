@@ -366,10 +366,6 @@
 							"visibility": false
 						},
 						{
-							"id": "need_impermeability_hotspots_q3",
-							"visibility": false
-						},
-						{
 							"id": "need_waterbalance_hotspots_q1",
 							"visibility": false
 						},
@@ -406,31 +402,83 @@
 							"visibility": false
 						},
 						{
-							"id": "measures_seepage",
+							"id": "module_3_3V1_draw",
 							"visibility": true
 						},
 						{
-							"id": "measures_permeability",
+							"id": "module_3_3V2_draw",
 							"visibility": false
 						},
 						{
-							"id": "measures_greening",
+							"id": "module_3_3V3_draw",
 							"visibility": false
 						},
 						{
-							"id": "measures_building_greening",
+							"id": "module_3_3V4_draw",
 							"visibility": false
 						},
 						{
-							"id": "measures_retention",
+							"id": "module_3_3V5_draw",
 							"visibility": false
 						},
 						{
-							"id": "measures_connected_areas",
+							"id": "module_3_3V6_draw",
 							"visibility": false
 						},
 						{
-							"id": "module1_notes",
+							"id": "module_3_3E1_draw",
+							"visibility": false
+						},
+						{
+							"id": "module_3_3E2_draw",
+							"visibility": false
+						},
+						{
+							"id": "module_3_3B1_draw",
+							"visibility": false
+						},
+						{
+							"id": "module_3_3B2_draw",
+							"visibility": false
+						},
+						{
+							"id": "module_3_3G1_draw",
+							"visibility": false
+						},
+						{
+							"id": "module_3_3G2_draw",
+							"visibility": false
+						},
+						{
+							"id": "module_3_3G5_draw",
+							"visibility": false
+						},
+						{
+							"id": "module_3_3S1_draw",
+							"visibility": false
+						},
+						{
+							"id": "module_3_3S2_draw",
+							"visibility": false
+						},
+						{
+							"id": "module_3_3S3_draw",
+							"visibility": false
+						},
+						{
+							"id": "module_3_3S4_draw",
+							"visibility": false
+						},
+						{
+							"id": "module_3_3S5_draw",
+							"visibility": false
+						},
+						{
+							"id": "module_3_connected_area_draw",
+							"visibility": false
+						},
+						{
+							"id": "project_notes",
 							"visibility": true
 						}
 					]

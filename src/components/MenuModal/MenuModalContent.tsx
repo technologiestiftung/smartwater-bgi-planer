@@ -1,12 +1,12 @@
 "use client";
 
-import MenuModule from "@/components/MenuModal/MenuModule";
+import { MenuModule } from "@/components/MenuModal/MenuModule";
 import modulesData from "@/components/Modules/modules.json";
-import ProjectDownloadButton from "@/components/ProjectDownloadButton/ProjectDownloadButton";
+import { ProjectDownloadButton } from "@/components/ProjectDownloadButton/ProjectDownloadButton";
 import { Button } from "@/components/ui/button";
 import { checkForQuestion } from "@/lib/helpers/questionCheck";
 import { useAnswersStore } from "@/store";
-import { useProjectsStore } from "@/store/projects";
+import { useProjectStore } from "@/store/project";
 import {
 	ArrowCircleRightIcon,
 	BookOpenTextIcon,
@@ -22,8 +22,8 @@ interface MenuModalProps {
 	projectId: string;
 }
 
-export default function MenuModalContent({ projectId }: MenuModalProps) {
-	const getProject = useProjectsStore((state) => state.getProject);
+export function MenuModalContent({ projectId }: MenuModalProps) {
+	const getProject = useProjectStore((state) => state.getProject);
 	const project = getProject();
 	const answers = useAnswersStore((state) => state.answers);
 
@@ -117,9 +117,11 @@ export default function MenuModalContent({ projectId }: MenuModalProps) {
 					additionalInfo="Keine Fragen beantwortet"
 					buttonBottom={
 						<div>
-							<Button disabled>
-								Zum Modul
-								<ArrowCircleRightIcon className="size-6" />
+							<Button asChild>
+								<Link href={`/${projectId}/planung`}>
+									Zum Modul
+									<ArrowCircleRightIcon className="size-6" />
+								</Link>
 							</Button>
 						</div>
 					}

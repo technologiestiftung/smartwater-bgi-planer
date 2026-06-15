@@ -1,10 +1,10 @@
 "use client";
 
-import ConfirmButton from "@/components/ConfirmButton/ConfirmButton";
+import { ConfirmButton } from "@/components/ConfirmButton/ConfirmButton";
 import { SideMenu } from "@/components/SideMenu";
 import { Button } from "@/components/ui/button";
-import AddWMSButton from "@/components/UploadControls/AddWMSButton/AddWMSButton";
-import UploadVectorLayersButton from "@/components/UploadControls/UploadVectorLayersButton/UploadVectorLayersButton";
+import { AddWMSButton } from "@/components/UploadControls/AddWMSButton/AddWMSButton";
+import { UploadVectorLayersButton } from "@/components/UploadControls/UploadVectorLayersButton/UploadVectorLayersButton";
 import {
 	StepConfig,
 	StepContainer,
@@ -242,7 +242,7 @@ function ProjectBoundaryStep() {
 }
 
 function NewDevelopmentStep() {
-	const { formattedArea } = useLayerArea("project_new_development");
+	const { formattedArea } = useLayerArea(LAYER_IDS.PROJECT_NEW_DEVELOPMENT);
 	const { uploadError, uploadSuccess } = useUploadStatusAutoHide();
 
 	return (
@@ -361,7 +361,7 @@ function AdditionalMapsStep({ projectId }: { projectId: string }) {
 	);
 }
 
-export default function ProjectStarterModule({
+export function ProjectStarterModule({
 	open,
 	onOpenChange,
 	onComplete,

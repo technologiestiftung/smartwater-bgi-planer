@@ -3,7 +3,7 @@ import { Field, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
-import { UseCase } from "@/store/projects/types";
+import { UseCase } from "@/store/project/types";
 import { SpinnerIcon } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 
@@ -21,7 +21,7 @@ interface ProjectModalProps {
 	deleted?: boolean;
 }
 
-export default function ProjectModalContent({
+export function ProjectModalContent({
 	onFormChange,
 	initialData,
 	deleted = false,

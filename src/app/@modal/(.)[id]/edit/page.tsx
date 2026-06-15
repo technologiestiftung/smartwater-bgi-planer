@@ -1,4 +1,4 @@
-import ProjectModal from "@/components/ProjectModal/ProjectModal";
+import { ProjectModal } from "@/components/ProjectModal/ProjectModal";
 
 interface EditProjectModalPageProps {
 	params: Promise<{
