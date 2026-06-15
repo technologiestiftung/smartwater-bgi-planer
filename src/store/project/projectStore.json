@@ -187,7 +187,6 @@
 				"unpaving": 2295.738951605,
 				"permeable_paving": 2295.738951605,
 				"to_inf_mulde": 2302.277194043,
-				"to_inf_rigole": 2302.277194043,
 				"to_inf_mulde_rigole": 2302.277194043,
 				"to_retention": 2302.277194043
 			},
@@ -205,7 +204,6 @@
 				"green_roof_ext": 0,
 				"green_roof_int": 0,
 				"to_inf_mulde": 0,
-				"to_inf_rigole": 0,
 				"to_inf_mulde_rigole": 0,
 				"to_retention": 0
 			}
@@ -227,7 +225,6 @@
 					"green_roof_ext": 0,
 					"green_roof_int": 0,
 					"to_inf_mulde": 0,
-					"to_inf_rigole": 0,
 					"to_inf_mulde_rigole": 0,
 					"to_retention": 0
 				},
@@ -237,7 +234,6 @@
 					"unpaving": 2295.738951605,
 					"permeable_paving": 2295.738951605,
 					"to_inf_mulde": 2302.277194043,
-					"to_inf_rigole": 2302.277194043,
 					"to_inf_mulde_rigole": 2302.277194043,
 					"to_retention": 2302.277194043
 				}
@@ -249,7 +245,6 @@
 			"unpaving": 2295.738951605,
 			"permeable_paving": 2295.738951605,
 			"to_inf_mulde": 2302.277194043,
-			"to_inf_rigole": 2302.277194043,
 			"to_inf_mulde_rigole": 2302.277194043,
 			"to_retention": 2302.277194043
 		},

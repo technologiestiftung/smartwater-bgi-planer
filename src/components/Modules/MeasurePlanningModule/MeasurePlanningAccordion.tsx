@@ -168,7 +168,10 @@ function MeasureListItem({
 					className="text-primary hover:text-primary/80 inline-flex h-9 w-9 items-center justify-center rounded-full"
 					aria-label={`Informationen zu ${label}`}
 				>
-					<InfoIcon className="h-5 w-5" />
+					{/* 
+						TODO: add routing to Measure catalog infos
+					*/}
+					<InfoIcon className="MeasuresInfosIcon h-5 w-5" />
 				</button>
 			)}
 		</div>
