@@ -16,6 +16,23 @@ export function getModuleConfig(moduleId: string): ModuleConfig | undefined {
 	return config.modules.find((module) => module.id === moduleId);
 }
 
+export function getModuleStepMeasure(
+	moduleId: string,
+	measureId: string,
+): ModuleMeasurementConfig | undefined {
+	const config = modulesConfig as ModulesConfigFile;
+	const findModule = config.modules.find((module) => module.id === moduleId);
+	let findMeasurement: ModuleMeasurementConfig | undefined;
+	findModule?.steps.forEach((step) => {
+		step.measurements?.forEach((measurement) => {
+			if (measurement.id === measureId) {
+				findMeasurement = measurement;
+			}
+		});
+	});
+	return findMeasurement;
+}
+
 export function getModuleSteps(moduleId: string): ModuleStepViewConfig[] {
 	const moduleConfig = getModuleConfig(moduleId);
 	if (!moduleConfig) {

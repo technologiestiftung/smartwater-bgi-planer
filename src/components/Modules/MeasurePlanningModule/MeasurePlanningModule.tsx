@@ -9,11 +9,13 @@ interface MeasurePlanningModuleProps {
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
 	projectId: string;
+	info?: string;
 }
 
 export function MeasurePlanningModule({
 	open,
 	onOpenChange,
+	info,
 }: MeasurePlanningModuleProps) {
 	const { title, description } = getModuleMetadata("measurePlanning");
 
@@ -29,6 +31,7 @@ export function MeasurePlanningModule({
 			onOpenChange={onOpenChange}
 			title={title}
 			description={description}
+			info={info}
 		/>
 	);
 }

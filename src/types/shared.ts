@@ -57,6 +57,26 @@ export interface ModuleMeasurementConfig {
 	metricIcons?: string[];
 	infoLayerConfigId?: string;
 	steps?: string[];
+	info?: ModuleMeasurementInfo;
+}
+
+export interface ModuleMeasurementInfo {
+	description?: string;
+	scores?: Record<string, number>;
+	images: ModuleMeasurementInfoImage[];
+	effects?: string[];
+	planningNotes?: ModuleMeasurementInfoNote[];
+}
+
+interface ModuleMeasurementInfoImage {
+	src: string;
+	alt: string;
+	description: string;
+}
+
+interface ModuleMeasurementInfoNote {
+	title: string;
+	notes: string[];
 }
 
 export interface ModuleConfig {

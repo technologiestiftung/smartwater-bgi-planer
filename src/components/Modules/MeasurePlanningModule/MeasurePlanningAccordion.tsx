@@ -7,7 +7,6 @@ import {
 	type ModuleStepViewConfig,
 } from "@/components/Modules/shared/moduleConfig";
 import { SideMenu } from "@/components/SideMenu";
-// import { Tutorial } from "@/components/Tutorial/Tutorial";
 import {
 	Accordion,
 	AccordionContent,
@@ -20,13 +19,15 @@ import { useMapReady } from "@/hooks/useMapReady";
 import { getIconComponent } from "@/lib/helpers/iconMap";
 import type { SectionId } from "@/lib/helpers/sectionIds";
 import { cn } from "@/lib/utils";
-import { useLayersStore, useUiStore } from "@/store";
+import { useLayersStore, useProjectStore, useUiStore } from "@/store";
 import type { LayerConfigItem } from "@/store/layers/types";
 import type { ModuleMeasurementConfig } from "@/types/shared";
 import { LAYER_IDS } from "@/types/shared";
 import { ArrowLeftIcon, InfoIcon, ListChecksIcon } from "@phosphor-icons/react";
+import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
+import { MeasureCatalogModal } from "../MeasureCatalogModule/MeasureCatalogModal";
 
 interface StepItem {
 	id: string;
@@ -70,6 +71,7 @@ interface MeasurePlanningAccordionProps {
 	onOpenChange: (open: boolean) => void;
 	title: string;
 	description: string;
+	info?: string;
 }
 
 function MeasurePlanningFooter({
@@ -90,7 +92,6 @@ function MeasurePlanningFooter({
 			>
 				<ListChecksIcon className="h-6 w-6 text-white" />
 			</Button>
-			{/* <Tutorial type="synthesis" /> */}
 			{showBackToQuestions && (
 				<Button
 					variant="ghost"
@@ -124,6 +125,9 @@ function MeasureListItem({
 	stepId,
 	onActivate,
 }: MeasureListItemProps) {
+	const getProject = useProjectStore((state) => state.getProject);
+	const project = getProject();
+	const projectId = project?.id;
 	return (
 		<div className="hover:bg-light flex items-center gap-2">
 			<button
@@ -131,7 +135,7 @@ function MeasureListItem({
 				onClick={() => !isDisabled && onActivate(stepId, item.configId)}
 				disabled={isDisabled}
 				className={cn(
-					"border-muted flex flex-1 items-center justify-between px-3 py-2 text-left transition-colors",
+					"border-muted flex flex-1 cursor-pointer items-center justify-between px-3 py-2 text-left transition-colors",
 					isConnectedArea &&
 						"bg-primary text-primary-foreground hover:bg-primary/90",
 					isDisabled && "cursor-not-allowed opacity-50 hover:bg-transparent",
@@ -162,17 +166,13 @@ function MeasureListItem({
 				</div>
 			</button>
 			{item.infoConfigId && (
-				<button
-					type="button"
-					onClick={() => onActivate(stepId, item.infoConfigId!)}
-					className="text-primary hover:text-primary/80 inline-flex h-9 w-9 items-center justify-center rounded-full"
+				<Link
+					href={`/${projectId}/planung?info=${item.id}`}
+					className="text-primary hover:text-primary/80 inline-flex h-9 w-9 cursor-pointer items-center justify-center rounded-full"
 					aria-label={`Informationen zu ${label}`}
 				>
-					{/* 
-						TODO: add routing to Measure catalog infos
-					*/}
 					<InfoIcon className="MeasuresInfosIcon h-5 w-5" />
-				</button>
+				</Link>
 			)}
 		</div>
 	);
@@ -183,6 +183,7 @@ export function MeasurePlanningAccordion({
 	onOpenChange,
 	title,
 	description,
+	info,
 }: MeasurePlanningAccordionProps) {
 	const steps = getModuleSteps("measurePlanning");
 	const { hasFeatures: hasConnectedArea } = useLayerFeatures(
@@ -318,59 +319,64 @@ export function MeasurePlanningAccordion({
 		);
 	} else {
 		content = (
-			<div className="flex h-full flex-col px-6 pb-6">
-				<p className="text-primary mt-2 mb-4">{description}</p>
-				<Accordion
-					type="single"
-					collapsible
-					value={expandedStepId}
-					onValueChange={(value) => setExpandedStepId(value || "")}
-				>
-					{steps.map((step) => {
-						const items = toStepItems(step);
-						const needsConnectedArea = stepRequiresConnectedArea(step);
+			<>
+				{info && <MeasureCatalogModal info={info} />}
+				<div className="flex h-full flex-col px-6 pb-6">
+					<p className="text-primary mt-2 mb-4">{description}</p>
+					<Accordion
+						type="single"
+						collapsible
+						value={expandedStepId}
+						onValueChange={(value) => setExpandedStepId(value || "")}
+					>
+						{steps.map((step) => {
+							const items = toStepItems(step);
+							const needsConnectedArea = stepRequiresConnectedArea(step);
 
-						return (
-							<AccordionItem
-								key={step.id}
-								value={step.id}
-								className="border-neutral-mid"
-							>
-								<AccordionTrigger className="text-primary py-5 text-xl font-semibold hover:no-underline">
-									<div className="flex items-center gap-3">
-										<span>{step.title}</span>
-									</div>
-								</AccordionTrigger>
-								<AccordionContent className="pb-5">
-									<div className="space-y-1">
-										{items.map((item) => {
-											const isConnectedArea =
-												item.configId === "connected_area";
-											const isDisabled =
-												needsConnectedArea &&
-												!isConnectedArea &&
-												!hasConnectedArea;
+							return (
+								<AccordionItem
+									key={step.id}
+									value={step.id}
+									className="border-neutral-mid"
+								>
+									<AccordionTrigger className="text-primary py-5 text-xl font-semibold hover:no-underline">
+										<div className="flex items-center gap-3">
+											<span>{step.title}</span>
+										</div>
+									</AccordionTrigger>
+									<AccordionContent className="pb-5">
+										<div className="space-y-1">
+											{items.map((item) => {
+												const isConnectedArea =
+													item.configId === "connected_area";
+												const isDisabled =
+													needsConnectedArea &&
+													!isConnectedArea &&
+													!hasConnectedArea;
 
-											return (
-												<MeasureListItem
-													key={item.id}
-													item={item}
-													label={getItemLabel(item, layerConfigById)}
-													isConnectedArea={isConnectedArea}
-													isDisabled={isDisabled}
-													hasPlacedMeasure={placedMeasureIds.has(item.configId)}
-													stepId={step.id}
-													onActivate={activateQuestion}
-												/>
-											);
-										})}
-									</div>
-								</AccordionContent>
-							</AccordionItem>
-						);
-					})}
-				</Accordion>
-			</div>
+												return (
+													<MeasureListItem
+														key={item.id}
+														item={item}
+														label={getItemLabel(item, layerConfigById)}
+														isConnectedArea={isConnectedArea}
+														isDisabled={isDisabled}
+														hasPlacedMeasure={placedMeasureIds.has(
+															item.configId,
+														)}
+														stepId={step.id}
+														onActivate={activateQuestion}
+													/>
+												);
+											})}
+										</div>
+									</AccordionContent>
+								</AccordionItem>
+							);
+						})}
+					</Accordion>
+				</div>
+			</>
 		);
 	}
 

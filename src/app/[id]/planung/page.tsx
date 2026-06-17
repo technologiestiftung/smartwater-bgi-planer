@@ -8,13 +8,18 @@ interface MaßnahmenplanungPageProps {
 	params: Promise<{
 		id: string;
 	}>;
+	searchParams: Promise<{
+		info?: string;
+	}>;
 }
 
 export default function MaßnahmenplanungPage({
 	params,
+	searchParams,
 }: MaßnahmenplanungPageProps) {
 	const router = useRouter();
 	const { id } = use(params);
+	const { info } = use(searchParams);
 
 	const handleClose = () => {
 		router.push(`/${id}/menu`);
@@ -25,6 +30,7 @@ export default function MaßnahmenplanungPage({
 			open={true}
 			onOpenChange={(open) => !open && handleClose()}
 			projectId={id}
+			info={info}
 		/>
 	);
 }
