@@ -80,14 +80,24 @@ export function CarouselWithIndicators({
 						)}
 					>
 						{slides.map((slide, index) => (
-							<CarouselItem key={index} className="relative aspect-[4/3] pl-0">
+							<CarouselItem
+								key={index}
+								className={cn(
+									"relative",
+									fullWidthSlider && "aspect-[4/3] pl-0",
+								)}
+							>
 								<Image
 									src={slide.src}
 									alt={slide.alt}
 									fill
-									className="object-contain"
-									sizes="(max-width: 768px) 100vw, 50vw"
 									priority={index === 0}
+									className={
+										fullWidthSlider ? "object-contain" : "object-cover"
+									}
+									sizes={
+										fullWidthSlider ? "(max-width: 768px) 100vw, 50vw" : "30vw"
+									}
 								/>
 							</CarouselItem>
 						))}
