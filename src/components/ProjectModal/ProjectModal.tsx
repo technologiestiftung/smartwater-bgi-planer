@@ -100,6 +100,7 @@ export function ProjectModal({ mode, projectId }: ProjectModalProps) {
 			try {
 				deleteProject();
 				setDeleted(true);
+				router.back();
 				setTimeout(() => {
 					router.replace("/");
 				}, 500);
