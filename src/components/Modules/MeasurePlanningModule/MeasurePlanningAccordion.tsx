@@ -321,7 +321,10 @@ export function MeasurePlanningAccordion({
 	} else if (cityClimateSimulation) {
 		content = (
 			<>
-				<CityClimateSimulation cityClimateSimulation={cityClimateSimulation} />
+				<CityClimateSimulation
+					cityClimateSimulation={cityClimateSimulation}
+					onActivate={activateQuestion}
+				/>
 				<CityClimateSimulationModal
 					cityClimateSimulation={cityClimateSimulation}
 				/>

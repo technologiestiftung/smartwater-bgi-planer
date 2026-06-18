@@ -2,24 +2,32 @@
 
 import { Button } from "@/components/ui/button";
 import { PencilRulerIcon, ArrowRightIcon } from "@phosphor-icons/react";
-import { useRouter } from "next/navigation";
-import { getModuleStepMeasure } from "../shared/moduleConfig";
-import { ModuleMeasurementConfig } from "@/types/shared";
+import { useRouter, useSearchParams } from "next/navigation";
+import { getModuleStep, getModuleStepMeasure } from "../shared/moduleConfig";
+import { ModuleMeasurementConfig, ModuleStepConfig } from "@/types/shared";
 
 interface CityClimateSimulationProps {
 	cityClimateSimulation: string;
+	onActivate: (stepId: string, configId: string) => void;
 }
 
 export function CityClimateSimulation({
 	cityClimateSimulation,
+	onActivate,
 }: CityClimateSimulationProps) {
 	const router = useRouter();
+	const searchParams = useSearchParams();
 	const getModuleInfo = getModuleStepMeasure(
 		"measurePlanning",
 		cityClimateSimulation,
 	) as ModuleMeasurementConfig;
+	const getStep = getModuleStep(
+		"measurePlanning",
+		cityClimateSimulation,
+	) as ModuleStepConfig;
 	const { title, cityClimateSimulation: { description } = {} } =
 		getModuleInfo || {};
+
 	return (
 		<div className="flex h-full w-full flex-col">
 			<div className="flex flex-1 flex-col gap-4 overflow-y-auto px-6 pb-6">
@@ -40,7 +48,12 @@ export function CityClimateSimulation({
 				</Button>
 				<div className="w-px self-stretch bg-white" />
 				<Button
-					onClick={() => console.log("Maßnahme platzieren")}
+					onClick={() => {
+						const params = new URLSearchParams(searchParams.toString());
+						params.delete("cityClimateSimulation");
+						router.replace(`?${params.toString()}`);
+						onActivate(getStep?.id || "", cityClimateSimulation);
+					}}
 					className="text-md my-4 flex-1 text-white hover:text-white"
 					size="lg"
 					variant="ghost"

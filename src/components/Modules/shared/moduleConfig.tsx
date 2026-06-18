@@ -33,6 +33,17 @@ export function getModuleStepMeasure(
 	return findMeasurement;
 }
 
+export function getModuleStep(
+	moduleId: string,
+	measureId: string,
+): ModuleMeasurementConfig | undefined {
+	const config = modulesConfig as ModulesConfigFile;
+	const findModule = config.modules.find((module) => module.id === moduleId);
+	return findModule?.steps.find((step) =>
+		step.measurements?.some((measurement) => measurement.id === measureId),
+	);
+}
+
 export function getModuleSteps(moduleId: string): ModuleStepViewConfig[] {
 	const moduleConfig = getModuleConfig(moduleId);
 	if (!moduleConfig) {
