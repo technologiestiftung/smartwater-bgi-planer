@@ -518,7 +518,28 @@
 		"id": "measure_start",
 		"name": "Startfrage",
 		"drawLayerId": "",
-		"visibleLayerIds": []
+		"visibleLayerIds": [
+			"project_boundary",
+			"module_3_connected_area_draw",
+			"module_3_3G1_draw",
+			"module_3_3G2_draw",
+			"module_3_3G5_draw",
+			"module_3_3E1_draw",
+			"module_3_3E2_draw",
+			"module_3_3B1_draw",
+			"module_3_3B2_draw",
+			"module_3_3V1_draw",
+			"module_3_3V2_draw",
+			"module_3_3V3_draw",
+			"module_3_3V4_draw",
+			"module_3_3V5_draw",
+			"module_3_3V6_draw",
+			"module_3_3S1_draw",
+			"module_3_3S2_draw",
+			"module_3_3S3_draw",
+			"module_3_3S4_draw",
+			"module_3_3S5_draw"
+		]
 	},
 	{
 		"id": "3G1",
