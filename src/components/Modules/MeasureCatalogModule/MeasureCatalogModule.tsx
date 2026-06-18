@@ -6,6 +6,7 @@ import { PlusIcon } from "@phosphor-icons/react";
 import { getIconComponent } from "@/lib/helpers/iconMap";
 import { cn } from "@/lib/utils";
 import { CarouselWithIndicators } from "@/components/ui/carousel-with-indicators";
+import { useRouter } from "next/navigation";
 
 interface MeasureCatalogModuleProps {
 	info: string;
@@ -21,14 +22,22 @@ const MeasureCatalogModule: FC<MeasureCatalogModuleProps> = ({ info }) => {
 		title,
 		info: { description, images, scores, effects, planningNotes } = {},
 	} = getModuleInfo || {};
+	const router = useRouter();
 	return (
 		<div className="MeasureCatalogModule-root">
 			<div className="border-muted flex items-center justify-between border-b px-6 py-4">
 				<h2 className="text-primary">{title}</h2>
 				<div className="flex gap-2.5">
-					<Button variant="outline">Modellierung Stadtklima</Button>
-					<Button variant="outline">Modellierung Überflutungsgefährdung</Button>
-					<Button>
+					<Button
+						variant="outline"
+						onClick={() => router.push(`?cityClimateSimulation=${id}`)}
+					>
+						Modellierung Stadtklima
+					</Button>
+					<Button variant="outline" disabled>
+						Modellierung Überflutungsgefährdung
+					</Button>
+					<Button disabled>
 						<PlusIcon /> Hinzufügen
 					</Button>
 				</div>

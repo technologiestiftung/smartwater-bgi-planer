@@ -10,6 +10,7 @@ interface MaßnahmenplanungPageProps {
 	}>;
 	searchParams: Promise<{
 		info?: string;
+		cityClimateSimulation?: string;
 	}>;
 }
 
@@ -19,7 +20,7 @@ export default function MaßnahmenplanungPage({
 }: MaßnahmenplanungPageProps) {
 	const router = useRouter();
 	const { id } = use(params);
-	const { info } = use(searchParams);
+	const { info, cityClimateSimulation } = use(searchParams);
 
 	const handleClose = () => {
 		router.push(`/${id}/menu`);
@@ -31,6 +32,7 @@ export default function MaßnahmenplanungPage({
 			onOpenChange={(open) => !open && handleClose()}
 			projectId={id}
 			info={info}
+			cityClimateSimulation={cityClimateSimulation}
 		/>
 	);
 }

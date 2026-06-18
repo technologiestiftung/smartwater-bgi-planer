@@ -19,7 +19,7 @@ import { useMapReady } from "@/hooks/useMapReady";
 import { getIconComponent } from "@/lib/helpers/iconMap";
 import type { SectionId } from "@/lib/helpers/sectionIds";
 import { cn } from "@/lib/utils";
-import { useLayersStore, useProjectStore, useUiStore } from "@/store";
+import { useLayersStore, useUiStore } from "@/store";
 import type { LayerConfigItem } from "@/store/layers/types";
 import type { ModuleMeasurementConfig } from "@/types/shared";
 import { LAYER_IDS } from "@/types/shared";
@@ -28,6 +28,8 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { MeasureCatalogModal } from "../MeasureCatalogModule/MeasureCatalogModal";
+import { CityClimateSimulation } from "./CityClimateSimulation";
+import { CityClimateSimulationModal } from "./CityClimateSimulationModal";
 
 interface StepItem {
 	id: string;
@@ -72,6 +74,7 @@ interface MeasurePlanningAccordionProps {
 	title: string;
 	description: string;
 	info?: string;
+	cityClimateSimulation?: string;
 }
 
 function MeasurePlanningFooter({
@@ -125,9 +128,6 @@ function MeasureListItem({
 	stepId,
 	onActivate,
 }: MeasureListItemProps) {
-	const getProject = useProjectStore((state) => state.getProject);
-	const project = getProject();
-	const projectId = project?.id;
 	return (
 		<div className="hover:bg-light flex items-center gap-2">
 			<button
@@ -167,7 +167,7 @@ function MeasureListItem({
 			</button>
 			{item.infoConfigId && (
 				<Link
-					href={`/${projectId}/planung?info=${item.id}`}
+					href={`?info=${item.id}`}
 					className="text-primary hover:text-primary/80 inline-flex h-9 w-9 cursor-pointer items-center justify-center rounded-full"
 					aria-label={`Informationen zu ${label}`}
 				>
@@ -184,6 +184,7 @@ export function MeasurePlanningAccordion({
 	title,
 	description,
 	info,
+	cityClimateSimulation,
 }: MeasurePlanningAccordionProps) {
 	const steps = getModuleSteps("measurePlanning");
 	const { hasFeatures: hasConnectedArea } = useLayerFeatures(
@@ -317,6 +318,15 @@ export function MeasurePlanningAccordion({
 				/>
 			</div>
 		);
+	} else if (cityClimateSimulation) {
+		content = (
+			<>
+				<CityClimateSimulation cityClimateSimulation={cityClimateSimulation} />
+				<CityClimateSimulationModal
+					cityClimateSimulation={cityClimateSimulation}
+				/>
+			</>
+		);
 	} else {
 		content = (
 			<>
@@ -387,7 +397,7 @@ export function MeasurePlanningAccordion({
 			title={title}
 			description={description}
 			footer={
-				isSynthesisMode ? null : (
+				isSynthesisMode || cityClimateSimulation ? null : (
 					<MeasurePlanningFooter
 						onShowSynthesis={handleShowSynthesis}
 						onBackToQuestions={handleBackToQuestions}

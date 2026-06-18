@@ -171,6 +171,95 @@
 										]
 									}
 								]
+							},
+							"cityClimateSimulation": {
+								"description": "TBD...",
+								"dropdownMenus": [
+									{
+										"title": "Messwert",
+										"options": [
+											{
+												"display": "Temperatur",
+												"value": "Temp"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ausschöpfung\nMaßnahme",
+										"options": [
+											{
+												"display": "100%",
+												"value": "100"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Uhrzeit",
+										"options": [
+											{
+												"display": "14:00",
+												"value": "1400"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Jahreszeit",
+										"options": [
+											{
+												"display": "Hitzetag"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ansicht",
+										"options": [
+											{
+												"display": "2.00m Höhe",
+												"value": "200M"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									}
+								]
 							}
 						},
 						{
@@ -241,6 +330,95 @@
 										]
 									}
 								]
+							},
+							"cityClimateSimulation": {
+								"description": "TBD...",
+								"dropdownMenus": [
+									{
+										"title": "Messwert",
+										"options": [
+											{
+												"display": "Temperatur",
+												"value": "Temp"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ausschöpfung\nMaßnahme",
+										"options": [
+											{
+												"display": "100%",
+												"value": "100"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Uhrzeit",
+										"options": [
+											{
+												"display": "14:00",
+												"value": "1400"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Jahreszeit",
+										"options": [
+											{
+												"display": "Hitzetag"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ansicht",
+										"options": [
+											{
+												"display": "2.00m Höhe",
+												"value": "200M"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									}
+								]
 							}
 						},
 						{
@@ -307,6 +485,95 @@
 											" Ausreichend Platz vor der Fassade nötig, um mit Hubsteigern / Fassadenaufzug den Bewuchs zu pflegen",
 											"Ggf. Abstimmung mit der Denkmalschutzbehörde",
 											"Brandschutzanforderungen beachten"
+										]
+									}
+								]
+							},
+							"cityClimateSimulation": {
+								"description": "TBD...",
+								"dropdownMenus": [
+									{
+										"title": "Messwert",
+										"options": [
+											{
+												"display": "Temperatur",
+												"value": "Temp"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ausschöpfung\nMaßnahme",
+										"options": [
+											{
+												"display": "100%",
+												"value": "100"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Uhrzeit",
+										"options": [
+											{
+												"display": "14:00",
+												"value": "1400"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Jahreszeit",
+										"options": [
+											{
+												"display": "Hitzetag"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ansicht",
+										"options": [
+											{
+												"display": "2.00m Höhe",
+												"value": "200M"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
 										]
 									}
 								]
@@ -380,6 +647,95 @@
 										]
 									}
 								]
+							},
+							"cityClimateSimulation": {
+								"description": "TBD...",
+								"dropdownMenus": [
+									{
+										"title": "Messwert",
+										"options": [
+											{
+												"display": "Temperatur",
+												"value": "Temp"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ausschöpfung\nMaßnahme",
+										"options": [
+											{
+												"display": "100%",
+												"value": "100"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Uhrzeit",
+										"options": [
+											{
+												"display": "14:00",
+												"value": "1400"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Jahreszeit",
+										"options": [
+											{
+												"display": "Hitzetag"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ansicht",
+										"options": [
+											{
+												"display": "2.00m Höhe",
+												"value": "200M"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									}
+								]
 							}
 						},
 						{
@@ -438,6 +794,95 @@
 										]
 									}
 								]
+							},
+							"cityClimateSimulation": {
+								"description": "TBD...",
+								"dropdownMenus": [
+									{
+										"title": "Messwert",
+										"options": [
+											{
+												"display": "Temperatur",
+												"value": "Temp"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ausschöpfung\nMaßnahme",
+										"options": [
+											{
+												"display": "100%",
+												"value": "100"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Uhrzeit",
+										"options": [
+											{
+												"display": "14:00",
+												"value": "1400"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Jahreszeit",
+										"options": [
+											{
+												"display": "Hitzetag"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ansicht",
+										"options": [
+											{
+												"display": "2.00m Höhe",
+												"value": "200M"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									}
+								]
 							}
 						}
 					]
@@ -465,6 +910,95 @@
 										"src": "/images/measureInfo/29_photo_gruenflaeche.jpg",
 										"alt": "TBD...",
 										"description": "Grünfläche (Berliner Regenwasseragentur)"
+									}
+								]
+							},
+							"cityClimateSimulation": {
+								"description": "TBD...",
+								"dropdownMenus": [
+									{
+										"title": "Messwert",
+										"options": [
+											{
+												"display": "Temperatur",
+												"value": "Temp"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ausschöpfung\nMaßnahme",
+										"options": [
+											{
+												"display": "100%",
+												"value": "100"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Uhrzeit",
+										"options": [
+											{
+												"display": "14:00",
+												"value": "1400"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Jahreszeit",
+										"options": [
+											{
+												"display": "Hitzetag"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ansicht",
+										"options": [
+											{
+												"display": "2.00m Höhe",
+												"value": "200M"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
 									}
 								]
 							}
@@ -533,6 +1067,95 @@
 											"Bei Anlage der Baumscheibe auf angrenzende Höhenplanung achten, um Regenwasser umliegender Flächen zu nutzen",
 											"Außerhalb von Wasserschutzgebieten mit Mulden kombinierbar (Hinweisblatt 2)",
 											"Anforderungen des Berliner Klimaanpassungsgesetzes beachten"
+										]
+									}
+								]
+							},
+							"cityClimateSimulation": {
+								"description": "TBD...",
+								"dropdownMenus": [
+									{
+										"title": "Messwert",
+										"options": [
+											{
+												"display": "Temperatur",
+												"value": "Temp"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ausschöpfung\nMaßnahme",
+										"options": [
+											{
+												"display": "100%",
+												"value": "100"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Uhrzeit",
+										"options": [
+											{
+												"display": "14:00",
+												"value": "1400"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Jahreszeit",
+										"options": [
+											{
+												"display": "Hitzetag"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ansicht",
+										"options": [
+											{
+												"display": "2.00m Höhe",
+												"value": "200M"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
 										]
 									}
 								]
@@ -622,6 +1245,95 @@
 										]
 									}
 								]
+							},
+							"cityClimateSimulation": {
+								"description": "TBD...",
+								"dropdownMenus": [
+									{
+										"title": "Messwert",
+										"options": [
+											{
+												"display": "Temperatur",
+												"value": "Temp"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ausschöpfung\nMaßnahme",
+										"options": [
+											{
+												"display": "100%",
+												"value": "100"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Uhrzeit",
+										"options": [
+											{
+												"display": "14:00",
+												"value": "1400"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Jahreszeit",
+										"options": [
+											{
+												"display": "Hitzetag"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ansicht",
+										"options": [
+											{
+												"display": "2.00m Höhe",
+												"value": "200M"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									}
+								]
 							}
 						},
 						{
@@ -691,6 +1403,95 @@
 											"Abstimmung mit der Bodenschutzbehörde",
 											"Berücksichtigung der Art der angeschlossenen",
 											"Fläche in Bezug auf die Schadstoffbelastung z.B. Metalleindeckung, Verkehrsstärke (Hinweisblatt 2)"
+										]
+									}
+								]
+							},
+							"cityClimateSimulation": {
+								"description": "TBD...",
+								"dropdownMenus": [
+									{
+										"title": "Messwert",
+										"options": [
+											{
+												"display": "Temperatur",
+												"value": "Temp"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ausschöpfung\nMaßnahme",
+										"options": [
+											{
+												"display": "100%",
+												"value": "100"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Uhrzeit",
+										"options": [
+											{
+												"display": "14:00",
+												"value": "1400"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Jahreszeit",
+										"options": [
+											{
+												"display": "Hitzetag"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ansicht",
+										"options": [
+											{
+												"display": "2.00m Höhe",
+												"value": "200M"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
 										]
 									}
 								]
@@ -769,6 +1570,95 @@
 										]
 									}
 								]
+							},
+							"cityClimateSimulation": {
+								"description": "TBD...",
+								"dropdownMenus": [
+									{
+										"title": "Messwert",
+										"options": [
+											{
+												"display": "Temperatur",
+												"value": "Temp"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ausschöpfung\nMaßnahme",
+										"options": [
+											{
+												"display": "100%",
+												"value": "100"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Uhrzeit",
+										"options": [
+											{
+												"display": "14:00",
+												"value": "1400"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Jahreszeit",
+										"options": [
+											{
+												"display": "Hitzetag"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ansicht",
+										"options": [
+											{
+												"display": "2.00m Höhe",
+												"value": "200M"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									}
+								]
 							}
 						},
 						{
@@ -833,6 +1723,95 @@
 											"Abstimmung mit der Wasserbehörde",
 											"Berücksichtigung der Art der angeschlossenen Fläche in Bezug auf die Schadstoffbelastung (z.B. Metalleindeckung, Verkehrsstärke (Hinweisblatt 2)",
 											"Tiefbeete können mit Rigolen kombiniert werden (bei geringerer Versickerungsfähigkeit des Untergrundes)"
+										]
+									}
+								]
+							},
+							"cityClimateSimulation": {
+								"description": "TBD...",
+								"dropdownMenus": [
+									{
+										"title": "Messwert",
+										"options": [
+											{
+												"display": "Temperatur",
+												"value": "Temp"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ausschöpfung\nMaßnahme",
+										"options": [
+											{
+												"display": "100%",
+												"value": "100"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Uhrzeit",
+										"options": [
+											{
+												"display": "14:00",
+												"value": "1400"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Jahreszeit",
+										"options": [
+											{
+												"display": "Hitzetag"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ansicht",
+										"options": [
+											{
+												"display": "2.00m Höhe",
+												"value": "200M"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
 										]
 									}
 								]
@@ -904,6 +1883,95 @@
 										]
 									}
 								]
+							},
+							"cityClimateSimulation": {
+								"description": "TBD...",
+								"dropdownMenus": [
+									{
+										"title": "Messwert",
+										"options": [
+											{
+												"display": "Temperatur",
+												"value": "Temp"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ausschöpfung\nMaßnahme",
+										"options": [
+											{
+												"display": "100%",
+												"value": "100"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Uhrzeit",
+										"options": [
+											{
+												"display": "14:00",
+												"value": "1400"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Jahreszeit",
+										"options": [
+											{
+												"display": "Hitzetag"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ansicht",
+										"options": [
+											{
+												"display": "2.00m Höhe",
+												"value": "200M"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									}
+								]
 							}
 						},
 						{
@@ -963,6 +2031,95 @@
 									{
 										"title": "Zusätzliche Hinweise:",
 										"notes": ["Abstimmung mit der Wasserbehörde"]
+									}
+								]
+							},
+							"cityClimateSimulation": {
+								"description": "TBD...",
+								"dropdownMenus": [
+									{
+										"title": "Messwert",
+										"options": [
+											{
+												"display": "Temperatur",
+												"value": "Temp"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ausschöpfung\nMaßnahme",
+										"options": [
+											{
+												"display": "100%",
+												"value": "100"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Uhrzeit",
+										"options": [
+											{
+												"display": "14:00",
+												"value": "1400"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Jahreszeit",
+										"options": [
+											{
+												"display": "Hitzetag"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ansicht",
+										"options": [
+											{
+												"display": "2.00m Höhe",
+												"value": "200M"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
 									}
 								]
 							}
@@ -1026,6 +2183,95 @@
 										]
 									}
 								]
+							},
+							"cityClimateSimulation": {
+								"description": "TBD...",
+								"dropdownMenus": [
+									{
+										"title": "Messwert",
+										"options": [
+											{
+												"display": "Temperatur",
+												"value": "Temp"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ausschöpfung\nMaßnahme",
+										"options": [
+											{
+												"display": "100%",
+												"value": "100"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Uhrzeit",
+										"options": [
+											{
+												"display": "14:00",
+												"value": "1400"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Jahreszeit",
+										"options": [
+											{
+												"display": "Hitzetag"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ansicht",
+										"options": [
+											{
+												"display": "2.00m Höhe",
+												"value": "200M"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									}
+								]
 							}
 						},
 						{
@@ -1034,7 +2280,96 @@
 							"title": "Zisterne für Bewässerung",
 							"metricIcons": ["Drop"],
 							"infoLayerConfigId": "3S2_info",
-							"info": {}
+							"info": {},
+							"cityClimateSimulation": {
+								"description": "TBD...",
+								"dropdownMenus": [
+									{
+										"title": "Messwert",
+										"options": [
+											{
+												"display": "Temperatur",
+												"value": "Temp"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ausschöpfung\nMaßnahme",
+										"options": [
+											{
+												"display": "100%",
+												"value": "100"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Uhrzeit",
+										"options": [
+											{
+												"display": "14:00",
+												"value": "1400"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Jahreszeit",
+										"options": [
+											{
+												"display": "Hitzetag"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ansicht",
+										"options": [
+											{
+												"display": "2.00m Höhe",
+												"value": "200M"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									}
+								]
+							}
 						},
 						{
 							"id": "3S3",
@@ -1042,7 +2377,96 @@
 							"title": "Zisterne für gebäudeinterne Nutzung",
 							"metricIcons": ["Drop", "Jar"],
 							"infoLayerConfigId": "3S3_info",
-							"info": {}
+							"info": {},
+							"cityClimateSimulation": {
+								"description": "TBD...",
+								"dropdownMenus": [
+									{
+										"title": "Messwert",
+										"options": [
+											{
+												"display": "Temperatur",
+												"value": "Temp"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ausschöpfung\nMaßnahme",
+										"options": [
+											{
+												"display": "100%",
+												"value": "100"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Uhrzeit",
+										"options": [
+											{
+												"display": "14:00",
+												"value": "1400"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Jahreszeit",
+										"options": [
+											{
+												"display": "Hitzetag"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ansicht",
+										"options": [
+											{
+												"display": "2.00m Höhe",
+												"value": "200M"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									}
+								]
+							}
 						},
 						{
 							"id": "3S4",
@@ -1108,6 +2532,95 @@
 										]
 									}
 								]
+							},
+							"cityClimateSimulation": {
+								"description": "TBD...",
+								"dropdownMenus": [
+									{
+										"title": "Messwert",
+										"options": [
+											{
+												"display": "Temperatur",
+												"value": "Temp"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ausschöpfung\nMaßnahme",
+										"options": [
+											{
+												"display": "100%",
+												"value": "100"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Uhrzeit",
+										"options": [
+											{
+												"display": "14:00",
+												"value": "1400"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Jahreszeit",
+										"options": [
+											{
+												"display": "Hitzetag"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ansicht",
+										"options": [
+											{
+												"display": "2.00m Höhe",
+												"value": "200M"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									}
+								]
 							}
 						},
 						{
@@ -1159,6 +2672,95 @@
 										"notes": [
 											"Durch die untere Abdichtung auch bei Altlasten anwendbar",
 											"Verdunstungsbeete sind noch nicht in technischen Richtlinien oder Standardisierungen beschrieben, Ableitung aus DWA-A 117 & DWA-A 138-1"
+										]
+									}
+								]
+							},
+							"cityClimateSimulation": {
+								"description": "TBD...",
+								"dropdownMenus": [
+									{
+										"title": "Messwert",
+										"options": [
+											{
+												"display": "Temperatur",
+												"value": "Temp"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ausschöpfung\nMaßnahme",
+										"options": [
+											{
+												"display": "100%",
+												"value": "100"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Uhrzeit",
+										"options": [
+											{
+												"display": "14:00",
+												"value": "1400"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Jahreszeit",
+										"options": [
+											{
+												"display": "Hitzetag"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
+										]
+									},
+									{
+										"title": "Ansicht",
+										"options": [
+											{
+												"display": "2.00m Höhe",
+												"value": "200M"
+											},
+											{
+												"display": "Option 2",
+												"value": "Opt2"
+											},
+											{
+												"display": "Option 3",
+												"value": "Opt3"
+											}
 										]
 									}
 								]

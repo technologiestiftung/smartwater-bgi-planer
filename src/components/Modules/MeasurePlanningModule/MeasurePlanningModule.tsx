@@ -10,12 +10,14 @@ interface MeasurePlanningModuleProps {
 	onOpenChange: (open: boolean) => void;
 	projectId: string;
 	info?: string;
+	cityClimateSimulation?: string;
 }
 
 export function MeasurePlanningModule({
 	open,
 	onOpenChange,
 	info,
+	cityClimateSimulation,
 }: MeasurePlanningModuleProps) {
 	const { title, description } = getModuleMetadata("measurePlanning");
 
@@ -32,6 +34,7 @@ export function MeasurePlanningModule({
 			title={title}
 			description={description}
 			info={info}
+			cityClimateSimulation={cityClimateSimulation}
 		/>
 	);
 }

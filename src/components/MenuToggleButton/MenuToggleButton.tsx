@@ -1,11 +1,12 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import SWLogo from "@/logos/SWLogo.svg";
 import { useProjectStore, useUiStore } from "@/store";
 import { selectActiveLayerConfig, useLayersStore } from "@/store/layers";
 import { InfoIcon, ListIcon } from "@phosphor-icons/react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface MenuToggleButtonProps {
 	projectId: string;
@@ -13,6 +14,8 @@ interface MenuToggleButtonProps {
 
 // eslint-disable-next-line complexity
 export function MenuToggleButton({ projectId }: MenuToggleButtonProps) {
+	const searchParams = useSearchParams();
+	const moveToTheBack = searchParams.has("cityClimateSimulation");
 	const router = useRouter();
 	const pathname = usePathname();
 	const setLastPath = useProjectStore((state) => state.setLastPath);
@@ -34,7 +37,12 @@ export function MenuToggleButton({ projectId }: MenuToggleButtonProps) {
 	};
 
 	return (
-		<div className="fixed top-4 right-4 z-40 flex items-center gap-3">
+		<div
+			className={cn(
+				"fixed top-4 right-4 flex items-center gap-3",
+				!moveToTheBack && "z-40",
+			)}
+		>
 			{isModule &&
 				(currentLayerConfig?.canDrawNotes ||
 					currentLayerConfig?.canDrawPolygons ||

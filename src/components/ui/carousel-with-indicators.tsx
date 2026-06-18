@@ -105,13 +105,13 @@ export function CarouselWithIndicators({
 					<CarouselPrevious
 						variant="ghost"
 						className={cn(
-							narrow && "absolute top-1/2 left-4 z-10 -translate-y-1/2",
+							narrow && "absolute top-1/2 left-2 z-10 -translate-y-1/2",
 						)}
 					/>
 					<CarouselNext
 						variant="ghost"
 						className={cn(
-							narrow && "absolute top-1/2 right-4 z-10 -translate-y-1/2",
+							narrow && "absolute top-1/2 right-2 z-10 -translate-y-1/2",
 						)}
 					/>
 				</Carousel>

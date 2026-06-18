@@ -58,6 +58,7 @@ export interface ModuleMeasurementConfig {
 	infoLayerConfigId?: string;
 	steps?: string[];
 	info?: ModuleMeasurementInfo;
+	cityClimateSimulation?: ModuleMeasurementCityClimateSimulation;
 }
 
 export interface ModuleMeasurementInfo {
@@ -77,6 +78,16 @@ interface ModuleMeasurementInfoImage {
 interface ModuleMeasurementInfoNote {
 	title: string;
 	notes: string[];
+}
+
+export interface ModuleMeasurementCityClimateSimulation {
+	description?: string;
+	dropdownMenus?: ModuleMeasurementCityClimateSimulationDropdownMenu[];
+}
+
+export interface ModuleMeasurementCityClimateSimulationDropdownMenu {
+	title: string;
+	options: { display: string; value: string | undefined }[];
 }
 
 export interface ModuleConfig {
