@@ -43,7 +43,7 @@ const MeasureCatalogModule: FC<MeasureCatalogModuleProps> = ({ info }) => {
 				</div>
 			</div>
 			<div className="flex">
-				<div className="flex min-w-0 flex-1 flex-col gap-4 p-6 pr-4">
+				<div className="flex max-h-[70vh] min-w-0 flex-1 flex-col gap-4 overflow-y-scroll p-6 pr-4">
 					<p>{description}</p>
 					<div className="flex flex-wrap justify-start gap-2">
 						{scores &&
