@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/carousel";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { CSSProperties } from "react";
 
 interface CarouselWithIndicatorsProps {
 	slides: {
@@ -21,7 +20,7 @@ interface CarouselWithIndicatorsProps {
 		description?: string;
 	}[];
 	hideTitle?: boolean;
-	slideWidth?: number;
+	fullWidthSlider?: boolean;
 	narrow?: boolean;
 	dark?: boolean;
 }
@@ -29,7 +28,7 @@ interface CarouselWithIndicatorsProps {
 export function CarouselWithIndicators({
 	slides,
 	hideTitle = false,
-	slideWidth = 0,
+	fullWidthSlider = false,
 	narrow = false,
 	dark = false,
 }: CarouselWithIndicatorsProps) {
@@ -64,38 +63,27 @@ export function CarouselWithIndicators({
 			)}
 			<div
 				className={cn(
-					"flex flex-1 items-center justify-center",
-					slideWidth
-						? "h-[var(--slide-height)] overflow-hidden"
-						: "h-[26.25vw]",
+					fullWidthSlider
+						? "w-full"
+						: "flex h-[26.25vw] flex-1 items-center justify-center",
 				)}
-				style={
-					{
-						"--slide-height": slideWidth * 0.75 + "px",
-					} as CSSProperties
-				}
 			>
-				<Carousel setApi={setApi} opts={{ loop: true }}>
+				<Carousel setApi={setApi} opts={{ loop: true }} className="w-full">
 					<CarouselContent
 						className={cn(
 							"aspect-[4/3]",
-							slideWidth ? "w-[var(--slide-width)]" : "w-[30vw]",
+							fullWidthSlider ? "-ml-0 w-full" : "w-[30vw]",
 						)}
-						style={
-							{
-								"--slide-width": slideWidth + "px",
-							} as CSSProperties
-						}
 					>
 						{slides.map((slide, index) => (
-							<CarouselItem key={index} className="relative">
+							<CarouselItem key={index} className="relative aspect-[4/3] pl-0">
 								<Image
 									src={slide.src}
 									alt={slide.alt}
 									fill
-									sizes={slideWidth ? `${slideWidth}px` : "30vw"}
+									className="object-contain"
+									sizes="(max-width: 768px) 100vw, 50vw"
 									priority={index === 0}
-									className="object-cover"
 								/>
 							</CarouselItem>
 						))}

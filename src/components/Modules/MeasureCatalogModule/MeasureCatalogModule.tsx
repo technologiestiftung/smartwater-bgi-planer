@@ -1,4 +1,4 @@
-import { FC, useRef, useLayoutEffect, useState } from "react";
+import { FC } from "react";
 import { getModuleStepMeasure } from "../shared/moduleConfig";
 import { ModuleMeasurementConfig } from "@/types/shared";
 import { Button } from "@/components/ui/button";
@@ -12,17 +12,6 @@ interface MeasureCatalogModuleProps {
 }
 
 const MeasureCatalogModule: FC<MeasureCatalogModuleProps> = ({ info }) => {
-	const divRef = useRef<HTMLDivElement | null>(null);
-	const [slideWidth, setSlideWidth] = useState<number>(0);
-	const maxHeight = true;
-
-	useLayoutEffect(() => {
-		if (!divRef.current) return;
-
-		const { clientWidth } = divRef.current;
-
-		setSlideWidth(clientWidth);
-	}, []);
 	const getModuleInfo = getModuleStepMeasure(
 		"measurePlanning",
 		info,
@@ -45,10 +34,7 @@ const MeasureCatalogModule: FC<MeasureCatalogModuleProps> = ({ info }) => {
 				</div>
 			</div>
 			<div className="flex">
-				<div
-					className="flex min-w-0 flex-1 flex-col gap-4 p-6 pr-4"
-					ref={divRef}
-				>
+				<div className="flex min-w-0 flex-1 flex-col gap-4 p-6 pr-4">
 					<p>{description}</p>
 					<div className="flex flex-wrap justify-start gap-2">
 						{scores &&
@@ -85,7 +71,7 @@ const MeasureCatalogModule: FC<MeasureCatalogModuleProps> = ({ info }) => {
 					{images && (
 						<CarouselWithIndicators
 							hideTitle
-							slideWidth={slideWidth}
+							fullWidthSlider
 							narrow
 							dark
 							slides={images}
@@ -93,12 +79,7 @@ const MeasureCatalogModule: FC<MeasureCatalogModuleProps> = ({ info }) => {
 					)}
 				</div>
 				<div className="border-muted border-l" />
-				<div
-					className={cn(
-						"flex min-w-0 flex-1 flex-col gap-6 p-6 pl-4",
-						maxHeight && "max-h-[70vh] overflow-y-scroll",
-					)}
-				>
+				<div className="flex max-h-[70vh] min-w-0 flex-1 flex-col gap-6 overflow-y-scroll p-6 pl-4">
 					<div>
 						<p className="font-bold">Effekte & Vorteile:</p>
 						{effects && (
