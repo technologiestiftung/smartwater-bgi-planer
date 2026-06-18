@@ -58,12 +58,17 @@ export const useScenarioStore = create<ScenarioState & ScenarioActions>()(
 				{
 					name: "scenario-storage",
 					onRehydrateStorage: () => (state) => {
-						if (
-							state &&
-							(Object.keys(state.scenarios).length === 0 ||
-								!state.activeScenarioId)
-						) {
-							state.createScenario(DEFAULT_SCENARIO_NAME);
+						if (state) {
+							const scenarioIds = Object.keys(state.scenarios);
+							const hasActiveScenario =
+								!!state.activeScenarioId &&
+								!!state.scenarios[state.activeScenarioId];
+
+							if (scenarioIds.length === 0) {
+								state.createScenario(DEFAULT_SCENARIO_NAME);
+							} else if (!hasActiveScenario) {
+								state.setActiveScenario(scenarioIds[0]);
+							}
 						}
 						state?.setHasHydrated(true);
 					},

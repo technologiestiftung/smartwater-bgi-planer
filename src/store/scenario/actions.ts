@@ -61,6 +61,10 @@ export const createCreateScenario = (set: SetState) => {
 		const id = createScenarioId();
 
 		set((state) => ({
+			activeScenarioId:
+				state.activeScenarioId && state.scenarios[state.activeScenarioId]
+					? state.activeScenarioId
+					: id,
 			scenarios: {
 				...state.scenarios,
 				[id]: {
@@ -70,7 +74,6 @@ export const createCreateScenario = (set: SetState) => {
 					measures: [],
 				},
 			},
-			activeScenarioId: state.activeScenarioId ?? id,
 		}));
 	};
 };
