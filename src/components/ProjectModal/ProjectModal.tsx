@@ -101,7 +101,7 @@ export function ProjectModal({ mode, projectId }: ProjectModalProps) {
 				deleteProject();
 				setDeleted(true);
 				setTimeout(() => router.push(`/`), 500);
-				setTimeout(() => setIsOpen(false), 1000);
+				// setTimeout(() => setIsOpen(false), 1000);
 			} catch (error) {
 				console.error("Fehler beim Löschen des Projekts:", error);
 				alert("Fehler beim Löschen des Projekts.");
@@ -169,7 +169,14 @@ export function ProjectModal({ mode, projectId }: ProjectModalProps) {
 	const footer = (
 		<div className="flex gap-2">
 			{mode === "edit" && projectId && (
-				<Button variant="outline" onClick={handleDelete} disabled={isSaving}>
+				<Button
+					variant="outline"
+					onClick={() => {
+						console.log("Delete project");
+						handleDelete();
+					}}
+					disabled={isSaving}
+				>
 					<TrashIcon />
 					Projekt löschen
 				</Button>
