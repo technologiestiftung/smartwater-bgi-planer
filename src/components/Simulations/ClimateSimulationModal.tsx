@@ -113,8 +113,8 @@ export function ClimateSimulationModal({
 								setImageError(true);
 							}}
 							loading="lazy"
-							width={0}
-							height={0}
+							width={1600}
+							height={900}
 							unoptimized
 						/>
 					)}

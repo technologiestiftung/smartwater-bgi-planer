@@ -1,3 +1,5 @@
+"use client";
+
 import { FC } from "react";
 import { getModuleStep, getModuleStepMeasure } from "../shared/moduleConfig";
 import { ModuleMeasurementConfig, ModuleStepConfig } from "@/types/shared";

@@ -64,7 +64,7 @@ export interface ModuleMeasurementConfig {
 export interface ModuleMeasurementInfo {
 	description?: string;
 	scores?: Record<string, number>;
-	images: ModuleMeasurementInfoImage[];
+	images?: ModuleMeasurementInfoImage[];
 	effects?: string[];
 	planningNotes?: ModuleMeasurementInfoNote[];
 }
@@ -87,7 +87,7 @@ export interface ModuleMeasurementClimateSimulation {
 
 export interface ModuleMeasurementClimateSimulationDropdownMenu {
 	title: string;
-	options: { display: string; value: string | undefined }[];
+	options: { display: string; value?: string }[];
 }
 
 export interface ModuleConfig {
