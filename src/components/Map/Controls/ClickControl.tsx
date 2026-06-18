@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 "use client";
 
 import { FeatureDetailsModal } from "@/components/FeatureDetailViews/FeatureDetailsModal/FeatureDetailsModal";
@@ -95,6 +96,11 @@ export const ClickControl: FC<ClickControlProps> = ({
 			setSelection(null);
 		}, 200) as unknown as number;
 	}, [clearTimeouts]);
+
+	const onCloseRender = useCallback(() => {
+		setIsVisible(false);
+		setSelection(null);
+	}, []);
 
 	const calculatePositioning = useCallback(
 		(pixel: [number, number]): OverlayPositioning => {
@@ -361,7 +367,7 @@ export const ClickControl: FC<ClickControlProps> = ({
 				}}
 			>
 				{selection?.displayMode === "overlay" &&
-					renderContent(selection.feature, selection.layerId, handleClose)}
+					renderContent(selection.feature, selection.layerId, onCloseRender)}
 			</div>
 
 			{selection?.displayMode === "modal" && (

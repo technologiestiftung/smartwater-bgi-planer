@@ -3,6 +3,7 @@ import {
 	useFilesStore,
 	useMapStore,
 	useProjectStore,
+	useScenarioStore,
 } from "@/store";
 import { getFileBlob, getProjectFileKeys } from "@/store/files/storage";
 import JSZip from "jszip";
@@ -15,6 +16,7 @@ export interface ProjectBackup {
 		project: any;
 		answers: Record<string, boolean | null>;
 		map: any;
+		scenario?: any;
 		files: Array<{
 			key: string;
 			projectId: string;
@@ -67,6 +69,8 @@ export const collectProjectData = async (
 		);
 	}
 
+	const scenarioState = useScenarioStore.getState();
+
 	return {
 		version: BACKUP_VERSION,
 		exportedAt: new Date().toISOString(),
@@ -75,6 +79,10 @@ export const collectProjectData = async (
 			project,
 			answers: useAnswersStore.getState().answers,
 			map: getMapData(),
+			scenario: {
+				scenarios: scenarioState.scenarios,
+				activeScenarioId: scenarioState.activeScenarioId,
+			},
 			files: getFilesMetadata(projectId),
 		},
 	};

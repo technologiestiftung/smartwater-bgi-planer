@@ -6,6 +6,7 @@ import {
 	useFilesStore,
 	useMapStore,
 	useProjectStore,
+	useScenarioStore,
 	useUiStore,
 } from "@/store";
 import { UploadIcon } from "@phosphor-icons/react";
@@ -64,6 +65,13 @@ export const ProjectUploaderButton: FC<ProjectUploaderButtonProps> = ({
 			Object.entries(data.answers || {}).forEach(([k, v]) =>
 				setAnswer(k, v as boolean),
 			);
+
+			if (data.scenario?.scenarios && data.scenario?.activeScenarioId) {
+				useScenarioStore.setState({
+					scenarios: data.scenario.scenarios,
+					activeScenarioId: data.scenario.activeScenarioId,
+				});
+			}
 
 			if (data.map?.mapView) {
 				updateConfig({
