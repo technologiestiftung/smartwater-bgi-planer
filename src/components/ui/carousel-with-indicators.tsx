@@ -68,7 +68,11 @@ export function CarouselWithIndicators({
 						: "flex h-[26.25vw] flex-1 items-center justify-center",
 				)}
 			>
-				<Carousel setApi={setApi} opts={{ loop: true }} className="w-full">
+				<Carousel
+					setApi={setApi}
+					opts={{ loop: true }}
+					className={cn(fullWidthSlider && "w-full")}
+				>
 					<CarouselContent
 						className={cn(
 							"aspect-[4/3]",
