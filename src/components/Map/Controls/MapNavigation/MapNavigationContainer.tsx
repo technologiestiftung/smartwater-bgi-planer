@@ -21,7 +21,7 @@ export const MapNavigationContainer: FC<MapNavigationContainerProps> = ({
 		(state) => state.setIsLayerTreeVisible,
 	);
 	const searchParams = useSearchParams();
-	const moveToTheBack = searchParams.has("cityClimateSimulation");
+	const moveToTheBack = searchParams.has("climateSimulation");
 	const enterTimeoutRef = useRef<number | null>(null);
 	const leaveTimeoutRef = useRef<number | null>(null);
 

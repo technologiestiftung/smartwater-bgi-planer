@@ -28,8 +28,8 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { MeasureCatalogModal } from "../MeasureCatalogModule/MeasureCatalogModal";
-import { CityClimateSimulation } from "./CityClimateSimulation";
-import { CityClimateSimulationModal } from "./CityClimateSimulationModal";
+import { ClimateSimulation } from "@/components/Simulations/ClimateSimulation";
+import { ClimateSimulationModal } from "@/components/Simulations/ClimateSimulationModal";
 
 interface StepItem {
 	id: string;
@@ -74,7 +74,7 @@ interface MeasurePlanningAccordionProps {
 	title: string;
 	description: string;
 	info?: string;
-	cityClimateSimulation?: string;
+	climateSimulation?: string;
 }
 
 function MeasurePlanningFooter({
@@ -184,7 +184,7 @@ export function MeasurePlanningAccordion({
 	title,
 	description,
 	info,
-	cityClimateSimulation,
+	climateSimulation,
 }: MeasurePlanningAccordionProps) {
 	const steps = getModuleSteps("measurePlanning");
 	const { hasFeatures: hasConnectedArea } = useLayerFeatures(
@@ -318,22 +318,22 @@ export function MeasurePlanningAccordion({
 				/>
 			</div>
 		);
-	} else if (cityClimateSimulation) {
+	} else if (climateSimulation) {
 		content = (
 			<>
-				<CityClimateSimulation
-					cityClimateSimulation={cityClimateSimulation}
+				<ClimateSimulation
+					climateSimulation={climateSimulation}
 					onActivate={activateQuestion}
 				/>
-				<CityClimateSimulationModal
-					cityClimateSimulation={cityClimateSimulation}
-				/>
+				<ClimateSimulationModal climateSimulation={climateSimulation} />
 			</>
 		);
 	} else {
 		content = (
 			<>
-				{info && <MeasureCatalogModal info={info} />}
+				{info && (
+					<MeasureCatalogModal info={info} onActivate={activateQuestion} />
+				)}
 				<div className="flex h-full flex-col px-6 pb-6">
 					<p className="text-primary mt-2 mb-4">{description}</p>
 					<Accordion
@@ -400,7 +400,7 @@ export function MeasurePlanningAccordion({
 			title={title}
 			description={description}
 			footer={
-				isSynthesisMode || cityClimateSimulation ? null : (
+				isSynthesisMode || climateSimulation ? null : (
 					<MeasurePlanningFooter
 						onShowSynthesis={handleShowSynthesis}
 						onBackToQuestions={handleBackToQuestions}

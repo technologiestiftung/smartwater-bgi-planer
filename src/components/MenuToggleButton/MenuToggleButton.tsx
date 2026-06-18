@@ -15,7 +15,7 @@ interface MenuToggleButtonProps {
 // eslint-disable-next-line complexity
 export function MenuToggleButton({ projectId }: MenuToggleButtonProps) {
 	const searchParams = useSearchParams();
-	const moveToTheBack = searchParams.has("cityClimateSimulation");
+	const moveToTheBack = searchParams.has("climateSimulation");
 	const router = useRouter();
 	const pathname = usePathname();
 	const setLastPath = useProjectStore((state) => state.setLastPath);

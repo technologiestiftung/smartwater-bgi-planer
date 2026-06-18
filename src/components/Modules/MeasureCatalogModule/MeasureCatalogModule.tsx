@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { getModuleStepMeasure } from "../shared/moduleConfig";
-import { ModuleMeasurementConfig } from "@/types/shared";
+import { getModuleStep, getModuleStepMeasure } from "../shared/moduleConfig";
+import { ModuleMeasurementConfig, ModuleStepConfig } from "@/types/shared";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "@phosphor-icons/react";
 import { getIconComponent } from "@/lib/helpers/iconMap";
@@ -10,9 +10,13 @@ import { useRouter } from "next/navigation";
 
 interface MeasureCatalogModuleProps {
 	info: string;
+	onActivate: (stepId: string, configId: string) => void;
 }
 
-const MeasureCatalogModule: FC<MeasureCatalogModuleProps> = ({ info }) => {
+const MeasureCatalogModule: FC<MeasureCatalogModuleProps> = ({
+	info,
+	onActivate,
+}) => {
 	const getModuleInfo = getModuleStepMeasure(
 		"measurePlanning",
 		info,
@@ -23,6 +27,9 @@ const MeasureCatalogModule: FC<MeasureCatalogModuleProps> = ({ info }) => {
 		info: { description, images, scores, effects, planningNotes } = {},
 	} = getModuleInfo || {};
 	const router = useRouter();
+
+	const getStep = getModuleStep("measurePlanning", info) as ModuleStepConfig;
+
 	return (
 		<div className="MeasureCatalogModule-root">
 			<div className="border-muted flex items-center justify-between border-b px-6 py-4">
@@ -30,14 +37,14 @@ const MeasureCatalogModule: FC<MeasureCatalogModuleProps> = ({ info }) => {
 				<div className="flex gap-2.5">
 					<Button
 						variant="outline"
-						onClick={() => router.push(`?cityClimateSimulation=${id}`)}
+						onClick={() => router.push(`?climateSimulation=${id}`)}
 					>
 						Modellierung Stadtklima
 					</Button>
 					<Button variant="outline" disabled>
 						Modellierung Überflutungsgefährdung
 					</Button>
-					<Button disabled>
+					<Button onClick={() => onActivate(getStep.id, info)}>
 						<PlusIcon /> Hinzufügen
 					</Button>
 				</div>

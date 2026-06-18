@@ -6,9 +6,13 @@ import MeasureCatalogModule from "./MeasureCatalogModule";
 
 interface MeasureCatalogModalProps {
 	info: string;
+	onActivate: (stepId: string, configId: string) => void;
 }
 
-export function MeasureCatalogModal({ info }: MeasureCatalogModalProps) {
+export function MeasureCatalogModal({
+	info,
+	onActivate,
+}: MeasureCatalogModalProps) {
 	const router = useRouter();
 	const [isOpen, setIsOpen] = useState(true);
 
@@ -25,7 +29,7 @@ export function MeasureCatalogModal({ info }: MeasureCatalogModalProps) {
 			className="max-w-6xl"
 			bodyClassName="p-0"
 		>
-			<MeasureCatalogModule info={info} />
+			<MeasureCatalogModule info={info} onActivate={onActivate} />
 		</PageModal>
 	);
 }

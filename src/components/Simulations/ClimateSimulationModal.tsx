@@ -1,7 +1,6 @@
 "use client";
 
 import { ModuleMeasurementConfig } from "@/types/shared";
-import { getModuleStepMeasure } from "../shared/moduleConfig";
 import {
 	DropdownMenu,
 	DropdownMenuTrigger,
@@ -10,9 +9,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { getModuleStepMeasure } from "../Modules/shared/moduleConfig";
 
-interface CityClimateSimulationModalProps {
-	cityClimateSimulation: string;
+interface ClimateSimulationModalProps {
+	climateSimulation: string;
 }
 
 type DropdownSelection = {
@@ -20,14 +20,14 @@ type DropdownSelection = {
 	value: string;
 };
 
-export function CityClimateSimulationModal({
-	cityClimateSimulation,
-}: CityClimateSimulationModalProps) {
+export function ClimateSimulationModal({
+	climateSimulation,
+}: ClimateSimulationModalProps) {
 	const getModuleInfo = getModuleStepMeasure(
 		"measurePlanning",
-		cityClimateSimulation,
+		climateSimulation,
 	) as ModuleMeasurementConfig;
-	const { title, cityClimateSimulation: { dropdownMenus } = {} } =
+	const { title, climateSimulation: { dropdownMenus } = {} } =
 		getModuleInfo || {};
 	const fileType = ".jpg";
 	const [imgError, setImageError] = useState(false);
@@ -41,7 +41,7 @@ export function CityClimateSimulationModal({
 				};
 			}) || [],
 	);
-	const fileName = `/images/cityClimateSimulation/${title}_${selections
+	const fileName = `/images/climateSimulation/${title}_${selections
 		.map((s) => sanitizeString(s.value || s.display))
 		.join("_")}${fileType}`; // Mulde_Temp_100_1400_Hitzetag_OstWest.jpg
 
@@ -72,7 +72,7 @@ export function CityClimateSimulationModal({
 	}
 
 	return (
-		<div className="CityClimateSimulation-Overlay fixed inset-0 z-40 ml-136 flex items-center justify-start bg-black/60 p-2 backdrop-blur-sm">
+		<div className="ClimateSimulation-Overlay fixed inset-0 z-40 ml-136 flex items-center justify-start bg-black/60 p-2 backdrop-blur-sm">
 			<div className="flex h-full w-full max-w-6xl flex-col gap-4 bg-white p-6">
 				<div className="flex items-end justify-between gap-2">
 					{dropdownMenus.map((menu, index) => (
