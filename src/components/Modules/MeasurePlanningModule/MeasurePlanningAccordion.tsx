@@ -313,6 +313,7 @@ export function MeasurePlanningAccordion({
 				<MeasurePlanningStepContent
 					layerConfig={selectedQuestionConfig}
 					metricIcons={selectedMetricIcons}
+					onConfirm={handleBackToQuestions}
 				/>
 			</div>
 		);
