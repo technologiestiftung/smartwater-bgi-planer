@@ -20,6 +20,7 @@ export function MenuModal({ projectId }: MenuModalProps) {
 	};
 
 	useEffect(() => {
+		console.log("MenuModal useEffect", { hasHydrated, deleteTheProject });
 		if (!hasHydrated || !deleteTheProject) return;
 		const project = getProject();
 		router.replace(`/${project?.id}/delete`);
