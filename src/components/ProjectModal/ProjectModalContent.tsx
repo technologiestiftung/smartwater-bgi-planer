@@ -5,7 +5,6 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
 import { UseCase } from "@/store/project/types";
 import { SpinnerIcon } from "@phosphor-icons/react";
-
 import { useEffect, useState } from "react";
 
 export interface ProjectFormData {
@@ -45,11 +44,10 @@ export function ProjectModalContent({
 	) => {
 		setFormData((prev) => ({ ...prev, [field]: value }));
 	};
-
 	if (deleted) {
 		return (
 			<>
-				<div className="mt-4 hidden flex-wrap items-center justify-center gap-2 lg:flex">
+				<div className="hidden flex-wrap items-center justify-center gap-2 lg:flex">
 					<SpinnerIcon
 						size={32}
 						className="animate-spin [animation-duration:3s]"
@@ -59,7 +57,6 @@ export function ProjectModalContent({
 			</>
 		);
 	}
-
 	return (
 		<FieldSet>
 			<FieldGroup>

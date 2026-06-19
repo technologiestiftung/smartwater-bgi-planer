@@ -100,8 +100,8 @@ export function ProjectModal({ mode, projectId }: ProjectModalProps) {
 			try {
 				deleteProject();
 				setDeleted(true);
-				setTimeout(() => router.push(`/`), 3000);
-				setTimeout(() => setIsOpen(false), 3500);
+				setTimeout(() => router.push(`/`), 500);
+				setTimeout(() => setIsOpen(false), 1000);
 			} catch (error) {
 				console.error("Fehler beim Löschen des Projekts:", error);
 				alert("Fehler beim Löschen des Projekts.");
