@@ -26,7 +26,7 @@ interface ProjectModalProps {
 
 export function ProjectModal({ mode, projectId }: ProjectModalProps) {
 	const router = useRouter();
-	const { createProject, updateProject, getProject, deleteProject } =
+	const { createProject, updateProject, getProject, setDeleteTheProject } =
 		useProjectStore();
 
 	const { ConfirmDialog, confirm } = useConfirmDialog({
@@ -79,7 +79,6 @@ export function ProjectModal({ mode, projectId }: ProjectModalProps) {
 	});
 	const [isSaving, setIsSaving] = useState(false);
 	const [isOpen, setIsOpen] = useState(true);
-	const [deleted, setDeleted] = useState(false);
 
 	useEffect(() => {
 		if (mode === "edit" && projectId) {
@@ -98,10 +97,7 @@ export function ProjectModal({ mode, projectId }: ProjectModalProps) {
 		const confirmed = await confirm();
 		if (confirmed) {
 			try {
-				deleteProject();
-				setDeleted(true);
-				setTimeout(() => router.push(`/`), 500);
-				setTimeout(() => setIsOpen(false), 1000);
+				setDeleteTheProject(true);
 			} catch (error) {
 				console.error("Fehler beim Löschen des Projekts:", error);
 				alert("Fehler beim Löschen des Projekts.");
@@ -199,7 +195,7 @@ export function ProjectModal({ mode, projectId }: ProjectModalProps) {
 				onOpenChange={() => handleClose()}
 				title={title}
 				description={description}
-				footer={deleted ? undefined : footer}
+				footer={footer}
 				customBackdrop={customBackdrop}
 			>
 				<ProjectModalContent
@@ -207,7 +203,6 @@ export function ProjectModal({ mode, projectId }: ProjectModalProps) {
 					projectId={projectId}
 					onFormChange={setFormData}
 					initialData={formData}
-					deleted={deleted}
 				/>
 			</PageModal>
 		</>

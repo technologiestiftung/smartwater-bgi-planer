@@ -85,6 +85,9 @@ export interface ProjectState {
 	project: Project | null;
 	hasHydrated: boolean;
 	lastPath?: string | null;
+
+	// delete Project
+	deleteTheProject: boolean;
 }
 
 export interface ProjectActions {
@@ -100,4 +103,5 @@ export interface ProjectActions {
 	setHasHydrated: (state: boolean) => void;
 	setLastPath: (path: string | null) => void;
 	getLastPath: () => string | null;
+	setDeleteTheProject: (state: boolean) => void;
 }

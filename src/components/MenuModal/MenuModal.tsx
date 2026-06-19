@@ -1,8 +1,9 @@
 "use client";
 import { MenuModalContent } from "@/components/MenuModal/MenuModalContent";
 import { PageModal } from "@/components/Modal";
+import { useProjectStore } from "@/store/project";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface MenuModalProps {
 	projectId: string;
@@ -11,11 +12,18 @@ interface MenuModalProps {
 export function MenuModal({ projectId }: MenuModalProps) {
 	const router = useRouter();
 	const [isOpen, setIsOpen] = useState(true);
+	const { hasHydrated, deleteTheProject, getProject } = useProjectStore();
 
 	const handleClose = () => {
 		setIsOpen(false);
 		router.back();
 	};
+
+	useEffect(() => {
+		if (!hasHydrated || !deleteTheProject) return;
+		const project = getProject();
+		router.replace(`/${project?.id}/delete`);
+	}, [hasHydrated, deleteTheProject]);
 
 	return (
 		<PageModal

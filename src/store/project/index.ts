@@ -7,6 +7,7 @@ import {
 	createGetLastPath,
 	createGetProject,
 	createSetActiveArea,
+	createSetDeleteTheProject,
 	createSetInputFeatures,
 	createSetLastPath,
 	createUpdateProject,
@@ -31,6 +32,9 @@ const initialState: ProjectState = {
 	project: null,
 	hasHydrated: false,
 	lastPath: null,
+
+	// delete Project
+	deleteTheProject: false,
 };
 
 export const useProjectStore = create<ProjectState & ProjectActions>()(
@@ -48,6 +52,7 @@ export const useProjectStore = create<ProjectState & ProjectActions>()(
 					setHasHydrated: (state) => set({ hasHydrated: state }),
 					setLastPath: createSetLastPath(set),
 					getLastPath: createGetLastPath(get),
+					setDeleteTheProject: createSetDeleteTheProject(set),
 				}),
 				{
 					name: "project-storage",

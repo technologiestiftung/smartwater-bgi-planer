@@ -95,6 +95,7 @@ export const createDeleteProject = (set: SetState, get: GetState) => {
 			computedFeatures: [],
 			activeAreaPotential: null,
 			activeAreaId: null,
+			deleteTheProject: false,
 		});
 
 		if (projectId) {
@@ -120,6 +121,12 @@ export const createGetProject = (get: GetState) => {
 export const createSetLastPath = (set: SetState) => {
 	return (path: string | null) => {
 		set({ lastPath: path });
+	};
+};
+
+export const createSetDeleteTheProject = (set: SetState) => {
+	return (state: boolean) => {
+		set({ deleteTheProject: state });
 	};
 };
 
