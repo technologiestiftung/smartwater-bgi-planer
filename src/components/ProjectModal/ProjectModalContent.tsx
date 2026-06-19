@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
 import { UseCase } from "@/store/project/types";
+import { SpinnerIcon } from "@phosphor-icons/react";
 
 import { useEffect, useState } from "react";
 
@@ -18,11 +19,13 @@ interface ProjectModalProps {
 	projectId?: string;
 	onFormChange?: (data: ProjectFormData) => void;
 	initialData?: ProjectFormData;
+	deleted?: boolean;
 }
 
 export function ProjectModalContent({
 	onFormChange,
 	initialData,
+	deleted = false,
 }: ProjectModalProps) {
 	const [formData, setFormData] = useState<ProjectFormData>({
 		name: initialData?.name || "",
@@ -42,6 +45,21 @@ export function ProjectModalContent({
 	) => {
 		setFormData((prev) => ({ ...prev, [field]: value }));
 	};
+
+	if (deleted) {
+		return (
+			<>
+				<div className="mt-4 hidden flex-wrap items-center justify-center gap-2 lg:flex">
+					<SpinnerIcon
+						size={32}
+						className="animate-spin [animation-duration:3s]"
+					/>
+					<p>Projekt wird gelöscht...</p>
+				</div>
+			</>
+		);
+	}
+
 	return (
 		<FieldSet>
 			<FieldGroup>
