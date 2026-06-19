@@ -194,7 +194,6 @@ export function ProjectModal({ mode, projectId }: ProjectModalProps) {
 	);
 
 	useEffect(() => {
-		console.log("ProjectModal useEffect", { hasHydrated, deleteTheProject });
 		if (!hasHydrated || !deleteTheProject) return;
 		const project = getProject();
 		router.replace(`/${project?.id}/delete`);
