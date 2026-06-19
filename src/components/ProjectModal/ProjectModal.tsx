@@ -26,8 +26,14 @@ interface ProjectModalProps {
 
 export function ProjectModal({ mode, projectId }: ProjectModalProps) {
 	const router = useRouter();
-	const { createProject, updateProject, getProject, setDeleteTheProject } =
-		useProjectStore();
+	const {
+		createProject,
+		updateProject,
+		getProject,
+		setDeleteTheProject,
+		hasHydrated,
+		deleteTheProject,
+	} = useProjectStore();
 
 	const { ConfirmDialog, confirm } = useConfirmDialog({
 		title: "Projekt löschen",
@@ -186,6 +192,13 @@ export function ProjectModal({ mode, projectId }: ProjectModalProps) {
 			<Background className="min-h-full min-w-full shrink-0" />
 		</div>
 	);
+
+	useEffect(() => {
+		console.log("ProjectModal useEffect", { hasHydrated, deleteTheProject });
+		if (!hasHydrated || !deleteTheProject) return;
+		const project = getProject();
+		router.replace(`/${project?.id}/delete`);
+	}, [hasHydrated, deleteTheProject]);
 
 	return (
 		<>
