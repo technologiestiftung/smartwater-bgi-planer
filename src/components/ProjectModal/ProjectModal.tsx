@@ -79,7 +79,6 @@ export function ProjectModal({ mode, projectId }: ProjectModalProps) {
 	});
 	const [isSaving, setIsSaving] = useState(false);
 	const [isOpen, setIsOpen] = useState(true);
-	const [deleted, setDeleted] = useState(false);
 
 	useEffect(() => {
 		if (mode === "edit" && projectId) {
@@ -99,11 +98,6 @@ export function ProjectModal({ mode, projectId }: ProjectModalProps) {
 		if (confirmed) {
 			try {
 				deleteProject();
-				setDeleted(true);
-				router.back();
-				setTimeout(() => {
-					router.replace("/");
-				}, 500);
 			} catch (error) {
 				console.error("Fehler beim Löschen des Projekts:", error);
 				alert("Fehler beim Löschen des Projekts.");
@@ -201,7 +195,7 @@ export function ProjectModal({ mode, projectId }: ProjectModalProps) {
 				onOpenChange={() => handleClose()}
 				title={title}
 				description={description}
-				footer={deleted ? undefined : footer}
+				footer={footer}
 				customBackdrop={customBackdrop}
 			>
 				<ProjectModalContent
@@ -209,7 +203,6 @@ export function ProjectModal({ mode, projectId }: ProjectModalProps) {
 					projectId={projectId}
 					onFormChange={setFormData}
 					initialData={formData}
-					deleted={deleted}
 				/>
 			</PageModal>
 		</>
