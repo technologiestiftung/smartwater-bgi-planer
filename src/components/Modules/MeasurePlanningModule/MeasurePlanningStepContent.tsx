@@ -25,6 +25,7 @@ import { ConnectedAreaSelection } from "./ConnectedAreaSelection";
 interface MeasurePlanningStepContentProps {
 	layerConfig: LayerConfigItem;
 	metricIcons?: string[];
+	onConfirm?: () => void;
 }
 
 interface MeasurePlanningLegendProps {
@@ -86,6 +87,7 @@ function MeasurePlanningLegend({ layerConfig }: MeasurePlanningLegendProps) {
 export function MeasurePlanningStepContent({
 	layerConfig,
 	metricIcons = [],
+	onConfirm,
 }: MeasurePlanningStepContentProps) {
 	const showLegendAccordion =
 		Boolean(layerConfig.legendSrc) || Boolean(layerConfig.canDrawMeasures);
@@ -168,6 +170,7 @@ export function MeasurePlanningStepContent({
 	const handleConfirm = () => {
 		confirmedRef.current = true;
 		useUiStore.getState().confirmDraftMeasures();
+		onConfirm?.();
 	};
 
 	useEffect(() => {
@@ -191,7 +194,6 @@ export function MeasurePlanningStepContent({
 							<RichTextWithLinks text={layerConfig.description} />
 						</div>
 					)}
-					{/* <PotentialsContent layerConfig={layerConfig} /> */}
 					<ConnectedAreaSelection
 						layerConfigId={layerConfig.id}
 						drawLayerId={layerConfig.drawLayerId}
