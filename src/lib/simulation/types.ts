@@ -28,7 +28,7 @@ export type ComputedArea = {
 	green_roof_int: number;
 	to_swale: number;
 	to_swale_trench: number;
-	to_cictern: number;
+	to_cistern: number;
 	to_surf_infil: number;
 	to_tree_pit: number;
 	trees_sm: number;
@@ -44,7 +44,7 @@ export type AreaPotential = {
 	permeable_paving: number;
 	to_swale: number;
 	to_swale_trench: number;
-	to_cictern: number;
+	to_cistern: number;
 	to_surf_infil: number;
 	to_tree_pit: number;
 };

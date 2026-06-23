@@ -81,7 +81,7 @@ function toComputedArea(area: OLFeature): ComputedArea {
 		green_roof_int: 0,
 		to_swale: calculatePrecisely(Number(values.to_swale)),
 		to_swale_trench: 0,
-		to_cictern: 0,
+		to_cistern: 0,
 
 		// todo: add correct calculation
 		to_surf_infil: 0,
@@ -107,7 +107,7 @@ function toAreaPotential(areas: ComputedArea): AreaPotential {
 		permeable_paving: calculatePrecisely(areas.pvd - areas.pvd_4),
 		to_swale: calculatePrecisely(areas.sealed),
 		to_swale_trench: calculatePrecisely(areas.sealed),
-		to_cictern: calculatePrecisely(areas.sealed),
+		to_cistern: calculatePrecisely(areas.sealed),
 		// todo: add correct calculation
 		to_surf_infil: calculatePrecisely(areas.sealed),
 		to_tree_pit: calculatePrecisely(areas.sealed),
@@ -130,7 +130,7 @@ function createEmptyComputedArea(): ComputedArea {
 		green_roof_int: 0,
 		to_swale: 0,
 		to_swale_trench: 0,
-		to_cictern: 0,
+		to_cistern: 0,
 		to_surf_infil: 0,
 		to_tree_pit: 0,
 		trees_sm: 0,
@@ -147,7 +147,7 @@ function createEmptyAreaPotential(): AreaPotential {
 		permeable_paving: 0,
 		to_swale: 0,
 		to_swale_trench: 0,
-		to_cictern: 0,
+		to_cistern: 0,
 		to_surf_infil: 0,
 		to_tree_pit: 0,
 	};
@@ -178,7 +178,7 @@ function addComputedAreas(
 		to_swale_trench: calculatePrecisely(
 			acc.to_swale_trench + value.to_swale_trench,
 		),
-		to_cictern: calculatePrecisely(acc.to_cictern + value.to_cictern),
+		to_cistern: calculatePrecisely(acc.to_cistern + value.to_cistern),
 
 		// todo: add correct calculation
 		to_surf_infil: calculatePrecisely(acc.to_surf_infil + value.to_surf_infil),
@@ -208,7 +208,7 @@ function addAreaPotentials(
 		to_swale_trench: calculatePrecisely(
 			acc.to_swale_trench + value.to_swale_trench,
 		),
-		to_cictern: calculatePrecisely(acc.to_cictern + value.to_cictern),
+		to_cistern: calculatePrecisely(acc.to_cistern + value.to_cistern),
 
 		// todo: add correct calculation
 		to_surf_infil: calculatePrecisely(acc.to_surf_infil + value.to_surf_infil),

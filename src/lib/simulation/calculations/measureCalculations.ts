@@ -5,7 +5,7 @@ import areaCalc from "./areaCalculations";
 const connectedAreaFieldByMeasure = {
 	to_swale: "to_swale",
 	to_swale_trench: "to_swale_trench",
-	to_cictern: "to_cictern",
+	to_cistern: "to_cistern",
 	to_tree_pit: "to_tree_pit",
 } as const;
 

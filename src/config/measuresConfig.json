@@ -236,7 +236,7 @@
 	{
 		"id": "3S2",
 		"geometryType": "Point",
-		"measureKey": "to_cictern",
+		"measureKey": "to_cistern",
 		"parameters": [
 			{
 				"key": "storageVolume",

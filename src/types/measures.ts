@@ -15,7 +15,7 @@ export type MeasureKey =
 	| "permeable_paving"
 	| "to_swale"
 	| "to_swale_trench"
-	| "to_cictern"
+	| "to_cistern"
 	| "to_surf_infil"
 	| "to_tree_pit";
 
