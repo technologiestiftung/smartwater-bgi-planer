@@ -79,9 +79,9 @@ function toComputedArea(area: OLFeature): ComputedArea {
 		unsealed: 0,
 		green_roof_ext: calculatePrecisely(roof * Number(values.green_roof)),
 		green_roof_int: 0,
-		to_inf_mulde: calculatePrecisely(Number(values.to_swale)),
-		to_inf_mulde_rigole: 0,
-		to_retention: 0,
+		to_swale: calculatePrecisely(Number(values.to_swale)),
+		to_swale_trench: 0,
+		to_cictern: 0,
 
 		// todo: add correct calculation
 		to_surf_infil: 0,
@@ -105,9 +105,9 @@ function toAreaPotential(areas: ComputedArea): AreaPotential {
 		green_roof_int: calculatePrecisely(availableGreenRoof),
 		unpaving: calculatePrecisely(areas.pvd),
 		permeable_paving: calculatePrecisely(areas.pvd - areas.pvd_4),
-		to_inf_mulde: calculatePrecisely(areas.sealed),
-		to_inf_mulde_rigole: calculatePrecisely(areas.sealed),
-		to_retention: calculatePrecisely(areas.sealed),
+		to_swale: calculatePrecisely(areas.sealed),
+		to_swale_trench: calculatePrecisely(areas.sealed),
+		to_cictern: calculatePrecisely(areas.sealed),
 		// todo: add correct calculation
 		to_surf_infil: calculatePrecisely(areas.sealed),
 		to_tree_pit: calculatePrecisely(areas.sealed),
@@ -128,9 +128,9 @@ function createEmptyComputedArea(): ComputedArea {
 		unsealed: 0,
 		green_roof_ext: 0,
 		green_roof_int: 0,
-		to_inf_mulde: 0,
-		to_inf_mulde_rigole: 0,
-		to_retention: 0,
+		to_swale: 0,
+		to_swale_trench: 0,
+		to_cictern: 0,
 		to_surf_infil: 0,
 		to_tree_pit: 0,
 		trees_sm: 0,
@@ -145,9 +145,9 @@ function createEmptyAreaPotential(): AreaPotential {
 		green_roof_int: 0,
 		unpaving: 0,
 		permeable_paving: 0,
-		to_inf_mulde: 0,
-		to_inf_mulde_rigole: 0,
-		to_retention: 0,
+		to_swale: 0,
+		to_swale_trench: 0,
+		to_cictern: 0,
 		to_surf_infil: 0,
 		to_tree_pit: 0,
 	};
@@ -174,11 +174,11 @@ function addComputedAreas(
 		green_roof_int: calculatePrecisely(
 			acc.green_roof_int + value.green_roof_int,
 		),
-		to_inf_mulde: calculatePrecisely(acc.to_inf_mulde + value.to_inf_mulde),
-		to_inf_mulde_rigole: calculatePrecisely(
-			acc.to_inf_mulde_rigole + value.to_inf_mulde_rigole,
+		to_swale: calculatePrecisely(acc.to_swale + value.to_swale),
+		to_swale_trench: calculatePrecisely(
+			acc.to_swale_trench + value.to_swale_trench,
 		),
-		to_retention: calculatePrecisely(acc.to_retention + value.to_retention),
+		to_cictern: calculatePrecisely(acc.to_cictern + value.to_cictern),
 
 		// todo: add correct calculation
 		to_surf_infil: calculatePrecisely(acc.to_surf_infil + value.to_surf_infil),
@@ -204,11 +204,11 @@ function addAreaPotentials(
 		permeable_paving: calculatePrecisely(
 			acc.permeable_paving + value.permeable_paving,
 		),
-		to_inf_mulde: calculatePrecisely(acc.to_inf_mulde + value.to_inf_mulde),
-		to_inf_mulde_rigole: calculatePrecisely(
-			acc.to_inf_mulde_rigole + value.to_inf_mulde_rigole,
+		to_swale: calculatePrecisely(acc.to_swale + value.to_swale),
+		to_swale_trench: calculatePrecisely(
+			acc.to_swale_trench + value.to_swale_trench,
 		),
-		to_retention: calculatePrecisely(acc.to_retention + value.to_retention),
+		to_cictern: calculatePrecisely(acc.to_cictern + value.to_cictern),
 
 		// todo: add correct calculation
 		to_surf_infil: calculatePrecisely(acc.to_surf_infil + value.to_surf_infil),

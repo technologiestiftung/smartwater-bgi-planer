@@ -186,9 +186,9 @@
 				"green_roof_int": 6.538242438,
 				"unpaving": 2295.738951605,
 				"permeable_paving": 2295.738951605,
-				"to_inf_mulde": 2302.277194043,
-				"to_inf_mulde_rigole": 2302.277194043,
-				"to_retention": 2302.277194043
+				"to_swale": 2302.277194043,
+				"to_swale_trench": 2302.277194043,
+				"to_cictern": 2302.277194043
 			},
 			"computedArea": {
 				"total": 2445.30274324,
@@ -203,9 +203,9 @@
 				"unsealed": 143.025549197,
 				"green_roof_ext": 0,
 				"green_roof_int": 0,
-				"to_inf_mulde": 0,
-				"to_inf_mulde_rigole": 0,
-				"to_retention": 0
+				"to_swale": 0,
+				"to_swale_trench": 0,
+				"to_cictern": 0
 			}
 		},
 		"computedFeatures": [
@@ -224,18 +224,18 @@
 					"unsealed": 143.025549197,
 					"green_roof_ext": 0,
 					"green_roof_int": 0,
-					"to_inf_mulde": 0,
-					"to_inf_mulde_rigole": 0,
-					"to_retention": 0
+					"to_swale": 0,
+					"to_swale_trench": 0,
+					"to_cictern": 0
 				},
 				"areaPotential": {
 					"green_roof_ext": 6.538242438,
 					"green_roof_int": 6.538242438,
 					"unpaving": 2295.738951605,
 					"permeable_paving": 2295.738951605,
-					"to_inf_mulde": 2302.277194043,
-					"to_inf_mulde_rigole": 2302.277194043,
-					"to_retention": 2302.277194043
+					"to_swale": 2302.277194043,
+					"to_swale_trench": 2302.277194043,
+					"to_cictern": 2302.277194043
 				}
 			}
 		],
@@ -244,9 +244,9 @@
 			"green_roof_int": 6.538242438,
 			"unpaving": 2295.738951605,
 			"permeable_paving": 2295.738951605,
-			"to_inf_mulde": 2302.277194043,
-			"to_inf_mulde_rigole": 2302.277194043,
-			"to_retention": 2302.277194043
+			"to_swale": 2302.277194043,
+			"to_swale_trench": 2302.277194043,
+			"to_cictern": 2302.277194043
 		},
 		"activeAreaId": "0000000007000815",
 		"project": {

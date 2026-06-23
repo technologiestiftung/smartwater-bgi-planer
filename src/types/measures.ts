@@ -13,9 +13,9 @@ export type MeasureKey =
 	| "green_roof_int"
 	| "unpaving"
 	| "permeable_paving"
-	| "to_inf_mulde"
-	| "to_inf_mulde_rigole"
-	| "to_retention"
+	| "to_swale"
+	| "to_swale_trench"
+	| "to_cictern"
 	| "to_surf_infil"
 	| "to_tree_pit";
 

@@ -26,9 +26,9 @@ export type ComputedArea = {
 	unsealed: number;
 	green_roof_ext: number;
 	green_roof_int: number;
-	to_inf_mulde: number;
-	to_inf_mulde_rigole: number;
-	to_retention: number;
+	to_swale: number;
+	to_swale_trench: number;
+	to_cictern: number;
 	to_surf_infil: number;
 	to_tree_pit: number;
 	trees_sm: number;
@@ -42,9 +42,9 @@ export type AreaPotential = {
 	green_roof_int: number;
 	unpaving: number;
 	permeable_paving: number;
-	to_inf_mulde: number;
-	to_inf_mulde_rigole: number;
-	to_retention: number;
+	to_swale: number;
+	to_swale_trench: number;
+	to_cictern: number;
 	to_surf_infil: number;
 	to_tree_pit: number;
 };

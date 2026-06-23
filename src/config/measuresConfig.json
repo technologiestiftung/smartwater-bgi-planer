@@ -115,7 +115,7 @@
 	},
 	{
 		"id": "3V1",
-		"measureKey": "to_inf_mulde",
+		"measureKey": "to_swale",
 		"geometryType": "Polygon",
 		"parameters": [
 			{
@@ -157,7 +157,7 @@
 	},
 	{
 		"id": "3V3",
-		"measureKey": "to_inf_mulde_rigole",
+		"measureKey": "to_swale_trench",
 		"geometryType": "Polygon",
 		"parameters": [
 			{
@@ -236,7 +236,7 @@
 	{
 		"id": "3S2",
 		"geometryType": "Point",
-		"measureKey": "to_retention",
+		"measureKey": "to_cictern",
 		"parameters": [
 			{
 				"key": "storageVolume",
