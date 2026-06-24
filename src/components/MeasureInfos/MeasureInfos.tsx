@@ -6,33 +6,19 @@ import { useProjectStore } from "@/store";
 import { selectActiveLayerConfig, useLayersStore } from "@/store/layers";
 import { useScenarioStore } from "@/store/scenario";
 import { useUiStore } from "@/store/ui";
-import type { MeasureValues } from "@/types/measures";
+import type { LiveMeasureInfo, MeasureValues } from "@/types/measures";
 import { FC } from "react";
 
 interface MeasureInfosProps {
-	liveMeasureInfo: any;
+	liveMeasureInfo: LiveMeasureInfo;
 }
-
-const getPotentialValue = (
-	map: MeasureValues | null,
-	key?: keyof MeasureValues,
-) => {
-	if (!map || !key) return null;
-	const value = map[key];
-	return typeof value === "number" ? value : null;
-};
 
 const MeasureInfos: FC<MeasureInfosProps> = ({ liveMeasureInfo }) => {
 	const layerConfig = useLayersStore((state) => selectActiveLayerConfig(state));
 	const layerConfigId = useLayersStore((state) => state.layerConfigId);
-	const areaPotential = useProjectStore(
-		(state) => state.accumulatedStats.areaPotential,
-	);
 	const activeAreaPotential = useProjectStore(
 		(state) => state.activeAreaPotential,
 	);
-	const computedFeatures = useProjectStore((state) => state.computedFeatures);
-	const activeAreaId = useProjectStore((state) => state.activeAreaId);
 	const selectedConnectedAreaId = useUiStore(
 		(state) => state.selectedConnectedAreaId,
 	);
@@ -52,15 +38,9 @@ const MeasureInfos: FC<MeasureInfosProps> = ({ liveMeasureInfo }) => {
 		: undefined;
 	const measureName = layerConfig?.name?.trim() || measureKey || "Maßnahme";
 
-	if (!areaPotential) return null;
-
-	const activeFeature = computedFeatures.find((f) => f.code === activeAreaId);
 	const activeRemaining =
 		measureKey && activeAreaPotential
-			? getPotentialValue(
-					activeFeature?.areaPotential ?? activeAreaPotential,
-					measureKey,
-				)
+			? (activeAreaPotential[measureKey as keyof MeasureValues] ?? null)
 			: null;
 
 	return (

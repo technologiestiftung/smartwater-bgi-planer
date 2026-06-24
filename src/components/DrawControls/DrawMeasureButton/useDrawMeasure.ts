@@ -427,6 +427,16 @@ export const useDrawMeasure = () => {
 		resetDrawInteractions();
 		setLiveMeasureInfo(null);
 
+		// computedFeatures is not persisted — re-derive it from inputFeatures if
+		// empty (e.g. after page reload) so the draw condition can resolve potentials.
+		const projectState = useProjectStore.getState();
+		if (
+			projectState.computedFeatures.length === 0 &&
+			projectState.inputFeatures.length > 0
+		) {
+			projectState.setInputFeatures(projectState.inputFeatures);
+		}
+
 		const layer = map
 			.getAllLayers()
 			.find((l) => l.get("id") === drawLayerId) as VectorLayer<VectorSource>;
