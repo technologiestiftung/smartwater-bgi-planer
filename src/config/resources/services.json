@@ -485,7 +485,7 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "measuresLayers"
+		"styleId": "3V1"
 	},
 	{
 		"id": "module_3_3V2_draw",
@@ -493,7 +493,7 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "measuresLayers"
+		"styleId": "3V2"
 	},
 	{
 		"id": "module_3_3V3_draw",
@@ -501,7 +501,7 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "measuresLayers"
+		"styleId": "3V3"
 	},
 	{
 		"id": "module_3_3V4_draw",
@@ -509,7 +509,7 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "measuresLayers"
+		"styleId": "3V4"
 	},
 	{
 		"id": "module_3_3V5_draw",
@@ -517,7 +517,7 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "trees"
+		"styleId": "3V5"
 	},
 	{
 		"id": "module_3_3V6_draw",
@@ -525,7 +525,7 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "measuresLayers"
+		"styleId": "3V6"
 	},
 	{
 		"id": "module_3_3E1_draw",
@@ -533,7 +533,7 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "measuresLayers"
+		"styleId": "3E1"
 	},
 	{
 		"id": "module_3_3E2_draw",
@@ -541,7 +541,7 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "measuresLayers"
+		"styleId": "3E2"
 	},
 	{
 		"id": "module_3_3B1_draw",
@@ -549,7 +549,7 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "measuresLayers"
+		"styleId": "3B1"
 	},
 	{
 		"id": "module_3_3B2_draw",
@@ -557,7 +557,7 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "trees"
+		"styleId": "3B2"
 	},
 	{
 		"id": "module_3_3G1_draw",
@@ -565,7 +565,7 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "measuresLayers"
+		"styleId": "3G1"
 	},
 	{
 		"id": "module_3_3G2_draw",
@@ -573,7 +573,7 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "measuresLayers"
+		"styleId": "3G2"
 	},
 	{
 		"id": "module_3_3G5_draw",
@@ -581,7 +581,7 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "measuresLayers"
+		"styleId": "3G5"
 	},
 	{
 		"id": "module_3_3S1_draw",
@@ -589,7 +589,7 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "measuresLayers"
+		"styleId": "3S1"
 	},
 	{
 		"id": "module_3_3S2_draw",
@@ -597,7 +597,7 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "measuresLayers"
+		"styleId": "3S2"
 	},
 	{
 		"id": "module_3_3S3_draw",
@@ -605,7 +605,7 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "measuresLayers"
+		"styleId": "3S3"
 	},
 	{
 		"id": "module_3_3S4_draw",
@@ -613,7 +613,7 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "measuresLayers"
+		"styleId": "3S4"
 	},
 	{
 		"id": "module_3_3S5_draw",
@@ -621,7 +621,7 @@
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
-		"styleId": "measuresLayers"
+		"styleId": "3S5"
 	},
 	{
 		"id": "module_3_connected_area_draw",

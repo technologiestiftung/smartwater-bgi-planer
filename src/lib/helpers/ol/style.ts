@@ -15,6 +15,9 @@ import Text from "ol/style/Text";
 interface StyleConfig {
 	polygonStrokeWidth?: number;
 	polygonStrokeColor?: number[] | string;
+	polygonStrokeLineDash?: number[];
+	polygonStrokeLineCap?: "butt" | "round" | "square";
+	polygonStrokeLineJoin?: "bevel" | "round" | "miter";
 	polygonFillColor?: number[] | string;
 	pointRadius?: number;
 	pointFillColor?: number[] | string;
@@ -77,6 +80,9 @@ export const createOLStyle = (config: StyleConfig): Style | Style[] => {
 		polygonFillColor = [0, 0, 0, 0],
 		polygonStrokeColor = [0, 0, 0, 1],
 		polygonStrokeWidth = 1,
+		polygonStrokeLineDash,
+		polygonStrokeLineCap,
+		polygonStrokeLineJoin,
 	} = config;
 
 	const mainStyle = new Style({
@@ -84,6 +90,9 @@ export const createOLStyle = (config: StyleConfig): Style | Style[] => {
 		stroke: new Stroke({
 			color: polygonStrokeColor,
 			width: polygonStrokeWidth,
+			lineDash: polygonStrokeLineDash,
+			lineCap: polygonStrokeLineCap,
+			lineJoin: polygonStrokeLineJoin,
 		}),
 		image: icon
 			? new Icon({
@@ -144,10 +153,10 @@ export const applyStyleToLayer = (
 	if (isConditional) {
 		layer.setStyle((feature) => {
 			const rule = entry.rules.find((r: any) => matches(feature, r.conditions));
-			return rule ? createOLStyle(rule.style) : DEFAULT_STYLE;
+			return rule ? createOLStyle(rule.style as StyleConfig) : DEFAULT_STYLE;
 		});
 	} else {
-		layer.setStyle(createOLStyle(entry.rules[0].style));
+		layer.setStyle(createOLStyle(entry.rules[0].style as StyleConfig));
 	}
 
 	return true;

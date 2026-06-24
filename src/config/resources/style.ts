@@ -179,7 +179,66 @@ export const styleList = [
 		],
 	},
 	{
-		styleId: "trees",
+		styleId: "3V5",
+		rules: [
+			{
+				conditions: {
+					properties: {
+						treeSize: "sm",
+					},
+				},
+				style: {
+					pointFillColor: [255, 134, 37, 1],
+					pointStrokeColor: [255, 134, 37, 1],
+					pointStrokeWidth: 2,
+					pointRadius: 10,
+					iconScale: 0.4,
+					icon: "/icons/leaf.svg",
+				},
+			},
+			{
+				conditions: {
+					properties: {
+						treeSize: "md",
+					},
+				},
+				style: {
+					pointFillColor: [255, 134, 37, 1],
+					pointStrokeColor: [255, 134, 37, 1],
+					pointStrokeWidth: 2,
+					pointRadius: 12,
+					iconScale: 0.6,
+					icon: "/icons/plant.svg",
+				},
+			},
+			{
+				conditions: {
+					properties: {
+						treeSize: "lg",
+					},
+				},
+				style: {
+					pointFillColor: [255, 134, 37, 1],
+					pointStrokeColor: [255, 134, 37, 1],
+					pointStrokeWidth: 2,
+					pointRadius: 14,
+					iconScale: 0.8,
+					icon: "/icons/tree.svg",
+				},
+			},
+			{
+				style: {
+					pointFillColor: [255, 134, 37, 1],
+					pointStrokeColor: [255, 134, 37, 1],
+					pointStrokeWidth: 2,
+					pointRadius: 14,
+					iconScale: 0.8,
+				},
+			},
+		],
+	},
+	{
+		styleId: "3B2",
 		rules: [
 			{
 				conditions: {
@@ -252,6 +311,214 @@ export const styleList = [
 				style: {
 					iconScale: 0.8,
 					icon: "/icons/check.svg",
+				},
+			},
+		],
+	},
+	{
+		styleId: "3G1",
+		rules: [
+			{
+				style: {
+					polygonStrokeWidth: 4,
+					polygonStrokeColor: [12, 76, 56, 1],
+					polygonStrokeLineCap: "butt",
+					polygonStrokeLineJoin: "miter",
+					polygonFillColor: [200, 236, 217, 0.5],
+				},
+			},
+		],
+	},
+	{
+		styleId: "3G2",
+		rules: [
+			{
+				style: {
+					polygonStrokeWidth: 4,
+					polygonStrokeColor: [12, 76, 56, 1],
+					polygonStrokeLineDash: [8],
+					polygonStrokeLineCap: "butt",
+					polygonStrokeLineJoin: "miter",
+					polygonFillColor: [200, 236, 217, 0.5],
+				},
+			},
+		],
+	},
+	{
+		styleId: "3G5",
+		rules: [
+			{
+				style: {
+					polygonStrokeWidth: 4,
+					polygonStrokeColor: [68, 156, 118, 1],
+					polygonStrokeLineCap: "butt",
+					polygonStrokeLineJoin: "miter",
+				},
+			},
+		],
+	},
+	{
+		styleId: "3E2",
+		rules: [
+			{
+				style: {
+					polygonStrokeWidth: 4,
+					polygonStrokeColor: [246, 27, 54, 1],
+					polygonStrokeLineCap: "butt",
+					polygonStrokeLineJoin: "miter",
+					polygonFillColor: [246, 27, 54, 0.1],
+				},
+			},
+		],
+	},
+	{
+		styleId: "3E1",
+		rules: [
+			{
+				style: {
+					polygonStrokeWidth: 4,
+					polygonStrokeColor: [246, 27, 54, 1],
+					polygonStrokeLineDash: [8],
+					polygonStrokeLineCap: "butt",
+					polygonStrokeLineJoin: "miter",
+				},
+			},
+		],
+	},
+	{
+		styleId: "3B1",
+		rules: [
+			{
+				style: {
+					polygonFillColor: [73, 222, 128, 0.5],
+				},
+			},
+		],
+	},
+	{
+		styleId: "3V1",
+		rules: [
+			{
+				style: {
+					polygonFillColor: [255, 134, 37, 0.3],
+				},
+			},
+		],
+	},
+	{
+		styleId: "3V2",
+		rules: [
+			{
+				style: {
+					polygonStrokeWidth: 4,
+					polygonStrokeColor: [255, 134, 37, 1],
+					polygonStrokeLineCap: "butt",
+					polygonStrokeLineJoin: "miter",
+					polygonFillColor: [255, 134, 37, 0.3],
+				},
+			},
+		],
+	},
+	{
+		styleId: "3V3",
+		rules: [
+			{
+				style: {
+					polygonStrokeWidth: 4,
+					polygonStrokeColor: [255, 134, 37, 1],
+					polygonStrokeLineDash: [8],
+					polygonStrokeLineCap: "butt",
+					polygonStrokeLineJoin: "miter",
+					polygonFillColor: [255, 134, 37, 0.3],
+				},
+			},
+		],
+	},
+	{
+		styleId: "3V4",
+		rules: [
+			{
+				style: {
+					polygonStrokeWidth: 4,
+					polygonStrokeColor: [255, 134, 37, 1],
+					polygonStrokeLineCap: "butt",
+					polygonStrokeLineJoin: "miter",
+				},
+			},
+		],
+	},
+	{
+		styleId: "3V6",
+		rules: [
+			{
+				style: {
+					polygonStrokeWidth: 4,
+					polygonStrokeColor: [255, 134, 37, 1],
+					polygonStrokeLineDash: [8],
+					polygonStrokeLineCap: "butt",
+					polygonStrokeLineJoin: "miter",
+				},
+			},
+		],
+	},
+	{
+		styleId: "3S1",
+		rules: [
+			{
+				style: {
+					polygonFillColor: [56, 175, 255, 0.3],
+				},
+			},
+		],
+	},
+	{
+		styleId: "3S2",
+		rules: [
+			{
+				style: {
+					polygonFillColor: [56, 175, 255, 1],
+				},
+			},
+		],
+	},
+	{
+		styleId: "3S3",
+		rules: [
+			{
+				style: {
+					polygonStrokeWidth: 4,
+					polygonStrokeColor: [56, 175, 255, 1],
+					polygonStrokeLineDash: [8],
+					polygonStrokeLineCap: "butt",
+					polygonStrokeLineJoin: "miter",
+					polygonFillColor: [56, 175, 255, 0.3],
+				},
+			},
+		],
+	},
+	{
+		styleId: "3S4",
+		rules: [
+			{
+				style: {
+					polygonStrokeWidth: 4,
+					polygonStrokeColor: [56, 175, 255, 1],
+					polygonStrokeLineCap: "butt",
+					polygonStrokeLineJoin: "miter",
+				},
+			},
+		],
+	},
+	{
+		styleId: "3S5",
+		rules: [
+			{
+				style: {
+					polygonStrokeWidth: 4,
+					polygonStrokeColor: [56, 175, 255, 1],
+					polygonStrokeLineDash: [8],
+					polygonStrokeLineCap: "butt",
+					polygonStrokeLineJoin: "miter",
 				},
 			},
 		],
