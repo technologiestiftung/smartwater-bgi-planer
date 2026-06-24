@@ -166,6 +166,12 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 					</div>
 				)}
 
+				{payload && (
+					<pre className="bg-muted text-foreground mt-4 overflow-x-auto rounded-sm p-3 text-xs">
+						{JSON.stringify(payload, null, 2)}
+					</pre>
+				)}
+
 				{result && (
 					<pre className="bg-muted text-foreground mt-4 overflow-x-auto rounded-sm p-3 text-xs">
 						{JSON.stringify(result.data, null, 2)}
