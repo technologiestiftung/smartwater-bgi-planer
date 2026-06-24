@@ -6,6 +6,7 @@ import { useProjectStore } from "@/store";
 import { selectActiveLayerConfig, useLayersStore } from "@/store/layers";
 import { useScenarioStore } from "@/store/scenario";
 import { useUiStore } from "@/store/ui";
+import type { MeasureValues } from "@/types/measures";
 import { FC } from "react";
 
 interface MeasureInfosProps {
@@ -13,8 +14,8 @@ interface MeasureInfosProps {
 }
 
 const getPotentialValue = (
-	map: Record<string, number> | null,
-	key?: string,
+	map: MeasureValues | null,
+	key?: keyof MeasureValues,
 ) => {
 	if (!map || !key) return null;
 	const value = map[key];
