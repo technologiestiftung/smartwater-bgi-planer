@@ -25,11 +25,6 @@ export type PreprocessedFeature = {
 	areaPotential: MeasureValues;
 };
 
-// Payload-compatible per-feature state.
-export type FeatureState = {
-	code: string;
-} & ComputedArea;
-
 // Preprocessed aggregate output for all selected features.
 export type PreprocessedFeatures = {
 	featuresSelected: number;
@@ -37,32 +32,4 @@ export type PreprocessedFeatures = {
 	computedArea: ComputedArea;
 	areaPotential: MeasureValues;
 	features: PreprocessedFeature[];
-};
-
-// Single simulation result row.
-export type ResultItem = {
-	area: number;
-	delta_w: number;
-	runoff: number;
-	evapor: number;
-	infiltr: number;
-};
-
-// Aggregated simulation output stats.
-export type ResultStats = {
-	deltaW: number;
-	runoff: number;
-	evaporation: number;
-	infiltration: number;
-};
-
-// Final payload passed to report generation.
-export type ReportPayload = {
-	totalArea: number;
-};
-
-// Aggregated stats for selected measures.
-export type MeasureStats = {
-	// todo: add types
-	// total_measure_area: number | null;
 };

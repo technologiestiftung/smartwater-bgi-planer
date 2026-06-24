@@ -49,9 +49,8 @@ export const emptyAccumulatedStats: AccumulatedStats = {
 		to_cistern: 0,
 		to_surf_infil: 0,
 		to_tree_pit: 0,
-		trees_sm: 0,
-		trees_md: 0,
-		trees_lg: 0,
+		unpaving: 0,
+		permeable_paving: 0,
 	},
 };
 
