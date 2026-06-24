@@ -33,3 +33,26 @@ export interface LiveMeasureInfo {
 	segmentLengths: string[];
 	isOverPotential?: boolean;
 }
+
+export interface MeasureValues {
+	green_roof_ext: number;
+	green_roof_int: number;
+	to_swale: number;
+	to_swale_trench: number;
+	to_cistern: number;
+	to_surf_infil: number;
+	to_tree_pit: number;
+	unpaving: number;
+	permeable_paving: number;
+}
+
+export interface MeasureValuesWithCalcFields extends MeasureValues {
+	pvd: number;
+	sealed: number;
+	unsealed: number;
+}
+export interface MeasureValuesWithTrees extends MeasureValues {
+	trees_sm: number;
+	trees_md: number;
+	trees_lg: number;
+}

@@ -1,13 +1,8 @@
 import { AreaProps } from "@/store/project/types";
-import type {
-	AreaPotential,
-	ComputedArea,
-	OLFeature,
-	PreprocessedFeatures,
-	ResultItem,
-	ResultStats,
-} from "../types";
+import { MeasureValues } from "@/types/measures";
+import type { ComputedArea, OLFeature, PreprocessedFeatures } from "../types";
 
+// todo: do we actually need this
 type RabimoLikeAreaValues = AreaProps & {
 	srf1_pvd: number;
 	srf2_pvd: number;
@@ -86,9 +81,8 @@ function toComputedArea(area: OLFeature): ComputedArea {
 		// todo: add correct calculation
 		to_surf_infil: 0,
 		to_tree_pit: 0,
-		trees_sm: 0,
-		trees_md: 0,
-		trees_lg: 0,
+		unpaving: 0,
+		permeable_paving: 0,
 	};
 
 	return updateCalculatedFields(current);
@@ -96,7 +90,7 @@ function toComputedArea(area: OLFeature): ComputedArea {
 
 // R: get_available_m2
 // Get available area for each measure, based on current "state" -> potential
-function toAreaPotential(areas: ComputedArea): AreaPotential {
+function toAreaPotential(areas: ComputedArea): MeasureValues {
 	const availableGreenRoof =
 		areas.roof - areas.green_roof_ext - areas.green_roof_int;
 
@@ -133,13 +127,12 @@ function createEmptyComputedArea(): ComputedArea {
 		to_cistern: 0,
 		to_surf_infil: 0,
 		to_tree_pit: 0,
-		trees_sm: 0,
-		trees_md: 0,
-		trees_lg: 0,
+		unpaving: 0,
+		permeable_paving: 0,
 	};
 }
 
-function createEmptyAreaPotential(): AreaPotential {
+function createEmptyAreaPotential(): MeasureValues {
 	return {
 		green_roof_ext: 0,
 		green_roof_int: 0,
@@ -183,16 +176,21 @@ function addComputedAreas(
 		// todo: add correct calculation
 		to_surf_infil: calculatePrecisely(acc.to_surf_infil + value.to_surf_infil),
 		to_tree_pit: calculatePrecisely(acc.to_tree_pit + value.to_tree_pit),
-		trees_sm: acc.trees_sm + value.trees_sm,
-		trees_md: acc.trees_md + value.trees_md,
-		trees_lg: acc.trees_lg + value.trees_lg,
+		unpaving: calculatePrecisely(acc.unpaving + value.unpaving),
+		permeable_paving: calculatePrecisely(
+			acc.permeable_paving + value.permeable_paving,
+		),
+
+		// trees_sm: acc.trees_sm + value.trees_sm,
+		// trees_md: acc.trees_md + value.trees_md,
+		// trees_lg: acc.trees_lg + value.trees_lg,
 	};
 }
 
 function addAreaPotentials(
-	acc: AreaPotential,
-	value: AreaPotential,
-): AreaPotential {
+	acc: MeasureValues,
+	value: MeasureValues,
+): MeasureValues {
 	return {
 		green_roof_ext: calculatePrecisely(
 			acc.green_roof_ext + value.green_roof_ext,
@@ -262,39 +260,11 @@ function preprocessAllFeatures(features: OLFeature[]): PreprocessedFeatures {
 	};
 }
 
-function calculateResultStats(data: ResultItem[]): ResultStats {
-	if (!data || data.length === 0) {
-		return {
-			deltaW: 0,
-			runoff: 0,
-			evaporation: 0,
-			infiltration: 0,
-		};
-	}
-
-	const totalArea = data.reduce((sum, item) => sum + item.area, 0);
-	const getWeightedAverage = (fieldName: keyof ResultItem): number => {
-		const weightedSum = data.reduce(
-			(sum, item) => sum + item[fieldName] * item.area,
-			0,
-		);
-		return totalArea ? weightedSum / totalArea : 0;
-	};
-
-	return {
-		deltaW: getWeightedAverage("delta_w"),
-		runoff: getWeightedAverage("runoff"),
-		evaporation: getWeightedAverage("evapor"),
-		infiltration: getWeightedAverage("infiltr"),
-	};
-}
-
 const areaCalculations = {
 	toComputedArea,
 	updateCalculatedFields,
 	toAreaPotential,
 	preprocessAllFeatures,
-	calculateResultStats,
 	calculatePrecisely,
 	addComputedAreas,
 	addAreaPotentials,
