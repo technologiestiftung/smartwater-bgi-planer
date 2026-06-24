@@ -53,6 +53,8 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 	const handleRequest = useCallback(async () => {
 		if (!activeScenarioId || !payload) return;
 
+		console.log("[SynthesisView] payload::", payload);
+
 		setState("loading");
 		setStatus(activeScenarioId, "loading");
 		setMessage("");
