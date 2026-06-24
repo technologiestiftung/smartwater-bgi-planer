@@ -1,8 +1,10 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { useRabimoPayload } from "@/hooks/useRabimoPayload";
 import { SectionId } from "@/lib/helpers/sectionIds";
-import { useLayersStore } from "@/store";
+import { useLayersStore, useResultStore, useScenarioStore } from "@/store";
+import type { Result } from "@/store/result/types";
 import { DownloadSimpleIcon, XIcon } from "@phosphor-icons/react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
@@ -12,8 +14,27 @@ interface SynthesisViewProps {
 }
 type TestState = "idle" | "loading" | "success" | "error";
 
+function extractErrorMessage(data: unknown, fallback: string): string {
+	if (
+		typeof data === "object" &&
+		data !== null &&
+		"error" in data &&
+		typeof (data as Record<string, unknown>).error === "string"
+	) {
+		return (data as Record<string, unknown>).error as string;
+	}
+	return fallback;
+}
+
 export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 	const applyConfigLayers = useLayersStore((state) => state.applyConfigLayers);
+	const activeScenarioId = useScenarioStore((state) => state.activeScenarioId);
+	const setResult = useResultStore((state) => state.setResult);
+	const setStatus = useResultStore((state) => state.setStatus);
+	const result = useResultStore((state) =>
+		activeScenarioId ? state.resultsByScenarioId[activeScenarioId] : undefined,
+	);
+	const payload = useRabimoPayload();
 	const [state, setState] = useState<TestState>("idle");
 	const [message, setMessage] = useState<string>("");
 	const isDisabled = state === "loading";
@@ -29,27 +50,38 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 		applyConfigLayers("measure_planning_synthesis_view", true);
 	}, [applyConfigLayers]);
 
-	const handleTestRequest = useCallback(async () => {
+	const handleRequest = useCallback(async () => {
+		if (!activeScenarioId || !payload) return;
+
 		setState("loading");
+		setStatus(activeScenarioId, "loading");
 		setMessage("");
 
 		try {
 			const response = await fetch("/api/rabimo", {
 				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(payload),
 			});
 
 			const data: unknown = await response.json();
 
 			if (!response.ok) {
-				const errorMessage =
-					typeof data === "object" &&
-					data !== null &&
-					"error" in data &&
-					typeof data.error === "string"
-						? data.error
-						: "Rabimo test request failed";
-				throw new Error(errorMessage);
+				setStatus(activeScenarioId, "error");
+				throw new Error(
+					extractErrorMessage(data, "Rabimo test request failed"),
+				);
 			}
+
+			const newResult: Result = {
+				id: `${activeScenarioId}-${Date.now()}`,
+				scenarioId: activeScenarioId,
+				timestamp: Date.now(),
+				data: data as Record<string, unknown>,
+			};
+
+			setResult(activeScenarioId, newResult);
+			setStatus(activeScenarioId, "done");
 
 			const summary =
 				typeof data === "object" && data !== null
@@ -57,6 +89,9 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 					: "Antwort erhalten";
 
 			setState("success");
+
+			console.log("[SynthesisView] data::", data);
+
 			setMessage(summary);
 		} catch (error) {
 			setState("error");
@@ -66,11 +101,11 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 					: "Unbekannter Fehler beim Rabimo-Test",
 			);
 		}
-	}, []);
+	}, [activeScenarioId, payload, setResult, setStatus]);
 
-	// useEffect(() => {
-	// 	handleTestRequest();
-	// }, []);
+	useEffect(() => {
+		handleRequest();
+	}, [handleRequest]);
 
 	if (process.env.NODE_ENV !== "development") {
 		<div className="flex h-full w-full flex-col">
@@ -109,7 +144,7 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 				<Button
 					variant="map-control"
 					size="default"
-					onClick={handleTestRequest}
+					onClick={handleRequest}
 					disabled={isDisabled}
 					className="h-12 rounded-xs px-3 text-xs font-semibold"
 				>
@@ -127,6 +162,12 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 					>
 						{message}
 					</div>
+				)}
+
+				{result && (
+					<pre className="bg-muted text-foreground mt-4 overflow-x-auto rounded-sm p-3 text-xs">
+						{JSON.stringify(result.data, null, 2)}
+					</pre>
 				)}
 			</div>
 			<div className="border-muted bg-secondary flex shrink-0 border-t px-4">

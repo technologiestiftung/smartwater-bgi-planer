@@ -13,4 +13,3 @@ export interface RabimoPayload {
 	blocks: RabimoFeature[];
 	measures: RabimoMeasure[];
 }
-
