@@ -518,6 +518,7 @@
 		"id": "measure_start",
 		"name": "Startfrage",
 		"drawLayerId": "",
+		"measurementSrc": "/legends/measures.svg",
 		"visibleLayerIds": [
 			"project_boundary",
 			"module_3_connected_area_draw",
@@ -549,7 +550,8 @@
 		"visibleLayerIds": [
 			"potenziale_regenwasserbewirtschaftung:ca_dachbegruenungspotenzial"
 		],
-		"canDrawMeasures": true
+		"canDrawMeasures": true,
+		"measurementSrc": "/legends/measures.svg"
 	},
 	{
 		"id": "3G2",
@@ -559,7 +561,8 @@
 		"visibleLayerIds": [
 			"potenziale_regenwasserbewirtschaftung:ca_dachbegruenungspotenzial"
 		],
-		"canDrawMeasures": true
+		"canDrawMeasures": true,
+		"measurementSrc": "/legends/measures.svg"
 	},
 	{
 		"id": "3G5",
@@ -567,7 +570,8 @@
 		"description": "Fassadenbegrünung mit im Boden wurzelnden Kletterpflanzen und ggf. Rankhilfen. Sie reduziert Hitze, verbessert Mikroklima und Luftqualität, schützt Fassaden und kann Regenwasserbewirtschaftung unterstützen. Wichtig sind standortgerechte Pflanzenwahl, regelmäßiger Rückschnitt und Pflege.",
 		"drawLayerId": "module_3_3G5_draw",
 		"visibleLayerIds": [],
-		"canDrawMeasures": true
+		"canDrawMeasures": true,
+		"measurementSrc": "/legends/measures.svg"
 	},
 	{
 		"id": "3E1",
@@ -577,7 +581,7 @@
 		"visibleLayerIds": ["ua_entsiegelung:b_entsieg_klasse_teil"],
 		"canDrawMeasures": true,
 		"legendSrc": "/legends/2e1.svg",
-		"measurementSrc": "/legends/2e1.svg"
+		"measurementSrc": "/legends/measures.svg"
 	},
 	{
 		"id": "3E2",
@@ -587,7 +591,7 @@
 		"visibleLayerIds": ["ua_entsiegelung:b_entsieg_klasse_teil"],
 		"canDrawMeasures": true,
 		"legendSrc": "/legends/2e1.svg",
-		"measurementSrc": "/legends/2e1.svg"
+		"measurementSrc": "/legends/measures.svg"
 	},
 	{
 		"id": "3B1",
@@ -597,7 +601,7 @@
 		"visibleLayerIds": ["ua_entsiegelung:b_entsieg_klasse_teil"],
 		"canDrawMeasures": true,
 		"legendSrc": "/legends/2e1.svg",
-		"measurementSrc": "/legends/2e1.svg"
+		"measurementSrc": "/legends/measures.svg"
 	},
 	{
 		"id": "3B2",
@@ -607,7 +611,7 @@
 		"visibleLayerIds": ["ua_entsiegelung:b_entsieg_klasse_teil"],
 		"canDrawTrees": true,
 		"legendSrc": "/legends/2e1.svg",
-		"measurementSrc": "/legends/2e1.svg"
+		"measurementSrc": "/legends/measures.svg"
 	},
 	{
 		"id": "3V1",
@@ -615,7 +619,8 @@
 		"description": "Flache, bepflanzte Bodenvertiefung zur temporären Speicherung und Versickerung von Niederschlagswasser. Mulden reduzieren Überflutungsrisiken, fördern Grundwasserneubildung und unterstützen Verdunstungskühlung. Voraussetzung sind geeignete Bodenverhältnisse sowie regelmäßige Pflege.",
 		"drawLayerId": "module_3_3V1_draw",
 		"visibleLayerIds": ["module_3_connected_area_draw"],
-		"canDrawMeasures": true
+		"canDrawMeasures": true,
+		"measurementSrc": "/legends/measures.svg"
 	},
 	{
 		"id": "3V2",
@@ -623,7 +628,8 @@
 		"description": "Ableitung von Regenwasser von befestigten Flächen in angrenzende bewachsene Flächen zur oberflächennahen Versickerung. Entlastet die Kanalisation, fördert Grundwasserneubildung und nutzt die Reinigungswirkung der belebten Bodenzone. Erfordert durchlässige Böden und ausreichende Flächen.",
 		"drawLayerId": "module_3_3V2_draw",
 		"visibleLayerIds": ["module_3_connected_area_draw"],
-		"canDrawMeasures": true
+		"canDrawMeasures": true,
+		"measurementSrc": "/legends/measures.svg"
 	},
 	{
 		"id": "3V3",
@@ -631,7 +637,8 @@
 		"description": "Kombination aus oberirdischer Mulde und unterirdischer Rigole zur Zwischenspeicherung, Vorreinigung und Versickerung von Regenwasser. Bei Bedarf ist eine gedrosselte Ableitung möglich. Besonders geeignet bei begrenztem Platz oder mäßig durchlässigen Böden.",
 		"drawLayerId": "module_3_3V3_draw",
 		"visibleLayerIds": ["module_3_connected_area_draw"],
-		"canDrawMeasures": true
+		"canDrawMeasures": true,
+		"measurementSrc": "/legends/measures.svg"
 	},
 	{
 		"id": "3V4",
@@ -639,7 +646,8 @@
 		"description": "Kompaktes Mulden-Rigolen-System für dichte urbane Räume mit geringem Flächenangebot. Es bietet hohe Rückhalte- und Reinigungsleistung und kann in Straßenräume integriert werden. Geeignet bei schwierigen Bodenverhältnissen, jedoch mit erhöhtem Planungs- und Pflegeaufwand.",
 		"drawLayerId": "module_3_3V4_draw",
 		"visibleLayerIds": ["module_3_connected_area_draw"],
-		"canDrawMeasures": true
+		"canDrawMeasures": true,
+		"measurementSrc": "/legends/measures.svg"
 	},
 	{
 		"id": "3V5",
@@ -647,7 +655,8 @@
 		"description": "Kombiniert Regenwasserbewirtschaftung mit verbesserten Wuchsbedingungen für Stadtbäume durch unterirdische Speicher- und Substraträume. Reduziert Oberflächenabfluss, stärkt Baumvitalität und verbessert das Stadtklima. Benötigt sorgfältige Planung von Einleitung, Substrat und Leitungsabständen.",
 		"drawLayerId": "module_3_3V5_draw",
 		"visibleLayerIds": ["module_3_connected_area_draw"],
-		"canDrawTrees": true
+		"canDrawTrees": true,
+		"measurementSrc": "/legends/measures.svg"
 	},
 	{
 		"id": "3V6",
@@ -655,7 +664,8 @@
 		"description": "Unterirdisches Speicher- und Versickerungselement aus Kies, Lavagranulat oder Hohlkörpersystemen. Es ermöglicht zeitverzögerte Versickerung und bei Bedarf gedrosselte Ableitung. Ohne Vorbehandlung nur für gering belastete Abflüsse geeignet; regelmäßige Wartung erforderlich.",
 		"drawLayerId": "module_3_3V6_draw",
 		"visibleLayerIds": ["module_3_connected_area_draw"],
-		"canDrawMeasures": true
+		"canDrawMeasures": true,
+		"measurementSrc": "/legends/measures.svg"
 	},
 	{
 		"id": "3S1",
@@ -665,7 +675,7 @@
 		"visibleLayerIds": ["ua_entsiegelung:b_entsieg_klasse_teil"],
 		"canDrawMeasures": true,
 		"legendSrc": "/legends/2e1.svg",
-		"measurementSrc": "/legends/2e1.svg"
+		"measurementSrc": "/legends/measures.svg"
 	},
 	{
 		"id": "3S2",
@@ -673,7 +683,8 @@
 		"description": "Speicherung von Regenwasser zur späteren Nutzung für Bewässerung von Grünflächen und Bäumen. Spart Trinkwasser und kann Abflüsse durch Zwischenspeicherung reduzieren. Technisch vergleichsweise einfach, mit Fokus auf geeignete Wasserqualität, Filterung und Wartung.",
 		"drawLayerId": "module_3_3S2_draw",
 		"visibleLayerIds": [],
-		"canDrawMeasures": true
+		"canDrawMeasures": true,
+		"measurementSrc": "/legends/measures.svg"
 	},
 	{
 		"id": "3S3",
@@ -681,7 +692,8 @@
 		"description": "Regenwasserspeicher zur Nutzung als Betriebswasser im Gebäude, z. B. für WC, Reinigung oder Waschmaschine. Reduziert Trinkwasserbedarf und entlastet die Kanalisation. Erfordert getrennte Leitungsführung, Aufbereitung und regelmäßige technische Kontrolle.",
 		"drawLayerId": "module_3_3S3_draw",
 		"visibleLayerIds": [],
-		"canDrawMeasures": true
+		"canDrawMeasures": true,
+		"measurementSrc": "/legends/measures.svg"
 	},
 	{
 		"id": "3S4",
@@ -691,7 +703,7 @@
 		"visibleLayerIds": ["ua_entsiegelung:b_entsieg_klasse_teil"],
 		"canDrawMeasures": true,
 		"legendSrc": "/legends/2e1.svg",
-		"measurementSrc": "/legends/2e1.svg"
+		"measurementSrc": "/legends/measures.svg"
 	},
 	{
 		"id": "3S5",
@@ -701,14 +713,15 @@
 		"visibleLayerIds": ["ua_entsiegelung:b_entsieg_klasse_teil"],
 		"canDrawMeasures": true,
 		"legendSrc": "/legends/2e1.svg",
-		"measurementSrc": "/legends/2e1.svg"
+		"measurementSrc": "/legends/measures.svg"
 	},
 	{
 		"id": "connected_area",
 		"name": "Angeschlossene Fläche",
 		"drawLayerId": "module_3_connected_area_draw",
 		"visibleLayerIds": [],
-		"canDrawMeasures": true
+		"canDrawMeasures": true,
+		"measurementSrc": "/legends/measures.svg"
 	},
 	{
 		"id": "measure_planning_synthesis_view",
