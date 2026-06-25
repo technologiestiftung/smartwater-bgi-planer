@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { removeMeasureFeatureFromLayer } from "@/lib/helpers/ol";
 import {
 	getInputFeatures,
 	performProjectBoundaryIntersection,
@@ -69,6 +70,24 @@ export const FeatureActionMenu: FC<FeatureActionMenuProps> = ({
 						removeMeasure(activeScenarioId, measureId);
 					}
 					if (connectedAreaId) {
+						const scenario =
+							useScenarioStore.getState().scenarios[activeScenarioId];
+						const usedByMeasureId = scenario?.connectedAreas.find(
+							(ca) => ca.id === connectedAreaId,
+						)?.usedByMeasureId;
+
+						if (usedByMeasureId) {
+							const connectedMeasure = scenario?.measures.find(
+								(m) => m.id === usedByMeasureId,
+							);
+							removeMeasureFeatureFromLayer(
+								map,
+								connectedMeasure?.drawLayerId ?? null,
+								usedByMeasureId,
+							);
+							removeMeasure(activeScenarioId, usedByMeasureId);
+						}
+
 						removeConnectedArea(activeScenarioId, connectedAreaId);
 						if (selectedConnectedAreaId === connectedAreaId) {
 							setSelectedConnectedArea(null);
