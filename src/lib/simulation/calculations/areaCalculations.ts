@@ -62,6 +62,7 @@ function toComputedArea(area: OLFeature): ComputedArea {
 	const pvd = total * Number(values.pvd);
 
 	const current: ComputedArea = {
+		// todo: add correct calculation
 		total: calculatePrecisely(total),
 		roof: calculatePrecisely(roof),
 		pvd: 0,
@@ -76,9 +77,8 @@ function toComputedArea(area: OLFeature): ComputedArea {
 		green_roof_int: 0,
 		to_swale: calculatePrecisely(Number(values.to_swale)),
 		to_swale_trench: 0,
+		to_trench: 0,
 		to_cistern: 0,
-
-		// todo: add correct calculation
 		to_surf_infil: 0,
 		to_tree_pit: 0,
 		unpaving: 0,
@@ -95,14 +95,15 @@ function toAreaPotential(areas: ComputedArea): MeasureValues {
 		areas.roof - areas.green_roof_ext - areas.green_roof_int;
 
 	return {
+		// todo: add correct calculation
 		green_roof_ext: calculatePrecisely(availableGreenRoof),
 		green_roof_int: calculatePrecisely(availableGreenRoof),
 		unpaving: calculatePrecisely(areas.pvd),
 		permeable_paving: calculatePrecisely(areas.pvd - areas.pvd_4),
 		to_swale: calculatePrecisely(areas.sealed),
 		to_swale_trench: calculatePrecisely(areas.sealed),
+		to_trench: calculatePrecisely(areas.sealed),
 		to_cistern: calculatePrecisely(areas.sealed),
-		// todo: add correct calculation
 		to_surf_infil: calculatePrecisely(areas.sealed),
 		to_tree_pit: calculatePrecisely(areas.sealed),
 	};
@@ -124,6 +125,7 @@ function createEmptyComputedArea(): ComputedArea {
 		green_roof_int: 0,
 		to_swale: 0,
 		to_swale_trench: 0,
+		to_trench: 0,
 		to_cistern: 0,
 		to_surf_infil: 0,
 		to_tree_pit: 0,
@@ -140,6 +142,7 @@ function createEmptyAreaPotential(): MeasureValues {
 		permeable_paving: 0,
 		to_swale: 0,
 		to_swale_trench: 0,
+		to_trench: 0,
 		to_cistern: 0,
 		to_surf_infil: 0,
 		to_tree_pit: 0,
@@ -171,6 +174,7 @@ function addComputedAreas(
 		to_swale_trench: calculatePrecisely(
 			acc.to_swale_trench + value.to_swale_trench,
 		),
+		to_trench: calculatePrecisely(acc.to_trench + value.to_trench),
 		to_cistern: calculatePrecisely(acc.to_cistern + value.to_cistern),
 
 		// todo: add correct calculation
@@ -206,6 +210,7 @@ function addAreaPotentials(
 		to_swale_trench: calculatePrecisely(
 			acc.to_swale_trench + value.to_swale_trench,
 		),
+		to_trench: calculatePrecisely(acc.to_trench + value.to_trench),
 		to_cistern: calculatePrecisely(acc.to_cistern + value.to_cistern),
 
 		// todo: add correct calculation

@@ -22,6 +22,7 @@ const MEASURE_KEY_TO_RABIMO: Partial<Record<string, keyof RabimoMeasure>> = {
 	// todo: trees -> trees_sm / trees_md / trees_lg (size from measure values)
 	// todo: to_trench mapping
 	to_cistern: "to_cistern",
+	to_trench: "to_trench",
 };
 
 const createEmptyRabimoMeasure = (code: string): RabimoMeasure => ({
@@ -36,6 +37,7 @@ const createEmptyRabimoMeasure = (code: string): RabimoMeasure => ({
 	to_swale: 0,
 	to_surf_infil: 0,
 	to_swale_trench: 0,
+	to_trench: 0,
 	to_tree_pit: 0,
 	to_cistern: 0,
 });

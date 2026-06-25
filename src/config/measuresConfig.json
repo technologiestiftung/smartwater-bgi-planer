@@ -212,12 +212,21 @@
 	{
 		"id": "3V6",
 		"geometryType": "Polygon",
+		"measureKey": "to_trench",
 		"parameters": [
 			{
 				"key": "area",
 				"type": "number",
 				"unit": "m2",
 				"source": "drawn"
+			},
+			{
+				"key": "connectedArea",
+				"type": "number",
+				"unit": "m2",
+				"source": "input",
+				"required": true,
+				"isCalculationInput": true
 			}
 		]
 	},

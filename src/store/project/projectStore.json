@@ -188,6 +188,7 @@
 				"permeable_paving": 2295.738951605,
 				"to_swale": 2302.277194043,
 				"to_swale_trench": 2302.277194043,
+				"to_trench": 2302.277194043,
 				"to_cistern": 2302.277194043
 			},
 			"computedArea": {
@@ -205,6 +206,7 @@
 				"green_roof_int": 0,
 				"to_swale": 0,
 				"to_swale_trench": 0,
+				"to_trench": 0,
 				"to_cistern": 0
 			}
 		},
@@ -226,6 +228,7 @@
 					"green_roof_int": 0,
 					"to_swale": 0,
 					"to_swale_trench": 0,
+					"to_trench": 0,
 					"to_cistern": 0
 				},
 				"areaPotential": {
@@ -235,6 +238,7 @@
 					"permeable_paving": 2295.738951605,
 					"to_swale": 2302.277194043,
 					"to_swale_trench": 2302.277194043,
+					"to_trench": 2302.277194043,
 					"to_cistern": 2302.277194043
 				}
 			}
@@ -246,6 +250,7 @@
 			"permeable_paving": 2295.738951605,
 			"to_swale": 2302.277194043,
 			"to_swale_trench": 2302.277194043,
+			"to_trench": 2302.277194043,
 			"to_cistern": 2302.277194043
 		},
 		"activeAreaId": "0000000007000815",

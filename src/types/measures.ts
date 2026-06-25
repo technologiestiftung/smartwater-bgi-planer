@@ -15,6 +15,7 @@ export type MeasureKey =
 	| "permeable_paving"
 	| "to_swale"
 	| "to_swale_trench"
+	| "to_trench"
 	| "to_cistern"
 	| "to_surf_infil"
 	| "to_tree_pit";
@@ -39,6 +40,7 @@ export interface MeasureValues {
 	green_roof_int: number;
 	to_swale: number;
 	to_swale_trench: number;
+	to_trench: number;
 	to_cistern: number;
 	to_surf_infil: number;
 	to_tree_pit: number;
