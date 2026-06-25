@@ -79,7 +79,10 @@ export const useClickControlConfig = () => {
 				);
 			}
 
-			if (layerId === LAYER_IDS.CONNECTED_AREA_DRAW) {
+			if (
+				layerId === LAYER_IDS.CONNECTED_AREA_DRAW &&
+				currentConfig?.id !== "measure_start"
+			) {
 				return (
 					<FeatureActionMenu
 						features={normalizedFeature}
