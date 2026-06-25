@@ -6,6 +6,7 @@ import { SectionId } from "@/lib/helpers/sectionIds";
 import { useLayersStore, useResultStore, useScenarioStore } from "@/store";
 import type { Result } from "@/store/result/types";
 import { DownloadSimpleIcon, XIcon } from "@phosphor-icons/react";
+import Image from "next/image";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 interface SynthesisViewProps {
@@ -177,6 +178,16 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 						{JSON.stringify(result.data, null, 2)}
 					</pre>
 				)}
+
+				<div className="mt-auto pt-6">
+					<Image
+						src={"/legends/measures.svg"}
+						alt="Legende für Maßnahmen"
+						width={620}
+						height={260}
+						className="h-auto max-w-full"
+					/>
+				</div>
 			</div>
 			<div className="border-muted bg-secondary flex shrink-0 border-t px-4">
 				<Button
