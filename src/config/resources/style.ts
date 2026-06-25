@@ -403,6 +403,7 @@ export const styleList = [
 			{
 				style: {
 					polygonFillColor: [73, 222, 128, 0.5],
+					polygonStrokeColor: [73, 222, 128, 0.5],
 				},
 			},
 		],
@@ -413,6 +414,7 @@ export const styleList = [
 			{
 				style: {
 					polygonFillColor: [255, 134, 37, 0.3],
+					polygonStrokeColor: [255, 134, 37, 0.3],
 				},
 			},
 		],
@@ -479,6 +481,7 @@ export const styleList = [
 			{
 				style: {
 					polygonFillColor: [56, 175, 255, 0.3],
+					polygonStrokeColor: [56, 175, 255, 0.3],
 				},
 			},
 		],
@@ -489,6 +492,7 @@ export const styleList = [
 			{
 				style: {
 					polygonFillColor: [56, 175, 255, 1],
+					polygonStrokeColor: [56, 175, 255, 1],
 				},
 			},
 		],
