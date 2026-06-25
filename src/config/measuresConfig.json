@@ -265,19 +265,6 @@
 		]
 	},
 	{
-		"id": "3S3",
-		"geometryType": "Polygon",
-		"parameters": [
-			{
-				"key": "area",
-				"type": "number",
-				"unit": "m2",
-				"source": "draw",
-				"required": true
-			}
-		]
-	},
-	{
 		"id": "3S4",
 		"geometryType": "Polygon",
 		"parameters": [

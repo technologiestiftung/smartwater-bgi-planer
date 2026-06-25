@@ -242,13 +242,6 @@
 							"infoLayerConfigId": "3S2_info"
 						},
 						{
-							"id": "3S3",
-							"layerConfigId": "3S3",
-							"title": "Zisterne für gebäudeinterne Nutzung",
-							"metricIcons": ["Drop", "Jar"],
-							"infoLayerConfigId": "3S3_info"
-						},
-						{
 							"id": "3S4",
 							"layerConfigId": "3S4",
 							"title": "Retentionsfläche",

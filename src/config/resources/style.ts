@@ -498,21 +498,6 @@ export const styleList = [
 		],
 	},
 	{
-		styleId: "3S3",
-		rules: [
-			{
-				style: {
-					polygonStrokeWidth: 4,
-					polygonStrokeColor: [56, 175, 255, 1],
-					polygonStrokeLineDash: [8],
-					polygonStrokeLineCap: "butt",
-					polygonStrokeLineJoin: "miter",
-					polygonFillColor: [56, 175, 255, 0.3],
-				},
-			},
-		],
-	},
-	{
 		styleId: "3S4",
 		rules: [
 			{

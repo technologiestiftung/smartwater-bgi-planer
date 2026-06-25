@@ -537,7 +537,6 @@
 			"module_3_3V6_draw",
 			"module_3_3S1_draw",
 			"module_3_3S2_draw",
-			"module_3_3S3_draw",
 			"module_3_3S4_draw",
 			"module_3_3S5_draw"
 		]
@@ -566,7 +565,6 @@
 			"module_3_3V6_draw",
 			"module_3_3S1_draw",
 			"module_3_3S2_draw",
-			"module_3_3S3_draw",
 			"module_3_3S4_draw",
 			"module_3_3S5_draw"
 		],
@@ -597,7 +595,6 @@
 			"module_3_3V6_draw",
 			"module_3_3S1_draw",
 			"module_3_3S2_draw",
-			"module_3_3S3_draw",
 			"module_3_3S4_draw",
 			"module_3_3S5_draw"
 		],
@@ -627,7 +624,6 @@
 			"module_3_3V6_draw",
 			"module_3_3S1_draw",
 			"module_3_3S2_draw",
-			"module_3_3S3_draw",
 			"module_3_3S4_draw",
 			"module_3_3S5_draw"
 		],
@@ -658,7 +654,7 @@
 			"module_3_3V6_draw",
 			"module_3_3S1_draw",
 			"module_3_3S2_draw",
-			"module_3_3S3_draw",
+			"module_3__draw",
 			"module_3_3S4_draw",
 			"module_3_3S5_draw"
 		],
@@ -690,7 +686,6 @@
 			"module_3_3V6_draw",
 			"module_3_3S1_draw",
 			"module_3_3S2_draw",
-			"module_3_3S3_draw",
 			"module_3_3S4_draw",
 			"module_3_3S5_draw"
 		],
@@ -722,7 +717,6 @@
 			"module_3_3V6_draw",
 			"module_3_3S1_draw",
 			"module_3_3S2_draw",
-			"module_3_3S3_draw",
 			"module_3_3S4_draw",
 			"module_3_3S5_draw"
 		],
@@ -754,7 +748,6 @@
 			"module_3_3V6_draw",
 			"module_3_3S1_draw",
 			"module_3_3S2_draw",
-			"module_3_3S3_draw",
 			"module_3_3S4_draw",
 			"module_3_3S5_draw"
 		],
@@ -785,7 +778,6 @@
 			"module_3_3V6_draw",
 			"module_3_3S1_draw",
 			"module_3_3S2_draw",
-			"module_3_3S3_draw",
 			"module_3_3S4_draw",
 			"module_3_3S5_draw"
 		],
@@ -815,7 +807,6 @@
 			"module_3_3V6_draw",
 			"module_3_3S1_draw",
 			"module_3_3S2_draw",
-			"module_3_3S3_draw",
 			"module_3_3S4_draw",
 			"module_3_3S5_draw"
 		],
@@ -845,7 +836,6 @@
 			"module_3_3V6_draw",
 			"module_3_3S1_draw",
 			"module_3_3S2_draw",
-			"module_3_3S3_draw",
 			"module_3_3S4_draw",
 			"module_3_3S5_draw"
 		],
@@ -875,7 +865,6 @@
 			"module_3_3V6_draw",
 			"module_3_3S1_draw",
 			"module_3_3S2_draw",
-			"module_3_3S3_draw",
 			"module_3_3S4_draw",
 			"module_3_3S5_draw"
 		],
@@ -905,7 +894,6 @@
 			"module_3_3V6_draw",
 			"module_3_3S1_draw",
 			"module_3_3S2_draw",
-			"module_3_3S3_draw",
 			"module_3_3S4_draw",
 			"module_3_3S5_draw"
 		],
@@ -935,7 +923,6 @@
 			"module_3_3V6_draw",
 			"module_3_3S1_draw",
 			"module_3_3S2_draw",
-			"module_3_3S3_draw",
 			"module_3_3S4_draw",
 			"module_3_3S5_draw"
 		],
@@ -966,7 +953,6 @@
 			"module_3_3V6_draw",
 			"module_3_3S1_draw",
 			"module_3_3S2_draw",
-			"module_3_3S3_draw",
 			"module_3_3S4_draw",
 			"module_3_3S5_draw"
 		],
@@ -997,37 +983,6 @@
 			"module_3_3V6_draw",
 			"module_3_3S1_draw",
 			"module_3_3S2_draw",
-			"module_3_3S3_draw",
-			"module_3_3S4_draw",
-			"module_3_3S5_draw"
-		],
-		"canDrawMeasures": true,
-		"measurementSrc": "/legends/measures.svg"
-	},
-	{
-		"id": "3S3",
-		"name": "Zisterne für gebäudeinterne Nutzung",
-		"description": "Regenwasserspeicher zur Nutzung als Betriebswasser im Gebäude, z. B. für WC, Reinigung oder Waschmaschine. Reduziert Trinkwasserbedarf und entlastet die Kanalisation. Erfordert getrennte Leitungsführung, Aufbereitung und regelmäßige technische Kontrolle.",
-		"drawLayerId": "module_3_3S3_draw",
-		"visibleLayerIds": [
-			"project_boundary",
-			"module_3_connected_area_draw",
-			"module_3_3G1_draw",
-			"module_3_3G2_draw",
-			"module_3_3G5_draw",
-			"module_3_3E1_draw",
-			"module_3_3E2_draw",
-			"module_3_3B1_draw",
-			"module_3_3B2_draw",
-			"module_3_3V1_draw",
-			"module_3_3V2_draw",
-			"module_3_3V3_draw",
-			"module_3_3V4_draw",
-			"module_3_3V5_draw",
-			"module_3_3V6_draw",
-			"module_3_3S1_draw",
-			"module_3_3S2_draw",
-			"module_3_3S3_draw",
 			"module_3_3S4_draw",
 			"module_3_3S5_draw"
 		],
@@ -1058,7 +1013,6 @@
 			"module_3_3V6_draw",
 			"module_3_3S1_draw",
 			"module_3_3S2_draw",
-			"module_3_3S3_draw",
 			"module_3_3S4_draw",
 			"module_3_3S5_draw"
 		],
@@ -1090,7 +1044,6 @@
 			"module_3_3V6_draw",
 			"module_3_3S1_draw",
 			"module_3_3S2_draw",
-			"module_3_3S3_draw",
 			"module_3_3S4_draw",
 			"module_3_3S5_draw"
 		],
@@ -1120,7 +1073,6 @@
 			"module_3_3V6_draw",
 			"module_3_3S1_draw",
 			"module_3_3S2_draw",
-			"module_3_3S3_draw",
 			"module_3_3S4_draw",
 			"module_3_3S5_draw"
 		],
@@ -1149,7 +1101,6 @@
 			"module_3_3V6_draw",
 			"module_3_3S1_draw",
 			"module_3_3S2_draw",
-			"module_3_3S3_draw",
 			"module_3_3S4_draw",
 			"module_3_3S5_draw"
 		],
