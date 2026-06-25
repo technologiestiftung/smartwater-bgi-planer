@@ -202,7 +202,7 @@
 						{
 							"id": "3V4",
 							"layerConfigId": "3V4",
-							"title": "Tiefbeet-Rigole",
+							"title": "Tiefbeet",
 							"metricIcons": ["Tree"],
 							"infoLayerConfigId": "3V4_info"
 						},
@@ -237,7 +237,7 @@
 						{
 							"id": "3S2",
 							"layerConfigId": "3S2",
-							"title": "Zisterne für Bewässerung",
+							"title": "Regenwasserspeicher",
 							"metricIcons": ["Drop"],
 							"infoLayerConfigId": "3S2_info"
 						},

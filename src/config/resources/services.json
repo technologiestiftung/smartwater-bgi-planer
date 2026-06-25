@@ -505,7 +505,7 @@
 	},
 	{
 		"id": "module_3_3V4_draw",
-		"name": "Tiefbeet-Rigole",
+		"name": "Tiefbeet",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
@@ -593,7 +593,7 @@
 	},
 	{
 		"id": "module_3_3S2_draw",
-		"name": "Zisterne für Bewässerung",
+		"name": "Regenwasserspeicher",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
