@@ -632,7 +632,7 @@
 	},
 	{
 		"id": "3E1",
-		"name": "Teilversiegelte Oberflächen",
+		"name": "Teildurchlässiger Flächenbelag",
 		"description": "Ersatz vollversiegelter Beläge durch teildurchlässige Oberflächen wie Sickerpflaster oder Rasengitter. Dadurch kann Regenwasser lokal versickern, Abflüsse werden reduziert und das Stadtklima verbessert. Die Wirksamkeit hängt von Boden, Gefälle und Wartung gegen Verstopfung ab.",
 		"drawLayerId": "module_3_3E1_draw",
 		"visibleLayerIds": [

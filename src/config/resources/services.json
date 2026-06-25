@@ -529,7 +529,7 @@
 	},
 	{
 		"id": "module_3_3E1_draw",
-		"name": "Teilversiegelte Oberflächen",
+		"name": "Teildurchlässiger Flächenbelag",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",

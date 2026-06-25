@@ -134,7 +134,7 @@
 						{
 							"id": "3E1",
 							"layerConfigId": "3E1",
-							"title": "Teilversiegelte Oberflächen",
+							"title": "Teildurchlässiger Flächenbelag",
 							"metricIcons": ["Drop", "ThermometerHot"],
 							"infoLayerConfigId": "3E1_info"
 						},
