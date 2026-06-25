@@ -214,6 +214,9 @@ export const useDrawTree = () => {
 					connectedArea: isTreePit
 						? (selectedConnectedArea?.area ?? 0)
 						: undefined,
+					connectedAreaId: isTreePit
+						? (selectedConnectedAreaId ?? null)
+						: undefined,
 					configId: layerConfigId ?? "3B2",
 					drawLayerId: drawLayerId ?? null,
 				};

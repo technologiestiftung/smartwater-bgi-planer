@@ -155,6 +155,18 @@ export const styleList = [
 		styleId: "connectedArea",
 		rules: [
 			{
+				conditions: {
+					properties: {
+						isUsed: true,
+					},
+				},
+				style: {
+					polygonStrokeWidth: 2,
+					polygonStrokeColor: [140, 120, 50, 1],
+					polygonFillColor: [140, 120, 50, 0.25],
+				},
+			},
+			{
 				style: {
 					polygonStrokeWidth: 2,
 					polygonStrokeColor: [255, 175, 80, 1],

@@ -9,6 +9,7 @@ export interface Measure {
 	name: string;
 	area: number;
 	connectedArea?: number;
+	connectedAreaId?: string | null;
 	configId: string;
 	drawLayerId: string | null;
 	// todo: get rid off values?

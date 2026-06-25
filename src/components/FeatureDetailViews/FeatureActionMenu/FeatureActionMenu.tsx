@@ -72,11 +72,24 @@ export const FeatureActionMenu: FC<FeatureActionMenuProps> = ({
 					if (connectedAreaId) {
 						const scenario =
 							useScenarioStore.getState().scenarios[activeScenarioId];
-						const usedByMeasureId = scenario?.connectedAreas.find(
+						const connectedArea = scenario?.connectedAreas.find(
 							(ca) => ca.id === connectedAreaId,
-						)?.usedByMeasureId;
+						);
+						const usedByMeasureId = connectedArea?.usedByMeasureId;
 
-						if (usedByMeasureId) {
+						if (usedByMeasureId === "trees") {
+							const treeMeasures = (scenario?.measures ?? []).filter(
+								(m) =>
+									m.name.startsWith("trees_") &&
+									(m.connectedAreaId !== null && m.connectedAreaId !== undefined
+										? m.connectedAreaId === connectedAreaId
+										: m.code === connectedArea?.code),
+							);
+							for (const m of treeMeasures) {
+								removeMeasureFeatureFromLayer(map, m.drawLayerId, m.id);
+								removeMeasure(activeScenarioId, m.id);
+							}
+						} else if (usedByMeasureId) {
 							const connectedMeasure = scenario?.measures.find(
 								(m) => m.id === usedByMeasureId,
 							);
