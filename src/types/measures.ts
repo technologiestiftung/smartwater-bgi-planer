@@ -1,3 +1,5 @@
+export type MeasureParameterKey = "area" | "connectedArea" | "count";
+
 export type MeasureParameterConfig = {
 	type: "number" | "integer" | "string";
 	unit?: string;
@@ -53,6 +55,7 @@ export interface MeasureValuesWithCalcFields extends MeasureValues {
 	sealed: number;
 	unsealed: number;
 }
+
 export interface MeasureValuesWithTrees extends MeasureValues {
 	trees_sm: number;
 	trees_md: number;

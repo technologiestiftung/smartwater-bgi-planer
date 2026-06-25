@@ -42,6 +42,12 @@ const createEmptyRabimoMeasure = (code: string): RabimoMeasure => ({
 	to_cistern: 0,
 });
 
+const TREE_NAME_TO_FIELD: Partial<Record<string, keyof RabimoMeasure>> = {
+	trees_sm: "trees_sm",
+	trees_md: "trees_md",
+	trees_lg: "trees_lg",
+};
+
 export function buildRabimoPayload(
 	inputFeatures: InputFeature[],
 	measures: Measure[],
@@ -60,21 +66,26 @@ export function buildRabimoPayload(
 		measuresByCode.set(code, createEmptyRabimoMeasure(code));
 	}
 
-	// Accumulate measure areas into the corresponding rabimo keys
+	// Accumulate measures into the corresponding rabimo keys
 	for (const measure of measures) {
 		if (!measure.code) continue;
-
-		const config = measureConfigById.get(measure.configId);
-		if (!config?.measureKey) continue;
-
-		// todo: check MEASURE_KEY_TO_RABIMO if neccessary or can be refactored
-		const rabimoKey = MEASURE_KEY_TO_RABIMO[config.measureKey];
-		if (!rabimoKey) continue;
 
 		const entry = measuresByCode.get(measure.code);
 		if (!entry) continue;
 
-		(entry[rabimoKey] as number) += measure.area;
+		// Count trees
+		const treeField = TREE_NAME_TO_FIELD[measure.name];
+		if (treeField) {
+			(entry[treeField] as number) += 1;
+		}
+
+		const config = measureConfigById.get(measure.configId);
+		if (!config?.measureKey) continue;
+
+		const rabimoKey = MEASURE_KEY_TO_RABIMO[config.measureKey];
+		if (!rabimoKey) continue;
+
+		(entry[rabimoKey] as number) += measure.connectedArea ?? measure.area;
 	}
 
 	return {

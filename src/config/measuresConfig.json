@@ -48,7 +48,7 @@
 		"geometryType": "Polygon",
 		"parameters": [
 			{
-				"key": "facadeArea",
+				"key": "area",
 				"type": "number",
 				"unit": "m2",
 				"source": "drawn",
@@ -248,10 +248,10 @@
 		"measureKey": "to_cistern",
 		"parameters": [
 			{
-				"key": "storageVolume",
+				"key": "area",
 				"type": "number",
-				"unit": "m3",
-				"source": "input",
+				"unit": "m2",
+				"source": "draw",
 				"required": true
 			},
 			{
@@ -266,13 +266,13 @@
 	},
 	{
 		"id": "3S3",
-		"geometryType": "Point",
+		"geometryType": "Polygon",
 		"parameters": [
 			{
-				"key": "storageVolume",
+				"key": "area",
 				"type": "number",
-				"unit": "m3",
-				"source": "input",
+				"unit": "m2",
+				"source": "draw",
 				"required": true
 			}
 		]
