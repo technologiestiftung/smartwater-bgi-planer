@@ -1102,7 +1102,11 @@
 			"module_3_3S1_draw",
 			"module_3_3S2_draw",
 			"module_3_3S4_draw",
-			"module_3_3S5_draw"
+			"module_3_3S5_draw",
+			"result_delta_w",
+			"result_runoff",
+			"result_evapor",
+			"result_infiltr"
 		],
 		"legendSrc": ""
 	}

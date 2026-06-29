@@ -249,6 +249,38 @@
 		"styleId": "projectBoundary"
 	},
 	{
+		"id": "result_delta_w",
+		"name": "Delta-W Ergebnis",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "result_delta_w"
+	},
+	{
+		"id": "result_runoff",
+		"name": "Oberflächen Abfluss Ergebnis",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "result_runoff"
+	},
+	{
+		"id": "result_evapor",
+		"name": "Verdunstung Ergebnis",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "result_evapor"
+	},
+	{
+		"id": "result_infiltr",
+		"name": "Versickerung Ergebnis",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "result_infiltr"
+	},
+	{
 		"id": "project_btf_planning",
 		"styleId": "projectBTFPlanning",
 		"name": "Untersuchungsgebiet mit Blockteilflächenauswahl",

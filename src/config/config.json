@@ -306,6 +306,22 @@
 					"type": "folder",
 					"elements": [
 						{
+							"id": "result_runoff",
+							"visibility": false
+						},
+						{
+							"id": "result_infiltr",
+							"visibility": false
+						},
+						{
+							"id": "result_evapor",
+							"visibility": false
+						},
+						{
+							"id": "result_delta_w",
+							"visibility": false
+						},
+						{
 							"id": "project_btf_planning",
 							"visibility": true
 						},

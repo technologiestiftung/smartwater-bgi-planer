@@ -3,6 +3,7 @@
 import ResultChart from "@/components/ResultChart/ResultChart";
 import { Button } from "@/components/ui/button";
 import { useRabimoPayload } from "@/hooks/useRabimoPayload";
+import { useResultLayer } from "@/hooks/useResultLayer";
 import { SectionId } from "@/lib/helpers/sectionIds";
 import { useLayersStore, useResultStore, useScenarioStore } from "@/store";
 import type { Result } from "@/store/result/types";
@@ -36,14 +37,16 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 	const payload = useRabimoPayload();
 	const [state, setState] = useState<TestState>("idle");
 	const [message, setMessage] = useState<string>("");
-	// const isDisabled = state === "loading";
-	// const buttonLabel = useMemo(() => {
-	// 	if (state === "loading") {
-	// 		return "Rabimo...";
-	// 	}
-	// 	return "Rabimo Test";
-	// }, [state]);
-	// todo: run rabimo if there is data that needs to be calculated
+
+	useResultLayer({
+		layerIds: [
+			"result_delta_w",
+			"result_runoff",
+			"result_infiltr",
+			"result_evapor",
+		],
+		dataKey: "water_balance_with_measures",
+	});
 
 	useEffect(() => {
 		applyConfigLayers("measure_planning_synthesis_view", true);
