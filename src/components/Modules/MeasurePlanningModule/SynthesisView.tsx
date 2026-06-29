@@ -1,5 +1,6 @@
 "use client";
 
+import ResultChart from "@/components/ResultChart/ResultChart";
 import { Button } from "@/components/ui/button";
 import { useRabimoPayload } from "@/hooks/useRabimoPayload";
 import { SectionId } from "@/lib/helpers/sectionIds";
@@ -7,7 +8,7 @@ import { useLayersStore, useResultStore, useScenarioStore } from "@/store";
 import type { Result } from "@/store/result/types";
 import { DownloadSimpleIcon, XIcon } from "@phosphor-icons/react";
 import Image from "next/image";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 interface SynthesisViewProps {
 	onBackToQuestions: () => void;
@@ -32,19 +33,16 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 	const activeScenarioId = useScenarioStore((state) => state.activeScenarioId);
 	const setResult = useResultStore((state) => state.setResult);
 	const setStatus = useResultStore((state) => state.setStatus);
-	const result = useResultStore((state) =>
-		activeScenarioId ? state.resultsByScenarioId[activeScenarioId] : undefined,
-	);
 	const payload = useRabimoPayload();
 	const [state, setState] = useState<TestState>("idle");
 	const [message, setMessage] = useState<string>("");
-	const isDisabled = state === "loading";
-	const buttonLabel = useMemo(() => {
-		if (state === "loading") {
-			return "Rabimo...";
-		}
-		return "Rabimo Test";
-	}, [state]);
+	// const isDisabled = state === "loading";
+	// const buttonLabel = useMemo(() => {
+	// 	if (state === "loading") {
+	// 		return "Rabimo...";
+	// 	}
+	// 	return "Rabimo Test";
+	// }, [state]);
 	// todo: run rabimo if there is data that needs to be calculated
 
 	useEffect(() => {
@@ -53,9 +51,6 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 
 	const handleRequest = useCallback(async () => {
 		if (!activeScenarioId || !payload) return;
-
-		console.log("[SynthesisView] payload::", payload);
-
 		setState("loading");
 		setStatus(activeScenarioId, "loading");
 		setMessage("");
@@ -144,16 +139,6 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 					angezeigt.
 				</p>
 
-				<Button
-					variant="map-control"
-					size="default"
-					onClick={handleRequest}
-					disabled={isDisabled}
-					className="h-12 rounded-xs px-3 text-xs font-semibold"
-				>
-					{buttonLabel}
-				</Button>
-
 				{message && (
 					<div
 						className={[
@@ -167,17 +152,15 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 					</div>
 				)}
 
-				{payload && (
+				{/* {payload && (
 					<pre className="bg-muted text-foreground mt-4 overflow-x-auto rounded-sm p-3 text-xs">
 						{JSON.stringify(payload, null, 2)}
 					</pre>
-				)}
+				)} */}
 
-				{result && (
-					<pre className="bg-muted text-foreground mt-4 overflow-x-auto rounded-sm p-3 text-xs">
-						{JSON.stringify(result.data, null, 2)}
-					</pre>
-				)}
+				<div className="mt-4">
+					<ResultChart />
+				</div>
 
 				<div className="mt-auto pt-6">
 					<Image
@@ -189,6 +172,8 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 					/>
 				</div>
 			</div>
+
+			{/* footer */}
 			<div className="border-muted bg-secondary flex shrink-0 border-t px-4">
 				<Button
 					onClick={onBackToQuestions}
