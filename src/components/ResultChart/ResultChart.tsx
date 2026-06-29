@@ -55,19 +55,17 @@ const MiniBarChart: FC<MiniBarChartProps> = ({
 				{Math.round(originalValue)}
 			</span>
 			<div
+				className="self-end rounded-sm"
 				style={{
 					height: origHeight,
 					backgroundColor: COLOR_ORIGINAL,
-					borderRadius: "4px 4px 0 0",
-					alignSelf: "end",
 				}}
 			/>
 			<div
+				className="self-end rounded-sm"
 				style={{
 					height: measHeight,
 					backgroundColor: COLOR_MEASURES,
-					borderRadius: "4px 4px 0 0",
-					alignSelf: "end",
 				}}
 			/>
 			<span className={`${valueClass} self-end pl-1`}>
