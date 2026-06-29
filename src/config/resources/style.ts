@@ -169,8 +169,8 @@ export const styleList = [
 			{
 				style: {
 					polygonStrokeWidth: 2,
-					polygonStrokeColor: [255, 175, 80, 1],
-					polygonFillColor: [200, 175, 80, 0.5],
+					polygonStrokeColor: [248, 237, 68, 1],
+					polygonFillColor: [248, 237, 68, 0.5],
 				},
 			},
 		],
