@@ -251,7 +251,7 @@
 				"key": "area",
 				"type": "number",
 				"unit": "m2",
-				"source": "draw",
+				"source": "drawn",
 				"required": true
 			},
 			{
