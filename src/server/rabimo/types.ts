@@ -12,3 +12,12 @@ export interface RabimoPayload {
 	blocks: RabimoFeature[];
 	measures: RabimoMeasure[];
 }
+
+export function isValidRabimoPayload(value: unknown): value is RabimoPayload {
+	return (
+		typeof value === "object" &&
+		value !== null &&
+		Array.isArray((value as Record<string, unknown>).blocks) &&
+		Array.isArray((value as Record<string, unknown>).measures)
+	);
+}

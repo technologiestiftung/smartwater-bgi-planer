@@ -1,14 +1,21 @@
 import { getRabimo } from "@/server/rabimo/getRabimo";
-import { RabimoPayload } from "@/server/rabimo/types";
+import { isValidRabimoPayload } from "@/server/rabimo/types";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
-	let body: RabimoPayload;
+	let body: unknown;
 
 	try {
 		body = await request.json();
 	} catch {
 		return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+	}
+
+	if (!isValidRabimoPayload(body)) {
+		return NextResponse.json(
+			{ error: "Invalid payload: 'blocks' and 'measures' arrays are required" },
+			{ status: 400 },
+		);
 	}
 
 	try {
