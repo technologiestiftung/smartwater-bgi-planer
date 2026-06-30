@@ -12,7 +12,6 @@ export interface Measure {
 	connectedAreaId?: string | null;
 	configId: string;
 	drawLayerId: string | null;
-	// todo: get rid off values?
 	values?: Partial<Record<MeasureParameterKey, MeasureValue>>;
 }
 
