@@ -3,7 +3,7 @@ import measureCalculations from "@/lib/simulation/calculations/measureCalculatio
 import type { ComputedArea } from "@/lib/simulation/types";
 import type { InputFeature } from "@/store/project/types";
 import { Measure } from "@/store/scenario/types";
-import { MeasureValues } from "@/types/measures";
+import type { MeasureValues } from "@/types/measures";
 
 type ApplyMeasuresResult = {
 	computedArea: ComputedArea;

@@ -2,7 +2,7 @@ import type {
 	ComputedArea,
 	PreprocessedFeatures,
 } from "@/lib/simulation/types";
-import { MeasureValues } from "@/types/measures";
+import type { MeasureValues } from "@/types/measures";
 import type Feature from "ol/Feature";
 import type Geometry from "ol/geom/Geometry";
 

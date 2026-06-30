@@ -1,4 +1,7 @@
-import { MeasureValues, MeasureValuesWithCalcFields } from "@/types/measures";
+import type {
+	MeasureValues,
+	MeasureValuesWithCalcFields,
+} from "@/types/measures";
 import type Feature from "ol/Feature";
 import type { Geometry } from "ol/geom";
 

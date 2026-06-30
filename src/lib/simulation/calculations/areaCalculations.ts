@@ -1,6 +1,10 @@
-import { AreaProps } from "@/store/project/types";
-import { MeasureValues } from "@/types/measures";
-import type { ComputedArea, OLFeature, PreprocessedFeatures } from "../types";
+import type {
+	ComputedArea,
+	OLFeature,
+	PreprocessedFeatures,
+} from "@/lib/simulation/types";
+import type { AreaProps } from "@/store/project/types";
+import type { MeasureValues } from "@/types/measures";
 
 // todo: do we actually need this
 type RabimoLikeAreaValues = AreaProps & {
