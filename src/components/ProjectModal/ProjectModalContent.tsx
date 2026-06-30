@@ -47,10 +47,10 @@ export function ProjectModalContent({
 	if (deleted) {
 		return (
 			<>
-				<div className="hidden flex-wrap items-center justify-center gap-2 lg:flex">
+				<div className="flex flex-wrap items-center justify-center gap-2">
 					<SpinnerIcon
 						size={32}
-						className="animate-spin [animation-duration:3s]"
+						className="animation-duration-[3s] animate-spin"
 					/>
 					<p>Projekt wird gelöscht...</p>
 				</div>

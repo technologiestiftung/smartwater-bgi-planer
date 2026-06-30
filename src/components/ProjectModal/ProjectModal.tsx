@@ -110,6 +110,7 @@ export function ProjectModal({ mode, projectId }: ProjectModalProps) {
 	};
 
 	const handleClose = () => {
+		if (deleted) return;
 		setIsOpen(false);
 		router.back();
 	};
