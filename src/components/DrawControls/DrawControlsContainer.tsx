@@ -8,6 +8,7 @@ import {
 	DrawProjectBoundaryButton,
 } from "@/components/DrawControls";
 import { UploadDrawLayerButton } from "@/components/UploadControls/UploadDrawLayerButton/UploadDrawLayerButton";
+import { useConnectedAreaFeatureSync } from "@/hooks/useConnectedAreaFeatureSync";
 import { selectActiveLayerConfig, useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
 import { usePathname } from "next/navigation";
@@ -25,6 +26,8 @@ export function DrawControlsContainer({}: DrawControlsContainerProps) {
 	const showTutorial = useUiStore((state) => state.showTutorial);
 	const setTutorialState = useUiStore((state) => state.setTutorialState);
 	const currentLayerConfig = useLayersStore(selectActiveLayerConfig);
+
+	useConnectedAreaFeatureSync();
 
 	const isProjectStarter = pathname.includes("/project-starter");
 	const isModule =

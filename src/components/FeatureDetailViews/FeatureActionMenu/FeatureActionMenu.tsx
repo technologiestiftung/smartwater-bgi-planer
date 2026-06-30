@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { removeMeasureFeatureFromLayer } from "@/lib/helpers/ol";
 import {
 	getInputFeatures,
 	performProjectBoundaryIntersection,
@@ -69,6 +70,37 @@ export const FeatureActionMenu: FC<FeatureActionMenuProps> = ({
 						removeMeasure(activeScenarioId, measureId);
 					}
 					if (connectedAreaId) {
+						const scenario =
+							useScenarioStore.getState().scenarios[activeScenarioId];
+						const connectedArea = scenario?.connectedAreas.find(
+							(ca) => ca.id === connectedAreaId,
+						);
+						const usedByMeasureId = connectedArea?.usedByMeasureId;
+
+						if (usedByMeasureId === "trees") {
+							const treeMeasures = (scenario?.measures ?? []).filter(
+								(m) =>
+									m.name.startsWith("trees_") &&
+									(m.connectedAreaId !== null && m.connectedAreaId !== undefined
+										? m.connectedAreaId === connectedAreaId
+										: m.code === connectedArea?.code),
+							);
+							for (const m of treeMeasures) {
+								removeMeasureFeatureFromLayer(map, m.drawLayerId, m.id);
+								removeMeasure(activeScenarioId, m.id);
+							}
+						} else if (usedByMeasureId) {
+							const connectedMeasure = scenario?.measures.find(
+								(m) => m.id === usedByMeasureId,
+							);
+							removeMeasureFeatureFromLayer(
+								map,
+								connectedMeasure?.drawLayerId ?? null,
+								usedByMeasureId,
+							);
+							removeMeasure(activeScenarioId, usedByMeasureId);
+						}
+
 						removeConnectedArea(activeScenarioId, connectedAreaId);
 						if (selectedConnectedAreaId === connectedAreaId) {
 							setSelectedConnectedArea(null);

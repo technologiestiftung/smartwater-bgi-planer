@@ -134,7 +134,7 @@
 						{
 							"id": "3E1",
 							"layerConfigId": "3E1",
-							"title": "Teilversiegelte Oberflächen",
+							"title": "Teildurchlässiger Flächenbelag",
 							"metricIcons": ["Drop", "ThermometerHot"],
 							"infoLayerConfigId": "3E1_info"
 						},
@@ -202,7 +202,7 @@
 						{
 							"id": "3V4",
 							"layerConfigId": "3V4",
-							"title": "Tiefbeet-Rigole",
+							"title": "Tiefbeet",
 							"metricIcons": ["Tree"],
 							"infoLayerConfigId": "3V4_info"
 						},
@@ -237,16 +237,9 @@
 						{
 							"id": "3S2",
 							"layerConfigId": "3S2",
-							"title": "Zisterne für Bewässerung",
+							"title": "Regenwasserspeicher",
 							"metricIcons": ["Drop"],
 							"infoLayerConfigId": "3S2_info"
-						},
-						{
-							"id": "3S3",
-							"layerConfigId": "3S3",
-							"title": "Zisterne für gebäudeinterne Nutzung",
-							"metricIcons": ["Drop", "Jar"],
-							"infoLayerConfigId": "3S3_info"
 						},
 						{
 							"id": "3S4",

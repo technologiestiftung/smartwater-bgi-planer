@@ -2,7 +2,7 @@ import type { MeasureValue } from "@/store/scenario/types";
 import type { MeasureConfig, MeasureParameterConfig } from "@/types/measures";
 import type Feature from "ol/Feature";
 import type Geometry from "ol/geom/Geometry";
-import { getArea, getLength } from "ol/sphere";
+import { LineString, Polygon } from "ol/geom";
 
 const roundGeometryValue = (value: number) => Number(value.toFixed(2));
 
@@ -21,11 +21,11 @@ export const getDrawnValue = (
 
 	const geometryType = geometry.getType();
 	if (geometryType.includes("Polygon")) {
-		return roundGeometryValue(getArea(geometry as any));
+		return roundGeometryValue((geometry as Polygon).getArea());
 	}
 
 	if (geometryType.includes("LineString")) {
-		return roundGeometryValue(getLength(geometry as any));
+		return roundGeometryValue((geometry as LineString).getLength());
 	}
 
 	return parameter.default ?? null;

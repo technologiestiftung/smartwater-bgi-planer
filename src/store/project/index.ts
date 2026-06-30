@@ -51,6 +51,14 @@ export const useProjectStore = create<ProjectState & ProjectActions>()(
 				}),
 				{
 					name: "project-storage",
+					// Exclude large derived/computed fields
+					partialize: (state) => ({
+						inputFeatures: state.inputFeatures,
+						project: state.project,
+						activeAreaId: state.activeAreaId,
+						lastPath: state.lastPath,
+						hasHydrated: state.hasHydrated,
+					}),
 					onRehydrateStorage: () => (state) => {
 						state?.setHasHydrated(true);
 					},

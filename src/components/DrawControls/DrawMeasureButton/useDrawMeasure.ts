@@ -29,7 +29,6 @@ import Polygon from "ol/geom/Polygon";
 import Draw from "ol/interaction/Draw";
 import VectorLayer from "ol/layer/Vector";
 import { Vector as VectorSource } from "ol/source";
-import { getArea } from "ol/sphere";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 
@@ -108,7 +107,7 @@ const clipToBtf = (
 	if (clippedGeometry instanceof MultiPolygon) {
 		const polygons = clippedGeometry.getPolygons();
 		return polygons.reduce((largest, p) =>
-			getArea(p) > getArea(largest) ? p : largest,
+			p.getArea() > largest.getArea() ? p : largest,
 		);
 	}
 	return null;
@@ -289,7 +288,7 @@ export const useDrawMeasure = () => {
 				return;
 			}
 			const potential = activeMeasurePotentialRef.current;
-			const currentArea = Number(getArea(geometry).toFixed(2));
+			const currentArea = Number(geometry.getArea().toFixed(2));
 			const isOverPotential =
 				typeof potential === "number" && currentArea > potential;
 			isOverPotentialRef.current = isOverPotential;
@@ -328,7 +327,9 @@ export const useDrawMeasure = () => {
 			}
 
 			if (isConnectedArea) {
-				const area = Number(getArea(drawnFeature.getGeometry()!).toFixed(2));
+				const area = Number(
+					(drawnFeature.getGeometry() as Polygon).getArea().toFixed(2),
+				);
 				const connectedArea = {
 					id: createEntityId("connected-area"),
 					createdAt: Date.now(),
@@ -426,6 +427,16 @@ export const useDrawMeasure = () => {
 
 		resetDrawInteractions();
 		setLiveMeasureInfo(null);
+
+		// computedFeatures is not persisted — re-derive it from inputFeatures if
+		// empty (e.g. after page reload) so the draw condition can resolve potentials.
+		const projectState = useProjectStore.getState();
+		if (
+			projectState.computedFeatures.length === 0 &&
+			projectState.inputFeatures.length > 0
+		) {
+			projectState.setInputFeatures(projectState.inputFeatures);
+		}
 
 		const layer = map
 			.getAllLayers()
