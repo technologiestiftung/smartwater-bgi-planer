@@ -1,0 +1,108 @@
+[
+	{
+		"title": "Delta oder Absolut",
+		"options": [
+			{
+				"display": "Delta",
+				"value": "DELTA"
+			},
+			{
+				"display": "Absolute",
+				"value": "ABSOLUT"
+			}
+		]
+	},
+	{
+		"title": "Messwert",
+		"options": [
+			{
+				"display": "Luftfeuchtigkeit"
+			},
+			{
+				"display": "Temperatur",
+				"value": "Temp"
+			},
+			{
+				"display": "Physiologisch Äquivalente Temperatur (PET)",
+				"value": "PET"
+			}
+		]
+	},
+	{
+		"title": "Uhrzeit",
+		"options": [
+			{
+				"display": "04:00 Uhr",
+				"value": "0400"
+			},
+			{
+				"display": "14:00 Uhr",
+				"value": "1400"
+			},
+			{
+				"display": "22:00 Uhr",
+				"value": "2200"
+			}
+		]
+	},
+	{
+		"title": "Ausschöpfung\nPotentialfläche",
+		"options": [
+			{
+				"display": "25%",
+				"value": "25"
+			},
+			{
+				"display": "50%",
+				"value": "50"
+			},
+			{
+				"display": "75%",
+				"value": "75"
+			},
+			{
+				"display": "100%",
+				"value": "100"
+			}
+		]
+	},
+	{
+		"title": "Jahreszeit",
+		"options": [
+			{
+				"display": "Hitzetag"
+			},
+			{
+				"display": "Sommertag"
+			},
+			{
+				"display": "Tropennacht"
+			}
+		]
+	},
+	{
+		"title": "Ansicht",
+		"options": [
+			{
+				"display": "Grundriss 2m Höhe",
+				"value": "xy2"
+			},
+			{
+				"display": "Grundriss 10m Höhe",
+				"value": "xy10"
+			},
+			{
+				"display": "Grundriss 20m Höhe",
+				"value": "xy20"
+			},
+			{
+				"display": "Querschnitt Ost-West",
+				"value": "xz"
+			},
+			{
+				"display": "Querschnitt Nord-Süd",
+				"value": "yz"
+			}
+		]
+	}
+]

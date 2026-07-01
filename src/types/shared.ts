@@ -88,12 +88,7 @@ interface ModuleMeasurementPoliciesGuidelines {
 
 export interface ModuleMeasurementClimateSimulation {
 	description?: string;
-	dropdownMenus?: ModuleMeasurementClimateSimulationDropdownMenu[];
-}
-
-export interface ModuleMeasurementClimateSimulationDropdownMenu {
-	title: string;
-	options: { display: string; value?: string }[];
+	title?: string;
 }
 
 export interface ModuleConfig {

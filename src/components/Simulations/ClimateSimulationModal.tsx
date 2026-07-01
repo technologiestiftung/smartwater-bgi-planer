@@ -10,6 +10,7 @@ import {
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { getModuleStepMeasure } from "../Modules/shared/moduleConfig";
+import dropdownMenus from "./dropDownMenus.json";
 
 interface ClimateSimulationModalProps {
 	climateSimulation: string;
@@ -27,9 +28,8 @@ export function ClimateSimulationModal({
 		"measurePlanning",
 		climateSimulation,
 	) as ModuleMeasurementConfig;
-	const { title, climateSimulation: { dropdownMenus } = {} } =
-		getModuleInfo || {};
-	const fileType = ".jpg";
+	const { climateSimulation: { title } = {} } = getModuleInfo || {};
+	const fileType = ".webp";
 	const [imgError, setImageError] = useState(false);
 	const [selections, setSelections] = useState<DropdownSelection[]>(
 		() =>
@@ -43,7 +43,7 @@ export function ClimateSimulationModal({
 	);
 	const fileName = `/images/climateSimulation/${title}_${selections
 		.map((s) => sanitizeString(s.value || s.display))
-		.join("_")}${fileType}`; // Mulde_Temp_100_1400_Hitzetag_OstWest.jpg
+		.join("_")}${fileType}`;
 
 	function sanitizeString(input: string) {
 		return input.replace(/[%:]/g, "");
@@ -100,9 +100,11 @@ export function ClimateSimulationModal({
 					))}
 				</div>
 				<div className="flex flex-col items-center gap-2">
-					<p>{fileName}</p>
 					{imgError && (
-						<p className="text-red font-bold">Fehler beim Laden des Bildes</p>
+						<>
+							<p className="text-red font-bold">Fehler beim Laden des Bildes</p>
+							<p>Dateienpfad: {fileName}</p>
+						</>
 					)}
 					{fileName && !imgError && (
 						<Image
