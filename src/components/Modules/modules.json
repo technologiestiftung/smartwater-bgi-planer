@@ -110,7 +110,7 @@
 							"metricIcons": ["Tree", "Drop", "ThermometerHot"],
 							"infoLayerConfigId": "3G1_info",
 							"info": {
-								"description": "Die extensive Dachbegrünung beschreibt eine leichte, pflegearme Begrünungsform für Dächer mit einem niedrigen Substrataufbauund robusten und widerstandsfähigen Pflanzen wie Sedum und Moosen. Je nach Aufbau und Substrathöhe können bis zu 60 % der Jahresniederschlagsmenge vor Ort zurückgehalten werden.",
+								"description": "Die extensive Dachbegrünung beschreibt eine leichte, pflegearme Begrünungsform für Dächer mit einem niedrigen Substrataufbau und robusten und widerstandsfähigen Pflanzen wie Sedum und Moosen. Je nach Aufbau und Substrathöhe können bis zu 60 % der Jahresniederschlagsmenge vor Ort zurückgehalten werden.",
 								"scores": {
 									"CloudRain": 2,
 									"ThermometerHot": 2,
@@ -169,6 +169,28 @@
 											"Dachablauf für überschüssiges Regenwasser notwendig",
 											"Ggf. Abstimmung mit der Denkmalschutzbehörde"
 										]
+									}
+								],
+								"policiesGuidelines": [
+									{
+										"title": "Ratgeber Dachbegrünung Berliner Regenwasseragentur",
+										"link": "https://regenwasseragentur.berlin/inspirieren-lassen/ratgeber/dachbegruenung/"
+									},
+									{
+										"title": "FLL-Dachbegrünungsrichtlinien",
+										"link": "https://shop.fll.de/de/dachbegruenungsrichtlinien-richtlinien-fuer-die-planung-bau-und-instandhaltungen-von-dachbegruenungen-2018-broschuere.html"
+									},
+									{
+										"title": "BuGG-Information",
+										"link": "https://www.gebaeudegruen.info/wissen-und-ressourcen/gebaeudebegruenung/dachbegruenung/"
+									},
+									{
+										"title": "BuGG-Fachinformation „Anforderungen an Brandschutz bei Dach- und Fassadenbegrünungen”",
+										"link": "https://www.gebaeudegruen.info/wp-content/uploads/2024/11/BuGG_Fachinfo_Brandschutz_FB_20231030_FINAL.pdf"
+									},
+									{
+										"title": "Kostenüberblick Berliner Regenwasseragentur",
+										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
 								]
 							},
@@ -269,7 +291,7 @@
 							"metricIcons": ["Tree", "Drop", "ThermometerHot"],
 							"infoLayerConfigId": "3G2_info",
 							"info": {
-								"description": "Die intensive Dachbegrünung beschreibt eine pflegeintensivere Begrünungsform für Dächer mit einem hohenSubstrataufbau, die mit Rasen, Stauden, Sträuchern und Bäumen bepflanzt wird und bis zu 90 % der Jahresniederschlagsmenge vor Ort zurückhalten kann. Darüber hinaus können intensiv begrünte Dächer als Dachgärten angelegt und als Aufenthaltsräume genutzt werden.",
+								"description": "Die intensive Dachbegrünung beschreibt eine pflegeintensivere Begrünungsform für Dächer mit einem hohen Substrataufbau, die mit Rasen, Stauden, Sträuchern und Bäumen bepflanzt wird und bis zu 90 % der Jahresniederschlagsmenge vor Ort zurückhalten kann. Darüber hinaus können intensiv begrünte Dächer als Dachgärten angelegt und als Aufenthaltsräume genutzt werden.",
 								"scores": {
 									"CloudRain": 3,
 									"ThermometerHot": 3,
@@ -328,6 +350,28 @@
 											"Dachablauf für überschüssiges Regenwasser notwendig",
 											"Ggf. Abstimmung mit der Denkmalschutzbehörde"
 										]
+									}
+								],
+								"policiesGuidelines": [
+									{
+										"title": "Ratgeber Dachbegrünung Berliner Regenwasseragentur",
+										"link": "https://regenwasseragentur.berlin/inspirieren-lassen/ratgeber/dachbegruenung/"
+									},
+									{
+										"title": "FLL-Dachbegrünungsrichtlinien",
+										"link": "https://shop.fll.de/de/dachbegruenungsrichtlinien-richtlinien-fuer-die-planung-bau-und-instandhaltungen-von-dachbegruenungen-2018-broschuere.html"
+									},
+									{
+										"title": "BuGG-Information",
+										"link": "https://www.gebaeudegruen.info/wissen-und-ressourcen/gebaeudebegruenung/dachbegruenung/"
+									},
+									{
+										"title": "BuGG-Fachinformation „Anforderungen an Brandschutz bei Dach- und Fassadenbegrünungen”",
+										"link": "https://www.gebaeudegruen.info/wp-content/uploads/2024/11/BuGG_Fachinfo_Brandschutz_FB_20231030_FINAL.pdf"
+									},
+									{
+										"title": "Kostenüberblick Berliner Regenwasseragentur",
+										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
 								]
 							},
@@ -482,10 +526,29 @@
 										"title": "Zusätzliche Hinweise:",
 										"notes": [
 											"Bepflanzung je nach Ausrichtung und Höhe der Fassade auswählen (verschiedene Umwelteinflüsse: Sonne, Schatten, etc.)",
-											" Ausreichend Platz vor der Fassade nötig, um mit Hubsteigern / Fassadenaufzug den Bewuchs zu pflegen",
+											"Ausreichend Platz vor der Fassade nötig, um mit Hubsteigern / Fassadenaufzug den Bewuchs zu pflegen",
+											"Für Selbstklimmer sollte die Fassade frei von Rissen oder offenen Fugen sein und kein Wärmedämmverbundsystem verbaut sein",
 											"Ggf. Abstimmung mit der Denkmalschutzbehörde",
 											"Brandschutzanforderungen beachten"
 										]
+									}
+								],
+								"policiesGuidelines": [
+									{
+										"title": "Ratgeber Fassadenbegrünung Berliner Regenwasseragentur",
+										"link": "https://regenwasseragentur.berlin/inspirieren-lassen/ratgeber/fassadenbegruenung/"
+									},
+									{
+										"title": "FLL-Fassadenbegrünungsrichtlinien",
+										"link": "https://shop.fll.de/de/fassadenbegruenungsrichtlinien-richtlinien-fuer-die-planung-bau-und-instandhaltung-von-fassadenbegruenungen-2018-broschuere.html"
+									},
+									{
+										"title": "BuGG-Information",
+										"link": "https://www.gebaeudegruen.info/wissen-und-ressourcen/gebaeudebegruenung/dachbegruenung/"
+									},
+									{
+										"title": "BuGG-Fachinformation „Anforderungen an Brandschutz bei Dach- und Fassadenbegrünungen”",
+										"link": "https://www.gebaeudegruen.info/wp-content/uploads/2024/11/BuGG_Fachinfo_Brandschutz_FB_20231030_FINAL.pdf"
 									}
 								]
 							},
@@ -593,7 +656,7 @@
 							"metricIcons": ["Drop", "ThermometerHot"],
 							"infoLayerConfigId": "3E1_info",
 							"info": {
-								"description": "Bei der Umsetzung von teildurchlässigen Flächenbelägenwerden vollversiegelte Oberflächendurch z.B. Rasengittersteine oder Fugenpflaster ersetzt, um den Oberflächenabfluss zum Kanal zu reduzieren und einen Teil des anfallenden Regenwassers vor Ort zu versickern. Teildurchlässige Flächenbeläge werdenangewendet, wenn eine Umwandlung in eine Grünfläche nicht möglich ist, da die Flächen z.B. für Parkplätzegenutzt werden.",
+								"description": "Bei der Umsetzung von teildurchlässigen Flächenbelägen werden vollversiegelte Oberflächen durch z.B. Rasengittersteine oder Fugenpflaster ersetzt, um den Oberflächenabfluss zum Kanal zu reduzieren und einen Teil des anfallenden Regenwassers vor Ort zu versickern. Teildurchlässige Flächenbeläge werden angewendet, wenn eine Umwandlung in eine Grünfläche nicht möglich ist, da die Flächen z.B. für Parkplätze genutzt werden.",
 								"scores": {
 									"CloudRain": 1,
 									"ThermometerHot": 1,
@@ -606,7 +669,7 @@
 										"description": "Rasengittersteine (Berliner Regenwasseragentur/Andreas [Franz Xaver] Süß)"
 									},
 									{
-										"src": "/images/measureInfo/08_schema_teilversiegelte_oberflaechen.jpeg",
+										"src": "/images/measureInfo/08_schema_teilversiegelte_oberflaechen.png",
 										"alt": "TBD...",
 										"description": "Schematische Darstellung zur Versickerung durch Rasengittersteine (Berliner Regenwasseragentur)"
 									}
@@ -645,6 +708,28 @@
 											"Abstimmung mit der Bodenschutzbehörde",
 											"Der Abflussbeiwert ist von der Art der teildurchlässigen Flächenbeläge abhängig (ca. 0,2 bis 0,7)"
 										]
+									}
+								],
+								"policiesGuidelines": [
+									{
+										"title": "Ratgeber Entsiegelung Berliner Regenwasseragentur",
+										"link": "https://regenwasseragentur.berlin/inspirieren-lassen/ratgeber/entsiegelung/"
+									},
+									{
+										"title": "Hinweisblatt 2 zur Antragstellung: Versickerung von Niederschlagswasser",
+										"link": "https://www.berlin.de/sen/uvk/_assets/umwelt/wasser-und-geologie/publikationen-und-merkblaetter/hinweisblatt2-versick.pdf?ts=1754465106"
+									},
+									{
+										"title": "FLL Planung, Bau und Instandhaltung von begrünbaren Flächenbefestigungen",
+										"link": "https://shop.fll.de/de/richtlinien-fuer-planung-bau-und-instandhaltung-von-begruenbaren-flaechenbefestigungen-2018-downloadversion.html"
+									},
+									{
+										"title": "FLL Planung, Bau und Instandhaltung von Wassergebunden Wegen",
+										"link": "https://shop.fll.de/de/fachbericht-zu-planung-bau-und-instandhaltung-von-wassergebunden-wegen-2007-broschuere.html"
+									},
+									{
+										"title": "Kostenüberblick Berliner Regenwasseragentur",
+										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
 								]
 							},
@@ -756,9 +841,13 @@
 										"src": "/images/measureInfo/23_photo_komplette_entsiegelung.jpg",
 										"alt": "TBD...",
 										"description": "Waldorfschule am Prenzlauer Berg nach der Entsiegelung des Schulhofs (Berliner Regenwasseragentur/ Andres [Franz Xaver] Süß)"
+									},
+									{
+										"src": "/images/measureInfo/22_schema_vollentsiegelung_teilentsiegelung.png",
+										"alt": "TBD...",
+										"description": "Schematische Darstellung verschiedener Möglichkeiten der Entsiegelung (Berliner Regenwasseragentur)"
 									}
 								],
-
 								"effects": [
 									"Verbesserung des lokalen Wasserhaushalts",
 									"Mehr Freiraumqualität",
@@ -792,6 +881,24 @@
 											"Abstimmung mit der Bodenschutzbehörde",
 											"Entsiegelte Flächen bieten Potentiale für Versickerungsanlagen"
 										]
+									}
+								],
+								"policiesGuidelines": [
+									{
+										"title": "Ratgeber Entsiegelung Berliner Regenwasseragentur",
+										"link": "https://regenwasseragentur.berlin/inspirieren-lassen/ratgeber/entsiegelung/"
+									},
+									{
+										"title": "Arbeitshilfe Orientierende Kostenschätzung für Entsiegelungsmaßnahmen",
+										"link": "https://www.berlin.de/sen/uvk/_assets/umwelt/bodenschutz-und-altlasten/arbeitshilfe_orientierende_kostenschaetzung_entsiegelungsmassnahmen.pdf?ts=1752674589"
+									},
+									{
+										"title": "Arbeitshilfen für Entsiegelungs- und Wiederherstellungsmaßnahmen einer durchwurzelbaren Bodenschicht",
+										"link": "https://www.berlin.de/sen/uvk/umwelt/bodenschutz-und-altlasten/vorsorgender-bodenschutz/vorsorgender-bodenschutz-nichtstofflich/arbeitshilfen-entsiegelung/"
+									},
+									{
+										"title": "Kostenüberblick Berliner Regenwasseragentur",
+										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
 								]
 							},
@@ -899,7 +1006,7 @@
 							"metricIcons": ["Tree", "ThermometerHot"],
 							"infoLayerConfigId": "3B1_info",
 							"info": {
-								"description": "",
+								"description": "Grünflächen und Grünanlagen mit einer Größe von etwa 1.000 m² oder mehr stellen wichtige Elemente urbaner Freiräume dar. Sie dienen als Aufenthalts- und Erholungsraum und schaffen gleichzeitig Lebensraum für Flora und Fauna. Als gestaltete oder naturnahe Flächen bieten sie Raum für Freizeitnutzung, Naturerfahrung und Rückzug. Sie tragen zur Grundwasserneubildung bei, unterstützen die Artenvielfalt und verbessern das städtische Mikroklima durch Verschattung und Verdunstung. Grünflächen können mit naturnahen Versickerungsmaßnahmen wie Flächenversickerung oder Mulden sowie Retentionsflächen kombiniert werden.",
 								"scores": {
 									"CloudRain": 2,
 									"ThermometerHot": 3,
@@ -907,9 +1014,52 @@
 								},
 								"images": [
 									{
-										"src": "/images/measureInfo/29_photo_gruenflaeche.jpg",
+										"src": "/images/measureInfo/28_photo_gruenflaeche.jpg",
 										"alt": "TBD...",
 										"description": "Grünfläche (Berliner Regenwasseragentur)"
+									}
+								],
+								"effects": [
+									"Verbesserung des lokalen Wasserhaushalts",
+									"Verbesserung des Stadtklima",
+									"Mehr Freiraumqualitä",
+									"Erhöhung der biologischen Vielfalt"
+								],
+								"planningNotes": [
+									{
+										"title": "Technische Hinweise:",
+										"notes": [
+											"Altlasten und Bodenverunreinigungen sind zu beachten, ggf. Bodenaustausch",
+											"Ggf. Entsiegelungsanforderungen beachten"
+										]
+									},
+									{
+										"title": "Begrünung:",
+										"notes": ["Rasen, Blühwiese, Stauden, Sträucher, Bäume"]
+									},
+									{
+										"title": "Pflege/Wartung:",
+										"notes": [
+											"Regelmäßige Pflege, abhängig von der Bepflanzungsart",
+											"Bewässerung und Mahd nach Bedarf",
+											"Freihalten von Laub und Unrat"
+										]
+									},
+									{
+										"title": "Zusätzliche Hinweise:",
+										"notes": [
+											"Mit naturnahen Versickerungsmaßnahmen und Retentionsflächen kombinierbar"
+										]
+									}
+								],
+								"policiesGuidelines": [
+									{
+										"title": "Grünanlagengesetz Berlin",
+										"link": "https://www.berlin.de/sen/uvk/natur-und-gruen/stadtgruen/oeffentliche-gruen-und-erholungsanlagen/gruenanlagengesetz/"
+									},
+									{
+										"title": "FLL Fachgremien: Pflege von Grün ",
+										"link": "https://www.fll.de/fachgremien/pflege-von-gruen/"
 									}
 								]
 							},
@@ -1006,11 +1156,11 @@
 						{
 							"id": "3B2",
 							"layerConfigId": "3B2",
-							"title": "Bäume",
+							"title": "Baumstandort",
 							"metricIcons": ["Tree"],
 							"infoLayerConfigId": "3B2_info",
 							"info": {
-								"description": "Bäume liefern im urbanen Raum durch Verschattung und Verdunstung einen wichtigen Beitrag zur Verbesserung des Stadtklimas. Neben der klimatischen Funktion haben sie auch eine wichtige Bedeutung für das Stadtbild, eine höhe ökologische Wirkung und können auch eine verkehrsleitende Funktion einnehmen. Bei der Planung ist auf eine standortgerechte Pflanzenauswahl sowie ausreichend oberirdischen und unterirdischen Raum zu achten. Auch die Kombination von Baumstandorten und Flächen- bzw. Muldenversickerung ist möglich.",
+								"description": "Bäume liefern im urbanen Raum durch Verschattung und Verdunstung einen wichtigen Beitrag zur Verbesserung des Stadtklimas. Neben der klimatischen Funktion haben sie auch eine wichtige Bedeutung für das Stadtbild, eine hohe ökologische Wirkung und können auch eine verkehrsleitende Funktion einnehmen. Bei der Planung ist auf eine standortgerechte Pflanzenauswahl sowie ausreichend oberirdischen und unterirdischen Raum zu achten. Auch die Kombination von Baumstandorten und Flächen- bzw. Muldenversickerung ist möglich.",
 								"scores": {
 									"CloudRain": 1,
 									"ThermometerHot": 3,
@@ -1018,7 +1168,7 @@
 								},
 								"images": [
 									{
-										"src": "/images/measureInfo/30_photo_Baeume.jpg",
+										"src": "/images/measureInfo/27_photo_baumstandort.jpeg",
 										"alt": "TBD...",
 										"description": "Baumstandort (Berliner Regenwasseragentur)"
 									}
@@ -1039,7 +1189,7 @@
 											"Volumen für durchwurzelbaren Raum je nach Größenklasse: mind. 12 m³ bis mind. 36 m³",
 											"Pflanzgrubentiefe: mind. 1 bis 1,5 m tief",
 											"Abstand von 2,5 m zu Leitungen, bei geeigneten Schutzmaßnahmen Verringerung möglich",
-											"Bei Baumpflanzungen im Straßenland, ist eine mind. 1,50 m breite, leitungsfreie Trasse und anschließender durchwurzelbarer Bereich vorzusehen",
+											"Bei Baumpflanzungen im Straßenland ist eine mind. 1,50 m breite, leitungsfreie Trasse und anschließender durchwurzelbarer Bereich vorzusehen",
 											"Geeigneter Boden bzw. Substrat",
 											"Abstände zu Gebäuden, Verkehrsflächen, zu anderen Bäumen etc. beachten",
 											"Ggf. Streusalzeinsatz beachten"
@@ -1068,6 +1218,24 @@
 											"Außerhalb von Wasserschutzgebieten mit Mulden kombinierbar (Hinweisblatt 2)",
 											"Anforderungen des Berliner Klimaanpassungsgesetzes beachten"
 										]
+									}
+								],
+								"policiesGuidelines": [
+									{
+										"title": "Berliner Standards für die Pflanzung und die anschließende Pflege von Straßenbäumen",
+										"link": "https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&ved=2ahUKEwjN_OP4rOiSAxUMzwIHHb0tA88QFnoECB8QAQ&url=https%3A%2F%2Fwww.berlin.de%2Fsen%2Fuvk%2F_assets%2Fnatur-gruen%2Fstadtgruen%2Fstadtbaeume%2Fstrassen-und-parkbaeume%2Fbaumpflege%2Fstandards-pflanzung-strassenbaeume.pdf&usg=AOvVaw01WHT5aPoDLhr4hFoJOPqe&opi=89978449"
+									},
+									{
+										"title": "FLL Empfehlungen für Baumpflanzungen Teil 1 und 2",
+										"link": "https://shop.fll.de/de/baeume-und-gehoelze/baumpflanzungen.html"
+									},
+									{
+										"title": "SenMVKU-Rundschreiben III C 2-1/ 2025 über die Pflanzung und Pflege von Straßengrün",
+										"link": "https://www.berlin.de/sen/uvk/_assets/natur-gruen/service/rechtsvorschriften/stadtgruen/rundschreiben_str.pdf"
+									},
+									{
+										"title": "Hinweisblatt 2 zur Antragstellung: Versickerung von Niederschlagswasser",
+										"link": "https://www.berlin.de/sen/uvk/_assets/umwelt/wasser-und-geologie/publikationen-und-merkblaetter/hinweisblatt2-versick.pdf?ts=1754465106"
 									}
 								]
 							},
@@ -1239,10 +1407,32 @@
 										"title": "Zusätzliche Hinweise:",
 										"notes": [
 											"ggf. Abstimmung mit der Wasserbehörde",
-											"Berücksichtigung der Art der angeschlossenen Fläche in Bezug auf die Schadstoffbelastung (z.B. Metalleindeckung, Verkehrsstärke (Hinweisblatt 2)",
+											"Berücksichtigung der Art der angeschlossenen Fläche in Bezug auf die Schadstoffbelastung (z.B. Metalleindeckung, Verkehrsstärke (Hinweisblatt 2))",
 											"Bei Bepflanzung mit Bäumen: Hinweisblatt 2 beachten (nur außerhalb WSG zulässig)",
 											"Mulden können mit Rigolen kombiniert werden (bei geringerer Versickerungsfähigkeit des Untergrundes)"
 										]
+									}
+								],
+								"policiesGuidelines": [
+									{
+										"title": "Ratgeber Versickerung Berliner Regenwasseragentur",
+										"link": "https://regenwasseragentur.berlin/inspirieren-lassen/ratgeber/versickerung/"
+									},
+									{
+										"title": "Hinweisblatt 2 zur Antragstellung: Versickerung von Niederschlagswasser",
+										"link": "https://www.berlin.de/sen/uvk/_assets/umwelt/wasser-und-geologie/publikationen-und-merkblaetter/hinweisblatt2-versick.pdf?ts=1754465106"
+									},
+									{
+										"title": "BWB Regelblatt 601",
+										"link": "https://www.bwb.de/regelblaetter/rgbl601_23-09.pdf"
+									},
+									{
+										"title": "DWA-A 138-1-Anlagen zur Versickerung von Niederschlagswasser",
+										"link": "https://shop.dwa.de/DWA-A-138-1-Anlagen-zur-Versickerung-von-Niederschlagswasser-Teil-1-Planung-Bau-Betrieb-Oktober-2024/A-138-T1-PDF-24"
+									},
+									{
+										"title": "Kostenüberblick Berliner Regenwasseragentur",
+										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
 								]
 							},
@@ -1404,6 +1594,24 @@
 											"Berücksichtigung der Art der angeschlossenen",
 											"Fläche in Bezug auf die Schadstoffbelastung z.B. Metalleindeckung, Verkehrsstärke (Hinweisblatt 2)"
 										]
+									}
+								],
+								"policiesGuidelines": [
+									{
+										"title": "Ratgeber Versickerung Berliner Regenwasseragentur",
+										"link": "https://regenwasseragentur.berlin/inspirieren-lassen/ratgeber/versickerung/"
+									},
+									{
+										"title": "Hinweisblatt 2 zur Antragstellung: Versickerung von Niederschlagswasser",
+										"link": "https://www.berlin.de/sen/uvk/_assets/umwelt/wasser-und-geologie/publikationen-und-merkblaetter/hinweisblatt2-versick.pdf?ts=1754465106"
+									},
+									{
+										"title": "DWA-A 138-1-Anlagen zur Versickerung von Niederschlagswasser",
+										"link": "https://shop.dwa.de/DWA-A-138-1-Anlagen-zur-Versickerung-von-Niederschlagswasser-Teil-1-Planung-Bau-Betrieb-Oktober-2024/A-138-T1-PDF-24"
+									},
+									{
+										"title": "Kostenüberblick Berliner Regenwasseragentur",
+										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
 								]
 							},
@@ -1569,6 +1777,28 @@
 											"Bei gering belasteten angeschlossenen Flächen kann ein Überlauf von der Mulde in die Rigole vorgesehen werden (nach Genehmigung)"
 										]
 									}
+								],
+								"policiesGuidelines": [
+									{
+										"title": "Ratgeber Versickerung Berliner Regenwasseragentur",
+										"link": "https://regenwasseragentur.berlin/inspirieren-lassen/ratgeber/versickerung/"
+									},
+									{
+										"title": "Hinweisblatt 2 zur Antragstellung: Versickerung von Niederschlagswasser",
+										"link": "https://www.berlin.de/sen/uvk/_assets/umwelt/wasser-und-geologie/publikationen-und-merkblaetter/hinweisblatt2-versick.pdf?ts=1754465106"
+									},
+									{
+										"title": "BWB Regelblatt 601",
+										"link": "https://www.bwb.de/regelblaetter/rgbl601_23-09.pdf"
+									},
+									{
+										"title": "DWA-A 138-1-Anlagen zur Versickerung von Niederschlagswasser",
+										"link": "https://shop.dwa.de/DWA-A-138-1-Anlagen-zur-Versickerung-von-Niederschlagswasser-Teil-1-Planung-Bau-Betrieb-Oktober-2024/A-138-T1-PDF-24"
+									},
+									{
+										"title": "Kostenüberblick Berliner Regenwasseragentur",
+										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
+									}
 								]
 							},
 							"climateSimulation": {
@@ -1681,7 +1911,7 @@
 										"description": "Tiefbeet (Berliner Regenwasseragentur)"
 									},
 									{
-										"src": "/images/measureInfo/26_schema_tiefbeet_rigole.jpg",
+										"src": "/images/measureInfo/26_schema_tiefbeet_rigole.png",
 										"alt": "TBD...",
 										"description": "Schematische Darstellung einer Tiefbeet-Rigole (Berliner Regenwasseragentur)"
 									}
@@ -1724,6 +1954,24 @@
 											"Berücksichtigung der Art der angeschlossenen Fläche in Bezug auf die Schadstoffbelastung (z.B. Metalleindeckung, Verkehrsstärke (Hinweisblatt 2)",
 											"Tiefbeete können mit Rigolen kombiniert werden (bei geringerer Versickerungsfähigkeit des Untergrundes)"
 										]
+									}
+								],
+								"policiesGuidelines": [
+									{
+										"title": "Ratgeber Versickerung Berliner Regenwasseragentur",
+										"link": "https://regenwasseragentur.berlin/inspirieren-lassen/ratgeber/versickerung/"
+									},
+									{
+										"title": "Hinweisblatt 2 zur Antragstellung: Versickerung von Niederschlagswasser",
+										"link": "https://www.berlin.de/sen/uvk/_assets/umwelt/wasser-und-geologie/publikationen-und-merkblaetter/hinweisblatt2-versick.pdf?ts=1754465106"
+									},
+									{
+										"title": "DWA-A 138-1-Anlagen zur Versickerung von Niederschlagswasser",
+										"link": "https://shop.dwa.de/DWA-A-138-1-Anlagen-zur-Versickerung-von-Niederschlagswasser-Teil-1-Planung-Bau-Betrieb-Oktober-2024/A-138-T1-PDF-24"
+									},
+									{
+										"title": "Kostenüberblick Berliner Regenwasseragentur",
+										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
 								]
 							},
@@ -1835,11 +2083,6 @@
 										"src": "/images/measureInfo/28_photo_optimierter_Baumstandort.jpeg",
 										"alt": "TBD...",
 										"description": ""
-									},
-									{
-										"src": "/images/measureInfo/27_schema_optimierter_Baumstandort.jpeg",
-										"alt": "TBD...",
-										"description": "Schematische Darstellung eines optimierten Baumstandortes (Berliner Regenwasseragentur)"
 									}
 								],
 
@@ -1881,6 +2124,36 @@
 											"Berücksichtigung der Art der angeschlossenen Fläche in Bezug auf die Schadstoffbelastung (z.B. Metalleindeckung, Verkehrsstärke (Hinweisblatt 2))",
 											"Nur außerhalb von Wasserschutzgebieten"
 										]
+									}
+								],
+								"policiesGuidelines": [
+									{
+										"title": "Ratgeber Versickerung Berliner Regenwasseragentur",
+										"link": "https://regenwasseragentur.berlin/inspirieren-lassen/ratgeber/versickerung/"
+									},
+									{
+										"title": "Hinweisblatt 2 zur Antragstellung: Versickerung von Niederschlagswasser",
+										"link": "https://www.berlin.de/sen/uvk/_assets/umwelt/wasser-und-geologie/publikationen-und-merkblaetter/hinweisblatt2-versick.pdf?ts=1754465106"
+									},
+									{
+										"title": "DWA-A 138-1-Anlagen zur Versickerung von Niederschlagswasser",
+										"link": "https://shop.dwa.de/DWA-A-138-1-Anlagen-zur-Versickerung-von-Niederschlagswasser-Teil-1-Planung-Bau-Betrieb-Oktober-2024/A-138-T1-PDF-24"
+									},
+									{
+										"title": "Kostenüberblick Berliner Regenwasseragentur",
+										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
+									},
+									{
+										"title": "Berliner Standards für die Pflanzung und die anschließende Pflege von Straßenbäumen",
+										"link": "https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&ved=2ahUKEwjN_OP4rOiSAxUMzwIHHb0tA88QFnoECB8QAQ&url=https%3A%2F%2Fwww.berlin.de%2Fsen%2Fuvk%2F_assets%2Fnatur-gruen%2Fstadtgruen%2Fstadtbaeume%2Fstrassen-und-parkbaeume%2Fbaumpflege%2Fstandards-pflanzung-strassenbaeume.pdf&usg=AOvVaw01WHT5aPoDLhr4hFoJOPqe&opi=89978449"
+									},
+									{
+										"title": "FLL Empfehlungen für Baumpflanzungen Teil 1 und 2",
+										"link": "https://shop.fll.de/de/baeume-und-gehoelze/baumpflanzungen.html"
+									},
+									{
+										"title": "SenMVKU-Rundschreiben III C 2-1/ 2025 über die Pflanzung und Pflege von Straßengrün",
+										"link": "https://www.berlin.de/sen/uvk/_assets/natur-gruen/service/rechtsvorschriften/stadtgruen/rundschreiben_str.pdf"
 									}
 								]
 							},
@@ -2032,6 +2305,24 @@
 										"title": "Zusätzliche Hinweise:",
 										"notes": ["Abstimmung mit der Wasserbehörde"]
 									}
+								],
+								"policiesGuidelines": [
+									{
+										"title": "Ratgeber Versickerung Berliner Regenwasseragentur",
+										"link": "https://regenwasseragentur.berlin/inspirieren-lassen/ratgeber/versickerung/"
+									},
+									{
+										"title": "Hinweisblatt 2 zur Antragstellung: Versickerung von Niederschlagswasser",
+										"link": "https://www.berlin.de/sen/uvk/_assets/umwelt/wasser-und-geologie/publikationen-und-merkblaetter/hinweisblatt2-versick.pdf?ts=1754465106"
+									},
+									{
+										"title": "DWA-A 138-1-Anlagen zur Versickerung von Niederschlagswasser",
+										"link": "https://shop.dwa.de/DWA-A-138-1-Anlagen-zur-Versickerung-von-Niederschlagswasser-Teil-1-Planung-Bau-Betrieb-Oktober-2024/A-138-T1-PDF-24"
+									},
+									{
+										"title": "Kostenüberblick Berliner Regenwasseragentur",
+										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
+									}
 								]
 							},
 							"climateSimulation": {
@@ -2182,6 +2473,16 @@
 											"Anschluss von Gründächern nicht empfehlenswert (Nährstoffaustrag)"
 										]
 									}
+								],
+								"policiesGuidelines": [
+									{
+										"title": "Leitfaden: Versickerung, Retention und Verdunstung als Beitrag zur Wassersensiblen Siedlungsentwickelung",
+										"link": "https://landwirtschaft.hessen.de/sites/landwirtschaft.hessen.de/files/2026-02/leitfaden_wassersensible_siedlungsentwicklung_stand_240724_0_final_nbf.pdf"
+									},
+									{
+										"title": "FLL Richtliniefür Planung, Bau und Instandhaltung, von privaten Schwimm- und Badeteichen (2017)",
+										"link": "https://shop.fll.de/de/richtlinien-fuer-planung-bau-und-instandhaltung-von-privaten-schwimm-und-badeteichen-2017-broschuere.html"
+									}
 								]
 							},
 							"climateSimulation": {
@@ -2280,104 +2581,67 @@
 							"title": "Regenwasserspeicher",
 							"metricIcons": ["Drop"],
 							"infoLayerConfigId": "3S2_info",
-							"info": {},
-							"climateSimulation": {
-								"description": "TBD...",
-								"dropdownMenus": [
+							"info": {
+								"description": "Ein Regenwasserspeicher wird für die Speicherung und zur anschließenden Nutzung von Regenwasser eingesetzt. Je nach Bauart besteht er aus Kunststoff, Beton oder Stahl. Auch abgedichtete Füllkörperrigolen können zum Einsatz kommen. Es gibt unterirdisch verbaute Zisternen oder auch gebäudeinterne Kellertanks. Das gespeicherte Regenwasser kann durch ein Entnahmesystem z.B. für die Toilettenspülung, die Waschmaschine, zur Reinigung oder für die Bewässerung genutzt werden.",
+								"scores": {
+									"CloudRain": 1,
+									"ThermometerHot": 2,
+									"Drop": 1
+								},
+								"images": [],
+								"effects": [
+									"Trinkwasser substituieren",
+									"Verbesserte Wasserversorgung der Stadtvegetation",
+									"Entlastung der Kanalisation und Gewässer"
+								],
+								"planningNotes": [
 									{
-										"title": "Messwert",
-										"options": [
-											{
-												"display": "Temperatur",
-												"value": "Temp"
-											},
-											{
-												"display": "Option 2",
-												"value": "Opt2"
-											},
-											{
-												"display": "Option 3",
-												"value": "Opt3"
-											}
+										"title": "Technische Hinweise:",
+										"notes": [
+											"Die Größe des Speichers hängt von dem individuellen Wasserbedarf, der Auffangfläche und der örtlichen Niederschlagsmenge ab (Zisternen-Rechner)",
+											"Filter und Entnahmepumpe notwendig ",
+											"Speicher-Überlauf (z.B. in Rigole) notwendig",
+											"Frostsichere Verlegung der Zu- und Ablaufleitungen (ca. 80 cm unter der Erde)",
+											"Unterirdische Leitungen und Infrastrukturen beachten"
 										]
 									},
 									{
-										"title": "Ausschöpfung\nMaßnahme",
-										"options": [
-											{
-												"display": "100%",
-												"value": "100"
-											},
-											{
-												"display": "Option 2",
-												"value": "Opt2"
-											},
-											{
-												"display": "Option 3",
-												"value": "Opt3"
-											}
+										"title": "Pflege/Wartung:",
+										"notes": [
+											"Ein Wartungsgang im Jahr für die meisten Komponenten",
+											"Reinigung des Speichers i.d.R. alle 10 Jahre"
 										]
 									},
 									{
-										"title": "Uhrzeit",
-										"options": [
-											{
-												"display": "14:00",
-												"value": "1400"
-											},
-											{
-												"display": "Option 2",
-												"value": "Opt2"
-											},
-											{
-												"display": "Option 3",
-												"value": "Opt3"
-											}
-										]
-									},
-									{
-										"title": "Jahreszeit",
-										"options": [
-											{
-												"display": "Hitzetag"
-											},
-											{
-												"display": "Option 2",
-												"value": "Opt2"
-											},
-											{
-												"display": "Option 3",
-												"value": "Opt3"
-											}
-										]
-									},
-									{
-										"title": "Ansicht",
-										"options": [
-											{
-												"display": "2.00m Höhe",
-												"value": "200M"
-											},
-											{
-												"display": "Option 2",
-												"value": "Opt2"
-											},
-											{
-												"display": "Option 3",
-												"value": "Opt3"
-											}
+										"title": "Zusätzliche Hinweise:",
+										"notes": [
+											"Art der Vorbehandlung in Abhängigkeit der angeschlossenen Flächenart",
+											"Für Bewässerung: keine Dachabflüsse von biozidhaltigen Dachbahnen oder Zink- und Kupferdächern nutzen, darüber hinaus keine Abflüsse von Bitumendächern für Bewässerung von Pflanzen zum Verzehr verwenden",
+											"Bei hochanstehendem Grundwasser ist eine Auftriebssicherung notwendig",
+											"Bei der gebäudeinternen Nutzung ist ein zweites Leitungsnetz und Privatwasserzähler notwendig",
+											"Substitution von Trinkwasser ist auch über Grauwasserrecycling möglich und mit der Regenwassernutzung kombinierbar"
 										]
 									}
+								],
+								"policiesGuidelines": [
+									{
+										"title": "Ratgeber Regenwassernutzung Berliner Regenwasseragentur",
+										"link": "https://regenwasseragentur.berlin/inspirieren-lassen/ratgeber/regenwassernutzung/"
+									},
+									{
+										"title": "DIN 1989-100 Regenwassernutzungsanlage",
+										"link": "https://www.din.de/de/mitwirken/normenausschuesse/naw/wdc-beuth:din21:264064948"
+									},
+									{
+										"title": "DIN 1986-100 Entwässerungsanlagen für Gebäude und Grundstücke",
+										"link": "https://www.din.de/de/mitwirken/normenausschuesse/naw/wdc-beuth:din21:264064948"
+									},
+									{
+										"title": "Zisternen-Rechner",
+										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/zisternengroesse-berechnen/"
+									}
 								]
-							}
-						},
-						{
-							"id": "3S3",
-							"layerConfigId": "3S3",
-							"title": "Zisterne für gebäudeinterne Nutzung",
-							"metricIcons": ["Drop", "Jar"],
-							"infoLayerConfigId": "3S3_info",
-							"info": {},
+							},
 							"climateSimulation": {
 								"description": "TBD...",
 								"dropdownMenus": [
@@ -2475,7 +2739,7 @@
 							"metricIcons": ["RoadHorizon", "Drop"],
 							"infoLayerConfigId": "3S4_info",
 							"info": {
-								"description": "Retentionsflächen können Niederschlagswasser von stärkeren Regenereignissen temporär zurückhalten, zwischenspeichern und kontrolliert ableiten oder versickern. Dadurch leisten sie einen wichtigen Beitrag zur Überflutungsvorsorge. Sie können als multifunktionale Flächen geplant und z.B. als Grünanlage, Parkplatz oder Sportplatz genutzt werden.",
+								"description": "Retentionsflächen können Niederschlagswasser von stärkeren Regenereignissen temporär zurückhalten, schadlos zwischenspeichern und kontrolliert ableiten oder versickern. Dadurch leisten sie einen wichtigen Beitrag zur Überflutungsvorsorge. Sie können als multifunktionale Flächen geplant und z.B. als Grünanlage, Parkplatz oder Sportplatz genutzt werden.",
 								"scores": {
 									"CloudRain": 3,
 									"ThermometerHot": 2,
@@ -2530,6 +2794,32 @@
 											"Verträglichkeit mit der Hauptnutzung der Fläche prüfen",
 											"Wiederherstellungskosten und Schäden an der Hauptfläche beachten"
 										]
+									}
+								],
+								"policiesGuidelines": [
+									{
+										"title": "MURIEL-Multifunktionale Retentionsflächen",
+										"link": "https://steb-koeln.de/Redaktionell/ABLAGE/Downloads/Brosch%C3%BCren-Ver%C3%B6ffentlichungen/Geb%C3%A4udeschutz/MURIEL-Multifunktionale-Retentionsfl%C3%A4chen.pdf"
+									},
+									{
+										"title": "DWA-M 194 (Gelbdruck)",
+										"link": "https://shop.dwa.de/DWA-M-194-Planung-Betrieb-und-Unterhalt-von-multifunktionalen-Flaechen-Entwurf-April-2025/M-194-GD-PDF-25"
+									},
+									{
+										"title": "DIN 18034-1",
+										"link": "https://www.din.de/de/mitwirken/normenausschuesse/nabau/veroeffentlichungen/wdc-beuth:din21:326134676"
+									},
+									{
+										"title": "DIN 1986-100 Entwässerungsanlagen für Gebäude und Grundstücke",
+										"link": "https://www.din.de/de/mitwirken/normenausschuesse/naw/wdc-beuth:din21:264064948"
+									},
+									{
+										"title": "DWA-A 118 - Bewertung der hydraulischen Leistungsfähigkeit von Entwässerungssystemen",
+										"link": "https://shop.dwa.de/DWA-A-118-Bewertung-der-hydraulischen-Leistungsfaehigkeit-von-Entwaesserungssystemen-Januar-2024-Stand-korrigierte-Fassung-Januar-2025/A-118-PDF-24"
+									},
+									{
+										"title": "DWA-M 119 - Risikomanagement in der kommunalen Überflutungsvorsorge für Entwässerungssysteme bei Starkregen",
+										"link": "https://shop.dwa.de/DWA-M-119-Risikomanagement-in-der-kommunalen-UEberflutungsvorsorge-fuer-Entwaesserungssysteme-bei-Starkregen-November-2016/M-119-Hauptprodukt-16-main"
 									}
 								]
 							},
@@ -2673,6 +2963,20 @@
 											"Durch die untere Abdichtung auch bei Altlasten anwendbar",
 											"Verdunstungsbeete sind noch nicht in technischen Richtlinien oder Standardisierungen beschrieben, Ableitung aus DWA-A 117 & DWA-A 138-1"
 										]
+									}
+								],
+								"policiesGuidelines": [
+									{
+										"title": "DWA-A 138-1-Anlagen zur Versickerung von Niederschlagswasser",
+										"link": "https://shop.dwa.de/DWA-A-138-1-Anlagen-zur-Versickerung-von-Niederschlagswasser-Teil-1-Planung-Bau-Betrieb-Oktober-2024/A-138-T1-PDF-24"
+									},
+									{
+										"title": "BlueGreenStreets A",
+										"link": "https://repos.hcu-hamburg.de/bitstream/hcu/638/5/2022-04-06_BlueGreenStreets_BlueGreenStreets_als_multicodierte_Strategie_zur_Klimafolgenanpassung_A.pdf"
+									},
+									{
+										"title": "BlueGreenStreets B",
+										"link": "https://repos.hcu-hamburg.de/bitstream/hcu/638/6/2022-04-06_BlueGreenStreets_BlueGreenStreets_als_multicodierte_Strategie_zur_Klimafolgenanpassung_B.pdf"
 									}
 								]
 							},

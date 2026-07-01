@@ -9,6 +9,7 @@ import { getIconComponent } from "@/lib/helpers/iconMap";
 import { cn } from "@/lib/utils";
 import { CarouselWithIndicators } from "@/components/ui/carousel-with-indicators";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface MeasureCatalogModuleProps {
 	info: string;
@@ -26,7 +27,14 @@ const MeasureCatalogModule: FC<MeasureCatalogModuleProps> = ({
 	const {
 		id,
 		title,
-		info: { description, images, scores, effects, planningNotes } = {},
+		info: {
+			description,
+			images,
+			scores,
+			effects,
+			planningNotes,
+			policiesGuidelines,
+		} = {},
 	} = getModuleInfo || {};
 	const router = useRouter();
 
@@ -34,7 +42,7 @@ const MeasureCatalogModule: FC<MeasureCatalogModuleProps> = ({
 
 	return (
 		<div className="MeasureCatalogModule-root">
-			<div className="border-muted flex items-center justify-between border-b px-6 py-4">
+			<div className="border-muted flex items-center justify-between gap-2 border-b px-6 py-4">
 				<h2 className="text-primary">{title}</h2>
 				<div className="flex gap-2.5">
 					<Button
@@ -99,9 +107,9 @@ const MeasureCatalogModule: FC<MeasureCatalogModuleProps> = ({
 				<div className="border-muted border-l" />
 				<div className="flex max-h-[70vh] min-w-0 flex-1 flex-col gap-6 overflow-y-scroll p-6 pl-4">
 					<div>
-						<p className="font-bold">Effekte & Vorteile:</p>
+						<h4>Effekte & Vorteile:</h4>
 						{effects && (
-							<ul className="list-inside list-disc">
+							<ul className="mt-4 list-inside list-disc">
 								{effects.map((effect, index) => (
 									<li key={index}>{effect}</li>
 								))}
@@ -109,7 +117,7 @@ const MeasureCatalogModule: FC<MeasureCatalogModuleProps> = ({
 						)}
 					</div>
 					<div>
-						<p className="font-bold">Planungshinweise:</p>
+						<h4>Planungshinweise:</h4>
 						{planningNotes && (
 							<div className="mt-4">
 								{planningNotes.map((note, index) => (
@@ -122,6 +130,29 @@ const MeasureCatalogModule: FC<MeasureCatalogModuleProps> = ({
 										</ul>
 									</div>
 								))}
+							</div>
+						)}
+					</div>
+					<div>
+						<h4>Richtlinien und Leitfäden:</h4>
+						{policiesGuidelines && (
+							<div className="mt-4">
+								<ul className="list-inside list-disc">
+									{policiesGuidelines.map(
+										(policiesGuidelinesItem, noteIndex) => (
+											<li key={noteIndex}>
+												<Link
+													href={policiesGuidelinesItem.link}
+													target="_blank"
+													rel="noopener noreferrer"
+													className="underline"
+												>
+													{policiesGuidelinesItem.title}
+												</Link>
+											</li>
+										),
+									)}
+								</ul>
 							</div>
 						)}
 					</div>

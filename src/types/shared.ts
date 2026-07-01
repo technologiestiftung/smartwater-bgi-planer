@@ -67,6 +67,7 @@ export interface ModuleMeasurementInfo {
 	images?: ModuleMeasurementInfoImage[];
 	effects?: string[];
 	planningNotes?: ModuleMeasurementInfoNote[];
+	policiesGuidelines?: ModuleMeasurementPoliciesGuidelines[];
 }
 
 interface ModuleMeasurementInfoImage {
@@ -78,6 +79,11 @@ interface ModuleMeasurementInfoImage {
 interface ModuleMeasurementInfoNote {
 	title: string;
 	notes: string[];
+}
+
+interface ModuleMeasurementPoliciesGuidelines {
+	title: string;
+	link: string;
 }
 
 export interface ModuleMeasurementClimateSimulation {
