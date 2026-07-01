@@ -3,9 +3,11 @@ import type { ComputedArea } from "../types";
 import areaCalc from "./areaCalculations";
 
 const connectedAreaFieldByMeasure = {
-	to_inf_mulde: "to_inf_mulde",
-	to_inf_mulde_rigole: "to_inf_mulde_rigole",
-	to_retention: "to_retention",
+	to_swale: "to_swale",
+	to_swale_trench: "to_swale_trench",
+	to_surf_infil: "to_surf_infil",
+	to_trench: "to_trench",
+	to_cistern: "to_cistern",
 	to_tree_pit: "to_tree_pit",
 } as const;
 
@@ -83,20 +85,18 @@ function calculateApplyMeasure(
 	}
 
 	if (isTreeMeasure(measure.name)) {
-		const field = TREE_FIELDS[measure.name];
-		const withTree = { ...area, [field]: area[field] + 1 };
-
-		// For 3V5 (to_tree_pit): also add connectedArea
 		if (
 			typeof measure.connectedArea === "number" &&
 			measure.connectedArea > 0
 		) {
-			withTree.to_tree_pit = areaCalc.calculatePrecisely(
-				withTree.to_tree_pit + measure.connectedArea,
-			);
+			return areaCalc.updateCalculatedFields({
+				...area,
+				to_tree_pit: areaCalc.calculatePrecisely(
+					area.to_tree_pit + measure.connectedArea,
+				),
+			});
 		}
-
-		return areaCalc.updateCalculatedFields(withTree);
+		return areaCalc.updateCalculatedFields(area);
 	}
 
 	if (isNoOpMeasure(measure.name)) {
@@ -121,16 +121,8 @@ function isNoOpMeasure(name: string | null): boolean {
 	return name === null;
 }
 
-const TREE_FIELDS = {
-	trees_sm: "trees_sm",
-	trees_md: "trees_md",
-	trees_lg: "trees_lg",
-} as const;
-
-type TreeMeasureName = keyof typeof TREE_FIELDS;
-
-function isTreeMeasure(name: string | null): name is TreeMeasureName {
-	return name !== null && name in TREE_FIELDS;
+function isTreeMeasure(name: string | null): boolean {
+	return name === "trees_sm" || name === "trees_md" || name === "trees_lg";
 }
 
 const measureCalculations = {

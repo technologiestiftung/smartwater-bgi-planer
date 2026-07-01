@@ -118,7 +118,9 @@ export const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
 				{measureConfig.parameters.map((param) => (
 					<label key={param.key} className="flex flex-col gap-1">
 						<div className="flex items-center justify-between gap-2">
-							<span className="text-sm font-medium">{param.key}</span>
+							<span className="text-sm font-medium">
+								{param.key === "area" ? "Fläche" : param.key}
+							</span>
 							{param.unit && (
 								<span className="text-xs text-gray-500">{param.unit}</span>
 							)}

@@ -48,7 +48,7 @@
 		"geometryType": "Polygon",
 		"parameters": [
 			{
-				"key": "facadeArea",
+				"key": "area",
 				"type": "number",
 				"unit": "m2",
 				"source": "drawn",
@@ -115,7 +115,7 @@
 	},
 	{
 		"id": "3V1",
-		"measureKey": "to_inf_mulde",
+		"measureKey": "to_swale",
 		"geometryType": "Polygon",
 		"parameters": [
 			{
@@ -157,7 +157,7 @@
 	},
 	{
 		"id": "3V3",
-		"measureKey": "to_inf_mulde_rigole",
+		"measureKey": "to_swale_trench",
 		"geometryType": "Polygon",
 		"parameters": [
 			{
@@ -212,12 +212,21 @@
 	{
 		"id": "3V6",
 		"geometryType": "Polygon",
+		"measureKey": "to_trench",
 		"parameters": [
 			{
 				"key": "area",
 				"type": "number",
 				"unit": "m2",
 				"source": "drawn"
+			},
+			{
+				"key": "connectedArea",
+				"type": "number",
+				"unit": "m2",
+				"source": "input",
+				"required": true,
+				"isCalculationInput": true
 			}
 		]
 	},
@@ -236,13 +245,13 @@
 	{
 		"id": "3S2",
 		"geometryType": "Point",
-		"measureKey": "to_retention",
+		"measureKey": "to_cistern",
 		"parameters": [
 			{
-				"key": "storageVolume",
+				"key": "area",
 				"type": "number",
-				"unit": "m3",
-				"source": "input",
+				"unit": "m2",
+				"source": "drawn",
 				"required": true
 			},
 			{
@@ -252,19 +261,6 @@
 				"source": "input",
 				"required": true,
 				"isCalculationInput": true
-			}
-		]
-	},
-	{
-		"id": "3S3",
-		"geometryType": "Point",
-		"parameters": [
-			{
-				"key": "storageVolume",
-				"type": "number",
-				"unit": "m3",
-				"source": "input",
-				"required": true
 			}
 		]
 	},

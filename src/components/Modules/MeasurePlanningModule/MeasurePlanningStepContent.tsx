@@ -25,6 +25,7 @@ import { ConnectedAreaSelection } from "./ConnectedAreaSelection";
 interface MeasurePlanningStepContentProps {
 	layerConfig: LayerConfigItem;
 	metricIcons?: string[];
+	onConfirm?: () => void;
 }
 
 interface MeasurePlanningLegendProps {
@@ -35,28 +36,30 @@ function MeasurePlanningLegend({ layerConfig }: MeasurePlanningLegendProps) {
 	return (
 		<div className="mt-auto pt-6 pb-4">
 			<Accordion type="multiple">
-				<AccordionItem value="legend" className="border-neutral-mid px-4">
-					<AccordionTrigger className="text-primary font-bold hover:no-underline">
-						{layerConfig.legendTitle || "Legende"}
-					</AccordionTrigger>
-					<AccordionContent className="pb-4">
-						{layerConfig.legendSrc ? (
-							<Image
-								src={layerConfig.legendSrc}
-								alt="Legende für die Karte"
-								width={620}
-								height={260}
-								className="h-auto max-w-full"
-							/>
-						) : (
-							<p className="text-muted-foreground text-sm">
-								Keine Legende verfügbar.
-							</p>
-						)}
-					</AccordionContent>
-				</AccordionItem>
+				{layerConfig.legendSrc && (
+					<AccordionItem value="legend" className="border-neutral-mid px-4">
+						<AccordionTrigger className="text-primary font-bold hover:no-underline">
+							{layerConfig.legendTitle || "Legende"}
+						</AccordionTrigger>
+						<AccordionContent className="pb-4">
+							{layerConfig.legendSrc ? (
+								<Image
+									src={layerConfig.legendSrc}
+									alt="Legende für die Karte"
+									width={620}
+									height={260}
+									className="h-auto max-w-full"
+								/>
+							) : (
+								<p className="text-muted-foreground text-sm">
+									Keine Legende verfügbar.
+								</p>
+							)}
+						</AccordionContent>
+					</AccordionItem>
+				)}
 
-				{layerConfig.canDrawMeasures && (
+				{layerConfig.measurementSrc && (
 					<AccordionItem value="measures" className="border-neutral-mid px-4">
 						<AccordionTrigger className="text-primary font-bold hover:no-underline">
 							Maßnahmen
@@ -86,9 +89,11 @@ function MeasurePlanningLegend({ layerConfig }: MeasurePlanningLegendProps) {
 export function MeasurePlanningStepContent({
 	layerConfig,
 	metricIcons = [],
+	onConfirm,
 }: MeasurePlanningStepContentProps) {
 	const showLegendAccordion =
-		Boolean(layerConfig.legendSrc) || Boolean(layerConfig.canDrawMeasures);
+		Boolean(layerConfig.legendSrc) || Boolean(layerConfig.measurementSrc);
+
 	const confirmedRef = useRef(false);
 	const map = useMapStore((s) => s.map);
 	const hasDrafts = useUiStore(
@@ -168,6 +173,7 @@ export function MeasurePlanningStepContent({
 	const handleConfirm = () => {
 		confirmedRef.current = true;
 		useUiStore.getState().confirmDraftMeasures();
+		onConfirm?.();
 	};
 
 	useEffect(() => {
@@ -191,7 +197,6 @@ export function MeasurePlanningStepContent({
 							<RichTextWithLinks text={layerConfig.description} />
 						</div>
 					)}
-					{/* <PotentialsContent layerConfig={layerConfig} /> */}
 					<ConnectedAreaSelection
 						layerConfigId={layerConfig.id}
 						drawLayerId={layerConfig.drawLayerId}

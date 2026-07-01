@@ -65,7 +65,6 @@ export const useClickControlConfig = () => {
 
 			if (drawLayerId && layerId === drawLayerId) {
 				const measureId = resolveMeasureId(normalizedFeature);
-
 				if (measureId) {
 					return <MeasureDetailsCard measureId={measureId} onClose={onClose} />;
 				}
@@ -78,8 +77,10 @@ export const useClickControlConfig = () => {
 					/>
 				);
 			}
-
-			if (layerId === LAYER_IDS.CONNECTED_AREA_DRAW) {
+			if (
+				layerId === LAYER_IDS.CONNECTED_AREA_DRAW &&
+				currentConfig?.id === LAYER_IDS.CONNECTED_AREA_DRAW
+			) {
 				return (
 					<FeatureActionMenu
 						features={normalizedFeature}
@@ -99,7 +100,6 @@ export const useClickControlConfig = () => {
 						/>
 					);
 				}
-
 				return (
 					<FeatureTooltip
 						attributes={attributes ?? {}}

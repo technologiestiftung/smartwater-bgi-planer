@@ -1,3 +1,5 @@
+import type { MeasureParameterKey } from "@/types/measures";
+
 export type MeasureValue = number | string | null;
 
 export interface Measure {
@@ -7,10 +9,10 @@ export interface Measure {
 	name: string;
 	area: number;
 	connectedArea?: number;
+	connectedAreaId?: string | null;
 	configId: string;
 	drawLayerId: string | null;
-	// get rid off values?
-	values?: Record<string, MeasureValue>;
+	values?: Partial<Record<MeasureParameterKey, MeasureValue>>;
 }
 
 export interface ConnectedArea {
@@ -42,7 +44,7 @@ export interface ScenarioActions {
 	updateMeasureValues: (
 		scenarioId: string,
 		measureId: string,
-		values: Record<string, MeasureValue>,
+		values: Partial<Record<MeasureParameterKey, MeasureValue>>,
 	) => void;
 	addConnectedArea: (scenarioId: string, connectedArea: ConnectedArea) => void;
 	removeConnectedArea: (scenarioId: string, connectedAreaId: string) => void;

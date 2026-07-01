@@ -1,8 +1,8 @@
 import type {
-	AreaPotential,
 	ComputedArea,
 	PreprocessedFeatures,
 } from "@/lib/simulation/types";
+import type { MeasureValues } from "@/types/measures";
 import type Feature from "ol/Feature";
 import type Geometry from "ol/geom/Geometry";
 
@@ -22,7 +22,7 @@ export interface Project {
 	updatedAt: number;
 }
 
-// Raw area properties read from OL features.
+// Raw area properties read from OL features (matches the WFS input layer schema).
 export type AreaProps = {
 	code: string;
 	prec_yr: number;
@@ -48,7 +48,7 @@ export type AreaProps = {
 	land_type: string;
 	veg_class: number;
 	irrigation: number;
-	block_type: string;
+	block_type?: string;
 	geometry?: Geometry;
 };
 
@@ -61,14 +61,14 @@ export interface InputFeature {
 export interface AccumulatedStats {
 	totalArea: number;
 	inputFeaturesCount: number;
-	areaPotential: AreaPotential;
+	areaPotential: MeasureValues;
 	computedArea: ComputedArea;
 }
 
 export interface ComputedFeatures {
 	code: string;
 	computedArea: ComputedArea;
-	areaPotential: AreaPotential;
+	areaPotential: MeasureValues;
 }
 
 export interface ProjectState {
@@ -78,7 +78,7 @@ export interface ProjectState {
 	computedFeatures: ComputedFeatures[];
 
 	// Active
-	activeAreaPotential: AreaPotential | null;
+	activeAreaPotential: MeasureValues | null;
 	activeAreaId: string | null;
 
 	// Project
@@ -95,7 +95,7 @@ export interface ProjectActions {
 	setInputFeatures: (features: InputFeature[]) => void;
 	setActiveArea: (
 		code: string | null,
-		potential?: AreaPotential | null,
+		potential?: MeasureValues | null,
 	) => void;
 	setHasHydrated: (state: boolean) => void;
 	setLastPath: (path: string | null) => void;

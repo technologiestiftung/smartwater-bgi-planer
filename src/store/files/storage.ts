@@ -39,15 +39,18 @@ export const storeFileBlob = async (
 	layerId: string,
 	file: File,
 ): Promise<void> => {
+	const key = createFileKey(projectId, layerId);
+	const arrayBuffer = await file.arrayBuffer();
+
 	const db = await openDB();
 	const tx = db.transaction(STORE_NAME, "readwrite");
 	const store = tx.objectStore(STORE_NAME);
-	const key = createFileKey(projectId, layerId);
+
+	store.put(arrayBuffer, key);
 
 	return new Promise((resolve, reject) => {
-		const request = store.put(file, key);
-		request.onsuccess = () => resolve();
-		request.onerror = () => reject(request.error);
+		tx.oncomplete = () => resolve();
+		tx.onerror = () => reject(tx.error);
 	});
 };
 
@@ -63,10 +66,21 @@ export const getFileBlob = async (
 	const store = tx.objectStore(STORE_NAME);
 	const key = createFileKey(projectId, layerId);
 
+	let result: File | null = null;
+
+	const request = store.get(key);
+	request.onsuccess = () => {
+		const arrayBuffer = request.result;
+		if (arrayBuffer) {
+			result = new File([arrayBuffer], key, {
+				type: "application/octet-stream",
+			});
+		}
+	};
+
 	return new Promise((resolve, reject) => {
-		const request = store.get(key);
-		request.onsuccess = () => resolve(request.result || null);
-		request.onerror = () => reject(request.error);
+		tx.oncomplete = () => resolve(result);
+		tx.onerror = () => reject(tx.error);
 	});
 };
 
@@ -82,10 +96,11 @@ export const deleteFileBlob = async (
 	const store = tx.objectStore(STORE_NAME);
 	const key = createFileKey(projectId, layerId);
 
+	store.delete(key);
+
 	return new Promise((resolve, reject) => {
-		const request = store.delete(key);
-		request.onsuccess = () => resolve();
-		request.onerror = () => reject(request.error);
+		tx.oncomplete = () => resolve();
+		tx.onerror = () => reject(tx.error);
 	});
 };
 
@@ -99,33 +114,23 @@ export const deleteProjectFileBlobs = async (
 	const tx = db.transaction(STORE_NAME, "readwrite");
 	const store = tx.objectStore(STORE_NAME);
 
-	return new Promise((resolve, reject) => {
-		const request = store.openCursor();
-		const deletePromises: Promise<void>[] = [];
+	const request = store.openCursor();
 
-		request.onsuccess = (event) => {
-			const cursor = (event.target as IDBRequest<IDBCursorWithValue>).result;
-			if (cursor) {
-				const key = cursor.key as string;
-				const parsed = parseFileKey(key);
-				if (parsed && parsed.projectId === projectId) {
-					deletePromises.push(
-						new Promise<void>((res, rej) => {
-							const delRequest = store.delete(key);
-							delRequest.onsuccess = () => res();
-							delRequest.onerror = () => rej(delRequest.error);
-						}),
-					);
-				}
-				cursor.continue();
-			} else {
-				Promise.all(deletePromises)
-					.then(() => resolve())
-					.catch(reject);
+	request.onsuccess = (event) => {
+		const cursor = (event.target as IDBRequest<IDBCursorWithValue>).result;
+		if (cursor) {
+			const key = cursor.key as string;
+			const parsed = parseFileKey(key);
+			if (parsed && parsed.projectId === projectId) {
+				store.delete(key);
 			}
-		};
+			cursor.continue();
+		}
+	};
 
-		request.onerror = () => reject(request.error);
+	return new Promise((resolve, reject) => {
+		tx.oncomplete = () => resolve();
+		tx.onerror = () => reject(tx.error);
 	});
 };
 
@@ -137,10 +142,16 @@ export const getAllFileKeys = async (): Promise<string[]> => {
 	const tx = db.transaction(STORE_NAME, "readonly");
 	const store = tx.objectStore(STORE_NAME);
 
+	let result: string[] = [];
+
+	const request = store.getAllKeys();
+	request.onsuccess = () => {
+		result = request.result as string[];
+	};
+
 	return new Promise((resolve, reject) => {
-		const request = store.getAllKeys();
-		request.onsuccess = () => resolve(request.result as string[]);
-		request.onerror = () => reject(request.error);
+		tx.oncomplete = () => resolve(result);
+		tx.onerror = () => reject(tx.error);
 	});
 };
 
@@ -154,16 +165,20 @@ export const getProjectFileKeys = async (
 	const tx = db.transaction(STORE_NAME, "readonly");
 	const store = tx.objectStore(STORE_NAME);
 
+	let result: string[] = [];
+
+	const request = store.getAllKeys();
+	request.onsuccess = () => {
+		const keys = request.result as string[];
+		result = keys.filter((key) => {
+			const parsed = parseFileKey(key);
+			return parsed && parsed.projectId === projectId;
+		});
+	};
+
 	return new Promise((resolve, reject) => {
-		const request = store.getAllKeys();
-		request.onsuccess = () => {
-			const keys = (request.result as string[]).filter((key) => {
-				const parsed = parseFileKey(key);
-				return parsed && parsed.projectId === projectId;
-			});
-			resolve(keys);
-		};
-		request.onerror = () => reject(request.error);
+		tx.oncomplete = () => resolve(result);
+		tx.onerror = () => reject(tx.error);
 	});
 };
 
@@ -267,7 +282,16 @@ export const filesStorage = {
 					},
 				};
 
-				localStorage.setItem(name, JSON.stringify(cleanValue));
+				try {
+					localStorage.setItem(name, JSON.stringify(cleanValue));
+				} catch (error) {
+					const err = error as { name?: string; message?: string };
+					console.error("localStorage.setItem failed:", {
+						name: err?.name,
+						message: err?.message,
+					});
+					throw error;
+				}
 			}
 		} catch (error) {
 			console.error("Error saving files:", error);
@@ -291,10 +315,11 @@ export const filesStorage = {
 			const tx = db.transaction(STORE_NAME, "readwrite");
 			const store = tx.objectStore(STORE_NAME);
 
+			store.clear();
+
 			return new Promise((resolve, reject) => {
-				const request = store.clear();
-				request.onsuccess = () => resolve();
-				request.onerror = () => reject(request.error);
+				tx.oncomplete = () => resolve();
+				tx.onerror = () => reject(tx.error);
 			});
 		} catch (error) {
 			console.error("Error removing files:", error);

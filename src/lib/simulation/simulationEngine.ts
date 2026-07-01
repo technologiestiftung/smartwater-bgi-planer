@@ -1,12 +1,13 @@
 import areaCalculations from "@/lib/simulation/calculations/areaCalculations";
 import measureCalculations from "@/lib/simulation/calculations/measureCalculations";
-import type { AreaPotential, ComputedArea } from "@/lib/simulation/types";
+import type { ComputedArea } from "@/lib/simulation/types";
 import type { InputFeature } from "@/store/project/types";
 import { Measure } from "@/store/scenario/types";
+import type { MeasureValues } from "@/types/measures";
 
 type ApplyMeasuresResult = {
 	computedArea: ComputedArea;
-	areaPotential: AreaPotential;
+	areaPotential: MeasureValues;
 };
 
 const getOlFeatures = (inputFeatures: InputFeature[]) =>

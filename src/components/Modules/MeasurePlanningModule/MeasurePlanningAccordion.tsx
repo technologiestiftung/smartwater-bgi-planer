@@ -25,6 +25,7 @@ import type { ModuleMeasurementConfig } from "@/types/shared";
 import { LAYER_IDS } from "@/types/shared";
 import { ArrowLeftIcon, InfoIcon, ListChecksIcon } from "@phosphor-icons/react";
 import Link from "next/link";
+import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { MeasureCatalogModal } from "../MeasureCatalogModule/MeasureCatalogModal";
@@ -315,6 +316,7 @@ export function MeasurePlanningAccordion({
 				<MeasurePlanningStepContent
 					layerConfig={selectedQuestionConfig}
 					metricIcons={selectedMetricIcons}
+					onConfirm={handleBackToQuestions}
 				/>
 			</div>
 		);
@@ -388,6 +390,25 @@ export function MeasurePlanningAccordion({
 							);
 						})}
 					</Accordion>
+
+					{/* <Accordion type="multiple">
+					<AccordionItem value="legend" className="border-neutral-mid px-4">
+						<AccordionTrigger className="text-primary font-bold hover:no-underline">
+							Legende
+						</AccordionTrigger>
+						<AccordionContent className="pb-4"> */}
+					<div className="mt-auto pt-6">
+						<Image
+							src={"/legends/measures.svg"}
+							alt="Legende für Maßnahmen"
+							width={620}
+							height={260}
+							className="h-auto max-w-full"
+						/>
+					</div>
+					{/* </AccordionContent>
+					</AccordionItem>
+				</Accordion> */}
 				</div>
 			</>
 		);
