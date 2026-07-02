@@ -99,7 +99,7 @@ export function ClimateSimulationModal({
 						</div>
 					))}
 				</div>
-				<div className="flex flex-col items-center gap-2">
+				<div className="flex min-h-0 flex-1 flex-col items-center gap-2 overflow-hidden">
 					{imgError && (
 						<>
 							<p className="text-red font-bold">Fehler beim Laden des Bildes</p>
@@ -110,7 +110,7 @@ export function ClimateSimulationModal({
 						<Image
 							src={fileName}
 							alt={fileName}
-							className="h-full max-h-[80%] w-full object-contain"
+							className="h-full max-h-[100%] w-full object-contain"
 							onError={() => {
 								setImageError(true);
 							}}
