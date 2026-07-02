@@ -29,6 +29,27 @@
 		]
 	},
 	{
+		"title": "Ausschöpfung\nPotentialfläche",
+		"options": [
+			{
+				"display": "25%",
+				"value": "25"
+			},
+			{
+				"display": "50%",
+				"value": "50"
+			},
+			{
+				"display": "75%",
+				"value": "75"
+			},
+			{
+				"display": "100%",
+				"value": "100"
+			}
+		]
+	},
+	{
 		"title": "Uhrzeit",
 		"options": [
 			{
@@ -56,27 +77,6 @@
 			},
 			{
 				"display": "Tropennacht"
-			}
-		]
-	},
-	{
-		"title": "Ausschöpfung\nPotentialfläche",
-		"options": [
-			{
-				"display": "25%",
-				"value": "25"
-			},
-			{
-				"display": "50%",
-				"value": "50"
-			},
-			{
-				"display": "75%",
-				"value": "75"
-			},
-			{
-				"display": "100%",
-				"value": "100"
 			}
 		]
 	},
