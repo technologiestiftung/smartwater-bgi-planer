@@ -37,6 +37,8 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 	const payload = useRabimoPayload();
 	const [state, setState] = useState<TestState>("idle");
 	const [message, setMessage] = useState<string>("");
+	const [plotUrl, setPlotUrl] = useState<string | null>(null);
+	const [plotState, setPlotState] = useState<TestState>("idle");
 
 	useResultLayer({
 		layerIds: [
@@ -57,6 +59,10 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 		setState("loading");
 		setStatus(activeScenarioId, "loading");
 		setMessage("");
+		setPlotUrl(null);
+		setPlotState("idle");
+
+		console.log("[SynthesisView] payload::", payload);
 
 		try {
 			const response = await fetch("/api/rabimo", {
@@ -83,6 +89,30 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 
 			setResult(activeScenarioId, newResult);
 			setStatus(activeScenarioId, "done");
+
+			const runoffReductionRaw = (
+				data as {
+					statistics?: { runoff_reduction_percent?: number | number[] };
+				}
+			)?.statistics?.runoff_reduction_percent;
+			const runoffReduction = Array.isArray(runoffReductionRaw)
+				? runoffReductionRaw[0]
+				: runoffReductionRaw;
+
+			if (typeof runoffReduction === "number") {
+				setPlotState("loading");
+				try {
+					const plotResponse = await fetch(
+						`/api/rabimo/plot-effect-of-disconnect?runoff_reduction=${runoffReduction}&type=critical_hours`,
+					);
+					if (!plotResponse.ok) throw new Error("Plot request failed");
+					const blob = await plotResponse.blob();
+					setPlotUrl(URL.createObjectURL(blob));
+					setPlotState("success");
+				} catch {
+					setPlotState("error");
+				}
+			}
 
 			const summary =
 				typeof data === "object" && data !== null
@@ -142,6 +172,12 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 					angezeigt.
 				</p>
 
+				{state === "loading" && (
+					<div className="bg-background text-foreground max-w-48 rounded-xs px-2 py-1 text-xs shadow-md">
+						Lädt...
+					</div>
+				)}
+
 				{message && (
 					<div
 						className={[
@@ -164,6 +200,27 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 				<div className="mt-4">
 					<ResultChart />
 				</div>
+
+				{plotState === "loading" && (
+					<div className="bg-background text-foreground mt-4 max-w-48 rounded-xs px-2 py-1 text-xs shadow-md">
+						Plot wird geladen...
+					</div>
+				)}
+
+				{plotUrl && (
+					<div className="mt-4">
+						<Image
+							src={plotUrl}
+							alt="Effect of disconnect"
+							width={620}
+							height={400}
+							unoptimized
+							className="h-auto max-w-full"
+							onLoad={() => setPlotState("success")}
+							onError={() => setPlotState("error")}
+						/>
+					</div>
+				)}
 
 				<div className="mt-auto pt-6">
 					<Image
