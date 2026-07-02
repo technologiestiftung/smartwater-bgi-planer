@@ -7,7 +7,7 @@ import { useResultLayer } from "@/hooks/useResultLayer";
 import { SectionId } from "@/lib/helpers/sectionIds";
 import { useLayersStore, useResultStore, useScenarioStore } from "@/store";
 import type { Result } from "@/store/result/types";
-import { DownloadSimpleIcon, XIcon } from "@phosphor-icons/react";
+import { DownloadSimpleIcon, SpinnerIcon, XIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 
@@ -15,7 +15,7 @@ interface SynthesisViewProps {
 	onBackToQuestions: () => void;
 	onBackToSpecificQuestion: (configId: string, sectionId: SectionId) => void;
 }
-type TestState = "idle" | "loading" | "success" | "error";
+type RequestState = "idle" | "loading" | "success" | "error";
 
 function extractErrorMessage(data: unknown, fallback: string): string {
 	if (
@@ -35,10 +35,10 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 	const setResult = useResultStore((state) => state.setResult);
 	const setStatus = useResultStore((state) => state.setStatus);
 	const payload = useRabimoPayload();
-	const [state, setState] = useState<TestState>("idle");
+	const [state, setState] = useState<RequestState>("idle");
 	const [message, setMessage] = useState<string>("");
 	const [plotUrl, setPlotUrl] = useState<string | null>(null);
-	const [plotState, setPlotState] = useState<TestState>("idle");
+	const [plotState, setPlotState] = useState<RequestState>("idle");
 
 	useResultLayer({
 		layerIds: [
@@ -61,8 +61,6 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 		setMessage("");
 		setPlotUrl(null);
 		setPlotState("idle");
-
-		console.log("[SynthesisView] payload::", payload);
 
 		try {
 			const response = await fetch("/api/rabimo", {
@@ -114,16 +112,7 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 				}
 			}
 
-			const summary =
-				typeof data === "object" && data !== null
-					? `Antwort erhalten (${Object.keys(data).length} Top-Level Felder)`
-					: "Antwort erhalten";
-
 			setState("success");
-
-			console.log("[SynthesisView] data::", data);
-
-			setMessage(summary);
 		} catch (error) {
 			setState("error");
 			setMessage(
@@ -173,9 +162,7 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 				</p>
 
 				{state === "loading" && (
-					<div className="bg-background text-foreground max-w-48 rounded-xs px-2 py-1 text-xs shadow-md">
-						Lädt...
-					</div>
+					<SpinnerIcon className="animate-spin" size={16} />
 				)}
 
 				{message && (
@@ -191,19 +178,13 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 					</div>
 				)}
 
-				{/* {payload && (
-					<pre className="bg-muted text-foreground mt-4 overflow-x-auto rounded-sm p-3 text-xs">
-						{JSON.stringify(payload, null, 2)}
-					</pre>
-				)} */}
-
 				<div className="mt-4">
 					<ResultChart />
 				</div>
 
 				{plotState === "loading" && (
-					<div className="bg-background text-foreground mt-4 max-w-48 rounded-xs px-2 py-1 text-xs shadow-md">
-						Plot wird geladen...
+					<div>
+						<SpinnerIcon className="animate-spin" size={16} />
 					</div>
 				)}
 
