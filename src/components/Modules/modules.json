@@ -960,7 +960,7 @@
 										"description": "Mulden-Rigolen-System (Berliner Regenwasseragentur/Andreas [FranzXaver] Süß)"
 									},
 									{
-										"src": "/images/measureInfo/10_schema_mulden_rigolen­_element.png",
+										"src": "/images/measureInfo/10_schema_mulden_rigolen_element.png",
 										"alt": "TBD...",
 										"description": "Schematische Darstellung eines Mulden-Rigolen-Elements (Berliner Regenwasseragentur)"
 									}
@@ -1147,7 +1147,7 @@
 									{
 										"src": "/images/measureInfo/28_photo_optimierter_Baumstandort.jpeg",
 										"alt": "TBD...",
-										"description": ""
+										"description": "Optimierter Baumstandort (BWB/Thomas Schmitt)"
 									}
 								],
 
@@ -1242,7 +1242,7 @@
 								},
 								"images": [
 									{
-										"src": "/images/measureInfo/03_photo_rigole.jpg",
+										"src": "/images/measureInfo/03_photo_rigole.jpeg",
 										"alt": "TBD...",
 										"description": "Rigole (Berliner Regenwasseragentur)"
 									},
@@ -1330,7 +1330,13 @@
 									"ThermometerHot": 2,
 									"Drop": 1
 								},
-								"images": [],
+								"images": [
+									{
+										"src": "/images/measureInfo/24_photo_wasserflaeche.jpg",
+										"alt": "TBD...",
+										"description": "künstliche Wasserfläche im Quartier 52° Nord (Berliner Regenwasseragentur)"
+									}
+								],
 								"effects": [
 									"Mehr Freiraumqualität",
 									"Entlastung der Kanalisation und Gewässer",
@@ -1398,7 +1404,18 @@
 									"ThermometerHot": 2,
 									"Drop": 1
 								},
-								"images": [],
+								"images": [
+									{
+										"src": "/images/measureInfo/11_schema_zisterne_bewaesserung.png",
+										"alt": "TBD...",
+										"description": "Zisterne (oikotecIngenieur*innen GmbH)"
+									},
+									{
+										"src": "/images/measureInfo/12_photo_Zisterne_Regenwasserspeicher.jpeg",
+										"alt": "TBD...",
+										"description": "Regenwassernutzung im Haushalt mit Trinkwassernachspeisung und Privatwasserzählern (Berliner Regenwasseragentur)"
+									}
+								],
 								"effects": [
 									"Trinkwasser substituieren",
 									"Verbesserte Wasserversorgung der Stadtvegetation",
@@ -1472,14 +1489,9 @@
 								},
 								"images": [
 									{
-										"src": "/images/measureInfo/21_photo_retentionsdach_ext.jpg",
+										"src": "/images/measureInfo/13_Retentionsflaeche.jpg",
 										"alt": "TBD...",
-										"description": "???"
-									},
-									{
-										"src": "/images/measureInfo/22_schema_retentionsdach_ext.png",
-										"alt": "TBD...",
-										"description": "???"
+										"description": "Retentionsfläche (BWB/Thomas Schmitt)"
 									}
 								],
 
@@ -1566,7 +1578,13 @@
 									"ThermometerHot": 3,
 									"Drop": 2
 								},
-								"images": [],
+								"images": [
+									{
+										"src": "/images/measureInfo/21_photo_Verdunstungsbeet.jpg",
+										"alt": "TBD...",
+										"description": "Verdunstungsbeet (BWB/Thomas Schmitt)"
+									}
+								],
 								"effects": [
 									" Verbesserung des Stadtklimas",
 									"Mehr Freiraumqualität",
