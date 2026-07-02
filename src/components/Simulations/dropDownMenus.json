@@ -46,6 +46,20 @@
 		]
 	},
 	{
+		"title": "Jahreszeit",
+		"options": [
+			{
+				"display": "Hitzetag"
+			},
+			{
+				"display": "Sommertag"
+			},
+			{
+				"display": "Tropennacht"
+			}
+		]
+	},
+	{
 		"title": "Ausschöpfung\nPotentialfläche",
 		"options": [
 			{
@@ -63,20 +77,6 @@
 			{
 				"display": "100%",
 				"value": "100"
-			}
-		]
-	},
-	{
-		"title": "Jahreszeit",
-		"options": [
-			{
-				"display": "Hitzetag"
-			},
-			{
-				"display": "Sommertag"
-			},
-			{
-				"display": "Tropennacht"
 			}
 		]
 	},
