@@ -17,18 +17,6 @@ interface SynthesisViewProps {
 }
 type RequestState = "idle" | "loading" | "success" | "error";
 
-function extractErrorMessage(data: unknown, fallback: string): string {
-	if (
-		typeof data === "object" &&
-		data !== null &&
-		"error" in data &&
-		typeof (data as Record<string, unknown>).error === "string"
-	) {
-		return (data as Record<string, unknown>).error as string;
-	}
-	return fallback;
-}
-
 export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 	const applyConfigLayers = useLayersStore((state) => state.applyConfigLayers);
 	const activeScenarioId = useScenarioStore((state) => state.activeScenarioId);
@@ -73,9 +61,7 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 
 			if (!response.ok) {
 				setStatus(activeScenarioId, "error");
-				throw new Error(
-					extractErrorMessage(data, "Rabimo test request failed"),
-				);
+				throw new Error("Rabimo request failed");
 			}
 
 			const newResult: Result = {
