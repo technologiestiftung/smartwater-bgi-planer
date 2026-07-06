@@ -77,6 +77,18 @@ export const StepContent: FC<StepContentProps> = ({
 						<div>{layerConfig.id === "2V1" && <ScenarioDisplay />}</div>
 						<div className="mb-4">
 							<p className="mb-2 font-semibold">{layerConfig.question}</p>
+							{layerConfig.embeddedImage && (
+								<div className="mb-2">
+									<Image
+										src={layerConfig.embeddedImage}
+										alt="Embedded Image"
+										width={1200}
+										height={800}
+										sizes="100vw"
+										className="h-auto w-full object-contain"
+									/>
+								</div>
+							)}
 							<div className="wrap-break-word">
 								<RichTextWithLinks text={layerConfig.description} />
 							</div>
