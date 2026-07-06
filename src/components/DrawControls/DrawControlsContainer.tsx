@@ -13,7 +13,7 @@ import { selectActiveLayerConfig, useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
 import { usePathname } from "next/navigation";
 import { DrawTreeMeasureButton } from "./DrawTreeMeasureButton/DrawTreeMeasureButton";
-// import { Tutorial } from "@/components/Tutorial/Tutorial";
+import { Tutorial } from "@/components/Tutorial/Tutorial";
 
 interface DrawControlsContainerProps {
 	projectId?: string;
@@ -91,7 +91,7 @@ export function DrawControlsContainer({}: DrawControlsContainerProps) {
 
 	return (
 		<div className="absolute right-4 bottom-8 z-52">
-			{/* <Tutorial type="controls" /> */}
+			<Tutorial type="controls" />
 			<div
 				className="relative mt-2 flex justify-center gap-2"
 				onClick={() => {

@@ -7,7 +7,7 @@ import {
 	type ModuleStepViewConfig,
 } from "@/components/Modules/shared/moduleConfig";
 import { SideMenu } from "@/components/SideMenu";
-// import { Tutorial } from "@/components/Tutorial/Tutorial";
+import { Tutorial } from "@/components/Tutorial/Tutorial";
 import {
 	Accordion,
 	AccordionContent,
@@ -91,7 +91,7 @@ function MeasurePlanningFooter({
 			>
 				<ListChecksIcon className="h-6 w-6 text-white" />
 			</Button>
-			{/* <Tutorial type="synthesis" /> */}
+			<Tutorial type="synthesis" />
 			{showBackToQuestions && (
 				<Button
 					variant="ghost"
