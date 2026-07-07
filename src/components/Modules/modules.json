@@ -1419,14 +1419,14 @@
 								},
 								"images": [
 									{
-										"src": "/images/measureInfo/11_schema_zisterne_bewaesserung.png",
-										"alt": "TBD...",
-										"description": "Zisterne (oikotecIngenieur*innen GmbH)"
-									},
-									{
 										"src": "/images/measureInfo/12_photo_Zisterne_Regenwasserspeicher.jpeg",
 										"alt": "TBD...",
 										"description": "Regenwassernutzung im Haushalt mit Trinkwassernachspeisung und Privatwasserzählern (Berliner Regenwasseragentur)"
+									},
+									{
+										"src": "/images/measureInfo/11_schema_zisterne_bewaesserung.png",
+										"alt": "TBD...",
+										"description": "Zisterne (oikotecIngenieur*innen GmbH)"
 									}
 								],
 								"effects": [
