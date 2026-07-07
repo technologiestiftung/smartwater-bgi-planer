@@ -66,9 +66,6 @@
 			},
 			{
 				"display": "Sommertag"
-			},
-			{
-				"display": "Tropennacht"
 			}
 		]
 	},
@@ -84,8 +81,8 @@
 				"value": "xy10"
 			},
 			{
-				"display": "Grundriss 20m Höhe",
-				"value": "xy20"
+				"display": "Grundriss 25m Höhe",
+				"value": "xy25"
 			},
 			{
 				"display": "Querschnitt Ost-West",
