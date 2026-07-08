@@ -85,11 +85,11 @@
 				"value": "xy25"
 			},
 			{
-				"display": "Querschnitt Ost-West",
+				"display": "Querschnitt Ost-West (Kästchen)",
 				"value": "xz"
 			},
 			{
-				"display": "Querschnitt Nord-Süd",
+				"display": "Querschnitt Nord-Süd (Kästchen)",
 				"value": "yz"
 			}
 		]
