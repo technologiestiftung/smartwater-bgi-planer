@@ -86,11 +86,7 @@ export const StepContent: FC<StepContentProps> = ({
 
 				<div className="pt-4">
 					{(() => {
-						if (
-							layerConfig.id === "2V1" ||
-							layerConfig.id === "2G1" ||
-							layerConfig.id === "2E1"
-						) {
+						if (layerConfig.id === "2V1" || layerConfig.id === "2G1") {
 							return (
 								<div className="flex w-full gap-2">
 									{/* <Button onClick={handleNext}>Weiter</Button> */}
