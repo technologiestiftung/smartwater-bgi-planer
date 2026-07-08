@@ -78,11 +78,13 @@
 			},
 			{
 				"display": "Grundriss 10m Höhe",
-				"value": "xy10"
+				"value": "xy10",
+				"disableIfFileNameIncludes": "PET"
 			},
 			{
 				"display": "Grundriss 25m Höhe",
-				"value": "xy25"
+				"value": "xy25",
+				"disableIfFileNameIncludes": "PET"
 			},
 			{
 				"display": "Querschnitt Ost-West (Kästchen)",
@@ -90,7 +92,8 @@
 			},
 			{
 				"display": "Querschnitt Nord-Süd (Kästchen)",
-				"value": "yz"
+				"value": "yz",
+				"disableIfFileNameIncludes": "PET"
 			}
 		]
 	}
