@@ -185,7 +185,8 @@
 		"name": "Kaltluftentstehung",
 		"question": "Gibt es Bereiche mit einer hohen Entstehung von Kaltluft in Grün- / Freiflächen (grün)? Wirken diese in Siedlungsbereichen (blau)?",
 		"description": [
-			"Neben dem großräumigen Luftaustauschsystem Berlins entstehen vor allem nachts während sommerlicher Strahlungswetterlagen lokale Luftaustauschprozesse, insbesondere zwischen begrünten Flächen und bebauten Gebieten. Dabei wird erwärmte aufsteigende Luft der dichtbebauten Siedlungsgebiete durch aus den Grünflächen nachströmende Kaltluft ersetzt.\nSolche Austauschprozesse sind wichtig für die nächtliche Abkühlung, da sie wesentlich häufiger und weiter verteilter als die linear ausgerichteten Strömungsbahnen vorkommen.",
+			"Neben dem großräumigen Luftaustauschsystem Berlins entstehen vor allem nachts während sommerlicher Strahlungswetterlagen lokale Luftaustauschprozesse, insbesondere zwischen begrünten Flächen und bebauten Gebieten. Dabei wird erwärmte aufsteigende Luft der dichtbebauten Siedlungsgebiete durch aus den Grünflächen nachströmende Kaltluft ersetzt.",
+			"Solche Austauschprozesse sind wichtig für die nächtliche Abkühlung, da sie wesentlich häufiger und weiter verteilter als die linear ausgerichteten Strömungsbahnen vorkommen.",
 			"Planungshinweise: Insbesondere Randbereiche von Grün- und Freiflächen mit einer überdurchschnittlichen Kaltluftvolumenstromdichte, die an Kaltlufteinwirkbereiche grenzen, sollten eine ungehinderte Ausbreitung der Kaltluft ermöglichen. Neubebauung, die an Grün- und Freiflächen mit einer überdurchschnittlichen Kaltluftvolumenstromdichte angrenzt, sollte durch ihre Typologie und Gebäudekubatur die Kaltlufteinwirktiefe unterstützen.",
 			"Methodik: Die Kartenebene weist Bereiche von Grün- und Freiflächen aus, welche eine hohe Kaltluftvolumenstromdichte von mehr als 7 m³/(s*m) aufweisen.",
 			"Weitere Informationen finden Sie in den [Planungshinweisen Stadtklima](https://www.berlin.de/umweltatlas/klima/klimabewertung/2022/einleitung/)."
@@ -228,7 +229,8 @@
 		"name": "Grünvolumenzahl",
 		"question": "Gibt es Bereiche mit einer niedrigen Grünvolumenzahl (unter 30 %)?",
 		"description": [
-			"Die Grünvolumenzahl berechnet sich aus dem Grünvolumen [m³] pro Flächeneinheit [m²].\nAus klimatischer Sicht ist ein Zielwert von 30-40 % Grünvolumen sinnvoll und erstrebenswert.",
+			"Die Grünvolumenzahl berechnet sich aus dem Grünvolumen [m³] pro Flächeneinheit [m²].",
+			"Aus klimatischer Sicht ist ein Zielwert von 30-40 % Grünvolumen sinnvoll und erstrebenswert.",
 			"Mit Klick auf in die Karte kann zudem geprüft werden, ob in einer Blockteilfläche die für den Flächentyp* durchschnittliche Grünvolumenzahl um mehr als 20 % unterschritten wird. Dies gibt einen Hinweis darüber, welche Flächen priorisiert werden sollten.",
 			"Hinweis: Die gesamte Landesfläche Berlins ist mit 52 Flächentypen gekennzeichnet."
 		],
@@ -253,7 +255,10 @@
 		"name": "Komponenten des Wasserhaushalts",
 		"question": "Gibt es Blockteilflächen, in denen der Wasserhaushalt stärker als 20 % vom natürlichen Wasserhaushalt abweicht? ",
 		"description": [
-			"Die Karten veranschaulichen die Abweichung des Wasserhaushalts vom natürlichen Zustand (DeltaW). Der Wasserhaushalt setzt sich aus den folgenden Komponenten zusammen:\n - Verdunstung\n - Versickerung\n - Oberflächenabfluss",
+			"Die Karten veranschaulichen die Abweichung des Wasserhaushalts vom natürlichen Zustand (DeltaW). Der Wasserhaushalt setzt sich aus den folgenden Komponenten zusammen:",
+			"- Verdunstung",
+			"- Versickerung",
+			"- Oberflächenabfluss",
 			"Durch Anklicken einer Blockteilfläche können die absoluten Werte dieser Komponenten sowohl für den natürlichen Zustand als auch für den Ist-Zustand eingesehen werden.",
 			"Gemäß EU-Wasserrahmenrichtlinie gilt eine Abweichung von mehr als 20 % vom natürlichen Wasserhaushalt als ökologisch schlecht und sollte vermieden werden. Die entsprechenden Anforderungen werden im Regelwerk DWA-M 102-4 weiter konkretisiert."
 		],
