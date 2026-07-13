@@ -14,7 +14,6 @@
 						"handlungsbedarfe_module_introduction",
 						"heavyRain_starter_question",
 						"heavy_rain_flow_velocity",
-						"heavy_rain_water_level",
 						"heavy_rain_fire_department_incidents"
 					]
 				},
@@ -28,7 +27,6 @@
 						"heat_thermal_load_night",
 						"heat_vulnerable_areas",
 						"heat_cold_air_corridors",
-						"heat_air_exchange_corridors",
 						"heat_cold_air_flow"
 					]
 				},
@@ -88,7 +86,7 @@
 					"icon": "File",
 					"title": "Potentiale",
 					"displayInSynthesis": false,
-					"questions": ["2V1", "2G1", "2E1"]
+					"questions": ["2V1", "2G1"]
 				}
 			]
 		},

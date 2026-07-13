@@ -7,7 +7,7 @@ import Image from "next/image";
 import { useEffect } from "react";
 
 interface TutorialProps {
-	type: "synthesis" | "controls";
+	type: "synthesis" | "controls" | "layerTree";
 }
 
 export function Tutorial({ type }: TutorialProps) {
@@ -22,6 +22,23 @@ export function Tutorial({ type }: TutorialProps) {
 	const currentLayerConfig = useLayersStore(selectActiveLayerConfig);
 
 	const renderContent = () => {
+		if (type === "layerTree") {
+			return (
+				<>
+					<p className="text-dark">
+						Tippen Sie hier, um die aktuelle Hintegrundkarte zwischen{" "}
+						<span className="font-bold">Digitale Orthophoto</span> und{" "}
+						<span className="font-bold">basemap.de Vector</span> zu wechseln.
+					</p>
+					<p className="text-dark">
+						Beim Hover können Sie die aktuelle inhaltliche{" "}
+						<span className="font-bold">Layers</span> und{" "}
+						<span className="font-bold">Zusatzkarten</span> steuern, inklusive
+						Deckkraft anpassen und ein- und ausschalten.
+					</p>
+				</>
+			);
+		}
 		if (type === "controls") {
 			return (
 				<>
@@ -68,7 +85,9 @@ export function Tutorial({ type }: TutorialProps) {
 			height={type === "synthesis" ? 32 : 16}
 			className={cn(
 				"relative shrink-0 self-end object-contain",
-				type === "synthesis" ? "translate-y-[6.5px] transform" : "mx-auto",
+				type === "synthesis" && "translate-y-[6.5px] transform",
+				type === "controls" && "mx-auto",
+				type === "layerTree" && "ml-5",
 			)}
 		/>
 	);
@@ -105,7 +124,9 @@ export function Tutorial({ type }: TutorialProps) {
 			)}
 			<div
 				className={cn(
-					type === "synthesis" ? "absolute bottom-7 left-24 flex" : "relative",
+					type === "synthesis" && "absolute bottom-7 left-24 flex",
+					type === "controls" && "relative",
+					type === "layerTree" && "absolute bottom-16 min-w-[300px]",
 				)}
 			>
 				{type === "synthesis" && renderArrow()}
@@ -114,7 +135,7 @@ export function Tutorial({ type }: TutorialProps) {
 						{renderContent()}
 					</div>
 				</div>
-				{type === "controls" && renderArrow()}
+				{(type === "controls" || type === "layerTree") && renderArrow()}
 			</div>
 		</>
 	);

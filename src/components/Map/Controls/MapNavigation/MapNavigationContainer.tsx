@@ -9,6 +9,7 @@ import { FC, useCallback, useRef } from "react";
 import { ProjectBoundaryControl } from "./ProjectBoundaryControl";
 import { useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { Tutorial } from "@/components/Tutorial/Tutorial";
 
 interface MapNavigationContainerProps {
 	onGeolocate?: () => void;
@@ -67,6 +68,7 @@ export const MapNavigationContainer: FC<MapNavigationContainerProps> = ({
 					onMouseEnter={handleMouseEnter}
 					onMouseLeave={handleMouseLeave}
 				>
+					<Tutorial type="layerTree" />
 					<BaselayerSwitch />
 					<LayerTree />
 				</div>

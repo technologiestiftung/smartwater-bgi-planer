@@ -101,6 +101,7 @@ export interface LayerConfigItem {
 	name: string;
 	description?: string;
 	question?: string;
+	embeddedImage?: string;
 	drawLayerId: string;
 	visibleLayerIds: string[];
 	canDrawPolygons?: boolean;
