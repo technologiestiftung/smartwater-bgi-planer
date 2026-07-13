@@ -7,6 +7,7 @@ import { LayerTree } from "@/components/Map/LayerTree/LayerTree";
 import { useUiStore } from "@/store/ui";
 import { FC, useCallback, useRef } from "react";
 import { ProjectBoundaryControl } from "./ProjectBoundaryControl";
+import { Tutorial } from "@/components/Tutorial/Tutorial";
 
 interface MapNavigationContainerProps {
 	onGeolocate?: () => void;
@@ -58,6 +59,7 @@ export const MapNavigationContainer: FC<MapNavigationContainerProps> = ({
 					onMouseEnter={handleMouseEnter}
 					onMouseLeave={handleMouseLeave}
 				>
+					<Tutorial type="layerTree" />
 					<BaselayerSwitch />
 					<LayerTree />
 				</div>
