@@ -26,7 +26,7 @@ export function MeasureCatalogModal({
 			open={isOpen}
 			onOpenChange={() => handleClose()}
 			title="Maßnahmenkatalog"
-			className="max-w-[1300px]"
+			className="max-w-wide"
 			bodyClassName="p-0"
 		>
 			<MeasureCatalogModule info={info} onActivate={onActivate} />
