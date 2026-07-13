@@ -193,7 +193,6 @@
 								]
 							},
 							"climateSimulation": {
-								"description": "TBD...",
 								"title": "DachExt"
 							}
 						},
@@ -289,7 +288,6 @@
 								]
 							},
 							"climateSimulation": {
-								"description": "TBD...",
 								"title": "DachInt"
 							}
 						},
@@ -381,7 +379,6 @@
 								]
 							},
 							"climateSimulation": {
-								"description": "TBD...",
 								"title": "Fassade"
 							}
 						}
@@ -561,7 +558,7 @@
 								]
 							},
 							"climateSimulation": {
-								"description": "TBD...",
+								"description": "Eine Entsieglung kann auch im kleineren Maßstab umgesetzt werden, wie z.B. bei einer Baumscheibenerweiterung. Die empfohlene Mindestgröße von Pflanzgruben für Bäume beträgt 12 m³ gemäß FLL Richtlinie. Je nach Größe des Baumes sind offene Baumscheiben von min. 9 m², min. 12 m² oder min. 15 m² empfohlen. Kleinere Baumscheiben bieten das Potenzial, diese zu vergrößern oder miteinander zu verbinden. [Berliner Standards für die Pflanzung und die anschließende Pflege von Straßenbäumen: https://www.berlin.de/sen/uvk/natur-und-gruen/stadtgruen/stadtbaeume/strassen-und-parkbaeume/baumpflege/] Auf bestimmen Straßenteilflächen sind Entsiegelungspotenziale zu vermuten:  -auf Trennstreifen -auf überdurchschnittlich breiten Straßenabschnitten (Straßenbreiten von 25-50 m Breite je nach Nutzung) -auf Straßenflächen mit einem Parkplatzanteil von über 20 %. (Der durchschnittliche Anteil an Parkplatzflächen in Berlin liegt zwischen 11 % und 22 %).",
 								"title": "VollEntsiegelung"
 							}
 						}
@@ -741,7 +738,7 @@
 								]
 							},
 							"climateSimulation": {
-								"description": "TBD...",
+								"description": "Ein Gelegenheitsfenster bieten auch die leer stehenden Baumscheiben in Berlin.",
 								"title": "Baum"
 							}
 						}

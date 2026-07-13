@@ -28,8 +28,11 @@ export function ClimateSimulation({
 		"measurePlanning",
 		climateSimulation,
 	) as ModuleStepConfig;
-	const { title, climateSimulation: { description } = {} } =
-		getModuleInfo || {};
+	const {
+		title,
+		info: { description: infoDescription } = {},
+		climateSimulation: { description } = {},
+	} = getModuleInfo || {};
 
 	return (
 		<div className="flex h-full w-full flex-col">
@@ -37,7 +40,8 @@ export function ClimateSimulation({
 				<h3 className="text-primary">
 					Simulationsergebnisse Stadtklima - {title}
 				</h3>
-				<p>{description}</p>
+				<p className="font-bold">{infoDescription}</p>
+				{description && <p>{description}</p>}
 			</div>
 			<div className="border-muted bg-secondary flex shrink-0 border-t px-4">
 				<Button
