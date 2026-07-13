@@ -321,7 +321,7 @@
 									}
 								],
 								"effects": [
-									" Verbesserung des Stadtklimas",
+									"Verbesserung des Stadtklimas",
 									"Lebensraum für Vögel und Insekten",
 									"Kühlt das Gebäude im Sommer (durch Verschattung und Verdunstung)",
 									"Verbesserte Dämmwirkung",
@@ -401,7 +401,7 @@
 							"metricIcons": ["Drop", "ThermometerHot"],
 							"infoLayerConfigId": "3E1_info",
 							"info": {
-								"description": "Bei der Umsetzung von teildurchlässigen Flächenbelägen werden vollversiegelte Oberflächen durch z.B. Rasengittersteine oder Fugenpflaster ersetzt, um den Oberflächenabfluss zum Kanal zu reduzieren und einen Teil des anfallenden Regenwassers vor Ort zu versickern. Teildurchlässige Flächenbeläge werden angewendet, wenn eine Umwandlung in eine Grünfläche nicht möglich ist, da die Flächen z.B. für Parkplätze genutzt werden.",
+								"description": "Bei der Umsetzung von teildurchlässigen Flächenbelägen werden vollversiegelte Oberflächen durch z.B. Rasengittersteine oder Fugenpflaster ersetzt, um den Oberflächenabfluss zum Kanal zu reduzieren und einen Teil des anfallenden Regenwassers vor Ort zu versickern. Teildurchlässige Flächenbeläge werden angewendet, wenn eine Umwandlung in eine Grünfläche nicht möglich ist, da die Flächen z.B. für Parkplätze oder Fahrradstellplätze genutzt werden.",
 								"scores": {
 									"CloudRain": 1,
 									"ThermometerHot": 1,
@@ -581,7 +581,10 @@
 							"metricIcons": ["Tree", "ThermometerHot"],
 							"infoLayerConfigId": "3B1_info",
 							"info": {
-								"description": "Grünflächen und Grünanlagen mit einer Größe von etwa 1.000 m² oder mehr stellen wichtige Elemente urbaner Freiräume dar. Sie dienen als Aufenthalts- und Erholungsraum und schaffen gleichzeitig Lebensraum für Flora und Fauna. Als gestaltete oder naturnahe Flächen bieten sie Raum für Freizeitnutzung, Naturerfahrung und Rückzug. Sie tragen zur Grundwasserneubildung bei, unterstützen die Artenvielfalt und verbessern das städtische Mikroklima durch Verschattung und Verdunstung. Grünflächen können mit naturnahen Versickerungsmaßnahmen wie Flächenversickerung oder Mulden sowie Retentionsflächen kombiniert werden.",
+								"description": [
+									"Grünflächen und Grünanlagen stellen wichtige Elemente urbaner Freiräume dar. Sie dienen als Aufenthalts- und Erholungsraum und schaffen gleichzeitig Lebensraum für Flora und Fauna. Als gestaltete oder naturnahe Flächen bieten sie Raum für Freizeitnutzung, Naturerfahrung und Rückzug.",
+									"Sie tragen zur Grundwasserneubildung bei, unterstützen die Artenvielfalt und verbessern das städtische Mikroklima durch Verschattung und Verdunstung. Grünflächen können mit naturnahen Versickerungsmaßnahmen wie Flächenversickerung oder Mulden sowie Retentionsflächen kombiniert werden."
+								],
 								"scores": {
 									"CloudRain": 2,
 									"ThermometerHot": 3,
@@ -610,7 +613,14 @@
 									},
 									{
 										"title": "Begrünung:",
-										"notes": ["Rasen, Blühwiese, Stauden, Sträucher, Bäume"]
+										"notes": [
+											"Gräser",
+											"Blühwiese",
+											"Bodendecker",
+											"Stauden",
+											"Sträucher",
+											"Bäume"
+										]
 									},
 									{
 										"title": "Pflege/Wartung:",
@@ -633,7 +643,7 @@
 										"link": "https://www.berlin.de/sen/uvk/natur-und-gruen/stadtgruen/oeffentliche-gruen-und-erholungsanlagen/gruenanlagengesetz/"
 									},
 									{
-										"title": "FLL Fachgremien: Pflege von Grün ",
+										"title": "FLL Fachgremien: Pflege von Grün",
 										"link": "https://www.fll.de/fachgremien/pflege-von-gruen/"
 									}
 								]
@@ -650,7 +660,10 @@
 							"metricIcons": ["Tree"],
 							"infoLayerConfigId": "3B2_info",
 							"info": {
-								"description": "Bäume liefern im urbanen Raum durch Verschattung und Verdunstung einen wichtigen Beitrag zur Verbesserung des Stadtklimas. Neben der klimatischen Funktion haben sie auch eine wichtige Bedeutung für das Stadtbild, eine hohe ökologische Wirkung und können auch eine verkehrsleitende Funktion einnehmen. Bei der Planung ist auf eine standortgerechte Pflanzenauswahl sowie ausreichend oberirdischen und unterirdischen Raum zu achten. Auch die Kombination von Baumstandorten und Flächen- bzw. Muldenversickerung ist möglich.",
+								"description": [
+									"Bäume liefern im urbanen Raum durch Verschattung und Verdunstung einen wichtigen Beitrag zur Verbesserung des Stadtklimas. Neben der klimatischen Funktion haben sie auch eine wichtige Bedeutung für das Stadtbild, eine hohe ökologische Wirkung und können auch eine verkehrsleitende Funktion einnehmen.",
+									"Bei der Planung ist auf eine standortgerechte Pflanzenauswahl sowie ausreichend oberirdischen und unterirdischen Raum zu achten. Auch die Kombination von Baumstandorten und Flächen- bzw. Muldenversickerung ist möglich."
+								],
 								"scores": {
 									"CloudRain": 1,
 									"ThermometerHot": 3,
@@ -896,7 +909,12 @@
 									{
 										"title": "Begrünung:",
 										"notes": [
-											"Gräser, Blühwiese, Bodendecker, Stauden, außerhalb WSG: Sträucher, Bäume"
+											"Gräser",
+											"Blühwiese",
+											"Bodendecker",
+											"Stauden",
+											"außerhalb des Wasserschutzgebiets (WSG): Sträucher",
+											"Bäume"
 										]
 									},
 									{
@@ -978,12 +996,8 @@
 									{
 										"title": "Technische Hinweise:",
 										"notes": [
-											"Flächenbedarf: 10 bis 20 % der angeschlossenen abflusswirksamen Fläche"
-										]
-									},
-									{
-										"title": "Altlasten und Bodenverunreinigungen sind zu beachten, ggf. Bodenaustausch",
-										"notes": [
+											"Flächenbedarf: 10 bis 20 % der angeschlossenen abflusswirksamen Fläche",
+											"Altlasten und Bodenverunreinigungen sind zu beachten, ggf. Bodenaustausch",
 											"Unterirdische Leitungen und Infrastrukturen beachten",
 											"Bewachsene Bodenzone: mind. 30 cm",
 											"Einstauhöhe: max. 30 cm",
@@ -1095,7 +1109,7 @@
 									},
 									{
 										"title": "Pflege/Wartung:",
-										"notes": ["Mind. zwei Wartungsgänge im Jahr "]
+										"notes": ["Mind. zwei Wartungsgänge im Jahr"]
 									},
 									{
 										"title": "Zusätzliche Hinweise:",
@@ -1145,7 +1159,7 @@
 								},
 								"images": [
 									{
-										"src": "/images/measureInfo/28_photo_optimierter_Baumstandort.jpeg",
+										"src": "/images/measureInfo/14_photo_optimierter_baumstandort.jpg",
 										"alt": "TBD...",
 										"description": "Optimierter Baumstandort (BWB/Thomas Schmitt)"
 									}
@@ -1173,7 +1187,7 @@
 									},
 									{
 										"title": "Begrünung:",
-										"notes": ["Standortgerechte Baumart in guter Qualität "]
+										"notes": ["Standortgerechte Baumart in guter Qualität"]
 									},
 									{
 										"title": "Pflege/Wartung:",
@@ -1263,12 +1277,11 @@
 									{
 										"title": "Technische Hinweise:",
 										"notes": [
-											"Flächenbedarf (Kunststoff-Rigole): 5 bis 10 % der angeschlossenen abflusswirksamen",
-											"Fläche",
+											"Flächenbedarf (Kunststoff-Rigole): 5 bis 10 % der angeschlossenen abflusswirksamen Fläche je nach Bauart",
 											"Altlasten und Bodenverunreinigungen sind zu beachten, ggf. Bodenaustausch",
 											"Unterirdische Leitungen und Infrastrukturen beachten",
 											"Vorbehandlung in Abhängigkeit der Art der angeschlossenen Fläche (stoffliche Belastung) notwendig",
-											"Einzuhaltender Abstand von der Sohle der Anlage bis zum Bemessungsgrundwasserstand: i.d.R. ≥ 1m (innerhalb des Wasserschutzgebiets: zeHGW; außerhalb: zeMHGW)",
+											"Einzuhaltender Abstand von der Sohle der Anlage bis zum Bemessungsgrundwasserstand: i.d.R. ≥ 1 m (innerhalb des Wasserschutzgebiets: zeHGW; außerhalb: zeMHGW)",
 											"Abstand zu Gebäuden ohne wasserdruckhaltende Abdichtung: > 1,5-Fache der Baugrubentiefe",
 											"Abstand zur Grundstücksgrenze: i.d.R. 2-3 m",
 											"Ausreichenden Abstand zu Bäumen beachten"
@@ -1406,14 +1419,14 @@
 								},
 								"images": [
 									{
-										"src": "/images/measureInfo/11_schema_zisterne_bewaesserung.png",
-										"alt": "TBD...",
-										"description": "Zisterne (oikotecIngenieur*innen GmbH)"
-									},
-									{
 										"src": "/images/measureInfo/12_photo_Zisterne_Regenwasserspeicher.jpeg",
 										"alt": "TBD...",
 										"description": "Regenwassernutzung im Haushalt mit Trinkwassernachspeisung und Privatwasserzählern (Berliner Regenwasseragentur)"
+									},
+									{
+										"src": "/images/measureInfo/11_schema_zisterne_bewaesserung.png",
+										"alt": "TBD...",
+										"description": "Zisterne (oikotecIngenieur*innen GmbH)"
 									}
 								],
 								"effects": [
@@ -1426,7 +1439,7 @@
 										"title": "Technische Hinweise:",
 										"notes": [
 											"Die Größe des Speichers hängt von dem individuellen Wasserbedarf, der Auffangfläche und der örtlichen Niederschlagsmenge ab (Zisternen-Rechner)",
-											"Filter und Entnahmepumpe notwendig ",
+											"Filter und Entnahmepumpe notwendig",
 											"Speicher-Überlauf (z.B. in Rigole) notwendig",
 											"Frostsichere Verlegung der Zu- und Ablaufleitungen (ca. 80 cm unter der Erde)",
 											"Unterirdische Leitungen und Infrastrukturen beachten"
@@ -1505,10 +1518,13 @@
 									{
 										"title": "Technische Hinweise:",
 										"notes": [
+											"Topografie für Notwasserwege und für die Verortung nutzen",
 											"Element zur Leitung des Niederschlagwassers in die Retentionsfläche und ggf. Entwässerungssystem  notwendig",
 											"Beachtung Verkehrssicherungspflichten",
 											"Beachtung Barrierefreiheit",
-											"Belastung der Niederschlagsabflüsse beachten (daraus können sich Restriktionen ableiten)"
+											"Belastung der Niederschlagsabflüsse beachten (daraus können sich Restriktionen ableiten)",
+											"Für Grundstücke : Überflutungsnachweis nach DIN 1986-100",
+											"Für öffentliche Straßen und Plätze: Überflutungsschutz nach DWA-A 118 und DWA-M 119 prüfen"
 										]
 									},
 									{
@@ -1586,7 +1602,7 @@
 									}
 								],
 								"effects": [
-									" Verbesserung des Stadtklimas",
+									"Verbesserung des Stadtklimas",
 									"Mehr Freiraumqualität",
 									"Entlastung der Kanalisation und Gewässer",
 									"Durch den gedichteten Wasserspeicher wird eine bessere Wasserversorgung und Verdunstungsleistung während der Trockenperioden erzielt"

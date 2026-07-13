@@ -16,9 +16,23 @@ interface ClimateSimulationModalProps {
 	climateSimulation: string;
 }
 
+type DropdownMenuOption = {
+	display: string;
+	value?: string;
+	disableIfFileNameIncludes?: string;
+};
+
+type DropdownMenuConfig = {
+	title: string;
+	options: DropdownMenuOption[];
+};
+
+const typedDropdownMenus = dropdownMenus as DropdownMenuConfig[];
+
 type DropdownSelection = {
 	display: string;
-	value: string;
+	value?: string;
+	disableIfFileNameIncludes?: string;
 };
 
 export function ClimateSimulationModal({
@@ -33,11 +47,12 @@ export function ClimateSimulationModal({
 	const [imgError, setImageError] = useState(false);
 	const [selections, setSelections] = useState<DropdownSelection[]>(
 		() =>
-			dropdownMenus?.map((m) => {
+			typedDropdownMenus?.map((m) => {
 				const first = m.options[0];
 				return {
 					display: first.display,
 					value: first.value || first.display,
+					disableIfFileNameIncludes: first.disableIfFileNameIncludes,
 				};
 			}) || [],
 	);
@@ -49,15 +64,13 @@ export function ClimateSimulationModal({
 		return input.replace(/[%:]/g, "");
 	}
 
-	const updateSelection = (
-		menuIndex: number,
-		option: { display: string; value?: string },
-	) => {
+	const updateSelection = (menuIndex: number, option: DropdownSelection) => {
 		setSelections((prev) => {
 			const next = [...prev];
 			next[menuIndex] = {
 				display: option.display,
 				value: option.value || option.display,
+				disableIfFileNameIncludes: option.disableIfFileNameIncludes,
 			};
 			return next;
 		});
@@ -75,7 +88,7 @@ export function ClimateSimulationModal({
 		<div className="ClimateSimulation-Overlay fixed inset-0 z-40 ml-136 flex items-center justify-start bg-black/60 p-2 backdrop-blur-sm">
 			<div className="flex h-full w-full max-w-6xl flex-col gap-4 bg-white p-6">
 				<div className="flex items-end justify-between gap-2">
-					{dropdownMenus.map((menu, index) => (
+					{typedDropdownMenus.map((menu, index) => (
 						<div key={index}>
 							<p className="text-primary mb-2 font-bold whitespace-pre-line">
 								{menu.title}
@@ -90,6 +103,10 @@ export function ClimateSimulationModal({
 											key={idx}
 											className="text-primary"
 											onClick={() => updateSelection(index, option)}
+											disabled={Boolean(
+												option.disableIfFileNameIncludes &&
+												fileName.includes(option.disableIfFileNameIncludes),
+											)}
 										>
 											{option.display}
 										</DropdownMenuItem>

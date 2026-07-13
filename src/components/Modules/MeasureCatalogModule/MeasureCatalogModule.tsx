@@ -61,7 +61,17 @@ const MeasureCatalogModule: FC<MeasureCatalogModuleProps> = ({
 			</div>
 			<div className="flex">
 				<div className="flex max-h-[70vh] min-w-0 flex-1 flex-col gap-4 overflow-y-scroll p-6 pr-4">
-					<p>{description}</p>
+					{description && Array.isArray(description) ? (
+						<div>
+							{description.map((desc, index) => (
+								<p key={index} className="wrap-break-word">
+									{desc}
+								</p>
+							))}
+						</div>
+					) : (
+						<p className="wrap-break-word">{description}</p>
+					)}
 					<div className="flex flex-wrap justify-start gap-2">
 						{scores &&
 							Object.keys(scores).map((iconName) => {

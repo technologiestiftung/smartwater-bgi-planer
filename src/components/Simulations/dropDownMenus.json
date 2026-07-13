@@ -66,9 +66,6 @@
 			},
 			{
 				"display": "Sommertag"
-			},
-			{
-				"display": "Tropennacht"
 			}
 		]
 	},
@@ -81,19 +78,22 @@
 			},
 			{
 				"display": "Grundriss 10m Höhe",
-				"value": "xy10"
+				"value": "xy10",
+				"disableIfFileNameIncludes": "PET"
 			},
 			{
-				"display": "Grundriss 20m Höhe",
-				"value": "xy20"
+				"display": "Grundriss 25m Höhe",
+				"value": "xy25",
+				"disableIfFileNameIncludes": "PET"
 			},
 			{
-				"display": "Querschnitt Ost-West",
+				"display": "Querschnitt Ost-West (Kästchen)",
 				"value": "xz"
 			},
 			{
-				"display": "Querschnitt Nord-Süd",
-				"value": "yz"
+				"display": "Querschnitt Nord-Süd (Kästchen)",
+				"value": "yz",
+				"disableIfFileNameIncludes": "PET"
 			}
 		]
 	}
