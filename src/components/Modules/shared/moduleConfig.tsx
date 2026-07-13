@@ -22,15 +22,16 @@ export function getModuleStepMeasure(
 ): ModuleMeasurementConfig | undefined {
 	const config = modulesConfig as ModulesConfigFile;
 	const findModule = config.modules.find((module) => module.id === moduleId);
-	let findMeasurement: ModuleMeasurementConfig | undefined;
-	findModule?.steps.forEach((step) => {
-		step.measurements?.forEach((measurement) => {
-			if (measurement.id === measureId) {
-				findMeasurement = measurement;
-			}
-		});
-	});
-	return findMeasurement;
+	for (const step of findModule?.steps ?? []) {
+		const findMeasurement = step.measurements?.find(
+			(measurement) => measurement.id === measureId,
+		);
+		if (findMeasurement) {
+			return findMeasurement;
+		}
+	}
+
+	return undefined;
 }
 
 export function getModuleStep(
