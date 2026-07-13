@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { CarouselWithIndicators } from "@/components/ui/carousel-with-indicators";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useUiStore } from "@/store/ui";
 
 interface MeasureCatalogModuleProps {
 	info: string;
@@ -40,6 +41,10 @@ const MeasureCatalogModule: FC<MeasureCatalogModuleProps> = ({
 
 	const getStep = getModuleStep("measurePlanning", info) as ModuleStepConfig;
 
+	const setIsClimateSimulationViewOpen = useUiStore(
+		(state) => state.setIsClimateSimulationViewOpen,
+	);
+
 	return (
 		<div className="MeasureCatalogModule-root">
 			<div className="border-muted flex items-center justify-between gap-2 border-b px-6 py-4">
@@ -47,7 +52,10 @@ const MeasureCatalogModule: FC<MeasureCatalogModuleProps> = ({
 				<div className="flex gap-2.5">
 					<Button
 						variant="outline"
-						onClick={() => router.push(`?climateSimulation=${id}`)}
+						onClick={() => {
+							router.push(`?climateSimulation=${id}`);
+							setIsClimateSimulationViewOpen(true);
+						}}
 					>
 						Modellierung Stadtklima
 					</Button>

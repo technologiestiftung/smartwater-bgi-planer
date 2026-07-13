@@ -27,6 +27,7 @@ export interface UiState {
 	showTutorialOnFirstQuestion: boolean;
 	draftMeasureIds: string[];
 	draftConnectedAreaIds: string[];
+	isClimateSimulationViewOpen: boolean;
 }
 
 export interface UiActions {
@@ -69,4 +70,7 @@ export interface UiActions {
 	addDraftConnectedAreaId: (connectedAreaId: string) => void;
 	confirmDraftMeasures: () => void;
 	clearDraftMeasures: () => void;
+	setIsClimateSimulationViewOpen: (
+		isClimateSimulationViewOpen: boolean,
+	) => void;
 }

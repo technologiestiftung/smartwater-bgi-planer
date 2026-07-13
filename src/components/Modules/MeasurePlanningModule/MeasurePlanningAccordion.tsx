@@ -194,6 +194,9 @@ export function MeasurePlanningAccordion({
 		LAYER_IDS.CONNECTED_AREA_DRAW,
 	);
 	const placedMeasureIds = useUiStore((state) => state.placedMeasureIds);
+	const isClimateSimulationViewOpen = useUiStore(
+		(state) => state.isClimateSimulationViewOpen,
+	);
 	const [expandedStepId, setExpandedStepId] = useState(steps[0]?.id ?? "");
 	const [selectedConfigId, setSelectedConfigId] = useState<string | null>(null);
 	const hasInitializedRef = useRef(false);
@@ -432,6 +435,7 @@ export function MeasurePlanningAccordion({
 				)
 			}
 			bodyClassName="p-0"
+			wrapperClassName={cn(isClimateSimulationViewOpen && "z-100")}
 		>
 			{content}
 		</SideMenu>

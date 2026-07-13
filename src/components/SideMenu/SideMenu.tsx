@@ -21,6 +21,7 @@ interface SideMenuProps {
 	footer?: React.ReactNode;
 	side?: "left" | "right";
 	bodyClassName?: string;
+	wrapperClassName?: string;
 	showStepper?: boolean;
 }
 
@@ -60,9 +61,14 @@ export function SideMenu(props: SideMenuProps) {
 		children,
 		footer,
 		bodyClassName = "p-6",
+		wrapperClassName = "",
 	} = props;
 	return (
-		<SidebarProvider open={open} onOpenChange={onOpenChange}>
+		<SidebarProvider
+			open={open}
+			onOpenChange={onOpenChange}
+			className={wrapperClassName}
+		>
 			<SideMenuInner
 				title={title}
 				footer={footer}

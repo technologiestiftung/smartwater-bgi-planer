@@ -42,6 +42,7 @@ const initialState: UiState = {
 	showTutorialOnFirstQuestion: false,
 	draftMeasureIds: [],
 	draftConnectedAreaIds: [],
+	isClimateSimulationViewOpen: false,
 };
 
 export const useUiStore = create<UiState & UiActions>()(
@@ -156,6 +157,9 @@ export const useUiStore = create<UiState & UiActions>()(
 				set({ draftMeasureIds: [], draftConnectedAreaIds: [] }),
 			clearDraftMeasures: () =>
 				set({ draftMeasureIds: [], draftConnectedAreaIds: [] }),
+
+			setIsClimateSimulationViewOpen: (isOpen) =>
+				set({ isClimateSimulationViewOpen: isOpen }),
 		})),
 		{ name: "uiStore" },
 	),
