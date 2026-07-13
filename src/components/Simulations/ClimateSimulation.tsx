@@ -8,7 +8,6 @@ import {
 	getModuleStepMeasure,
 } from "../Modules/shared//moduleConfig";
 import { ModuleMeasurementConfig, ModuleStepConfig } from "@/types/shared";
-import { useUiStore } from "@/store/ui";
 
 interface ClimateSimulationProps {
 	climateSimulation: string;
@@ -31,9 +30,6 @@ export function ClimateSimulation({
 	) as ModuleStepConfig;
 	const { title, climateSimulation: { description } = {} } =
 		getModuleInfo || {};
-	const setIsClimateSimulationViewOpen = useUiStore(
-		(state) => state.setIsClimateSimulationViewOpen,
-	);
 
 	return (
 		<div className="flex h-full w-full flex-col">
@@ -45,10 +41,7 @@ export function ClimateSimulation({
 			</div>
 			<div className="border-muted bg-secondary flex shrink-0 border-t px-4">
 				<Button
-					onClick={() => {
-						router.back();
-						setIsClimateSimulationViewOpen(false);
-					}}
+					onClick={() => router.back()}
 					className="text-md my-4 flex-1 text-white hover:text-white"
 					size="lg"
 					variant="ghost"
@@ -63,7 +56,6 @@ export function ClimateSimulation({
 						params.delete("climateSimulation");
 						router.replace(`?${params.toString()}`);
 						onActivate(getStep?.id || "", climateSimulation);
-						setIsClimateSimulationViewOpen(false);
 					}}
 					className="text-md my-4 flex-1 text-white hover:text-white"
 					size="lg"
