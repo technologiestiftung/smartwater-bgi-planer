@@ -72,6 +72,7 @@
 	{
 		"id": "heavy_rain_fire_department_incidents",
 		"name": "Feuerwehreinsätze",
+		"embeddedImage": "/images/embeddedLayer/ExampleImage.jpg",
 		"question": "Gibt es  Blockteilflächen oder Bereiche, in denen es einen oder mehrere starkregenbedingte Feuerwehreinsätze gab? Oder ist Ihnen das Auftreten von Schäden in der Vergangenheit bekannt?",
 		"description": "Die Karte zeigt die Blockteilflächen an, in denen in der Zeit zwischen Mai 2005 bis November 2021 starkregenbedingte Feuerwehreinsätze gemeldet wurden.",
 		"drawLayerId": "need_flooding_hotspots_q3",
