@@ -474,7 +474,6 @@
 								]
 							},
 							"climateSimulation": {
-								"description": "TBD...",
 								"title": "TeilEntsiegelung"
 							}
 						},
@@ -644,7 +643,6 @@
 								]
 							},
 							"climateSimulation": {
-								"description": "TBD...",
 								"title": "Gruen"
 							}
 						},
@@ -850,7 +848,6 @@
 								]
 							},
 							"climateSimulation": {
-								"description": "TBD...",
 								"title": "Mulde"
 							}
 						},
@@ -949,7 +946,6 @@
 								]
 							},
 							"climateSimulation": {
-								"description": "TBD...",
 								"title": "Flaechenvers"
 							}
 						},
@@ -1046,7 +1042,6 @@
 								]
 							},
 							"climateSimulation": {
-								"description": "TBD...",
 								"title": "MuldRigElem"
 							}
 						},
@@ -1135,7 +1130,6 @@
 								]
 							},
 							"climateSimulation": {
-								"description": "TBD...",
 								"title": "Tiefbeet"
 							}
 						},
@@ -1232,7 +1226,6 @@
 								]
 							},
 							"climateSimulation": {
-								"description": "TBD...",
 								"title": "OptBaum"
 							}
 						},
@@ -1314,7 +1307,6 @@
 								]
 							},
 							"climateSimulation": {
-								"description": "TBD...",
 								"title": "Rigole"
 							}
 						}
@@ -1395,7 +1387,6 @@
 								]
 							},
 							"climateSimulation": {
-								"description": "TBD...",
 								"title": "Wasserfl"
 							}
 						},
@@ -1478,7 +1469,6 @@
 								]
 							},
 							"climateSimulation": {
-								"description": "TBD...",
 								"title": "Speicher"
 							}
 						},
@@ -1572,7 +1562,6 @@
 								]
 							},
 							"climateSimulation": {
-								"description": "TBD...",
 								"title": "RetFlaeche"
 							}
 						},
@@ -1649,7 +1638,6 @@
 								]
 							},
 							"climateSimulation": {
-								"description": "TBD...",
 								"title": "Verdunstung"
 							}
 						}
