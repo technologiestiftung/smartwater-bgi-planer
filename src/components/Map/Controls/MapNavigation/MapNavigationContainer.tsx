@@ -8,6 +8,7 @@ import { useUiStore } from "@/store/ui";
 import { FC, useCallback, useRef } from "react";
 import { ProjectBoundaryControl } from "./ProjectBoundaryControl";
 import { Tutorial } from "@/components/Tutorial/Tutorial";
+import { cn } from "@/lib/utils";
 
 interface MapNavigationContainerProps {
 	onGeolocate?: () => void;
@@ -19,6 +20,7 @@ export const MapNavigationContainer: FC<MapNavigationContainerProps> = ({
 	const setIsLayerTreeVisible = useUiStore(
 		(state) => state.setIsLayerTreeVisible,
 	);
+	const showTutorial = useUiStore((state) => state.showTutorial);
 	const enterTimeoutRef = useRef<number | null>(null);
 	const leaveTimeoutRef = useRef<number | null>(null);
 
@@ -49,7 +51,12 @@ export const MapNavigationContainer: FC<MapNavigationContainerProps> = ({
 	}, [setIsLayerTreeVisible]);
 
 	return (
-		<div className="absolute bottom-6 left-4 z-20 flex items-end gap-2">
+		<div
+			className={cn(
+				"absolute bottom-6 left-4 z-20 flex items-end gap-2",
+				showTutorial && "z-50",
+			)}
+		>
 			<div className="flex flex-col gap-2">
 				<ProjectBoundaryControl />
 				<GeolocationControl onGeolocate={onGeolocate} />

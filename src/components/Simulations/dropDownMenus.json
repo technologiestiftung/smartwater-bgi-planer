@@ -1,0 +1,100 @@
+[
+	{
+		"title": "Delta oder Absolut",
+		"options": [
+			{
+				"display": "Delta",
+				"value": "DELTA"
+			},
+			{
+				"display": "Absolute",
+				"value": "ABSOLUT"
+			}
+		]
+	},
+	{
+		"title": "Messwert",
+		"options": [
+			{
+				"display": "Luftfeuchtigkeit"
+			},
+			{
+				"display": "Temperatur",
+				"value": "Temp"
+			},
+			{
+				"display": "Physiologisch Äquivalente Temperatur (PET)",
+				"value": "PET"
+			}
+		]
+	},
+	{
+		"title": "Ausschöpfung\nPotentialfläche",
+		"options": [
+			{
+				"display": "100%",
+				"value": "100"
+			},
+			{
+				"display": "50%",
+				"value": "50"
+			}
+		]
+	},
+	{
+		"title": "Uhrzeit",
+		"options": [
+			{
+				"display": "04:00 Uhr",
+				"value": "0400"
+			},
+			{
+				"display": "14:00 Uhr",
+				"value": "1400"
+			},
+			{
+				"display": "22:00 Uhr",
+				"value": "2200"
+			}
+		]
+	},
+	{
+		"title": "Jahreszeit",
+		"options": [
+			{
+				"display": "Hitzetag"
+			},
+			{
+				"display": "Sommertag"
+			}
+		]
+	},
+	{
+		"title": "Ansicht",
+		"options": [
+			{
+				"display": "Grundriss 2m Höhe",
+				"value": "xy2"
+			},
+			{
+				"display": "Grundriss 10m Höhe",
+				"value": "xy10",
+				"disableIfFileNameIncludes": "PET"
+			},
+			{
+				"display": "Grundriss 25m Höhe",
+				"value": "xy25",
+				"disableIfFileNameIncludes": "PET"
+			},
+			{
+				"display": "Querschnitt Ost-West (Kästchen)",
+				"value": "xz"
+			},
+			{
+				"display": "Querschnitt Nord-Süd (Kästchen)",
+				"value": "yz",
+				"disableIfFileNameIncludes": "PET"
+			}
+		]
+	}
+]

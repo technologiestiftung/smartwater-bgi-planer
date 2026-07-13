@@ -16,6 +16,35 @@ export function getModuleConfig(moduleId: string): ModuleConfig | undefined {
 	return config.modules.find((module) => module.id === moduleId);
 }
 
+export function getModuleStepMeasure(
+	moduleId: string,
+	measureId: string,
+): ModuleMeasurementConfig | undefined {
+	const config = modulesConfig as ModulesConfigFile;
+	const findModule = config.modules.find((module) => module.id === moduleId);
+	for (const step of findModule?.steps ?? []) {
+		const findMeasurement = step.measurements?.find(
+			(measurement) => measurement.id === measureId,
+		);
+		if (findMeasurement) {
+			return findMeasurement;
+		}
+	}
+
+	return undefined;
+}
+
+export function getModuleStep(
+	moduleId: string,
+	measureId: string,
+): ModuleMeasurementConfig | undefined {
+	const config = modulesConfig as ModulesConfigFile;
+	const findModule = config.modules.find((module) => module.id === moduleId);
+	return findModule?.steps.find((step) =>
+		step.measurements?.some((measurement) => measurement.id === measureId),
+	);
+}
+
 export function getModuleSteps(moduleId: string): ModuleStepViewConfig[] {
 	const moduleConfig = getModuleConfig(moduleId);
 	if (!moduleConfig) {
