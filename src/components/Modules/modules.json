@@ -189,10 +189,8 @@
 										"title": "Kostenüberblick Berliner Regenwasseragentur",
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
-								]
-							},
-							"climateSimulation": {
-								"title": "DachExt"
+								],
+								"climateSimulationFileSlug": "DachExt"
 							}
 						},
 						{
@@ -283,10 +281,8 @@
 										"title": "Kostenüberblick Berliner Regenwasseragentur",
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
-								]
-							},
-							"climateSimulation": {
-								"title": "DachInt"
+								],
+								"climateSimulationFileSlug": "DachInt"
 							}
 						},
 						{
@@ -373,10 +369,8 @@
 										"title": "BuGG-Fachinformation „Anforderungen an Brandschutz bei Dach- und Fassadenbegrünungen”",
 										"link": "https://www.gebaeudegruen.info/wp-content/uploads/2024/11/BuGG_Fachinfo_Brandschutz_FB_20231030_FINAL.pdf"
 									}
-								]
-							},
-							"climateSimulation": {
-								"title": "Fassade"
+								],
+								"climateSimulationFileSlug": "Fassade"
 							}
 						}
 					]
@@ -467,10 +461,8 @@
 										"title": "Kostenüberblick Berliner Regenwasseragentur",
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
-								]
-							},
-							"climateSimulation": {
-								"title": "TeilEntsiegelung"
+								],
+								"climateSimulationFileSlug": "TeilEntsiegelung"
 							}
 						},
 						{
@@ -480,6 +472,7 @@
 							"metricIcons": ["RoadHorizon", "Drop"],
 							"info": {
 								"description": "Eine vollständige Entsiegelung ist eine umfangreiche und wirkungsvolle Maßnahme, um begrünen zu können, den Oberflächenabfluss in den Kanal zu reduzieren und Regenwasser wieder über die natürliche Bodenzone versickern zu lassen. Dafür müssen zunächst die undurchlässigen Oberflächenbelege entfernt und anschließend der verdichtete Boden gelockert bzw. ausgetauscht und bepflanzt werden. Ziel ist es, die natürlichen Bodenfunktionen so weitgehend wie möglich wieder herzustellen.",
+								"subDescription": "Eine Entsieglung kann auch im kleineren Maßstab umgesetzt werden, wie z.B. bei einer Baumscheibenerweiterung. Die empfohlene Mindestgröße von Pflanzgruben für Bäume beträgt 12 m³ gemäß FLL Richtlinie. Je nach Größe des Baumes sind offene Baumscheiben von min. 9 m², min. 12 m² oder min. 15 m² empfohlen. Kleinere Baumscheiben bieten das Potenzial, diese zu vergrößern oder miteinander zu verbinden. [Berliner Standards für die Pflanzung und die anschließende Pflege von Straßenbäumen: https://www.berlin.de/sen/uvk/natur-und-gruen/stadtgruen/stadtbaeume/strassen-und-parkbaeume/baumpflege/] Auf bestimmen Straßenteilflächen sind Entsiegelungspotenziale zu vermuten:  -auf Trennstreifen -auf überdurchschnittlich breiten Straßenabschnitten (Straßenbreiten von 25-50 m Breite je nach Nutzung) -auf Straßenflächen mit einem Parkplatzanteil von über 20 %. (Der durchschnittliche Anteil an Parkplatzflächen in Berlin liegt zwischen 11 % und 22 %).",
 								"scores": {
 									"CloudRain": 2,
 									"ThermometerHot": 2,
@@ -549,11 +542,8 @@
 										"title": "Kostenüberblick Berliner Regenwasseragentur",
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
-								]
-							},
-							"climateSimulation": {
-								"description": "Eine Entsieglung kann auch im kleineren Maßstab umgesetzt werden, wie z.B. bei einer Baumscheibenerweiterung. Die empfohlene Mindestgröße von Pflanzgruben für Bäume beträgt 12 m³ gemäß FLL Richtlinie. Je nach Größe des Baumes sind offene Baumscheiben von min. 9 m², min. 12 m² oder min. 15 m² empfohlen. Kleinere Baumscheiben bieten das Potenzial, diese zu vergrößern oder miteinander zu verbinden. [Berliner Standards für die Pflanzung und die anschließende Pflege von Straßenbäumen: https://www.berlin.de/sen/uvk/natur-und-gruen/stadtgruen/stadtbaeume/strassen-und-parkbaeume/baumpflege/] Auf bestimmen Straßenteilflächen sind Entsiegelungspotenziale zu vermuten:  -auf Trennstreifen -auf überdurchschnittlich breiten Straßenabschnitten (Straßenbreiten von 25-50 m Breite je nach Nutzung) -auf Straßenflächen mit einem Parkplatzanteil von über 20 %. (Der durchschnittliche Anteil an Parkplatzflächen in Berlin liegt zwischen 11 % und 22 %).",
-								"title": "VollEntsiegelung"
+								],
+								"climateSimulationFileSlug": "VollEntsiegelung"
 							}
 						}
 					]
@@ -634,10 +624,8 @@
 										"title": "FLL Fachgremien: Pflege von Grün",
 										"link": "https://www.fll.de/fachgremien/pflege-von-gruen/"
 									}
-								]
-							},
-							"climateSimulation": {
-								"title": "Gruen"
+								],
+								"climateSimulationFileSlug": "Gruen"
 							}
 						},
 						{
@@ -650,6 +638,7 @@
 									"Bäume liefern im urbanen Raum durch Verschattung und Verdunstung einen wichtigen Beitrag zur Verbesserung des Stadtklimas. Neben der klimatischen Funktion haben sie auch eine wichtige Bedeutung für das Stadtbild, eine hohe ökologische Wirkung und können auch eine verkehrsleitende Funktion einnehmen.",
 									"Bei der Planung ist auf eine standortgerechte Pflanzenauswahl sowie ausreichend oberirdischen und unterirdischen Raum zu achten. Auch die Kombination von Baumstandorten und Flächen- bzw. Muldenversickerung ist möglich."
 								],
+								"subDescription": "Ein Gelegenheitsfenster bieten auch die leer stehenden Baumscheiben in Berlin.",
 								"scores": {
 									"CloudRain": 1,
 									"ThermometerHot": 3,
@@ -726,11 +715,8 @@
 										"title": "Hinweisblatt 2 zur Antragstellung: Versickerung von Niederschlagswasser",
 										"link": "https://www.berlin.de/sen/uvk/_assets/umwelt/wasser-und-geologie/publikationen-und-merkblaetter/hinweisblatt2-versick.pdf?ts=1754465106"
 									}
-								]
-							},
-							"climateSimulation": {
-								"description": "Ein Gelegenheitsfenster bieten auch die leer stehenden Baumscheiben in Berlin.",
-								"title": "Baum"
+								],
+								"climateSimulationFileSlug": "Baum"
 							}
 						}
 					]
@@ -837,10 +823,8 @@
 										"title": "Kostenüberblick Berliner Regenwasseragentur",
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
-								]
-							},
-							"climateSimulation": {
-								"title": "Mulde"
+								],
+								"climateSimulationFileSlug": "Mulde"
 							}
 						},
 						{
@@ -934,10 +918,8 @@
 										"title": "Kostenüberblick Berliner Regenwasseragentur",
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
-								]
-							},
-							"climateSimulation": {
-								"title": "Flaechenvers"
+								],
+								"climateSimulationFileSlug": "Flaechenvers"
 							}
 						},
 						{
@@ -1029,10 +1011,8 @@
 										"title": "Kostenüberblick Berliner Regenwasseragentur",
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
-								]
-							},
-							"climateSimulation": {
-								"title": "MuldRigElem"
+								],
+								"climateSimulationFileSlug": "MuldRigElem"
 							}
 						},
 						{
@@ -1116,10 +1096,8 @@
 										"title": "Kostenüberblick Berliner Regenwasseragentur",
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
-								]
-							},
-							"climateSimulation": {
-								"title": "Tiefbeet"
+								],
+								"climateSimulationFileSlug": "Tiefbeet"
 							}
 						},
 						{
@@ -1211,10 +1189,8 @@
 										"title": "SenMVKU-Rundschreiben III C 2-1/ 2025 über die Pflanzung und Pflege von Straßengrün",
 										"link": "https://www.berlin.de/sen/uvk/_assets/natur-gruen/service/rechtsvorschriften/stadtgruen/rundschreiben_str.pdf"
 									}
-								]
-							},
-							"climateSimulation": {
-								"title": "OptBaum"
+								],
+								"climateSimulationFileSlug": "OptBaum"
 							}
 						},
 						{
@@ -1291,10 +1267,8 @@
 										"title": "Kostenüberblick Berliner Regenwasseragentur",
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
-								]
-							},
-							"climateSimulation": {
-								"title": "Rigole"
+								],
+								"climateSimulationFileSlug": "Rigole"
 							}
 						}
 					]
@@ -1370,10 +1344,8 @@
 										"title": "FLL Richtliniefür Planung, Bau und Instandhaltung, von privaten Schwimm- und Badeteichen (2017)",
 										"link": "https://shop.fll.de/de/richtlinien-fuer-planung-bau-und-instandhaltung-von-privaten-schwimm-und-badeteichen-2017-broschuere.html"
 									}
-								]
-							},
-							"climateSimulation": {
-								"title": "Wasserfl"
+								],
+								"climateSimulationFileSlug": "Wasserfl"
 							}
 						},
 						{
@@ -1451,10 +1423,8 @@
 										"title": "Zisternen-Rechner",
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/zisternengroesse-berechnen/"
 									}
-								]
-							},
-							"climateSimulation": {
-								"title": "Speicher"
+								],
+								"climateSimulationFileSlug": "Speicher"
 							}
 						},
 						{
@@ -1543,10 +1513,8 @@
 										"title": "DWA-M 119 - Risikomanagement in der kommunalen Überflutungsvorsorge für Entwässerungssysteme bei Starkregen",
 										"link": "https://shop.dwa.de/DWA-M-119-Risikomanagement-in-der-kommunalen-UEberflutungsvorsorge-fuer-Entwaesserungssysteme-bei-Starkregen-November-2016/M-119-Hauptprodukt-16-main"
 									}
-								]
-							},
-							"climateSimulation": {
-								"title": "RetFlaeche"
+								],
+								"climateSimulationFileSlug": "RetFlaeche"
 							}
 						},
 						{
@@ -1618,10 +1586,8 @@
 										"title": "BlueGreenStreets B",
 										"link": "https://repos.hcu-hamburg.de/bitstream/hcu/638/6/2022-04-06_BlueGreenStreets_BlueGreenStreets_als_multicodierte_Strategie_zur_Klimafolgenanpassung_B.pdf"
 									}
-								]
-							},
-							"climateSimulation": {
-								"title": "Verdunstung"
+								],
+								"climateSimulationFileSlug": "Verdunstung"
 							}
 						}
 					]

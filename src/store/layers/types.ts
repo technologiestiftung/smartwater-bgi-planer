@@ -100,6 +100,7 @@ export interface LayerConfigItem {
 	id: string;
 	name: string;
 	description?: string;
+	subDescription?: string;
 	question?: string;
 	embeddedImage?: string;
 	drawLayerId: string;

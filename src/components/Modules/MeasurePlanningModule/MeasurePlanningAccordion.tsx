@@ -242,6 +242,17 @@ export function MeasurePlanningAccordion({
 		return [];
 	}, [selectedConfigId, steps]);
 
+	const selectedMeasurementInfo = useMemo(() => {
+		if (!selectedConfigId) return null;
+		for (const step of steps) {
+			const measurement = step.measurements?.find(
+				(m) => (m.layerConfigId ?? m.id) === selectedConfigId,
+			);
+			if (measurement) return measurement;
+		}
+		return null;
+	}, [selectedConfigId, steps]);
+
 	const activateQuestion = useCallback(
 		(stepId: string, configId: string) => {
 			setExpandedStepId(stepId);
@@ -309,14 +320,19 @@ export function MeasurePlanningAccordion({
 				onBackToSpecificQuestion={handleBackToSpecificQuestion}
 			/>
 		);
-	} else if (selectedQuestionConfig) {
+	} else if (selectedQuestionConfig && selectedMeasurementInfo) {
 		content = (
 			<div className="flex h-full flex-col p-6">
 				<h3 className="text-primary shrink-0 text-xl font-semibold">
-					{selectedQuestionConfig.name || selectedConfigId}
+					{selectedMeasurementInfo.title}
 				</h3>
 				<MeasurePlanningStepContent
-					layerConfig={selectedQuestionConfig}
+					layerConfig={{
+						...selectedQuestionConfig,
+						name: selectedMeasurementInfo.title ?? selectedQuestionConfig.name,
+						description: selectedMeasurementInfo.info?.description,
+						subDescription: selectedMeasurementInfo.info?.subDescription,
+					}}
 					metricIcons={selectedMetricIcons}
 					onConfirm={handleBackToQuestions}
 				/>

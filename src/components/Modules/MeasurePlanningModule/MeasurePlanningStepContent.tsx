@@ -197,6 +197,12 @@ export function MeasurePlanningStepContent({
 							<RichTextWithLinks text={layerConfig.description} />
 						</div>
 					)}
+					{layerConfig.subDescription && (
+						<div className="wrap-break-word">
+							<br />
+							<RichTextWithLinks text={layerConfig.subDescription} />
+						</div>
+					)}
 					<ConnectedAreaSelection
 						layerConfigId={layerConfig.id}
 						drawLayerId={layerConfig.drawLayerId}
