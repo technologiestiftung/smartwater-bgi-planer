@@ -7,8 +7,6 @@ import { LayerTree } from "@/components/Map/LayerTree/LayerTree";
 import { useUiStore } from "@/store/ui";
 import { FC, useCallback, useRef } from "react";
 import { ProjectBoundaryControl } from "./ProjectBoundaryControl";
-import { useSearchParams } from "next/navigation";
-import { cn } from "@/lib/utils";
 import { Tutorial } from "@/components/Tutorial/Tutorial";
 
 interface MapNavigationContainerProps {
@@ -21,8 +19,6 @@ export const MapNavigationContainer: FC<MapNavigationContainerProps> = ({
 	const setIsLayerTreeVisible = useUiStore(
 		(state) => state.setIsLayerTreeVisible,
 	);
-	const searchParams = useSearchParams();
-	const moveToTheBack = searchParams.has("climateSimulation");
 	const enterTimeoutRef = useRef<number | null>(null);
 	const leaveTimeoutRef = useRef<number | null>(null);
 
@@ -53,12 +49,7 @@ export const MapNavigationContainer: FC<MapNavigationContainerProps> = ({
 	}, [setIsLayerTreeVisible]);
 
 	return (
-		<div
-			className={cn(
-				"absolute bottom-6 left-4 flex items-end gap-2",
-				!moveToTheBack && "z-20",
-			)}
-		>
+		<div className="absolute bottom-6 left-4 z-20 flex items-end gap-2">
 			<div className="flex flex-col gap-2">
 				<ProjectBoundaryControl />
 				<GeolocationControl onGeolocate={onGeolocate} />
