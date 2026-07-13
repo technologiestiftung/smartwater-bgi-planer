@@ -55,7 +55,6 @@ export interface ModuleMeasurementConfig {
 	layerConfigId?: string;
 	title?: string;
 	metricIcons?: string[];
-	infoLayerConfigId?: string;
 	steps?: string[];
 	info?: ModuleMeasurementInfo;
 	climateSimulation?: ModuleMeasurementClimateSimulation;

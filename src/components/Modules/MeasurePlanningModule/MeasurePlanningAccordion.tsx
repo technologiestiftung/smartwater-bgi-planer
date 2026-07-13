@@ -46,7 +46,7 @@ function toStepItems(step: ModuleStepViewConfig): StepItem[] {
 		return step.measurements.map((m: ModuleMeasurementConfig) => ({
 			id: m.id,
 			configId: m.layerConfigId ?? m.id,
-			infoConfigId: m.infoLayerConfigId,
+			infoConfigId: `${m.layerConfigId ?? m.id}_info`,
 			title: m.title,
 			metricIcons: m.metricIcons ?? [],
 		}));
