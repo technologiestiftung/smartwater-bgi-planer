@@ -88,7 +88,7 @@
 	--shadow-md: var(--shadow-300);
 	--shadow-lg: var(--shadow-400);
 
-	--max-width-wide: var(--wide-max);
+	--container-wide: var(--wide-max);
 }
 @layer components {
 	/* Headings */
