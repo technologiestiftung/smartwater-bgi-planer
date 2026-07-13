@@ -194,6 +194,9 @@ export function MeasurePlanningAccordion({
 		LAYER_IDS.CONNECTED_AREA_DRAW,
 	);
 	const placedMeasureIds = useUiStore((state) => state.placedMeasureIds);
+	const setIsClimateSimulationViewOpen = useUiStore(
+		(state) => state.setIsClimateSimulationViewOpen,
+	);
 	const isClimateSimulationViewOpen = useUiStore(
 		(state) => state.isClimateSimulationViewOpen,
 	);
@@ -302,6 +305,12 @@ export function MeasurePlanningAccordion({
 		applyConfigLayers("measure_start", true);
 		hasInitializedRef.current = true;
 	}, [open, isMapReady, layerConfig.length, applyConfigLayers]);
+
+	useEffect(() => {
+		if (info) {
+			setIsClimateSimulationViewOpen(false);
+		}
+	}, [info]);
 
 	let content: React.ReactNode;
 
