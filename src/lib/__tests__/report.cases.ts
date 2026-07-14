@@ -20,13 +20,13 @@ export const reportCases: ReportTestCase[] = [
 					title: buildXMLTitle("Starkregen", "yellow"),
 					content: [
 						buildBulletXml(
-							"green",
 							"Starkregengefährdung",
+							"green",
 							"Notizen für Starkregengefährdung",
 						),
 						buildBulletXml(
-							"red",
 							"Feuerwehreinsätze",
+							"red",
 							"Notizen für Feuerwehreinsätze",
 						),
 					].join(""),
@@ -35,28 +35,28 @@ export const reportCases: ReportTestCase[] = [
 					title: buildXMLTitle("Hitze", "red"),
 					content: [
 						buildBulletXml(
-							"green",
 							"Hitzebelastung am Tag",
+							"green",
 							"Notizen für Hitzebelastung am Tag",
 						),
 						buildBulletXml(
-							"red",
 							"Hitzebelastung in der Nacht",
+							"red",
 							"Notizen für Hitzebelastung in der Nacht",
 						),
 						buildBulletXml(
-							"yellow",
 							"Vulnerable Bereiche",
+							"yellow",
 							"Notizen für Vulnerable Bereiche",
 						),
 						buildBulletXml(
-							"yellow",
 							"Luftaustausch: Kaltluftbahnen & Leitbahnkorridore",
+							"yellow",
 							"Notizen für Luftaustausch: Kaltluftbahnen & Leitbahnkorridore",
 						),
 						buildBulletXml(
-							"green",
 							"Kaltluftentstehung",
+							"green",
 							"Notizen für Kaltluftentstehung",
 						),
 					].join(""),
@@ -64,10 +64,10 @@ export const reportCases: ReportTestCase[] = [
 				{
 					title: buildXMLTitle("Versiegelung", "green"),
 					content: [
-						buildBulletXml("green", "Versiegelung", "Notizen für Versiegelung"),
+						buildBulletXml("Versiegelung", "green", "Notizen für Versiegelung"),
 						buildBulletXml(
-							"green",
 							"Grünvolumenzahl",
+							"green",
 							"Notizen für Grünvolumenzahl",
 						),
 					].join(""),
@@ -83,18 +83,18 @@ export const reportCases: ReportTestCase[] = [
 					title: buildXMLTitle("Gewässerschutz", "yellow"),
 					content: [
 						buildBulletXml(
-							"red",
 							"Art der Kanalisation",
+							"red",
 							"Notizen für Art der Kanalisation",
 						),
 						buildBulletXml(
-							"green",
 							"Erstaufnehmendes Gewässer im Einzugsbereich der Trennkanalisation",
+							"green",
 							"Notizen für Erstaufnehmendes Gewässer im Einzugsbereich der Trennkanalisation",
 						),
 						buildBulletXml(
-							"green",
 							"Kleingewässer",
+							"green",
 							"Notizen für Kleingewässer",
 						),
 					].join(""),

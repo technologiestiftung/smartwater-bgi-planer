@@ -46,8 +46,8 @@ export function buildXMLTitle(
 }
 
 export function buildBulletXml(
+	text: string,
 	color: HighlightColor,
-	hazard: string,
 	notes?: string,
 	fontSize: number = 10,
 ): string {
@@ -59,7 +59,7 @@ export function buildBulletXml(
 
 	const sizeVal = fontSize * 2;
 
-	const hazardParagraph = `
+	const paragraph = `
     <w:p>
       <w:pPr>
         <w:pStyle w:val="ListParagraph"/>
@@ -71,7 +71,7 @@ export function buildBulletXml(
           <w:sz w:val="${sizeVal}"/>
           <w:szCs w:val="${sizeVal}"/>
         </w:rPr>
-        <w:t>${escapeXml(hazard)}</w:t>
+        <w:t>${escapeXml(text)}</w:t>
       </w:r>
     </w:p>
   `;
@@ -94,5 +94,5 @@ export function buildBulletXml(
   `
 		: "";
 
-	return (hazardParagraph + notesParagraph).replace(/>\s+</g, "><").trim();
+	return (paragraph + notesParagraph).replace(/>\s+</g, "><").trim();
 }
