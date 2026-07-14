@@ -1,5 +1,10 @@
+import tsEslintPlugin from "@typescript-eslint/eslint-plugin";
+
 export const technologiestiftungRules = {
 	files: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
+	plugins: {
+		"@typescript-eslint": tsEslintPlugin,
+	},
 	languageOptions: {
 		globals: {
 			React: "readonly",
