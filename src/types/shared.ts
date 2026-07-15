@@ -55,19 +55,19 @@ export interface ModuleMeasurementConfig {
 	layerConfigId?: string;
 	title?: string;
 	metricIcons?: string[];
-	infoLayerConfigId?: string;
 	steps?: string[];
 	info?: ModuleMeasurementInfo;
-	climateSimulation?: ModuleMeasurementClimateSimulation;
 }
 
 export interface ModuleMeasurementInfo {
 	description?: string;
+	subDescription?: string;
 	scores?: Record<string, number>;
 	images?: ModuleMeasurementInfoImage[];
 	effects?: string[];
 	planningNotes?: ModuleMeasurementInfoNote[];
 	policiesGuidelines?: ModuleMeasurementPoliciesGuidelines[];
+	climateSimulationFileSlug?: string;
 }
 
 interface ModuleMeasurementInfoImage {
@@ -84,11 +84,6 @@ interface ModuleMeasurementInfoNote {
 interface ModuleMeasurementPoliciesGuidelines {
 	title: string;
 	link: string;
-}
-
-export interface ModuleMeasurementClimateSimulation {
-	description?: string;
-	title?: string;
 }
 
 export interface ModuleConfig {

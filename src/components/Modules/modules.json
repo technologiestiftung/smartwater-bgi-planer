@@ -106,7 +106,6 @@
 							"layerConfigId": "3G1",
 							"title": "Extensive Dachbegrünung",
 							"metricIcons": ["Tree", "Drop", "ThermometerHot"],
-							"infoLayerConfigId": "3G1_info",
 							"info": {
 								"description": "Die extensive Dachbegrünung beschreibt eine leichte, pflegearme Begrünungsform für Dächer mit einem niedrigen Substrataufbau und robusten und widerstandsfähigen Pflanzen wie Sedum und Moosen. Je nach Aufbau und Substrathöhe können bis zu 60 % der Jahresniederschlagsmenge vor Ort zurückgehalten werden.",
 								"scores": {
@@ -190,11 +189,8 @@
 										"title": "Kostenüberblick Berliner Regenwasseragentur",
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
-								]
-							},
-							"climateSimulation": {
-								"description": "TBD...",
-								"title": "DachExt"
+								],
+								"climateSimulationFileSlug": "DachExt"
 							}
 						},
 						{
@@ -202,7 +198,6 @@
 							"layerConfigId": "3G2",
 							"title": "Intensive Dachbegrünung",
 							"metricIcons": ["Tree", "Drop", "ThermometerHot"],
-							"infoLayerConfigId": "3G2_info",
 							"info": {
 								"description": "Die intensive Dachbegrünung beschreibt eine pflegeintensivere Begrünungsform für Dächer mit einem hohen Substrataufbau, die mit Rasen, Stauden, Sträuchern und Bäumen bepflanzt wird und bis zu 90 % der Jahresniederschlagsmenge vor Ort zurückhalten kann. Darüber hinaus können intensiv begrünte Dächer als Dachgärten angelegt und als Aufenthaltsräume genutzt werden.",
 								"scores": {
@@ -286,11 +281,8 @@
 										"title": "Kostenüberblick Berliner Regenwasseragentur",
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
-								]
-							},
-							"climateSimulation": {
-								"description": "TBD...",
-								"title": "DachInt"
+								],
+								"climateSimulationFileSlug": "DachInt"
 							}
 						},
 						{
@@ -298,7 +290,6 @@
 							"layerConfigId": "3G5",
 							"title": "Erdgebundene Fassadenbegrünung",
 							"metricIcons": ["Drop", "ThermometerHot"],
-							"infoLayerConfigId": "3G5_info",
 							"info": {
 								"description": "Eine bodengebundene Fassadenbegrünung ist eine kostengünstige Möglichkeit, um eine Hausfassade zu begrünen. Hierbei werden Kletterpflanzen direkt in eine Pflanzgrube in den Boden oder in Pflanzkübel gepflanzt. Es gibt Gerüstkletterpflanzen, die eine Rankhilfe benötigen und sogenannte Selbstklimmer, die selbständig an der Fassade haften.",
 								"scores": {
@@ -378,11 +369,8 @@
 										"title": "BuGG-Fachinformation „Anforderungen an Brandschutz bei Dach- und Fassadenbegrünungen”",
 										"link": "https://www.gebaeudegruen.info/wp-content/uploads/2024/11/BuGG_Fachinfo_Brandschutz_FB_20231030_FINAL.pdf"
 									}
-								]
-							},
-							"climateSimulation": {
-								"description": "TBD...",
-								"title": "Fassade"
+								],
+								"climateSimulationFileSlug": "Fassade"
 							}
 						}
 					]
@@ -397,7 +385,6 @@
 							"layerConfigId": "3E1",
 							"title": "Teildurchlässiger Flächenbelag",
 							"metricIcons": ["Drop", "ThermometerHot"],
-							"infoLayerConfigId": "3E1_info",
 							"info": {
 								"description": "Bei der Umsetzung von teildurchlässigen Flächenbelägen werden vollversiegelte Oberflächen durch z.B. Rasengittersteine oder Fugenpflaster ersetzt, um den Oberflächenabfluss zum Kanal zu reduzieren und einen Teil des anfallenden Regenwassers vor Ort zu versickern. Teildurchlässige Flächenbeläge werden angewendet, wenn eine Umwandlung in eine Grünfläche nicht möglich ist, da die Flächen z.B. für Parkplätze oder Fahrradstellplätze genutzt werden.",
 								"scores": {
@@ -474,11 +461,8 @@
 										"title": "Kostenüberblick Berliner Regenwasseragentur",
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
-								]
-							},
-							"climateSimulation": {
-								"description": "TBD...",
-								"title": "TeilEntsiegelung"
+								],
+								"climateSimulationFileSlug": "TeilEntsiegelung"
 							}
 						},
 						{
@@ -486,9 +470,9 @@
 							"layerConfigId": "3E2",
 							"title": "Vollständige Entsiegelung",
 							"metricIcons": ["RoadHorizon", "Drop"],
-							"infoLayerConfigId": "3E2_info",
 							"info": {
 								"description": "Eine vollständige Entsiegelung ist eine umfangreiche und wirkungsvolle Maßnahme, um begrünen zu können, den Oberflächenabfluss in den Kanal zu reduzieren und Regenwasser wieder über die natürliche Bodenzone versickern zu lassen. Dafür müssen zunächst die undurchlässigen Oberflächenbelege entfernt und anschließend der verdichtete Boden gelockert bzw. ausgetauscht und bepflanzt werden. Ziel ist es, die natürlichen Bodenfunktionen so weitgehend wie möglich wieder herzustellen.",
+								"subDescription": "Eine Entsieglung kann auch im kleineren Maßstab umgesetzt werden, wie z.B. bei einer Baumscheibenerweiterung. Die empfohlene Mindestgröße von Pflanzgruben für Bäume beträgt 12 m³ gemäß FLL Richtlinie. Je nach Größe des Baumes sind offene Baumscheiben von min. 9 m², min. 12 m² oder min. 15 m² empfohlen. Kleinere Baumscheiben bieten das Potenzial, diese zu vergrößern oder miteinander zu verbinden. [Berliner Standards für die Pflanzung und die anschließende Pflege von Straßenbäumen: https://www.berlin.de/sen/uvk/natur-und-gruen/stadtgruen/stadtbaeume/strassen-und-parkbaeume/baumpflege/] Auf bestimmen Straßenteilflächen sind Entsiegelungspotenziale zu vermuten:  -auf Trennstreifen -auf überdurchschnittlich breiten Straßenabschnitten (Straßenbreiten von 25-50 m Breite je nach Nutzung) -auf Straßenflächen mit einem Parkplatzanteil von über 20 %. (Der durchschnittliche Anteil an Parkplatzflächen in Berlin liegt zwischen 11 % und 22 %).",
 								"scores": {
 									"CloudRain": 2,
 									"ThermometerHot": 2,
@@ -558,11 +542,8 @@
 										"title": "Kostenüberblick Berliner Regenwasseragentur",
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
-								]
-							},
-							"climateSimulation": {
-								"description": "TBD...",
-								"title": "VollEntsiegelung"
+								],
+								"climateSimulationFileSlug": "VollEntsiegelung"
 							}
 						}
 					]
@@ -577,7 +558,6 @@
 							"layerConfigId": "3B1",
 							"title": "Grünflächen",
 							"metricIcons": ["Tree", "ThermometerHot"],
-							"infoLayerConfigId": "3B1_info",
 							"info": {
 								"description": [
 									"Grünflächen und Grünanlagen stellen wichtige Elemente urbaner Freiräume dar. Sie dienen als Aufenthalts- und Erholungsraum und schaffen gleichzeitig Lebensraum für Flora und Fauna. Als gestaltete oder naturnahe Flächen bieten sie Raum für Freizeitnutzung, Naturerfahrung und Rückzug.",
@@ -644,11 +624,8 @@
 										"title": "FLL Fachgremien: Pflege von Grün",
 										"link": "https://www.fll.de/fachgremien/pflege-von-gruen/"
 									}
-								]
-							},
-							"climateSimulation": {
-								"description": "TBD...",
-								"title": "Gruen"
+								],
+								"climateSimulationFileSlug": "Gruen"
 							}
 						},
 						{
@@ -656,12 +633,12 @@
 							"layerConfigId": "3B2",
 							"title": "Baumstandort",
 							"metricIcons": ["Tree"],
-							"infoLayerConfigId": "3B2_info",
 							"info": {
 								"description": [
 									"Bäume liefern im urbanen Raum durch Verschattung und Verdunstung einen wichtigen Beitrag zur Verbesserung des Stadtklimas. Neben der klimatischen Funktion haben sie auch eine wichtige Bedeutung für das Stadtbild, eine hohe ökologische Wirkung und können auch eine verkehrsleitende Funktion einnehmen.",
 									"Bei der Planung ist auf eine standortgerechte Pflanzenauswahl sowie ausreichend oberirdischen und unterirdischen Raum zu achten. Auch die Kombination von Baumstandorten und Flächen- bzw. Muldenversickerung ist möglich."
 								],
+								"subDescription": "Ein Gelegenheitsfenster bieten auch die leer stehenden Baumscheiben in Berlin.",
 								"scores": {
 									"CloudRain": 1,
 									"ThermometerHot": 3,
@@ -738,11 +715,8 @@
 										"title": "Hinweisblatt 2 zur Antragstellung: Versickerung von Niederschlagswasser",
 										"link": "https://www.berlin.de/sen/uvk/_assets/umwelt/wasser-und-geologie/publikationen-und-merkblaetter/hinweisblatt2-versick.pdf?ts=1754465106"
 									}
-								]
-							},
-							"climateSimulation": {
-								"description": "TBD...",
-								"title": "Baum"
+								],
+								"climateSimulationFileSlug": "Baum"
 							}
 						}
 					]
@@ -762,7 +736,6 @@
 							"layerConfigId": "3V1",
 							"title": "Mulde",
 							"metricIcons": ["Tree", "ThermometerHot", "Drop"],
-							"infoLayerConfigId": "3V1_info",
 							"info": {
 								"description": "Eine Mulde ist eine naturnahe Versickerungsanlage mit einer 10 bis 30 cm mächtigen Geländevertiefung. Niederschlagswasser von angeschlossenen Flächen wird kurzzeitig zwischengespeichert und versickert durch die bewachsene Bodenzone, in der es gereinigt wird.",
 								"scores": {
@@ -850,11 +823,8 @@
 										"title": "Kostenüberblick Berliner Regenwasseragentur",
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
-								]
-							},
-							"climateSimulation": {
-								"description": "TBD...",
-								"title": "Mulde"
+								],
+								"climateSimulationFileSlug": "Mulde"
 							}
 						},
 						{
@@ -862,7 +832,6 @@
 							"layerConfigId": "3V2",
 							"title": "Flächenversickerung",
 							"metricIcons": ["Tree", "ThermometerHot", "Drop"],
-							"infoLayerConfigId": "3V2_info",
 							"info": {
 								"description": "Bei einer Flächenversickerung kann das Regenwasser breitflächig auf unbefestigten begrünten Randstreifen oder Grünflächen geleitet werden und dort durch die bewachsene Bodenzone versickern. Die Flächenversickerung kommt der natürlichen Versickerung am nächsten.",
 								"scores": {
@@ -949,11 +918,8 @@
 										"title": "Kostenüberblick Berliner Regenwasseragentur",
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
-								]
-							},
-							"climateSimulation": {
-								"description": "TBD...",
-								"title": "Flaechenvers"
+								],
+								"climateSimulationFileSlug": "Flaechenvers"
 							}
 						},
 						{
@@ -961,7 +927,6 @@
 							"layerConfigId": "3V3",
 							"title": "Mulden-Rigolen-Element",
 							"metricIcons": ["Tree", "Drop"],
-							"infoLayerConfigId": "3V3_info",
 							"info": {
 								"description": "Ein Mulden-Rigolen-Element kombiniert eine Versickerungsmulde mit einer Rigole. Die Kombination wird bei geringerer Wasserdurchlässigkeit des Bodens genutzt. Das Niederschlagswasser wird kurzzeitig oberirdisch in der Mulde, sowie unterirdisch in der Rigole zwischengespeichert. Anschließend versickert das Regenwasser, das zuvor durch die bewachsene Bodenzone gereinigt wurde, im angrenzenden Erdboden.",
 								"scores": {
@@ -1046,11 +1011,8 @@
 										"title": "Kostenüberblick Berliner Regenwasseragentur",
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
-								]
-							},
-							"climateSimulation": {
-								"description": "TBD...",
-								"title": "MuldRigElem"
+								],
+								"climateSimulationFileSlug": "MuldRigElem"
 							}
 						},
 						{
@@ -1058,7 +1020,6 @@
 							"layerConfigId": "3V4",
 							"title": "Tiefbeet",
 							"metricIcons": ["Tree"],
-							"infoLayerConfigId": "3V4_info",
 							"info": {
 								"description": "Tiefbeete sind eine Sonderform der Mulde und werden statt mit einer Erdböschung durch Betonrahmen oder Betonelementen eingefasst. Sie können mit Rigolen als Tiefbeet-Rigolen-Element kombiniert werden. Im öffentlichen Straßenraum bedarf es der Abstimmung zur Verkehrssicherung.",
 								"scores": {
@@ -1135,11 +1096,8 @@
 										"title": "Kostenüberblick Berliner Regenwasseragentur",
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
-								]
-							},
-							"climateSimulation": {
-								"description": "TBD...",
-								"title": "Tiefbeet"
+								],
+								"climateSimulationFileSlug": "Tiefbeet"
 							}
 						},
 						{
@@ -1147,7 +1105,6 @@
 							"layerConfigId": "3V5",
 							"title": "Optimierter Baumstandort (Baum mit unterirdischer Versickerung kombiniert)",
 							"metricIcons": ["ThermometerHot", "RoadHorizon"],
-							"infoLayerConfigId": "3V5_info",
 							"info": {
 								"description": "Der Begriff optimierter Baumstandort steht für die Kombination aus Baumstandort und Regenwasserbewirtschaftung. Das können Flächenversickerung oder Muldenversickerung mit Baumstandorten sein sowie Baumstandorte mit speicherfähigen Substraten oder gedichteten Bodenwannen z.B. aus Ton- oder  Bentonitabdichtungen zur Speicherung von Regenwasser. Im BGI-Planer ist der Begriff optimierter Baumstandort als Baumstandort mit Speicherraum und unterirdischer Versickerung definiert.",
 								"scores": {
@@ -1232,11 +1189,8 @@
 										"title": "SenMVKU-Rundschreiben III C 2-1/ 2025 über die Pflanzung und Pflege von Straßengrün",
 										"link": "https://www.berlin.de/sen/uvk/_assets/natur-gruen/service/rechtsvorschriften/stadtgruen/rundschreiben_str.pdf"
 									}
-								]
-							},
-							"climateSimulation": {
-								"description": "TBD...",
-								"title": "OptBaum"
+								],
+								"climateSimulationFileSlug": "OptBaum"
 							}
 						},
 						{
@@ -1244,7 +1198,6 @@
 							"layerConfigId": "3V6",
 							"title": "Rigole",
 							"metricIcons": ["Tree", "Drop"],
-							"infoLayerConfigId": "3V6_info",
 							"info": {
 								"description": "Eine Rigole ist eine unterirdisch verbaute Versickerungsanlage. Sie bestehen aus Füllmaterialien wie gewaschenem Kies, Lavagranulat oder aus einem Kunststoff- oder auch Betonhohlkörper. Durch das geschaffene Speichervolumen kann das Niederschlagswasser der angeschlossenen Flächen auch bei geringerer Wasserdurchlässigkeit des Bodens zwischengespeichert und versickert werden.",
 								"scores": {
@@ -1314,11 +1267,8 @@
 										"title": "Kostenüberblick Berliner Regenwasseragentur",
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
-								]
-							},
-							"climateSimulation": {
-								"description": "TBD...",
-								"title": "Rigole"
+								],
+								"climateSimulationFileSlug": "Rigole"
 							}
 						}
 					]
@@ -1333,7 +1283,6 @@
 							"layerConfigId": "3S1",
 							"title": "(Künstliche) Wasserflächen",
 							"metricIcons": ["Drop", "RoadHorizon"],
-							"infoLayerConfigId": "3S1_info",
 							"info": {
 								"description": "(Künstliche) Wasserflächen weisen ein hohes Speicher- und Verdunstungspotenzial auf und können damit einen wichtigen Beitrag zur blau-grünen Gestaltung von Städten leisten. Gleichzeitig tragen sie zur Aufwertung und Steigerung der Freiraumqualität bei.",
 								"scores": {
@@ -1395,11 +1344,8 @@
 										"title": "FLL Richtliniefür Planung, Bau und Instandhaltung, von privaten Schwimm- und Badeteichen (2017)",
 										"link": "https://shop.fll.de/de/richtlinien-fuer-planung-bau-und-instandhaltung-von-privaten-schwimm-und-badeteichen-2017-broschuere.html"
 									}
-								]
-							},
-							"climateSimulation": {
-								"description": "TBD...",
-								"title": "Wasserfl"
+								],
+								"climateSimulationFileSlug": "Wasserfl"
 							}
 						},
 						{
@@ -1407,7 +1353,6 @@
 							"layerConfigId": "3S2",
 							"title": "Regenwasserspeicher",
 							"metricIcons": ["Drop"],
-							"infoLayerConfigId": "3S2_info",
 							"info": {
 								"description": "Ein Regenwasserspeicher wird für die Speicherung und zur anschließenden Nutzung von Regenwasser eingesetzt. Je nach Bauart besteht er aus Kunststoff, Beton oder Stahl. Auch abgedichtete Füllkörperrigolen können zum Einsatz kommen. Es gibt unterirdisch verbaute Zisternen oder auch gebäudeinterne Kellertanks. Das gespeicherte Regenwasser kann durch ein Entnahmesystem z.B. für die Toilettenspülung, die Waschmaschine, zur Reinigung oder für die Bewässerung genutzt werden.",
 								"scores": {
@@ -1478,11 +1423,8 @@
 										"title": "Zisternen-Rechner",
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/zisternengroesse-berechnen/"
 									}
-								]
-							},
-							"climateSimulation": {
-								"description": "TBD...",
-								"title": "Speicher"
+								],
+								"climateSimulationFileSlug": "Speicher"
 							}
 						},
 						{
@@ -1490,7 +1432,6 @@
 							"layerConfigId": "3S4",
 							"title": "Retentionsfläche",
 							"metricIcons": ["RoadHorizon", "Drop"],
-							"infoLayerConfigId": "3S4_info",
 							"info": {
 								"description": "Retentionsflächen können Niederschlagswasser von stärkeren Regenereignissen temporär zurückhalten, schadlos zwischenspeichern und kontrolliert ableiten oder versickern. Dadurch leisten sie einen wichtigen Beitrag zur Überflutungsvorsorge. Sie können als multifunktionale Flächen geplant und z.B. als Grünanlage, Parkplatz oder Sportplatz genutzt werden.",
 								"scores": {
@@ -1572,11 +1513,8 @@
 										"title": "DWA-M 119 - Risikomanagement in der kommunalen Überflutungsvorsorge für Entwässerungssysteme bei Starkregen",
 										"link": "https://shop.dwa.de/DWA-M-119-Risikomanagement-in-der-kommunalen-UEberflutungsvorsorge-fuer-Entwaesserungssysteme-bei-Starkregen-November-2016/M-119-Hauptprodukt-16-main"
 									}
-								]
-							},
-							"climateSimulation": {
-								"description": "TBD...",
-								"title": "RetFlaeche"
+								],
+								"climateSimulationFileSlug": "RetFlaeche"
 							}
 						},
 						{
@@ -1584,7 +1522,6 @@
 							"layerConfigId": "3S5",
 							"title": "Verdunstungsbeet",
 							"metricIcons": ["Drop", "File"],
-							"infoLayerConfigId": "3S5_info",
 							"info": {
 								"description": "Verdunstungsbeete sind nach unten hin abgedichtete Pflanzbeete, die Regenwasser zwischenspeichern und zeitverzögert über die Pflanzen verdunsten. Auf diese Weise tragen sie zur Verbesserung des Mikroklimas bei. Für stärkere Regenereignisse und in Monaten mit geringer Verdunstung aufgrund der kalten Witterung benötigen Verdunstungsbeete einen Überlauf in eine Versickerungsanlage bzw. Kanal.",
 								"scores": {
@@ -1649,11 +1586,8 @@
 										"title": "BlueGreenStreets B",
 										"link": "https://repos.hcu-hamburg.de/bitstream/hcu/638/6/2022-04-06_BlueGreenStreets_BlueGreenStreets_als_multicodierte_Strategie_zur_Klimafolgenanpassung_B.pdf"
 									}
-								]
-							},
-							"climateSimulation": {
-								"description": "TBD...",
-								"title": "Verdunstung"
+								],
+								"climateSimulationFileSlug": "Verdunstung"
 							}
 						}
 					]

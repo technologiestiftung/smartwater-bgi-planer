@@ -42,7 +42,7 @@ export function ClimateSimulationModal({
 		"measurePlanning",
 		climateSimulation,
 	) as ModuleMeasurementConfig;
-	const { climateSimulation: { title } = {} } = getModuleInfo || {};
+	const { info: { climateSimulationFileSlug } = {} } = getModuleInfo || {};
 	const fileType = ".webp";
 	const [imgError, setImageError] = useState(false);
 	const [selections, setSelections] = useState<DropdownSelection[]>(
@@ -56,7 +56,7 @@ export function ClimateSimulationModal({
 				};
 			}) || [],
 	);
-	const fileName = `/images/climateSimulation/${title}_${selections
+	const fileName = `/images/climateSimulation/${climateSimulationFileSlug}_${selections
 		.map((s) => sanitizeString(s.value || s.display))
 		.join("_")}${fileType}`;
 
