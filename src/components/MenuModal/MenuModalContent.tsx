@@ -29,7 +29,9 @@ export function MenuModalContent({ projectId }: MenuModalProps) {
 	const getProject = useProjectStore((state) => state.getProject);
 	const project = getProject();
 	const answers = useAnswersStore((state) => state.answers);
-	const [reportGenerating, setReportGenerating] = useState(false);
+	const [reportStatus, setReportStatus] = useState<
+		"idle" | "generating" | "error"
+	>("idle");
 
 	const name = project?.name || "Unbenanntes Projekt";
 	const description = project?.description || "Keine Beschreibung vorhanden.";
@@ -59,8 +61,8 @@ export function MenuModalContent({ projectId }: MenuModalProps) {
 	};
 
 	const downloadReport = async () => {
-		if (reportGenerating) return;
-		setReportGenerating(true);
+		if (reportStatus === "generating") return;
+		setReportStatus("generating");
 		const response = await fetch("/api/generate-report", {
 			method: "POST",
 			headers: {
@@ -74,7 +76,7 @@ export function MenuModalContent({ projectId }: MenuModalProps) {
 				"Fehler beim Generieren des Berichts:",
 				response.statusText,
 			);
-			return;
+			return setReportStatus("error");
 		}
 
 		const blob = await response.blob();
@@ -85,7 +87,7 @@ export function MenuModalContent({ projectId }: MenuModalProps) {
 		document.body.appendChild(a);
 		a.click();
 		document.body.removeChild(a);
-		setReportGenerating(false);
+		setReportStatus("idle");
 	};
 
 	return (
@@ -162,18 +164,25 @@ export function MenuModalContent({ projectId }: MenuModalProps) {
 				/>
 				<div className="flex items-end justify-end px-6 py-4">
 					<div className="flex items-center gap-2">
-						{reportGenerating && (
+						{reportStatus === "generating" && (
 							<SpinnerIcon
 								size={24}
 								className="animate-spin [animation-duration:3s]"
 							/>
 						)}
-						<Button onClick={downloadReport} variant="outline">
-							<BookOpenTextIcon />
-							{reportGenerating
-								? "Report wird generiert..."
-								: "Gesamter Report"}
-						</Button>
+						<div className="flex flex-col items-end gap-1">
+							{reportStatus === "error" && (
+								<p className="text-destructive">
+									Fehler beim Generieren des Berichts
+								</p>
+							)}
+							<Button onClick={downloadReport} variant="outline">
+								<BookOpenTextIcon />
+								{reportStatus === "generating"
+									? "Report wird generiert..."
+									: "Gesamter Report"}
+							</Button>
+						</div>
 					</div>
 				</div>
 			</div>
