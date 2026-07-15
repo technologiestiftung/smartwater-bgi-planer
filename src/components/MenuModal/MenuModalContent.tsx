@@ -4,6 +4,7 @@ import { MenuModule } from "@/components/MenuModal/MenuModule";
 import modulesData from "@/components/Modules/modules.json";
 import { ProjectDownloadButton } from "@/components/ProjectDownloadButton/ProjectDownloadButton";
 import { Button } from "@/components/ui/button";
+import { reportCases } from "@/lib/__tests__/report.cases";
 import { checkForQuestion } from "@/lib/helpers/questionCheck";
 import { useAnswersStore } from "@/store";
 import { useProjectStore } from "@/store/project";
@@ -15,8 +16,10 @@ import {
 	PencilRulerIcon,
 	PolygonIcon,
 	ShovelIcon,
+	SpinnerIcon,
 } from "@phosphor-icons/react";
 import Link from "next/link";
+import { useState } from "react";
 
 interface MenuModalProps {
 	projectId: string;
@@ -26,6 +29,7 @@ export function MenuModalContent({ projectId }: MenuModalProps) {
 	const getProject = useProjectStore((state) => state.getProject);
 	const project = getProject();
 	const answers = useAnswersStore((state) => state.answers);
+	const [reportGenerating, setReportGenerating] = useState(false);
 
 	const name = project?.name || "Unbenanntes Projekt";
 	const description = project?.description || "Keine Beschreibung vorhanden.";
@@ -52,6 +56,36 @@ export function MenuModalContent({ projectId }: MenuModalProps) {
 		);
 		return Object.keys(answers).filter((key) => questionIds.includes(key))
 			.length;
+	};
+
+	const downloadReport = async () => {
+		if (reportGenerating) return;
+		setReportGenerating(true);
+		const response = await fetch("/api/generate-report", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(reportCases[0].data),
+		});
+
+		if (!response.ok) {
+			console.error(
+				"Fehler beim Generieren des Berichts:",
+				response.statusText,
+			);
+			return;
+		}
+
+		const blob = await response.blob();
+		const url = window.URL.createObjectURL(blob);
+		const a = document.createElement("a");
+		a.href = url;
+		a.download = `report_${name || ""}_${Date.now()}.pdf`;
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
+		setReportGenerating(false);
 	};
 
 	return (
@@ -127,10 +161,20 @@ export function MenuModalContent({ projectId }: MenuModalProps) {
 					}
 				/>
 				<div className="flex items-end justify-end px-6 py-4">
-					<Button disabled variant="outline">
-						<BookOpenTextIcon />
-						Gesamter Report
-					</Button>
+					<div className="flex items-center gap-2">
+						{reportGenerating && (
+							<SpinnerIcon
+								size={24}
+								className="animate-spin [animation-duration:3s]"
+							/>
+						)}
+						<Button onClick={downloadReport} variant="outline">
+							<BookOpenTextIcon />
+							{reportGenerating
+								? "Report wird generiert..."
+								: "Gesamter Report"}
+						</Button>
+					</div>
 				</div>
 			</div>
 		</>
