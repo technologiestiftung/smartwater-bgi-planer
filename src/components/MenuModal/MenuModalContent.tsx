@@ -3,13 +3,13 @@
 import { MenuModule } from "@/components/MenuModal/MenuModule";
 import modulesData from "@/components/Modules/modules.json";
 import { ProjectDownloadButton } from "@/components/ProjectDownloadButton/ProjectDownloadButton";
+import ReportDownloadButton from "@/components/Report/ReportDownloadButton";
 import { Button } from "@/components/ui/button";
 import { checkForQuestion } from "@/lib/helpers/questionCheck";
 import { useAnswersStore } from "@/store";
 import { useProjectStore } from "@/store/project";
 import {
 	ArrowCircleRightIcon,
-	BookOpenTextIcon,
 	InfoIcon,
 	ListMagnifyingGlassIcon,
 	PencilRulerIcon,
@@ -127,10 +127,7 @@ export function MenuModalContent({ projectId }: MenuModalProps) {
 					}
 				/>
 				<div className="flex items-end justify-end px-6 py-4">
-					<Button disabled variant="outline">
-						<BookOpenTextIcon />
-						Gesamter Report
-					</Button>
+					<ReportDownloadButton />
 				</div>
 			</div>
 		</>
