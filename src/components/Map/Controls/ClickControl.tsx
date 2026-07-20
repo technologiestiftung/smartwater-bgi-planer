@@ -34,10 +34,7 @@ type Selection = {
 };
 
 type OverlayPositioning =
-	| "bottom-left"
-	| "bottom-right"
-	| "top-left"
-	| "top-right";
+	"bottom-left" | "bottom-right" | "top-left" | "top-right";
 
 const POSITION_OFFSETS: Record<OverlayPositioning, [number, number]> = {
 	"top-left": [5, 15],

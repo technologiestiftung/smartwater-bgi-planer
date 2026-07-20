@@ -77,8 +77,7 @@ export const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
 			const layer = map
 				.getAllLayers()
 				.find((item) => item.get("id") === measure.drawLayerId) as
-				| VectorLayer<VectorSource>
-				| undefined;
+				VectorLayer<VectorSource> | undefined;
 			const source = layer?.getSource();
 			if (source) {
 				const feature = source
