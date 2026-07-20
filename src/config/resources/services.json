@@ -238,6 +238,129 @@
 		"gfiAttributes": "showAll"
 	},
 	{
+		"id": "UPDATE 20260720"
+	},
+	{
+		"id": "bgi-planer:Gefaehrdungsstufe_Baeume",
+		"name": "Gefährdungsstufe Bäume",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "Gefaehrdungsstufe_Baeume",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:Gefaehrdungsstufe_Gruendaecher",
+		"name": "Gefährdungsstufe Gründächer",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "Gefaehrdungsstufe_Gruendaecher",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:Gefaehrdungsstufe_Mulde",
+		"name": "Gefährdungsstufe Mulde",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "Gefaehrdungsstufe_Mulde",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:Gefaehrdungsstufe_Mulde-Rigole",
+		"name": "Gefährdungsstufe Mulde-Rigole",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "Gefaehrdungsstufe_Mulde-Rigole",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:Gefaehrdungsstufe_Rigole",
+		"name": "Gefährdungsstufe Rigole",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "Gefaehrdungsstufe_Rigole",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:Wasserstand_Baeume",
+		"name": "Wasserstand Bäume",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "Wasserstand_Baeume",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:Wasserstand_Gruendaecher",
+		"name": "Wasserstand Gründächer",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "Wasserstand_Gruendaecher",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:Wasserstand_Mulde",
+		"name": "Wasserstand Mulde",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "Wasserstand_Mulde",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:Wasserstand_Mulde-Rigole",
+		"name": "Wasserstand Mulde-Rigole",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "Wasserstand_Mulde-Rigole",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:Wasserstand_Rigole",
+		"name": "Wasserstand Rigole",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "Wasserstand_Rigole",
+		"gfiAttributes": "ignore"
+	},
+	{
 		"id": "BGI DRAW MAPS"
 	},
 	{
