@@ -1,16 +1,19 @@
 "use client";
 
+import PlotsDisplay from "@/components/PlotsDisplay/PlotsDisplay";
 import ResultChart from "@/components/ResultChart/ResultChart";
 import { Button } from "@/components/ui/button";
 import { useRabimoPayload } from "@/hooks/useRabimoPayload";
 import { useResultLayer } from "@/hooks/useResultLayer";
 import { SectionId } from "@/lib/helpers/sectionIds";
-import { PLOT_TYPES, PlotType } from "@/server/rabimo/types";
+import { PlotType } from "@/server/rabimo/types";
 import { useLayersStore, useResultStore, useScenarioStore } from "@/store";
 import type { Result } from "@/store/result/types";
 import { DownloadSimpleIcon, SpinnerIcon, XIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
+
+const plotsCache = new Map<number, Partial<Record<PlotType, string>>>();
 
 interface SynthesisViewProps {
 	onBackToQuestions: () => void;
@@ -38,7 +41,7 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 			"result_infiltr",
 			"result_evapor",
 		],
-		dataKey: "water_balance_with_measures",
+		dataKey: "water_balance.with_measures",
 	});
 
 	useEffect(() => {
@@ -46,15 +49,21 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 	}, [applyConfigLayers]);
 
 	const fetchPlots = useCallback(async (runoffReduction: number) => {
+		if (plotsCache.has(runoffReduction)) {
+			setPlotUrls(plotsCache.get(runoffReduction)!);
+			setPlotState("success");
+			return;
+		}
 		setPlotState("loading");
 		const res = await fetch(
-			`/api/rabimo/plots-effect-of-disconnect?runoff_reduction=${runoffReduction}`,
+			`/api/rabimo/plot-effect-of-disconnect?runoff_reduction=${runoffReduction}`,
 		);
 		if (!res.ok) {
 			setPlotState("error");
 			return;
 		}
 		const data = (await res.json()) as Partial<Record<PlotType, string>>;
+		plotsCache.set(runoffReduction, data);
 		setPlotUrls(data);
 		setPlotState("success");
 	}, []);
@@ -174,29 +183,12 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 					<ResultChart />
 				</div>
 
-				{plotState === "loading" && (
-					<div>
-						<SpinnerIcon className="animate-spin" size={16} />
-					</div>
-				)}
-
-				{Object.keys(plotUrls).length > 0 && (
-					<div className="mt-4 flex flex-col gap-4">
-						{PLOT_TYPES.map((type) =>
-							plotUrls[type] ? (
-								<Image
-									key={type}
-									src={`data:image/png;base64,${plotUrls[type]}`}
-									alt={type}
-									width={620}
-									height={400}
-									unoptimized
-									className="h-auto max-w-full"
-								/>
-							) : null,
-						)}
-					</div>
-				)}
+				<div className="mt-4">
+					<PlotsDisplay
+						plotUrls={plotUrls}
+						isLoading={plotState === "loading"}
+					/>
+				</div>
 
 				<div className="mt-auto pt-6">
 					<Image
