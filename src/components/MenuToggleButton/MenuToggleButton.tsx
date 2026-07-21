@@ -64,7 +64,6 @@ export function MenuToggleButton({ projectId }: MenuToggleButtonProps) {
 					className="bg-background flex h-16 w-56 gap-4 p-2 shadow-lg"
 					aria-label="Toggle menu"
 				>
-					{showTutorial && <span className="absolute inset-0 bg-black/58" />}
 					<SWLogo className="size-36" />
 					<ListIcon className="text-primary size-4" />
 				</Button>

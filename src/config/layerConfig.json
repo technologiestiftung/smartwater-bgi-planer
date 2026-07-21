@@ -70,22 +70,10 @@
 		"legendTitle": "Fließgeschwindigkeit"
 	},
 	{
-		"id": "heavy_rain_water_level",
-		"name": "Wasserstand",
-		"question": "Wo gibt es Bereiche, in denen ein Wasserstand von über 30 cm auftritt und damit eine Gefährdung für Menschen oder von Infrastruktur sowie Sachwerten ausgehen könnte? (Zum Beispiel, Bereiche mit hohen Wasserständen unmittelbar an den Gebäuden.)",
-		"description": "Die Karte enthält Aussagen zum Wasserstand für ein außergewöhnliches Starkregenereignis, welches rein statistisch alle 100 Jahre vorkommt. Relevant sind dabei Bereiche, wo ein Wasserstand von über 30 cm auftritt. Bei höheren Fließgeschwindigkeiten, können bereits Wasserstände ab 10 cm relevant sein. \n Für die Überflutungsvorsorge ist es zudem wichtig, ob es Bereiche mit hohen Wasserständen unmittelbar an den Gebäuden gibt.",
-		"drawLayerId": "need_flooding_hotspots_q2",
-		"canDrawPolygons": true,
-		"canDrawBTF": true,
-		"canDrawNotes": true,
-		"visibleLayerIds": ["ua_srhk:dc_wasserstand_aussergew_kostra"],
-		"legendSrc": "/legends/1s2.svg",
-		"legendTitle": "Wasserstand"
-	},
-	{
 		"id": "heavy_rain_fire_department_incidents",
 		"name": "Feuerwehreinsätze",
-		"question": "In welchen Blockteilflächen oder Bereichen gab es einen oder mehrere starkregenbedingte Feuerwehreinsätze? Oder ist Ihnen das Auftreten von Schäden in der Vergangenheit bekannt?",
+		"embeddedImage": "/images/embeddedLayer/ExampleImage.jpg",
+		"question": "Gibt es  Blockteilflächen oder Bereiche, in denen es einen oder mehrere starkregenbedingte Feuerwehreinsätze gab? Oder ist Ihnen das Auftreten von Schäden in der Vergangenheit bekannt?",
 		"description": "Die Karte zeigt die Blockteilflächen an, in denen in der Zeit zwischen Mai 2005 bis November 2021 starkregenbedingte Feuerwehreinsätze gemeldet wurden.",
 		"drawLayerId": "need_flooding_hotspots_q3",
 		"canDrawPolygons": true,
@@ -110,8 +98,13 @@
 	{
 		"id": "heat_thermal_load_day",
 		"name": "Hitzebelastung am Tag",
-		"question": "Wo gibt es Bereiche mit einer starken oder extremen thermischen Belastung von 35 ° C oder mehr?",
-		"description": "Die Karte bewertet die thermische Belastung am Tag. Grundlage bildet die Durchführung einer gesamtstädtischen Klimamodellierung eines durchschnittlichen Sommertages.",
+		"question": "Gibt es Bereiche mit einer starken oder extremen thermischen Belastung von 35 ° C oder mehr?",
+		"description": [
+			"Die Hitzebelastung am Tag wirkt sich direkt auf den Menschen und das gesellschaftliche Leben aus. Darüber hinaus sind die Wirkungen vielfältig und betreffen u. a. das Stadtgrün, den Wasserhaushalt oder die biologische Vielfalt. In Siedlungs- und Verkehrsflächen mit einer starken oder extremen Belastung sind Maßnahmen zur Verbesserung der mikroklimatischen Verhältnisse notwendig und sollten Maßnahmen prioritär umgesetzt werden.",
+			"Methodik: Die Kartendarstellung bewertet die bioklimatische Situation auf Grundlage des Bewertungsindex PET um 14:00 Uhr. Der Bewertungsindex PET stellt insbesondere die solare Einstrahlung und deren Einfluss auf das menschliche Temperaturempfinden im Freien in den Mittelpunkt. Grundlage bildet die Durchführung einer gesamtstädtischen Klimamodellierung.",
+			"Darstellung: Der Bewertungsindex PET wird einerseits auf Blockteilebene und andererseits auf Rasterebene angeboten. Die Bewertung der Belastung auf Blockteilebene erfolgt auf Basis des PET-Mittelwertes für den gesamten Blockteilfläche. Alternativ bietet eine 10 m x 10 m Rasterkarte die originale Auflösung der durchgeführten Gesamtstädtischen Klimamodellierung. Die Rasterkarte ermöglicht eine kleinräumige und differenzierte Betrachtung, wohingegen die Blockteilebene einen gröberen Überblick bietet.",
+			"Weitere Informationen finden Sie in den [Planungshinweisen Stadtklima](https://www.berlin.de/umweltatlas/klima/klimabewertung/2022/einleitung/)."
+		],
 		"drawLayerId": "need_temperature_hotspots_q1",
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
@@ -128,8 +121,13 @@
 	{
 		"id": "heat_thermal_load_night",
 		"name": "Hitzebelastung in der Nacht",
-		"question": "Wo gibt es Bereiche mit einer ungünstigen oder sehr ungünstigen thermischen Belastung von 18 ° C oder mehr?",
-		"description": "Die Karte bewertet die thermische Belastung in der Nacht. Die nächtliche Abkühlung des Siedlungsraums spielt für die Hitzebelastung eine besondere Rolle. Bei hohen Temperaturen in der Nacht kann die Hitzebelastung nicht mehr ausgeglichen werden.",
+		"question": "Gibt es Bereiche mit einer ungünstigen oder sehr ungünstigen thermischen Belastung von 18 ° C oder mehr?",
+		"description": [
+			"Eine hohe nächtliche Hitzebelastung kann die Schlafqualität deutlich beeinträchtigen und wirkt sich somit direkt auf Gesundheit und Leistungsfähigkeit aus. In Bereichen mit einer ungünstigen und sehr ungünstigen Bewertung sind klimatisch wirksame Maßnahmen besonders notwendig und prioritär.",
+			"Methodik: Die Karte bewertet die nächtliche Situation der Siedlungs- und Verkehrsflächen um 04:00 Uhr. Zu diesem Zeitpunkt wird von einer annähernd maximalen Abkühlung des Stadtkörpers ausgegangen. Grundlage bildet die Durchführung einer gesamtstädtischen Klimamodellierung.",
+			"Darstellung: Neben der Darstellung der Belastung auf Blockebene bietet ergänzend die 10 m x 10 m Rasterkarte eine detaillierte Auflösung. In der Rasterkarte können auch kleinräumige Unterschiede in der Temperaturausprägung innerhalb eines Baublocks unterschieden werden. Die Karte ist somit für die Konkretisierung und genauen Verortung von Qualifizierungs- und Verdichtungsmaßnahmen aussagekräftiger.",
+			"Weitere Informationen finden Sie in den [Planungshinweisen Stadtklima](https://www.berlin.de/umweltatlas/klima/klimabewertung/2022/einleitung/)."
+		],
 		"drawLayerId": "need_temperature_hotspots_q2",
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
@@ -145,8 +143,12 @@
 	{
 		"id": "heat_vulnerable_areas",
 		"name": "Vulnerable Bereiche",
-		"question": "Wo gibt es besonders vulnerable Bevölkerungsgruppen und Nutzungen, die vor Hitze geschützt werden müssen?",
-		"description": "Bereiche mit hoher thermischer Belastung haben insbesondere für vulnerable Bevölkerungsgruppen (über 65-jährige und unter 6-jährige Personen), für bestimmte Flächennutzungen (z.B. Krankenhäuser) und für Quartiere mit einer Grünflächenunterversorgung negative Auswirkungen und bedürfen der besonderen Vorsorge.",
+		"question": "Gibt es besonders vulnerable Bevölkerungsgruppen und Nutzungen, die vor Hitze geschützt werden müssen?",
+		"description": [
+			"Bereiche mit hoher thermischer Belastung haben insbesondere für vulnerable Bevölkerungsgruppen (über 65-jährige und unter 6-jährige Personen), für bestimmte Flächennutzungen (z.B. Krankenhäuser) und für Quartiere mit einer Grünflächenunterversorgung negative Auswirkungen und bedürfen der besonderen Vorsorge.",
+			"Darstellung: Die Karte gibt in drei Layern Auskunft darüber, a) in welchen Blockteilflächen ein überdurchschnittlicher Anteil von vulnerablen Gruppen wohnen, b) wo sich klimasensible Gebäude und Nutzungen befinden, und c) wo eine Grünflächenunterversorgung von Wohngebieten vorliegt. Mithilfe der Layer-Funktion können Sie die einzelnen Layer ein- und ausblenden.",
+			"Weitere Informationen finden Sie in den [Planungshinweisen Stadtklima](https://www.berlin.de/umweltatlas/klima/klimabewertung/2022/einleitung/)."
+		],
 		"drawLayerId": "need_temperature_hotspots_q3",
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
@@ -161,9 +163,14 @@
 	},
 	{
 		"id": "heat_cold_air_corridors",
-		"name": "Luftaustausch: Kaltluftbahnen",
-		"question": "Wo verlaufen Kaltluftbahnen im Gebiet oder im Umkreis? (Bereiche zwischen den Pfeilen)",
-		"description": "Großräumige Luftleitbahnen bilden wichtige Bereiche, in denen ein Luftaustausch insbesondere von Kaltluft erfolgen kann. Leitbahnkorridore bedürfen einer besonderen planerischen Berücksichtigung, um den Luftaustausch von der Leitbahn in das umliegende Stadtgebiet zu ermöglichen.",
+		"name": "Luftaustausch: Kaltluftbahnen & Leitbahnkorridore",
+		"question": "Verlaufen Kaltluftbahnen im Gebiet oder im Umkreis (Bereiche zwischen den Pfeilen) und gibt es Bereiche, die von einem Leitbahnkorridor überlagert werden?",
+		"description": [
+			"Das regionale Luftaustauschsystem in Berlin besteht aus linearen Freiflächen, die sich vor allem entlang der Gewässer wie Spree, Havel und Dahme sowie entlang von Freiraumkorridoren und Grünzügen erstrecken. Diese sind durchgängig ausreichend groß, um den Luftmassenaustausch über unterschiedlich ausgeprägte Siedlungsbereiche zu ermöglichen. Das Luftaustauschsystem hat eine übergeordnete Bedeutung für das Stadtklima, da es hilft, Kaltluft in überhitzte Bereiche zu transportieren.",
+			"Kaltluftbahnen und Leitbahnkorridore bedürfen einer besonderen planerischen Berücksichtigung, um den Luftaustausch in das umliegende Stadtgebiet zu ermöglichen.",
+			"Darstellung: Die Kartenebene stellt das großräumige Luftaustauschsystem in Berlin schematisch in Form von Pfeilen dar.Die Leitbahnkorridore und Kaltluftbahnen sind häufig erst beim Herauszoomen auf eine höhere Maßstabsebene erkennbar.",
+			"Weitere Informationen finden Sie in den [Planungshinweisen Stadtklima](https://www.berlin.de/umweltatlas/klima/klimabewertung/2022/einleitung/)."
+		],
 		"drawLayerId": "need_temperature_hotspots_q4",
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
@@ -175,26 +182,17 @@
 		"legendSrc": "/legends/1h4a.svg"
 	},
 	{
-		"id": "heat_air_exchange_corridors",
-		"name": "Luftaustausch: Leitbahnkorridore",
-		"question": "Wo sind Bereiche, die von einem Leitbahnkorridor überlagert werden?",
-		"description": "Großräumige Luftleitbahnen bilden wichtige Bereiche, in denen ein Luftaustausch insbesondere von Kaltluft erfolgen kann. Leitbahnkorridore bedürfen einer besonderen planerischen Berücksichtigung, um den Luftaustausch von der Leitbahn in das umliegende Stadtgebiet zu ermöglichen.",
-		"drawLayerId": "need_temperature_hotspots_q5",
-		"canDrawPolygons": true,
-		"canDrawBTF": true,
-		"canDrawNotes": true,
-		"visibleLayerIds": [
-			"ua_klimaanalyse_2022:ta_kak_luftaustausch_2022",
-			"ua_klimaanalyse_2022:tk_kak_leitbahnkorridor_2022"
-		],
-		"legendSrc": "/legends/1h4b.svg"
-	},
-	{
 		"id": "heat_cold_air_flow",
-		"name": "Kaltluft",
-		"question": "Wo befinden sich Bereiche mit einer hohen Volumenstromdichte und eindeutiger Strömungsrichtung von Grünflächen zu Einwirkbereichen (blau)? ",
-		"description": "Der Luftaustausch entsteht zwischen Kaltluftentstehungsgebieten wie Grün- und Freiräumen und thermisch belasteten Siedlungsräumen. In den Übergangsbereichen ist ein hoher Grün- und Freiflächenanteil für die Kühlung förderlich.",
-		"drawLayerId": "need_temperature_hotspots_q6",
+		"name": "Kaltluftentstehung",
+		"question": "Gibt es Bereiche mit einer hohen Entstehung von Kaltluft in Grün- / Freiflächen (grün)? Wirken diese in Siedlungsbereichen (blau)?",
+		"description": [
+			"Neben dem großräumigen Luftaustauschsystem Berlins entstehen vor allem nachts während sommerlicher Strahlungswetterlagen lokale Luftaustauschprozesse, insbesondere zwischen begrünten Flächen und bebauten Gebieten. Dabei wird erwärmte aufsteigende Luft der dichtbebauten Siedlungsgebiete durch aus den Grünflächen nachströmende Kaltluft ersetzt.",
+			"Solche Austauschprozesse sind wichtig für die nächtliche Abkühlung, da sie wesentlich häufiger und weiter verteilter als die linear ausgerichteten Strömungsbahnen vorkommen.",
+			"Planungshinweise: Insbesondere Randbereiche von Grün- und Freiflächen mit einer überdurchschnittlichen Kaltluftvolumenstromdichte, die an Kaltlufteinwirkbereiche grenzen, sollten eine ungehinderte Ausbreitung der Kaltluft ermöglichen. Neubebauung, die an Grün- und Freiflächen mit einer überdurchschnittlichen Kaltluftvolumenstromdichte angrenzt, sollte durch ihre Typologie und Gebäudekubatur die Kaltlufteinwirktiefe unterstützen.",
+			"Methodik: Die Kartenebene weist Bereiche von Grün- und Freiflächen aus, welche eine hohe Kaltluftvolumenstromdichte von mehr als 7 m³/(s*m) aufweisen.",
+			"Weitere Informationen finden Sie in den [Planungshinweisen Stadtklima](https://www.berlin.de/umweltatlas/klima/klimabewertung/2022/einleitung/)."
+		],
+		"drawLayerId": "need_temperature_hotspots_q5",
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
 		"canDrawNotes": true,
@@ -230,8 +228,13 @@
 	{
 		"id": "sealing_green_volume_low",
 		"name": "Grünvolumenzahl",
-		"question": "Wo liegen Bereiche, in denen die Grünvolumenzahl den Durchschnitt um mehr als 20 % unterschreitet?",
-		"description": "Die Grünvolumenzahl berechnet sich aus dem Grünvolumen [m³] pro Flächeneinheit [m²]. Die Karte zeigt die Abweichungen vom Durchschnittswert des jeweiligen Flächentyps an.",
+		"question": "Gibt es Bereiche mit einer niedrigen Grünvolumenzahl (unter 30 %)?",
+		"description": [
+			"Die Grünvolumenzahl berechnet sich aus dem Grünvolumen [m³] pro Flächeneinheit [m²].",
+			"Aus klimatischer Sicht ist ein Zielwert von 30-40 % Grünvolumen sinnvoll und erstrebenswert.",
+			"Mit Klick auf in die Karte kann zudem geprüft werden, ob in einer Blockteilfläche die für den Flächentyp* durchschnittliche Grünvolumenzahl um mehr als 20 % unterschritten wird. Dies gibt einen Hinweis darüber, welche Flächen priorisiert werden sollten.",
+			"Hinweis: Die gesamte Landesfläche Berlins ist mit 52 Flächentypen gekennzeichnet."
+		],
 		"drawLayerId": "need_impermeability_hotspots_q2",
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
@@ -251,8 +254,15 @@
 	{
 		"id": "water_balance_natural_deviation",
 		"name": "Komponenten des Wasserhaushalts",
-		"question": "Wo liegen die Blockteilflächen, in denen der Wasserhaushalt stärker als 20 % vom natürlichen Wasserhaushalt abweicht? (Notieren Sie, welche Komponente besonders abweicht mithilfe einer Attributabfrage in Karte zu Delta W (Evaporation, Versickerung und Oberflächenabfluss)).",
-		"description": "Die Karten zeigen den aktuellen Zustand des Wasserhaushalts sowie die Abweichung vom natürlichen Zustand (Delta-W). Der Wasserhaushalt setzt sich aus den Komponenten Verdunstung, Versickerung und Oberflächenabfluss zusammen.",
+		"question": "Gibt es Blockteilflächen, in denen der Wasserhaushalt stärker als 20 % vom natürlichen Wasserhaushalt abweicht? ",
+		"description": [
+			"Die Karten veranschaulichen die Abweichung des Wasserhaushalts vom natürlichen Zustand (DeltaW). Der Wasserhaushalt setzt sich aus den folgenden Komponenten zusammen:",
+			"- Verdunstung",
+			"- Versickerung",
+			"- Oberflächenabfluss",
+			"Durch Anklicken einer Blockteilfläche können die absoluten Werte dieser Komponenten sowohl für den natürlichen Zustand als auch für den Ist-Zustand eingesehen werden.",
+			"Gemäß EU-Wasserrahmenrichtlinie gilt eine Abweichung von mehr als 20 % vom natürlichen Wasserhaushalt als ökologisch schlecht und sollte vermieden werden. Die entsprechenden Anforderungen werden im Regelwerk DWA-M 102-4 weiter konkretisiert."
+		],
 		"drawLayerId": "need_waterbalance_hotspots_q1",
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
@@ -273,8 +283,8 @@
 	{
 		"id": "water_protection_sewer_type",
 		"name": "Art der Kanalisation",
-		"question": "Liegt das Quartier ausschließlich innerhalb der Mischwasserkanalisation?",
-		"description": "Um Überläufe aus der Mischwasserkanalisation bei Starkregen in die Berliner Fließgewässer wirksam zu reduzieren, ist eine konsequente dezentrale Regenwasserbewirtschaftung im Einzugsbereich der Mischkanalisation erforderlich. Dies umfasst Maßnahmen wie Versickerung, Rückhaltung und Nutzung des Regenwassers.",
+		"question": "Liegt das Untersuchungsgebiet im Einzugsbereich der Mischwasserkanalisation?",
+		"description": "Um Überläufe aus der Mischwasserkanalisation bei stärkeren Regenereignissen in die Berliner Fließgewässer wirksam zu reduzieren, ist eine konsequente dezentrale Regenwasserbewirtschaftung im Einzugsbereich der Mischwasserkanalisation erforderlich. Dies umfasst Maßnahmen wie Verdunstung, Rückhaltung, Nutzung und Versickerung des Regenwassers.",
 		"drawLayerId": "need_groundwater_hotspots_q1",
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
@@ -300,9 +310,9 @@
 	},
 	{
 		"id": "water_protection_small_waters_demand",
-		"name": "Kleingewässer mit Wasserbedarf",
-		"question": "Wo gibt es im Quartier oder in der Umgebung Gewässer mit Wasserbedarf?",
-		"description": "Die Karte gibt Auskunft darüber, welche Kleingewässer und Feuchtbiotope einen besonderen Bedarf an zusätzlichen Wassermengen haben. Falls das Gewässer von Trockenfall betroffen bzw. gefährdet ist, sollte es das Ziel sein, Regenwasser einzuleiten. Mit Klick auf das Gewässer werden mehr Informationen gegeben.",
+		"name": "Kleingewässer",
+		"question": "Gibt es im Untersuchungsgebiet oder in der Umgebung Kleingewässer?",
+		"description": "Die Karte zeigt Kleingewässer und Feuchtbiotope. Durch eine frühzeitige Einbindung des bezirklichen Umwelt- und Naturschutzamtes kann abgefragt werden, ob umliegende Gewässer Bedarf an zusätzlichen Wassermengen haben. In einem solchen Fall kann geprüft werden, ob eine Zuleitung von Regenwasser realisierbar ist.",
 		"drawLayerId": "need_groundwater_hotspots_q3",
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
@@ -403,8 +413,11 @@
 	{
 		"id": "2V2",
 		"name": "Altlasten",
-		"question": "Kommen Altlasten bzw. Altlastenverdachtsflächen im Plangebiet vor? (Relevant ist zum Beispiel, ob es ein Bodengutachten mit Aussagen zur Altlastensituation gibt.)",
-		"description": "Wenn ein Teil des Plangebiets im Bodenbelastungskataster Berlin als Altlasten- bzw. Altlastenverdachtsfläche erfasst ist, ist eine frühzeitige Rücksprache mit der oberen Wasserbehörde bzw. der zuständigen bezirklichen Bodenschutzbehörde notwendig. In der Regel ist ein Bodengutachten zu erstellen. Beim Antreffen von Altlasten oder anthropogenen Auffüllungen (z.B. Bauschutt) ist in Abstimmung mit der Bodenschutzbehörde ein Bodenaustausch im Bereich der geplanten Versickerungsanlagen vorzusehen.",
+		"question": "Kommen Altlasten bzw. Altlastenverdachtsflächen im Untersuchungsgebiet vor? ",
+		"description": [
+			"Wenn Flächen innerhalb des Untersuchungsgebiets im Bodenbelastungskataster Berlin als Altlasten- bzw. Altlastenverdachtsfläche erfasst sind, ist eine frühzeitige Rücksprache mit der zuständigen Bodenschutzbehörde notwendig und eine wasserbehördliche Genehmigung für die Versickerung erforderlich ([Hinweisblatt 2](https://www.berlin.de/sen/uvk/_assets/umwelt/wasser-und-geologie/publikationen-und-merkblaetter/hinweisblatt2-versick.pdf)). In der Regel ist ein Bodengutachten zu erstellen. Beim Antreffen von Altlasten oder anthropogenen Auffüllungen (z.B. Bauschutt) ist in Abstimmung mit der Bodenschutzbehörde ein Bodenaustausch im Bereich der geplanten Versickerungsanlagen vorzusehen.",
+			"Informationen zur Antragstellung auf Auskunft aus dem Bodenbelastungskataster sind [hier abrufbar](https://service.berlin.de/dienstleistung/353866/)."
+		],
 		"drawLayerId": "module_2_2V2_draw",
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
@@ -415,7 +428,7 @@
 		"id": "2V3",
 		"name": "Unterirdische Infrastrukturen: Leitungsbestand, U-Bahntunnel",
 		"question": "Sind Leitungen oder unterirdische Infrastrukturen (z.B. U-Bahntunnel) vorhanden, die bei der Platzierung von z.B. Versickerungsanlagen oder Zisternen zu beachten sind?",
-		"description": "Vorhabenträger*in oder SGA können über infreST (https://www.infrest.de/) den Leitungsbestand abfragen.",
+		"description": "Eine flächendeckende öffentlichlich zugängliche Kartengrundlage zum Leitungsbestand liegt nicht vor. Grundstückeigentümer:innen bzw. von ihnen beauftrage Planungsbüros können über [infreSt](https://www.infrest.de/leico-leitungsauskunft/) eine Leitungsauskunft abfragen. Weitere unterirdische Infrastrukturen sind zu bachten (z.B. U-Bahntunnel, Tiefgaragen).",
 		"drawLayerId": "module_2_2V3_draw",
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
@@ -441,12 +454,13 @@
 	{
 		"id": "2V5",
 		"name": "Geologischer Untergrund",
-		"question": "Gibt es Bohrkernprofile, die für die Maßnahmenplanung relevant sind? (z.B. durch Auffüllungen (Bauschutt) oder oberflächennahe Grundwasserstände)",
+		"question": "Zeigen die vorhandenen Bohrkernprofile Hinweise auf  Auffüllungen (z.B. Bauschutt) oder oberflächennahes Grundwasser?",
 		"description": [
-			"Zur detaillierten Beurteilung der Bodenverhältnisse ist ein Bodengutachten zu erstellen. Zur groben Ersteinschätzung können ggf. vorhandene Bohrkerndaten genutzt werden. Über die Bohrdaten können eher gut versickerungsfähige Böden (Beispiele: Kies, Sande) und eher schlecht versickerungsfähige Böden (Beispiele: Geschiebemergel, Ton) erkannt werden.",
+			"Zur detaillierten Beurteilung der Bodenverhältnisse ist ein Bodengutachten erforderlich. Zur groben Ersteinschätzung können ggf. vorhandene Bohrkerndaten genutzt werden.",
 			"Bei Auffüllungen (z.B. Bauschutt) muss ein Bodenaustausch bei der Umsetzung von Versickerungsanlagen erfolgen.",
-			"Beim Antreffen oder Verdacht von oberflächennahem Grundwasser ist eine frühzeitige Rücksprache mit der Senatsumweltverwaltung (Wasserwirtschaft) erforderlich. Weitere Informationen finden Sie hier (https://www.berlin.de/sen/uvk/umwelt/wasser-und-geologie/regenwasser/regenwasserbewirtschaftung/versickerung-barnim/)",
-			"*Hinweis: Auf der Barnim Hochfläche kann oberflächennah auch sog. Schichtenwasser zeitweise über wasserstauenden Schichten vorkommen. Weitere Informationen dazu finden sie auf der Seite der Umweltverwaltung (https://www.berlin.de/sen/uvk/umwelt/wasser-und-geologie/regenwasser/regenwasserbewirtschaftung/versickerung-barnim/) und der Regenwasseragentur (https://regenwasseragentur.berlin/planen-und-umsetzen/regenwasser-auf-barnim-hochflaeche-versickern/)"
+			"Beim Antreffen oder Verdacht von oberflächennahem Grundwasser ist eine frühzeitige Rücksprache mit der Senatsumweltverwaltung (Wasserbehörde und Wasserwirtschaft) erforderlich.",
+			"Über die Bohrkernprofile können eher gut versickerungsfähige Bodenarten (Beispiele: Kies, Sande) und eher schlecht versickerungsfähige Bodenarten (Beispiele: Geschiebemergel, Ton) erkannt werden.",
+			"*Hinweis: Auf der Barnim Hochfläche kann oberflächennah auch sog. Schichtenwasser zeitweise über wasserstauenden Schichten vorkommen. Weitere Informationen dazu finden sie auf der Seite der [Senatsumweltverwaltung](https://www.berlin.de/sen/uvk/umwelt/wasser-und-geologie/regenwasser/regenwasserbewirtschaftung/versickerung-barnim/) und der [Regenwasseragentur](https://regenwasseragentur.berlin/planen-und-umsetzen/regenwasser-auf-barnim-hochflaeche-versickern/)"
 		],
 		"drawLayerId": "module_2_2V5_draw",
 		"canDrawPolygons": true,
@@ -462,7 +476,7 @@
 		"id": "2B1",
 		"name": "Denkmalschutz",
 		"question": "Bestehen Belange des Denkmalschutzes, die es zu berücksichtigen gilt?",
-		"description": "Die Denkmalkarte Berlin stellt denkmalgeschützte Gebäude, Ensembles, Gärten, Gesamtanlagen und Bodendenkmäler dar. Maßnahmen der Klimaanpassung, die meist mit sichtbaren, baulichen Änderungen am Gebäude oder zugehörigen Außenanlagen einhergehen, müssen mit der Denkmalschutzbehörde abgestimmt werden. Die Umsetzung von Klimaanpassungsmaßnahmen kann durch Denkmalschutzbedenken eingeschränkt sein.",
+		"description": "Die Denkmalkarte Berlin stellt denkmalgeschützte Gebäude, Ensembles, Gärten, Gesamtanlagen und Bodendenkmäler dar. Maßnahmen der Klimaanpassung, die meist mit sichtbaren, baulichen Änderungen am Gebäude oder zugehörigen Außenanlagen einhergehen, müssen mit der Denkmalschutzbehörde abgestimmt werden.",
 		"drawLayerId": "module_2_2B1_draw",
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
@@ -481,7 +495,11 @@
 		"id": "2G1",
 		"name": "Gründachpotenziale",
 		"question": "",
-		"description": "Gründächer können als intensiv begrüntes, extensiv begrüntes oder als Retentionsgründach mit Drossel ausgeführt werden. Intensive Begrünung oder ein Retentionsgründach sind nur auf einem Flachdach (mit einer Dachneigung < 5°) möglich. Zusätzlich können Gründächer mit Solaranlagen kombiniert oder als Biodiversitätsgründächer ausgeführt werden. \nDie Machbarkeit und die Art der Dachbegrünung ist auch von der Statik des Gebäudes abhängig (Tragfähigkeit bei extensivem Gründach etwa 60 kg/m²; bei intensivem Gründach ab etwa 300kg/m²). Eine extensive Dachbegrünung ist in der Regel möglich, wenn es eine Dachstuhlerneuerung mit ausreichender Lastreserve gab oder bereits ein Kiesdach vorhanden ist. \nIn Ergänzung zu der angezeigten Dachbegrünungspotentialkarte sollte über das Luftbild nach weiteren bereits realisierten Dachbegrünungen oder Photovoltaikanlagen geschaut werden.",
+		"description": [
+			"Die Ermittlung des Gründachpotenzials erfolgte im Wesentlichen über die Dachneigung. Die Einschätzung der Potenziale werden anhand einer Ampel-Systematik auf der Ebene von Dachteilflächen dargestellt. Flächen mit geringer Dachneigung und ohne Denkmalschutz wurden besser bewertet als denkmalgeschützte Flächen mit einer Dachneigung über 5°. Ausgeschlossen wurden Flächen mit vorhandener PV-/Solarthermie-Anlage und/oder Dachbegrünung sowie Kleinstflächen. Gründachpotenziale werden bei automatisierten Ermittlungsverfahren i.d.R. überschätzt. Wesentliche Aspekte, v.a. Informationen zur Gebäudestatik, sind nicht flächendeckend verfügbar. Die Karte kann zur groben Ersteinschätzung dienen, ist jedoch kein Ersatz für Vor-Ort Untersuchungen bzw. Fachplanungen.",
+			"Gründächer können als intensiv begrüntes, extensiv begrüntes oder als Retentionsgründach mit Drossel ausgeführt werden. Intensive Begrünung oder ein Retentionsgründach sind nur auf einem Flachdach (mit einer Dachneigung < 5°) möglich. Zusätzlich können Gründächer mit Solaranlagen kombiniert oder als Biodiversitätsgründächer ausgeführt werden.",
+			"Die Machbarkeit und die Art der Dachbegrünung ist vor allem von der Statik des Gebäudes abhängig (einzuplanendes Gewicht eines extensiven Gründaches ab etwa 60 kg/m²; bei intensivem Gründach ab etwa 300 kg/m²). Eine extensive Dachbegrünung ist in der Regel möglich, wenn es eine Dachstuhlerneuerung mit ausreichender Lastreserve gab oder bereits ein Kiesdach vorhanden ist."
+		],
 		"drawLayerId": "",
 		"canDrawNotes": true,
 		"visibleLayerIds": [
@@ -497,19 +515,6 @@
 		],
 		"legendSrc": "/legends/2g1.svg",
 		"legendTitle": "Gründachpotential"
-	},
-	{
-		"id": "2E1",
-		"name": "Entsiegelungspotenzialflächen",
-		"question": "",
-		"description": "Vereinzelte Flächen mit Potenzial zur Entsiegelung wurden bereits auf Basis einer Befragung der Bezirksämter und der Berliner Forsten ermittelt. Dabei wurde das Potenzial zur Entsiegelung festgestellt, bewertet und priorisiert.",
-		"drawLayerId": "",
-		"canDrawNotes": true,
-		"visibleLayerIds": ["ua_entsiegelung:b_entsieg_klasse_teil"],
-		"featureDisplay": "tooltip",
-		"canQueryFeatures": ["ua_entsiegelung:b_entsieg_klasse_teil"],
-		"legendSrc": "/legends/2e1.svg",
-		"legendTitle": "Entsiegelungspotential"
 	},
 	{
 		"id": "NOTE: MODULE 3"
@@ -543,8 +548,6 @@
 	},
 	{
 		"id": "3G1",
-		"name": "Extensive Dachbegrünung",
-		"description": "Leichtes Gründach mit dünner Vegetations- und Substratschicht (ca. 6-8 cm) für Flach- und leicht geneigte Dächer. Es hält Regenwasser zurück, verdunstet einen Teil und leitet den Rest verzögert ab; zusätzlich verbessert es Mikroklima, Luftqualität und Dachschutz. Geeignet für robuste Bepflanzung mit geringem Pflegebedarf und regelmäßiger Kontrolle.",
 		"drawLayerId": "module_3_3G1_draw",
 		"visibleLayerIds": [
 			"potenziale_regenwasserbewirtschaftung:ca_dachbegruenungspotenzial",
@@ -573,8 +576,6 @@
 	},
 	{
 		"id": "3G2",
-		"name": "Intensive Dachbegrünung",
-		"description": "Nutzbares Gründach mit dicker Substratschicht (ab ca. 15 cm bis mehrere Meter) für Dachgärten und vielfältige Vegetation. Es bietet hohe Regenwasserrückhaltung, verbessert das Stadtklima und schafft Aufenthaltsflächen. Benötigt hohe Tragfähigkeit, geringe Dachneigung und regelmäßige Pflege.",
 		"drawLayerId": "module_3_3G2_draw",
 		"visibleLayerIds": [
 			"potenziale_regenwasserbewirtschaftung:ca_dachbegruenungspotenzial",
@@ -603,8 +604,6 @@
 	},
 	{
 		"id": "3G5",
-		"name": "Erdgebundene Fassadenbegrünung",
-		"description": "Fassadenbegrünung mit im Boden wurzelnden Kletterpflanzen und ggf. Rankhilfen. Sie reduziert Hitze, verbessert Mikroklima und Luftqualität, schützt Fassaden und kann Regenwasserbewirtschaftung unterstützen. Wichtig sind standortgerechte Pflanzenwahl, regelmäßiger Rückschnitt und Pflege.",
 		"drawLayerId": "module_3_3G5_draw",
 		"visibleLayerIds": [
 			"project_boundary",
@@ -632,8 +631,6 @@
 	},
 	{
 		"id": "3E1",
-		"name": "Teildurchlässiger Flächenbelag",
-		"description": "Ersatz vollversiegelter Beläge durch teildurchlässige Oberflächen wie Sickerpflaster oder Rasengitter. Dadurch kann Regenwasser lokal versickern, Abflüsse werden reduziert und das Stadtklima verbessert. Die Wirksamkeit hängt von Boden, Gefälle und Wartung gegen Verstopfung ab.",
 		"drawLayerId": "module_3_3E1_draw",
 		"visibleLayerIds": [
 			"ua_entsiegelung:b_entsieg_klasse_teil",
@@ -663,8 +660,6 @@
 	},
 	{
 		"id": "3E2",
-		"name": "Komplette Entsiegelung",
-		"description": "Vollständiger Rückbau versiegelter Schichten mit Bodenlockerung und Rekultivierung zur Wiederherstellung natürlicher Bodenfunktionen. Fördert Versickerung, Grundwasserneubildung, Biodiversität und Klimaanpassung. Wirksam, aber mit hohem Aufwand und Kosten verbunden.",
 		"drawLayerId": "module_3_3E2_draw",
 		"visibleLayerIds": [
 			"ua_entsiegelung:b_entsieg_klasse_teil",
@@ -694,8 +689,6 @@
 	},
 	{
 		"id": "3B1",
-		"name": "Grünflächen",
-		"description": "Grünflächen und Grünanlagen sind zentrale urbane Freiräume mit hoher ökologischer und sozialer Wirkung. Sie fördern Verdunstung, Kühlung, Biodiversität, Luftqualität und Regenwasserrückhalt im Sinne der Schwammstadt. Erfordern Flächenverfügbarkeit sowie kontinuierliche Planung und Pflege.",
 		"drawLayerId": "module_3_3B1_draw",
 		"visibleLayerIds": [
 			"ua_entsiegelung:b_entsieg_klasse_teil",
@@ -725,8 +718,6 @@
 	},
 	{
 		"id": "3B2",
-		"name": "Bäume",
-		"description": "Stadtbäume speichern und verdunsten Wasser, spenden Schatten und reduzieren Hitzeinseln. Sie verbessern Luftqualität, fördern Biodiversität und entlasten die Kanalisation durch verzögerten Abfluss. Für langfristige Vitalität sind ausreichend Wurzelraum, geeignete Substrate und Pflege entscheidend.",
 		"drawLayerId": "module_3_3B2_draw",
 		"visibleLayerIds": [
 			"ua_entsiegelung:b_entsieg_klasse_teil",
@@ -756,8 +747,6 @@
 	},
 	{
 		"id": "3V1",
-		"name": "Mulde",
-		"description": "Flache, bepflanzte Bodenvertiefung zur temporären Speicherung und Versickerung von Niederschlagswasser. Mulden reduzieren Überflutungsrisiken, fördern Grundwasserneubildung und unterstützen Verdunstungskühlung. Voraussetzung sind geeignete Bodenverhältnisse sowie regelmäßige Pflege.",
 		"drawLayerId": "module_3_3V1_draw",
 		"visibleLayerIds": [
 			"project_boundary",
@@ -785,8 +774,6 @@
 	},
 	{
 		"id": "3V2",
-		"name": "Flächenversickerung",
-		"description": "Ableitung von Regenwasser von befestigten Flächen in angrenzende bewachsene Flächen zur oberflächennahen Versickerung. Entlastet die Kanalisation, fördert Grundwasserneubildung und nutzt die Reinigungswirkung der belebten Bodenzone. Erfordert durchlässige Böden und ausreichende Flächen.",
 		"drawLayerId": "module_3_3V2_draw",
 		"visibleLayerIds": [
 			"project_boundary",
@@ -814,8 +801,6 @@
 	},
 	{
 		"id": "3V3",
-		"name": "Mulden-Rigolen-Element",
-		"description": "Kombination aus oberirdischer Mulde und unterirdischer Rigole zur Zwischenspeicherung, Vorreinigung und Versickerung von Regenwasser. Bei Bedarf ist eine gedrosselte Ableitung möglich. Besonders geeignet bei begrenztem Platz oder mäßig durchlässigen Böden.",
 		"drawLayerId": "module_3_3V3_draw",
 		"visibleLayerIds": [
 			"project_boundary",
@@ -843,8 +828,6 @@
 	},
 	{
 		"id": "3V4",
-		"name": "Tiefbeet",
-		"description": "Kompaktes Mulden-Rigolen-System für dichte urbane Räume mit geringem Flächenangebot. Es bietet hohe Rückhalte- und Reinigungsleistung und kann in Straßenräume integriert werden. Geeignet bei schwierigen Bodenverhältnissen, jedoch mit erhöhtem Planungs- und Pflegeaufwand.",
 		"drawLayerId": "module_3_3V4_draw",
 		"visibleLayerIds": [
 			"project_boundary",
@@ -872,8 +855,6 @@
 	},
 	{
 		"id": "3V5",
-		"name": "Optimierter Baumstandort (Baum mit unterirdischer Versickerung kombiniert)",
-		"description": "Kombiniert Regenwasserbewirtschaftung mit verbesserten Wuchsbedingungen für Stadtbäume durch unterirdische Speicher- und Substraträume. Reduziert Oberflächenabfluss, stärkt Baumvitalität und verbessert das Stadtklima. Benötigt sorgfältige Planung von Einleitung, Substrat und Leitungsabständen.",
 		"drawLayerId": "module_3_3V5_draw",
 		"visibleLayerIds": [
 			"project_boundary",
@@ -901,8 +882,6 @@
 	},
 	{
 		"id": "3V6",
-		"name": "Rigole",
-		"description": "Unterirdisches Speicher- und Versickerungselement aus Kies, Lavagranulat oder Hohlkörpersystemen. Es ermöglicht zeitverzögerte Versickerung und bei Bedarf gedrosselte Ableitung. Ohne Vorbehandlung nur für gering belastete Abflüsse geeignet; regelmäßige Wartung erforderlich.",
 		"drawLayerId": "module_3_3V6_draw",
 		"visibleLayerIds": [
 			"project_boundary",
@@ -930,8 +909,6 @@
 	},
 	{
 		"id": "3S1",
-		"name": "(Künstliche) Wasserflächen",
-		"description": "Offene Wasserflächen wie Teiche oder Gräben zur Sammlung, Rückhaltung und ggf. Aufbereitung von Niederschlagswasser. Sie reduzieren Abflussspitzen, können Freiräume aufwerten und Biodiversität fördern. Planung und Betrieb erfordern abgestimmte Vorreinigung, Überläufe und Pflege.",
 		"drawLayerId": "module_3_3S1_draw",
 		"visibleLayerIds": [
 			"ua_entsiegelung:b_entsieg_klasse_teil",
@@ -961,8 +938,6 @@
 	},
 	{
 		"id": "3S2",
-		"name": "Regenwasserspeicher",
-		"description": "Speicherung von Regenwasser zur späteren Nutzung für Bewässerung von Grünflächen und Bäumen. Spart Trinkwasser und kann Abflüsse durch Zwischenspeicherung reduzieren. Technisch vergleichsweise einfach, mit Fokus auf geeignete Wasserqualität, Filterung und Wartung.",
 		"drawLayerId": "module_3_3S2_draw",
 		"visibleLayerIds": [
 			"project_boundary",
@@ -990,8 +965,6 @@
 	},
 	{
 		"id": "3S4",
-		"name": "Retentionsfläche",
-		"description": "Temporäre Rückhaltefläche für Starkregen, häufig als multifunktionaler Freiraum wie Park oder Sportfläche ausgebildet. Sie schützt vor Überflutung, kann städtebauliche Qualität erhöhen und mit anderen Klimaanpassungsmaßnahmen kombiniert werden. Erfordert sichere Zu- und Ableitungsstrukturen.",
 		"drawLayerId": "module_3_3S4_draw",
 		"visibleLayerIds": [
 			"ua_entsiegelung:b_entsieg_klasse_teil",
@@ -1021,8 +994,6 @@
 	},
 	{
 		"id": "3S5",
-		"name": "Verdunstungsbeet",
-		"description": "Abgedichtetes Beet zur Rückhaltung von Regenwasser mit Fokus auf Verdunstung statt Versickerung. Es reduziert Abflussspitzen, stärkt den lokalen Wasserkreislauf und kann gestalterisch in den Straßenraum integriert werden. Geeignet bei begrenzter Versickerungsmöglichkeit und hohem Rückhaltebedarf.",
 		"drawLayerId": "module_3_3S5_draw",
 		"visibleLayerIds": [
 			"ua_entsiegelung:b_entsieg_klasse_teil",
