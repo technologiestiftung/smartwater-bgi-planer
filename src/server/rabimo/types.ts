@@ -21,3 +21,12 @@ export function isValidRabimoPayload(value: unknown): value is RabimoPayload {
 		Array.isArray((value as Record<string, unknown>).measures)
 	);
 }
+
+export const PLOT_TYPES = [
+	"critical_hours",
+	"unpleasant_hours",
+	"critical_events",
+	"negative_deviation",
+] as const;
+
+export type PlotType = (typeof PLOT_TYPES)[number];

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useRabimoPayload } from "@/hooks/useRabimoPayload";
 import { useResultLayer } from "@/hooks/useResultLayer";
 import { SectionId } from "@/lib/helpers/sectionIds";
+import { PLOT_TYPES, PlotType } from "@/server/rabimo/types";
 import { useLayersStore, useResultStore, useScenarioStore } from "@/store";
 import type { Result } from "@/store/result/types";
 import { DownloadSimpleIcon, SpinnerIcon, XIcon } from "@phosphor-icons/react";
@@ -25,7 +26,9 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 	const payload = useRabimoPayload();
 	const [state, setState] = useState<RequestState>("idle");
 	const [message, setMessage] = useState<string>("");
-	const [plotUrl, setPlotUrl] = useState<string | null>(null);
+	const [plotUrls, setPlotUrls] = useState<Partial<Record<PlotType, string>>>(
+		{},
+	);
 	const [plotState, setPlotState] = useState<RequestState>("idle");
 
 	useResultLayer({
@@ -42,12 +45,26 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 		applyConfigLayers("measure_planning_synthesis_view", true);
 	}, [applyConfigLayers]);
 
+	const fetchPlots = useCallback(async (runoffReduction: number) => {
+		setPlotState("loading");
+		const res = await fetch(
+			`/api/rabimo/plots-effect-of-disconnect?runoff_reduction=${runoffReduction}`,
+		);
+		if (!res.ok) {
+			setPlotState("error");
+			return;
+		}
+		const data = (await res.json()) as Partial<Record<PlotType, string>>;
+		setPlotUrls(data);
+		setPlotState("success");
+	}, []);
+
 	const handleRequest = useCallback(async () => {
 		if (!activeScenarioId || !payload) return;
 		setState("loading");
 		setStatus(activeScenarioId, "loading");
 		setMessage("");
-		setPlotUrl(null);
+		setPlotUrls({});
 		setPlotState("idle");
 
 		try {
@@ -84,18 +101,7 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 				: runoffReductionRaw;
 
 			if (typeof runoffReduction === "number") {
-				setPlotState("loading");
-				try {
-					const plotResponse = await fetch(
-						`/api/rabimo/plot-effect-of-disconnect?runoff_reduction=${runoffReduction}&type=critical_hours`,
-					);
-					if (!plotResponse.ok) throw new Error("Plot request failed");
-					const blob = await plotResponse.blob();
-					setPlotUrl(URL.createObjectURL(blob));
-					setPlotState("success");
-				} catch {
-					setPlotState("error");
-				}
+				await fetchPlots(runoffReduction);
 			}
 
 			setState("success");
@@ -107,7 +113,7 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 					: "Unbekannter Fehler beim Rabimo-Test",
 			);
 		}
-	}, [activeScenarioId, payload, setResult, setStatus]);
+	}, [activeScenarioId, fetchPlots, payload, setResult, setStatus]);
 
 	useEffect(() => {
 		handleRequest();
@@ -174,18 +180,21 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 					</div>
 				)}
 
-				{plotUrl && (
-					<div className="mt-4">
-						<Image
-							src={plotUrl}
-							alt="Effect of disconnect"
-							width={620}
-							height={400}
-							unoptimized
-							className="h-auto max-w-full"
-							onLoad={() => setPlotState("success")}
-							onError={() => setPlotState("error")}
-						/>
+				{Object.keys(plotUrls).length > 0 && (
+					<div className="mt-4 flex flex-col gap-4">
+						{PLOT_TYPES.map((type) =>
+							plotUrls[type] ? (
+								<Image
+									key={type}
+									src={`data:image/png;base64,${plotUrls[type]}`}
+									alt={type}
+									width={620}
+									height={400}
+									unoptimized
+									className="h-auto max-w-full"
+								/>
+							) : null,
+						)}
 					</div>
 				)}
 

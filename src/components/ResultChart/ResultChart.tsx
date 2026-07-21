@@ -3,17 +3,33 @@
 import { useResultStore, useScenarioStore } from "@/store";
 import { FC } from "react";
 
-interface SummaryEntry {
-	total_area_m2: number;
+interface WaterBalanceEntry {
 	runoff: number;
 	infiltr: number;
 	evapor: number;
-	delta: number;
+	delta_w: number;
 }
 
-interface ResultSummary {
-	original: SummaryEntry;
-	with_measures: SummaryEntry;
+interface WaterBalanceStatistics {
+	status_quo: WaterBalanceEntry[];
+	with_measures: WaterBalanceEntry[];
+}
+
+interface WaterQualityEntry {
+	overflow_volume: number[];
+	critical_hours: number[];
+	critical_events: number[];
+}
+
+interface WaterQualityIndicators {
+	status_quo: WaterQualityEntry;
+	with_measures: WaterQualityEntry;
+}
+
+interface ResultStatistics {
+	water_balance: WaterBalanceStatistics;
+	runoff_reduction_percent: number[];
+	water_quality_indicators: WaterQualityIndicators;
 }
 
 const COLOR_ORIGINAL = "#6db08a";
@@ -35,9 +51,12 @@ const MiniBarChart: FC<MiniBarChartProps> = ({
 	showLegend = false,
 	largeValues = false,
 }) => {
-	const max = Math.max(originalValue, measuresValue, 1);
-	const origHeight = (originalValue / max) * BAR_MAX_HEIGHT;
-	const measHeight = (measuresValue / max) * BAR_MAX_HEIGHT;
+	const roundedOrig = Math.round(originalValue);
+	const roundedMeas = Math.round(measuresValue);
+	const max = Math.max(roundedOrig, roundedMeas, 1);
+	const origHeight = (roundedOrig / max) * BAR_MAX_HEIGHT;
+	const measHeight = (roundedMeas / max) * BAR_MAX_HEIGHT;
+
 	const valueClass = largeValues
 		? "text-3xl font-bold leading-none"
 		: "text-base font-bold leading-none";
@@ -52,7 +71,8 @@ const MiniBarChart: FC<MiniBarChartProps> = ({
 		>
 			{/* Row 1: value | bar | bar | value */}
 			<span className={`${valueClass} self-end pr-1`}>
-				{Math.round(originalValue)}
+				{/* {Math.round(originalValue)} */}
+				{roundedOrig}
 			</span>
 			<div
 				className="self-end rounded-sm"
@@ -69,7 +89,8 @@ const MiniBarChart: FC<MiniBarChartProps> = ({
 				}}
 			/>
 			<span className={`${valueClass} self-end pl-1`}>
-				{Math.round(measuresValue)}
+				{/* {Math.round(measuresValue)} */}
+				{roundedMeas}
 			</span>
 
 			{/* Row 2: legend boxes aligned directly under bars */}
@@ -119,7 +140,16 @@ const ResultChart: FC<ResultChartProps> = () => {
 		);
 	}
 
-	const { original, with_measures } = result.data.summary as ResultSummary;
+	const stats = (result.data as { statistics: ResultStatistics }).statistics;
+
+	const waterBalance = stats.water_balance;
+	const original = waterBalance.status_quo[0];
+	const with_measures = waterBalance.with_measures[0];
+
+	const runoffReduction = stats.runoff_reduction_percent[0];
+	const wqi = stats.water_quality_indicators;
+	const wqiOrig = wqi.status_quo;
+	const wqiSim = wqi.with_measures;
 
 	const metrics = [
 		{
@@ -143,7 +173,8 @@ const ResultChart: FC<ResultChartProps> = () => {
 	];
 
 	return (
-		<div className="ResultChart-root">
+		<div className="ResultChart-root flex flex-col gap-4">
+			{/* Chart 1: Wasserhaushalt */}
 			<div
 				className="border-primary grid overflow-hidden border"
 				style={{
@@ -174,8 +205,8 @@ const ResultChart: FC<ResultChartProps> = () => {
 					</p>
 					<div className="flex flex-1 items-center justify-center">
 						<MiniBarChart
-							originalValue={original.delta}
-							measuresValue={with_measures.delta}
+							originalValue={original.delta_w}
+							measuresValue={with_measures.delta_w}
 							showLegend
 							largeValues
 						/>
@@ -200,6 +231,87 @@ const ResultChart: FC<ResultChartProps> = () => {
 							<MiniBarChart originalValue={orig} measuresValue={sim} />
 						</div>
 					))}
+				</div>
+			</div>
+
+			{/* Chart 2: Gewässerbelastung */}
+			<div
+				className="border-primary grid overflow-hidden border"
+				style={{
+					gridTemplateColumns: "1fr 1fr",
+					gridTemplateRows: "auto 1fr",
+				}}
+			>
+				{/* Top-left: title */}
+				<div
+					className="border-primary border-r border-b p-4"
+					style={{ gridColumn: 1, gridRow: 1 }}
+				>
+					<h2 className="text-xl font-bold">Gewässerbelastung</h2>
+				</div>
+
+				{/* Bottom-left: MWÜ Volumen */}
+				<div
+					className="border-primary flex flex-col border-r p-4"
+					style={{ gridColumn: 1, gridRow: 2 }}
+				>
+					<p
+						className="mb-3 text-sm leading-tight font-bold"
+						style={{ color: COLOR_MEASURES }}
+					>
+						MWÜ Volumen
+						<br />
+						(m³)
+					</p>
+					<div className="flex flex-1 items-center justify-center">
+						<MiniBarChart
+							originalValue={wqiOrig.overflow_volume[0]}
+							measuresValue={wqiSim.overflow_volume[0]}
+							showLegend
+							largeValues
+						/>
+					</div>
+				</div>
+
+				{/* Right column: Abkopplung + 2 metric cells */}
+				<div
+					className="flex flex-col divide-y divide-gray-200"
+					style={{ gridColumn: 2, gridRow: "1 / 3" }}
+				>
+					<div className="flex flex-1 items-center justify-between p-4">
+						<span className="text-sm leading-tight font-semibold text-gray-700">
+							Abkopplung
+							<br />
+							<span className="font-normal">(Prozent)</span>
+						</span>
+						<span className="text-3xl leading-none font-bold">
+							{runoffReduction.toLocaleString("de-DE", {
+								maximumFractionDigits: 1,
+							})}
+						</span>
+					</div>
+					<div className="flex flex-1 items-center justify-between p-4">
+						<span className="text-sm leading-tight font-semibold text-gray-700">
+							Unterschreitungsdauer
+							<br />
+							<span className="font-normal">(Stunden)</span>
+						</span>
+						<MiniBarChart
+							originalValue={wqiOrig.critical_hours[0]}
+							measuresValue={wqiSim.critical_hours[0]}
+						/>
+					</div>
+					<div className="flex flex-1 items-center justify-between p-4">
+						<span className="text-sm leading-tight font-semibold text-gray-700">
+							Kritische O₂ Ereignisse
+							<br />
+							<span className="font-normal">(Anzahl)</span>
+						</span>
+						<MiniBarChart
+							originalValue={wqiOrig.critical_events[0]}
+							measuresValue={wqiSim.critical_events[0]}
+						/>
+					</div>
 				</div>
 			</div>
 		</div>
