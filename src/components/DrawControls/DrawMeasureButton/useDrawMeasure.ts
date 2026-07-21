@@ -81,8 +81,7 @@ const clipToBtf = (
 		drawnGeometry,
 	) as GeoJSONPolygon;
 	const btfGeoJSON = geoJsonFormat.writeGeometryObject(btfGeometry) as
-		| GeoJSONPolygon
-		| GeoJSONMultiPolygon;
+		GeoJSONPolygon | GeoJSONMultiPolygon;
 
 	const drawnFeature: GeoJSONFeature<GeoJSONPolygon> = {
 		type: "Feature",
