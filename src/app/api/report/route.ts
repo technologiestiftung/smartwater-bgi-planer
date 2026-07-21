@@ -145,7 +145,7 @@ async function convertWithGotenberg(docxBuffer: Buffer): Promise<ArrayBuffer> {
 	const docxBlob = new Blob([new Uint8Array(docxBuffer)], {
 		type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 	});
-	formData.append("files", docxBlob, "report.docx");
+	formData.append("files", docxBlob, "report-blueprint.docx");
 
 	const res = await fetch(
 		`${process.env.GOTENBERG_URL}/forms/libreoffice/convert`,
@@ -170,10 +170,12 @@ export async function POST(req: Request) {
 			process.cwd(),
 			"src",
 			"templates",
-			"report.docx",
+			"report-blueprint.docx",
 		);
 		if (!fs.existsSync(templatePath)) {
-			throw new Error("report.docx nicht im templates Ordner gefunden!");
+			throw new Error(
+				"report-blueprint.docx nicht im templates Ordner gefunden!",
+			);
 		}
 
 		const content = fs.readFileSync(templatePath, "binary");
