@@ -192,7 +192,8 @@
 								],
 								"climateSimulationFileSlug": "DachExt",
 								"floodRiskLayerConfigId": "Gruendaecher",
-								"floodRiskChartSlug": "Gruendaecher"
+								"floodRiskChartFolderSlug": "Gruendaecher",
+								"floodRiskChartFileSlug": "Gr_nd_cher"
 							}
 						},
 						{
@@ -286,7 +287,8 @@
 								],
 								"climateSimulationFileSlug": "DachInt",
 								"floodRiskLayerConfigId": "Gruendaecher",
-								"floodRiskChartSlug": "Gruendaecher"
+								"floodRiskChartFolderSlug": "Gruendaecher",
+								"floodRiskChartFileSlug": "Gr_nd_cher"
 							}
 						},
 						{
@@ -467,7 +469,7 @@
 									}
 								],
 								"climateSimulationFileSlug": "TeilEntsiegelung",
-								"floodRiskChartSlug": "Teilentsiegelung"
+								"floodRiskChartFolderSlug": "Teilentsiegelung"
 							}
 						},
 						{
@@ -548,7 +550,9 @@
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
 								],
-								"climateSimulationFileSlug": "VollEntsiegelung"
+								"climateSimulationFileSlug": "VollEntsiegelung",
+								"floodRiskChartFolderSlug": "Gruenflaechen",
+								"floodRiskChartFileSlug": "Gr_nfl_chen"
 							}
 						}
 					]
@@ -631,7 +635,8 @@
 									}
 								],
 								"climateSimulationFileSlug": "Gruen",
-								"floodRiskChartSlug": "Gruenflaechen"
+								"floodRiskChartFolderSlug": "Gruenflaechen",
+								"floodRiskChartFileSlug": "Gr_nfl_chen"
 							}
 						},
 						{
@@ -724,7 +729,8 @@
 								],
 								"climateSimulationFileSlug": "Baum",
 								"floodRiskLayerConfigId": "Baeume",
-								"floodRiskChartSlug": "Baeume"
+								"floodRiskChartFolderSlug": "Baeume",
+								"floodRiskChartFileSlug": "B_ume"
 							}
 						}
 					]
@@ -834,7 +840,7 @@
 								],
 								"climateSimulationFileSlug": "Mulde",
 								"floodRiskLayerConfigId": "Mulde",
-								"floodRiskChartSlug": "Mulde"
+								"floodRiskChartFolderSlug": "Mulde"
 							}
 						},
 						{
@@ -1024,7 +1030,8 @@
 								],
 								"climateSimulationFileSlug": "MuldRigElem",
 								"floodRiskLayerConfigId": "Mulde-Rigole",
-								"floodRiskChartSlug": "Mulde-Rigole-Element"
+								"floodRiskChartFolderSlug": "Mulde-Rigole-Element",
+								"floodRiskChartFileSlug": "Mulde_Rigole"
 							}
 						},
 						{
@@ -1282,7 +1289,7 @@
 								],
 								"climateSimulationFileSlug": "Rigole",
 								"floodRiskLayerConfigId": "Rigole",
-								"floodRiskChartSlug": "Rigole"
+								"floodRiskChartFolderSlug": "Rigole"
 							}
 						}
 					]

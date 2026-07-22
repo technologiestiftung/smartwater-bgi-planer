@@ -34,6 +34,8 @@ const MeasureCatalogModule: FC<MeasureCatalogModuleProps> = ({
 			effects,
 			planningNotes,
 			policiesGuidelines,
+			floodRiskLayerConfigId,
+			floodRiskChartFolderSlug,
 		} = {},
 	} = getModuleInfo || {};
 	const router = useRouter();
@@ -54,6 +56,7 @@ const MeasureCatalogModule: FC<MeasureCatalogModuleProps> = ({
 					<Button
 						variant="outline"
 						onClick={() => router.push(`?floodRisk=${id}`)}
+						disabled={!floodRiskLayerConfigId && !floodRiskChartFolderSlug}
 					>
 						Modellierung Überflutungsgefährdung
 					</Button>

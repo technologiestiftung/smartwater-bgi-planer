@@ -69,7 +69,8 @@ export interface ModuleMeasurementInfo {
 	policiesGuidelines?: ModuleMeasurementPoliciesGuidelines[];
 	climateSimulationFileSlug?: string;
 	floodRiskLayerConfigId?: string;
-	floodRiskChartSlug?: string;
+	floodRiskChartFolderSlug?: string;
+	floodRiskChartFileSlug?: string;
 }
 
 interface ModuleMeasurementInfoImage {
