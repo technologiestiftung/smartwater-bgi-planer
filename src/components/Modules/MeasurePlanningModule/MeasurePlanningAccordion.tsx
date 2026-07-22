@@ -32,6 +32,7 @@ import { useShallow } from "zustand/react/shallow";
 import { MeasureCatalogModal } from "../MeasureCatalogModule/MeasureCatalogModal";
 import { ClimateSimulation } from "@/components/Simulations/ClimateSimulation";
 import { ClimateSimulationModal } from "@/components/Simulations/ClimateSimulationModal";
+import { FloodRisk } from "@/components/Simulations/FloodRiskSimulation";
 
 interface StepItem {
 	id: string;
@@ -353,7 +354,7 @@ export function MeasurePlanningAccordion({
 	} else if (floodRisk) {
 		content = (
 			<>
-				<h1>Modelierung Überflutungsgefährdung</h1>
+				<FloodRisk floodRisk={floodRisk} onActivate={activateQuestion} />
 			</>
 		);
 	} else {
@@ -447,7 +448,7 @@ export function MeasurePlanningAccordion({
 			title={title}
 			description={description}
 			footer={
-				isSynthesisMode || climateSimulation ? null : (
+				isSynthesisMode || climateSimulation || floodRisk ? null : (
 					<MeasurePlanningFooter
 						onShowSynthesis={handleShowSynthesis}
 						onBackToQuestions={handleBackToQuestions}
