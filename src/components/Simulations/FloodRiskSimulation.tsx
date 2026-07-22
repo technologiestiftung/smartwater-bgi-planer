@@ -10,8 +10,8 @@ import {
 import { ModuleMeasurementConfig, ModuleStepConfig } from "@/types/shared";
 import { useEffect, useState } from "react";
 import { useLayersStore } from "@/store/layers";
-import { CarouselWithIndicators } from "../ui/carousel-with-indicators";
 import restoreUmlaute from "@/lib/helpers/restoreUmlaute";
+import Image from "next/image";
 
 interface FloodRiskProps {
 	floodRisk: string;
@@ -37,14 +37,9 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 			floodRiskLayerConfigId,
 			floodRiskChartFolderSlug,
 			floodRiskChartFileSlug,
+			floodRiskCharts,
 		} = {},
 	} = getModuleInfo || {};
-	const [activeSimulation, setActiveSimulation] =
-		useState<ActiveSimulation>("waterLevel");
-	const applyConfigLayers = useLayersStore((state) => state.applyConfigLayers);
-	const [sliderImages, setSliderImages] = useState<
-		{ src: string; alt: string; description?: string }[]
-	>([]);
 
 	const SCENARIOS: { id: ActiveSimulation; label: string }[] = [
 		{
@@ -64,27 +59,19 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 		"Kombinationsmassnahmen_Ueberflutungsvolumen", // this will not exist for all measures
 	];
 
+	const useCharts = floodRiskCharts || CHARTS;
+
+	const [activeSimulation, setActiveSimulation] =
+		useState<ActiveSimulation>("waterLevel");
+	const [activeChart, setActiveChart] = useState<string>(useCharts[0]);
+	const applyConfigLayers = useLayersStore((state) => state.applyConfigLayers);
+
 	useEffect(() => {
 		if (!activeSimulation || !floodRiskLayerConfigId) return;
 		const configId = `bgi-planer:${activeSimulation === "waterLevel" ? "Wasserstand" : "Gefaehrdungsstufe"}_${floodRiskLayerConfigId}`;
 		console.log("configId", configId);
 		applyConfigLayers(configId, true);
 	}, [activeSimulation, applyConfigLayers]);
-
-	useEffect(() => {
-		if (!floodRiskChartFolderSlug || !floodRiskChartFileSlug) return;
-
-		const images = CHARTS.map((chartSlug) => {
-			const imageSRC = `/images/floodRiskSimulation/${floodRiskChartFolderSlug}/${chartSlug}_${floodRiskChartFileSlug}.png`;
-			return {
-				src: imageSRC,
-				alt: `${chartSlug}${floodRiskChartFolderSlug}`,
-				description: restoreUmlaute(chartSlug.replace(/_/g, " ")),
-			};
-		});
-
-		setSliderImages(images);
-	}, [floodRiskChartFolderSlug, floodRiskChartFileSlug]);
 
 	return (
 		<div className="flex h-full w-full flex-col">
@@ -115,16 +102,44 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 						</div>
 					</div>
 				)}
-				{floodRiskChartFolderSlug && sliderImages.length > 0 && (
-					<div className="mt-4">
-						<CarouselWithIndicators
-							hideTitle
-							fullWidthSlider
-							narrow
-							dark
-							slides={sliderImages}
-						/>
-					</div>
+				{floodRiskChartFolderSlug && (
+					<>
+						<div className="flex flex-col gap-2">
+							<p className="text-primary text-lg font-bold">
+								Diagramm auswählen
+							</p>
+							<div className="flex flex-wrap gap-2">
+								{useCharts.map((chart) => (
+									<Button
+										key={chart}
+										variant={activeChart === chart ? "default" : "outline"}
+										size="sm"
+										onClick={() => setActiveChart(chart)}
+										className="text-sm"
+									>
+										{restoreUmlaute(chart)}
+									</Button>
+								))}
+							</div>
+						</div>
+						{(() => {
+							const imageSRC = `/images/floodRiskSimulation/${floodRiskChartFolderSlug}/${activeChart}_${floodRiskChartFileSlug}.png`;
+							return (
+								<Image
+									src={imageSRC}
+									alt={`${activeChart}${floodRiskChartFolderSlug}`}
+									className="mt-4 h-full max-h-[100%] w-full object-contain object-top"
+									onError={() => {
+										console.error(`Error loading image: ${imageSRC}`);
+									}}
+									loading="lazy"
+									width={1600}
+									height={900}
+									unoptimized
+								/>
+							);
+						})()}
+					</>
 				)}
 			</div>
 			<div className="border-muted bg-secondary flex shrink-0 border-t px-4">

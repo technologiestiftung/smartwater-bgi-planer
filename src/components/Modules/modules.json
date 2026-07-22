@@ -730,7 +730,11 @@
 								"climateSimulationFileSlug": "Baum",
 								"floodRiskLayerConfigId": "Baeume",
 								"floodRiskChartFolderSlug": "Baeume",
-								"floodRiskChartFileSlug": "B_ume"
+								"floodRiskChartFileSlug": "B_ume",
+								"floodRiskCharts": [
+									"Vergleich_gefaehrdeter_Flaechen",
+									"Reduktion_des_Ueberflutungsvolumens"
+								]
 							}
 						}
 					]

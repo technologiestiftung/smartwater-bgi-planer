@@ -6,7 +6,9 @@ function restoreUmlaute(input: string): string {
 		.replace(/ae/g, "ä")
 		.replace(/oe/g, "ö")
 		.replace(/ue/g, "ü")
-		.replace(/ss/g, "ß");
+		.replace(/ss/g, "ß")
+		.replace(/_/g, " ")
+		.replace("ßtufen", "sstufen");
 }
 
 export default restoreUmlaute;
