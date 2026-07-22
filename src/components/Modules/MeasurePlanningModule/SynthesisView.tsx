@@ -15,7 +15,21 @@ import { DownloadSimpleIcon, XIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 
+const CACHE_MAX_SIZE = 20;
+
+function setWithSizeLimit<K, V>(map: Map<K, V>, key: K, value: V): void {
+	if (map.size >= CACHE_MAX_SIZE) {
+		const oldest = map.keys().next().value;
+		if (oldest !== undefined) map.delete(oldest);
+	}
+	map.set(key, value);
+}
+
 const plotsCache = new Map<number, Partial<Record<PlotType, string>>>();
+const lastRequestByScenarioId = new Map<
+	string,
+	{ payloadKey: string; runoffReduction: number | undefined }
+>();
 
 interface SynthesisViewProps {
 	onBackToQuestions: () => void;
@@ -59,6 +73,26 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 		applyConfigLayers("measure_planning_synthesis_view", true);
 	}, [applyConfigLayers]);
 
+	const restoreFromCache = useCallback(
+		(scenarioId: string, payloadKey: string): boolean => {
+			const last = lastRequestByScenarioId.get(scenarioId);
+			if (last?.payloadKey !== payloadKey) return false;
+			const existingResult =
+				useResultStore.getState().resultsByScenarioId[scenarioId];
+			if (!existingResult) return false;
+			if (
+				last.runoffReduction !== undefined &&
+				plotsCache.has(last.runoffReduction)
+			) {
+				setPlotUrls(plotsCache.get(last.runoffReduction)!);
+				setPlotState("success");
+			}
+			setState("success");
+			return true;
+		},
+		[],
+	);
+
 	const fetchPlots = useCallback(async (runoffReduction: number) => {
 		if (plotsCache.has(runoffReduction)) {
 			setPlotUrls(plotsCache.get(runoffReduction)!);
@@ -74,15 +108,22 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 			return;
 		}
 		const data = (await res.json()) as Partial<Record<PlotType, string>>;
-		plotsCache.set(runoffReduction, data);
+		setWithSizeLimit(plotsCache, runoffReduction, data);
 		setPlotUrls(data);
 		setPlotState("success");
 	}, []);
 
+	// eslint-disable-next-line complexity
 	const handleRequest = useCallback(async () => {
 		if (!activeScenarioId || !payload) return;
+
+		const payloadKey = JSON.stringify(payload);
+
+		if (restoreFromCache(activeScenarioId, payloadKey)) return;
+
+		const requestScenarioId = activeScenarioId;
 		setState("loading");
-		setStatus(activeScenarioId, "loading");
+		setStatus(requestScenarioId, "loading");
 		setMessage("");
 		setPlotUrls({});
 		setPlotState("idle");
@@ -96,20 +137,25 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 
 			const data: unknown = await response.json();
 
+			if (useScenarioStore.getState().activeScenarioId !== requestScenarioId) {
+				return;
+			}
+
 			if (!response.ok) {
-				setStatus(activeScenarioId, "error");
+				setStatus(requestScenarioId, "error");
 				throw new Error("Rabimo request failed");
 			}
 
 			const newResult: Result = {
-				id: `${activeScenarioId}-${Date.now()}`,
-				scenarioId: activeScenarioId,
+				id: `${requestScenarioId}-${Date.now()}`,
+				scenarioId: requestScenarioId,
 				timestamp: Date.now(),
+				payloadKey,
 				data: data as Record<string, unknown>,
 			};
 
-			setResult(activeScenarioId, newResult);
-			setStatus(activeScenarioId, "done");
+			setResult(requestScenarioId, newResult);
+			setStatus(requestScenarioId, "done");
 
 			const runoffReductionRaw = (
 				data as {
@@ -124,6 +170,16 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 				await fetchPlots(runoffReduction);
 			}
 
+			if (useScenarioStore.getState().activeScenarioId !== requestScenarioId) {
+				return;
+			}
+
+			setWithSizeLimit(lastRequestByScenarioId, requestScenarioId, {
+				payloadKey,
+				runoffReduction:
+					typeof runoffReduction === "number" ? runoffReduction : undefined,
+			});
+
 			setState("success");
 		} catch (error) {
 			setState("error");
@@ -133,7 +189,14 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 					: "Unbekannter Fehler beim Erstellen der Effektbewertung",
 			);
 		}
-	}, [activeScenarioId, fetchPlots, payload, setResult, setStatus]);
+	}, [
+		activeScenarioId,
+		fetchPlots,
+		payload,
+		restoreFromCache,
+		setResult,
+		setStatus,
+	]);
 
 	useEffect(() => {
 		queueMicrotask(() => {
