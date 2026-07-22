@@ -11,6 +11,8 @@ const pillVariants = cva(
 			variant: {
 				default:
 					"border-transparent bg-primary text-primary-foreground [a&]:hover:bg-primary/90",
+				secondary:
+					"border-transparent bg-neutral-light text-primary [a&]:hover:bg-secondary/80",
 				outline:
 					"text-white border-white [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
 				"outline-dark": "border-primary text-primary [a&]:hover:bg-primary/90",

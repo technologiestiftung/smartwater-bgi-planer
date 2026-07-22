@@ -8,6 +8,8 @@ import {
 	getModuleStepMeasure,
 } from "../Modules/shared//moduleConfig";
 import { ModuleMeasurementConfig, ModuleStepConfig } from "@/types/shared";
+import { Pill } from "../ui/pill";
+import { useState } from "react";
 
 interface FloodRiskProps {
 	floodRisk: string;
@@ -26,6 +28,9 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 		floodRisk,
 	) as ModuleStepConfig;
 	const { title } = getModuleInfo || {};
+	const [activeSimulation, setActiveSimulation] = useState<
+		"waterLevel" | "hazardLevel"
+	>("waterLevel");
 
 	return (
 		<div className="flex h-full w-full flex-col">
@@ -34,8 +39,28 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 					Simulationsergebnisse Überflutungsgefährdung - {title}
 				</h3>
 				<p className="text-muted-foreground">Erklärende Text...</p>
-				<div>
+				<div className="flex flex-col gap-2">
 					<p className="text-primary text-lg font-bold">Simulation auswählen</p>
+					<div className="flex gap-2">
+						<Pill
+							className="cursor-pointer rounded-sm"
+							variant={
+								activeSimulation === "waterLevel" ? "default" : "secondary"
+							}
+							onClick={() => setActiveSimulation("waterLevel")}
+						>
+							<p className="text-sm select-none">Wasserstand</p>
+						</Pill>
+						<Pill
+							className="cursor-pointer rounded-sm"
+							variant={
+								activeSimulation === "hazardLevel" ? "default" : "secondary"
+							}
+							onClick={() => setActiveSimulation("hazardLevel")}
+						>
+							<p className="text-sm select-none">Gefährdungsstufe</p>
+						</Pill>
+					</div>
 				</div>
 			</div>
 			<div className="border-muted bg-secondary flex shrink-0 border-t px-4">
