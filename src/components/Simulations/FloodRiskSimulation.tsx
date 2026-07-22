@@ -8,7 +8,8 @@ import {
 	getModuleStepMeasure,
 } from "../Modules/shared//moduleConfig";
 import { ModuleMeasurementConfig, ModuleStepConfig } from "@/types/shared";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLayersStore } from "@/store/layers";
 
 interface FloodRiskProps {
 	floodRisk: string;
@@ -28,9 +29,10 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 		"measurePlanning",
 		floodRisk,
 	) as ModuleStepConfig;
-	const { title } = getModuleInfo || {};
+	const { title, info: { floodRiskLayerConfigId } = {} } = getModuleInfo || {};
 	const [activeSimulation, setActiveSimulation] =
 		useState<ActiveSimulation>("waterLevel");
+	const applyConfigLayers = useLayersStore((state) => state.applyConfigLayers);
 
 	const SCENARIOS: { id: ActiveSimulation; label: string }[] = [
 		{
@@ -43,6 +45,13 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 		},
 	];
 
+	useEffect(() => {
+		if (!activeSimulation || !floodRiskLayerConfigId) return;
+		const configId = `bgi-planer:${activeSimulation === "waterLevel" ? "Wasserstand" : "Gefaehrdungsstufe"}_${floodRiskLayerConfigId}`;
+		console.log("configId", configId);
+		// applyConfigLayers(configId, true);
+	}, [activeSimulation, applyConfigLayers]);
+
 	return (
 		<div className="flex h-full w-full flex-col">
 			<div className="flex flex-1 flex-col gap-4 overflow-y-auto px-6 pb-6">
@@ -50,24 +59,28 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 					Simulationsergebnisse Überflutungsgefährdung - {title}
 				</h3>
 				<p className="text-muted-foreground">Erklärende Text...</p>
-				<div className="flex flex-col gap-2">
-					<p className="text-primary text-lg font-bold">Simulation auswählen</p>
-					<div className="flex gap-2">
-						{SCENARIOS.map((scenario) => (
-							<Button
-								key={scenario.id}
-								variant={
-									activeSimulation === scenario.id ? "default" : "outline"
-								}
-								size="sm"
-								onClick={() => setActiveSimulation(scenario.id)}
-								className="text-sm"
-							>
-								{scenario.label}
-							</Button>
-						))}
+				{floodRiskLayerConfigId && (
+					<div className="flex flex-col gap-2">
+						<p className="text-primary text-lg font-bold">
+							Simulation auswählen
+						</p>
+						<div className="flex gap-2">
+							{SCENARIOS.map((scenario) => (
+								<Button
+									key={scenario.id}
+									variant={
+										activeSimulation === scenario.id ? "default" : "outline"
+									}
+									size="sm"
+									onClick={() => setActiveSimulation(scenario.id)}
+									className="text-sm"
+								>
+									{scenario.label}
+								</Button>
+							))}
+						</div>
 					</div>
-				</div>
+				)}
 			</div>
 			<div className="border-muted bg-secondary flex shrink-0 border-t px-4">
 				<Button

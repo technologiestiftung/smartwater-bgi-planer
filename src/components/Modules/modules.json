@@ -190,7 +190,9 @@
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
 								],
-								"climateSimulationFileSlug": "DachExt"
+								"climateSimulationFileSlug": "DachExt",
+								"floodRiskLayerConfigId": "Gruendaecher",
+								"floodRiskChartSlug": "Gruendaecher"
 							}
 						},
 						{
@@ -282,7 +284,9 @@
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
 								],
-								"climateSimulationFileSlug": "DachInt"
+								"climateSimulationFileSlug": "DachInt",
+								"floodRiskLayerConfigId": "Gruendaecher",
+								"floodRiskChartSlug": "Gruendaecher"
 							}
 						},
 						{
@@ -462,7 +466,8 @@
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
 								],
-								"climateSimulationFileSlug": "TeilEntsiegelung"
+								"climateSimulationFileSlug": "TeilEntsiegelung",
+								"floodRiskChartSlug": "Teilentsiegelung"
 							}
 						},
 						{
@@ -625,7 +630,8 @@
 										"link": "https://www.fll.de/fachgremien/pflege-von-gruen/"
 									}
 								],
-								"climateSimulationFileSlug": "Gruen"
+								"climateSimulationFileSlug": "Gruen",
+								"floodRiskChartSlug": "Gruenflaechen"
 							}
 						},
 						{
@@ -716,7 +722,9 @@
 										"link": "https://www.berlin.de/sen/uvk/_assets/umwelt/wasser-und-geologie/publikationen-und-merkblaetter/hinweisblatt2-versick.pdf?ts=1754465106"
 									}
 								],
-								"climateSimulationFileSlug": "Baum"
+								"climateSimulationFileSlug": "Baum",
+								"floodRiskLayerConfigId": "Baeume",
+								"floodRiskChartSlug": "Baeume"
 							}
 						}
 					]
@@ -824,7 +832,9 @@
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
 								],
-								"climateSimulationFileSlug": "Mulde"
+								"climateSimulationFileSlug": "Mulde",
+								"floodRiskLayerConfigId": "Mulde",
+								"floodRiskChartSlug": "Mulde"
 							}
 						},
 						{
@@ -1012,7 +1022,9 @@
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
 								],
-								"climateSimulationFileSlug": "MuldRigElem"
+								"climateSimulationFileSlug": "MuldRigElem",
+								"floodRiskLayerConfigId": "Mulde-Rigole",
+								"floodRiskChartSlug": "Mulde-Rigole-Element"
 							}
 						},
 						{
@@ -1268,7 +1280,9 @@
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
 								],
-								"climateSimulationFileSlug": "Rigole"
+								"climateSimulationFileSlug": "Rigole",
+								"floodRiskLayerConfigId": "Rigole",
+								"floodRiskChartSlug": "Rigole"
 							}
 						}
 					]
