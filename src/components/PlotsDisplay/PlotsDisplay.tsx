@@ -22,8 +22,7 @@ const PlotsDisplay: FC<PlotsDisplayProps> = ({ plotUrls, isLoading }) => {
 	if (isLoading) {
 		return (
 			<div className="text-muted-foreground flex items-center gap-2 text-sm">
-				<SpinnerIcon className="animate-spin" size={16} />
-				Grafiken werden geladen…
+				<SpinnerIcon className="animate-spin" size={24} />
 			</div>
 		);
 	}

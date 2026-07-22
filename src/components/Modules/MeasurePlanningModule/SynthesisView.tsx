@@ -1,7 +1,8 @@
 "use client";
 
 import PlotsDisplay from "@/components/PlotsDisplay/PlotsDisplay";
-import ResultChart from "@/components/ResultChart/ResultChart";
+import WaterBalanceChart from "@/components/ResultCharts/WaterBalanceChart";
+import WaterQualityChart from "@/components/ResultCharts/WaterQualityChart";
 import { Button } from "@/components/ui/button";
 import { useRabimoPayload } from "@/hooks/useRabimoPayload";
 import { useResultLayer } from "@/hooks/useResultLayer";
@@ -9,7 +10,8 @@ import { SectionId } from "@/lib/helpers/sectionIds";
 import { PlotType } from "@/server/rabimo/types";
 import { useLayersStore, useResultStore, useScenarioStore } from "@/store";
 import type { Result } from "@/store/result/types";
-import { DownloadSimpleIcon, SpinnerIcon, XIcon } from "@phosphor-icons/react";
+import { ResultStatistics } from "@/types/result";
+import { DownloadSimpleIcon, XIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 
@@ -33,6 +35,15 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 		{},
 	);
 	const [plotState, setPlotState] = useState<RequestState>("idle");
+	
+const result = useResultStore((storeState) =>
+	activeScenarioId
+		? storeState.resultsByScenarioId[activeScenarioId]
+		: undefined,
+);
+	const stats = result?.data
+		? (result.data as { statistics: ResultStatistics }).statistics
+		: undefined;
 
 	useResultLayer({
 		layerIds: [
@@ -119,53 +130,20 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 			setMessage(
 				error instanceof Error
 					? error.message
-					: "Unbekannter Fehler beim Rabimo-Test",
+					: "Unbekannter Fehler beim Erstellen der Effektbewertung",
 			);
 		}
 	}, [activeScenarioId, fetchPlots, payload, setResult, setStatus]);
 
 	useEffect(() => {
-		handleRequest();
+		queueMicrotask(() => {
+			handleRequest();
+		});
 	}, [handleRequest]);
-
-	if (process.env.NODE_ENV !== "development") {
-		<div className="flex h-full w-full flex-col">
-			<div className="border-muted bg-secondary flex shrink-0 border-t px-4">
-				<Button
-					onClick={onBackToQuestions}
-					className="text-md my-4 flex-1 text-white hover:text-white"
-					size="lg"
-					variant="ghost"
-				>
-					<XIcon className="h-4 w-4" />
-					Zu den Maßnahmen
-				</Button>
-				<div className="w-px self-stretch bg-white" />
-				<Button
-					onClick={() => undefined}
-					className="text-md my-4 flex-1 text-white hover:text-white"
-					size="lg"
-					variant="ghost"
-				>
-					<DownloadSimpleIcon className="h-4 w-4" />
-					Exportieren
-				</Button>
-			</div>
-		</div>;
-	}
 
 	return (
 		<div className="flex h-full w-full flex-col">
 			<div className="flex-1 overflow-y-auto px-6 pb-6">
-				<p className="text-primary mt-2 max-w-3xl">
-					Hier wird später die Auswertung der Maßnahmen mit Berechnungen
-					angezeigt.
-				</p>
-
-				{state === "loading" && (
-					<SpinnerIcon className="animate-spin" size={16} />
-				)}
-
 				{message && (
 					<div
 						className={[
@@ -180,7 +158,52 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 				)}
 
 				<div className="mt-4">
-					<ResultChart />
+					<WaterBalanceChart stats={stats} isLoading={state === "loading"} />
+
+					<p className="mt-4">
+						Für den ausgewählten Projektbereich berechnet das Modell ABIMO die
+						drei Komponenten des Wasserhaushalts in Millimetern pro Jahr: den
+						kanalisierten Oberflächenabfluss, die Evapotranspiration – also die
+						Verdunstung über Oberflächen und Pflanzen – sowie die Versickerung.
+						Die Berechnung erfolgt für den Ist-Zustand, den Planungszustand und
+						ein idealisiertes naturnahes Szenario. Als Referenz dient dabei ein
+						unversiegelter Stadtpark mit Mischvegetation. Durch den Vergleich
+						des Ist- und Planungszustands mit dem naturnahen Referenzszenario
+						wird jeweils der Parameter ΔW ermittelt. Dieser gibt in Prozent an,
+						wie stark der Wasserhaushalt eines Gebiets vom naturnahen Zustand
+						abweicht. Die folgenden Grafiken zeigen, wie die geplanten Maßnahmen
+						den Wasserhaushalt verbessern und den ΔW-Wert verringern. Die Werte
+						der einzelnen ausgewählten Blockteilflächen werden dabei zu einem
+						flächengewichteten Mittelwert zusammengefasst.
+					</p>
+
+					<br />
+
+					<WaterQualityChart
+						stats={stats}
+						isLoading={plotState === "loading"}
+					/>
+
+					<p className="mt-4">
+						Die Auswirkungen geplanter BGI-Maßnahmen auf die Gewässerbelastung
+						werden mithilfe eines vereinfachten, datenbasierten Modells
+						abgeschätzt. Grundlage sind umfangreiche hydrodynamische
+						Simulationen des Berliner Mischwassersystems mit den Modellen
+						InfoWorks ICM, GERRIS, HYDRAX und QSim. Aus den geplanten Maßnahmen
+						wird zunächst die Verringerung des Regenabflusses in die
+						Mischkanalisation ermittelt. Diese wird auf die angeschlossenen
+						versiegelten Flächen aller 18 Berliner Mischwassereinzugsgebiete
+						hochgerechnet und über die aus den Modellrechnungen abgeleiteten
+						Wirkungszusammenhänge in Veränderungen der Gewässerbelastung
+						übersetzt. Die Ergebnisse werden anhand der Kennwerte
+						„Unterschreitungsdauer in Stunden“ und „Anzahl kritischer
+						O₂-Ereignisse“ dargestellt. Beide Kennwerte beziehen sich auf
+						Sauerstoffkonzentrationen unter 1,5 mg/L, die als fischkritisch
+						gelten und zu Fischsterben führen können. Je geringer die
+						Unterschreitungsdauer und je weniger kritische O₂-Ereignisse
+						auftreten, desto geringer ist die Belastung der Gewässer durch
+						Mischwasserüberläufe.
+					</p>
 				</div>
 
 				<div className="mt-4">
