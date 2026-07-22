@@ -184,26 +184,6 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
         <a title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> 
         <a href="https://github.com/technologiestiftung/smartwater-bgi-planer/pulls?q=is%3Apr+reviewed-by%3AJonathanHaudenschild" title="Reviewed Pull Requests">👀</a>
       </td>
-      <!--  -->
-      <!--  -->
-      <!--  -->
-      <!--  -->
-      <!--  -->
-      <!--  -->
-      <td align="center" valign="top">
-        <a href="https://github.com/guadiromero">
-          <img src="https://avatars.githubusercontent.com/u/32439356?v=4" width="64px;" alt="Guadalupe Romero"/>
-          <br />
-          <sub text-decoration="none">
-            <b>Guadalupe Romero</b>
-          </sub>
-        </a>
-        <br />
-        <a href="https://github.com/technologiestiftung/smartwater-bgi-planer/commits?author=guadiromero" title="Code">💻</a> 
-        <a href="https://github.com/technologiestiftung/smartwater-bgi-planer/commits?author=guadiromero&path=docs" title="Documentation">📖</a>
-        <a title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> 
-        <a href="https://github.com/technologiestiftung/smartwater-bgi-planer/pulls?q=is%3Apr+reviewed-by%3Aguadiromero" title="Reviewed Pull Requests">👀</a>
-      </td>
       <td align="center" valign="top">
         <a href="https://github.com/JS-TSB">
         <img src="https://avatars.githubusercontent.com/u/185074060?v=4" width="64px;" alt="Jakob Sawal"/>
@@ -219,8 +199,6 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
   </tbody>
 </table>
-
-<!-- <a href="#design-LuiseBrandenburger" title="Design">🎨</a> -->
 
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
