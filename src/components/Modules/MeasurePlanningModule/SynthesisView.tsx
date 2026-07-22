@@ -35,12 +35,12 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 		{},
 	);
 	const [plotState, setPlotState] = useState<RequestState>("idle");
-	
-const result = useResultStore((storeState) =>
-	activeScenarioId
-		? storeState.resultsByScenarioId[activeScenarioId]
-		: undefined,
-);
+
+	const result = useResultStore((storeState) =>
+		activeScenarioId
+			? storeState.resultsByScenarioId[activeScenarioId]
+			: undefined,
+	);
 	const stats = result?.data
 		? (result.data as { statistics: ResultStatistics }).statistics
 		: undefined;
