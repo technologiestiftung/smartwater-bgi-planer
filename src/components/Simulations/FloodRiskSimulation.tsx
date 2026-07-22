@@ -8,7 +8,7 @@ import {
 	getModuleStepMeasure,
 } from "../Modules/shared//moduleConfig";
 import { ModuleMeasurementConfig, ModuleStepConfig } from "@/types/shared";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLayersStore } from "@/store/layers";
 import restoreUmlaute from "@/lib/helpers/restoreUmlaute";
 import Image from "next/image";
@@ -31,6 +31,9 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 		"measurePlanning",
 		floodRisk,
 	) as ModuleStepConfig;
+	const setLayerVisibility = useLayersStore(
+		(state) => state.setLayerVisibility,
+	);
 	const {
 		title,
 		info: {
@@ -64,14 +67,49 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 	const [activeSimulation, setActiveSimulation] =
 		useState<ActiveSimulation>("waterLevel");
 	const [activeChart, setActiveChart] = useState<string>(useCharts[0]);
-	const applyConfigLayers = useLayersStore((state) => state.applyConfigLayers);
+	const layers = useLayersStore((state) => state.layers);
+	const floodRiskLayerConfigIdRef = useRef(floodRiskLayerConfigId);
 
 	useEffect(() => {
-		if (!activeSimulation || !floodRiskLayerConfigId) return;
-		const configId = `bgi-planer:${activeSimulation === "waterLevel" ? "Wasserstand" : "Gefaehrdungsstufe"}_${floodRiskLayerConfigId}`;
-		console.log("configId", configId);
-		applyConfigLayers(configId, true);
-	}, [activeSimulation, applyConfigLayers]);
+		if (!activeSimulation || !floodRiskLayerConfigId || layers.size === 0)
+			return;
+
+		const configIdWaterLevel = `bgi-planer:Wasserstand_${floodRiskLayerConfigId}`;
+		const configIdHazardLevel = `bgi-planer:Gefaehrdungsstufe_${floodRiskLayerConfigId}`;
+
+		const activeConfigId =
+			activeSimulation === "waterLevel"
+				? configIdWaterLevel
+				: configIdHazardLevel;
+		const inactiveConfigId =
+			activeSimulation === "waterLevel"
+				? configIdHazardLevel
+				: configIdWaterLevel;
+
+		const activeLayer = layers.get(activeConfigId);
+		const inactiveLayer = layers.get(inactiveConfigId);
+
+		if (activeLayer && !activeLayer.visibility) {
+			setLayerVisibility(activeConfigId, true);
+		}
+		if (inactiveLayer && inactiveLayer.visibility) {
+			setLayerVisibility(inactiveConfigId, false);
+		}
+	}, [activeSimulation, floodRiskLayerConfigId, layers, setLayerVisibility]);
+
+	useEffect(() => {
+		floodRiskLayerConfigIdRef.current = floodRiskLayerConfigId;
+	}, [floodRiskLayerConfigId]);
+
+	useEffect(() => {
+		return () => {
+			const currentId = floodRiskLayerConfigIdRef.current;
+			if (currentId) {
+				setLayerVisibility(`bgi-planer:Wasserstand_${currentId}`, false);
+				setLayerVisibility(`bgi-planer:Gefaehrdungsstufe_${currentId}`, false);
+			}
+		};
+	}, [setLayerVisibility]);
 
 	return (
 		<div className="flex h-full w-full flex-col">
