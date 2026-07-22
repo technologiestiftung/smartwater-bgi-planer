@@ -139,8 +139,7 @@ export function ConnectedAreaSelection({
 
 		const handleSelect = (event: { selected: Feature<Geometry>[] }) => {
 			const id = event.selected[0]?.get("connectedAreaId") as
-				| string
-				| undefined;
+				string | undefined;
 			if (id) setSelectedConnectedArea(id);
 		};
 

@@ -168,6 +168,7 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 				<div className="mt-auto pt-6">
 					<Image
 						src={"/legends/measures.svg"}
+						loading="eager"
 						alt="Legende für Maßnahmen"
 						width={620}
 						height={260}

@@ -63,8 +63,7 @@ export const FeatureActionMenu: FC<FeatureActionMenuProps> = ({
 				if (activeScenarioId) {
 					const measureId = features.get("measureId") as string | undefined;
 					const connectedAreaId = features.get("connectedAreaId") as
-						| string
-						| undefined;
+						string | undefined;
 
 					if (measureId) {
 						removeMeasure(activeScenarioId, measureId);
