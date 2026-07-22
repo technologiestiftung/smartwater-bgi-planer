@@ -352,11 +352,7 @@ export function MeasurePlanningAccordion({
 			</>
 		);
 	} else if (floodRisk) {
-		content = (
-			<>
-				<FloodRisk floodRisk={floodRisk} onActivate={activateQuestion} />
-			</>
-		);
+		content = <FloodRisk floodRisk={floodRisk} onActivate={activateQuestion} />;
 	} else {
 		content = (
 			<>
