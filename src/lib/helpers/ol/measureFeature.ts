@@ -37,8 +37,7 @@ export const removeMeasureFeatureFromLayer = (
 	if (!drawLayerId) return;
 
 	const layer = map.getAllLayers().find((l) => l.get("id") === drawLayerId) as
-		| VectorLayer<VectorSource>
-		| undefined;
+		VectorLayer<VectorSource> | undefined;
 	const source = layer?.getSource();
 	if (!source) return;
 

@@ -25,8 +25,7 @@ export function useConnectedAreaFeatureSync() {
 		const layer = map
 			.getAllLayers()
 			.find((l) => l.get("id") === LAYER_IDS.CONNECTED_AREA_DRAW) as
-			| VectorLayer<VectorSource>
-			| undefined;
+			VectorLayer<VectorSource> | undefined;
 		const source = layer?.getSource();
 		if (!source) return;
 
