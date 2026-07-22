@@ -298,6 +298,46 @@
 						{
 							"id": "ua_klimabewertung_2022:ec_ua_phk_vul_nutz_2022",
 							"visibility": false
+						},
+						{
+							"id": "bgi-planer:Gefaehrdungsstufe_Baeume",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:Gefaehrdungsstufe_Gruendaecher",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:Gefaehrdungsstufe_Mulde",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:Gefaehrdungsstufe_Mulde-Rigole",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:Gefaehrdungsstufe_Rigole",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:Wasserstand_Baeume",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:Wasserstand_Gruendaecher",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:Wasserstand_Mulde",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:Wasserstand_Mulde-Rigole",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:Wasserstand_Rigole",
+							"visibility": false
 						}
 					]
 				},
