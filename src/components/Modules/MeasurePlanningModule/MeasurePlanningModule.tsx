@@ -11,6 +11,7 @@ interface MeasurePlanningModuleProps {
 	projectId: string;
 	info?: string;
 	climateSimulation?: string;
+	floodRisk?: string;
 }
 
 export function MeasurePlanningModule({
@@ -18,6 +19,7 @@ export function MeasurePlanningModule({
 	onOpenChange,
 	info,
 	climateSimulation,
+	floodRisk,
 }: MeasurePlanningModuleProps) {
 	const { title, description } = getModuleMetadata("measurePlanning");
 
@@ -35,6 +37,7 @@ export function MeasurePlanningModule({
 			description={description}
 			info={info}
 			climateSimulation={climateSimulation}
+			floodRisk={floodRisk}
 		/>
 	);
 }

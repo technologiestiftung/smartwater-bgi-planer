@@ -77,6 +77,7 @@ interface MeasurePlanningAccordionProps {
 	description: string;
 	info?: string;
 	climateSimulation?: string;
+	floodRisk?: string;
 }
 
 function MeasurePlanningFooter({
@@ -188,6 +189,7 @@ export function MeasurePlanningAccordion({
 	description,
 	info,
 	climateSimulation,
+	floodRisk,
 }: MeasurePlanningAccordionProps) {
 	const steps = getModuleSteps("measurePlanning");
 	const { hasFeatures: hasConnectedArea } = useLayerFeatures(
@@ -346,6 +348,12 @@ export function MeasurePlanningAccordion({
 					onActivate={activateQuestion}
 				/>
 				<ClimateSimulationModal climateSimulation={climateSimulation} />
+			</>
+		);
+	} else if (floodRisk) {
+		content = (
+			<>
+				<h1>Modelierung Überflutungsgefährdung</h1>
 			</>
 		);
 	} else {

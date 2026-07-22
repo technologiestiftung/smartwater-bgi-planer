@@ -51,7 +51,10 @@ const MeasureCatalogModule: FC<MeasureCatalogModuleProps> = ({
 					>
 						Modellierung Stadtklima
 					</Button>
-					<Button variant="outline" disabled>
+					<Button
+						variant="outline"
+						onClick={() => router.push(`?floodRisk=${id}`)}
+					>
 						Modellierung Überflutungsgefährdung
 					</Button>
 					<Button onClick={() => onActivate(getStep.id, info)}>
