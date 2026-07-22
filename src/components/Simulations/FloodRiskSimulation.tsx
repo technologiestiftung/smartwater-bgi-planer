@@ -8,13 +8,14 @@ import {
 	getModuleStepMeasure,
 } from "../Modules/shared//moduleConfig";
 import { ModuleMeasurementConfig, ModuleStepConfig } from "@/types/shared";
-import { Pill } from "../ui/pill";
 import { useState } from "react";
 
 interface FloodRiskProps {
 	floodRisk: string;
 	onActivate: (stepId: string, configId: string) => void;
 }
+
+type ActiveSimulation = "waterLevel" | "hazardLevel";
 
 export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 	const router = useRouter();
@@ -28,9 +29,19 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 		floodRisk,
 	) as ModuleStepConfig;
 	const { title } = getModuleInfo || {};
-	const [activeSimulation, setActiveSimulation] = useState<
-		"waterLevel" | "hazardLevel"
-	>("waterLevel");
+	const [activeSimulation, setActiveSimulation] =
+		useState<ActiveSimulation>("waterLevel");
+
+	const SCENARIOS: { id: ActiveSimulation; label: string }[] = [
+		{
+			id: "waterLevel",
+			label: "Wasserstand",
+		},
+		{
+			id: "hazardLevel",
+			label: "Gefährdungsstufe",
+		},
+	];
 
 	return (
 		<div className="flex h-full w-full flex-col">
@@ -42,24 +53,19 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 				<div className="flex flex-col gap-2">
 					<p className="text-primary text-lg font-bold">Simulation auswählen</p>
 					<div className="flex gap-2">
-						<Pill
-							className="cursor-pointer rounded-sm"
-							variant={
-								activeSimulation === "waterLevel" ? "default" : "secondary"
-							}
-							onClick={() => setActiveSimulation("waterLevel")}
-						>
-							<p className="text-sm select-none">Wasserstand</p>
-						</Pill>
-						<Pill
-							className="cursor-pointer rounded-sm"
-							variant={
-								activeSimulation === "hazardLevel" ? "default" : "secondary"
-							}
-							onClick={() => setActiveSimulation("hazardLevel")}
-						>
-							<p className="text-sm select-none">Gefährdungsstufe</p>
-						</Pill>
+						{SCENARIOS.map((scenario) => (
+							<Button
+								key={scenario.id}
+								variant={
+									activeSimulation === scenario.id ? "default" : "outline"
+								}
+								size="sm"
+								onClick={() => setActiveSimulation(scenario.id)}
+								className="text-sm"
+							>
+								{scenario.label}
+							</Button>
+						))}
 					</div>
 				</div>
 			</div>
