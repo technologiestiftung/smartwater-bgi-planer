@@ -101,6 +101,7 @@ export interface LayerConfigItem {
 	name: string;
 	description?: string;
 	subDescription?: string;
+	scores?: Record<string, number>;
 	question?: string;
 	embeddedImage?: string;
 	drawLayerId: string;
