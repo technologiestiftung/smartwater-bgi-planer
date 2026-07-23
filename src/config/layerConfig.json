@@ -751,6 +751,7 @@
 		"visibleLayerIds": [
 			"project_boundary",
 			"module_3_connected_area_draw",
+			"bgi-planer:versickerungspotenzial_gp_muldenversickerung",
 			"module_3_3G1_draw",
 			"module_3_3G2_draw",
 			"module_3_3G5_draw",
@@ -778,6 +779,7 @@
 		"visibleLayerIds": [
 			"project_boundary",
 			"module_3_connected_area_draw",
+			"bgi-planer:versickerungspotenzial_gp_flaechenversickerung",
 			"module_3_3G1_draw",
 			"module_3_3G2_draw",
 			"module_3_3G5_draw",
@@ -805,6 +807,7 @@
 		"visibleLayerIds": [
 			"project_boundary",
 			"module_3_connected_area_draw",
+			"bgi-planer:versickerungspotenzial_gp_mulden_rigolenelement",
 			"module_3_3G1_draw",
 			"module_3_3G2_draw",
 			"module_3_3G5_draw",
@@ -832,6 +835,7 @@
 		"visibleLayerIds": [
 			"project_boundary",
 			"module_3_connected_area_draw",
+			"bgi-planer:versickerungspotenzial_gp_muldenversickerung",
 			"module_3_3G1_draw",
 			"module_3_3G2_draw",
 			"module_3_3G5_draw",
@@ -886,6 +890,7 @@
 		"visibleLayerIds": [
 			"project_boundary",
 			"module_3_connected_area_draw",
+			"bgi-planer:versickerungspotenzial_gp_rigolenanlage",
 			"module_3_3G1_draw",
 			"module_3_3G2_draw",
 			"module_3_3G5_draw",

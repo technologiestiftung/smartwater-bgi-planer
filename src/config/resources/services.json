@@ -361,6 +361,61 @@
 		"gfiAttributes": "ignore"
 	},
 	{
+		"id": "UPDATE 20260723 - with SLD styles"
+	},
+	{
+		"id": "bgi-planer:versickerungspotenzial_gp_flaechenversickerung",
+		"name": "Flächenversickerung",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "versickerungspotenzial_gp",
+		"styles": "bgi-planer:Potentiale_Regenwasserbewirtschaftung_flaechenversickerung",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:versickerungspotenzial_gp_mulden_rigolenelement",
+		"name": "Mulden-Rigolenelement",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "versickerungspotenzial_gp",
+		"styles": "bgi-planer:Potentiale_Regenwasserbewirtschaftung_mulden_rigolenelement",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:versickerungspotenzial_gp_muldenversickerung",
+		"name": "Muldenversickerung",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "versickerungspotenzial_gp",
+		"styles": "bgi-planer:Potentiale_Regenwasserbewirtschaftung_muldenversickerung",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:versickerungspotenzial_gp_rigolenanlage",
+		"name": "Rigolenanlage",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "versickerungspotenzial_gp",
+		"styles": "bgi-planer:Potentiale_Regenwasserbewirtschaftung_rigolenanlage",
+		"gfiAttributes": "ignore"
+	},
+	{
 		"id": "BGI DRAW MAPS"
 	},
 	{
