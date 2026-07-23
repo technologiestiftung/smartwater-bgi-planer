@@ -18,7 +18,7 @@ import { useCallback, useEffect, useState } from "react";
 const CACHE_MAX_SIZE = 20;
 
 function setWithSizeLimit<K, V>(map: Map<K, V>, key: K, value: V): void {
-	if (map.size >= CACHE_MAX_SIZE) {
+	if (!map.has(key) && map.size >= CACHE_MAX_SIZE) {
 		const oldest = map.keys().next().value;
 		if (oldest !== undefined) map.delete(oldest);
 	}
@@ -100,17 +100,21 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 			return;
 		}
 		setPlotState("loading");
-		const res = await fetch(
-			`/api/rabimo/plot-effect-of-disconnect?runoff_reduction=${runoffReduction}`,
-		);
-		if (!res.ok) {
+		try {
+			const res = await fetch(
+				`/api/rabimo/plot-effect-of-disconnect?runoff_reduction=${runoffReduction}`,
+			);
+			if (!res.ok) {
+				setPlotState("error");
+				return;
+			}
+			const data = (await res.json()) as Partial<Record<PlotType, string>>;
+			setWithSizeLimit(plotsCache, runoffReduction, data);
+			setPlotUrls(data);
+			setPlotState("success");
+		} catch {
 			setPlotState("error");
-			return;
 		}
-		const data = (await res.json()) as Partial<Record<PlotType, string>>;
-		setWithSizeLimit(plotsCache, runoffReduction, data);
-		setPlotUrls(data);
-		setPlotState("success");
 	}, []);
 
 	// eslint-disable-next-line complexity
@@ -143,7 +147,9 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 
 			if (!response.ok) {
 				setStatus(requestScenarioId, "error");
-				throw new Error("Rabimo request failed");
+				const message =
+					(data as { error?: string })?.error ?? "Rabimo request failed";
+				throw new Error(message);
 			}
 
 			const newResult: Result = {
@@ -232,10 +238,7 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 
 					<br />
 
-					<WaterQualityChart
-						stats={stats}
-						isLoading={plotState === "loading"}
-					/>
+					<WaterQualityChart stats={stats} isLoading={state === "loading"} />
 
 					<p className="mt-4">
 						Die Auswirkungen geplanter BGI-Maßnahmen auf die Gewässerbelastung

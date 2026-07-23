@@ -21,9 +21,9 @@ const WaterQualityChart: FC<WaterQualityChartProps> = ({
 		return <SpinnerIcon className="animate-spin" size={24} />;
 	}
 
-	const runoffReduction = stats.runoff_reduction_percent[0];
-	const wqiOrig = stats.water_quality_indicators.status_quo;
-	const wqiSim = stats.water_quality_indicators.with_measures;
+	const runoffReduction = stats.runoff_reduction_percent[0] ?? 0;
+	const wqiOrig = stats.water_quality_indicators.status_quo ?? 0;
+	const wqiSim = stats.water_quality_indicators.with_measures ?? 0;
 
 	return (
 		<div
