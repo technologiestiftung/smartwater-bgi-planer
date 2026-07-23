@@ -12,6 +12,13 @@ export async function GET(request: NextRequest) {
 		);
 	}
 
+	if (!runoffReduction || Number.isNaN(Number(runoffReduction))) {
+		return NextResponse.json(
+			{ error: "'runoff_reduction' query param must be a valid number" },
+			{ status: 400 },
+		);
+	}
+
 	const results = await Promise.allSettled(
 		PLOT_TYPES.map(async (type) => {
 			const buffer = await getPlotEffectOfDisconnect(
