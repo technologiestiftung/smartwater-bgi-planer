@@ -10,8 +10,11 @@ import {
 import { ModuleMeasurementConfig, ModuleStepConfig } from "@/types/shared";
 import { useEffect, useRef, useState } from "react";
 import { useLayersStore } from "@/store/layers";
+import { useMapStore } from "@/store/map";
 import restoreUmlaute from "@/lib/helpers/restoreUmlaute";
 import Image from "next/image";
+import { getCenter } from "ol/extent";
+import { transformExtent } from "ol/proj";
 
 interface FloodRiskProps {
 	floodRisk: string;
@@ -69,6 +72,7 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 		useState<ActiveSimulation>("waterLevel");
 	const [activeChart, setActiveChart] = useState<string>(useCharts[0]);
 	const layers = useLayersStore((state) => state.layers);
+	const map = useMapStore((state) => state.map);
 	const floodRiskLayerConfigIdRef = useRef(floodRiskLayerConfigId);
 
 	useEffect(() => {
@@ -97,6 +101,36 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 			setLayerVisibility(inactiveConfigId, false);
 		}
 	}, [activeSimulation, floodRiskLayerConfigId, layers, setLayerVisibility]);
+
+	useEffect(() => {
+		if (!map) return;
+
+		const simulationView = {
+			bbox: [13.447359, 52.496827, 13.477934, 52.528612],
+			zoom: 4,
+			duration: 800,
+			padding: [40, 40, 40, 40],
+		};
+		const { bbox, zoom, duration, padding } = simulationView;
+		const view = map.getView();
+
+		const mapProjection = view.getProjection().getCode();
+		const transformedExtent = transformExtent(bbox, "EPSG:4326", mapProjection);
+
+		if (typeof zoom === "number") {
+			view.animate({
+				center: getCenter(transformedExtent),
+				zoom,
+				duration,
+			});
+			return;
+		}
+
+		view.fit(transformedExtent, {
+			duration,
+			padding,
+		});
+	}, [activeSimulation, map]);
 
 	useEffect(() => {
 		floodRiskLayerConfigIdRef.current = floodRiskLayerConfigId;
