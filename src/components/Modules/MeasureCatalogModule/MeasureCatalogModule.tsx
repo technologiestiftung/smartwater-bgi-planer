@@ -5,11 +5,10 @@ import { getModuleStep, getModuleStepMeasure } from "../shared/moduleConfig";
 import { ModuleMeasurementConfig, ModuleStepConfig } from "@/types/shared";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "@phosphor-icons/react";
-import { getIconComponent } from "@/lib/helpers/iconMap";
-import { cn } from "@/lib/utils";
 import { CarouselWithIndicators } from "@/components/ui/carousel-with-indicators";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { MeasureCatalogScore } from "./MeasureCatalogScore";
 
 interface MeasureCatalogModuleProps {
 	info: string;
@@ -78,38 +77,7 @@ const MeasureCatalogModule: FC<MeasureCatalogModuleProps> = ({
 					) : (
 						<p className="wrap-break-word">{description}</p>
 					)}
-					<div className="flex flex-wrap justify-start gap-2">
-						{scores &&
-							Object.keys(scores).map((iconName) => {
-								const MetricIcon = getIconComponent(iconName);
-								const maxScore = 3;
-								const label: Record<string, string> = {
-									CloudRain: "Starkregen",
-									ThermometerHot: "Stadtklima",
-									Drop: "Gewässerschutz",
-								};
-								const score = getModuleInfo.info?.scores?.[iconName] ?? 0;
-								return (
-									<div
-										key={`${id}-${iconName}`}
-										className="flex items-center gap-1"
-									>
-										{Array.from({ length: maxScore }, (_, i) => (
-											<span
-												key={`${id}-${iconName}-${i}`}
-												className={cn(
-													"bg-neutral-mid border-neutral-mid inline-flex h-6 w-6 items-center justify-center rounded-full border",
-													score > i && "bg-primary border-primary",
-												)}
-											>
-												<MetricIcon className="h-4 w-4 text-white" />
-											</span>
-										))}
-										<p>{label[iconName]}</p>
-									</div>
-								);
-							})}
-					</div>
+					<MeasureCatalogScore scores={scores} />
 					{images && (
 						<CarouselWithIndicators
 							hideTitle
