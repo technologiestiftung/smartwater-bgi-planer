@@ -44,7 +44,7 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 	const setStatus = useResultStore((state) => state.setStatus);
 	const payload = useRabimoPayload();
 	const [state, setState] = useState<RequestState>("idle");
-	const [message, setMessage] = useState<string>("");
+	const [error, setError] = useState<string>("");
 	const [plotUrls, setPlotUrls] = useState<Partial<Record<PlotType, string>>>(
 		{},
 	);
@@ -124,7 +124,7 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 		const requestScenarioId = activeScenarioId;
 		setState("loading");
 		setStatus(requestScenarioId, "loading");
-		setMessage("");
+		setError("");
 		setPlotUrls({});
 		setPlotState("idle");
 
@@ -183,11 +183,7 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 			setState("success");
 		} catch (error) {
 			setState("error");
-			setMessage(
-				error instanceof Error
-					? error.message
-					: "Unbekannter Fehler beim Erstellen der Effektbewertung",
-			);
+			setError(error instanceof Error ? error.message : "Unbekannter Fehler");
 		}
 	}, [
 		activeScenarioId,
@@ -207,16 +203,10 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 	return (
 		<div className="flex h-full w-full flex-col">
 			<div className="flex-1 overflow-y-auto px-6 pb-6">
-				{message && (
-					<div
-						className={[
-							"max-w-48 rounded-xs px-2 py-1 text-xs shadow-md",
-							state === "error"
-								? "bg-destructive/90 text-white"
-								: "bg-background text-foreground",
-						].join(" ")}
-					>
-						{message}
+				<h3>Effektbewertung</h3>
+				{error && (
+					<div className="border-primary text-red mt-4 flex cursor-pointer flex-col items-center justify-center gap-2 border-2 border-dashed p-4 text-center transition-colors">
+						<span>Effektbewertung konnte nicht geladen werden.</span>
 					</div>
 				)}
 
