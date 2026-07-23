@@ -41,6 +41,7 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 			floodRiskChartFolderSlug,
 			floodRiskChartFileSlug,
 			floodRiskCharts,
+			floodRiskText,
 		} = {},
 	} = getModuleInfo || {};
 
@@ -117,7 +118,9 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 				<h3 className="text-primary">
 					Simulationsergebnisse Überflutungsgefährdung - {title}
 				</h3>
-				<p className="text-muted-foreground">Erklärende Text...</p>
+				{floodRiskText && (
+					<p className="text-muted-foreground">{floodRiskText}</p>
+				)}
 				{floodRiskLayerConfigId && (
 					<div className="flex flex-col gap-2">
 						<p className="text-primary text-lg font-bold">

@@ -72,6 +72,7 @@ export interface ModuleMeasurementInfo {
 	floodRiskChartFolderSlug?: string;
 	floodRiskChartFileSlug?: string;
 	floodRiskCharts?: string[];
+	floodRiskText?: string;
 }
 
 interface ModuleMeasurementInfoImage {

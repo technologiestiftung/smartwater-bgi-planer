@@ -193,7 +193,8 @@
 								"climateSimulationFileSlug": "DachExt",
 								"floodRiskLayerConfigId": "Gruendaecher",
 								"floodRiskChartFolderSlug": "Gruendaecher",
-								"floodRiskChartFileSlug": "Gr_nd_cher"
+								"floodRiskChartFileSlug": "Gr_nd_cher",
+								"floodRiskText": "Erklärender Text..."
 							}
 						},
 						{
@@ -288,7 +289,8 @@
 								"climateSimulationFileSlug": "DachInt",
 								"floodRiskLayerConfigId": "Gruendaecher",
 								"floodRiskChartFolderSlug": "Gruendaecher",
-								"floodRiskChartFileSlug": "Gr_nd_cher"
+								"floodRiskChartFileSlug": "Gr_nd_cher",
+								"floodRiskText": "Erklärender Text..."
 							}
 						},
 						{
@@ -469,7 +471,8 @@
 									}
 								],
 								"climateSimulationFileSlug": "TeilEntsiegelung",
-								"floodRiskChartFolderSlug": "Teilentsiegelung"
+								"floodRiskChartFolderSlug": "Teilentsiegelung",
+								"floodRiskText": "Erklärender Text..."
 							}
 						},
 						{
@@ -552,7 +555,8 @@
 								],
 								"climateSimulationFileSlug": "VollEntsiegelung",
 								"floodRiskChartFolderSlug": "Gruenflaechen",
-								"floodRiskChartFileSlug": "Gr_nfl_chen"
+								"floodRiskChartFileSlug": "Gr_nfl_chen",
+								"floodRiskText": "Erklärender Text..."
 							}
 						}
 					]
@@ -636,7 +640,8 @@
 								],
 								"climateSimulationFileSlug": "Gruen",
 								"floodRiskChartFolderSlug": "Gruenflaechen",
-								"floodRiskChartFileSlug": "Gr_nfl_chen"
+								"floodRiskChartFileSlug": "Gr_nfl_chen",
+								"floodRiskText": "Erklärender Text..."
 							}
 						},
 						{
@@ -734,7 +739,8 @@
 								"floodRiskCharts": [
 									"Vergleich_gefaehrdeter_Flaechen",
 									"Reduktion_des_Ueberflutungsvolumens"
-								]
+								],
+								"floodRiskText": "Erklärender Text..."
 							}
 						}
 					]
@@ -844,7 +850,8 @@
 								],
 								"climateSimulationFileSlug": "Mulde",
 								"floodRiskLayerConfigId": "Mulde",
-								"floodRiskChartFolderSlug": "Mulde"
+								"floodRiskChartFolderSlug": "Mulde",
+								"floodRiskText": "Erklärender Text..."
 							}
 						},
 						{
@@ -1035,7 +1042,8 @@
 								"climateSimulationFileSlug": "MuldRigElem",
 								"floodRiskLayerConfigId": "Mulde-Rigole",
 								"floodRiskChartFolderSlug": "Mulde-Rigole-Element",
-								"floodRiskChartFileSlug": "Mulde_Rigole"
+								"floodRiskChartFileSlug": "Mulde_Rigole",
+								"floodRiskText": "Erklärender Text..."
 							}
 						},
 						{
@@ -1293,7 +1301,8 @@
 								],
 								"climateSimulationFileSlug": "Rigole",
 								"floodRiskLayerConfigId": "Rigole",
-								"floodRiskChartFolderSlug": "Rigole"
+								"floodRiskChartFolderSlug": "Rigole",
+								"floodRiskText": "Erklärender Text..."
 							}
 						}
 					]
