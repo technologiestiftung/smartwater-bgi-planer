@@ -21,8 +21,8 @@ const WaterBalanceChart: FC<WaterBalanceChartProps> = ({
 		return <SpinnerIcon className="animate-spin" size={24} />;
 	}
 
-	const original = stats.water_balance.status_quo[0] ?? 0;
-	const with_measures = stats.water_balance.with_measures[0] ?? 0;
+	const original = stats.water_balance.status_quo[0]!;
+	const with_measures = stats.water_balance.with_measures[0]!;
 
 	const metrics = [
 		{
