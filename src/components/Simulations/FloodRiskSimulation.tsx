@@ -48,10 +48,15 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 		} = {},
 	} = getModuleInfo || {};
 
-	const SCENARIOS: { id: ActiveSimulation; label: string }[] = [
+	const SCENARIOS: {
+		id: ActiveSimulation;
+		label: string;
+		legendLabel?: string;
+	}[] = [
 		{
 			id: "waterLevel",
 			label: "Wasserstand",
+			legendLabel: "Wasserstand in cm",
 		},
 		{
 			id: "hazardLevel",
@@ -173,6 +178,22 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 								>
 									{scenario.label}
 								</Button>
+							))}
+						</div>
+						<div className="mb-4 flex flex-col gap-2">
+							{SCENARIOS.map((scenario) => (
+								<div key={scenario.id}>
+									<h5 className="text-primary mb-2 text-sm font-medium">
+										{scenario.legendLabel || scenario.label}
+									</h5>
+									<Image
+										src={`/legends/${scenario.id}.svg`}
+										alt="Legende für die Karte"
+										width={400}
+										height={200}
+										className="h-[18px] w-auto"
+									/>
+								</div>
 							))}
 						</div>
 					</div>
