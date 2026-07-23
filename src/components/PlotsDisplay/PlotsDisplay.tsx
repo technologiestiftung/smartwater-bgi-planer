@@ -8,7 +8,7 @@ import { FC, useState } from "react";
 
 const PLOT_LABELS: Record<PlotType, string> = {
 	critical_hours: "Unterschreitungsdauer in Stunden (1,5 mg/L)",
-	critical_events: "Kritische Sauerstoffreignisse (Anzahl)",
+	critical_events: "Kritische Sauerstoffereignisse (Anzahl)",
 };
 
 interface PlotsDisplayProps {
