@@ -416,6 +416,18 @@
 		"gfiAttributes": "ignore"
 	},
 	{
+		"id": "bgi-planer:optimierter_Baumstandort",
+		"name": "Optimierter Baumstandort",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "optimierter_Baumstandort",
+		"gfiAttributes": "ignore"
+	},
+	{
 		"id": "BGI DRAW MAPS"
 	},
 	{

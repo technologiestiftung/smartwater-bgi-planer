@@ -863,6 +863,7 @@
 		"visibleLayerIds": [
 			"project_boundary",
 			"module_3_connected_area_draw",
+			"bgi-planer:optimierter_Baumstandort",
 			"module_3_3G1_draw",
 			"module_3_3G2_draw",
 			"module_3_3G5_draw",

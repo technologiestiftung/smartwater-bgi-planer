@@ -354,6 +354,10 @@
 						{
 							"id": "bgi-planer:versickerungspotenzial_gp_rigolenanlage",
 							"visibility": false
+						},
+						{
+							"id": "bgi-planer:optimierter_Baumstandort",
+							"visibility": false
 						}
 					]
 				},
