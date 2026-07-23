@@ -183,6 +183,8 @@ export function MeasurePlanningAccordion({
 	const hasInitializedRef = useRef(false);
 	const isMapReady = useMapReady();
 
+	const noSimulationIsActive = !climateSimulation && !floodRisk;
+
 	const { layerConfig, applyConfigLayers } = useLayersStore(
 		useShallow((state) => ({
 			layerConfig: state.layerConfig,
@@ -296,7 +298,7 @@ export function MeasurePlanningAccordion({
 	} else if (
 		selectedQuestionConfig &&
 		selectedMeasurementInfo &&
-		!climateSimulation
+		noSimulationIsActive
 	) {
 		content = (
 			<MeasurePlanningStepContent
@@ -310,9 +312,7 @@ export function MeasurePlanningAccordion({
 				onConfirm={handleBackToQuestions}
 			/>
 		);
-	} else if (floodRisk) {
-		content = <FloodRisk floodRisk={floodRisk} onActivate={activateQuestion} />;
-	} else if (!climateSimulation) {
+	} else if (noSimulationIsActive) {
 		content = (
 			<div className="flex h-full flex-col px-6 pb-6">
 				<p className="text-primary mt-2 mb-4">{description}</p>
@@ -409,6 +409,9 @@ export function MeasurePlanningAccordion({
 		>
 			{info && (
 				<MeasureCatalogModal info={info} onActivate={activateQuestion} />
+			)}
+			{floodRisk && (
+				<FloodRisk floodRisk={floodRisk} onActivate={activateQuestion} />
 			)}
 			{climateSimulation && (
 				<>

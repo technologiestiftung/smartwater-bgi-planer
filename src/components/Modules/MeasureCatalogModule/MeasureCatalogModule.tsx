@@ -1,6 +1,7 @@
 "use client";
 
 import { FC } from "react";
+import { useSearchParams } from "next/navigation";
 import { getModuleStep, getModuleStepMeasure } from "../shared/moduleConfig";
 import { ModuleMeasurementConfig, ModuleStepConfig } from "@/types/shared";
 import { Button } from "@/components/ui/button";
@@ -23,6 +24,7 @@ const MeasureCatalogModule: FC<MeasureCatalogModuleProps> = ({
 		"measurePlanning",
 		info,
 	) as ModuleMeasurementConfig;
+	const searchParams = useSearchParams();
 	const {
 		id,
 		title,
@@ -59,7 +61,16 @@ const MeasureCatalogModule: FC<MeasureCatalogModuleProps> = ({
 					>
 						Modellierung Überflutungsgefährdung
 					</Button>
-					<Button onClick={() => onActivate(getStep.id, info)}>
+					<Button
+						onClick={() => {
+							const params = new URLSearchParams(searchParams.toString());
+							params.delete("climateSimulation");
+							params.delete("floodRisk");
+							params.delete("info");
+							router.replace(`?${params.toString()}`);
+							onActivate(getStep.id, info);
+						}}
+					>
 						<PlusIcon /> Hinzufügen
 					</Button>
 				</div>
