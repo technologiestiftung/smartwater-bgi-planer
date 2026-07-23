@@ -161,7 +161,7 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 							</div>
 						</div>
 						{(() => {
-							const imageSRC = `/images/floodRiskSimulation/${floodRiskChartFolderSlug}/${activeChart}_${floodRiskChartFileSlug}.png`;
+							const imageSRC = `/images/floodRiskSimulation/${floodRiskChartFolderSlug}/${activeChart}_${floodRiskChartFileSlug || floodRiskChartFolderSlug}.png`;
 							return (
 								<Image
 									src={imageSRC}
