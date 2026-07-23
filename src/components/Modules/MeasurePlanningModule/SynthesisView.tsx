@@ -278,6 +278,14 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 						height={260}
 						className="h-auto max-w-full"
 					/>
+					<Image
+						src={"/legends/effektbewertung.svg"}
+						loading="eager"
+						alt="Legende für Maßnahmen"
+						width={620}
+						height={260}
+						className="mt-4 h-auto max-w-full"
+					/>
 				</div>
 			</div>
 
