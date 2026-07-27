@@ -338,6 +338,26 @@
 						{
 							"id": "bgi-planer:Wasserstand_Rigole",
 							"visibility": false
+						},
+						{
+							"id": "bgi-planer:versickerungspotenzial_gp_flaechenversickerung",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:versickerungspotenzial_gp_mulden_rigolenelement",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:versickerungspotenzial_gp_muldenversickerung",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:versickerungspotenzial_gp_rigolenanlage",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:optimierter_Baumstandort",
+							"visibility": false
 						}
 					]
 				},
