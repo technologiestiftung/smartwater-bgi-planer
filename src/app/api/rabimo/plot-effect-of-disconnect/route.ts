@@ -1,30 +1,40 @@
 import { getPlotEffectOfDisconnect } from "@/server/rabimo/getPlotEffectOfDisconnect";
+import { PLOT_TYPES, PlotType } from "@/server/rabimo/types";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
-	const searchParams = request.nextUrl.searchParams;
-	const runoffReduction = searchParams.get("runoff_reduction");
-	const type = searchParams.get("type");
+	const runoffReduction = request.nextUrl.searchParams.get("runoff_reduction");
 
-	if (!runoffReduction || !type) {
+	if (!runoffReduction) {
 		return NextResponse.json(
-			{ error: "'runoff_reduction' and 'type' query params are required" },
+			{ error: "'runoff_reduction' query param is required" },
 			{ status: 400 },
 		);
 	}
 
-	try {
-		const buffer = await getPlotEffectOfDisconnect(
-			Number(runoffReduction),
-			type,
+	if (!runoffReduction || Number.isNaN(Number(runoffReduction))) {
+		return NextResponse.json(
+			{ error: "'runoff_reduction' query param must be a valid number" },
+			{ status: 400 },
 		);
-		return new NextResponse(new Uint8Array(buffer), {
-			headers: { "Content-Type": "image/png" },
-		});
-	} catch (error) {
-		const message =
-			error instanceof Error ? error.message : "Unknown Rabimo API error";
-
-		return NextResponse.json({ error: message }, { status: 502 });
 	}
+
+	const results = await Promise.allSettled(
+		PLOT_TYPES.map(async (type) => {
+			const buffer = await getPlotEffectOfDisconnect(
+				Number(runoffReduction),
+				type,
+			);
+			return { type, data: buffer.toString("base64") };
+		}),
+	);
+
+	const plots: Partial<Record<PlotType, string>> = {};
+	for (const result of results) {
+		if (result.status === "fulfilled") {
+			plots[result.value.type] = result.value.data;
+		}
+	}
+
+	return NextResponse.json(plots);
 }

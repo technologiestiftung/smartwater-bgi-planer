@@ -298,6 +298,66 @@
 						{
 							"id": "ua_klimabewertung_2022:ec_ua_phk_vul_nutz_2022",
 							"visibility": false
+						},
+						{
+							"id": "bgi-planer:Gefaehrdungsstufe_Baeume",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:Gefaehrdungsstufe_Gruendaecher",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:Gefaehrdungsstufe_Mulde",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:Gefaehrdungsstufe_Mulde-Rigole",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:Gefaehrdungsstufe_Rigole",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:Wasserstand_Baeume",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:Wasserstand_Gruendaecher",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:Wasserstand_Mulde",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:Wasserstand_Mulde-Rigole",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:Wasserstand_Rigole",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:versickerungspotenzial_gp_flaechenversickerung",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:versickerungspotenzial_gp_mulden_rigolenelement",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:versickerungspotenzial_gp_muldenversickerung",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:versickerungspotenzial_gp_rigolenanlage",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:optimierter_Baumstandort",
+							"visibility": false
 						}
 					]
 				},

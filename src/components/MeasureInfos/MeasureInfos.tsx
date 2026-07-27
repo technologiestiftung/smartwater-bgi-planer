@@ -1,5 +1,6 @@
 "use client";
 
+import { getModuleStepMeasure } from "@/components/Modules/shared/moduleConfig";
 import { measureConfigById } from "@/config/measuresConfig";
 import { isSwaleLayerConfigId } from "@/lib/helpers/measures/swale";
 import { useProjectStore } from "@/store";
@@ -33,10 +34,16 @@ const MeasureInfos: FC<MeasureInfosProps> = ({ liveMeasureInfo }) => {
 		(a) => a.id === selectedConnectedAreaId,
 	);
 
+	const measureName =
+		(layerConfigId
+			? getModuleStepMeasure("measurePlanning", layerConfigId)?.title
+			: undefined) ??
+		layerConfig?.name?.trim() ??
+		"";
+
 	const measureKey = layerConfig?.id
 		? measureConfigById.get(layerConfig.id)?.measureKey
 		: undefined;
-	const measureName = layerConfig?.name?.trim() || measureKey || "Maßnahme";
 
 	const activeRemaining =
 		measureKey && activeAreaPotential

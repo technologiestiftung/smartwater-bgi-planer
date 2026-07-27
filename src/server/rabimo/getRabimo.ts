@@ -1,69 +1,34 @@
 import "server-only";
 
-import { RabimoPayload } from "@/server/rabimo/types";
-import http from "http";
-import https from "https";
+import type { RabimoPayload } from "@/server/rabimo/types";
 
 /**
  * Calls the external Rabimo API and returns the parsed JSON response.
  */
 export async function getRabimo(payload: RabimoPayload) {
 	const apiUrl = process.env.API_URL;
+	if (!apiUrl) throw new Error("API_URL is not configured");
 
-	if (!apiUrl) {
-		throw new Error("API_URL is not configured");
+	const url = new URL(`${apiUrl.replace(/\/$/, "")}/calculate_multiblock`);
+
+	const res = await fetch(url, {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(payload),
+		signal: AbortSignal.timeout(10_000),
+	});
+
+	const text = await res.text();
+
+	if (!res.ok) {
+		throw new Error(`BGI API error ${res.status}: ${text.slice(0, 500)}`);
 	}
 
-	const url = new URL(apiUrl);
-	const isHttps = url.protocol === "https:";
-	const transport = isHttps ? https : http;
-
-	const basePath = url.pathname.replace(/\/$/, "");
-	const path = `${basePath}/calculate_multiblock`;
-
-	return new Promise((resolve, reject) => {
-		const options = {
-			hostname: url.hostname,
-			port: url.port,
-			path,
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			...(isHttps && {
-				rejectUnauthorized: process.env.NODE_ENV === "production",
-			}),
-		};
-
-		const req = transport.request(options, (res) => {
-			let data = "";
-			res.on("data", (chunk) => {
-				data += chunk;
-			});
-			res.on("end", () => {
-				if (!res.statusCode || res.statusCode >= 400) {
-					reject(
-						new Error(`BGI API error ${res.statusCode}: ${data.slice(0, 500)}`),
-					);
-					return;
-				}
-				try {
-					resolve(JSON.parse(data));
-				} catch {
-					reject(
-						new Error(
-							`BGI API returned invalid JSON (status ${res.statusCode}): ${data.slice(0, 500)}`,
-						),
-					);
-				}
-			});
-		});
-
-		req.on("error", (error) => {
-			reject(error);
-		});
-
-		req.write(JSON.stringify(payload));
-		req.end();
-	});
+	try {
+		return JSON.parse(text);
+	} catch {
+		throw new Error(
+			`BGI API returned invalid JSON (status ${res.status}): ${text.slice(0, 500)}`,
+		);
+	}
 }
