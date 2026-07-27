@@ -3,6 +3,7 @@ import {
 	useMapStore,
 	useProjectStore,
 	useScenarioStore,
+	useResultStore,
 } from "@/store";
 import Map from "ol/Map";
 import { BookOpenTextIcon, SpinnerIcon } from "@phosphor-icons/react";
@@ -76,6 +77,8 @@ const ReportDownloadButton: FC<ReportDownloadButtonProps> = ({}) => {
 	const map = useMapStore((state) => state.map);
 	const notes = getAllNotes(map as Map);
 
+	const getResult = useResultStore((state) => state.getResult);
+
 	const generateReport = async () => {
 		setLoading(true);
 		setError(null);
@@ -103,6 +106,9 @@ const ReportDownloadButton: FC<ReportDownloadButtonProps> = ({}) => {
 			allQuestionIDs.forEach((id) => {
 				measures[id] = answers[id] ?? null;
 			});
+
+			const result = activeScenario ? getResult(activeScenario.id) : null;
+			console.log("result", result);
 
 			const body = {
 				project,
