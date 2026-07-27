@@ -1084,6 +1084,6 @@
 			"result_evapor",
 			"result_infiltr"
 		],
-		"legendSrc": ""
+		"legendSrc": "/legends/effektbewertung.svg"
 	}
 ]

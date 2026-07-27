@@ -2,6 +2,7 @@ export interface Result {
 	id: string;
 	scenarioId: string;
 	timestamp: number;
+	payloadKey: string;
 	data: Record<string, unknown>;
 }
 
