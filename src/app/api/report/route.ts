@@ -5,14 +5,6 @@ import path from "path";
 import PizZip from "pizzip";
 
 // ---------- body types ----------
-interface SummaryEntry {
-	total_area_m2: number;
-	runoff: number;
-	infiltr: number;
-	evapor: number;
-	delta: number;
-}
-
 interface ReportBody {
 	project: {
 		id: string;
@@ -22,12 +14,6 @@ interface ReportBody {
 		createdAt: number;
 		updatedAt: number;
 	} | null;
-	accumulatedStats: {
-		totalArea: number;
-		inputFeaturesCount: number;
-		areaPotential: Record<string, number>;
-		computedArea: Record<string, number>;
-	} | null;
 	activeScenario: {
 		id: string;
 		name: string;
@@ -35,17 +21,20 @@ interface ReportBody {
 			id: string;
 			name: string;
 			area: number;
+			connectedArea: number;
 			code: string | null;
 			configId: string;
 		}>;
 		connectedAreas: Array<{ id: string; area: number }>;
 	} | null;
-	result: { data: Record<string, unknown> } | null;
 	datum: string;
+	measures: {
+		[key: string]: boolean | null;
+	};
+	notes: string[];
 }
 
 // ---------- helpers ----------
-
 const USE_CASE_LABELS: Record<string, string> = {
 	"Individual area": "Einzelfläche",
 	District: "Quartier",
@@ -68,75 +57,93 @@ function buildProjectFields(body: ReportBody) {
 	};
 }
 
-// eslint-disable-next-line complexity
-function buildAreaFields(stats: ReportBody["accumulatedStats"]) {
-	const p = stats?.areaPotential;
-	const c = stats?.computedArea;
-	return {
-		total_area_m2: stats?.totalArea ?? 0,
-		area_count: stats?.inputFeaturesCount ?? 0,
-		potential_green_roof_ext: p?.green_roof_ext ?? 0,
-		potential_green_roof_int: p?.green_roof_int ?? 0,
-		potential_unpaving: p?.unpaving ?? 0,
-		potential_permeable_paving: p?.permeable_paving ?? 0,
-		potential_to_swale: p?.to_swale ?? 0,
-		potential_to_swale_trench: p?.to_swale_trench ?? 0,
-		potential_to_trench: p?.to_trench ?? 0,
-		potential_to_cistern: p?.to_cistern ?? 0,
-		potential_to_surf_infil: p?.to_surf_infil ?? 0,
-		potential_to_tree_pit: p?.to_tree_pit ?? 0,
-		area_total_m2: c?.total ?? 0,
-		area_roof_m2: c?.roof ?? 0,
-		area_pvd_m2: c?.pvd ?? 0,
-		area_sealed_m2: c?.sealed ?? 0,
-		area_unsealed_m2: c?.unsealed ?? 0,
-	};
-}
-
 function buildScenarioFields(scenario: ReportBody["activeScenario"]) {
-	return {
-		scenario_name: scenario?.name ?? "",
-		measure_count: scenario?.measures?.length ?? 0,
-		measures: (scenario?.measures ?? []).map((m) => ({
-			measure_name: m.name,
-			measure_area_m2: m.area,
-			measure_code: m.code ?? "",
-		})),
-	};
+	const allMeasures: Array<{ name: string; configId?: string }> = [
+		{ name: "green_roof_ext" },
+		{ name: "green_roof_int" },
+		{ name: "3G5" },
+		{ name: "permeable_paving" },
+		{ name: "unpaving", configId: "3E2" },
+		{ name: "unpaving", configId: "3B1" },
+		{ name: "to_swale" },
+		{ name: "to_surf_infil" },
+		{ name: "to_swale_trench" },
+		{ name: "3V4" },
+		{ name: "to_trench" },
+		{ name: "3S1" },
+		{ name: "to_cistern" },
+		{ name: "3S4" },
+		{ name: "3S5" },
+	];
+	const measures = scenario?.measures ?? [];
+	if (!measures.length) {
+		return [];
+	}
+	const setMeasures: Record<string, string> = {};
+	allMeasures.forEach((measure) => {
+		const findMeasure = measures.find(
+			(findSingleMeasure) => findSingleMeasure.name === measure.name,
+		);
+		if (!findMeasure) {
+			setMeasures[`p_${measure.name}`] = "0";
+			setMeasures[`ca_${measure.name}`] = "-";
+		} else {
+			setMeasures[
+				`p_${findMeasure.name}${measure.configId ? `_${measure.configId}` : ""}`
+			] = findMeasure.area ? findMeasure.area.toString() : "0";
+			setMeasures[
+				`ca_${findMeasure.name}${measure.configId ? `_${measure.configId}` : ""}`
+			] = findMeasure.connectedArea
+				? findMeasure.connectedArea.toString()
+				: "-";
+		}
+	});
+	// Baumstandort
+	const numberOfTrees = measures.filter(
+		(m) => m.name.startsWith("trees") && m.configId === "3B2",
+	).length;
+	setMeasures["t_n"] = numberOfTrees.toString();
+	// Optimierter Baumstandort
+	const numberOfOptimizedTrees = measures.filter(
+		(m) => m.name.startsWith("trees") && m.configId === "3V5",
+	).length;
+	setMeasures["t_o"] = numberOfOptimizedTrees.toString();
+	setMeasures["ca_t_o"] =
+		measures
+			.find((m) => m.name.startsWith("trees") && m.configId === "3V5")
+			?.connectedArea.toString() ?? "-";
+	return setMeasures;
 }
 
 // eslint-disable-next-line complexity
-function buildResultFields(result: ReportBody["result"]) {
-	const data = result?.data as {
-		summary?: { original?: SummaryEntry; with_measures?: SummaryEntry };
-		statistics?: { runoff_reduction_percent?: number | number[] };
-	} | null;
+function buildMeasureFields(measures: ReportBody["measures"]) {
+	function translateMeasureAnswer(answer: boolean | null): string {
+		if (answer === true) return "Relevant";
+		if (answer === false) return "Nicht Relevant";
+		return "Nicht Beantwortet";
+	}
+	return Object.fromEntries(
+		Object.entries(measures).map(([id, answer]) => [
+			id,
+			translateMeasureAnswer(answer),
+		]),
+	);
+}
 
-	const summary = data?.summary;
-	const raw = data?.statistics?.runoff_reduction_percent;
-	const runoffReduction = Array.isArray(raw) ? raw[0] : raw;
-
-	return {
-		has_result: result !== null,
-		original_runoff: summary?.original?.runoff ?? 0,
-		original_infiltr: summary?.original?.infiltr ?? 0,
-		original_evapor: summary?.original?.evapor ?? 0,
-		original_delta: summary?.original?.delta ?? 0,
-		measures_runoff: summary?.with_measures?.runoff ?? 0,
-		measures_infiltr: summary?.with_measures?.infiltr ?? 0,
-		measures_evapor: summary?.with_measures?.evapor ?? 0,
-		measures_delta: summary?.with_measures?.delta ?? 0,
-		runoff_reduction_percent:
-			typeof runoffReduction === "number" ? runoffReduction * 100 : 0,
-	};
+// eslint-disable-next-line complexity
+function buildPlanningNotes(notes: ReportBody["notes"]) {
+	if (notes.length === 0) {
+		return { notes: ["Keine Anmerkungen vorhanden."] };
+	}
+	return { notes };
 }
 
 function buildRenderData(body: ReportBody) {
 	return {
 		...buildProjectFields(body),
-		...buildAreaFields(body.accumulatedStats),
 		...buildScenarioFields(body.activeScenario),
-		...buildResultFields(body.result),
+		...buildMeasureFields(body.measures),
+		...buildPlanningNotes(body.notes),
 	};
 }
 
@@ -145,7 +152,7 @@ async function convertWithGotenberg(docxBuffer: Buffer): Promise<ArrayBuffer> {
 	const docxBlob = new Blob([new Uint8Array(docxBuffer)], {
 		type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 	});
-	formData.append("files", docxBlob, "report-blueprint.docx");
+	formData.append("files", docxBlob, "report.docx");
 
 	const res = await fetch(
 		`${process.env.GOTENBERG_URL}/forms/libreoffice/convert`,
@@ -170,12 +177,10 @@ export async function POST(req: Request) {
 			process.cwd(),
 			"src",
 			"templates",
-			"report-blueprint.docx",
+			"report.docx",
 		);
 		if (!fs.existsSync(templatePath)) {
-			throw new Error(
-				"report-blueprint.docx nicht im templates Ordner gefunden!",
-			);
+			throw new Error("report.docx nicht im templates Ordner gefunden!");
 		}
 
 		const content = fs.readFileSync(templatePath, "binary");

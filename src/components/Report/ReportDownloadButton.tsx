@@ -1,7 +1,16 @@
-import { useProjectStore, useResultStore, useScenarioStore } from "@/store";
+import {
+	useAnswersStore,
+	useMapStore,
+	useProjectStore,
+	useScenarioStore,
+} from "@/store";
+import Map from "ol/Map";
 import { BookOpenTextIcon, SpinnerIcon } from "@phosphor-icons/react";
 import { FC, useState } from "react";
 import { Button } from "../ui/button";
+import modulesData from "@/components/Modules/modules.json";
+import VectorLayer from "ol/layer/Vector";
+import VectorSource from "ol/source/Vector";
 
 interface ReportDownloadButtonProps {}
 
@@ -33,15 +42,39 @@ function triggerDownload(blob: Blob, filename: string) {
 	a.remove();
 }
 
+function getAllNotes(map: Map) {
+	if (!map) {
+		return [];
+	}
+	return map.getAllLayers().flatMap((layer) => {
+		if (!(layer instanceof VectorLayer)) return [];
+
+		const source = layer.getSource();
+		if (!(source instanceof VectorSource)) return [];
+
+		return source
+			.getFeatures()
+			.filter((feature) => feature.get("note"))
+			.map((feature) => ({
+				layerId: layer.get("id"),
+				feature,
+				note: feature.get("note"),
+			}));
+	});
+}
+
 const ReportDownloadButton: FC<ReportDownloadButtonProps> = ({}) => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
 	const project = useProjectStore((s) => s.project);
-	const accumulatedStats = useProjectStore((s) => s.accumulatedStats);
 	const activeScenarioId = useScenarioStore((s) => s.activeScenarioId);
 	const scenarios = useScenarioStore((s) => s.scenarios);
-	const resultsByScenarioId = useResultStore((s) => s.resultsByScenarioId);
+
+	const answers = useAnswersStore((state) => state.answers);
+
+	const map = useMapStore((state) => state.map);
+	const notes = getAllNotes(map as Map);
 
 	const generateReport = async () => {
 		setLoading(true);
@@ -51,18 +84,35 @@ const ReportDownloadButton: FC<ReportDownloadButtonProps> = ({}) => {
 			const activeScenario = activeScenarioId
 				? (scenarios[activeScenarioId] ?? null)
 				: null;
-			const result = activeScenarioId
-				? (resultsByScenarioId[activeScenarioId] ?? null)
-				: null;
 
-			const blob = await fetchReport({
-				project,
-				accumulatedStats,
-				activeScenario,
-				result,
-				datum: new Date().toLocaleDateString("de-DE"),
+			const allQuestionIDs = modulesData.modules
+				.filter((module) => module.id !== "measurePlanning")
+				.flatMap((module) =>
+					module.steps.flatMap((step) =>
+						"questions" in step
+							? step.questions.filter(
+									(id) =>
+										!id.includes("starter_question") &&
+										!id.includes("module_introduction"),
+								)
+							: [],
+					),
+				);
+
+			const measures: Record<string, boolean | null> = {};
+			allQuestionIDs.forEach((id) => {
+				measures[id] = answers[id] ?? null;
 			});
 
+			const body = {
+				project,
+				activeScenario,
+				datum: new Date().toLocaleDateString("de-DE"),
+				measures,
+				notes: notes.map((n) => n.note),
+			};
+
+			const blob = await fetchReport(body);
 			triggerDownload(blob, `Report_${project?.name}.pdf`);
 		} catch (err) {
 			console.error("Report generation error:", err);
