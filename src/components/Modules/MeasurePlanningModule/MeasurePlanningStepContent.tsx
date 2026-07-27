@@ -1,6 +1,5 @@
 "use client";
 
-import { MetricIconBadges } from "@/components/MetricIconBadges/MetricIconBadges";
 import { RichTextWithLinks } from "@/components/RichTextWithLinks/RichTextWithLinks";
 import {
 	Accordion,
@@ -20,11 +19,12 @@ import VectorLayer from "ol/layer/Vector";
 import { Vector as VectorSource } from "ol/source";
 import { useCallback, useEffect, useRef } from "react";
 import { ConnectedAreaSelection } from "./ConnectedAreaSelection";
-// import PotentialsContent from "./PotentialsContent";
+import { MeasureCatalogScore } from "../MeasureCatalogModule/MeasureCatalogScore";
+import Link from "next/link";
+import { InfoIcon } from "@phosphor-icons/react";
 
 interface MeasurePlanningStepContentProps {
 	layerConfig: LayerConfigItem;
-	metricIcons?: string[];
 	onConfirm?: () => void;
 }
 
@@ -88,7 +88,6 @@ function MeasurePlanningLegend({ layerConfig }: MeasurePlanningLegendProps) {
 
 export function MeasurePlanningStepContent({
 	layerConfig,
-	metricIcons = [],
 	onConfirm,
 }: MeasurePlanningStepContentProps) {
 	const showLegendAccordion =
@@ -185,39 +184,53 @@ export function MeasurePlanningStepContent({
 	}, [removeDraftMeasures]);
 
 	return (
-		<div className="flex min-h-0 flex-1 flex-col">
-			<div className="mt-4">
-				<div className="mb-4">
-					<MetricIconBadges metricIcons={metricIcons} />
-					{layerConfig.question && (
-						<p className="mb-2 font-semibold">{layerConfig.question}</p>
-					)}
-					{layerConfig.description && (
-						<div className="wrap-break-word">
-							<RichTextWithLinks text={layerConfig.description} />
+		<div className="flex h-full flex-col p-6">
+			<div className="flex justify-between">
+				<h3 className="text-primary shrink-0 text-xl font-semibold">
+					{layerConfig.name}
+				</h3>
+				<Link
+					href={`?info=${layerConfig.id}`}
+					className="text-primary hover:text-primary/80 inline-flex h-9 w-9 cursor-pointer items-center justify-center rounded-full"
+					aria-label={`Informationen zu ${layerConfig.name}`}
+				>
+					<InfoIcon className="MeasuresInfosIcon h-5 w-5" />
+				</Link>
+			</div>
+			<div className="flex min-h-0 flex-1 flex-col">
+				<div className="mt-4">
+					<div className="mb-4">
+						<MeasureCatalogScore scores={layerConfig.scores} className="mb-8" />
+						{layerConfig.question && (
+							<p className="mb-2 font-semibold">{layerConfig.question}</p>
+						)}
+						{layerConfig.description && (
+							<div className="wrap-break-word">
+								<RichTextWithLinks text={layerConfig.description} />
+							</div>
+						)}
+						{layerConfig.subDescription && (
+							<div className="wrap-break-word">
+								<br />
+								<RichTextWithLinks text={layerConfig.subDescription} />
+							</div>
+						)}
+						<ConnectedAreaSelection
+							layerConfigId={layerConfig.id}
+							drawLayerId={layerConfig.drawLayerId}
+							layerName={layerConfig.name || layerConfig.question || "Maßnahme"}
+						/>
+						<div className="mt-6">
+							<Button onClick={handleConfirm} disabled={!hasDrafts}>
+								Bestätigen
+							</Button>
 						</div>
-					)}
-					{layerConfig.subDescription && (
-						<div className="wrap-break-word">
-							<br />
-							<RichTextWithLinks text={layerConfig.subDescription} />
-						</div>
-					)}
-					<ConnectedAreaSelection
-						layerConfigId={layerConfig.id}
-						drawLayerId={layerConfig.drawLayerId}
-						layerName={layerConfig.name || layerConfig.question || "Maßnahme"}
-					/>
-					<div className="mt-6">
-						<Button onClick={handleConfirm} disabled={!hasDrafts}>
-							Bestätigen
-						</Button>
 					</div>
 				</div>
+				{showLegendAccordion && (
+					<MeasurePlanningLegend layerConfig={layerConfig} />
+				)}
 			</div>
-			{showLegendAccordion && (
-				<MeasurePlanningLegend layerConfig={layerConfig} />
-			)}
 		</div>
 	);
 }
