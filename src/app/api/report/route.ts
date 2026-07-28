@@ -82,26 +82,21 @@ function buildScenarioFields(scenario: ReportBody["activeScenario"]) {
 		{ name: "3S5" },
 	];
 	const measures = scenario?.measures ?? [];
-	if (!measures.length) {
-		return [];
-	}
 	const setMeasures: Record<string, string> = {};
 	allMeasures.forEach((measure) => {
 		const findMeasure = measures.find(
 			(findSingleMeasure) => findSingleMeasure.name === measure.name,
 		);
+		const configId = measure.configId ? `_${measure.configId}` : "";
 		if (!findMeasure) {
-			setMeasures[`p_${measure.name}`] = "0";
-			setMeasures[`ca_${measure.name}`] = "-";
+			setMeasures[`p_${measure.name}${configId}`] = "0";
+			setMeasures[`ca_${measure.name}${configId}`] = "-";
 		} else {
-			setMeasures[
-				`p_${findMeasure.name}${measure.configId ? `_${measure.configId}` : ""}`
-			] = findMeasure.area ? findMeasure.area.toString() : "0";
-			setMeasures[
-				`ca_${findMeasure.name}${measure.configId ? `_${measure.configId}` : ""}`
-			] = findMeasure.connectedArea
-				? findMeasure.connectedArea.toString()
-				: "-";
+			setMeasures[`p_${findMeasure.name}${configId}`] = findMeasure.area
+				? findMeasure.area.toString()
+				: "0";
+			setMeasures[`ca_${findMeasure.name}${configId}`] =
+				findMeasure.connectedArea ? findMeasure.connectedArea.toString() : "-";
 		}
 	});
 	// Baumstandort
