@@ -11,6 +11,7 @@ interface MaßnahmenplanungPageProps {
 	searchParams: Promise<{
 		info?: string;
 		climateSimulation?: string;
+		floodRisk?: string;
 	}>;
 }
 
@@ -20,7 +21,7 @@ export default function MaßnahmenplanungPage({
 }: MaßnahmenplanungPageProps) {
 	const router = useRouter();
 	const { id } = use(params);
-	const { info, climateSimulation } = use(searchParams);
+	const { info, climateSimulation, floodRisk } = use(searchParams);
 
 	const handleClose = () => {
 		router.push(`/${id}/menu`);
@@ -33,6 +34,7 @@ export default function MaßnahmenplanungPage({
 			projectId={id}
 			info={info}
 			climateSimulation={climateSimulation}
+			floodRisk={floodRisk}
 		/>
 	);
 }

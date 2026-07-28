@@ -31,6 +31,7 @@ import { useShallow } from "zustand/react/shallow";
 import { MeasureCatalogModal } from "../MeasureCatalogModule/MeasureCatalogModal";
 import { ClimateSimulation } from "@/components/Simulations/ClimateSimulation";
 import { ClimateSimulationModal } from "@/components/Simulations/ClimateSimulationModal";
+import { FloodRisk } from "@/components/Simulations/FloodRiskSimulation";
 
 interface StepItem {
 	id: string;
@@ -76,6 +77,7 @@ interface MeasurePlanningAccordionProps {
 	description: string;
 	info?: string;
 	climateSimulation?: string;
+	floodRisk?: string;
 }
 
 function MeasurePlanningFooter({
@@ -169,6 +171,7 @@ export function MeasurePlanningAccordion({
 	description,
 	info,
 	climateSimulation,
+	floodRisk,
 }: MeasurePlanningAccordionProps) {
 	const steps = getModuleSteps("measurePlanning");
 	const { hasFeatures: hasConnectedArea } = useLayerFeatures(
@@ -179,6 +182,8 @@ export function MeasurePlanningAccordion({
 	const [selectedConfigId, setSelectedConfigId] = useState<string | null>(null);
 	const hasInitializedRef = useRef(false);
 	const isMapReady = useMapReady();
+
+	const noSimulationIsActive = !climateSimulation && !floodRisk;
 
 	const { layerConfig, applyConfigLayers } = useLayersStore(
 		useShallow((state) => ({
@@ -293,7 +298,7 @@ export function MeasurePlanningAccordion({
 	} else if (
 		selectedQuestionConfig &&
 		selectedMeasurementInfo &&
-		!climateSimulation
+		noSimulationIsActive
 	) {
 		content = (
 			<MeasurePlanningStepContent
@@ -307,7 +312,7 @@ export function MeasurePlanningAccordion({
 				onConfirm={handleBackToQuestions}
 			/>
 		);
-	} else if (!climateSimulation) {
+	} else if (noSimulationIsActive) {
 		content = (
 			<div className="flex h-full flex-col px-6 pb-6">
 				<p className="text-primary mt-2 mb-4">{description}</p>
@@ -392,7 +397,7 @@ export function MeasurePlanningAccordion({
 			title={title}
 			description={description}
 			footer={
-				isSynthesisMode || climateSimulation ? null : (
+				isSynthesisMode || climateSimulation || floodRisk ? null : (
 					<MeasurePlanningFooter
 						onShowSynthesis={handleShowSynthesis}
 						onBackToQuestions={handleBackToQuestions}
@@ -404,6 +409,9 @@ export function MeasurePlanningAccordion({
 		>
 			{info && (
 				<MeasureCatalogModal info={info} onActivate={activateQuestion} />
+			)}
+			{floodRisk && (
+				<FloodRisk floodRisk={floodRisk} onActivate={activateQuestion} />
 			)}
 			{climateSimulation && (
 				<>

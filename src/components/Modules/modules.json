@@ -190,7 +190,11 @@
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
 								],
-								"climateSimulationFileSlug": "DachExt"
+								"climateSimulationFileSlug": "DachExt",
+								"floodRiskLayerConfigId": "Gruendaecher",
+								"floodRiskChartFolderSlug": "Gruendaecher",
+								"floodRiskChartFileSlug": "Gr_nd_cher",
+								"floodRiskText": "Erklärender Text..."
 							}
 						},
 						{
@@ -282,7 +286,11 @@
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
 								],
-								"climateSimulationFileSlug": "DachInt"
+								"climateSimulationFileSlug": "DachInt",
+								"floodRiskLayerConfigId": "Gruendaecher",
+								"floodRiskChartFolderSlug": "Gruendaecher",
+								"floodRiskChartFileSlug": "Gr_nd_cher",
+								"floodRiskText": "Erklärender Text..."
 							}
 						},
 						{
@@ -462,7 +470,9 @@
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
 								],
-								"climateSimulationFileSlug": "TeilEntsiegelung"
+								"climateSimulationFileSlug": "TeilEntsiegelung",
+								"floodRiskChartFolderSlug": "Teilentsiegelung",
+								"floodRiskText": "Erklärender Text..."
 							}
 						},
 						{
@@ -543,7 +553,10 @@
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
 								],
-								"climateSimulationFileSlug": "VollEntsiegelung"
+								"climateSimulationFileSlug": "VollEntsiegelung",
+								"floodRiskChartFolderSlug": "Gruenflaechen",
+								"floodRiskChartFileSlug": "Gr_nfl_chen",
+								"floodRiskText": "Erklärender Text..."
 							}
 						}
 					]
@@ -625,7 +638,10 @@
 										"link": "https://www.fll.de/fachgremien/pflege-von-gruen/"
 									}
 								],
-								"climateSimulationFileSlug": "Gruen"
+								"climateSimulationFileSlug": "Gruen",
+								"floodRiskChartFolderSlug": "Gruenflaechen",
+								"floodRiskChartFileSlug": "Gr_nfl_chen",
+								"floodRiskText": "Erklärender Text..."
 							}
 						},
 						{
@@ -716,7 +732,15 @@
 										"link": "https://www.berlin.de/sen/uvk/_assets/umwelt/wasser-und-geologie/publikationen-und-merkblaetter/hinweisblatt2-versick.pdf?ts=1754465106"
 									}
 								],
-								"climateSimulationFileSlug": "Baum"
+								"climateSimulationFileSlug": "Baum",
+								"floodRiskLayerConfigId": "Baeume",
+								"floodRiskChartFolderSlug": "Baeume",
+								"floodRiskChartFileSlug": "B_ume",
+								"floodRiskCharts": [
+									"Vergleich_gefaehrdeter_Flaechen",
+									"Reduktion_des_Ueberflutungsvolumens"
+								],
+								"floodRiskText": "Erklärender Text..."
 							}
 						}
 					]
@@ -824,7 +848,10 @@
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
 								],
-								"climateSimulationFileSlug": "Mulde"
+								"climateSimulationFileSlug": "Mulde",
+								"floodRiskLayerConfigId": "Mulde",
+								"floodRiskChartFolderSlug": "Mulde",
+								"floodRiskText": "Erklärender Text..."
 							}
 						},
 						{
@@ -1012,7 +1039,11 @@
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
 								],
-								"climateSimulationFileSlug": "MuldRigElem"
+								"climateSimulationFileSlug": "MuldRigElem",
+								"floodRiskLayerConfigId": "Mulde-Rigole",
+								"floodRiskChartFolderSlug": "Mulde-Rigole-Element",
+								"floodRiskChartFileSlug": "Mulde_Rigole",
+								"floodRiskText": "Erklärender Text..."
 							}
 						},
 						{
@@ -1268,7 +1299,10 @@
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
 								],
-								"climateSimulationFileSlug": "Rigole"
+								"climateSimulationFileSlug": "Rigole",
+								"floodRiskLayerConfigId": "Rigole",
+								"floodRiskChartFolderSlug": "Rigole",
+								"floodRiskText": "Erklärender Text..."
 							}
 						}
 					]
