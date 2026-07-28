@@ -33,7 +33,7 @@ const PlotsDisplay: FC<PlotsDisplayProps> = ({ plotUrls, isLoading }) => {
 
 	return (
 		<>
-			<div className="flex flex-col gap-4">
+			<div className="flex gap-4">
 				{PLOT_TYPES.map((type) => {
 					const base64 = plotUrls[type];
 					if (!base64) return null;

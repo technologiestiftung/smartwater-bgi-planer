@@ -1,11 +1,12 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import { FC } from "react";
 
 export const COLOR_MEASURES = "#1e4d35";
 const COLOR_ORIGINAL = "#6db08a";
 const COLOR_LEGEND = "#B3B3B3";
-const BAR_MAX_HEIGHT = 72;
+const BAR_MAX_HEIGHT = 32;
 const BAR_WIDTH = 16;
 
 interface MiniBarChartProps {
@@ -13,6 +14,7 @@ interface MiniBarChartProps {
 	measuresValue: number;
 	showLegend?: boolean;
 	largeValues?: boolean;
+	maxHeight?: number;
 }
 
 export const MiniBarChart: FC<MiniBarChartProps> = ({
@@ -20,12 +22,14 @@ export const MiniBarChart: FC<MiniBarChartProps> = ({
 	measuresValue,
 	showLegend = false,
 	largeValues = false,
+	maxHeight,
 }) => {
+	const setMaxHeight = maxHeight ?? BAR_MAX_HEIGHT;
 	const roundedOrig = Math.round(originalValue);
 	const roundedMeas = Math.round(measuresValue);
 	const max = Math.max(roundedOrig, roundedMeas, 1);
-	const origHeight = (roundedOrig / max) * BAR_MAX_HEIGHT;
-	const measHeight = (roundedMeas / max) * BAR_MAX_HEIGHT;
+	const origHeight = (roundedOrig / max) * setMaxHeight;
+	const measHeight = (roundedMeas / max) * setMaxHeight;
 
 	const valueClass = largeValues
 		? "text-3xl font-bold leading-none"
@@ -40,7 +44,9 @@ export const MiniBarChart: FC<MiniBarChartProps> = ({
 			}}
 		>
 			{/* Row 1: value | bar | bar | value */}
-			<span className={`${valueClass} self-end pr-1`}>{roundedOrig}</span>
+			<span className={cn(valueClass, "min-w-9 self-end pr-1 text-right")}>
+				{roundedOrig}
+			</span>
 			<div
 				className="self-end rounded-sm"
 				style={{
@@ -55,7 +61,9 @@ export const MiniBarChart: FC<MiniBarChartProps> = ({
 					backgroundColor: COLOR_MEASURES,
 				}}
 			/>
-			<span className={`${valueClass} self-end pl-1`}>{roundedMeas}</span>
+			<span className={`${valueClass} min-w-9 self-end pl-1`}>
+				{roundedMeas}
+			</span>
 
 			{/* Row 2: legend boxes aligned directly under bars */}
 			{showLegend && (
