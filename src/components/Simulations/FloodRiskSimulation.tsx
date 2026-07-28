@@ -75,6 +75,7 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 
 	const [activeSimulation, setActiveSimulation] =
 		useState<ActiveSimulation>("waterLevel");
+	const [mapWasZoomed, setMapWasZoomed] = useState(false);
 	const [activeChart, setActiveChart] = useState<string>(useCharts[0]);
 	const layers = useLayersStore((state) => state.layers);
 	const map = useMapStore((state) => state.map);
@@ -108,7 +109,7 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 	}, [activeSimulation, floodRiskLayerConfigId, layers, setLayerVisibility]);
 
 	useEffect(() => {
-		if (!map) return;
+		if (!map || mapWasZoomed) return;
 
 		const simulationView = {
 			bbox: [13.447359, 52.496827, 13.477934, 52.528612],
@@ -128,6 +129,7 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 				zoom,
 				duration,
 			});
+			setMapWasZoomed(true);
 			return;
 		}
 
@@ -224,7 +226,7 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 								<Image
 									src={imageSRC}
 									alt={`${activeChart}${floodRiskChartFolderSlug}`}
-									className="mt-4 h-full max-h-[100%] w-full object-contain object-top"
+									className="mt-4 h-full max-h-[100%] w-full object-contain object-top align-top"
 									onError={() => {
 										console.error(`Error loading image: ${imageSRC}`);
 									}}
