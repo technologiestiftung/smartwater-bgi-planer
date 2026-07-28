@@ -34,6 +34,7 @@
 		"docxtemplater": "^3.69.0",
 		"docxtemplater-image-module-free": "^1.1.1",
 		"embla-carousel-react": "^8.6.0",
+		"image-size": "^2.0.2",
 		"immer": "^11.0.1",
 		"jszip": "^3.10.1",
 		"lucide-react": "^0.553.0",

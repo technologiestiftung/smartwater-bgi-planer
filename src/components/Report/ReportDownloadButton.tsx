@@ -12,6 +12,7 @@ import { Button } from "../ui/button";
 import modulesData from "@/components/Modules/modules.json";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
+import { ResultStatistics } from "@/types/result";
 
 interface ReportDownloadButtonProps {}
 
@@ -77,7 +78,12 @@ const ReportDownloadButton: FC<ReportDownloadButtonProps> = ({}) => {
 	const map = useMapStore((state) => state.map);
 	const notes = getAllNotes(map as Map);
 
-	const getResult = useResultStore((state) => state.getResult);
+	const result = useResultStore((storeState) =>
+		activeScenarioId ? storeState.resultsByScenarioId[activeScenarioId] : null,
+	);
+	const stats = result?.data
+		? (result.data as { statistics: ResultStatistics }).statistics
+		: null;
 
 	const generateReport = async () => {
 		setLoading(true);
@@ -107,12 +113,10 @@ const ReportDownloadButton: FC<ReportDownloadButtonProps> = ({}) => {
 				measures[id] = answers[id] ?? null;
 			});
 
-			const result = activeScenario ? getResult(activeScenario.id) : null;
-			console.log("result", result);
-
 			const body = {
 				project,
 				activeScenario,
+				stats,
 				datum: new Date().toLocaleDateString("de-DE"),
 				measures,
 				notes: notes.map((n) => n.note),

@@ -28,6 +28,7 @@ export const useResultStore = create<ResultState & ResultActions>()(
 					name: "result-storage",
 					partialize: (state) => ({
 						statusByScenarioId: state.statusByScenarioId,
+						resultsByScenarioId: state.resultsByScenarioId,
 						hasHydrated: state.hasHydrated,
 					}),
 					onRehydrateStorage: () => (state) => {

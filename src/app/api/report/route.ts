@@ -1,8 +1,11 @@
+import { ResultStatistics } from "@/types/result";
 import Docxtemplater from "docxtemplater";
 import fs from "fs";
 import { NextResponse } from "next/server";
 import path from "path";
 import PizZip from "pizzip";
+import sizeOf from "image-size";
+import ImageModule from "docxtemplater-image-module-free";
 
 // ---------- body types ----------
 interface ReportBody {
@@ -27,11 +30,14 @@ interface ReportBody {
 		}>;
 		connectedAreas: Array<{ id: string; area: number }>;
 	} | null;
+	stats: ResultStatistics | null;
 	datum: string;
 	measures: {
 		[key: string]: boolean | null;
 	};
 	notes: string[];
+	plot_1?: string;
+	plot_2?: string;
 }
 
 // ---------- helpers ----------
@@ -138,12 +144,58 @@ function buildPlanningNotes(notes: ReportBody["notes"]) {
 	return { notes };
 }
 
+function buildStatsFields(stats: ReportBody["stats"]) {
+	if (!stats) {
+		return {
+			delta_w_status_quo: "-",
+			delta_w_with_measures: "-",
+			runoff_status_quo: "-",
+			runoff_with_measures: "-",
+			infiltr_status_quo: "-",
+			infiltr_with_measures: "-",
+			evapor_status_quo: "-",
+			evapor_with_measures: "-",
+			runoffReduction: "-",
+			overflow_volume_status_quo: "-",
+			overflow_volume_simulation: "-",
+			critical_hours_status_quo: "-",
+			critical_hours_simulation: "-",
+			critical_events_status_quo: "-",
+			critical_events_simulation: "-",
+		};
+	}
+	const original = stats.water_balance.status_quo[0]!;
+	const with_measures = stats.water_balance.with_measures[0]!;
+	const wqiOrig = stats.water_quality_indicators.status_quo;
+	const wqiSim = stats.water_quality_indicators.with_measures;
+	return {
+		delta_w_status_quo: original.delta_w.toFixed(2),
+		delta_w_with_measures: with_measures.delta_w.toFixed(2),
+		runoff_status_quo: original.runoff.toFixed(2),
+		runoff_with_measures: with_measures.runoff.toFixed(2),
+		infiltr_status_quo: original.infiltr.toFixed(2),
+		infiltr_with_measures: with_measures.infiltr.toFixed(2),
+		evapor_status_quo: original.evapor.toFixed(2),
+		evapor_with_measures: with_measures.evapor.toFixed(2),
+		runoffReduction: stats.runoff_reduction_percent[0].toFixed(2),
+		overflow_volume_status_quo: wqiOrig.overflow_volume[0].toFixed(2),
+		overflow_volume_simulation: wqiSim.overflow_volume[0].toFixed(2),
+		critical_hours_status_quo: wqiOrig.critical_hours[0].toFixed(2),
+		critical_hours_simulation: wqiSim.critical_hours[0].toFixed(2),
+		critical_events_status_quo: wqiOrig.critical_events[0].toFixed(2),
+		critical_events_simulation: wqiSim.critical_events[0].toFixed(2),
+	};
+}
+
 function buildRenderData(body: ReportBody) {
 	return {
 		...buildProjectFields(body),
 		...buildScenarioFields(body.activeScenario),
 		...buildMeasureFields(body.measures),
 		...buildPlanningNotes(body.notes),
+		...buildStatsFields(body.stats),
+		plot_1: "images/intro_effektbewertung.png",
+		plot_2: "images/intro_effektbewertung.png",
 	};
 }
 
@@ -185,7 +237,34 @@ export async function POST(req: Request) {
 
 		const content = fs.readFileSync(templatePath, "binary");
 		const zip = new PizZip(content);
+
+		const imageModule = new ImageModule({
+			centered: false,
+			getImage(tagValue: string) {
+				// tagValue = e.g. "images/intro_effektbewertung.png"
+				const imagePath = path.join(process.cwd(), "public", tagValue);
+				if (!fs.existsSync(imagePath)) {
+					throw new Error(`Bild nicht gefunden: ${imagePath}`);
+				}
+				return fs.readFileSync(imagePath);
+			},
+			getSize(img: Buffer) {
+				const dimensions = sizeOf(img);
+				// scale down if needed, e.g. max width 500px
+				const maxWidth = 500;
+				const ratio =
+					dimensions.width && dimensions.width > maxWidth
+						? maxWidth / dimensions.width
+						: 1;
+				return [
+					Math.round((dimensions.width ?? maxWidth) * ratio),
+					Math.round((dimensions.height ?? maxWidth) * ratio),
+				];
+			},
+		});
+
 		const doc = new Docxtemplater(zip, {
+			modules: [imageModule],
 			paragraphLoop: true,
 			linebreaks: true,
 		});
