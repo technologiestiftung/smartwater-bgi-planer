@@ -36,8 +36,8 @@ interface ReportBody {
 		[key: string]: boolean | null;
 	};
 	notes: string[];
-	plot_1?: string;
-	plot_2?: string;
+	plot_critical_hours?: string;
+	plot_critical_events?: string;
 }
 
 // ---------- helpers ----------
@@ -194,8 +194,8 @@ function buildRenderData(body: ReportBody) {
 		...buildMeasureFields(body.measures),
 		...buildPlanningNotes(body.notes),
 		...buildStatsFields(body.stats),
-		plot_1: "images/intro_effektbewertung.png",
-		plot_2: "images/intro_effektbewertung.png",
+		plot_critical_hours: body.plot_critical_hours,
+		plot_critical_events: body.plot_critical_events,
 	};
 }
 
@@ -241,7 +241,21 @@ export async function POST(req: Request) {
 		const imageModule = new ImageModule({
 			centered: false,
 			getImage(tagValue: string) {
-				// tagValue = e.g. "images/intro_effektbewertung.png"
+				if (tagValue.startsWith("data:")) {
+					// full data URL — extract the part after the comma
+					const base64Data = tagValue.split(",")[1];
+					if (!base64Data) {
+						throw new Error("Ungültige Data URL für Bild");
+					}
+					return Buffer.from(base64Data, "base64");
+				}
+
+				if (/^[A-Za-z0-9+/=]+$/.test(tagValue)) {
+					// raw base64 string, no prefix
+					return Buffer.from(tagValue, "base64");
+				}
+
+				// fallback: treat as a file path under public/
 				const imagePath = path.join(process.cwd(), "public", tagValue);
 				if (!fs.existsSync(imagePath)) {
 					throw new Error(`Bild nicht gefunden: ${imagePath}`);

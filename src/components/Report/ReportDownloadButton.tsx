@@ -7,12 +7,13 @@ import {
 } from "@/store";
 import Map from "ol/Map";
 import { BookOpenTextIcon, SpinnerIcon } from "@phosphor-icons/react";
-import { FC, useState } from "react";
+import { FC, useCallback, useState } from "react";
 import { Button } from "../ui/button";
 import modulesData from "@/components/Modules/modules.json";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
 import { ResultStatistics } from "@/types/result";
+import { PlotType } from "@/server/rabimo/types";
 
 interface ReportDownloadButtonProps {}
 
@@ -65,6 +66,21 @@ function getAllNotes(map: Map) {
 	});
 }
 
+const fetchPlots = async (runoffReduction: number) => {
+	try {
+		const res = await fetch(
+			`/api/rabimo/plot-effect-of-disconnect?runoff_reduction=${runoffReduction}`,
+		);
+		if (!res.ok) {
+			return { critical_hours: null, critical_events: null };
+		}
+		const data = (await res.json()) as Partial<Record<PlotType, string>>;
+		return data;
+	} catch {
+		return { critical_hours: null, critical_events: null };
+	}
+};
+
 const ReportDownloadButton: FC<ReportDownloadButtonProps> = ({}) => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
@@ -113,6 +129,8 @@ const ReportDownloadButton: FC<ReportDownloadButtonProps> = ({}) => {
 				measures[id] = answers[id] ?? null;
 			});
 
+			const plots = await fetchPlots(stats?.runoff_reduction_percent[0] ?? 0);
+
 			const body = {
 				project,
 				activeScenario,
@@ -120,6 +138,8 @@ const ReportDownloadButton: FC<ReportDownloadButtonProps> = ({}) => {
 				datum: new Date().toLocaleDateString("de-DE"),
 				measures,
 				notes: notes.map((n) => n.note),
+				plot_critical_hours: plots?.critical_hours ?? null,
+				plot_critical_events: plots?.critical_events ?? null,
 			};
 
 			const blob = await fetchReport(body);
