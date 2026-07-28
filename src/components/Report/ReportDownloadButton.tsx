@@ -7,7 +7,7 @@ import {
 } from "@/store";
 import Map from "ol/Map";
 import { BookOpenTextIcon, SpinnerIcon } from "@phosphor-icons/react";
-import { FC, useCallback, useState } from "react";
+import { FC, useState } from "react";
 import { Button } from "../ui/button";
 import modulesData from "@/components/Modules/modules.json";
 import VectorLayer from "ol/layer/Vector";
