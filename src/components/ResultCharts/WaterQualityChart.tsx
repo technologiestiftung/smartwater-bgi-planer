@@ -34,14 +34,14 @@ const WaterQualityChart: FC<WaterQualityChartProps> = ({
 			}}
 		>
 			<div
-				className="border-primary flex min-w-[200px] items-center border-r border-b px-4"
+				className="border-primary flex min-w-[200px] items-center border-r border-b px-2"
 				style={{ gridColumn: 1, gridRow: 1 }}
 			>
 				<h2 className="text-lg font-bold">Gewässerbelastung</h2>
 			</div>
 
 			<div
-				className="border-primary flex flex-col justify-center border-r px-4"
+				className="border-primary flex flex-col justify-center border-r px-2"
 				style={{ gridColumn: 1, gridRow: 2 }}
 			>
 				<p
@@ -58,7 +58,7 @@ const WaterQualityChart: FC<WaterQualityChartProps> = ({
 						measuresValue={wqiSim.overflow_volume[0]}
 						showLegend
 						largeValues
-						maxHeight={72}
+						maxHeight={96}
 					/>
 				</div>
 			</div>
@@ -67,19 +67,19 @@ const WaterQualityChart: FC<WaterQualityChartProps> = ({
 				className="flex flex-col divide-y divide-gray-200"
 				style={{ gridColumn: 2, gridRow: "1 / 3" }}
 			>
-				<div className="flex max-h-[65px] flex-1 items-center justify-between px-4">
+				<div className="flex max-h-[65px] flex-1 items-center justify-between px-2">
 					<span className="text-sm leading-tight font-semibold text-gray-700">
 						Abkopplung
 						<br />
 						<span className="font-normal">(Prozent)</span>
 					</span>
-					<span className="text-3xl leading-none font-bold">
+					<span className="mr-2 text-3xl leading-none font-bold">
 						{runoffReduction.toLocaleString("de-DE", {
 							maximumFractionDigits: 1,
 						})}
 					</span>
 				</div>
-				<div className="flex max-h-[65px] flex-1 items-center justify-between px-4">
+				<div className="flex max-h-[65px] flex-1 items-center justify-between px-2">
 					<span className="text-sm leading-tight font-semibold text-gray-700">
 						Unterschreitungs&shy;dauer
 						<br />
@@ -90,7 +90,7 @@ const WaterQualityChart: FC<WaterQualityChartProps> = ({
 						measuresValue={wqiSim.critical_hours[0]}
 					/>
 				</div>
-				<div className="flex max-h-[65px] flex-1 items-center justify-between px-4">
+				<div className="flex max-h-[65px] flex-1 items-center justify-between px-2">
 					<span className="text-sm leading-tight font-semibold text-gray-700">
 						Kritische O₂ Ereignisse
 						<br />

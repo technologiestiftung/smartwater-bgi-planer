@@ -55,14 +55,14 @@ const WaterBalanceChart: FC<WaterBalanceChartProps> = ({
 			}}
 		>
 			<div
-				className="border-primary flex min-w-[240px] items-center border-r border-b px-4"
+				className="border-primary flex min-w-[240px] items-center border-r border-b px-2"
 				style={{ gridColumn: 1, gridRow: 1 }}
 			>
 				<h2 className="text-lg font-bold">Wasserhaushalt</h2>
 			</div>
 
 			<div
-				className="border-primary flex flex-col justify-center border-r px-4"
+				className="border-primary flex flex-col justify-center border-r px-2"
 				style={{ gridColumn: 1, gridRow: 2 }}
 			>
 				<p
@@ -79,7 +79,7 @@ const WaterBalanceChart: FC<WaterBalanceChartProps> = ({
 						measuresValue={with_measures.delta_w}
 						showLegend
 						largeValues
-						maxHeight={72}
+						maxHeight={96}
 					/>
 				</div>
 			</div>
@@ -91,7 +91,7 @@ const WaterBalanceChart: FC<WaterBalanceChartProps> = ({
 				{metrics.map(({ label, unit, orig, sim }) => (
 					<div
 						key={label}
-						className="flex max-h-[65px] flex-1 items-center justify-between px-4"
+						className="flex max-h-[65px] flex-1 items-center justify-between px-2"
 					>
 						<span className="text-sm leading-tight font-semibold text-gray-700">
 							{label}

@@ -6,7 +6,7 @@ import { FC } from "react";
 export const COLOR_MEASURES = "#1e4d35";
 const COLOR_ORIGINAL = "#6db08a";
 const COLOR_LEGEND = "#B3B3B3";
-const BAR_MAX_HEIGHT = 32;
+const BAR_MAX_HEIGHT = 48;
 const BAR_WIDTH = 16;
 
 interface MiniBarChartProps {
