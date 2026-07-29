@@ -159,8 +159,14 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 				<h3 className="text-primary">
 					Simulationsergebnisse Überflutungsgefährdung - {title}
 				</h3>
-				{floodRiskText && (
-					<p className="text-muted-foreground">{floodRiskText}</p>
+				{Array.isArray(floodRiskText) && (
+					<>
+						{floodRiskText.map((text, index) => (
+							<p key={index} className="text-muted-foreground">
+								{text}
+							</p>
+						))}
+					</>
 				)}
 				{floodRiskLayerConfigId && (
 					<div className="flex flex-col gap-2">
