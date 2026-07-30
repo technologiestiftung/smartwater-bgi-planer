@@ -5,10 +5,18 @@ import { PLOT_TYPES, PlotType } from "@/server/rabimo/types";
 import { SpinnerIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import { FC, useState } from "react";
+import { Button } from "../ui/button";
 
 const PLOT_LABELS: Record<PlotType, string> = {
 	critical_hours: "Unterschreitungsdauer in Stunden (1,5 mg/L)",
 	critical_events: "Kritische Sauerstoffereignisse (Anzahl)",
+};
+
+const TOGGLE_LABELS: string[] = ["Ist-Zustand", "Simulation"];
+
+const STATUS_QUO_IMAGES: Record<PlotType, string> = {
+	critical_hours: "/images/Unterschreitung_Ist_Zustand.png",
+	critical_events: "/images/Kritische_Ereignisse_Ist_Zustand.png",
 };
 
 interface PlotsDisplayProps {
@@ -18,6 +26,9 @@ interface PlotsDisplayProps {
 
 const PlotsDisplay: FC<PlotsDisplayProps> = ({ plotUrls, isLoading }) => {
 	const [selectedPlot, setSelectedPlot] = useState<PlotType | null>(null);
+	const [activeSimulation, setActiveSimulation] = useState<string>(
+		TOGGLE_LABELS[1],
+	);
 
 	if (isLoading) {
 		return (
@@ -33,7 +44,7 @@ const PlotsDisplay: FC<PlotsDisplayProps> = ({ plotUrls, isLoading }) => {
 
 	return (
 		<>
-			<div className="flex gap-4">
+			<div className="border-primary flex divide-x divide-gray-200 border-t">
 				{PLOT_TYPES.map((type) => {
 					const base64 = plotUrls[type];
 					if (!base64) return null;
@@ -44,6 +55,9 @@ const PlotsDisplay: FC<PlotsDisplayProps> = ({ plotUrls, isLoading }) => {
 							className="cursor-zoom-in text-left"
 							onClick={() => setSelectedPlot(type)}
 						>
+							<p className="text-primary caption m-2 font-bold">
+								{PLOT_LABELS[type]}
+							</p>
 							<Image
 								src={`data:image/png;base64,${base64}`}
 								alt={PLOT_LABELS[type]}
@@ -63,8 +77,22 @@ const PlotsDisplay: FC<PlotsDisplayProps> = ({ plotUrls, isLoading }) => {
 					if (!open) setSelectedPlot(null);
 				}}
 				title={selectedPlot ? PLOT_LABELS[selectedPlot] : ""}
+				className="max-w-5xl"
 			>
-				{selectedBase64 && (
+				<div className="flex w-full justify-end gap-2">
+					{TOGGLE_LABELS.map((label, index) => (
+						<Button
+							key={index}
+							variant={activeSimulation === label ? "default" : "outline"}
+							size="sm"
+							onClick={() => setActiveSimulation(label)}
+							className="text-sm"
+						>
+							{label}
+						</Button>
+					))}
+				</div>
+				{selectedBase64 && activeSimulation === TOGGLE_LABELS[1] && (
 					<Image
 						src={`data:image/png;base64,${selectedBase64}`}
 						alt={selectedPlot ? PLOT_LABELS[selectedPlot] : ""}
@@ -74,6 +102,18 @@ const PlotsDisplay: FC<PlotsDisplayProps> = ({ plotUrls, isLoading }) => {
 						className="h-auto w-full"
 					/>
 				)}
+				{selectedBase64 &&
+					activeSimulation === TOGGLE_LABELS[0] &&
+					!!STATUS_QUO_IMAGES[selectedPlot as PlotType] && (
+						<Image
+							src={STATUS_QUO_IMAGES[selectedPlot as PlotType]}
+							alt={selectedPlot ? PLOT_LABELS[selectedPlot] : ""}
+							width={800}
+							height={520}
+							unoptimized
+							className="h-auto w-full"
+						/>
+					)}
 			</PageModal>
 		</>
 	);

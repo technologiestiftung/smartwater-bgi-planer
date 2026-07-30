@@ -1,6 +1,5 @@
 "use client";
 
-import PlotsDisplay from "@/components/PlotsDisplay/PlotsDisplay";
 import WaterBalanceChart from "@/components/ResultCharts/WaterBalanceChart";
 import WaterQualityChart from "@/components/ResultCharts/WaterQualityChart";
 import { Button } from "@/components/ui/button";
@@ -238,7 +237,12 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 
 					<br />
 
-					<WaterQualityChart stats={stats} isLoading={state === "loading"} />
+					<WaterQualityChart
+						stats={stats}
+						isLoading={state === "loading"}
+						plotUrls={plotUrls}
+						plotState={plotState}
+					/>
 
 					<p className="mt-4">
 						Die Auswirkungen geplanter BGI-Maßnahmen auf die Gewässerbelastung
@@ -260,13 +264,6 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 						auftreten, desto geringer ist die Belastung der Gewässer durch
 						Mischwasserüberläufe.
 					</p>
-				</div>
-
-				<div className="mt-4">
-					<PlotsDisplay
-						plotUrls={plotUrls}
-						isLoading={plotState === "loading"}
-					/>
 				</div>
 
 				<div className="mt-auto pt-6">

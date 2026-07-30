@@ -4,18 +4,26 @@ import {
 	COLOR_MEASURES,
 	MiniBarChart,
 } from "@/components/ResultCharts/MiniBarChart";
+import { PlotType } from "@/server/rabimo/types";
 import { ResultStatistics } from "@/types/result";
 import { SpinnerIcon } from "@phosphor-icons/react";
 import { FC } from "react";
+import PlotsDisplay from "../PlotsDisplay/PlotsDisplay";
 
 interface WaterQualityChartProps {
 	stats?: ResultStatistics;
 	isLoading?: boolean;
+	plotUrls: Partial<Record<PlotType, string>>;
+	plotState: RequestState;
 }
+
+type RequestState = "idle" | "loading" | "success" | "error";
 
 const WaterQualityChart: FC<WaterQualityChartProps> = ({
 	stats,
 	isLoading,
+	plotUrls,
+	plotState,
 }) => {
 	if (isLoading || !stats) {
 		return <SpinnerIcon className="animate-spin" size={24} />;
@@ -30,7 +38,7 @@ const WaterQualityChart: FC<WaterQualityChartProps> = ({
 			className="border-primary grid overflow-hidden border"
 			style={{
 				gridTemplateColumns: "1fr 1fr",
-				gridTemplateRows: "65px 130px",
+				gridTemplateRows: "65px 130px auto",
 			}}
 		>
 			<div
@@ -101,6 +109,9 @@ const WaterQualityChart: FC<WaterQualityChartProps> = ({
 						measuresValue={wqiSim.critical_events[0]}
 					/>
 				</div>
+			</div>
+			<div style={{ gridColumn: "1 / 3", gridRow: 3 }}>
+				<PlotsDisplay plotUrls={plotUrls} isLoading={plotState === "loading"} />
 			</div>
 		</div>
 	);
