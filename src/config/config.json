@@ -76,6 +76,10 @@
 					"type": "folder",
 					"elements": [
 						{
+							"id": "bgi-planer:Starkregengefaehrdungskarte_high_compression",
+							"visibility": false
+						},
+						{
 							"id": "ua_srhk:db_fliessgeschw_aussergew_kostra",
 							"visibility": false
 						},

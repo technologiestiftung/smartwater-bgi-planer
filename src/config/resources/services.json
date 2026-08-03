@@ -428,6 +428,22 @@
 		"gfiAttributes": "ignore"
 	},
 	{
+		"id": "UPDATE 20260803"
+	},
+	{
+		"id": "bgi-planer:Starkregengefaehrdungskarte_high_compression",
+		"name": "Starkregengefährdungskarte",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "Starkregengefaehrdungskarte_high_compression",
+		"styles": "bgi-planer:Starkregengefaehrdungskarte_high_compression",
+		"gfiAttributes": "ignore"
+	},
+	{
 		"id": "BGI DRAW MAPS"
 	},
 	{

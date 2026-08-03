@@ -64,7 +64,8 @@
 		"canDrawNotes": true,
 		"visibleLayerIds": [
 			"ua_srhk:da_fr_aussergewoehnlich",
-			"ua_srhk:db_fliessgeschw_aussergew_kostra"
+			"ua_srhk:db_fliessgeschw_aussergew_kostra",
+			"bgi-planer:Starkregengefaehrdungskarte_high_compression"
 		],
 		"legendSrc": "/legends/1s1.svg",
 		"legendTitle": "Fließgeschwindigkeit"
