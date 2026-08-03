@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import layerConfig from "@/config/layerConfig.json";
+import { getModuleStepMeasure } from "@/components/Modules/shared/moduleConfig";
 import { measureConfigById } from "@/config/measuresConfig";
 import {
 	formatMeasureValue,
@@ -21,7 +22,15 @@ const getDisplayName = (configId: string): string => {
 	const layer = (layerConfig as Array<{ id?: string; name?: string }>).find(
 		(item) => item.id === configId,
 	);
-	return layer?.name || configId;
+	const name = layer?.name || configId;
+	const nameStartsWithANumber = /^\d/.test(name);
+	if (nameStartsWithANumber) {
+		const measure = getModuleStepMeasure("measurePlanning", configId);
+		if (measure && measure.title) {
+			return measure.title;
+		}
+	}
+	return name;
 };
 
 interface MeasureDetailsCardProps {
