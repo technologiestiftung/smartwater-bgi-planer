@@ -1,4 +1,3 @@
-export * from "./feature";
 export * from "./format";
 export * from "./geojson";
 export * from "./layer";

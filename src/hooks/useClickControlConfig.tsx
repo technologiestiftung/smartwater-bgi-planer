@@ -5,7 +5,6 @@ import { FeatureDetailsModal } from "@/components/FeatureDetailViews/FeatureDeta
 import { FeatureNoteCard } from "@/components/FeatureDetailViews/FeatureNoteCard/FeatureNoteCard";
 import { FeatureTooltip } from "@/components/FeatureDetailViews/FeatureTooltip/FeatureTooltip";
 import { MeasureDetailsCard } from "@/components/FeatureDetailViews/MeasureDetailsCard/MeasureDetailsCard";
-import { getFeatureAttributes } from "@/lib/helpers/ol/feature";
 import { resolveMeasureId } from "@/lib/helpers/ol/measureFeature";
 import { selectActiveLayerConfig, useLayersStore } from "@/store/layers";
 import { LAYER_IDS } from "@/types/shared";
@@ -51,7 +50,6 @@ export const useClickControlConfig = () => {
 			onClose: () => void,
 		) => {
 			const normalizedFeature = feature ?? undefined;
-			const attributes = getFeatureAttributes(normalizedFeature);
 
 			if (layerId === "project_notes") {
 				return (
@@ -89,12 +87,13 @@ export const useClickControlConfig = () => {
 					/>
 				);
 			}
-
-			if (currentConfig?.canQueryFeatures?.includes(layerId)) {
+			if (currentConfig?.canQueryFeatures?.includes(layerId) && feature) {
 				if (currentConfig.featureDisplay === "modal") {
 					return (
 						<FeatureDetailsModal
-							attributes={attributes}
+							attributes={
+								feature?.getProperties ? feature.getProperties() : feature
+							}
 							layerId={layerId}
 							onClose={onClose}
 						/>
@@ -102,7 +101,9 @@ export const useClickControlConfig = () => {
 				}
 				return (
 					<FeatureTooltip
-						attributes={attributes ?? {}}
+						attributes={
+							feature?.getProperties ? feature.getProperties() : feature
+						}
 						layerId={layerId}
 						onClose={onClose}
 					/>
