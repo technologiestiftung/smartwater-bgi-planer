@@ -502,7 +502,7 @@
 		"styleId": "projectNotes"
 	},
 	{
-		"id": "need_flooding_hotspots",
+		"id": "module_1_flooding_hotspots",
 		"name": "Starkregen Hotspot",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
@@ -510,7 +510,7 @@
 		"styleId": "floodingHotspots"
 	},
 	{
-		"id": "need_flooding_hotspots_q1",
+		"id": "module_1_flooding_hotspots_q1",
 		"name": "Starkregen Hotspot Q1",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
@@ -518,7 +518,7 @@
 		"styleId": "floodingHotspots"
 	},
 	{
-		"id": "need_flooding_hotspots_q2",
+		"id": "module_1_flooding_hotspots_q2",
 		"name": "Starkregen Hotspot Q2",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
@@ -526,7 +526,7 @@
 		"styleId": "floodingHotspots"
 	},
 	{
-		"id": "need_flooding_hotspots_q3",
+		"id": "module_1_flooding_hotspots_q3",
 		"name": "Starkregen Hotspot Q3",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
@@ -534,7 +534,7 @@
 		"styleId": "floodingHotspots"
 	},
 	{
-		"id": "need_temperature_hotspots",
+		"id": "module_1_temperature_hotspots",
 		"name": "Hitze Hotspot",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
@@ -542,7 +542,7 @@
 		"styleId": "temperatureHotspots"
 	},
 	{
-		"id": "need_temperature_hotspots_q1",
+		"id": "module_1_temperature_hotspots_q1",
 		"name": "Hitze Hotspot Q1",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
@@ -550,7 +550,7 @@
 		"styleId": "temperatureHotspots"
 	},
 	{
-		"id": "need_temperature_hotspots_q2",
+		"id": "module_1_temperature_hotspots_q2",
 		"name": "Hitze Hotspot Q2",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
@@ -558,7 +558,7 @@
 		"styleId": "temperatureHotspots"
 	},
 	{
-		"id": "need_temperature_hotspots_q3",
+		"id": "module_1_temperature_hotspots_q3",
 		"name": "Hitze Hotspot Q3",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
@@ -566,7 +566,7 @@
 		"styleId": "temperatureHotspots"
 	},
 	{
-		"id": "need_temperature_hotspots_q4",
+		"id": "module_1_temperature_hotspots_q4",
 		"name": "Hitze Hotspot Q4",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
@@ -574,7 +574,7 @@
 		"styleId": "temperatureHotspots"
 	},
 	{
-		"id": "need_temperature_hotspots_q5",
+		"id": "module_1_temperature_hotspots_q5",
 		"name": "Hitze Hotspot Q5",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
@@ -582,7 +582,7 @@
 		"styleId": "temperatureHotspots"
 	},
 	{
-		"id": "need_temperature_hotspots_q6",
+		"id": "module_1_temperature_hotspots_q6",
 		"name": "Hitze Hotspot Q6",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
@@ -590,7 +590,7 @@
 		"styleId": "temperatureHotspots"
 	},
 	{
-		"id": "need_impermeability_hotspots",
+		"id": "module_1_impermeability_hotspots",
 		"name": "Versiegelung Hotspots",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
@@ -598,7 +598,7 @@
 		"styleId": "impermeabilityHotspots"
 	},
 	{
-		"id": "need_impermeability_hotspots_q1",
+		"id": "module_1_impermeability_hotspots_q1",
 		"name": "Versiegelung Hotspots Q1",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
@@ -606,7 +606,7 @@
 		"styleId": "impermeabilityHotspots"
 	},
 	{
-		"id": "need_impermeability_hotspots_q2",
+		"id": "module_1_impermeability_hotspots_q2",
 		"name": "Versiegelung Hotspots Q2",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
@@ -614,7 +614,7 @@
 		"styleId": "impermeabilityHotspots"
 	},
 	{
-		"id": "need_groundwater_hotspots",
+		"id": "module_1_groundwater_hotspots",
 		"name": "Gewässerschutz Hotspots",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
@@ -622,7 +622,7 @@
 		"styleId": "groundwaterHotspots"
 	},
 	{
-		"id": "need_groundwater_hotspots_q1",
+		"id": "module_1_groundwater_hotspots_q1",
 		"name": "Gewässerschutz Hotspots Q1",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
@@ -630,7 +630,7 @@
 		"styleId": "groundwaterHotspots"
 	},
 	{
-		"id": "need_groundwater_hotspots_q2",
+		"id": "module_1_groundwater_hotspots_q2",
 		"name": "Gewässerschutz Hotspots Q2",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
@@ -638,7 +638,7 @@
 		"styleId": "groundwaterHotspots"
 	},
 	{
-		"id": "need_groundwater_hotspots_q3",
+		"id": "module_1_groundwater_hotspots_q3",
 		"name": "Gewässerschutz Hotspots Q3",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
@@ -646,7 +646,7 @@
 		"styleId": "groundwaterHotspots"
 	},
 	{
-		"id": "need_waterbalance_hotspots",
+		"id": "module_1_waterbalance_hotspots",
 		"name": "Wasserhaushalt Hotspots",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
@@ -654,7 +654,7 @@
 		"styleId": "waterbalanceHotspots"
 	},
 	{
-		"id": "need_waterbalance_hotspots_q1",
+		"id": "module_1_waterbalance_hotspots_q1",
 		"name": "Wasserhaushalt Hotspots Q1",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
