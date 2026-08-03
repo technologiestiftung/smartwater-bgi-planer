@@ -200,7 +200,7 @@
 		"gfiAttributes": "ignore"
 	},
 	{
-		"id": "bgi-planer:versiegelung_2021",
+		"id": "bgi-planer:versiegelung_2021_outdated",
 		"name": "Versiegelung der Block- und Blockteilflächen 2021",
 		"crs": "EPSG:25833",
 		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
@@ -440,7 +440,18 @@
 		"format": "image/png",
 		"datasets": false,
 		"layers": "Starkregengefaehrdungskarte_high_compression",
-		"styles": "bgi-planer:Starkregengefaehrdungskarte_high_compression",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:versiegelung_2021",
+		"name": "Versiegelung der Blockteilflächen 2021",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "versiegelung_2021_mit_durchschnitt",
 		"gfiAttributes": "ignore"
 	},
 	{
