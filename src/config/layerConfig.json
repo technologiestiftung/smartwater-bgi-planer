@@ -383,7 +383,8 @@
 			"potenziale_regenwasserbewirtschaftung:aa_versickerungspotenzial_eu"
 		],
 		"visibleLayerIds": [
-			"potenziale_regenwasserbewirtschaftung:aa_versickerungspotenzial_eu"
+			"potenziale_regenwasserbewirtschaftung:aa_versickerungspotenzial_eu",
+			"wsg:wsg"
 		],
 		"legendSrc": "/legends/2v1.svg",
 		"legendTitle": "Anzahl mögliche Versickerungsmaßnahmen"
@@ -396,7 +397,8 @@
 			"potenziale_regenwasserbewirtschaftung:ab_versickerungspotenzial_gp"
 		],
 		"visibleLayerIds": [
-			"potenziale_regenwasserbewirtschaftung:ab_versickerungspotenzial_gp"
+			"potenziale_regenwasserbewirtschaftung:ab_versickerungspotenzial_gp",
+			"wsg:wsg"
 		]
 	},
 	{
@@ -407,7 +409,8 @@
 			"potenziale_regenwasserbewirtschaftung:ac_versickerungspotenzial_au"
 		],
 		"visibleLayerIds": [
-			"potenziale_regenwasserbewirtschaftung:ac_versickerungspotenzial_au"
+			"potenziale_regenwasserbewirtschaftung:ac_versickerungspotenzial_au",
+			"wsg:wsg"
 		]
 	},
 	{

@@ -292,6 +292,10 @@
 							"visibility": false
 						},
 						{
+							"id": "wsg:wsg",
+							"visibility": false
+						},
+						{
 							"id": "ua_klimabewertung_2022:eb_ua_phk_vul_demog_2022",
 							"visibility": false
 						},
