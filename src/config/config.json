@@ -228,6 +228,10 @@
 							"visibility": false
 						},
 						{
+							"id": "ua_vegetationshoehen_2020:c_vegetationshoehe_2020_raster",
+							"visibility": false
+						},
+						{
 							"id": "baumbestand:anlagenbaeume",
 							"visibility": false
 						},

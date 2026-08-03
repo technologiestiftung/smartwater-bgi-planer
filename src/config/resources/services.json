@@ -13347,6 +13347,30 @@
 		"id": "Themenkarten"
 	},
 	{
+		"id": "ua_vegetationshoehen_2020:c_vegetationshoehe_2020_raster",
+		"name": "Vegetationshöhen 2020 (Raster)",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_vegetationshoehen_2020",
+		"typ": "WMS",
+		"layers": "c_vegetationshoehe_2020_raster",
+		"legend": true,
+		"datasets": [
+			{
+				"md_id": "e724b90e-ce12-4091-8058-5feab4793dd8",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"transparent": true,
+		"gfiAttributes": "showAll",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"singleTile": true
+	},
+	{
 		"id": "ua_srgk:bb_fliessgeschwindigkeit_aussergewoehnlich",
 		"name": "Fließgeschwindigkeit (außergewöhnliches Ereignis)",
 		"name_lang": "Fließgeschwindigkeit (außergewöhnliches Ereignis) (Starkregengefahrenkarte)",

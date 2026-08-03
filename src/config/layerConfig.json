@@ -446,7 +446,8 @@
 		"canDrawNotes": true,
 		"visibleLayerIds": [
 			"baumbestand:anlagenbaeume",
-			"baumbestand:strassenbaeume"
+			"baumbestand:strassenbaeume",
+			"ua_vegetationshoehen_2020:c_vegetationshoehe_2020_raster"
 		],
 		"legendSrc": "/legends/2v4.svg",
 		"legendTitle": "Bäume"
