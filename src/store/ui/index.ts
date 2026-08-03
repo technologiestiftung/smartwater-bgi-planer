@@ -38,8 +38,6 @@ const initialState: UiState = {
 	moduleQuestionIndices: getInitialModuleQuestionIndices(),
 	moduleSavedState: null,
 	isSynthesisMode: false,
-	showTutorial: false,
-	showTutorialOnFirstQuestion: false,
 	draftMeasureIds: [],
 	draftConnectedAreaIds: [],
 };
@@ -132,14 +130,6 @@ export const useUiStore = create<UiState & UiActions>()(
 					moduleQuestionIndices: getInitialModuleQuestionIndices(),
 					moduleSavedState: null,
 					isSynthesisMode: false,
-				}),
-			setTutorialState: (showTutorial) =>
-				set({
-					showTutorial,
-				}),
-			setTutorialOnFirstQuestionState: (showTutorialOnFirstQuestion) =>
-				set({
-					showTutorialOnFirstQuestion,
 				}),
 			addDraftMeasureId: (measureId) =>
 				set((state) => ({

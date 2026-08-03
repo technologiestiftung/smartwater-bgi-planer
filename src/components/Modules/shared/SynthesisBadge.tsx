@@ -28,9 +28,9 @@ export function SynthesisBadge({
 	);
 	const pathname = usePathname();
 	// eslint-disable-next-line no-nested-ternary
-	const moduleId = pathname.includes("/handlungsbedarfe")
+	const moduleId = pathname.endsWith("/handlungsbedarfe")
 		? "needForAction"
-		: pathname.includes("/machbarkeit")
+		: pathname.endsWith("/machbarkeit")
 			? "feasibility"
 			: null;
 

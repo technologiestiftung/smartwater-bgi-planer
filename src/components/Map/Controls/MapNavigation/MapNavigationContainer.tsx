@@ -8,6 +8,7 @@ import { useUiStore } from "@/store/ui";
 import { FC, useCallback, useRef } from "react";
 import { ProjectBoundaryControl } from "./ProjectBoundaryControl";
 import { Tutorial } from "@/components/Tutorial/Tutorial";
+import { useTutorialStore } from "@/store/tutorial";
 import { cn } from "@/lib/utils";
 
 interface MapNavigationContainerProps {
@@ -20,7 +21,14 @@ export const MapNavigationContainer: FC<MapNavigationContainerProps> = ({
 	const setIsLayerTreeVisible = useUiStore(
 		(state) => state.setIsLayerTreeVisible,
 	);
-	const showTutorial = useUiStore((state) => state.showTutorial);
+	const showTutorialOnFirstQuestion = useTutorialStore(
+		(state) => state.showTutorialOnFirstQuestion,
+	);
+	const showTutorialOnFirstMeasureDraw = useTutorialStore(
+		(state) => state.showTutorialOnFirstMeasureDraw,
+	);
+	const showTutorial =
+		showTutorialOnFirstQuestion || showTutorialOnFirstMeasureDraw;
 	const enterTimeoutRef = useRef<number | null>(null);
 	const leaveTimeoutRef = useRef<number | null>(null);
 
