@@ -49,33 +49,34 @@ export function MenuToggleButton({ projectId }: MenuToggleButtonProps) {
 
 	return (
 		<div className="fixed top-4 right-4 z-40 flex items-center gap-3">
-			{isModule &&
+			{((isModule &&
 				(currentLayerConfig?.canDrawNotes ||
 					currentLayerConfig?.canDrawPolygons ||
-					currentLayerConfig?.canDrawBTF) && (
-					<div className="relative inline-flex">
-						{showTutorial && (
-							<span className="bg-accent/80 absolute inset-0 animate-ping rounded-full [animation-duration:1s] [animation-fill-mode:forwards] [animation-iteration-count:3]" />
-						)}
-						<button
-							type="button"
-							className="bg-accent flex size-8 cursor-pointer items-center justify-center rounded-full"
-							onClick={() => {
-								if (isPlanningModule) {
-									setTutorialOnFirstMeasureDraw(false);
-								} else {
-									setTutorialOnFirstQuestion(false);
-								}
-							}}
-							aria-label={showTutorial ? "Hide tutorial" : "Show tutorial"}
-						>
-							<InfoIcon
-								className="text-neutral-dark size-6 cursor-pointer"
-								aria-hidden="true"
-							/>
-						</button>
-					</div>
-				)}
+					currentLayerConfig?.canDrawBTF)) ||
+				isPlanningModule) && (
+				<div className="relative inline-flex">
+					{showTutorial && (
+						<span className="bg-accent/80 absolute inset-0 animate-ping rounded-full [animation-duration:1s] [animation-fill-mode:forwards] [animation-iteration-count:3]" />
+					)}
+					<button
+						type="button"
+						className="bg-accent flex size-8 cursor-pointer items-center justify-center rounded-full"
+						onClick={() => {
+							if (isPlanningModule) {
+								setTutorialOnFirstMeasureDraw(true);
+							} else {
+								setTutorialOnFirstQuestion(true);
+							}
+						}}
+						aria-label={showTutorial ? "Hide tutorial" : "Show tutorial"}
+					>
+						<InfoIcon
+							className="text-neutral-dark size-6 cursor-pointer"
+							aria-hidden="true"
+						/>
+					</button>
+				</div>
+			)}
 			<div className="relative">
 				<Button
 					onClick={handleToggle}
