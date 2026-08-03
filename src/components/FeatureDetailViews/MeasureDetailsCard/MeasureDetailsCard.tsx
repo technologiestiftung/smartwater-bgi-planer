@@ -1,5 +1,6 @@
 "use client";
 
+import { ConfirmButton } from "@/components/ConfirmButton/ConfirmButton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import layerConfig from "@/config/layerConfig.json";
@@ -33,6 +34,7 @@ export const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
 	onClose,
 }) => {
 	const [draftValues, setDraftValues] = useState<Record<string, string>>({});
+	const [confirmDeletion, setConfirmDeletion] = useState<boolean>(false);
 
 	const activeScenarioId = useScenarioStore((state) => state.activeScenarioId);
 	const measure = useScenarioStore((state) => {
@@ -142,18 +144,34 @@ export const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
 					</label>
 				))}
 
-				<div className="flex gap-2">
-					{hasInputParams && (
-						<Button onClick={handleSave} className="flex-1">
-							<CheckIcon />
-							Speichern
+				{confirmDeletion ? (
+					<ConfirmButton
+						displayText="Bitte bestätigen Sie das Löschen dieser Maßnahme"
+						buttonText="Maßnahme löschen"
+						icon={<TrashIcon />}
+						onConfirm={() => {
+							handleDelete();
+							return true;
+						}}
+					/>
+				) : (
+					<div className="flex gap-2">
+						{hasInputParams && (
+							<Button onClick={handleSave} className="flex-1">
+								<CheckIcon />
+								Speichern
+							</Button>
+						)}
+						<Button
+							variant="outline"
+							onClick={() => setConfirmDeletion(true)}
+							className="flex-1"
+						>
+							<TrashIcon size={16} />
+							Löschen
 						</Button>
-					)}
-					<Button variant="outline" onClick={handleDelete} className="flex-1">
-						<TrashIcon size={16} />
-						Löschen
-					</Button>
-				</div>
+					</div>
+				)}
 			</div>
 		</div>
 	);

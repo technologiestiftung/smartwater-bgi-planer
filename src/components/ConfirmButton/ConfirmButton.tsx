@@ -12,6 +12,7 @@ interface ConfirmButtonProps {
 	autoAdvanceStep?: boolean;
 	buttonText?: string;
 	disabled?: boolean;
+	icon?: React.ReactNode;
 }
 
 export const ConfirmButton: FC<ConfirmButtonProps> = ({
@@ -21,6 +22,7 @@ export const ConfirmButton: FC<ConfirmButtonProps> = ({
 	autoAdvanceStep = true,
 	buttonText = "Bestätigen",
 	disabled = false,
+	icon = <CheckIcon />,
 }) => {
 	const stepper = useOptionalVerticalStepper();
 	const [isLoading, setIsLoading] = useState(false);
@@ -55,7 +57,7 @@ export const ConfirmButton: FC<ConfirmButtonProps> = ({
 				onClick={handleConfirm}
 				disabled={!isValid || isLoading || disabled}
 			>
-				<CheckIcon />
+				{icon}
 				{isLoading ? "Wird verarbeitet..." : buttonText}
 			</Button>
 			{displayText && (
