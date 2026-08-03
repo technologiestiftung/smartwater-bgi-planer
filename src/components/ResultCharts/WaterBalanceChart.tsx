@@ -7,6 +7,7 @@ import {
 import { ResultStatistics } from "@/types/result";
 import { SpinnerIcon } from "@phosphor-icons/react";
 import { FC } from "react";
+import Image from "next/image";
 
 interface WaterBalanceChartProps {
 	stats?: ResultStatistics;
@@ -48,33 +49,37 @@ const WaterBalanceChart: FC<WaterBalanceChartProps> = ({
 	return (
 		<div
 			className="border-primary grid overflow-hidden border"
-			style={{ gridTemplateColumns: "1fr 1fr", gridTemplateRows: "auto 1fr" }}
+			style={{
+				gridTemplateColumns: "1fr 1fr",
+				gridTemplateRows: "65px 130px auto",
+			}}
 		>
 			<div
-				className="border-primary border-r border-b p-4"
+				className="border-primary flex min-w-[240px] items-center border-r border-b px-2"
 				style={{ gridColumn: 1, gridRow: 1 }}
 			>
-				<h2 className="text-xl font-bold">Wasserhaushalt</h2>
+				<h2 className="text-lg font-bold">Wasserhaushalt</h2>
 			</div>
 
 			<div
-				className="border-primary flex flex-col border-r p-4"
+				className="border-primary flex flex-col justify-center border-r px-2"
 				style={{ gridColumn: 1, gridRow: 2 }}
 			>
 				<p
-					className="mb-3 text-sm leading-tight font-bold"
+					className="translate-y-4 text-sm leading-tight font-bold"
 					style={{ color: COLOR_MEASURES }}
 				>
 					Delta-W
 					<br />
 					(%)
 				</p>
-				<div className="flex flex-1 items-center justify-center">
+				<div className="flex flex-1 -translate-y-4 items-center justify-end">
 					<MiniBarChart
 						originalValue={original.delta_w}
 						measuresValue={with_measures.delta_w}
 						showLegend
 						largeValues
+						maxHeight={96}
 					/>
 				</div>
 			</div>
@@ -86,7 +91,7 @@ const WaterBalanceChart: FC<WaterBalanceChartProps> = ({
 				{metrics.map(({ label, unit, orig, sim }) => (
 					<div
 						key={label}
-						className="flex flex-1 items-center justify-between p-4"
+						className="flex max-h-[65px] flex-1 items-center justify-between px-2"
 					>
 						<span className="text-sm leading-tight font-semibold text-gray-700">
 							{label}
@@ -96,6 +101,20 @@ const WaterBalanceChart: FC<WaterBalanceChartProps> = ({
 						<MiniBarChart originalValue={orig} measuresValue={sim} />
 					</div>
 				))}
+			</div>
+
+			<div
+				className="border-primary flex flex-col border-t"
+				style={{ gridColumn: "1 / 3", gridRow: 3 }}
+			>
+				<Image
+					src={"/legends/effektbewertung.svg"}
+					loading="eager"
+					alt="Legende für Maßnahmen"
+					width={620}
+					height={260}
+					className="h-auto max-w-full"
+				/>
 			</div>
 		</div>
 	);

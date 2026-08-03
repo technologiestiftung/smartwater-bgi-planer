@@ -1,6 +1,5 @@
 "use client";
 
-import PlotsDisplay from "@/components/PlotsDisplay/PlotsDisplay";
 import WaterBalanceChart from "@/components/ResultCharts/WaterBalanceChart";
 import WaterQualityChart from "@/components/ResultCharts/WaterQualityChart";
 import { Button } from "@/components/ui/button";
@@ -238,7 +237,12 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 
 					<br />
 
-					<WaterQualityChart stats={stats} isLoading={state === "loading"} />
+					<WaterQualityChart
+						stats={stats}
+						isLoading={state === "loading"}
+						plotUrls={plotUrls}
+						plotState={plotState}
+					/>
 
 					<p className="mt-4">
 						Die Auswirkungen geplanter BGI-Maßnahmen auf die Gewässerbelastung
@@ -262,13 +266,6 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 					</p>
 				</div>
 
-				<div className="mt-4">
-					<PlotsDisplay
-						plotUrls={plotUrls}
-						isLoading={plotState === "loading"}
-					/>
-				</div>
-
 				<div className="mt-auto pt-6">
 					<Image
 						src={"/legends/measures.svg"}
@@ -277,14 +274,6 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 						width={620}
 						height={260}
 						className="h-auto max-w-full"
-					/>
-					<Image
-						src={"/legends/effektbewertung.svg"}
-						loading="eager"
-						alt="Legende für Maßnahmen"
-						width={620}
-						height={260}
-						className="mt-4 h-auto max-w-full"
 					/>
 				</div>
 			</div>
