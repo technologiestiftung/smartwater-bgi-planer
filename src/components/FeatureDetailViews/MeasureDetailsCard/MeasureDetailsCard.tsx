@@ -10,6 +10,7 @@ import {
 } from "@/lib/helpers/measures/values";
 import { useMapStore } from "@/store/map";
 import { useScenarioStore } from "@/store/scenario";
+import { useUiStore } from "@/store/ui";
 import type { MeasureValue } from "@/store/scenario/types";
 import { CheckIcon, TrashIcon, XCircleIcon } from "@phosphor-icons/react";
 import VectorLayer from "ol/layer/Vector";
@@ -46,7 +47,9 @@ export const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
 	const updateMeasureValues = useScenarioStore(
 		(state) => state.updateMeasureValues,
 	);
-	const removeMeasure = useScenarioStore((state) => state.removeMeasure);
+	const addPendingDeleteMeasureId = useUiStore(
+		(state) => state.addPendingDeleteMeasureId,
+	);
 	const map = useMapStore((state) => state.map);
 
 	if (!measure || !activeScenarioId) {
@@ -83,13 +86,10 @@ export const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
 				const feature = source
 					.getFeatures()
 					.find((f) => f.get("measureId") === measure.id);
-				if (feature) {
-					source.removeFeature(feature);
-				}
+				if (feature) source.removeFeature(feature);
 			}
 		}
-
-		removeMeasure(activeScenarioId, measure.id);
+		addPendingDeleteMeasureId(measure.id);
 		onClose?.();
 	};
 
