@@ -55,9 +55,14 @@
 	},
 	{
 		"id": "heavy_rain_flow_velocity",
-		"name": "Fließgeschwindigkeit",
-		"question": "Wo gibt es Bereiche in denen Fließgeschwindigkeiten über 0,5 m/s auftreten und dadurch eine Gefährdung bestehen könnte?",
-		"description": "Die Karte enthält Aussagen zur Fließgeschwindigkeit und zur Fließrichtung für ein außergewöhnliches Starkregenereignis, welches rein statistisch alle 100 Jahre vorkommt. Zu beachten ist auch, ob durch die Geländesituation in der Umgebung ein oberirdischer Zufluss in das Quartier oder ein Abfluss aus dem Quartier zu erwarten ist.",
+		"name": "Starkregengefährdung",
+		"question": "Gibt es Bereiche, in denen von einer Gefährdung durch Starkregen für Menschen, die Umwelt, von Infrastruktur oder Sachwerten auszugehen ist?",
+		"description": [
+			"Methodik: Die Starkregengefährdungskarte ist durch eine Kombination von Fließgeschwindigkeit und Wassertiefe des außergewöhnlichen Szenarios der vom [Bundesamt für Kartographie und Geodäsie (BKG)](https://www.bkg.bund.de/) bereitgestellten [Hinweiskarte Starkregengefahren](https://gdi.berlin.de/viewer/main/?MAPS=%7b%22center%22:%5b389858.4,5819603.577837354%5d,%22zoom%22:5%7d&LAYERS=%5b%7b%22id%22:%22hintergrund_default_grau%22,%22visibility%22:true,%22transparency%22:0%7d,%7b%22id%22:%22ua_srhk:dc_wasserstand_aussergew_kostra%22,%22visibility%22:true,%22transparency%22:0%7d,%7b%22id%22:%22ua_srhk:db_fliessgeschw_aussergew_kostra%22,%22visibility%22:true,%22transparency%22:0%7d,%7b%22id%22:%22ua_srhk:da_fr_aussergewoehnlich%22,%22visibility%22:true,%22transparency%22:0%7d%5d) im Rahmen des Projektes SmartWater berechnet worden. Das „außergewöhnliche Ereignis“ betrachtet ein 100-jährliches Niederschlagsereignis, das statistisch alle 100 Jahre auftritt (T = 100a, Dauerstufe 1 Stunde mit einem Euler-Typ II Niederschlagsverteilung). Die Basisdaten wurden wie im [Naturgefahrenportal (NGP)](https://www.naturgefahrenportal.de/de/help_ngp_data_info?hash=rain) in vier Gefährdungsstufen eingeteilt: gering, mittel, hoch und sehr hoch. Die Klasse \"geringe Gefährdung\" beinhaltet alle Wassertiefen von 0 bis 5 cm, es gibt also keinen Bereich, an dem eine Gefährdung durch Starkregen ausgeschlossen werden kann. Hinweis: Für die Überflutungsvorsorge sind auch die an das Untersuchungsgebiet angrenzenden Flächen und deren Geländesituation zu betrachten. Es sollte in der Planung vermieden werden, dass sich die Gefährdung von benachbarten Gebieten erhöht sowie ein Zufluss in das Untersuchungsgebiet für eine erhöhte Gefährdung sorgt. Bei der Einschätzung hilft die Darstellung der Fließwege über Pfeile. Es sollte geprüft werden, ob es Gebäude oder Bereiche im Untersuchungsgebiet gibt, die sich durch ein hohes Schadenspotenzial auszeichnen. Etwa weil dort kritische Infrastruktur, besonders sensible Sachwerte untergebracht sind oder sich vulnerable Gruppen aufhalten, z.B. Kitas, Schulen, Altenheime. Die Karten liefern nur erste Hinweise darauf, wo Gefährdungen durch Überflutungen auftreten könnten. Die dargestellten Modellergebnisse können von der Realität abweichen - es kann also durchaus sein, dass Bereiche von Überflutungen betroffen sind, die auf der Karte nicht gekennzeichnet sind oder umgekehrt. Sollte für das Untersuchungsgebiet bereits eine Starkregengefahrenkarte vorliegen, sollte diese vorrangig genutzt werden. Für die Umsetzung von Maßnahmen sollte die Gefährdungseinschätzung immer durch eine Begehung vor Ort ergänzt werden.",
+			"Über die Kartenauswahl können die Karten zu Wasserstand und Fließgeschwindigkeit (außergewöhnliches Ereignis) abgerufen werden: Für eine grobe Ersteinschätzung der Gefährdung mittels Kartengrundlage sollten die Parameter Wasserstand, Fließgeschwindigkeit und Fließrichtung gemeinsam bewertet werden, da bei gleichem Wasserstand höhere Fließgeschwindigkeiten die Gefährdung erhöhen können. Potenzielle Gefahren können Beispielsweise vollgelaufene Keller oder Beeinträchtigungen des Verkehrs (wie Aquaplaning) sein. Für Kinder und (bewegungs-) eingeschränkte Personen können bereits Überflutungstiefen ab 10 cm zur Gefahr werden. Generell besonders gefährdete Bereiche sind zum Beispiel Souterrain-Wohnungen, (Tief-) Garageneinfahrten, U-Bahn-Zugänge oder Unterführungen."
+		],
+		"embeddedImageAfterText": "/images/placeholder.png",
+		"embeddedImageAfterTextDescription": "Zuordnung der Gefährdungsstufen, Quelle: [NGP Naturgefahrenportal](https://www.naturgefahrenportal.de/de/help_ngp_data_info?hash=rain)",
 		"drawLayerId": "need_flooding_hotspots_q1",
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
@@ -66,8 +71,7 @@
 			"ua_srhk:da_fr_aussergewoehnlich",
 			"ua_srhk:db_fliessgeschw_aussergew_kostra"
 		],
-		"legendSrc": "/legends/1s1.svg",
-		"legendTitle": "Fließgeschwindigkeit"
+		"legendSrc": "/legends/1s1.svg"
 	},
 	{
 		"id": "heavy_rain_fire_department_incidents",
@@ -215,15 +219,20 @@
 	},
 	{
 		"id": "sealing_block_areas_high",
-		"name": "Versiegelung der Blockteilflächen",
-		"question": "Wo liegen Bereiche, in denen der Versiegelungsgrad den Durchschnitt um mehr als 20 % überschreitet?",
-		"description": "Die Karte zeigt die Abweichung vom Durchschnittswert des jeweiligen Flächentyps an. *Hinweis: Die gesamte Landesfläche Berlins ist mit 52 Flächentypen gekennzeichnet.",
+		"name": "Versiegelung",
+		"question": "Gibt es Blockteilflächen mit hohen Versiegelungsgraden (über 60-70 %)?",
+		"description": [
+			"Große versiegelte Bereiche können die thermische Belastung erhöhen und führen zu hohen Oberflächenabflüssen. Dadurch sind im urbanen Wasserhaushalt die Komponenten Versickerung und Verdunstung im Vergleich zum natürlichen Zustand stark reduziert.",
+			"Mit Klick in die Karte kann geprüft werden, ob der durchschnittliche Versiegelungsgrad des jeweiligen Flächentyps einer Blockteilfläche um mehr als 20 % überschritten wird. Dies gibt einen Hinweis auf eine untypisch hohe Versiegelung eines Flächentyps und zeigt den Entsiegelungsbedarf. ",
+			"Hinweis: Die gesamte Landesfläche Berlins ist mit 52 Flächentypen gekennzeichnet. Die Kartenbeschreibung finden Sie [hier](https://www.berlin.de/umweltatlas/boden/versiegelung/2021/kartenbeschreibung/)."
+		],
 		"drawLayerId": "need_impermeability_hotspots_q1",
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
 		"canDrawNotes": true,
 		"visibleLayerIds": ["bgi-planer:versiegelung_2021"],
-		"legendSrc": "/legends/1v1.svg"
+		"legendSrc": "/legends/1v1.svg",
+		"legendTitle": "Versiegelungsgrad (%)"
 	},
 	{
 		"id": "sealing_green_volume_low",
@@ -240,7 +249,8 @@
 		"canDrawBTF": true,
 		"canDrawNotes": true,
 		"visibleLayerIds": ["bgi-planer:a_gruenvol2020"],
-		"legendSrc": "/legends/1v2.svg"
+		"legendSrc": "/legends/1v2.svg",
+		"legendTitle": "Grünvolumenzahl (m³/m²)"
 	},
 	{
 		"id": "waterBalance_starter_question",
@@ -295,9 +305,12 @@
 	},
 	{
 		"id": "water_protection_decoupling_requirements",
-		"name": "Abkopplung vom erstaufnehmenden Gewässer",
-		"question": "Wo liegen in dem Gebiet erstaufnehmende Gewässer, die belastet sind und wo Regenwasser eingeleitet wird, und deswegen ein Abkopplungsbedarf besteht?",
-		"description": "Die Karte gibt Auskunft darüber, in welches (erstaufnehmende) Gewässer das in die Regenwasserkanalisation eingeleitete Regenwasser gelangt und ob dieses belastet ist. Falls das Gewässer belastet ist, sollte es das Ziel sein, das Gewässer von Regenwassereinleitungen abzukoppeln. Ob das Gewässer einen Abkopplungsbedarf hat, ist mit der Wasserbehörde abzustimmen. In den Einzugsgebieten von Fließgewässern 1. Ordnung (Spree, Havel, Berlin-Spandauer Schifffahrtskanal, Landwehrkanal, u.a.) ist eine Abkopplung geboten.  Mit Klick auf das Gewässer werden mehr Informationen gegeben.",
+		"name": "Erstaufnehmendes Gewässer im Einzugsbereich der Trennkanalisation",
+		"question": "In welches Gewässer wird das Regenwasser eingeleitet?",
+		"description": [
+			"Falls sich das Untersuchungsgebiet im Einzugsbereich der Trennkanalisation befindet, kann die Information zum erstaufnehmenden Gewässer durch Klick in die Karte abgerufen werden. Die Karte gibt Auskunft darüber, in welches Gewässer das in die Regenwasserkanalisation eingeleitete Regenwasser gelangt. Ziel ist es durch Abkopplung die Belastung der Gewässer zu reduzieren (hydraulisch & stofflich).",
+			"In Einzugsgebieten von Fließgewässern (z.B. Spree, Landwehrkanal, Panke) ist eine Abkopplung geboten. Bei stehenden Gewässern (z.B. Seen, Teiche) ist zu prüfen, ob es einen Wasserbedarf gibt und daher keine Abkopplung forciert werden sollte (siehe nächste Frage)."
+		],
 		"drawLayerId": "need_groundwater_hotspots_q2",
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
@@ -321,7 +334,7 @@
 			"bgi-planer:HA4_Kleingewaesser_trocken_pkt",
 			"bgi-planer:HA4_Kleingewaesser_trocken_topoEZG_pl"
 		],
-		"legendSrc": "/legends/placeholder.svg"
+		"legendSrc": "/legends/1g3.svg"
 	},
 	{
 		"id": "NOTE: MODULE 2"

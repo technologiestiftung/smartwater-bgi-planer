@@ -104,6 +104,8 @@ export interface LayerConfigItem {
 	scores?: Record<string, number>;
 	question?: string;
 	embeddedImage?: string;
+	embeddedImageAfterText?: string;
+	embeddedImageAfterTextDescription?: string;
 	drawLayerId: string;
 	visibleLayerIds: string[];
 	canDrawPolygons?: boolean;
