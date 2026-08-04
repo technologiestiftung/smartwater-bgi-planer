@@ -353,7 +353,7 @@
 	},
 	{
 		"id": "potential_maps_view",
-		"name": "Machbarkeiten prüfen – Versickerungspotential",
+		"name": "Machbarkeiten prüfen – Versickerungspotenzial",
 		"question": "",
 		"description": "",
 		"drawLayerId": "",
@@ -369,25 +369,22 @@
 	},
 	{
 		"id": "2V1",
-		"name": "Versickerungspotential",
+		"name": "Versickerungspotenzial",
 		"question": "",
 		"description": [
-			"Die Versickerungspotenzialkarte zeigt die Potentialflächen der jeweiligen Versickerungsarten an.",
-			"Bei der Planung von Versickerungsanlagen ist zudem die Hangneigung zu berücksichtigen, da eine gleichmäßige Beschickung der oberirdischen Versickerungsanlagen angestrebt werden sollte.",
-			"Für eine vollständige Abwägung der Versickerungsfähigkeit bedarf es einer Analyse der Randbedingungen:",
+			"Die Versickerungspotenzialkarte zeigt die Potenzialflächen der betrachteten Versickerungsmaßnahmen an. Je dunkler eine Fläche ist, desto mehr Maßnahmen sind in diesem Bereich möglich. Mit Klick in die Karte werden die jeweils möglichen Maßnahmen sowie weitere Informationen zu den spezifischen Rahmenbedingungen vor Ort angezeigt:",
 			{
 				"type": "bullets",
 				"items": [
-					"Befindet sich das Vorhaben bzw. Plangebiet ganz oder teilweise in einem Wasserschutzgebiet und wenn ja in welcher Schutzzone?",
 					"Wie groß ist der Abstand (von der Geländeoberkante) zum maßgeblichen Bemessungsgrundwasserstand?",
-					"Gibt es arten- und naturschutzfachliche bedeutsame Biotope oder Schutzgebiete mit Relevanz für das Plangebiet?",
-					"Gibt es starke Geländeneigungen (über 10 Grad), die bei der Planung von Versickerungsanlagen berücksichtigt werden sollten?",
+					"Wie hoch ist die Mächtigkeit der wasserdurchlässigen Schicht?",
+					"Gibt es Biotope oder Schutzgebiete mit Relevanz für das Untersuchungsgebiet?",
+					"Gibt es starke Geländeneigungen (über 10 Grad), die bei der Planung berücksichtigt werden sollten?",
 					"Bestehen Belange des Denkmalschutzes, die es zu berücksichtigen gilt?"
 				]
 			},
 			"Die Karte kann zur groben Ersteinschätzung dienen, ist jedoch kein Ersatz für Vor-Ort Untersuchungen bzw. Fachplanungen. Es wurden z. B. keine Altlasten, Leitungen im Untergrund oder Flächennutzungen betrachtet.",
-			"In der Schutzzone III B sowie außerhalb von Wasserschutzgebieten gilt die Niederschlagswasserfreistellungsverordnung (NWFreiV). In allen anderen Schutzzonen bedarf es in jedem Fall einer Erlaubnis von der Wasserbehörde. Je nach Art und Nutzung der befestigten Fläche können unterschiedliche Versickerungsanlagen und ggf. Vorbehandlungen zum Einsatz kommen. (Siehe Hinweisblatt 2 zur Antragstellung: Versickerung von Niederschlagswasser, https://www.berlin.de/sen/uvk/_assets/umwelt/wasser-und-geologie/publikationen-und-merkblaetter/hinweisblatt2-versick.pdf)",
-			"I.d.R. ist ein Abstand von ca. 1 m von der Sohle der Versickerungsanlage bis zum Bemessungsgrundwasserstand einzuhalten. Als Bemessungsgrundwasserstand innerhalb von Wasserschutzgebieten ist der zu erwartende höchste Grundwasserstand (zeHGW) heranzuziehen, außerhalb von Wasserschutzgebieten der zu erwartende mittlere höchste Grundwasserstand (zeMHGW). Sollten keine Daten vorliegen, können Informationen bei der Wasserbehörde eingeholt werden (Siehe Hinweisblatt 2)."
+			"Anforderungen an die schadfreie Versickerung regelt das [Hinweisblatt 2 zur Antragstellung: Versickerung von Niederschlagswasser](https://www.berlin.de/sen/uvk/_assets/umwelt/wasser-und-geologie/publikationen-und-merkblaetter/hinweisblatt2-versick.pdf) Je nach Art und Nutzung der befestigten Fläche können unterschiedliche Versickerungsanlagen und ggf. Vorbehandlungen zum Einsatz kommen. ([Siehe Hinweisblatt 2](https://www.berlin.de/sen/uvk/_assets/umwelt/wasser-und-geologie/publikationen-und-merkblaetter/hinweisblatt2-versick.pdf) ) I.d.R. ist ein Abstand von ca. 1 m von der Sohle der Versickerungsanlage bis zum Bemessungsgrundwasserstand einzuhalten. Als Bemessungsgrundwasserstand innerhalb von Wasserschutzgebieten ist der zu erwartende höchste Grundwasserstand (zeHGW) heranzuziehen, außerhalb von Wasserschutzgebieten der zu erwartende mittlere höchste Grundwasserstand (zeMHGW). Sollten keine Daten vorliegen, können Informationen bei der Wasserbehörde eingeholt werden (siehe Hinweisblatt 2). Informationen zur [Kartengrundlage](https://regenwasseragentur.berlin/planen-und-umsetzen/abkopplungspotenzialkarten/)."
 		],
 		"drawLayerId": "",
 		"canDrawNotes": true,
@@ -450,9 +447,9 @@
 	},
 	{
 		"id": "2V4",
-		"name": "Altbaumbestand",
-		"question": "Gibt es einen Altbaumbestand, der bei der Verortung von Maßnahmen berücksichtigt werden muss?",
-		"description": "In der Karte Baumbestand werden Straßen- und Anlagenbäume auf öffentlichen Flächen dargestellt. Die müssen bei der Planung von Versickerungsmaßnahmen berücksichtigt werden, ebenso wie das Fehlen von Bäumen im Untersuchungsgebiet.",
+		"name": "Baumbestand",
+		"question": "Gibt es einen Baumbestand, der bei der Verortung von Maßnahmen berücksichtigt werden muss?",
+		"description": "In der Karte Baumbestand werden Straßen- und Anlagenbäume auf öffentlichen Flächen dargestellt. Diese müssen bei der Planung von Versickerungsmaßnahmen berücksichtigt werden. Ebenso liefert das Fehlen von Bäumen im Untersuchungsgebiet ein Hinweis auf erforderliche Neupflanzungen.",
 		"drawLayerId": "module_2_2V4_draw",
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
@@ -527,7 +524,7 @@
 			"ua_gruendaecher_2020:c_begruente_dachteilfl_tief"
 		],
 		"legendSrc": "/legends/2g1.svg",
-		"legendTitle": "Gründachpotential"
+		"legendTitle": "Gründachpotenzial"
 	},
 	{
 		"id": "NOTE: MODULE 3"
