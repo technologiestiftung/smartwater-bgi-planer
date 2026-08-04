@@ -11,8 +11,9 @@ import { selectActiveLayerConfig, useLayersStore } from "@/store/layers";
 import { ManagedLayer } from "@/store/layers/types";
 import { useUiStore } from "@/store/ui";
 import { EyeIcon, EyeSlashIcon } from "@phosphor-icons/react";
-import { FC, useMemo, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
+import { usePathname } from "next/navigation";
 import viewLayerConfig from "@/config/layerConfig.json";
 
 const HIDDEN_LAYER_IDS = new Set([
@@ -157,6 +158,7 @@ export const LayerTree: FC = () => {
 		);
 	const isLayerTreeVisible = useUiStore((state) => state.isLayerTreeVisible);
 	const [search, setSearch] = useState("");
+	const pathname = usePathname();
 
 	const allLayers = useMemo(() => Array.from(layers.values()), [layers]);
 
@@ -184,6 +186,18 @@ export const LayerTree: FC = () => {
 			),
 		[allLayers, currentVisibleLayerIds],
 	);
+
+	useEffect(() => {
+		if (!pathname?.includes("/planung")) return;
+		allLayers.forEach((layer) => {
+			if (
+				layer.id.startsWith("module_1_") ||
+				layer.id.startsWith("module_2_")
+			) {
+				setLayerVisibility(layer.id, false);
+			}
+		});
+	}, [pathname]);
 
 	if (uploadedLayers.length === 0 && subjectLayers.length === 0) return null;
 
