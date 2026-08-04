@@ -64,7 +64,8 @@
 		"canDrawNotes": true,
 		"visibleLayerIds": [
 			"ua_srhk:da_fr_aussergewoehnlich",
-			"ua_srhk:db_fliessgeschw_aussergew_kostra"
+			"ua_srhk:db_fliessgeschw_aussergew_kostra",
+			"bgi-planer:Starkregengefaehrdungskarte_high_compression"
 		],
 		"legendSrc": "/legends/1s1.svg",
 		"legendTitle": "Fließgeschwindigkeit"
@@ -383,7 +384,8 @@
 			"potenziale_regenwasserbewirtschaftung:aa_versickerungspotenzial_eu"
 		],
 		"visibleLayerIds": [
-			"potenziale_regenwasserbewirtschaftung:aa_versickerungspotenzial_eu"
+			"potenziale_regenwasserbewirtschaftung:aa_versickerungspotenzial_eu",
+			"wsg:wsg"
 		],
 		"legendSrc": "/legends/2v1.svg",
 		"legendTitle": "Anzahl mögliche Versickerungsmaßnahmen"
@@ -396,7 +398,8 @@
 			"potenziale_regenwasserbewirtschaftung:ab_versickerungspotenzial_gp"
 		],
 		"visibleLayerIds": [
-			"potenziale_regenwasserbewirtschaftung:ab_versickerungspotenzial_gp"
+			"potenziale_regenwasserbewirtschaftung:ab_versickerungspotenzial_gp",
+			"wsg:wsg"
 		]
 	},
 	{
@@ -407,7 +410,8 @@
 			"potenziale_regenwasserbewirtschaftung:ac_versickerungspotenzial_au"
 		],
 		"visibleLayerIds": [
-			"potenziale_regenwasserbewirtschaftung:ac_versickerungspotenzial_au"
+			"potenziale_regenwasserbewirtschaftung:ac_versickerungspotenzial_au",
+			"wsg:wsg"
 		]
 	},
 	{
@@ -446,7 +450,8 @@
 		"canDrawNotes": true,
 		"visibleLayerIds": [
 			"baumbestand:anlagenbaeume",
-			"baumbestand:strassenbaeume"
+			"baumbestand:strassenbaeume",
+			"ua_vegetationshoehen_2020:c_vegetationshoehe_2020_raster"
 		],
 		"legendSrc": "/legends/2v4.svg",
 		"legendTitle": "Bäume"
