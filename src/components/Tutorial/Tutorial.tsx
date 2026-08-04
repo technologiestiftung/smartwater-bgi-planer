@@ -1,28 +1,48 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { useUiStore } from "@/store";
 import { selectActiveLayerConfig, useLayersStore } from "@/store/layers";
+import { useTutorialStore } from "@/store/tutorial";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
 interface TutorialProps {
 	type: "synthesis" | "controls" | "layerTree";
+	isAddMeasure?: boolean;
 }
 
-export function Tutorial({ type }: TutorialProps) {
-	const showTutorial = useUiStore((state) => state.showTutorial);
-	const setTutorialState = useUiStore((state) => state.setTutorialState);
-	const showTutorialOnFirstQuestion = useUiStore(
+export function Tutorial({ type, isAddMeasure }: TutorialProps) {
+	const showTutorialOnFirstQuestion = useTutorialStore(
 		(state) => state.showTutorialOnFirstQuestion,
 	);
-	const setTutorialOnFirstQuestionState = useUiStore(
-		(state) => state.setTutorialOnFirstQuestionState,
+	const setTutorialOnFirstQuestion = useTutorialStore(
+		(state) => state.setTutorialOnFirstQuestion,
 	);
+	const showTutorialOnFirstMeasureDraw = useTutorialStore(
+		(state) => state.showTutorialOnFirstMeasureDraw,
+	);
+	const setTutorialOnFirstMeasureDraw = useTutorialStore(
+		(state) => state.setTutorialOnFirstMeasureDraw,
+	);
+	const showTutorial =
+		showTutorialOnFirstQuestion || showTutorialOnFirstMeasureDraw;
+	const pathname = usePathname();
+	const isPlanningModule = pathname.endsWith("/planung");
+
 	const currentLayerConfig = useLayersStore(selectActiveLayerConfig);
 
 	const renderContent = () => {
 		if (type === "layerTree") {
+			if (isPlanningModule) {
+				return (
+					<p className="text-dark">
+						Im <span className="font-bold">Layer Tree</span> können Sie auf Ihr
+						Inhalt aus Module 1 und 2 jederzeit zugreifen bzw. ein- und
+						ausschalten.
+					</p>
+				);
+			}
 			return (
 				<>
 					<p className="text-dark">
@@ -40,6 +60,23 @@ export function Tutorial({ type }: TutorialProps) {
 			);
 		}
 		if (type === "controls") {
+			if (isPlanningModule) {
+				return (
+					<>
+						<p className="text-dark">
+							Verwenden Sie die Zeichentools um Ihre Maßnahmen zu platzieren.
+						</p>
+						<p className="text-dark">
+							Bei <span className="font-bold">Versickerungsmaßnahmen</span>{" "}
+							erfolgt der Prozess zweistufig: Erstmal müssen Sie angeschlossene
+							Flächen zeichnen - das heißt, von welche versiegelten Fläche oder
+							Dächern das Wasser abgeleitet werden soll. Dann wählen Sie die
+							angeschlossene Fläche aus und zeichnen Sie die Maßnahme, die daran
+							angeschlossen werden soll.
+						</p>
+					</>
+				);
+			}
 			return (
 				<>
 					<p className="text-dark">
@@ -62,6 +99,15 @@ export function Tutorial({ type }: TutorialProps) {
 						einen weiteren Klick auch wieder abwählen.
 					</p>
 				</>
+			);
+		}
+		if (isPlanningModule) {
+			return (
+				<p className="text-dark">
+					Die <span className="font-bold">Effektbewertung</span> erlaubt Ihnen,
+					die simulierte Effekte Ihrer bisherige Planung hinsichtlich
+					Wasserhaushalt und Gewässerbelastung zu entdecken.
+				</p>
 			);
 		}
 		return (
@@ -93,23 +139,30 @@ export function Tutorial({ type }: TutorialProps) {
 	);
 
 	useEffect(() => {
-		if (type !== "controls") return;
+		if (type !== "synthesis") return;
 		if (
 			currentLayerConfig &&
-			!showTutorialOnFirstQuestion &&
 			(currentLayerConfig.canDrawNotes ||
 				currentLayerConfig.canDrawPolygons ||
 				currentLayerConfig.canDrawBTF)
 		) {
-			setTutorialOnFirstQuestionState(true);
-			setTutorialState(true);
+			if (showTutorialOnFirstQuestion === null) {
+				setTutorialOnFirstQuestion(true);
+			}
+		} else if (
+			isPlanningModule &&
+			isAddMeasure &&
+			showTutorialOnFirstMeasureDraw === null
+		) {
+			setTutorialOnFirstMeasureDraw(true);
 		}
 	}, [
 		type,
 		currentLayerConfig,
-		setTutorialState,
-		showTutorialOnFirstQuestion,
-		setTutorialOnFirstQuestionState,
+		isPlanningModule,
+		isAddMeasure,
+		setTutorialOnFirstMeasureDraw,
+		setTutorialOnFirstQuestion,
 	]);
 
 	if (!showTutorial) return null;
@@ -119,7 +172,13 @@ export function Tutorial({ type }: TutorialProps) {
 			{type === "synthesis" && (
 				<div
 					className="fixed inset-0 bg-black/58"
-					onClick={() => setTutorialState(false)}
+					onClick={() => {
+						if (isPlanningModule) {
+							setTutorialOnFirstMeasureDraw(false);
+						} else {
+							setTutorialOnFirstQuestion(false);
+						}
+					}}
 				/>
 			)}
 			<div

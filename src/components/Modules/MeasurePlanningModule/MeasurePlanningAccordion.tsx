@@ -84,10 +84,12 @@ function MeasurePlanningFooter({
 	onShowSynthesis,
 	onBackToQuestions,
 	showBackToQuestions,
+	isAddMeasure,
 }: {
 	onShowSynthesis: () => void;
 	onBackToQuestions: () => void;
 	showBackToQuestions: boolean;
+	isAddMeasure: boolean;
 }) {
 	return (
 		<div className="MeasurePlanningFooter-root border-muted flex h-full w-full border-t">
@@ -98,7 +100,7 @@ function MeasurePlanningFooter({
 			>
 				<ListChecksIcon className="h-6 w-6 text-white" />
 			</Button>
-			<Tutorial type="synthesis" />
+			<Tutorial type="synthesis" isAddMeasure={isAddMeasure} />
 			{showBackToQuestions && (
 				<Button
 					variant="ghost"
@@ -366,13 +368,6 @@ export function MeasurePlanningAccordion({
 						);
 					})}
 				</Accordion>
-
-				{/* <Accordion type="multiple">
-					<AccordionItem value="legend" className="border-neutral-mid px-4">
-						<AccordionTrigger className="text-primary font-bold hover:no-underline">
-							Legende
-						</AccordionTrigger>
-						<AccordionContent className="pb-4"> */}
 				<div className="mt-auto pt-6">
 					<Image
 						src={"/legends/measures.svg"}
@@ -383,9 +378,6 @@ export function MeasurePlanningAccordion({
 						className="h-auto max-w-full"
 					/>
 				</div>
-				{/* </AccordionContent>
-					</AccordionItem>
-				</Accordion> */}
 			</div>
 		);
 	}
@@ -402,6 +394,11 @@ export function MeasurePlanningAccordion({
 						onShowSynthesis={handleShowSynthesis}
 						onBackToQuestions={handleBackToQuestions}
 						showBackToQuestions={Boolean(selectedQuestionConfig)}
+						isAddMeasure={Boolean(
+							selectedQuestionConfig &&
+							selectedMeasurementInfo &&
+							noSimulationIsActive,
+						)}
 					/>
 				)
 			}
