@@ -16,14 +16,19 @@ export const createAddFile =
 	}): Promise<void> => {
 		const { projectId, layerId, file, displayFileName } = params;
 		const key = createFileKey(projectId, layerId);
-		await storeFileBlob(projectId, layerId, file);
+		const uploadedAt = Date.now();
+		await storeFileBlob(projectId, layerId, {
+			file,
+			displayFileName,
+			uploadedAt,
+		});
 		set((state: FilesState) => {
 			const newFiles = new Map(state.files);
 			newFiles.set(key, {
 				projectId,
 				layerId,
 				file,
-				uploadedAt: Date.now(),
+				uploadedAt,
 				displayFileName,
 			});
 			return { files: newFiles };
@@ -115,7 +120,8 @@ export const createAddDrawLayerFile =
 		});
 
 		const key = createFileKey(projectId, layerId);
-		await storeFileBlob(projectId, layerId, file);
+		const uploadedAt = Date.now();
+		await storeFileBlob(projectId, layerId, { file, uploadedAt });
 
 		set((state: FilesState) => {
 			const newFiles = new Map(state.files);
@@ -123,7 +129,7 @@ export const createAddDrawLayerFile =
 				projectId,
 				layerId,
 				file,
-				uploadedAt: Date.now(),
+				uploadedAt,
 			});
 			return { files: newFiles };
 		});
