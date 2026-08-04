@@ -2,13 +2,14 @@
 
 import { Tutorial } from "@/components/Tutorial/Tutorial";
 import { Button } from "@/components/ui/button";
-import { useUiStore } from "@/store";
+import { useTutorialStore } from "@/store/tutorial";
 import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
 	ListChecksIcon,
 } from "@phosphor-icons/react";
 import { useCallback } from "react";
+import { usePathname } from "next/navigation";
 
 interface ModuleFooterProps {
 	onClose: () => void;
@@ -35,7 +36,14 @@ export function ModuleFooter({
 
 	const { isFirstQuestion, isLastQuestion } = getCurrentQuestionInfo();
 
-	const setTutorialState = useUiStore((state) => state.setTutorialState);
+	const setTutorialOnFirstQuestion = useTutorialStore(
+		(state) => state.setTutorialOnFirstQuestion,
+	);
+	const setTutorialOnFirstMeasureDraw = useTutorialStore(
+		(state) => state.setTutorialOnFirstMeasureDraw,
+	);
+	const pathname = usePathname();
+	const isPlanningModule = pathname?.endsWith("/planung");
 
 	const handlePrevious = useCallback(() => {
 		const success = navigateToPrevious();
@@ -56,7 +64,11 @@ export function ModuleFooter({
 			<Button
 				onClick={() => {
 					onShowSynthesis();
-					setTutorialState(false);
+					if (isPlanningModule) {
+						setTutorialOnFirstMeasureDraw(false);
+					} else {
+						setTutorialOnFirstQuestion(false);
+					}
 				}}
 				variant="ghost"
 				disabled={isNextDisabled}

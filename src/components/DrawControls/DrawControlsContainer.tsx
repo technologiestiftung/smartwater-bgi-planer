@@ -11,6 +11,7 @@ import { UploadDrawLayerButton } from "@/components/UploadControls/UploadDrawLay
 import { useConnectedAreaFeatureSync } from "@/hooks/useConnectedAreaFeatureSync";
 import { selectActiveLayerConfig, useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
+import { useTutorialStore } from "@/store/tutorial";
 import { usePathname } from "next/navigation";
 import { DrawTreeMeasureButton } from "./DrawTreeMeasureButton/DrawTreeMeasureButton";
 import { Tutorial } from "@/components/Tutorial/Tutorial";
@@ -23,17 +24,29 @@ interface DrawControlsContainerProps {
 export function DrawControlsContainer({}: DrawControlsContainerProps) {
 	const pathname = usePathname();
 	const currentStepId = useUiStore((state) => state.currentStepId);
-	const showTutorial = useUiStore((state) => state.showTutorial);
-	const setTutorialState = useUiStore((state) => state.setTutorialState);
+	const showTutorialOnFirstQuestion = useTutorialStore(
+		(state) => state.showTutorialOnFirstQuestion,
+	);
+	const setTutorialOnFirstQuestion = useTutorialStore(
+		(state) => state.setTutorialOnFirstQuestion,
+	);
+	const showTutorialOnFirstMeasureDraw = useTutorialStore(
+		(state) => state.showTutorialOnFirstMeasureDraw,
+	);
+	const setTutorialOnFirstMeasureDraw = useTutorialStore(
+		(state) => state.setTutorialOnFirstMeasureDraw,
+	);
 	const currentLayerConfig = useLayersStore(selectActiveLayerConfig);
 
 	useConnectedAreaFeatureSync();
 
-	const isProjectStarter = pathname.includes("/project-starter");
+	const isProjectStarter = pathname.endsWith("/project-starter");
 	const isModule =
-		pathname.includes("/handlungsbedarfe") ||
-		pathname.includes("/machbarkeit") ||
-		pathname.includes("/planung");
+		pathname.endsWith("/handlungsbedarfe") ||
+		pathname.endsWith("/machbarkeit") ||
+		pathname.endsWith("/planung");
+
+	const isPlanningModule = pathname?.endsWith("/planung");
 
 	let controls: React.ReactNode = null;
 
@@ -95,8 +108,10 @@ export function DrawControlsContainer({}: DrawControlsContainerProps) {
 			<div
 				className="relative mt-2 flex justify-center gap-2"
 				onClick={() => {
-					if (showTutorial) {
-						setTutorialState(false);
+					if (isPlanningModule && showTutorialOnFirstMeasureDraw) {
+						setTutorialOnFirstMeasureDraw(false);
+					} else if (showTutorialOnFirstQuestion) {
+						setTutorialOnFirstQuestion(false);
 					}
 				}}
 			>
