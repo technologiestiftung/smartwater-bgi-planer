@@ -42,6 +42,7 @@ const initialState: UiState = {
 	showTutorialOnFirstQuestion: false,
 	draftMeasureIds: [],
 	draftConnectedAreaIds: [],
+	pendingDeleteMeasureIds: [],
 };
 
 export const useUiStore = create<UiState & UiActions>()(
@@ -156,6 +157,14 @@ export const useUiStore = create<UiState & UiActions>()(
 				set({ draftMeasureIds: [], draftConnectedAreaIds: [] }),
 			clearDraftMeasures: () =>
 				set({ draftMeasureIds: [], draftConnectedAreaIds: [] }),
+			addPendingDeleteMeasureId: (measureId) =>
+				set((state) => ({
+					pendingDeleteMeasureIds: [
+						...state.pendingDeleteMeasureIds,
+						measureId,
+					],
+				})),
+			clearPendingDeleteMeasureIds: () => set({ pendingDeleteMeasureIds: [] }),
 		})),
 		{ name: "uiStore" },
 	),

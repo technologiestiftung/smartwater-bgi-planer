@@ -27,6 +27,7 @@ export interface UiState {
 	showTutorialOnFirstQuestion: boolean;
 	draftMeasureIds: string[];
 	draftConnectedAreaIds: string[];
+	pendingDeleteMeasureIds: string[];
 }
 
 export interface UiActions {
@@ -69,4 +70,6 @@ export interface UiActions {
 	addDraftConnectedAreaId: (connectedAreaId: string) => void;
 	confirmDraftMeasures: () => void;
 	clearDraftMeasures: () => void;
+	addPendingDeleteMeasureId: (measureId: string) => void;
+	clearPendingDeleteMeasureIds: () => void;
 }

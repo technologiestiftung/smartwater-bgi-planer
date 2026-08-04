@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import layerConfig from "@/config/layerConfig.json";
+import { getModuleStepMeasure } from "@/components/Modules/shared/moduleConfig";
 import { measureConfigById } from "@/config/measuresConfig";
 import {
 	formatMeasureValue,
@@ -10,6 +11,7 @@ import {
 } from "@/lib/helpers/measures/values";
 import { useMapStore } from "@/store/map";
 import { useScenarioStore } from "@/store/scenario";
+import { useUiStore } from "@/store/ui";
 import type { MeasureValue } from "@/store/scenario/types";
 import { CheckIcon, TrashIcon, XCircleIcon } from "@phosphor-icons/react";
 import VectorLayer from "ol/layer/Vector";
@@ -20,7 +22,15 @@ const getDisplayName = (configId: string): string => {
 	const layer = (layerConfig as Array<{ id?: string; name?: string }>).find(
 		(item) => item.id === configId,
 	);
-	return layer?.name || configId;
+	const name = layer?.name || configId;
+	const nameStartsWithANumber = /^\d/.test(name);
+	if (nameStartsWithANumber) {
+		const measure = getModuleStepMeasure("measurePlanning", configId);
+		if (measure && measure.title) {
+			return measure.title;
+		}
+	}
+	return name;
 };
 
 interface MeasureDetailsCardProps {
@@ -46,7 +56,9 @@ export const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
 	const updateMeasureValues = useScenarioStore(
 		(state) => state.updateMeasureValues,
 	);
-	const removeMeasure = useScenarioStore((state) => state.removeMeasure);
+	const addPendingDeleteMeasureId = useUiStore(
+		(state) => state.addPendingDeleteMeasureId,
+	);
 	const map = useMapStore((state) => state.map);
 
 	if (!measure || !activeScenarioId) {
@@ -83,13 +95,10 @@ export const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
 				const feature = source
 					.getFeatures()
 					.find((f) => f.get("measureId") === measure.id);
-				if (feature) {
-					source.removeFeature(feature);
-				}
+				if (feature) source.removeFeature(feature);
 			}
 		}
-
-		removeMeasure(activeScenarioId, measure.id);
+		addPendingDeleteMeasureId(measure.id);
 		onClose?.();
 	};
 

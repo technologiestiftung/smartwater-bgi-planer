@@ -96,7 +96,10 @@ export function MeasurePlanningStepContent({
 	const confirmedRef = useRef(false);
 	const map = useMapStore((s) => s.map);
 	const hasDrafts = useUiStore(
-		(s) => s.draftMeasureIds.length > 0 || s.draftConnectedAreaIds.length > 0,
+		(s) =>
+			s.draftMeasureIds.length > 0 ||
+			s.draftConnectedAreaIds.length > 0 ||
+			s.pendingDeleteMeasureIds.length > 0,
 	);
 
 	const removeDraftFeaturesFromLayer = useCallback(
@@ -171,7 +174,24 @@ export function MeasurePlanningStepContent({
 
 	const handleConfirm = () => {
 		confirmedRef.current = true;
-		useUiStore.getState().confirmDraftMeasures();
+
+		const {
+			pendingDeleteMeasureIds,
+			confirmDraftMeasures,
+			clearPendingDeleteMeasureIds,
+		} = useUiStore.getState();
+
+		if (pendingDeleteMeasureIds.length > 0) {
+			const { activeScenarioId, removeMeasure } = useScenarioStore.getState();
+			if (activeScenarioId) {
+				for (const measureId of pendingDeleteMeasureIds) {
+					removeMeasure(activeScenarioId, measureId);
+				}
+			}
+			clearPendingDeleteMeasureIds();
+		}
+
+		confirmDraftMeasures();
 		onConfirm?.();
 	};
 
@@ -179,6 +199,18 @@ export function MeasurePlanningStepContent({
 		return () => {
 			if (!confirmedRef.current) {
 				removeDraftMeasures();
+				const { pendingDeleteMeasureIds, clearPendingDeleteMeasureIds } =
+					useUiStore.getState();
+				if (pendingDeleteMeasureIds.length > 0) {
+					const { activeScenarioId, removeMeasure } =
+						useScenarioStore.getState();
+					if (activeScenarioId) {
+						for (const measureId of pendingDeleteMeasureIds) {
+							removeMeasure(activeScenarioId, measureId);
+						}
+					}
+					clearPendingDeleteMeasureIds();
+				}
 			}
 		};
 	}, [removeDraftMeasures]);
