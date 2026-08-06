@@ -76,6 +76,10 @@
 					"type": "folder",
 					"elements": [
 						{
+							"id": "bgi-planer:Starkregengefaehrdungskarte_high_compression",
+							"visibility": false
+						},
+						{
 							"id": "ua_srhk:db_fliessgeschw_aussergew_kostra",
 							"visibility": false
 						},
@@ -228,6 +232,10 @@
 							"visibility": false
 						},
 						{
+							"id": "ua_vegetationshoehen_2020:c_vegetationshoehe_2020_raster",
+							"visibility": false
+						},
+						{
 							"id": "baumbestand:anlagenbaeume",
 							"visibility": false
 						},
@@ -285,6 +293,10 @@
 						},
 						{
 							"id": "potenziale_regenwasserbewirtschaftung:ac_versickerungspotenzial_au",
+							"visibility": false
+						},
+						{
+							"id": "wsg:wsg",
 							"visibility": false
 						},
 						{
