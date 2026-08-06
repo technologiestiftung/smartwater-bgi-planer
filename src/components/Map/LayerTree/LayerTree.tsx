@@ -277,7 +277,10 @@ export const LayerTree: FC = () => {
 		if (!isPlanningModule) return;
 		allLayers.forEach((layer) => {
 			const shouldHide =
-				layer.id.startsWith("module_1_") || layer.id.startsWith("module_2_");
+				(layer.id.startsWith("module_1_") ||
+					layer.id.startsWith("module_2_")) &&
+				!activeLayersInModule3.includes(layer.id);
+
 			if (shouldHide) {
 				setLayerVisibility(layer.id, false);
 			}
