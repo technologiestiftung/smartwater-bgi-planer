@@ -69,6 +69,10 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 	});
 
 	useEffect(() => {
+		console.log("[SynthesisView] error::", error);
+	}, [error]);
+
+	useEffect(() => {
 		applyConfigLayers("measure_planning_synthesis_view", true);
 	}, [applyConfigLayers]);
 
