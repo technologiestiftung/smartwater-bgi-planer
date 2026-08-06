@@ -14,6 +14,7 @@ import { EyeIcon, EyeSlashIcon } from "@phosphor-icons/react";
 import { FC, useMemo, useState, useEffect } from "react";
 import { useShallow } from "zustand/react/shallow";
 import viewLayerConfig from "@/config/layerConfig.json";
+import visibleLayerIdsModule3 from "@/config/visibleLayerIdsModule3.json";
 import { usePathname } from "next/navigation";
 
 const HIDDEN_LAYER_IDS = new Set([
@@ -202,7 +203,9 @@ export const LayerTree: FC = () => {
 					l.layerType === "subject" &&
 					!l.id.startsWith("uploaded_") &&
 					!HIDDEN_LAYER_IDS.has(l.id) &&
-					(currentVisibleLayerIds === null || currentVisibleLayerIds.has(l.id)),
+					(currentVisibleLayerIds === null ||
+						currentVisibleLayerIds.has(l.id) ||
+						visibleLayerIdsModule3.includes(l.id)),
 			),
 		[allLayers, currentVisibleLayerIds],
 	);
@@ -283,9 +286,11 @@ export const LayerTree: FC = () => {
 
 			if (shouldHide) {
 				setLayerVisibility(layer.id, false);
+			} else if (activeLayersInModule3.includes(layer.id)) {
+				setLayerVisibility(layer.id, true);
 			}
 		});
-	}, [isPlanningModule, isAddMeasureActive]);
+	}, [isPlanningModule, isAddMeasureActive, activeLayersInModule3]);
 
 	if (uploadedLayers.length === 0 && subjectLayers.length === 0) return null;
 
