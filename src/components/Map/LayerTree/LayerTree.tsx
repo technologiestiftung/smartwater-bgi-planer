@@ -84,7 +84,7 @@ const LayerCard: FC<LayerCardProps> = ({ layer, onToggle, onOpacity }) => {
 					<TooltipTrigger asChild>
 						<button
 							onClick={() => onToggle(layer.id, layer.visibility)}
-							className={`focus-visible:ring-ring relative flex h-12 w-12 items-center justify-center rounded-sm transition-all focus-visible:ring-2 focus-visible:outline-none ${
+							className={`focus-visible:ring-ring relative flex h-12 w-12 cursor-pointer items-center justify-center rounded-sm transition-all focus-visible:ring-2 focus-visible:outline-none ${
 								layer.visibility
 									? "bg-primary text-white"
 									: "border border-gray-200 bg-gray-50 text-gray-400"
