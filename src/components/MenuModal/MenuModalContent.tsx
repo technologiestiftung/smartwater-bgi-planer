@@ -114,7 +114,7 @@ export function MenuModalContent({ projectId }: MenuModalProps) {
 					title="Maßnahmen planen & bewerten"
 					description="Die Maßnahmenplanung hilft Ihnen den richtigen Standort für blau-grüne Maßnahmen zu finden."
 					sideElements={<PencilRulerIcon className="text-primary size-16" />}
-					additionalInfo="Keine Fragen beantwortet"
+					additionalInfo=""
 					buttonBottom={
 						<div>
 							<Button asChild>
