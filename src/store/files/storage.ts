@@ -266,8 +266,6 @@ export const filesStorage = {
 				}
 			}
 
-			// Prime the diff cache so the setItem call triggered right after
-			// hydration doesn't re-write everything we just read.
 			lastPersistedFiles = new Map(filesMap);
 
 			const localData = localStorage.getItem(name);
