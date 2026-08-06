@@ -2,6 +2,11 @@
 
 Guidance for Claude Code when working in this repository.
 
+## Subagents
+
+- Use the `explore` subagent for codebase search/lookup tasks (read-only). It runs on a cheaper model — keep its prompts scoped and specific.
+- Subagents must not run build/test/install commands themselves — only the main agent may run commands, and only after your confirmation.
+
 # Rules for Claude
 
 ## General
@@ -165,8 +170,8 @@ and `API_URL` (Rabimo service) — see `.env.example`.
 
 ## If unsure
 
-If project behaviour is unclear:
+If project behavior is unclear:
 
 - Ask instead of guessing.
 - Never fabricate requirements.
-- Never silently change behaviour.
+- Never silently change behavior.
