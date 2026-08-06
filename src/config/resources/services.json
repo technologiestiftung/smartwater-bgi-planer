@@ -503,14 +503,6 @@
 		"styleId": "projectNotes"
 	},
 	{
-		"id": "module_1_flooding_hotspots",
-		"name": "Starkregen Hotspot",
-		"crs": "urn:ogc:def:crs:EPSG::25833",
-		"typ": "GEOJSON",
-		"gfiAttributes": "showAll",
-		"styleId": "floodingHotspots"
-	},
-	{
 		"id": "module_1_flooding_hotspots_q1",
 		"name": "Starkregen Hotspot Q1",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
@@ -533,14 +525,6 @@
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
 		"styleId": "floodingHotspots"
-	},
-	{
-		"id": "module_1_temperature_hotspots",
-		"name": "Hitze Hotspot",
-		"crs": "urn:ogc:def:crs:EPSG::25833",
-		"typ": "GEOJSON",
-		"gfiAttributes": "showAll",
-		"styleId": "temperatureHotspots"
 	},
 	{
 		"id": "module_1_temperature_hotspots_q1",
@@ -591,14 +575,6 @@
 		"styleId": "temperatureHotspots"
 	},
 	{
-		"id": "module_1_impermeability_hotspots",
-		"name": "Versiegelung Hotspots",
-		"crs": "urn:ogc:def:crs:EPSG::25833",
-		"typ": "GEOJSON",
-		"gfiAttributes": "showAll",
-		"styleId": "impermeabilityHotspots"
-	},
-	{
 		"id": "module_1_impermeability_hotspots_q1",
 		"name": "Versiegelung Hotspots Q1",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
@@ -613,14 +589,6 @@
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
 		"styleId": "impermeabilityHotspots"
-	},
-	{
-		"id": "module_1_groundwater_hotspots",
-		"name": "Gewässerschutz Hotspots",
-		"crs": "urn:ogc:def:crs:EPSG::25833",
-		"typ": "GEOJSON",
-		"gfiAttributes": "showAll",
-		"styleId": "groundwaterHotspots"
 	},
 	{
 		"id": "module_1_groundwater_hotspots_q1",
@@ -645,14 +613,6 @@
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
 		"styleId": "groundwaterHotspots"
-	},
-	{
-		"id": "module_1_waterbalance_hotspots",
-		"name": "Wasserhaushalt Hotspots",
-		"crs": "urn:ogc:def:crs:EPSG::25833",
-		"typ": "GEOJSON",
-		"gfiAttributes": "showAll",
-		"styleId": "waterbalanceHotspots"
 	},
 	{
 		"id": "module_1_waterbalance_hotspots_q1",
