@@ -299,6 +299,9 @@ export function MeasurePlanningAccordion({
 				noSimulationIsActive,
 			),
 		);
+		return () => {
+			setIsAddMeasureActive(false);
+		};
 	}, [selectedQuestionConfig, selectedMeasurementInfo, noSimulationIsActive]);
 
 	let content: React.ReactNode;

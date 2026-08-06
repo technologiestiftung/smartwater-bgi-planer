@@ -23,9 +23,13 @@ const HIDDEN_LAYER_IDS = new Set([
 	"project_new_development",
 ]);
 
+const layerConfigMap = new Map(
+	viewLayerConfig.map((config) => [config.drawLayerId, config]),
+);
+
 function getLayerDisplayName(layer: ManagedLayer): string {
 	if (layer.id.startsWith("module_1_") || layer.id.startsWith("module_2_")) {
-		const config = viewLayerConfig.find((c) => c.drawLayerId === layer.id);
+		const config = layerConfigMap.get(layer.id);
 		if (config?.name) {
 			return config.name;
 		}
@@ -272,10 +276,9 @@ export const LayerTree: FC = () => {
 	useEffect(() => {
 		if (!isPlanningModule) return;
 		allLayers.forEach((layer) => {
-			if (
-				layer.id.startsWith("module_") &&
-				!activeLayersInModule3.includes(layer.id)
-			) {
+			const shouldHide =
+				layer.id.startsWith("module_1_") || layer.id.startsWith("module_2_");
+			if (shouldHide) {
 				setLayerVisibility(layer.id, false);
 			}
 		});
