@@ -11,7 +11,7 @@ import { selectActiveLayerConfig, useLayersStore } from "@/store/layers";
 import { ManagedLayer } from "@/store/layers/types";
 import { useUiStore } from "@/store/ui";
 import { EyeIcon, EyeSlashIcon } from "@phosphor-icons/react";
-import { FC, useMemo, useState } from "react";
+import { FC, useMemo, useState, useEffect } from "react";
 import { useShallow } from "zustand/react/shallow";
 import viewLayerConfig from "@/config/layerConfig.json";
 import { usePathname } from "next/navigation";
@@ -138,7 +138,10 @@ const LayerSection: FC<LayerSectionProps> = ({
 	</div>
 );
 
-function filterLayers(arr: ManagedLayer[], search: string): ManagedLayer[] {
+function filterLayersAfterSearch(
+	arr: ManagedLayer[],
+	search: string,
+): ManagedLayer[] {
 	if (!search.trim()) return arr;
 	return arr.filter((l) =>
 		getLayerDisplayName(l).toLowerCase().includes(search.toLowerCase()),
@@ -167,7 +170,11 @@ export const LayerTree: FC = () => {
 			})),
 		);
 	const isLayerTreeVisible = useUiStore((state) => state.isLayerTreeVisible);
+	const isAddMeasureActive = useUiStore((state) => state.isAddMeasureActive);
 	const [search, setSearch] = useState("");
+	const [activeLayersInModule3, setActiveLayersInModule3] = useState<string[]>(
+		[],
+	);
 
 	const allLayers = useMemo(() => Array.from(layers.values()), [layers]);
 
@@ -199,19 +206,32 @@ export const LayerTree: FC = () => {
 	const pathname = usePathname();
 	const isPlanningModule = pathname?.endsWith("/planung");
 
+	const filteredUploaded = filterLayersAfterSearch(uploadedLayers, search);
+	const filteredSubject = filterLayersAfterSearch(subjectLayers, search);
+	const noResults =
+		filteredUploaded.length === 0 && filteredSubject.length === 0;
+
 	const renderPlanningModuleLayerSections = () => {
 		const contentMaps = filterOutModuleLayers(filteredSubject);
 		const module1Maps = filterLayersAfterModule(filteredSubject, "module_1_");
 		const module2Maps = filterLayersAfterModule(filteredSubject, "module_2_");
 		const module3Maps = filterLayersAfterModule(filteredSubject, "module_3_");
 		const content: React.ReactNode[] = [];
+		const setLayerVisibilityInModule3 = (id: string, v: boolean) => {
+			if (activeLayersInModule3.includes(id)) {
+				setActiveLayersInModule3((prev) => prev.filter((f) => f !== id));
+			} else {
+				setActiveLayersInModule3((prev) => [...prev, id]);
+			}
+			setLayerVisibility(id, v);
+		};
 		if (contentMaps.length > 0)
 			content.push(
 				<LayerSection
 					key="contentMaps"
 					title="Inhaltskarten"
 					layers={contentMaps}
-					onToggle={(id, v) => setLayerVisibility(id, !v)}
+					onToggle={(id, v) => setLayerVisibilityInModule3(id, !v)}
 					onOpacity={setLayerOpacity}
 				/>,
 			);
@@ -221,7 +241,7 @@ export const LayerTree: FC = () => {
 					key="module1Maps"
 					title="Modul 1: Handlungsbedarfe"
 					layers={module1Maps}
-					onToggle={(id, v) => setLayerVisibility(id, !v)}
+					onToggle={(id, v) => setLayerVisibilityInModule3(id, !v)}
 					onOpacity={setLayerOpacity}
 				/>,
 			);
@@ -231,7 +251,7 @@ export const LayerTree: FC = () => {
 					key="module2Maps"
 					title="Modul 2: Machbarkeiten"
 					layers={module2Maps}
-					onToggle={(id, v) => setLayerVisibility(id, !v)}
+					onToggle={(id, v) => setLayerVisibilityInModule3(id, !v)}
 					onOpacity={setLayerOpacity}
 				/>,
 			);
@@ -241,7 +261,7 @@ export const LayerTree: FC = () => {
 					key="module3Maps"
 					title="Modul 3: Maßnahmen"
 					layers={module3Maps}
-					onToggle={(id, v) => setLayerVisibility(id, !v)}
+					onToggle={(id, v) => setLayerVisibilityInModule3(id, !v)}
 					onOpacity={setLayerOpacity}
 				/>,
 			);
@@ -249,12 +269,19 @@ export const LayerTree: FC = () => {
 		return content;
 	};
 
-	if (uploadedLayers.length === 0 && subjectLayers.length === 0) return null;
+	useEffect(() => {
+		if (!isPlanningModule) return;
+		allLayers.forEach((layer) => {
+			if (
+				layer.id.startsWith("module_") &&
+				!activeLayersInModule3.includes(layer.id)
+			) {
+				setLayerVisibility(layer.id, false);
+			}
+		});
+	}, [isPlanningModule, isAddMeasureActive]);
 
-	const filteredUploaded = filterLayers(uploadedLayers, search);
-	const filteredSubject = filterLayers(subjectLayers, search);
-	const noResults =
-		filteredUploaded.length === 0 && filteredSubject.length === 0;
+	if (uploadedLayers.length === 0 && subjectLayers.length === 0) return null;
 
 	return (
 		<div
