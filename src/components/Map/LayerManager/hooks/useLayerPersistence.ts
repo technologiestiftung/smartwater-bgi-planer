@@ -22,6 +22,7 @@ import { useFilesStore } from "@/store/files";
 import { LayerService } from "@/store/layers/types";
 import { useMapStore } from "@/store/map";
 import { useProjectStore } from "@/store/project";
+import { useScenarioStore } from "@/store/scenario";
 import { Map } from "ol";
 import GeoJSON from "ol/format/GeoJSON";
 import VectorLayer from "ol/layer/Vector";
@@ -472,6 +473,12 @@ export const useLayerPersistence = (
 			try {
 				await restoreDrawLayers();
 				setInputFeatures(getInputFeatures(map));
+
+				const { activeScenarioId, setActiveScenario } =
+					useScenarioStore.getState();
+				if (activeScenarioId) {
+					setActiveScenario(activeScenarioId);
+				}
 				await restoreUploadedLayers();
 			} finally {
 				isRestoringRef.current = false;
