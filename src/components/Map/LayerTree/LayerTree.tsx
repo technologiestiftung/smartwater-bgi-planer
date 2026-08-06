@@ -14,6 +14,7 @@ import { EyeIcon, EyeSlashIcon } from "@phosphor-icons/react";
 import { FC, useMemo, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 import viewLayerConfig from "@/config/layerConfig.json";
+import { usePathname } from "next/navigation";
 
 const HIDDEN_LAYER_IDS = new Set([
 	"rabimo_input_2025",
@@ -143,6 +144,16 @@ function filterLayers(arr: ManagedLayer[], search: string): ManagedLayer[] {
 		getLayerDisplayName(l).toLowerCase().includes(search.toLowerCase()),
 	);
 }
+function filterLayersAfterModule(
+	arr: ManagedLayer[],
+	moduleId: string,
+): ManagedLayer[] {
+	if (!moduleId.trim()) return arr;
+	return arr.filter((l) => l.id.startsWith(moduleId));
+}
+function filterOutModuleLayers(arr: ManagedLayer[]): ManagedLayer[] {
+	return arr.filter((l) => !l.id.startsWith("module_"));
+}
 
 // eslint-disable-next-line complexity
 export const LayerTree: FC = () => {
@@ -185,6 +196,59 @@ export const LayerTree: FC = () => {
 		[allLayers, currentVisibleLayerIds],
 	);
 
+	const pathname = usePathname();
+	const isPlanningModule = pathname?.endsWith("/planung");
+
+	const renderPlanningModuleLayerSections = () => {
+		const contentMaps = filterOutModuleLayers(filteredSubject);
+		const module1Maps = filterLayersAfterModule(filteredSubject, "module_1_");
+		const module2Maps = filterLayersAfterModule(filteredSubject, "module_2_");
+		const module3Maps = filterLayersAfterModule(filteredSubject, "module_3_");
+		const content: React.ReactNode[] = [];
+		if (contentMaps.length > 0)
+			content.push(
+				<LayerSection
+					key="contentMaps"
+					title="Inhaltskarten"
+					layers={contentMaps}
+					onToggle={(id, v) => setLayerVisibility(id, !v)}
+					onOpacity={setLayerOpacity}
+				/>,
+			);
+		if (module1Maps.length > 0)
+			content.push(
+				<LayerSection
+					key="module1Maps"
+					title="Modul 1: Handlungsbedarfe"
+					layers={module1Maps}
+					onToggle={(id, v) => setLayerVisibility(id, !v)}
+					onOpacity={setLayerOpacity}
+				/>,
+			);
+		if (module2Maps.length > 0)
+			content.push(
+				<LayerSection
+					key="module2Maps"
+					title="Modul 2: Machbarkeiten"
+					layers={module2Maps}
+					onToggle={(id, v) => setLayerVisibility(id, !v)}
+					onOpacity={setLayerOpacity}
+				/>,
+			);
+		if (module3Maps.length > 0)
+			content.push(
+				<LayerSection
+					key="module3Maps"
+					title="Modul 3: Maßnahmen"
+					layers={module3Maps}
+					onToggle={(id, v) => setLayerVisibility(id, !v)}
+					onOpacity={setLayerOpacity}
+				/>,
+			);
+
+		return content;
+	};
+
 	if (uploadedLayers.length === 0 && subjectLayers.length === 0) return null;
 
 	const filteredUploaded = filterLayers(uploadedLayers, search);
@@ -213,7 +277,7 @@ export const LayerTree: FC = () => {
 
 				<div className="max-h-80 overflow-y-auto">
 					<div className="flex flex-col gap-4 p-3">
-						{filteredSubject.length > 0 && (
+						{filteredSubject.length > 0 && !isPlanningModule && (
 							<LayerSection
 								title="Inhaltskarten"
 								layers={filteredSubject}
@@ -221,6 +285,7 @@ export const LayerTree: FC = () => {
 								onOpacity={setLayerOpacity}
 							/>
 						)}
+						{isPlanningModule && renderPlanningModuleLayerSections()}
 						{filteredUploaded.length > 0 && filteredSubject.length > 0 && (
 							<Separator />
 						)}
