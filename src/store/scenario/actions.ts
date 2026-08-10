@@ -5,6 +5,7 @@ import { ComputedFeatures } from "@/store/project/types";
 import { ConnectedArea, Measure, MeasureValue, ScenarioState } from "./types";
 
 type SetState = (fn: (state: ScenarioState) => Partial<ScenarioState>) => void;
+type GetState = () => ScenarioState;
 
 const createScenarioId = () =>
 	`scenario-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
@@ -97,42 +98,40 @@ export const createUpdateScenarioName = (set: SetState) => {
 	};
 };
 
-export const createAddMeasure = (set: SetState) => {
+export const createAddMeasure = (set: SetState, get: GetState) => {
 	return (id: string, measure: Measure) => {
-		let nextMeasures: Measure[] | null = null;
-
 		set((state) => {
 			const scenario = state.scenarios[id];
 			if (!scenario) return state;
-			nextMeasures = [...scenario.measures, measure];
 
 			return {
 				scenarios: {
 					...state.scenarios,
 					[id]: {
 						...scenario,
-						measures: nextMeasures,
+						measures: [...scenario.measures, measure],
 					},
 				},
 			};
 		});
 
-		if (nextMeasures) {
-			syncProjectDerivedSimulation(nextMeasures);
+		// Read back via get() rather than the producer's draft: immer revokes
+		// the draft proxies as soon as the set() callback above returns.
+		const measures = get().scenarios[id]?.measures;
+		if (measures) {
+			syncProjectDerivedSimulation(measures);
 		}
 	};
 };
 
-export const createRemoveMeasure = (set: SetState) => {
+export const createRemoveMeasure = (set: SetState, get: GetState) => {
 	return (scenarioId: string, measureId: string) => {
-		let nextMeasures: Measure[] | null = null;
-
 		set((state) => {
 			const scenario = state.scenarios[scenarioId];
 			if (!scenario) return state;
 
 			const removedMeasure = scenario.measures.find((m) => m.id === measureId);
-			nextMeasures = scenario.measures.filter(
+			const nextMeasures = scenario.measures.filter(
 				(measure) => measure.id !== measureId,
 			);
 
@@ -169,20 +168,19 @@ export const createRemoveMeasure = (set: SetState) => {
 			};
 		});
 
-		if (nextMeasures) {
-			syncProjectDerivedSimulation(nextMeasures);
+		const measures = get().scenarios[scenarioId]?.measures;
+		if (measures) {
+			syncProjectDerivedSimulation(measures);
 		}
 	};
 };
 
-export const createUpdateMeasureValues = (set: SetState) => {
+export const createUpdateMeasureValues = (set: SetState, get: GetState) => {
 	return (
 		scenarioId: string,
 		measureId: string,
 		values: Record<string, MeasureValue>,
 	) => {
-		let nextMeasures: Measure[] | null = null;
-
 		set((state) => {
 			const scenario = state.scenarios[scenarioId];
 			if (!scenario) return state;
@@ -202,7 +200,7 @@ export const createUpdateMeasureValues = (set: SetState) => {
 				nextConnectedArea = Number(values.connectedArea) || undefined;
 			}
 
-			nextMeasures = scenario.measures.map((measure) =>
+			const nextMeasures = scenario.measures.map((measure) =>
 				measure.id === measureId
 					? {
 							...measure,
@@ -225,26 +223,25 @@ export const createUpdateMeasureValues = (set: SetState) => {
 			};
 		});
 
-		if (nextMeasures) {
-			syncProjectDerivedSimulation(nextMeasures);
+		const measures = get().scenarios[scenarioId]?.measures;
+		if (measures) {
+			syncProjectDerivedSimulation(measures);
 		}
 	};
 };
 
-export const createSetActiveScenario = (set: SetState) => {
+export const createSetActiveScenario = (set: SetState, get: GetState) => {
 	return (id: string) => {
-		let nextMeasures: Measure[] | null = null;
-
 		set((state) => {
 			const scenario = state.scenarios[id];
 			if (!scenario) return state;
-			nextMeasures = scenario.measures;
 
 			return { activeScenarioId: id };
 		});
 
-		if (nextMeasures) {
-			syncProjectDerivedSimulation(nextMeasures);
+		const measures = get().scenarios[id]?.measures;
+		if (measures) {
+			syncProjectDerivedSimulation(measures);
 		}
 	};
 };

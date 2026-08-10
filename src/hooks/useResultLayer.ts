@@ -61,13 +61,16 @@ export function useResultLayer({
 	const result = useResultStore((state) =>
 		activeScenarioId ? state.resultsByScenarioId[activeScenarioId] : undefined,
 	);
+	const status = useResultStore((state) =>
+		activeScenarioId ? state.statusByScenarioId[activeScenarioId] : undefined,
+	);
 
 	const ids = Array.isArray(layerIds) ? layerIds : [layerIds];
 
 	useEffect(() => {
 		if (!map) return;
 
-		if (!result) {
+		if (!result || status !== "done") {
 			clearLayers(map, ids);
 			return;
 		}
@@ -89,5 +92,5 @@ export function useResultLayer({
 			source.addFeatures(features.map((f) => f.clone()));
 		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [map, result, dataKey, geometryLayerId, codeKey]);
+	}, [map, result, status, dataKey, geometryLayerId, codeKey]);
 }

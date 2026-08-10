@@ -36,17 +36,17 @@ export const useScenarioStore = create<ScenarioState & ScenarioActions>()(
 	devtools(
 		immer(
 			persist(
-				(set) => ({
+				(set, get) => ({
 					...initialState,
 					createScenario: createCreateScenario(set),
 					updateScenarioName: createUpdateScenarioName(set),
-					addMeasure: createAddMeasure(set),
-					removeMeasure: createRemoveMeasure(set),
-					updateMeasureValues: createUpdateMeasureValues(set),
+					addMeasure: createAddMeasure(set, get),
+					removeMeasure: createRemoveMeasure(set, get),
+					updateMeasureValues: createUpdateMeasureValues(set, get),
 					addConnectedArea: createAddConnectedArea(set),
 					removeConnectedArea: createRemoveConnectedArea(set),
 					markConnectedAreaUsed: createMarkConnectedAreaUsed(set),
-					setActiveScenario: createSetActiveScenario(set),
+					setActiveScenario: createSetActiveScenario(set, get),
 					setHasHydrated: (state) => set({ hasHydrated: state }),
 					resetScenarioState: () => {
 						set({
