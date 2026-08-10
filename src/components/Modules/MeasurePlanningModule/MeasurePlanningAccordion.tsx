@@ -180,6 +180,9 @@ export function MeasurePlanningAccordion({
 		LAYER_IDS.CONNECTED_AREA_DRAW,
 	);
 	const placedMeasureIds = useUiStore((state) => state.placedMeasureIds);
+	const setIsAddMeasureActive = useUiStore(
+		(state) => state.setIsAddMeasureActive,
+	);
 	const [expandedStepId, setExpandedStepId] = useState(steps[0]?.id ?? "");
 	const [selectedConfigId, setSelectedConfigId] = useState<string | null>(null);
 	const hasInitializedRef = useRef(false);
@@ -287,6 +290,19 @@ export function MeasurePlanningAccordion({
 		applyConfigLayers("measure_start", true);
 		hasInitializedRef.current = true;
 	}, [open, isMapReady, layerConfig.length, applyConfigLayers]);
+
+	useEffect(() => {
+		setIsAddMeasureActive(
+			Boolean(
+				selectedQuestionConfig &&
+				selectedMeasurementInfo &&
+				noSimulationIsActive,
+			),
+		);
+		return () => {
+			setIsAddMeasureActive(false);
+		};
+	}, [selectedQuestionConfig, selectedMeasurementInfo, noSimulationIsActive]);
 
 	let content: React.ReactNode;
 
