@@ -1,5 +1,6 @@
 "use client";
 
+import { useLayerPersistence } from "@/components/Map/LayerManager/hooks/useLayerPersistence";
 import { Separator } from "@/components/ui/separator";
 import { Slider } from "@/components/ui/slider";
 import {
@@ -149,7 +150,16 @@ export const LayerTree: FC = () => {
 			})),
 		);
 	const isLayerTreeVisible = useUiStore((state) => state.isLayerTreeVisible);
+	const { saveLayer } = useLayerPersistence({
+		autoSave: false,
+		autoRestore: false,
+	});
 	const [search, setSearch] = useState("");
+
+	const handleUploadedToggle = (id: string, visible: boolean) => {
+		setLayerVisibility(id, !visible);
+		saveLayer(id);
+	};
 
 	const allLayers = useMemo(() => Array.from(layers.values()), [layers]);
 
@@ -221,7 +231,7 @@ export const LayerTree: FC = () => {
 							<LayerSection
 								title="Zusatzkarten"
 								layers={filteredUploaded}
-								onToggle={(id, v) => setLayerVisibility(id, !v)}
+								onToggle={handleUploadedToggle}
 								onOpacity={setLayerOpacity}
 							/>
 						)}

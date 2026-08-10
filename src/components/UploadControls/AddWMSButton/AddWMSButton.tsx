@@ -1,5 +1,6 @@
 "use client";
 
+import { useLayerPersistence } from "@/components/Map/LayerManager/hooks/useLayerPersistence";
 import { ModalHeader } from "@/components/Modal";
 import { Button } from "@/components/ui/button";
 import {
@@ -110,6 +111,10 @@ const createWMSLayer = (params: {
 export const AddWMSButton: FC = () => {
 	const map = useMapStore((state) => state.map);
 	const addLayer = useLayersStore((state) => state.addLayer);
+	const { saveLayer } = useLayerPersistence({
+		autoSave: false,
+		autoRestore: false,
+	});
 	const { setUploadError, setUploadSuccess, clearUploadStatus } = useUiStore(
 		useShallow((state) => ({
 			setUploadError: state.setUploadError,
@@ -172,7 +177,7 @@ export const AddWMSButton: FC = () => {
 	}, [wmsUrl, clearUploadStatus]);
 
 	const addWMSLayerToMap = useCallback(
-		(params: {
+		async (params: {
 			url: string;
 			layerName: string;
 			layerTitle: string;
@@ -201,8 +206,9 @@ export const AddWMSButton: FC = () => {
 					zIndex: 100,
 				}),
 			);
+			await saveLayer(layerId);
 		},
-		[map, addLayer],
+		[map, addLayer, saveLayer],
 	);
 
 	const handleAddLayers = useCallback(async () => {
@@ -216,14 +222,16 @@ export const AddWMSButton: FC = () => {
 
 			const baseUrl = getBaseUrl(wmsUrl);
 
-			layersToAdd.forEach((layer) => {
-				addWMSLayerToMap({
-					url: baseUrl,
-					layerName: layer.name,
-					layerTitle: layer.title,
-					previewUrl: layer.previewUrl,
-				});
-			});
+			await Promise.all(
+				layersToAdd.map((layer) =>
+					addWMSLayerToMap({
+						url: baseUrl,
+						layerName: layer.name,
+						layerTitle: layer.title,
+						previewUrl: layer.previewUrl,
+					}),
+				),
+			);
 
 			setUploadSuccess(
 				`${layersToAdd.length} WMS Layer erfolgreich hinzugefügt.`,
