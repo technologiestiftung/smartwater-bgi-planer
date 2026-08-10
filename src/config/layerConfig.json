@@ -546,7 +546,9 @@
 		"drawLayerId": "module_3_3G1_draw",
 		"visibleLayerIds": [
 			"project_boundary",
-			"potenziale_regenwasserbewirtschaftung:ca_dachbegruenungspotenzial"
+			"potenziale_regenwasserbewirtschaftung:ca_dachbegruenungspotenzial",
+			"ua_gruendaecher_2020:b_begruente_dachteilfl_geb",
+			"ua_gruendaecher_2020:c_begruente_dachteilfl_tief"
 		],
 		"canDrawMeasures": true,
 		"measurementSrc": "/legends/measures.svg"
@@ -556,7 +558,9 @@
 		"drawLayerId": "module_3_3G2_draw",
 		"visibleLayerIds": [
 			"project_boundary",
-			"potenziale_regenwasserbewirtschaftung:ca_dachbegruenungspotenzial"
+			"potenziale_regenwasserbewirtschaftung:ca_dachbegruenungspotenzial",
+			"ua_gruendaecher_2020:b_begruente_dachteilfl_geb",
+			"ua_gruendaecher_2020:c_begruente_dachteilfl_tief"
 		],
 		"canDrawMeasures": true,
 		"measurementSrc": "/legends/measures.svg"
