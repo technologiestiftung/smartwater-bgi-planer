@@ -1,8 +1,10 @@
 "use client";
 
 import { getLayerById } from "@/lib/helpers/ol";
+import { useFilesStore } from "@/store/files";
 import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";
+import { useProjectStore } from "@/store/project";
 import Select from "ol/interaction/Select";
 import { Vector as VectorSource } from "ol/source";
 import { useCallback } from "react";
@@ -10,6 +12,8 @@ import { useCallback } from "react";
 export function useDeselectAllFeatures() {
 	const map = useMapStore((state) => state.map);
 	const drawLayerId = useLayersStore((state) => state.drawLayerId);
+	const getProject = useProjectStore((state) => state.getProject);
+	const deleteFile = useFilesStore((state) => state.deleteFile);
 
 	const deselectAllFeatures = useCallback(() => {
 		if (!map) return;
@@ -32,8 +36,13 @@ export function useDeselectAllFeatures() {
 		if (source instanceof VectorSource) {
 			source.clear();
 			source.changed();
+
+			const project = getProject();
+			if (project) {
+				deleteFile(project.id, drawLayerId);
+			}
 		}
-	}, [map, drawLayerId]);
+	}, [map, drawLayerId, getProject, deleteFile]);
 
 	return { deselectAllFeatures, clearDrawLayerFeatures };
 }

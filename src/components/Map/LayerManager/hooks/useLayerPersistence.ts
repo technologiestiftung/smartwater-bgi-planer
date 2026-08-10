@@ -135,9 +135,6 @@ export const useLayerPersistence = (
 					const layer = getVectorLayer(map, layerId);
 					const source = layer ? getLayerSource(layer) : null;
 					if (source && source.getFeatures().length === 0) {
-						if (getFile(project.id, layerId)) {
-							await deleteFile(project.id, layerId);
-						}
 						return;
 					}
 				}
