@@ -41,6 +41,7 @@ const initialState: UiState = {
 	draftMeasureIds: [],
 	draftConnectedAreaIds: [],
 	pendingDeleteMeasureIds: [],
+	isAddMeasureActive: false,
 };
 
 export const useUiStore = create<UiState & UiActions>()(
@@ -155,6 +156,8 @@ export const useUiStore = create<UiState & UiActions>()(
 					],
 				})),
 			clearPendingDeleteMeasureIds: () => set({ pendingDeleteMeasureIds: [] }),
+			setIsAddMeasureActive: (isAddMeasureActive) =>
+				set({ isAddMeasureActive }),
 		})),
 		{ name: "uiStore" },
 	),

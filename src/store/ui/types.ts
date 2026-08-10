@@ -26,6 +26,7 @@ export interface UiState {
 	draftMeasureIds: string[];
 	draftConnectedAreaIds: string[];
 	pendingDeleteMeasureIds: string[];
+	isAddMeasureActive: boolean;
 }
 
 export interface UiActions {
@@ -66,4 +67,5 @@ export interface UiActions {
 	clearDraftMeasures: () => void;
 	addPendingDeleteMeasureId: (measureId: string) => void;
 	clearPendingDeleteMeasureIds: () => void;
+	setIsAddMeasureActive: (isAddMeasureActive: boolean) => void;
 }

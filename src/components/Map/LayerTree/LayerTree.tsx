@@ -12,8 +12,11 @@ import { selectActiveLayerConfig, useLayersStore } from "@/store/layers";
 import { ManagedLayer } from "@/store/layers/types";
 import { useUiStore } from "@/store/ui";
 import { EyeIcon, EyeSlashIcon } from "@phosphor-icons/react";
-import { FC, useMemo, useState } from "react";
+import { FC, useMemo, useState, useEffect } from "react";
 import { useShallow } from "zustand/react/shallow";
+import viewLayerConfig from "@/config/layerConfig.json";
+import visibleLayerIdsModule3 from "@/config/visibleLayerIdsModule3.json";
+import { usePathname } from "next/navigation";
 
 const HIDDEN_LAYER_IDS = new Set([
 	"rabimo_input_2025",
@@ -22,7 +25,17 @@ const HIDDEN_LAYER_IDS = new Set([
 	"project_new_development",
 ]);
 
+const layerConfigMap = new Map(
+	viewLayerConfig.map((config) => [config.drawLayerId, config]),
+);
+
 function getLayerDisplayName(layer: ManagedLayer): string {
+	if (layer.id.startsWith("module_1_") || layer.id.startsWith("module_2_")) {
+		const config = layerConfigMap.get(layer.id);
+		if (config?.name) {
+			return config.name;
+		}
+	}
 	return (
 		layer.config?.name ||
 		layer.config?.service?.name ||
@@ -78,7 +91,7 @@ const LayerCard: FC<LayerCardProps> = ({ layer, onToggle, onOpacity }) => {
 					<TooltipTrigger asChild>
 						<button
 							onClick={() => onToggle(layer.id, layer.visibility)}
-							className={`focus-visible:ring-ring relative flex h-12 w-12 items-center justify-center rounded-sm transition-all focus-visible:ring-2 focus-visible:outline-none ${
+							className={`focus-visible:ring-ring relative flex h-12 w-12 cursor-pointer items-center justify-center rounded-sm transition-all focus-visible:ring-2 focus-visible:outline-none ${
 								layer.visibility
 									? "bg-primary text-white"
 									: "border border-gray-200 bg-gray-50 text-gray-400"
@@ -131,11 +144,24 @@ const LayerSection: FC<LayerSectionProps> = ({
 	</div>
 );
 
-function filterLayers(arr: ManagedLayer[], search: string): ManagedLayer[] {
+function filterLayersAfterSearch(
+	arr: ManagedLayer[],
+	search: string,
+): ManagedLayer[] {
 	if (!search.trim()) return arr;
 	return arr.filter((l) =>
 		getLayerDisplayName(l).toLowerCase().includes(search.toLowerCase()),
 	);
+}
+function filterLayersAfterModule(
+	arr: ManagedLayer[],
+	moduleId: string,
+): ManagedLayer[] {
+	if (!moduleId.trim()) return arr;
+	return arr.filter((l) => l.id.startsWith(moduleId));
+}
+function filterOutModuleLayers(arr: ManagedLayer[]): ManagedLayer[] {
+	return arr.filter((l) => !l.id.startsWith("module_"));
 }
 
 // eslint-disable-next-line complexity
@@ -150,6 +176,7 @@ export const LayerTree: FC = () => {
 			})),
 		);
 	const isLayerTreeVisible = useUiStore((state) => state.isLayerTreeVisible);
+	const isAddMeasureActive = useUiStore((state) => state.isAddMeasureActive);
 	const { saveLayer } = useLayerPersistence({
 		autoSave: false,
 		autoRestore: false,
@@ -160,6 +187,9 @@ export const LayerTree: FC = () => {
 		setLayerVisibility(id, !visible);
 		saveLayer(id);
 	};
+	const [activeLayersInModule3, setActiveLayersInModule3] = useState<string[]>(
+		[],
+	);
 
 	const allLayers = useMemo(() => Array.from(layers.values()), [layers]);
 
@@ -183,17 +213,96 @@ export const LayerTree: FC = () => {
 					l.layerType === "subject" &&
 					!l.id.startsWith("uploaded_") &&
 					!HIDDEN_LAYER_IDS.has(l.id) &&
-					(currentVisibleLayerIds === null || currentVisibleLayerIds.has(l.id)),
+					(currentVisibleLayerIds === null ||
+						currentVisibleLayerIds.has(l.id) ||
+						visibleLayerIdsModule3.includes(l.id)),
 			),
 		[allLayers, currentVisibleLayerIds],
 	);
 
-	if (uploadedLayers.length === 0 && subjectLayers.length === 0) return null;
+	const pathname = usePathname();
+	const isPlanningModule = pathname?.endsWith("/planung");
 
-	const filteredUploaded = filterLayers(uploadedLayers, search);
-	const filteredSubject = filterLayers(subjectLayers, search);
+	const filteredUploaded = filterLayersAfterSearch(uploadedLayers, search);
+	const filteredSubject = filterLayersAfterSearch(subjectLayers, search);
 	const noResults =
 		filteredUploaded.length === 0 && filteredSubject.length === 0;
+
+	const renderPlanningModuleLayerSections = () => {
+		const contentMaps = filterOutModuleLayers(filteredSubject);
+		const module1Maps = filterLayersAfterModule(filteredSubject, "module_1_");
+		const module2Maps = filterLayersAfterModule(filteredSubject, "module_2_");
+		const module3Maps = filterLayersAfterModule(filteredSubject, "module_3_");
+		const content: React.ReactNode[] = [];
+		const setLayerVisibilityInModule3 = (id: string, v: boolean) => {
+			if (activeLayersInModule3.includes(id)) {
+				setActiveLayersInModule3((prev) => prev.filter((f) => f !== id));
+			} else {
+				setActiveLayersInModule3((prev) => [...prev, id]);
+			}
+			setLayerVisibility(id, v);
+		};
+		if (contentMaps.length > 0)
+			content.push(
+				<LayerSection
+					key="contentMaps"
+					title="Inhaltskarten"
+					layers={contentMaps}
+					onToggle={(id, v) => setLayerVisibilityInModule3(id, !v)}
+					onOpacity={setLayerOpacity}
+				/>,
+			);
+		if (module1Maps.length > 0)
+			content.push(
+				<LayerSection
+					key="module1Maps"
+					title="Modul 1: Handlungsbedarfe"
+					layers={module1Maps}
+					onToggle={(id, v) => setLayerVisibilityInModule3(id, !v)}
+					onOpacity={setLayerOpacity}
+				/>,
+			);
+		if (module2Maps.length > 0)
+			content.push(
+				<LayerSection
+					key="module2Maps"
+					title="Modul 2: Machbarkeiten"
+					layers={module2Maps}
+					onToggle={(id, v) => setLayerVisibilityInModule3(id, !v)}
+					onOpacity={setLayerOpacity}
+				/>,
+			);
+		if (module3Maps.length > 0)
+			content.push(
+				<LayerSection
+					key="module3Maps"
+					title="Modul 3: Maßnahmen"
+					layers={module3Maps}
+					onToggle={(id, v) => setLayerVisibilityInModule3(id, !v)}
+					onOpacity={setLayerOpacity}
+				/>,
+			);
+
+		return content;
+	};
+
+	useEffect(() => {
+		if (!isPlanningModule) return;
+		allLayers.forEach((layer) => {
+			const shouldHide =
+				(layer.id.startsWith("module_1_") ||
+					layer.id.startsWith("module_2_")) &&
+				!activeLayersInModule3.includes(layer.id);
+
+			if (shouldHide) {
+				setLayerVisibility(layer.id, false);
+			} else if (activeLayersInModule3.includes(layer.id)) {
+				setLayerVisibility(layer.id, true);
+			}
+		});
+	}, [isPlanningModule, isAddMeasureActive, activeLayersInModule3]);
+
+	if (uploadedLayers.length === 0 && subjectLayers.length === 0) return null;
 
 	return (
 		<div
@@ -216,7 +325,7 @@ export const LayerTree: FC = () => {
 
 				<div className="max-h-80 overflow-y-auto">
 					<div className="flex flex-col gap-4 p-3">
-						{filteredSubject.length > 0 && (
+						{filteredSubject.length > 0 && !isPlanningModule && (
 							<LayerSection
 								title="Inhaltskarten"
 								layers={filteredSubject}
@@ -224,6 +333,7 @@ export const LayerTree: FC = () => {
 								onOpacity={setLayerOpacity}
 							/>
 						)}
+						{isPlanningModule && renderPlanningModuleLayerSections()}
 						{filteredUploaded.length > 0 && filteredSubject.length > 0 && (
 							<Separator />
 						)}
