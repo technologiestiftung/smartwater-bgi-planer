@@ -92,6 +92,23 @@ export const StepContent: FC<StepContentProps> = ({
 							<div className="wrap-break-word">
 								<RichTextWithLinks text={layerConfig.description} />
 							</div>
+							{layerConfig.embeddedImageAfterText && (
+								<div className="my-2">
+									<Image
+										src={layerConfig.embeddedImageAfterText}
+										alt="Embedded Image"
+										width={1200}
+										height={800}
+										sizes="100vw"
+										className="h-auto w-full object-contain"
+									/>
+									<div className="wrap-break-word">
+										<RichTextWithLinks
+											text={layerConfig.embeddedImageAfterTextDescription}
+										/>
+									</div>
+								</div>
+							)}
 						</div>
 					</div>
 				)}
@@ -153,7 +170,7 @@ export const StepContent: FC<StepContentProps> = ({
 					<Image
 						src={layerConfig.legendSrc}
 						alt="Legende für die Karte"
-						width={400}
+						width={600}
 						height={200}
 						className="h-auto max-w-full rounded border"
 					/>
