@@ -1,11 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="426" height="60" viewBox="0 0 426 60">
-  <defs>
-    <style>
-      @import url("https://fonts.cdnfonts.com/css/arthouse-owned");
-      text { font-family: "Arthouse Owned", Arial, sans-serif; }
-    </style>
-  </defs>
-  <rect width="100%" height="100%" fill="transparent" />
-  <rect x="16" y="12.0" width="24" height="16" rx="2" ry="2" fill="#78FF83" stroke="#0C4C38" stroke-width="1"/>
-  <text x="56" y="25" font-size="14" fill="#0C4C38">Gr&#252;nvolumen &#60; 80% Durchschnitt</text>
+<svg width="464" height="66" viewBox="0 0 464 66" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="464" height="66" fill="white"/>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="16" y="26.887">0</tspan></text>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="72.1431" y="26.887">0.3</tspan></text>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="139.286" y="26.887">0.5</tspan></text>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="206.429" y="26.887">1</tspan></text>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="259.571" y="26.887">2</tspan></text>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="315.714" y="26.887">4</tspan></text>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="372.857" y="26.887">8</tspan></text>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="429" y="26.887">16+</tspan></text>
+<rect x="16" y="38" width="432" height="16" fill="url(#paint0_linear_5545_17473)"/>
+<defs>
+<linearGradient id="paint0_linear_5545_17473" x1="16" y1="46" x2="448" y2="46" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="0.12" stop-color="#FEFEC7"/>
+<stop offset="0.25" stop-color="#E0FE9F"/>
+<stop offset="0.37" stop-color="#C2FE77"/>
+<stop offset="0.5" stop-color="#A4FE4F"/>
+<stop offset="0.62" stop-color="#7CD627"/>
+<stop offset="0.75" stop-color="#54AE00"/>
+<stop offset="0.88" stop-color="#2C8627"/>
+<stop offset="1" stop-color="#045E4F"/>
+</linearGradient>
+</defs>
 </svg>

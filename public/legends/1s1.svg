@@ -1,17 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="426" height="100" viewBox="0 0 426 100">
-  <defs>
-    <style>
-      @import url("https://fonts.cdnfonts.com/css/arthouse-owned");
-      text { font-family: "Arthouse Owned", Arial, sans-serif; }
-    </style>
-  </defs>
-  <rect width="100%" height="100%" fill="transparent" />
-  <rect x="16" y="12.0" width="24" height="16" rx="2" ry="2" fill="#FFFFB2" stroke="#0C4C38" stroke-width="1"/>
-  <text x="56" y="25" font-size="14" fill="#0C4C38">0,2 - 0,5 m/s</text>
-  <rect x="197.2" y="12.0" width="24" height="16" rx="2" ry="2" fill="#FECC5C" stroke="#0C4C38" stroke-width="1"/>
-  <text x="237.2" y="25" font-size="14" fill="#0C4C38">0,5 - 1,0 m/s</text>
-  <rect x="16" y="52.0" width="24" height="16" rx="2" ry="2" fill="#FD8D3C" stroke="#0C4C38" stroke-width="1"/>
-  <text x="56" y="65" font-size="14" fill="#0C4C38">1,0 - 2,0 m/s</text>
-  <rect x="197.2" y="52.0" width="24" height="16" rx="2" ry="2" fill="#E31A1C" stroke="#0C4C38" stroke-width="1"/>
-  <text x="237.2" y="65" font-size="14" fill="#0C4C38">>=2,0 m/s</text>
+<svg width="464" height="172" viewBox="0 0 464 172" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="464" height="172" fill="white"/>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="16" y="26.887">Flie&#xdf;geschwindigkeit in m/s</tspan></text>
+<rect x="16" y="39" width="24" height="16" fill="#FFFFB2"/>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="48" y="52.887">0.2-0.5</tspan></text>
+<rect x="103" y="39" width="24" height="16" fill="#FECC5C"/>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="135" y="52.887">0.5-1.0</tspan></text>
+<rect x="187" y="39" width="24" height="16" fill="#FD8D3C"/>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="219" y="52.887">1.0-2.0</tspan></text>
+<rect x="272" y="39" width="24" height="16" fill="#E31A1C"/>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="304" y="52.887">&#62;=2.0</tspan></text>
+<path d="M363.66 46.472C363.581 46.5507 363.488 46.6131 363.386 46.6557C363.283 46.6983 363.173 46.7202 363.062 46.7202C362.951 46.7202 362.841 46.6983 362.738 46.6557C362.636 46.6131 362.543 46.5507 362.464 46.472L358.844 42.8517V53.1876C358.844 53.4114 358.755 53.626 358.597 53.7842C358.439 53.9424 358.224 54.0313 358 54.0313C357.776 54.0313 357.562 53.9424 357.404 53.7842C357.245 53.626 357.156 53.4114 357.156 53.1876V42.8517L353.535 46.472C353.376 46.6306 353.161 46.7196 352.937 46.7196C352.713 46.7196 352.498 46.6306 352.339 46.472C352.181 46.3135 352.092 46.0986 352.092 45.8744C352.092 45.6502 352.181 45.4352 352.339 45.2767L357.402 40.2142C357.48 40.1356 357.573 40.0732 357.676 40.0306C357.779 39.988 357.888 39.9661 358 39.9661C358.111 39.9661 358.221 39.988 358.323 40.0306C358.426 40.0732 358.519 40.1356 358.597 40.2142L363.66 45.2767C363.738 45.3551 363.801 45.4483 363.843 45.5508C363.886 45.6534 363.908 45.7633 363.908 45.8744C363.908 45.9854 363.886 46.0954 363.843 46.198C363.801 46.3005 363.738 46.3937 363.66 46.472Z" fill="#0A0A0A"/>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="375" y="52.887">Flie&#xdf;richtung</tspan></text>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="16" y="78.887">Wasserstand in cm</tspan></text>
+<rect x="16" y="91" width="24" height="16" fill="#CCECFF"/>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="48" y="104.887">10-30</tspan></text>
+<rect x="95" y="91" width="24" height="16" fill="#99CCFF"/>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="127" y="104.887">30-50</tspan></text>
+<rect x="177" y="91" width="24" height="16" fill="#6E99FF"/>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="209" y="104.887">50-100</tspan></text>
+<rect x="263" y="91" width="24" height="16" fill="#3D66FF"/>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="295" y="104.887">&#62;100</tspan></text>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="16" y="130.887">Gef&#xe4;hrdungsstufe</tspan></text>
+<rect x="16" y="143" width="24" height="16" fill="#F9DCDA"/>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="48" y="156.887">1: gering</tspan></text>
+<rect x="111" y="143" width="24" height="16" fill="#E198B3"/>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="143" y="156.887">2: mittel</tspan></text>
+<rect x="205" y="143" width="24" height="16" fill="#AC5FA5"/>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="237" y="156.887">3: hoch</tspan></text>
+<rect x="294" y="143" width="24" height="16" fill="#5D3595"/>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="326" y="156.887">4: sehr hoch</tspan></text>
 </svg>

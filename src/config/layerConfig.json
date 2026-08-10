@@ -55,9 +55,14 @@
 	},
 	{
 		"id": "heavy_rain_flow_velocity",
-		"name": "Fließgeschwindigkeit",
-		"question": "Wo gibt es Bereiche in denen Fließgeschwindigkeiten über 0,5 m/s auftreten und dadurch eine Gefährdung bestehen könnte?",
-		"description": "Die Karte enthält Aussagen zur Fließgeschwindigkeit und zur Fließrichtung für ein außergewöhnliches Starkregenereignis, welches rein statistisch alle 100 Jahre vorkommt. Zu beachten ist auch, ob durch die Geländesituation in der Umgebung ein oberirdischer Zufluss in das Quartier oder ein Abfluss aus dem Quartier zu erwarten ist.",
+		"name": "Starkregengefährdung",
+		"question": "Gibt es Bereiche, in denen von einer Gefährdung durch Starkregen für Menschen, die Umwelt, von Infrastruktur oder Sachwerten auszugehen ist?",
+		"description": [
+			"Methodik: Die Starkregengefährdungskarte ist durch eine Kombination von Fließgeschwindigkeit und Wassertiefe des außergewöhnlichen Szenarios der vom [Bundesamt für Kartographie und Geodäsie (BKG)](https://www.bkg.bund.de/) bereitgestellten [Hinweiskarte Starkregengefahren](https://gdi.berlin.de/viewer/main/?MAPS=%7b%22center%22:%5b389858.4,5819603.577837354%5d,%22zoom%22:5%7d&LAYERS=%5b%7b%22id%22:%22hintergrund_default_grau%22,%22visibility%22:true,%22transparency%22:0%7d,%7b%22id%22:%22ua_srhk:dc_wasserstand_aussergew_kostra%22,%22visibility%22:true,%22transparency%22:0%7d,%7b%22id%22:%22ua_srhk:db_fliessgeschw_aussergew_kostra%22,%22visibility%22:true,%22transparency%22:0%7d,%7b%22id%22:%22ua_srhk:da_fr_aussergewoehnlich%22,%22visibility%22:true,%22transparency%22:0%7d%5d) im Rahmen des Projektes SmartWater berechnet worden. Das „außergewöhnliche Ereignis“ betrachtet ein 100-jährliches Niederschlagsereignis, das statistisch alle 100 Jahre auftritt (T = 100a, Dauerstufe 1 Stunde mit einem Euler-Typ II Niederschlagsverteilung). Die Basisdaten wurden wie im [Naturgefahrenportal (NGP)](https://www.naturgefahrenportal.de/de/help_ngp_data_info?hash=rain) in vier Gefährdungsstufen eingeteilt: gering, mittel, hoch und sehr hoch. Die Klasse \"geringe Gefährdung\" beinhaltet alle Wassertiefen von 0 bis 5 cm, es gibt also keinen Bereich, an dem eine Gefährdung durch Starkregen ausgeschlossen werden kann. Hinweis: Für die Überflutungsvorsorge sind auch die an das Untersuchungsgebiet angrenzenden Flächen und deren Geländesituation zu betrachten. Es sollte in der Planung vermieden werden, dass sich die Gefährdung von benachbarten Gebieten erhöht sowie ein Zufluss in das Untersuchungsgebiet für eine erhöhte Gefährdung sorgt. Bei der Einschätzung hilft die Darstellung der Fließwege über Pfeile. Es sollte geprüft werden, ob es Gebäude oder Bereiche im Untersuchungsgebiet gibt, die sich durch ein hohes Schadenspotenzial auszeichnen. Etwa weil dort kritische Infrastruktur, besonders sensible Sachwerte untergebracht sind oder sich vulnerable Gruppen aufhalten, z.B. Kitas, Schulen, Altenheime. Die Karten liefern nur erste Hinweise darauf, wo Gefährdungen durch Überflutungen auftreten könnten. Die dargestellten Modellergebnisse können von der Realität abweichen - es kann also durchaus sein, dass Bereiche von Überflutungen betroffen sind, die auf der Karte nicht gekennzeichnet sind oder umgekehrt. Sollte für das Untersuchungsgebiet bereits eine Starkregengefahrenkarte vorliegen, sollte diese vorrangig genutzt werden. Für die Umsetzung von Maßnahmen sollte die Gefährdungseinschätzung immer durch eine Begehung vor Ort ergänzt werden.",
+			"Über die Kartenauswahl können die Karten zu Wasserstand und Fließgeschwindigkeit (außergewöhnliches Ereignis) abgerufen werden: Für eine grobe Ersteinschätzung der Gefährdung mittels Kartengrundlage sollten die Parameter Wasserstand, Fließgeschwindigkeit und Fließrichtung gemeinsam bewertet werden, da bei gleichem Wasserstand höhere Fließgeschwindigkeiten die Gefährdung erhöhen können. Potenzielle Gefahren können Beispielsweise vollgelaufene Keller oder Beeinträchtigungen des Verkehrs (wie Aquaplaning) sein. Für Kinder und (bewegungs-) eingeschränkte Personen können bereits Überflutungstiefen ab 10 cm zur Gefahr werden. Generell besonders gefährdete Bereiche sind zum Beispiel Souterrain-Wohnungen, (Tief-) Garageneinfahrten, U-Bahn-Zugänge oder Unterführungen."
+		],
+		"embeddedImageAfterText": "/images/Starkregen.jpg",
+		"embeddedImageAfterTextDescription": "Zuordnung der Gefährdungsstufen, Quelle: [NGP Naturgefahrenportal](https://www.naturgefahrenportal.de/de/help_ngp_data_info?hash=rain)",
 		"drawLayerId": "module_1_flooding_hotspots_q1",
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
@@ -67,13 +72,11 @@
 			"ua_srhk:db_fliessgeschw_aussergew_kostra",
 			"bgi-planer:Starkregengefaehrdungskarte_high_compression"
 		],
-		"legendSrc": "/legends/1s1.svg",
-		"legendTitle": "Fließgeschwindigkeit"
+		"legendSrc": "/legends/1s1.svg"
 	},
 	{
 		"id": "heavy_rain_fire_department_incidents",
 		"name": "Feuerwehreinsätze",
-		"embeddedImage": "/images/embeddedLayer/ExampleImage.jpg",
 		"question": "Gibt es  Blockteilflächen oder Bereiche, in denen es einen oder mehrere starkregenbedingte Feuerwehreinsätze gab? Oder ist Ihnen das Auftreten von Schäden in der Vergangenheit bekannt?",
 		"description": "Die Karte zeigt die Blockteilflächen an, in denen in der Zeit zwischen Mai 2005 bis November 2021 starkregenbedingte Feuerwehreinsätze gemeldet wurden.",
 		"drawLayerId": "module_1_flooding_hotspots_q3",
@@ -216,15 +219,20 @@
 	},
 	{
 		"id": "sealing_block_areas_high",
-		"name": "Versiegelung der Blockteilflächen",
-		"question": "Wo liegen Bereiche, in denen der Versiegelungsgrad den Durchschnitt um mehr als 20 % überschreitet?",
-		"description": "Die Karte zeigt die Abweichung vom Durchschnittswert des jeweiligen Flächentyps an. *Hinweis: Die gesamte Landesfläche Berlins ist mit 52 Flächentypen gekennzeichnet.",
+		"name": "Versiegelung",
+		"question": "Gibt es Blockteilflächen mit hohen Versiegelungsgraden (über 60-70 %)?",
+		"description": [
+			"Große versiegelte Bereiche können die thermische Belastung erhöhen und führen zu hohen Oberflächenabflüssen. Dadurch sind im urbanen Wasserhaushalt die Komponenten Versickerung und Verdunstung im Vergleich zum natürlichen Zustand stark reduziert.",
+			"Mit Klick in die Karte kann geprüft werden, ob der durchschnittliche Versiegelungsgrad des jeweiligen Flächentyps einer Blockteilfläche um mehr als 20 % überschritten wird. Dies gibt einen Hinweis auf eine untypisch hohe Versiegelung eines Flächentyps und zeigt den Entsiegelungsbedarf. ",
+			"Hinweis: Die gesamte Landesfläche Berlins ist mit 52 Flächentypen gekennzeichnet. Die Kartenbeschreibung finden Sie [hier](https://www.berlin.de/umweltatlas/boden/versiegelung/2021/kartenbeschreibung/)."
+		],
 		"drawLayerId": "module_1_impermeability_hotspots_q1",
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
 		"canDrawNotes": true,
 		"visibleLayerIds": ["bgi-planer:versiegelung_2021"],
-		"legendSrc": "/legends/1v1.svg"
+		"legendSrc": "/legends/1v1.svg",
+		"legendTitle": "Versiegelungsgrad (%)"
 	},
 	{
 		"id": "sealing_green_volume_low",
@@ -241,7 +249,8 @@
 		"canDrawBTF": true,
 		"canDrawNotes": true,
 		"visibleLayerIds": ["bgi-planer:a_gruenvol2020"],
-		"legendSrc": "/legends/1v2.svg"
+		"legendSrc": "/legends/1v2.svg",
+		"legendTitle": "Grünvolumenzahl (m³/m²)"
 	},
 	{
 		"id": "waterBalance_starter_question",
@@ -296,9 +305,12 @@
 	},
 	{
 		"id": "water_protection_decoupling_requirements",
-		"name": "Abkopplung vom erstaufnehmenden Gewässer",
-		"question": "Wo liegen in dem Gebiet erstaufnehmende Gewässer, die belastet sind und wo Regenwasser eingeleitet wird, und deswegen ein Abkopplungsbedarf besteht?",
-		"description": "Die Karte gibt Auskunft darüber, in welches (erstaufnehmende) Gewässer das in die Regenwasserkanalisation eingeleitete Regenwasser gelangt und ob dieses belastet ist. Falls das Gewässer belastet ist, sollte es das Ziel sein, das Gewässer von Regenwassereinleitungen abzukoppeln. Ob das Gewässer einen Abkopplungsbedarf hat, ist mit der Wasserbehörde abzustimmen. In den Einzugsgebieten von Fließgewässern 1. Ordnung (Spree, Havel, Berlin-Spandauer Schifffahrtskanal, Landwehrkanal, u.a.) ist eine Abkopplung geboten.  Mit Klick auf das Gewässer werden mehr Informationen gegeben.",
+		"name": "Erstaufnehmendes Gewässer im Einzugsbereich der Trennkanalisation",
+		"question": "In welches Gewässer wird das Regenwasser eingeleitet?",
+		"description": [
+			"Falls sich das Untersuchungsgebiet im Einzugsbereich der Trennkanalisation befindet, kann die Information zum erstaufnehmenden Gewässer durch Klick in die Karte abgerufen werden. Die Karte gibt Auskunft darüber, in welches Gewässer das in die Regenwasserkanalisation eingeleitete Regenwasser gelangt. Ziel ist es durch Abkopplung die Belastung der Gewässer zu reduzieren (hydraulisch & stofflich).",
+			"In Einzugsgebieten von Fließgewässern (z.B. Spree, Landwehrkanal, Panke) ist eine Abkopplung geboten. Bei stehenden Gewässern (z.B. Seen, Teiche) ist zu prüfen, ob es einen Wasserbedarf gibt und daher keine Abkopplung forciert werden sollte (siehe nächste Frage)."
+		],
 		"drawLayerId": "module_1_groundwater_hotspots_q2",
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
@@ -307,7 +319,7 @@
 			"bgi-planer:HA4_Kleingewaesser_trocken_pkt",
 			"ua_kanalisation_2022:sp02_09kanalisation2022_2"
 		],
-		"legendSrc": "/legends/placeholder.svg"
+		"legendSrc": "/legends/1g2.svg"
 	},
 	{
 		"id": "water_protection_small_waters_demand",
@@ -322,7 +334,7 @@
 			"bgi-planer:HA4_Kleingewaesser_trocken_pkt",
 			"bgi-planer:HA4_Kleingewaesser_trocken_topoEZG_pl"
 		],
-		"legendSrc": "/legends/placeholder.svg"
+		"legendSrc": "/legends/1g3.svg"
 	},
 	{
 		"id": "NOTE: MODULE 2"
@@ -341,7 +353,7 @@
 	},
 	{
 		"id": "potential_maps_view",
-		"name": "Machbarkeiten prüfen – Versickerungspotential",
+		"name": "Machbarkeiten prüfen – Versickerungspotenzial",
 		"question": "",
 		"description": "",
 		"drawLayerId": "",
@@ -357,25 +369,22 @@
 	},
 	{
 		"id": "2V1",
-		"name": "Versickerungspotential",
+		"name": "Versickerungspotenzial",
 		"question": "",
 		"description": [
-			"Die Versickerungspotenzialkarte zeigt die Potentialflächen der jeweiligen Versickerungsarten an.",
-			"Bei der Planung von Versickerungsanlagen ist zudem die Hangneigung zu berücksichtigen, da eine gleichmäßige Beschickung der oberirdischen Versickerungsanlagen angestrebt werden sollte.",
-			"Für eine vollständige Abwägung der Versickerungsfähigkeit bedarf es einer Analyse der Randbedingungen:",
+			"Die Versickerungspotenzialkarte zeigt die Potenzialflächen der betrachteten Versickerungsmaßnahmen an. Je dunkler eine Fläche ist, desto mehr Maßnahmen sind in diesem Bereich möglich. Mit Klick in die Karte werden die jeweils möglichen Maßnahmen sowie weitere Informationen zu den spezifischen Rahmenbedingungen vor Ort angezeigt:",
 			{
 				"type": "bullets",
 				"items": [
-					"Befindet sich das Vorhaben bzw. Plangebiet ganz oder teilweise in einem Wasserschutzgebiet und wenn ja in welcher Schutzzone?",
 					"Wie groß ist der Abstand (von der Geländeoberkante) zum maßgeblichen Bemessungsgrundwasserstand?",
-					"Gibt es arten- und naturschutzfachliche bedeutsame Biotope oder Schutzgebiete mit Relevanz für das Plangebiet?",
-					"Gibt es starke Geländeneigungen (über 10 Grad), die bei der Planung von Versickerungsanlagen berücksichtigt werden sollten?",
+					"Wie hoch ist die Mächtigkeit der wasserdurchlässigen Schicht?",
+					"Gibt es Biotope oder Schutzgebiete mit Relevanz für das Untersuchungsgebiet?",
+					"Gibt es starke Geländeneigungen (über 10 Grad), die bei der Planung berücksichtigt werden sollten?",
 					"Bestehen Belange des Denkmalschutzes, die es zu berücksichtigen gilt?"
 				]
 			},
 			"Die Karte kann zur groben Ersteinschätzung dienen, ist jedoch kein Ersatz für Vor-Ort Untersuchungen bzw. Fachplanungen. Es wurden z. B. keine Altlasten, Leitungen im Untergrund oder Flächennutzungen betrachtet.",
-			"In der Schutzzone III B sowie außerhalb von Wasserschutzgebieten gilt die Niederschlagswasserfreistellungsverordnung (NWFreiV). In allen anderen Schutzzonen bedarf es in jedem Fall einer Erlaubnis von der Wasserbehörde. Je nach Art und Nutzung der befestigten Fläche können unterschiedliche Versickerungsanlagen und ggf. Vorbehandlungen zum Einsatz kommen. (Siehe Hinweisblatt 2 zur Antragstellung: Versickerung von Niederschlagswasser, https://www.berlin.de/sen/uvk/_assets/umwelt/wasser-und-geologie/publikationen-und-merkblaetter/hinweisblatt2-versick.pdf)",
-			"I.d.R. ist ein Abstand von ca. 1 m von der Sohle der Versickerungsanlage bis zum Bemessungsgrundwasserstand einzuhalten. Als Bemessungsgrundwasserstand innerhalb von Wasserschutzgebieten ist der zu erwartende höchste Grundwasserstand (zeHGW) heranzuziehen, außerhalb von Wasserschutzgebieten der zu erwartende mittlere höchste Grundwasserstand (zeMHGW). Sollten keine Daten vorliegen, können Informationen bei der Wasserbehörde eingeholt werden (Siehe Hinweisblatt 2)."
+			"Anforderungen an die schadfreie Versickerung regelt das [Hinweisblatt 2 zur Antragstellung: Versickerung von Niederschlagswasser](https://www.berlin.de/sen/uvk/_assets/umwelt/wasser-und-geologie/publikationen-und-merkblaetter/hinweisblatt2-versick.pdf) Je nach Art und Nutzung der befestigten Fläche können unterschiedliche Versickerungsanlagen und ggf. Vorbehandlungen zum Einsatz kommen. ([Siehe Hinweisblatt 2](https://www.berlin.de/sen/uvk/_assets/umwelt/wasser-und-geologie/publikationen-und-merkblaetter/hinweisblatt2-versick.pdf) ) I.d.R. ist ein Abstand von ca. 1 m von der Sohle der Versickerungsanlage bis zum Bemessungsgrundwasserstand einzuhalten. Als Bemessungsgrundwasserstand innerhalb von Wasserschutzgebieten ist der zu erwartende höchste Grundwasserstand (zeHGW) heranzuziehen, außerhalb von Wasserschutzgebieten der zu erwartende mittlere höchste Grundwasserstand (zeMHGW). Sollten keine Daten vorliegen, können Informationen bei der Wasserbehörde eingeholt werden (siehe Hinweisblatt 2). Informationen zur [Kartengrundlage](https://regenwasseragentur.berlin/planen-und-umsetzen/abkopplungspotenzialkarten/)."
 		],
 		"drawLayerId": "",
 		"canDrawNotes": true,
@@ -441,9 +450,9 @@
 	},
 	{
 		"id": "2V4",
-		"name": "Altbaumbestand",
-		"question": "Gibt es einen Altbaumbestand, der bei der Verortung von Maßnahmen berücksichtigt werden muss?",
-		"description": "In der Karte Baumbestand werden Straßen- und Anlagenbäume auf öffentlichen Flächen dargestellt. Die müssen bei der Planung von Versickerungsmaßnahmen berücksichtigt werden, ebenso wie das Fehlen von Bäumen im Untersuchungsgebiet.",
+		"name": "Baumbestand",
+		"question": "Gibt es einen Baumbestand, der bei der Verortung von Maßnahmen berücksichtigt werden muss?",
+		"description": "In der Karte Baumbestand werden Straßen- und Anlagenbäume auf öffentlichen Flächen dargestellt. Diese müssen bei der Planung von Versickerungsmaßnahmen berücksichtigt werden. Ebenso liefert das Fehlen von Bäumen im Untersuchungsgebiet ein Hinweis auf erforderliche Neupflanzungen.",
 		"drawLayerId": "module_2_2V4_draw",
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
@@ -519,7 +528,7 @@
 			"ua_gruendaecher_2020:c_begruente_dachteilfl_tief"
 		],
 		"legendSrc": "/legends/2g1.svg",
-		"legendTitle": "Gründachpotential"
+		"legendTitle": "Gründachpotenzial"
 	},
 	{
 		"id": "NOTE: MODULE 3"
