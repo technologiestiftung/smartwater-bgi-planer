@@ -604,12 +604,8 @@
 	{
 		"id": "3B2",
 		"drawLayerId": "module_3_3B2_draw",
-		"visibleLayerIds": [
-			"project_boundary",
-			"ua_entsiegelung:b_entsieg_klasse_teil"
-		],
+		"visibleLayerIds": ["project_boundary"],
 		"canDrawTrees": true,
-		"legendSrc": "/legends/2e1.svg",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
@@ -675,12 +671,8 @@
 	{
 		"id": "3S1",
 		"drawLayerId": "module_3_3S1_draw",
-		"visibleLayerIds": [
-			"project_boundary",
-			"ua_entsiegelung:b_entsieg_klasse_teil"
-		],
+		"visibleLayerIds": ["project_boundary"],
 		"canDrawMeasures": true,
-		"legendSrc": "/legends/2e1.svg",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
@@ -693,23 +685,15 @@
 	{
 		"id": "3S4",
 		"drawLayerId": "module_3_3S4_draw",
-		"visibleLayerIds": [
-			"project_boundary",
-			"ua_entsiegelung:b_entsieg_klasse_teil"
-		],
+		"visibleLayerIds": ["project_boundary"],
 		"canDrawMeasures": true,
-		"legendSrc": "/legends/2e1.svg",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
 		"id": "3S5",
 		"drawLayerId": "module_3_3S5_draw",
-		"visibleLayerIds": [
-			"project_boundary",
-			"ua_entsiegelung:b_entsieg_klasse_teil"
-		],
+		"visibleLayerIds": ["project_boundary"],
 		"canDrawMeasures": true,
-		"legendSrc": "/legends/2e1.svg",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
