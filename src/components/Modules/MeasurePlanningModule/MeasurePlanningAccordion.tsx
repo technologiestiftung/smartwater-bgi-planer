@@ -84,10 +84,12 @@ function MeasurePlanningFooter({
 	onShowSynthesis,
 	onBackToQuestions,
 	showBackToQuestions,
+	isAddMeasure,
 }: {
 	onShowSynthesis: () => void;
 	onBackToQuestions: () => void;
 	showBackToQuestions: boolean;
+	isAddMeasure: boolean;
 }) {
 	return (
 		<div className="MeasurePlanningFooter-root border-muted flex h-full w-full border-t">
@@ -98,7 +100,7 @@ function MeasurePlanningFooter({
 			>
 				<ListChecksIcon className="h-6 w-6 text-white" />
 			</Button>
-			<Tutorial type="synthesis" />
+			<Tutorial type="synthesis" isAddMeasure={isAddMeasure} />
 			{showBackToQuestions && (
 				<Button
 					variant="ghost"
@@ -178,6 +180,9 @@ export function MeasurePlanningAccordion({
 		LAYER_IDS.CONNECTED_AREA_DRAW,
 	);
 	const placedMeasureIds = useUiStore((state) => state.placedMeasureIds);
+	const setIsAddMeasureActive = useUiStore(
+		(state) => state.setIsAddMeasureActive,
+	);
 	const [expandedStepId, setExpandedStepId] = useState(steps[0]?.id ?? "");
 	const [selectedConfigId, setSelectedConfigId] = useState<string | null>(null);
 	const hasInitializedRef = useRef(false);
@@ -286,6 +291,19 @@ export function MeasurePlanningAccordion({
 		hasInitializedRef.current = true;
 	}, [open, isMapReady, layerConfig.length, applyConfigLayers]);
 
+	useEffect(() => {
+		setIsAddMeasureActive(
+			Boolean(
+				selectedQuestionConfig &&
+				selectedMeasurementInfo &&
+				noSimulationIsActive,
+			),
+		);
+		return () => {
+			setIsAddMeasureActive(false);
+		};
+	}, [selectedQuestionConfig, selectedMeasurementInfo, noSimulationIsActive]);
+
 	let content: React.ReactNode;
 
 	if (isSynthesisMode) {
@@ -366,13 +384,6 @@ export function MeasurePlanningAccordion({
 						);
 					})}
 				</Accordion>
-
-				{/* <Accordion type="multiple">
-					<AccordionItem value="legend" className="border-neutral-mid px-4">
-						<AccordionTrigger className="text-primary font-bold hover:no-underline">
-							Legende
-						</AccordionTrigger>
-						<AccordionContent className="pb-4"> */}
 				<div className="mt-auto pt-6">
 					<Image
 						src={"/legends/measures.svg"}
@@ -383,9 +394,6 @@ export function MeasurePlanningAccordion({
 						className="h-auto max-w-full"
 					/>
 				</div>
-				{/* </AccordionContent>
-					</AccordionItem>
-				</Accordion> */}
 			</div>
 		);
 	}
@@ -402,6 +410,11 @@ export function MeasurePlanningAccordion({
 						onShowSynthesis={handleShowSynthesis}
 						onBackToQuestions={handleBackToQuestions}
 						showBackToQuestions={Boolean(selectedQuestionConfig)}
+						isAddMeasure={Boolean(
+							selectedQuestionConfig &&
+							selectedMeasurementInfo &&
+							noSimulationIsActive,
+						)}
 					/>
 				)
 			}

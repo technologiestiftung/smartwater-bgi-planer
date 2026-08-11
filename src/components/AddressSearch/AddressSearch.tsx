@@ -30,7 +30,7 @@ export function AddressSearch() {
 		undefined,
 	);
 	const pathname = usePathname();
-	const isProjectStarter = pathname.includes("/project-starter");
+	const isProjectStarter = pathname.endsWith("/project-starter");
 
 	useEffect(() => {
 		const handleClickOutside = (event: MouseEvent) => {

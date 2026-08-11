@@ -1,9 +1,17 @@
 import { StorageValue } from "zustand/middleware";
-import { FilesStore, createFileKey, parseFileKey } from "./types";
+import { FilesStore, LayerFile, createFileKey, parseFileKey } from "./types";
 
 const DB_NAME = "smartwater-bgi-planer";
 const STORE_NAME = "layer-files";
 const DB_VERSION = 1;
+
+interface StoredFileRecord {
+	file: File;
+	displayFileName?: string;
+	uploadedAt: number;
+}
+
+let lastPersistedFiles = new Map<string, LayerFile>();
 
 /**
  * Opens or creates the IndexedDB database for file storage
@@ -37,19 +45,48 @@ const openDB = (): Promise<IDBDatabase> => {
 export const storeFileBlob = async (
 	projectId: string,
 	layerId: string,
-	file: File,
+	options: { file: File; displayFileName?: string; uploadedAt?: number },
 ): Promise<void> => {
 	const key = createFileKey(projectId, layerId);
-	const arrayBuffer = await file.arrayBuffer();
+	const record: StoredFileRecord = {
+		file: options.file,
+		displayFileName: options.displayFileName,
+		uploadedAt: options.uploadedAt ?? Date.now(),
+	};
 
 	const db = await openDB();
 	const tx = db.transaction(STORE_NAME, "readwrite");
 	const store = tx.objectStore(STORE_NAME);
 
-	store.put(arrayBuffer, key);
+	store.put(record, key);
 
 	return new Promise((resolve, reject) => {
 		tx.oncomplete = () => resolve();
+		tx.onerror = () => reject(tx.error);
+	});
+};
+
+/**
+ * Retrieves the full stored record (file + metadata) for a layer file.
+ */
+const getFileRecord = async (
+	projectId: string,
+	layerId: string,
+): Promise<StoredFileRecord | null> => {
+	const db = await openDB();
+	const tx = db.transaction(STORE_NAME, "readonly");
+	const store = tx.objectStore(STORE_NAME);
+	const key = createFileKey(projectId, layerId);
+
+	let result: StoredFileRecord | null = null;
+
+	const request = store.get(key);
+	request.onsuccess = () => {
+		result = request.result ?? null;
+	};
+
+	return new Promise((resolve, reject) => {
+		tx.oncomplete = () => resolve(result);
 		tx.onerror = () => reject(tx.error);
 	});
 };
@@ -61,27 +98,8 @@ export const getFileBlob = async (
 	projectId: string,
 	layerId: string,
 ): Promise<File | null> => {
-	const db = await openDB();
-	const tx = db.transaction(STORE_NAME, "readonly");
-	const store = tx.objectStore(STORE_NAME);
-	const key = createFileKey(projectId, layerId);
-
-	let result: File | null = null;
-
-	const request = store.get(key);
-	request.onsuccess = () => {
-		const arrayBuffer = request.result;
-		if (arrayBuffer) {
-			result = new File([arrayBuffer], key, {
-				type: "application/octet-stream",
-			});
-		}
-	};
-
-	return new Promise((resolve, reject) => {
-		tx.oncomplete = () => resolve(result);
-		tx.onerror = () => reject(tx.error);
-	});
+	const record = await getFileRecord(projectId, layerId);
+	return record?.file ?? null;
 };
 
 /**
@@ -183,8 +201,39 @@ export const getProjectFileKeys = async (
 };
 
 /**
- * Custom storage adapter for Zustand persist middleware
- * Stores file metadata in localStorage and actual file blobs in IndexedDB
+ * Writes only the files that are new/changed since the last call, and
+ * removes any that dropped out of the map, instead of rewriting everything.
+ */
+const syncFilesToIndexedDB = async (
+	files: Map<string, LayerFile>,
+): Promise<void> => {
+	const writes: Promise<void>[] = [];
+
+	for (const [key, layerFile] of files.entries()) {
+		if (lastPersistedFiles.get(key) === layerFile) continue;
+		writes.push(
+			storeFileBlob(layerFile.projectId, layerFile.layerId, {
+				file: layerFile.file,
+				displayFileName: layerFile.displayFileName,
+				uploadedAt: layerFile.uploadedAt,
+			}),
+		);
+	}
+
+	for (const [key, layerFile] of lastPersistedFiles.entries()) {
+		if (!files.has(key)) {
+			writes.push(deleteFileBlob(layerFile.projectId, layerFile.layerId));
+		}
+	}
+
+	await Promise.all(writes);
+	lastPersistedFiles = new Map(files);
+};
+
+/**
+ * Custom storage adapter for Zustand persist middleware.
+ * File + metadata records live in IndexedDB (see storeFileBlob); localStorage
+ * only tracks the persist `version` for this store.
  */
 export const filesStorage = {
 	getItem: async (name: string): Promise<StorageValue<FilesStore> | null> => {
@@ -198,23 +247,26 @@ export const filesStorage = {
 
 			const allKeys = await getAllFileKeys();
 
-			const filesMap = new Map();
+			const filesMap = new Map<string, LayerFile>();
 
 			// Load all files from IndexedDB
 			for (const key of allKeys) {
 				const parsed = parseFileKey(key);
 				if (parsed) {
-					const file = await getFileBlob(parsed.projectId, parsed.layerId);
-					if (file) {
+					const record = await getFileRecord(parsed.projectId, parsed.layerId);
+					if (record) {
 						filesMap.set(key, {
 							projectId: parsed.projectId,
 							layerId: parsed.layerId,
-							file,
-							uploadedAt: file.lastModified,
+							file: record.file,
+							uploadedAt: record.uploadedAt,
+							displayFileName: record.displayFileName,
 						});
 					}
 				}
 			}
+
+			lastPersistedFiles = new Map(filesMap);
 
 			const localData = localStorage.getItem(name);
 			const version = localData
@@ -246,52 +298,20 @@ export const filesStorage = {
 				return;
 			}
 
-			// Store file blobs in IndexedDB
 			const files = value.state.files;
 			if (files instanceof Map) {
-				const storePromises: Promise<void>[] = [];
+				await syncFilesToIndexedDB(files);
+			}
 
-				for (const [, layerFile] of files.entries()) {
-					storePromises.push(
-						storeFileBlob(
-							layerFile.projectId,
-							layerFile.layerId,
-							layerFile.file,
-						),
-					);
-				}
-
-				await Promise.all(storePromises);
-
-				// Store only metadata in localStorage (no file blobs)
-				const metadataEntries = Array.from(files.entries()).map(
-					([key, layerFile]) => [
-						key,
-						{
-							projectId: layerFile.projectId,
-							layerId: layerFile.layerId,
-							uploadedAt: layerFile.uploadedAt,
-						},
-					],
-				);
-
-				const cleanValue = {
-					state: {
-						...value.state,
-						files: metadataEntries,
-					},
-				};
-
-				try {
-					localStorage.setItem(name, JSON.stringify(cleanValue));
-				} catch (error) {
-					const err = error as { name?: string; message?: string };
-					console.error("localStorage.setItem failed:", {
-						name: err?.name,
-						message: err?.message,
-					});
-					throw error;
-				}
+			try {
+				localStorage.setItem(name, JSON.stringify({ version: value.version }));
+			} catch (error) {
+				const err = error as { name?: string; message?: string };
+				console.error("localStorage.setItem failed:", {
+					name: err?.name,
+					message: err?.message,
+				});
+				throw error;
 			}
 		} catch (error) {
 			console.error("Error saving files:", error);
@@ -318,7 +338,10 @@ export const filesStorage = {
 			store.clear();
 
 			return new Promise((resolve, reject) => {
-				tx.oncomplete = () => resolve();
+				tx.oncomplete = () => {
+					lastPersistedFiles = new Map();
+					resolve();
+				};
 				tx.onerror = () => reject(tx.error);
 			});
 		} catch (error) {

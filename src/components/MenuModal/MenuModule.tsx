@@ -15,8 +15,6 @@ export const MenuModule: FC<MenuModuleProps> = ({
 	additionalInfo,
 	buttonBottom,
 }) => {
-	const showFooter = additionalInfo && buttonBottom;
-
 	return (
 		<div className="MenuModule-root border-muted flex flex-col border p-6">
 			<div className="mb-4 flex gap-4">
@@ -27,7 +25,7 @@ export const MenuModule: FC<MenuModuleProps> = ({
 				{sideElements && <div className="shrink">{sideElements}</div>}
 			</div>
 
-			{showFooter && (
+			{buttonBottom && (
 				<div className="mt-4 flex items-center justify-between">
 					<span className="text-primary italic">{additionalInfo}</span>
 					{buttonBottom}

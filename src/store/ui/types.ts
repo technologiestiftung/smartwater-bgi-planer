@@ -23,10 +23,10 @@ export interface UiState {
 		questionIndices: Record<SectionId, number>;
 	} | null;
 	isSynthesisMode: boolean;
-	showTutorial: boolean;
-	showTutorialOnFirstQuestion: boolean;
 	draftMeasureIds: string[];
 	draftConnectedAreaIds: string[];
+	pendingDeleteMeasureIds: string[];
+	isAddMeasureActive: boolean;
 }
 
 export interface UiActions {
@@ -61,12 +61,11 @@ export interface UiActions {
 	} | null;
 	setIsSynthesisMode: (isSynthesisMode: boolean) => void;
 	resetModuleState: () => void;
-	setTutorialState: (showTutorial: boolean) => void;
-	setTutorialOnFirstQuestionState: (
-		showTutorialOnFirstQuestion: boolean,
-	) => void;
 	addDraftMeasureId: (measureId: string) => void;
 	addDraftConnectedAreaId: (connectedAreaId: string) => void;
 	confirmDraftMeasures: () => void;
 	clearDraftMeasures: () => void;
+	addPendingDeleteMeasureId: (measureId: string) => void;
+	clearPendingDeleteMeasureIds: () => void;
+	setIsAddMeasureActive: (isAddMeasureActive: boolean) => void;
 }

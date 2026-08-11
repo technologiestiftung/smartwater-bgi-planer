@@ -36,6 +36,46 @@ export function ClimateSimulation({
 				<h3 className="text-primary">
 					Simulationsergebnisse Stadtklima - {title}
 				</h3>
+				<p>
+					Die Karte zeigt die mikroklimatische Wirkung der Maßnahme XXX im
+					Pilotgebiet Friedrichshain. Über die Auswahlfelder am oberen Rand
+					steuern Sie, was dargestellt wird:
+				</p>
+				<p>
+					<span className="font-bold">Delta / Absolut</span> - Delta zeigt die
+					Veränderung gegenüber dem Zustand ohne Maßnahme (die reine Wirkung der
+					Begrünung); Absolut die simulierten Ist-Werte inkl. Maßnahme.
+				</p>
+				<p>
+					<span className="font-bold">Messwert</span> - dargestellter Parameter:
+					Lufttemperatur (°C), Physiologisch Äquivalente Temperatur / PET (°C -
+					thermisches Empfinden inkl. Strahlung und Wind) oder relative
+					Luftfeuchtigkeit (%).
+				</p>
+				<p>
+					<span className="font-bold">Ausschöpfung Potentialfläche</span> -
+					Umsetzungsgrad der jeweiligen BGI Maßnahme: 100 % (alle Potentiale,
+					basierend auf Machbarkeiten ausgeschöpft) oder 50 %.
+				</p>
+				<p>
+					<span className="font-bold">Uhrzeit</span> - Simulationszeitpunkt:
+					04:00 (nächtliche Abkühlung), 14:00 (Tagesmaximum) oder 22:00 Uhr.
+				</p>
+				<p>
+					<span className="font-bold">Jahreszeit</span> - meteorologisches
+					Szenario: Hitzetag / Tropennacht (extreme Hitze) oder Sommertag
+					(durchschnittlich warmer Tag).
+				</p>
+				<p>
+					<span className="font-bold">Ansicht</span> - Schnittebene im
+					3D-Modell: Grundriss (xy, horizontal, z. B. 2 m Höhe) oder vertikale
+					Schnitte (xz / yz) entlang von Straßen und Gebäudehöhen.
+				</p>
+				<p>
+					<span className="font-bold">Farbskala</span> - Kräftigeres Rot =
+					stärkere Wirkung (in der Delta-Ansicht: größere PET-Reduktion /
+					Abkühlung). Weiße Flächen sind Gebäude, grüne Punkte Bestandsbäume.
+				</p>
 			</div>
 			<div className="border-muted bg-secondary flex shrink-0 border-t px-4">
 				<Button

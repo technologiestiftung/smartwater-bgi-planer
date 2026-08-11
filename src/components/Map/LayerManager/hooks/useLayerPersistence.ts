@@ -16,11 +16,13 @@ import {
 	getVectorLayer,
 	importLayerFromGeoJSON,
 } from "@/lib/helpers/ol";
+import { getInputFeatures } from "@/lib/helpers/projectBoundary";
 import { useLayersStore } from "@/store";
 import { useFilesStore } from "@/store/files";
 import { LayerService } from "@/store/layers/types";
 import { useMapStore } from "@/store/map";
 import { useProjectStore } from "@/store/project";
+import { useScenarioStore } from "@/store/scenario";
 import { Map } from "ol";
 import GeoJSON from "ol/format/GeoJSON";
 import VectorLayer from "ol/layer/Vector";
@@ -41,6 +43,7 @@ export const useLayerPersistence = (
 	const map = useMapStore((state) => state.map);
 	const mapReady = useMapStore((state) => state.isReady);
 	const getProject = useProjectStore((state) => state.getProject);
+	const setInputFeatures = useProjectStore((state) => state.setInputFeatures);
 	const addFile = useFilesStore((state) => state.addFile);
 	const getFile = useFilesStore((state) => state.getFile);
 	const deleteFile = useFilesStore((state) => state.deleteFile);
@@ -469,6 +472,13 @@ export const useLayerPersistence = (
 			isRestoringRef.current = true;
 			try {
 				await restoreDrawLayers();
+				setInputFeatures(getInputFeatures(map));
+
+				const { activeScenarioId, setActiveScenario } =
+					useScenarioStore.getState();
+				if (activeScenarioId) {
+					setActiveScenario(activeScenarioId);
+				}
 				await restoreUploadedLayers();
 			} finally {
 				isRestoringRef.current = false;
@@ -482,6 +492,7 @@ export const useLayerPersistence = (
 		autoRestore,
 		filesHydrated,
 		getProject,
+		setInputFeatures,
 		restoreDrawLayers,
 		restoreUploadedLayers,
 		setupAutoSave,

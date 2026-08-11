@@ -1,0 +1,20 @@
+<svg width="464" height="60" viewBox="0 0 464 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="464" height="60" fill="white"/>
+<path d="M16 22H40V38H16V22Z" fill="url(#paint0_linear_5670_668)"/>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="48" y="26.887">Alle Farben: Einzugsgebiet Trennkanalisation, nach </tspan><tspan x="48" y="44.887">erstaufnehmenden Gew&#xe4;sser geteilt</tspan></text>
+<defs>
+<linearGradient id="paint0_linear_5670_668" x1="16" y1="30" x2="40" y2="30" gradientUnits="userSpaceOnUse">
+<stop offset="0.05" stop-color="#BCFF79"/>
+<stop offset="0.1" stop-color="#FFFF80"/>
+<stop offset="0.2" stop-color="#FFFF00"/>
+<stop offset="0.3" stop-color="#FFD0A2"/>
+<stop offset="0.4" stop-color="#DCA603"/>
+<stop offset="0.5" stop-color="#FF8000"/>
+<stop offset="0.6" stop-color="#F94F06"/>
+<stop offset="0.7" stop-color="#FF0000"/>
+<stop offset="0.8" stop-color="#BF00BF"/>
+<stop offset="0.9" stop-color="#800080"/>
+<stop offset="1" stop-color="#000099"/>
+</linearGradient>
+</defs>
+</svg>
