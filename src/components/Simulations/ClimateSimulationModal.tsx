@@ -84,8 +84,17 @@ export function ClimateSimulationModal({
 		return null;
 	}
 
+	const imageAlt = typedDropdownMenus
+		.map((menu, index) => `${menu.title}: ${selections[index]?.display}`)
+		.join(", ");
+
 	return (
-		<div className="ClimateSimulation-Overlay fixed inset-0 z-40 ml-136 flex items-center justify-start bg-black/60 p-2 backdrop-blur-sm">
+		<div
+			className="ClimateSimulation-Overlay fixed inset-0 z-40 ml-136 flex items-center justify-start bg-black/60 p-2 backdrop-blur-sm"
+			role="dialog"
+			aria-modal="true"
+			aria-label="Klimasimulation"
+		>
 			<div className="flex h-full w-full max-w-6xl flex-col gap-4 bg-white p-6">
 				<div className="flex flex-wrap items-end justify-between gap-2">
 					{typedDropdownMenus.map((menu, index) => (
@@ -127,7 +136,7 @@ export function ClimateSimulationModal({
 					{fileName && !imgError && (
 						<Image
 							src={fileName}
-							alt={fileName}
+							alt={imageAlt}
 							className="h-full max-h-[100%] w-full object-contain"
 							onError={() => {
 								setImageError(true);
