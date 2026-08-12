@@ -183,7 +183,7 @@ export const AddWMSButton: FC = () => {
 			layerTitle: string;
 			previewUrl?: string;
 		}) => {
-			if (!map) return;
+			if (!map) throw new Error("Map not ready.");
 
 			const { url, layerName, layerTitle, previewUrl } = params;
 			const layerId = generateLayerId("uploaded_wms_");
