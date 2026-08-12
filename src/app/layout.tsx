@@ -1,8 +1,10 @@
 import { LayerInitializer } from "@/components/Map/Initializer/LayerInitializer/LayerInitializer";
 import { MapInitializer } from "@/components/Map/Initializer/MapInitializer/MapInitializer";
+import MatomoAnalytics from "@/components/MatomoAnalytics/MatomoAnalytics";
 import Background from "@/images/background.svg";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Suspense } from "react";
 import "./css/globals.css";
 
 const arthouseOwned = localFont({
@@ -68,6 +70,9 @@ export default function RootLayout({
 						<LayerInitializer />
 						{children}
 						{modal}
+						<Suspense fallback={null}>
+							<MatomoAnalytics />
+						</Suspense>
 					</div>
 					<div className="bg-primary absolute -z-99 flex h-full w-full items-center justify-center overflow-hidden">
 						<Background className="min-h-full min-w-full shrink-0" />
