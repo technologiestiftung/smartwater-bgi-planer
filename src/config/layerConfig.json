@@ -617,7 +617,8 @@
 		"drawLayerId": "module_3_3V1_draw",
 		"visibleLayerIds": [
 			"project_boundary",
-			"bgi-planer:versickerungspotenzial_gp_muldenversickerung"
+			"bgi-planer:versickerungspotenzial_gp_muldenversickerung",
+			"module_3_connected_area_draw"
 		],
 		"canDrawMeasures": true,
 		"measurementSrc": "/legends/measures.svg"
@@ -627,7 +628,8 @@
 		"drawLayerId": "module_3_3V2_draw",
 		"visibleLayerIds": [
 			"project_boundary",
-			"bgi-planer:versickerungspotenzial_gp_flaechenversickerung"
+			"bgi-planer:versickerungspotenzial_gp_flaechenversickerung",
+			"module_3_connected_area_draw"
 		],
 		"canDrawMeasures": true,
 		"measurementSrc": "/legends/measures.svg"
@@ -637,7 +639,8 @@
 		"drawLayerId": "module_3_3V3_draw",
 		"visibleLayerIds": [
 			"project_boundary",
-			"bgi-planer:versickerungspotenzial_gp_mulden_rigolenelement"
+			"bgi-planer:versickerungspotenzial_gp_mulden_rigolenelement",
+			"module_3_connected_area_draw"
 		],
 		"canDrawMeasures": true,
 		"measurementSrc": "/legends/measures.svg"
@@ -647,7 +650,8 @@
 		"drawLayerId": "module_3_3V4_draw",
 		"visibleLayerIds": [
 			"project_boundary",
-			"bgi-planer:versickerungspotenzial_gp_muldenversickerung"
+			"bgi-planer:versickerungspotenzial_gp_muldenversickerung",
+			"module_3_connected_area_draw"
 		],
 		"canDrawMeasures": true,
 		"measurementSrc": "/legends/measures.svg"
@@ -657,7 +661,8 @@
 		"drawLayerId": "module_3_3V5_draw",
 		"visibleLayerIds": [
 			"project_boundary",
-			"bgi-planer:optimierter_Baumstandort"
+			"bgi-planer:optimierter_Baumstandort",
+			"module_3_connected_area_draw"
 		],
 		"canDrawTrees": true,
 		"measurementSrc": "/legends/measures.svg"
@@ -667,7 +672,8 @@
 		"drawLayerId": "module_3_3V6_draw",
 		"visibleLayerIds": [
 			"project_boundary",
-			"bgi-planer:versickerungspotenzial_gp_rigolenanlage"
+			"bgi-planer:versickerungspotenzial_gp_rigolenanlage",
+			"module_3_connected_area_draw"
 		],
 		"canDrawMeasures": true,
 		"measurementSrc": "/legends/measures.svg"
