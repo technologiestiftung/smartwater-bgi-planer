@@ -172,6 +172,7 @@ export function AddressSearch() {
 					<Input
 						ref={inputRef}
 						placeholder="Search for an address..."
+						aria-label="Adresse suchen"
 						value={query}
 						className="bg-background min-h-12 w-full border-none pr-12 pl-12"
 						onChange={handleInputChange}
