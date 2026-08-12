@@ -1,0 +1,293 @@
+[
+	{
+		"id": "connected_area",
+		"geometryType": "Polygon",
+		"parameters": [
+			{
+				"key": "area",
+				"type": "number",
+				"unit": "m2",
+				"source": "drawn",
+				"required": true,
+				"isCalculationInput": true
+			}
+		]
+	},
+	{
+		"id": "3G1",
+		"measureKey": "green_roof_ext",
+		"geometryType": "Polygon",
+		"parameters": [
+			{
+				"key": "area",
+				"type": "number",
+				"unit": "m2",
+				"source": "drawn",
+				"required": true,
+				"isCalculationInput": true
+			}
+		]
+	},
+	{
+		"id": "3G2",
+		"measureKey": "green_roof_int",
+		"geometryType": "Polygon",
+		"parameters": [
+			{
+				"key": "area",
+				"type": "number",
+				"unit": "m2",
+				"source": "drawn",
+				"required": true,
+				"isCalculationInput": true
+			}
+		]
+	},
+	{
+		"id": "3G5",
+		"geometryType": "Polygon",
+		"parameters": [
+			{
+				"key": "area",
+				"type": "number",
+				"unit": "m2",
+				"source": "drawn",
+				"required": true
+			}
+		]
+	},
+	{
+		"id": "3E1",
+		"measureKey": "permeable_paving",
+		"geometryType": "Polygon",
+		"parameters": [
+			{
+				"key": "area",
+				"type": "number",
+				"unit": "m2",
+				"source": "drawn",
+				"required": true,
+				"isCalculationInput": true
+			}
+		]
+	},
+	{
+		"id": "3E2",
+		"measureKey": "unpaving",
+		"geometryType": "Polygon",
+		"parameters": [
+			{
+				"key": "area",
+				"type": "number",
+				"unit": "m2",
+				"source": "drawn",
+				"required": true,
+				"isCalculationInput": true
+			}
+		]
+	},
+	{
+		"id": "3B1",
+		"geometryType": "Polygon",
+		"measureKey": "unpaving",
+		"parameters": [
+			{
+				"key": "area",
+				"type": "number",
+				"unit": "m2",
+				"source": "drawn",
+				"required": true,
+				"isCalculationInput": true
+			}
+		]
+	},
+	{
+		"id": "3B2",
+		"geometryType": "Point",
+		"parameters": [
+			{
+				"key": "count",
+				"type": "integer",
+				"source": "drawn",
+				"isCalculationInput": true
+			}
+		]
+	},
+	{
+		"id": "3V1",
+		"measureKey": "to_swale",
+		"geometryType": "Polygon",
+		"parameters": [
+			{
+				"key": "area",
+				"type": "number",
+				"unit": "m2",
+				"source": "drawn"
+			},
+			{
+				"key": "connectedArea",
+				"type": "number",
+				"unit": "m2",
+				"source": "input",
+				"required": true,
+				"isCalculationInput": true
+			}
+		]
+	},
+	{
+		"id": "3V2",
+		"geometryType": "Polygon",
+		"measureKey": "to_surf_infil",
+		"parameters": [
+			{
+				"key": "area",
+				"type": "number",
+				"unit": "m2",
+				"source": "drawn"
+			},
+			{
+				"key": "connectedArea",
+				"type": "number",
+				"unit": "m2",
+				"source": "input",
+				"required": true,
+				"isCalculationInput": true
+			}
+		]
+	},
+	{
+		"id": "3V3",
+		"measureKey": "to_swale_trench",
+		"geometryType": "Polygon",
+		"parameters": [
+			{
+				"key": "area",
+				"type": "number",
+				"unit": "m2",
+				"source": "drawn"
+			},
+			{
+				"key": "connectedArea",
+				"type": "number",
+				"unit": "m2",
+				"source": "input",
+				"required": true,
+				"isCalculationInput": true
+			}
+		]
+	},
+	{
+		"id": "3V4",
+		"geometryType": "Polygon",
+		"parameters": [
+			{
+				"key": "area",
+				"type": "number",
+				"unit": "m2",
+				"source": "drawn"
+			}
+		]
+	},
+	{
+		"id": "3V5",
+		"geometryType": "Point",
+		"measureKey": "to_tree_pit",
+		"parameters": [
+			{
+				"key": "count",
+				"type": "integer",
+				"source": "input",
+				"isCalculationInput": true
+			},
+			{
+				"key": "connectedArea",
+				"type": "number",
+				"unit": "m2",
+				"source": "input",
+				"required": true,
+				"isCalculationInput": true
+			}
+		]
+	},
+	{
+		"id": "3V6",
+		"geometryType": "Polygon",
+		"measureKey": "to_trench",
+		"parameters": [
+			{
+				"key": "area",
+				"type": "number",
+				"unit": "m2",
+				"source": "drawn"
+			},
+			{
+				"key": "connectedArea",
+				"type": "number",
+				"unit": "m2",
+				"source": "input",
+				"required": true,
+				"isCalculationInput": true
+			}
+		]
+	},
+	{
+		"id": "3S1",
+		"geometryType": "Polygon",
+		"parameters": [
+			{
+				"key": "area",
+				"type": "number",
+				"unit": "m2",
+				"source": "drawn"
+			}
+		]
+	},
+	{
+		"id": "3S2",
+		"geometryType": "Point",
+		"measureKey": "to_cistern",
+		"parameters": [
+			{
+				"key": "area",
+				"type": "number",
+				"unit": "m2",
+				"source": "drawn",
+				"required": true
+			},
+			{
+				"key": "connectedArea",
+				"type": "number",
+				"unit": "m2",
+				"source": "input",
+				"required": true,
+				"isCalculationInput": true
+			}
+		]
+	},
+	{
+		"id": "3S4",
+		"geometryType": "Polygon",
+		"parameters": [
+			{
+				"key": "area",
+				"type": "number",
+				"unit": "m2",
+				"source": "drawn",
+				"required": true
+			}
+		]
+	},
+	{
+		"id": "3S5",
+		"geometryType": "Polygon",
+		"parameters": [
+			{
+				"key": "area",
+				"type": "number",
+				"unit": "m2",
+				"source": "drawn",
+				"required": true
+			}
+		]
+	}
+]

@@ -1,0 +1,2067 @@
+[
+	{
+		"id": "BASEMAPS"
+	},
+	{
+		"id": "basemap_raster_grau",
+		"name": "basemap.de Web Raster Grau",
+		"name_lang": "basemap.de Web Raster Grau",
+		"capabilitiesUrl": "https://sgx.geodatenzentrum.de/wmts_basemapde/1.0.0/WMTSCapabilities.xml",
+		"url": "https://sgx.geodatenzentrum.de/wmts_basemapde/1.0.0/",
+		"typ": "WMTS",
+		"tileMatrixSet": "DE_EPSG_25833_ADV",
+		"layers": "de_basemapde_web_raster_grau",
+		"optionsFromCapabilities": true,
+		"crs": "http://www.opengis.net/def/crs/EPSG/0/25833",
+		"legend": "https://sgx.geodatenzentrum.de/wms_basemapde?format=image/png&layer=de_basemapde_web_raster_grau&sld_version=1.1.0&request=GetLegendGraphic&service=WMS&version=1.1.1&styles=",
+		"layerAttribution": "© basemap.de / BKG (Monat) (Jahr)",
+		"datasets": [
+			{
+				"md_id": "FE1D2837-ABE0-46B5-9821-BB11BAF22531",
+				"rs_id": "https://registry.gdi-de.org/id/de.bund.bkg.csw/68f48957-a20f-3d93-bd62-e59ce6bd99fa",
+				"csw_url": "https://gdk.gdi-de.org/gdi-de/srv/ger/csw",
+				"show_doc_url": "https://gdz.bkg.bund.de/index.php/default/wmts-basemapde-webraster-wmts-basemapde-webraster.html#"
+			}
+		],
+		"preview": {
+			"src": "/preview-img/basemap-grau.png"
+		}
+	},
+	{
+		"id": "hintergrund_orthophoto",
+		"name": "Digitale Orthophotos 2024",
+		"url": "https://gdi.berlin.de/services/wmts/truedop_2024",
+		"capabilitiesUrl": "https://gdi.berlin.de/services/wmts/truedop_2024?request=getcapabilities&service=WMTS&version=1.0.0",
+		"typ": "WMTS",
+		"layers": "truedop_2024",
+		"tileMatrixSet": "GDIBE:25833",
+		"datasets": [
+			{
+				"md_id": "aff8a8a5-2b48-44e8-949b-ea5f7d382a4f",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/f8e73787-217b-3242-8aa5-80dedf9f05cf",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"optionsFromCapabilities": true,
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Namensnennung - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/by-2-0 abrufbar. Der Quellenvermerk gemäß (2) der Lizenz lautet \"Geoportal Berlin / [Titel des Datensatzes]\"",
+		"preview": {
+			"src": "/preview-img/basemap-satelite.png"
+		}
+	},
+	{
+		"id": "GEOSERVER THEMEMAPS"
+	},
+	{
+		"id": "bgi-planer:q_ua_pet_raster_2022",
+		"name": "Raster: Bewertungsindex Physiologisch Äquivalente Temperatur (PET) [°C] 2022",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "q_ua_pet_raster_2022",
+		"gfiAttributes": "ignore",
+		"maxScale": "5000",
+		"sourceUrl": "https://www.berlin.de/umweltatlas/klima/klimaanalyse/"
+	},
+	{
+		"id": "bgi-planer:ua_versiegelung_2021_raster",
+		"name": "Versiegelung 2021 (unkorrigierte Versiegelungsgrade, Rasterdaten)",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "ua_versiegelung_2021_raster",
+		"gfiAttributes": "ignore",
+		"sourceUrl": "https://www.berlin.de/umweltatlas/boden/versiegelung/"
+	},
+	{
+		"id": "bgi-planer:g_ua_lufttemp_raster_t2m_04h_2022",
+		"name": "Raster: Lufttemperatur 04:00 Uhr [°C] 2022 (Klimaanalysekarten 2022 (Umweltatlas))",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "g_ua_lufttemp_raster_t2m_04h_2022",
+		"gfiAttributes": "ignore",
+		"maxScale": "5000",
+		"sourceUrl": "https://www.berlin.de/umweltatlas/klima/klimaanalyse/"
+	},
+	{
+		"id": "bgi-planer:ca_ua_phk_aufenth_grfrei_tag_2022",
+		"name": "Grün- und Freiflächen: Bewertung der Aufenthaltsqualität am Tag anhand des mittleren Physiologisch Äquivalenten Temperatur (PET) pro Block(teil)fläche um 14:00 Uhr [°C] 2022",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "ca_ua_phk_aufenth_grfrei_tag_2022",
+		"gfiAttributes": "ignore",
+		"minScale": "5000",
+		"sourceUrl": "https://www.berlin.de/umweltatlas/klima/klimabewertung/"
+	},
+	{
+		"id": "bgi-planer:cb_ua_phk_bioklim_siedl_tag_2022",
+		"name": "Siedlungsflächen: Bewertung der bioklimatische Situation anhand des mittleren Physiologisch Äquivalenten Temperatur (PET) pro Block(teil)fläche um 14:00 Uhr [°C] 2022",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "cb_ua_phk_bioklim_siedl_tag_2022",
+		"gfiAttributes": "ignore",
+		"minScale": "5000",
+		"sourceUrl": "https://www.berlin.de/umweltatlas/klima/klimabewertung/"
+	},
+	{
+		"id": "bgi-planer:cc_ua_phk_bioklim_str_tag_2022",
+		"name": "Verkehrsflächen: Bewertung der bioklimatische Situation anhand des mittleren Physiologisch Äquivalenten Temperatur (PET) pro Block(teil)fläche um 14:00 Uhr [°C] 2022",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "cc_ua_phk_bioklim_str_tag_2022",
+		"gfiAttributes": "ignore",
+		"minScale": "5000",
+		"sourceUrl": "https://www.berlin.de/umweltatlas/klima/klimabewertung/"
+	},
+	{
+		"id": "bgi-planer:dc_ua_phk_bioklim_siedl_nacht_2022",
+		"name": "Siedlungsflächen: Bioklimatische Bewertung anhand der mittleren Lufttemperatur pro Block(teil)fläche um 04:00 Uhr [°C] 2022",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "dc_ua_phk_bioklim_siedl_nacht_2022",
+		"gfiAttributes": "ignore",
+		"minScale": "5000",
+		"sourceUrl": "https://www.berlin.de/umweltatlas/klima/klimabewertung/"
+	},
+	{
+		"id": "bgi-planer:dd_ua_phk_bioklim_str_nacht_2022",
+		"name": "Verkehrsflächen: Bioklimatische Bewertung anhand der mittleren Lufttemperatur pro Block(teil)fläche um 04:00 Uhr [°C] 2022",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "dd_ua_phk_bioklim_str_nacht_2022",
+		"gfiAttributes": "ignore",
+		"minScale": "5000",
+		"sourceUrl": "https://www.berlin.de/umweltatlas/klima/klimabewertung/"
+	},
+	{
+		"id": "bgi-planer:HA4_Kleingewaesser_trocken_pkt",
+		"name": "HA4_Kleingewaesser_trocken_pkt",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "HA4_Kleingewaesser_trocken_pkt",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:HA4_Kleingewaesser_trocken_topoEZG_pl",
+		"name": "HA4_Kleingewaesser_trocken_topoEZG_pl",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "HA4_Kleingewaesser_trocken_topoEZG_pl",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:a_gruenvol2020",
+		"name": "Grünvolumenzahl [m³/m²]",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "gruenvol_2020_mit_durchschnitt",
+		"gfiAttributes": "ignore",
+		"sourceUrl": "https://www.berlin.de/umweltatlas/biotope/gruenvolumen/"
+	},
+	{
+		"id": "rabimo_input_2025",
+		"styleId": "abimoInput",
+		"name": "Abimo Input 2025",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/amarex/wfs",
+		"typ": "WFS",
+		"featureType": "amarex:rabimo_input_2025",
+		"featureNS": "http://geoserver.org",
+		"datasets": false,
+		"gfiAttributes": "showAll"
+	},
+	{
+		"id": "UPDATE 20260720"
+	},
+	{
+		"id": "bgi-planer:Gefaehrdungsstufe_Baeume",
+		"name": "Gefährdungsstufe Bäume",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "Gefaehrdungsstufe_Baeume",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:Gefaehrdungsstufe_Gruendaecher",
+		"name": "Gefährdungsstufe Gründächer",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "Gefaehrdungsstufe_Gruendaecher",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:Gefaehrdungsstufe_Mulde",
+		"name": "Gefährdungsstufe Mulde",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "Gefaehrdungsstufe_Mulde",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:Gefaehrdungsstufe_Mulde-Rigole",
+		"name": "Gefährdungsstufe Mulde-Rigole",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "Gefaehrdungsstufe_Mulde-Rigole",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:Gefaehrdungsstufe_Rigole",
+		"name": "Gefährdungsstufe Rigole",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "Gefaehrdungsstufe_Rigole",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:Wasserstand_Baeume",
+		"name": "Wasserstand Bäume",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "Wasserstand_Baeume",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:Wasserstand_Gruendaecher",
+		"name": "Wasserstand Gründächer",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "Wasserstand_Gruendaecher",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:Wasserstand_Mulde",
+		"name": "Wasserstand Mulde",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "Wasserstand_Mulde",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:Wasserstand_Mulde-Rigole",
+		"name": "Wasserstand Mulde-Rigole",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "Wasserstand_Mulde-Rigole",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:Wasserstand_Rigole",
+		"name": "Wasserstand Rigole",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "Wasserstand_Rigole",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "UPDATE 20260723 - with SLD styles"
+	},
+	{
+		"id": "bgi-planer:versickerungspotenzial_gp_flaechenversickerung",
+		"name": "Flächenversickerung",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "versickerungspotenzial_gp",
+		"styles": "bgi-planer:Potentiale_Regenwasserbewirtschaftung_flaechenversickerung",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:versickerungspotenzial_gp_mulden_rigolenelement",
+		"name": "Mulden-Rigolenelement",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "versickerungspotenzial_gp",
+		"styles": "bgi-planer:Potentiale_Regenwasserbewirtschaftung_mulden_rigolenelement",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:versickerungspotenzial_gp_muldenversickerung",
+		"name": "Muldenversickerung",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "versickerungspotenzial_gp",
+		"styles": "bgi-planer:Potentiale_Regenwasserbewirtschaftung_muldenversickerung",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:versickerungspotenzial_gp_rigolenanlage",
+		"name": "Rigolenanlage",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "versickerungspotenzial_gp",
+		"styles": "bgi-planer:Potentiale_Regenwasserbewirtschaftung_rigolenanlage",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:optimierter_Baumstandort",
+		"name": "Optimierter Baumstandort",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "optimierter_Baumstandort",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "UPDATE 20260803"
+	},
+	{
+		"id": "bgi-planer:Starkregengefaehrdungskarte_high_compression",
+		"name": "Starkregengefährdungskarte",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "Starkregengefaehrdungskarte_high_compression",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:versiegelung_2021",
+		"name": "Versiegelung der Blockteilflächen 2021",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "versiegelung_2021_mit_durchschnitt",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "BGI DRAW MAPS"
+	},
+	{
+		"id": "project_boundary",
+		"name": "Untersuchungsgebiet",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "projectBoundary"
+	},
+	{
+		"id": "result_delta_w",
+		"name": "Delta-W Ergebnis",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "result_delta_w"
+	},
+	{
+		"id": "result_runoff",
+		"name": "Oberflächen Abfluss Ergebnis",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "result_runoff"
+	},
+	{
+		"id": "result_evapor",
+		"name": "Verdunstung Ergebnis",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "result_evapor"
+	},
+	{
+		"id": "result_infiltr",
+		"name": "Versickerung Ergebnis",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "result_infiltr"
+	},
+	{
+		"id": "project_btf_planning",
+		"styleId": "projectBTFPlanning",
+		"name": "Untersuchungsgebiet mit Blockteilflächenauswahl",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll"
+	},
+	{
+		"id": "project_new_development",
+		"name": "Neubauten & Versiegelte Flächen",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "newDevelopment"
+	},
+	{
+		"id": "project_custom_maps",
+		"name": "Zusätzliche Hintergrundkarten",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll"
+	},
+	{
+		"id": "project_notes",
+		"name": "Notizen",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "projectNotes"
+	},
+	{
+		"id": "module_1_flooding_hotspots_q1",
+		"name": "Starkregen Hotspot Q1",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "floodingHotspots"
+	},
+	{
+		"id": "module_1_flooding_hotspots_q2",
+		"name": "Starkregen Hotspot Q2",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "floodingHotspots"
+	},
+	{
+		"id": "module_1_flooding_hotspots_q3",
+		"name": "Starkregen Hotspot Q3",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "floodingHotspots"
+	},
+	{
+		"id": "module_1_temperature_hotspots_q1",
+		"name": "Hitze Hotspot Q1",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "temperatureHotspots"
+	},
+	{
+		"id": "module_1_temperature_hotspots_q2",
+		"name": "Hitze Hotspot Q2",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "temperatureHotspots"
+	},
+	{
+		"id": "module_1_temperature_hotspots_q3",
+		"name": "Hitze Hotspot Q3",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "temperatureHotspots"
+	},
+	{
+		"id": "module_1_temperature_hotspots_q4",
+		"name": "Hitze Hotspot Q4",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "temperatureHotspots"
+	},
+	{
+		"id": "module_1_temperature_hotspots_q5",
+		"name": "Hitze Hotspot Q5",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "temperatureHotspots"
+	},
+	{
+		"id": "module_1_temperature_hotspots_q6",
+		"name": "Hitze Hotspot Q6",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "temperatureHotspots"
+	},
+	{
+		"id": "module_1_impermeability_hotspots_q1",
+		"name": "Versiegelung Hotspots Q1",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "impermeabilityHotspots"
+	},
+	{
+		"id": "module_1_impermeability_hotspots_q2",
+		"name": "Versiegelung Hotspots Q2",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "impermeabilityHotspots"
+	},
+	{
+		"id": "module_1_groundwater_hotspots_q1",
+		"name": "Gewässerschutz Hotspots Q1",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "groundwaterHotspots"
+	},
+	{
+		"id": "module_1_groundwater_hotspots_q2",
+		"name": "Gewässerschutz Hotspots Q2",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "groundwaterHotspots"
+	},
+	{
+		"id": "module_1_groundwater_hotspots_q3",
+		"name": "Gewässerschutz Hotspots Q3",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "groundwaterHotspots"
+	},
+	{
+		"id": "module_1_waterbalance_hotspots_q1",
+		"name": "Wasserhaushalt Hotspots Q1",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "waterbalanceHotspots"
+	},
+	{
+		"id": "module_2_2V2_draw",
+		"name": "Versickerung Machbarkeit",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "feasibilityLayers"
+	},
+	{
+		"id": "module_2_2V3_draw",
+		"name": "Entsiegelung Machbarkeit",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "feasibilityLayers"
+	},
+	{
+		"id": "module_2_2V4_draw",
+		"name": "Bepflanzung/Begrünung Machbarkeit",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "feasibilityLayers"
+	},
+	{
+		"id": "module_2_2V5_draw",
+		"name": "Gebäudebegrünung Machbarkeit",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "2v5"
+	},
+	{
+		"id": "module_2_2B1_draw",
+		"name": "Speicherung Machbarkeit",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "feasibilityLayers"
+	},
+	{
+		"id": "module_3_3V1_draw",
+		"name": "Mulde",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "3V1"
+	},
+	{
+		"id": "module_3_3V2_draw",
+		"name": "Flächenversickerung",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "3V2"
+	},
+	{
+		"id": "module_3_3V3_draw",
+		"name": "Mulden-Rigolen-Element",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "3V3"
+	},
+	{
+		"id": "module_3_3V4_draw",
+		"name": "Tiefbeet",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "3V4"
+	},
+	{
+		"id": "module_3_3V5_draw",
+		"name": "Optimierter Baumstandort (Baum mit unterirdischer Versickerung kombiniert)",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "3V5"
+	},
+	{
+		"id": "module_3_3V6_draw",
+		"name": "Rigole",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "3V6"
+	},
+	{
+		"id": "module_3_3E1_draw",
+		"name": "Teildurchlässiger Flächenbelag",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "3E1"
+	},
+	{
+		"id": "module_3_3E2_draw",
+		"name": "Komplette Entsiegelung",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "3E2"
+	},
+	{
+		"id": "module_3_3B1_draw",
+		"name": "Grünflächen",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "3B1"
+	},
+	{
+		"id": "module_3_3B2_draw",
+		"name": "Bäume",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "3B2"
+	},
+	{
+		"id": "module_3_3G1_draw",
+		"name": "Extensive Dachbegrünung",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "3G1"
+	},
+	{
+		"id": "module_3_3G2_draw",
+		"name": "Intensive Dachbegrünung",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "3G2"
+	},
+	{
+		"id": "module_3_3G5_draw",
+		"name": "Erdgebundene Fassadenbegrünung",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "3G5"
+	},
+	{
+		"id": "module_3_3S1_draw",
+		"name": "(Künstliche) Wasserflächen",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "3S1"
+	},
+	{
+		"id": "module_3_3S2_draw",
+		"name": "Regenwasserspeicher",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "3S2"
+	},
+	{
+		"id": "module_3_3S4_draw",
+		"name": "Retentionsfläche",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "3S4"
+	},
+	{
+		"id": "module_3_3S5_draw",
+		"name": "Verdunstungsbeet",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "3S5"
+	},
+	{
+		"id": "module_3_connected_area_draw",
+		"name": "Angeschlossene Fläche",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "connectedArea"
+	},
+	{
+		"id": "THEME MAPS"
+	},
+	{
+		"id": "alkis_bezirke:bezirksgrenzen",
+		"name": "Bezirksgrenzen",
+		"name_lang": "Bezirksgrenzen (ALKIS Berlin Bezirke)",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/alkis_bezirke",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "bezirksgrenzen",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "ALKIS Berlin Bezirke",
+				"md_id": "0a7c53a5-b29d-3f45-9734-1c811045e6c2",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/cb2897d1-4258-3312-a3db-7ceb2ad86be7",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar."
+	},
+	{
+		"id": "alkis_flurstuecke:flurstuecke",
+		"name": "Flurstücke",
+		"name_lang": "Flurstücke (ALKIS Berlin Flurstücke)",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/alkis_flurstuecke",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "flurstuecke",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "ALKIS Berlin Flurstücke",
+				"md_id": "0a7c53a5-b29d-3f45-9734-1c811045e6c2",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/cb2897d1-4258-3312-a3db-7ceb2ad86be7",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar."
+	},
+	{
+		"id": "alkis_gebaeude:gebaeude",
+		"name": "Gebäude",
+		"name_lang": "Gebäude (ALKIS Berlin Gebäude)",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/alkis_gebaeude",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "gebaeude",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "ALKIS Berlin Gebäude",
+				"md_id": "0a7c53a5-b29d-3f45-9734-1c811045e6c2",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/cb2897d1-4258-3312-a3db-7ceb2ad86be7",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"sourceUrl": "https://www.berlin.de/sen/sbw/stadtdaten/geoinformation/liegenschaftskataster/alkis/"
+	},
+	{
+		"id": "baumbestand:anlagenbaeume",
+		"name": "Baumbestand Berlin - Anlagenbäume",
+		"name_lang": "Baumbestand Berlin - Anlagenbäume (Baumbestand Berlin)",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/baumbestand",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "anlagenbaeume",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Baumbestand Berlin",
+				"md_id": "3368004a-d596-336a-8fdf-c4391f3313dd",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/101a1c6e-4991-3df3-afbd-078495cb2f37",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"sourceUrl": "https://www.berlin.de/sen/uvk/natur-und-gruen/stadtgruen/stadtbaeume/strassen-und-parkbaeume/"
+	},
+	{
+		"id": "baumbestand:strassenbaeume",
+		"name": "Baumbestand Berlin - Straßenbäume",
+		"name_lang": "Baumbestand Berlin - Straßenbäume (Baumbestand Berlin)",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/baumbestand",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "strassenbaeume",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Baumbestand Berlin",
+				"md_id": "3368004a-d596-336a-8fdf-c4391f3313dd",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/101a1c6e-4991-3df3-afbd-078495cb2f37",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar."
+	},
+	{
+		"id": "denkmale:a_baudenkmal",
+		"name": "Baudenkmal",
+		"name_lang": "Baudenkmal (Denkmalkarte Berlin)",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/denkmale",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "a_baudenkmal",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Denkmalkarte Berlin",
+				"md_id": "65b2f04e-2e8c-393f-a848-b7d696508f1a",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/bda48992-adb7-36c1-80e3-3b7234092079",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"sourceUrl": "https://www.berlin.de/landesdenkmalamt/denkmale/liste-karte-datenbank/denkmalkarte/"
+	},
+	{
+		"id": "denkmale:b_bodendenkmal",
+		"name": "Bodendenkmal",
+		"name_lang": "Bodendenkmal (Denkmalkarte Berlin)",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/denkmale",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "b_bodendenkmal",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Denkmalkarte Berlin",
+				"md_id": "65b2f04e-2e8c-393f-a848-b7d696508f1a",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/bda48992-adb7-36c1-80e3-3b7234092079",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"sourceUrl": "https://www.berlin.de/landesdenkmalamt/denkmale/liste-karte-datenbank/denkmalkarte/"
+	},
+	{
+		"id": "denkmale:c_gartendenkmal",
+		"name": "Gartendenkmal",
+		"name_lang": "Gartendenkmal (Denkmalkarte Berlin)",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/denkmale",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "c_gartendenkmal",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Denkmalkarte Berlin",
+				"md_id": "65b2f04e-2e8c-393f-a848-b7d696508f1a",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/bda48992-adb7-36c1-80e3-3b7234092079",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"sourceUrl": "https://www.berlin.de/landesdenkmalamt/denkmale/liste-karte-datenbank/denkmalkarte/"
+	},
+	{
+		"id": "denkmale:d_denkmalbereich_gesamtanlage",
+		"name": "Denkmalbereich Gesamtanlage",
+		"name_lang": "Denkmalbereich Gesamtanlage (Denkmalkarte Berlin)",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/denkmale",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "d_denkmalbereich_gesamtanlage",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Denkmalkarte Berlin",
+				"md_id": "65b2f04e-2e8c-393f-a848-b7d696508f1a",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/bda48992-adb7-36c1-80e3-3b7234092079",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"sourceUrl": "https://www.berlin.de/landesdenkmalamt/denkmale/liste-karte-datenbank/denkmalkarte/"
+	},
+	{
+		"id": "denkmale:e_denkmalbereich_ensemble",
+		"name": "Denkmalbereich Ensemble",
+		"name_lang": "Denkmalbereich Ensemble (Denkmalkarte Berlin)",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/denkmale",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "e_denkmalbereich_ensemble",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Denkmalkarte Berlin",
+				"md_id": "65b2f04e-2e8c-393f-a848-b7d696508f1a",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/bda48992-adb7-36c1-80e3-3b7234092079",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"sourceUrl": "https://www.berlin.de/landesdenkmalamt/denkmale/liste-karte-datenbank/denkmalkarte/"
+	},
+	{
+		"id": "ua_entsiegelung:b_entsieg_klasse_teil",
+		"name": "Entsiegelungspotenziale Signatur",
+		"name_lang": "Entsiegelungspotenziale Signatur (Entsiegelungspotenziale (Umweltatlas))",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_entsiegelung",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "b_entsieg_klasse_teil",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Entsiegelungspotenziale (Umweltatlas)",
+				"md_id": "25597bc5-ea63-3ee9-9a98-92251f2fd5ff",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/5b02005b-ed3b-3afb-b733-9b29b65d032f",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"sourceUrl": "https://www.berlin.de/umweltatlas/boden/entsiegelungspotenziale/fortlaufend-aktualisiert/zusammenfassung/"
+	},
+	{
+		"id": "ua_kanalisation_2022:sp02_09kanalisation2022",
+		"name": "Art der Kanalisation 2022",
+		"name_lang": "Art der Kanalisation 2022 (Entsorgung von Regen- und Abwasser 2022 (Umweltatlas))",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_kanalisation_2022",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "sp02_09kanalisation2022",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Entsorgung von Regen- und Abwasser 2022",
+				"md_id": "b36ac611-ff31-4904-8df7-09fe417057df",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/e1a4aa5e-822d-301e-89ff-40761bf7abe3",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar."
+	},
+	{
+		"id": "ua_kanalisation_2022:sp02_09kanalisation2022_2",
+		"name": "Einzugsgebiete der Regenwasserkanalisation differenziert 2022",
+		"name_lang": "Einzugsgebiete der Regenwasserkanalisation differenziert 2022 (Entsorgung von Regen- und Abwasser 2022 (Umweltatlas))",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_kanalisation_2022",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "sp02_09kanalisation2022_2",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Entsorgung von Regen- und Abwasser 2022",
+				"md_id": "b36ac611-ff31-4904-8df7-09fe417057df",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/e1a4aa5e-822d-301e-89ff-40761bf7abe3",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar."
+	},
+	{
+		"id": "bohrdaten:bohrpunkte",
+		"name": "Geologische Bohrdaten",
+		"name_lang": "Geologische Bohrdaten (Geologische Bohrdaten)",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/bohrdaten",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "bohrpunkte",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Geologische Bohrdaten",
+				"md_id": "bb30f2e3-f41e-3d60-972b-3b9240fac94a",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/94800fd2-5e0d-315e-806a-de032a97bd6b",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"sourceUrl": "https://gdi.berlin.de/data/bohrdaten/docs/s_bohrpunkte.pdf"
+	},
+	{
+		"id": "ua_gruendaecher_2020:b_begruente_dachteilfl_geb",
+		"name": "Begrünte Dachteilflächen - Gebäude 2020",
+		"name_lang": "Begrünte Dachteilflächen - Gebäude 2020 (Gründächer 2020 (Umweltatlas))",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_gruendaecher_2020",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "b_begruente_dachteilfl_geb",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Gründächer 2020 (Umweltatlas)",
+				"md_id": "2dc1787a-2ab8-49aa-ac07-1b4a116071b4",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/6513504d-2375-3a73-a2c1-345e5007cae0",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"maxScale": "25000.0",
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"sourceUrl": "https://www.berlin.de/umweltatlas/nutzung/gruendaecher/"
+	},
+	{
+		"id": "ua_gruendaecher_2020:c_begruente_dachteilfl_tief",
+		"name": "Begrünte Dachteilflächen - Tiefgaragen 2020",
+		"name_lang": "Begrünte Dachteilflächen - Tiefgaragen 2020 (Gründächer 2020 (Umweltatlas))",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_gruendaecher_2020",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "c_begruente_dachteilfl_tief",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Gründächer 2020 (Umweltatlas)",
+				"md_id": "2dc1787a-2ab8-49aa-ac07-1b4a116071b4",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/6513504d-2375-3a73-a2c1-345e5007cae0",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"maxScale": "25000.0",
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"sourceUrl": "https://www.berlin.de/umweltatlas/nutzung/gruendaecher/"
+	},
+	{
+		"id": "ua_klimaanalyse_2022:ba_ua_windfeld_2m_22h_2022_20m",
+		"name": "Windfeld um 22:00 Uhr [m/s] 2022 (bis Maßstab 1:2500)",
+		"name_lang": "Windfeld um 22:00 Uhr [m/s] 2022 (bis Maßstab 1:2500) (Klimaanalysekarten 2022 (Umweltatlas))",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_klimaanalyse_2022",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "ba_ua_windfeld_2m_22h_2022_20m",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Klimaanalysekarten 2022 (Umweltatlas)",
+				"md_id": "8ea601b2-9a12-4123-bb19-b5774fe3003b",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/78c87800-446e-3e83-8171-03ca776eaa7f",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"maxScale": "2500.0",
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"sourceUrl": "https://www.berlin.de/umweltatlas/klima/klimaanalyse/"
+	},
+	{
+		"id": "ua_klimaanalyse_2022:bb_ua_windfeld_2m_22h_2022_100m",
+		"name": "Windfeld um 22:00 Uhr [m/s] 2022 (ab Maßstab 1:2500)",
+		"name_lang": "Windfeld um 22:00 Uhr [m/s] 2022 (ab Maßstab 1:2500) (Klimaanalysekarten 2022 (Umweltatlas))",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_klimaanalyse_2022",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "bb_ua_windfeld_2m_22h_2022_100m",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Klimaanalysekarten 2022 (Umweltatlas)",
+				"md_id": "8ea601b2-9a12-4123-bb19-b5774fe3003b",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/78c87800-446e-3e83-8171-03ca776eaa7f",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"minScale": "2501.0",
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"sourceUrl": "https://www.berlin.de/umweltatlas/klima/klimaanalyse/"
+	},
+	{
+		"id": "ua_klimaanalyse_2022:g_ua_lufttemp_raster_t2m_04h_2022",
+		"name": "Raster: Lufttemperatur 04:00 Uhr [°C] 2022",
+		"name_lang": "Raster: Lufttemperatur 04:00 Uhr [°C] 2022 (Klimaanalysekarten 2022 (Umweltatlas))",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_klimaanalyse_2022",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "g_ua_lufttemp_raster_t2m_04h_2022",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Klimaanalysekarten 2022 (Umweltatlas)",
+				"md_id": "8ea601b2-9a12-4123-bb19-b5774fe3003b",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/78c87800-446e-3e83-8171-03ca776eaa7f",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"sourceUrl": "https://technologiestiftungberlin0-my.sharepoint.com/:i:/g/personal/austin_kotting_ts_berlin/EY0mefueWD9EiiAdG5ZEKAABtC_QiOtEwLIRikldX1ufoA?e=T74Xzm"
+	},
+	{
+		"id": "ua_klimaanalyse_2022:q_ua_pet_raster_2022",
+		"name": "Raster: Bewertungsindex Physiologisch Äquivalente Temperatur (PET) [°C] 2022",
+		"name_lang": "Raster: Bewertungsindex Physiologisch Äquivalente Temperatur (PET) [°C] 2022 (Klimaanalysekarten 2022 (Umweltatlas))",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_klimaanalyse_2022",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "q_ua_pet_raster_2022",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Klimaanalysekarten 2022 (Umweltatlas)",
+				"md_id": "8ea601b2-9a12-4123-bb19-b5774fe3003b",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/78c87800-446e-3e83-8171-03ca776eaa7f",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"sourceUrl": "https://technologiestiftungberlin0-my.sharepoint.com/:i:/g/personal/austin_kotting_ts_berlin/EYQqyImAKt5OjVft8MwdLKcBzpS517V9Ad-r68EqU30S-g?e=jw6Kfg"
+	},
+	{
+		"id": "ua_klimaanalyse_2022:ta_kak_luftaustausch_2022",
+		"name": "Luftaustausch 2022",
+		"name_lang": "Luftaustausch 2022 (Klimaanalysekarten 2022 (Umweltatlas))",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_klimaanalyse_2022",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "ta_kak_luftaustausch_2022",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Klimaanalysekarten 2022 (Umweltatlas)",
+				"md_id": "8ea601b2-9a12-4123-bb19-b5774fe3003b",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/78c87800-446e-3e83-8171-03ca776eaa7f",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"sourceUrl": "https://www.berlin.de/umweltatlas/klima/klimaanalyse/"
+	},
+	{
+		"id": "ua_klimaanalyse_2022:td_kak_kaltlufteinwirkbereich_siedlungsfl_2022",
+		"name": "Kaltlufteinwirkbereich innerhalb von Siedlungs- und Verkehrsflächen 2022",
+		"name_lang": "Kaltlufteinwirkbereich innerhalb von Siedlungs- und Verkehrsflächen 2022 (Klimaanalysekarten 2022 (Umweltatlas))",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_klimaanalyse_2022",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "td_kak_kaltlufteinwirkbereich_siedlungsfl_2022",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Klimaanalysekarten 2022 (Umweltatlas)",
+				"md_id": "8ea601b2-9a12-4123-bb19-b5774fe3003b",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/78c87800-446e-3e83-8171-03ca776eaa7f",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"sourceUrl": "https://www.berlin.de/umweltatlas/klima/klimaanalyse/"
+	},
+	{
+		"id": "ua_klimaanalyse_2022:tj_kak_gruen_kvs_hoch_2022",
+		"name": "Grünflächenanteile mit überdurchschnittlich hoher Kaltluftvolumenstromdichte 2022",
+		"name_lang": "Grünflächenanteile mit überdurchschnittlich hoher Kaltluftvolumenstromdichte 2022 (Klimaanalysekarten 2022 (Umweltatlas))",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_klimaanalyse_2022",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "tj_kak_gruen_kvs_hoch_2022",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Klimaanalysekarten 2022 (Umweltatlas)",
+				"md_id": "8ea601b2-9a12-4123-bb19-b5774fe3003b",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/78c87800-446e-3e83-8171-03ca776eaa7f",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"sourceUrl": "https://www.berlin.de/umweltatlas/klima/klimaanalyse/"
+	},
+	{
+		"id": "ua_klimaanalyse_2022:tk_kak_leitbahnkorridor_2022",
+		"name": "Leitbahnkorridor 2022",
+		"name_lang": "Leitbahnkorridor 2022 (Klimaanalysekarten 2022 (Umweltatlas))",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_klimaanalyse_2022",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "tk_kak_leitbahnkorridor_2022",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Klimaanalysekarten 2022 (Umweltatlas)",
+				"md_id": "8ea601b2-9a12-4123-bb19-b5774fe3003b",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/78c87800-446e-3e83-8171-03ca776eaa7f",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"sourceUrl": "https://www.berlin.de/umweltatlas/klima/klimaanalyse/"
+	},
+	{
+		"id": "ua_klimabewertung_2022:eb_ua_phk_vul_geb_demog_2022",
+		"name": "Stadtklimatisch besonderes vulnerable Stadtgebiete 2022",
+		"name_lang": "Stadtklimatisch besonderes vulnerable Stadtgebiete 2022 (Klimabewertungskarten 2022 (Umweltatlas))",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_klimabewertung_2022",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "eb_ua_phk_vul_geb_demog_2022",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Klimabewertungskarten 2022 (Umweltatlas)",
+				"md_id": "d002e10f-d745-49e5-98b1-bde00700f4e4",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/b12543bc-e79d-3af5-88fa-b54da877b30f",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"sourceUrl": "https://www.berlin.de/umweltatlas/klima/klimabewertung/"
+	},
+	{
+		"id": "potenziale_regenwasserbewirtschaftung:aa_versickerungspotenzial_eu",
+		"name": "Versickerungspotenzial: Szenario „Einfache Umsetzung“",
+		"name_lang": "Versickerungspotenzial: Szenario „Einfache Umsetzung“ (Potenziale der dezentralen Regenwasserbewirtschaftung)",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/potenziale_regenwasserbewirtschaftung",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "aa_versickerungspotenzial_eu",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Potenziale der dezentralen Regenwasserbewirtschaftung",
+				"md_id": "4b84fdbc-ac77-48ef-a1ec-4f7c75c777d3",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/d69e4c33-2334-37a9-8644-cfe963807a33",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"maxScale": "10000.0",
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Der Datenbestand wird unter der Lizenz CC-BY-4.0-Namensnennung International Public License veröffentlicht (vgl. https://creativecommons.org/licenses/by/4.0/legalcode.de). Der Quellenvermerk gemäß Abschnitt 3a der Lizenz lautet \"Berliner Regenwasseragentur/ Potenziale der dezentralen Regenwasserbewirtschaftung\".",
+		"sourceUrl": "https://daten.berlin.de/datensaetze/potenziale-der-dezentralen-regenwasserbewirtschaftung-wms-309141aa"
+	},
+	{
+		"id": "potenziale_regenwasserbewirtschaftung:ab_versickerungspotenzial_gp",
+		"name": "Versickerungspotenzial: Szenario „Gängige Praxis“",
+		"name_lang": "Versickerungspotenzial: Szenario „Gängige Praxis“ (Potenziale der dezentralen Regenwasserbewirtschaftung)",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/potenziale_regenwasserbewirtschaftung",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "ab_versickerungspotenzial_gp",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Potenziale der dezentralen Regenwasserbewirtschaftung",
+				"md_id": "4b84fdbc-ac77-48ef-a1ec-4f7c75c777d3",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/d69e4c33-2334-37a9-8644-cfe963807a33",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"maxScale": "10000.0",
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Der Datenbestand wird unter der Lizenz CC-BY-4.0-Namensnennung International Public License veröffentlicht (vgl. https://creativecommons.org/licenses/by/4.0/legalcode.de). Der Quellenvermerk gemäß Abschnitt 3a der Lizenz lautet \"Berliner Regenwasseragentur/ Potenziale der dezentralen Regenwasserbewirtschaftung\".",
+		"sourceUrl": "https://daten.berlin.de/datensaetze/potenziale-der-dezentralen-regenwasserbewirtschaftung-wms-309141aa"
+	},
+	{
+		"id": "potenziale_regenwasserbewirtschaftung:ac_versickerungspotenzial_au",
+		"name": "Versickerungspotenzial: Szenario „Aufwendige Umsetzung“",
+		"name_lang": "Versickerungspotenzial: Szenario „Aufwendige Umsetzung“ (Potenziale der dezentralen Regenwasserbewirtschaftung)",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/potenziale_regenwasserbewirtschaftung",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "ac_versickerungspotenzial_au",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Potenziale der dezentralen Regenwasserbewirtschaftung",
+				"md_id": "4b84fdbc-ac77-48ef-a1ec-4f7c75c777d3",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/d69e4c33-2334-37a9-8644-cfe963807a33",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"maxScale": "10000.0",
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Der Datenbestand wird unter der Lizenz CC-BY-4.0-Namensnennung International Public License veröffentlicht (vgl. https://creativecommons.org/licenses/by/4.0/legalcode.de). Der Quellenvermerk gemäß Abschnitt 3a der Lizenz lautet \"Berliner Regenwasseragentur/ Potenziale der dezentralen Regenwasserbewirtschaftung\".",
+		"sourceUrl": "https://daten.berlin.de/datensaetze/potenziale-der-dezentralen-regenwasserbewirtschaftung-wms-309141aa"
+	},
+	{
+		"id": "potenziale_regenwasserbewirtschaftung:ca_dachbegruenungspotenzial",
+		"name": "Dachbegrünungspotenzial",
+		"name_lang": "Dachbegrünungspotenzial (Potenziale der dezentralen Regenwasserbewirtschaftung)",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/potenziale_regenwasserbewirtschaftung",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "ca_dachbegruenungspotenzial",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Potenziale der dezentralen Regenwasserbewirtschaftung",
+				"md_id": "4b84fdbc-ac77-48ef-a1ec-4f7c75c777d3",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/d69e4c33-2334-37a9-8644-cfe963807a33",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"maxScale": "2500.0",
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Der Datenbestand wird unter der Lizenz CC-BY-4.0-Namensnennung International Public License veröffentlicht (vgl. https://creativecommons.org/licenses/by/4.0/legalcode.de). Der Quellenvermerk gemäß Abschnitt 3a der Lizenz lautet \"Berliner Regenwasseragentur/ Potenziale der dezentralen Regenwasserbewirtschaftung\".",
+		"sourceUrl": "https://daten.berlin.de/datensaetze/potenziale-der-dezentralen-regenwasserbewirtschaftung-wms-309141aa"
+	},
+	{
+		"id": "ua_srhk:da_fr_aussergewoehnlich",
+		"name": "Fließrichtung (außergewöhnliches Ereignis)",
+		"name_lang": "Fließrichtung (außergewöhnliches Ereignis) (Starkregenhinweiskarte)",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_srhk",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "da_fr_aussergewoehnlich",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Starkregenhinweiskarte",
+				"md_id": "fb5bcb65-6dcc-475b-8a37-c023ce19203b",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/a0dd801e-4933-3e91-a210-310f372c172b",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"maxScale": "2501.0",
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"sourceUrl": "https://www.berlin.de/sen/uvk/umwelt/wasser-und-geologie/starkregen-und-ueberflutungen/gefahren/#Starkregenhinweiskarte"
+	},
+	{
+		"id": "ua_srhk:db_fliessgeschw_aussergew_kostra",
+		"name": "Fließgeschwindigkeit (außergewöhnliches Ereignis)",
+		"name_lang": "Fließgeschwindigkeit (außergewöhnliches Ereignis) (Starkregenhinweiskarte)",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_srhk",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "db_fliessgeschw_aussergew_kostra",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Starkregenhinweiskarte",
+				"md_id": "fb5bcb65-6dcc-475b-8a37-c023ce19203b",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/a0dd801e-4933-3e91-a210-310f372c172b",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"maxScale": "50001.0",
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"sourceUrl": "https://www.berlin.de/sen/uvk/umwelt/wasser-und-geologie/starkregen-und-ueberflutungen/gefahren/#Starkregenhinweiskarte"
+	},
+	{
+		"id": "ua_srhk:dc_wasserstand_aussergew_kostra",
+		"name": "Wasserstand (außergewöhnliches Ereignis)",
+		"name_lang": "Wasserstand (außergewöhnliches Ereignis) (Starkregenhinweiskarte)",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_srhk",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "dc_wasserstand_aussergew_kostra",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Starkregenhinweiskarte",
+				"md_id": "fb5bcb65-6dcc-475b-8a37-c023ce19203b",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/a0dd801e-4933-3e91-a210-310f372c172b",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"maxScale": "50001.0",
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"sourceUrl": "https://www.berlin.de/sen/uvk/umwelt/wasser-und-geologie/starkregen-und-ueberflutungen/gefahren/#Starkregenhinweiskarte"
+	},
+	{
+		"id": "ua_srhk:b_srhk_feuerwehreinsaetze_pkt",
+		"name": "Feuerwehreinsätze (Punkte)",
+		"name_lang": "Feuerwehreinsätze (Punkte) (Starkregenhinweiskarte)",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_srhk",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "b_srhk_feuerwehreinsaetze_pkt",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Starkregenhinweiskarte",
+				"md_id": "fb5bcb65-6dcc-475b-8a37-c023ce19203b",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/a0dd801e-4933-3e91-a210-310f372c172b",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"maxScale": "25000.0",
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar."
+	},
+	{
+		"id": "ua_srhk:g_srhk_feuerwehreinsaetze",
+		"name": "Feuerwehreinsätze",
+		"name_lang": "Feuerwehreinsätze (Starkregenhinweiskarte)",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_srhk",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "g_srhk_feuerwehreinsaetze",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Starkregenhinweiskarte",
+				"md_id": "fb5bcb65-6dcc-475b-8a37-c023ce19203b",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/a0dd801e-4933-3e91-a210-310f372c172b",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"sourceUrl": "https://www.berlin.de/sen/uvk/umwelt/wasser-und-geologie/starkregen-und-ueberflutungen/gefahren/#Starkregenhinweiskarte"
+	},
+	{
+		"id": "wsg:wsg",
+		"name": "Wasserschutzgebiete",
+		"name_lang": "Wasserschutzgebiete (Wasserschutzgebiete)",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/wsg",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "wsg",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Wasserschutzgebiete",
+				"md_id": "577270ae-d249-3244-bab7-d265797e941b",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/1c058a53-844f-313a-890b-d26913f4a67a",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"sourceUrl": "https://www.berlin.de/umweltatlas/wasser/wasserschutzgebiete/"
+	},
+	{
+		"id": "ABIMO"
+	},
+	{
+		"id": "Themenkarten"
+	},
+	{
+		"id": "ua_vegetationshoehen_2020:c_vegetationshoehe_2020_raster",
+		"name": "Vegetationshöhen 2020 (Raster)",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_vegetationshoehen_2020",
+		"typ": "WMS",
+		"layers": "c_vegetationshoehe_2020_raster",
+		"legend": true,
+		"datasets": [
+			{
+				"md_id": "e724b90e-ce12-4091-8058-5feab4793dd8",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"transparent": true,
+		"gfiAttributes": "showAll",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"singleTile": true
+	},
+	{
+		"id": "ua_srgk:bb_fliessgeschwindigkeit_aussergewoehnlich",
+		"name": "Fließgeschwindigkeit (außergewöhnliches Ereignis)",
+		"name_lang": "Fließgeschwindigkeit (außergewöhnliches Ereignis) (Starkregengefahrenkarte)",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_srgk",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "bb_fliessgeschwindigkeit_aussergewoehnlich",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Starkregengefahrenkarte",
+				"md_id": "41028a9c-0d6e-4a7d-9bfd-0ddf9df834de",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/9910c89f-a798-3fcc-a3ee-573a99df91a2",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"maxScale": "2500.0",
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Gebiet Obersee: Für die Nutzung der Daten ist die Datenlizenz Deutschland - Namensnennung - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/by-2-0 abrufbar. Der Quellenvermerk gemäß (2) der Lizenz lautet \"Umweltatlas Berlin / Starkregengefahrenkarte, Gebiet Obersee\". Gebiete Moabit, Flughafensee: Der Datenbestand wird unter der Lizenz CC-BY-4.0-Namensnennung International Public License veröffentlicht (vgl. https://creativecommons.org/licenses/by/4.0/legalcode.de). Der Quellenvermerk gemäß Abschnitt 3a der Lizenz lautet \"Berliner Wasserbetriebe / Starkregengefahrenkarte, Gebiete Moabit, Flughafensee \".",
+		"sourceUrl": "https://www.berlin.de/sen/uvk/umwelt/wasser-und-geologie/starkregen-und-ueberflutungen/gefahren/#Starkregenhinweiskarte"
+	},
+	{
+		"id": "ua_srgk:cb_wasserstand_aussergewoehnlich",
+		"name": "Wasserstand (außergewöhnliches Ereignis)",
+		"name_lang": "Wasserstand (außergewöhnliches Ereignis) (Starkregengefahrenkarte)",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_srgk",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "cb_wasserstand_aussergewoehnlich",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Starkregengefahrenkarte",
+				"md_id": "41028a9c-0d6e-4a7d-9bfd-0ddf9df834de",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/9910c89f-a798-3fcc-a3ee-573a99df91a2",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"maxScale": "10000.0",
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Gebiet Obersee: Für die Nutzung der Daten ist die Datenlizenz Deutschland - Namensnennung - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/by-2-0 abrufbar. Der Quellenvermerk gemäß (2) der Lizenz lautet \"Umweltatlas Berlin / Starkregengefahrenkarte, Gebiet Obersee\". Gebiete Moabit, Flughafensee: Der Datenbestand wird unter der Lizenz CC-BY-4.0-Namensnennung International Public License veröffentlicht (vgl. https://creativecommons.org/licenses/by/4.0/legalcode.de). Der Quellenvermerk gemäß Abschnitt 3a der Lizenz lautet \"Berliner Wasserbetriebe / Starkregengefahrenkarte, Gebiete Moabit, Flughafensee \".",
+		"sourceUrl": "https://www.berlin.de/sen/uvk/umwelt/wasser-und-geologie/starkregen-und-ueberflutungen/gefahren/#Starkregengefahrenkarte"
+	},
+	{
+		"id": "ua_wasserhaushalt_2022:f_deltaw_2022",
+		"name": "Delta-W: Abweichung des Wasserhaushalts vom natürlichen Wasserhaushalt 2022",
+		"name_lang": "Delta-W: Abweichung des Wasserhaushalts vom natürlichen Wasserhaushalt 2022 (Wasserhaushalt 2022 (Umweltatlas))",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_wasserhaushalt_2022",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "f_deltaw_2022",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Wasserhaushalt 2022 (Umweltatlas)",
+				"md_id": "08e12768-0bc1-41c0-a8d2-0b2d78c596e0",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/1f112654-3704-3638-a5ca-a2e6c56e4fd2",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar."
+	},
+	{
+		"id": "ua_wasserhaushalt_2022:e_verdunstung_2022",
+		"name": "Verdunstung aus Niederschlägen 2022",
+		"name_lang": "Verdunstung aus Niederschlägen 2022 (Wasserhaushalt 2022 (Umweltatlas))",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_wasserhaushalt_2022",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "e_verdunstung_2022",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Wasserhaushalt 2022 (Umweltatlas)",
+				"md_id": "08e12768-0bc1-41c0-a8d2-0b2d78c596e0",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/1f112654-3704-3638-a5ca-a2e6c56e4fd2",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar."
+	},
+	{
+		"id": "ua_wasserhaushalt_2022:b_versickerung_2022",
+		"name": "Versickerung aus Niederschlägen 2022",
+		"name_lang": "Versickerung aus Niederschlägen 2022 (Wasserhaushalt 2022 (Umweltatlas))",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_wasserhaushalt_2022",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "b_versickerung_2022",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Wasserhaushalt 2022 (Umweltatlas)",
+				"md_id": "08e12768-0bc1-41c0-a8d2-0b2d78c596e0",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/1f112654-3704-3638-a5ca-a2e6c56e4fd2",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar."
+	},
+	{
+		"id": "ua_wasserhaushalt_2022:a_oberflaechenabfluss_2022",
+		"name": "Oberflächenabfluss aus Niederschlägen 2022",
+		"name_lang": "Oberflächenabfluss aus Niederschlägen 2022 (Wasserhaushalt 2022 (Umweltatlas))",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_wasserhaushalt_2022",
+		"typ": "WMS",
+		"gfiAttributes": "showAll",
+		"layers": "a_oberflaechenabfluss_2022",
+		"legend": true,
+		"datasets": [
+			{
+				"md_name": "Wasserhaushalt 2022 (Umweltatlas)",
+				"md_id": "08e12768-0bc1-41c0-a8d2-0b2d78c596e0",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/1f112654-3704-3638-a5ca-a2e6c56e4fd2",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"transparent": true,
+		"singleTile": true,
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"sourceUrl": "https://www.berlin.de/umweltatlas/wasser/wasserhaushalt/"
+	},
+	{
+		"id": "ua_klimabewertung_2022:ed_ua_phk_vul_gruenversorgung_2022",
+		"name": "Stadtklimatisch besonderes vulnerable Stadtgebiete bezogen auf Grünflächenunterversorgung 2022",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_klimabewertung_2022",
+		"typ": "WMS",
+		"layers": "ed_ua_phk_vul_gruenversorgung_2022",
+		"legend": true,
+		"datasets": [
+			{
+				"md_id": "d002e10f-d745-49e5-98b1-bde00700f4e4",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"transparent": true,
+		"gfiAttributes": "showAll",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"singleTile": true
+	},
+	{
+		"id": "ua_klimabewertung_2022:ec_ua_phk_vul_nutz_2022",
+		"name": "Stadtklimatisch besonderes vulnerable Stadtgebiete bezogen auf Gebäude- / Flächennutzung 2022",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_klimabewertung_2022",
+		"typ": "WMS",
+		"layers": "ec_ua_phk_vul_nutz_2022",
+		"legend": true,
+		"datasets": [
+			{
+				"md_id": "d002e10f-d745-49e5-98b1-bde00700f4e4",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"transparent": true,
+		"gfiAttributes": "showAll",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"singleTile": true
+	},
+	{
+		"id": "ua_klimabewertung_2022:eb_ua_phk_vul_demog_2022",
+		"name": "Stadtklimatisch besonderes vulnerable Stadtgebiete bezogen auf Demographie 2022",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_klimabewertung_2022",
+		"typ": "WMS",
+		"layers": "eb_ua_phk_vul_demog_2022",
+		"legend": true,
+		"datasets": [
+			{
+				"md_id": "d002e10f-d745-49e5-98b1-bde00700f4e4",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"transparent": true,
+		"gfiAttributes": "showAll",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"singleTile": true
+	}
+]

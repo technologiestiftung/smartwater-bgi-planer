@@ -15,7 +15,8 @@
 				"refactor",
 				"revert",
 				"style",
-				"ally"
+				"ally",
+				"debug"
 			]
 		]
 	}

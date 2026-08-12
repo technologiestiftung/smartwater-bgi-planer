@@ -1,0 +1,36 @@
+import { FC, ReactNode } from "react";
+
+interface MenuModuleProps {
+	title: string;
+	description: string;
+	sideElements?: ReactNode;
+	additionalInfo?: string;
+	buttonBottom?: ReactNode;
+}
+
+export const MenuModule: FC<MenuModuleProps> = ({
+	title,
+	description,
+	sideElements,
+	additionalInfo,
+	buttonBottom,
+}) => {
+	return (
+		<div className="MenuModule-root border-muted flex flex-col border p-6">
+			<div className="mb-4 flex gap-4">
+				<div className="flex grow flex-col">
+					<h4 className="text-primary font-bold">{title}</h4>
+					<p className="">{description}</p>
+				</div>
+				{sideElements && <div className="shrink">{sideElements}</div>}
+			</div>
+
+			{buttonBottom && (
+				<div className="mt-4 flex items-center justify-between">
+					<span className="text-primary italic">{additionalInfo}</span>
+					{buttonBottom}
+				</div>
+			)}
+		</div>
+	);
+};

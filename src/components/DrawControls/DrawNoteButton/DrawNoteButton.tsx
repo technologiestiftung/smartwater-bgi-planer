@@ -1,0 +1,118 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
+import { useLayersStore } from "@/store/layers";
+import { useMapStore } from "@/store/map";
+import { useUiStore } from "@/store/ui";
+import { NoteIcon } from "@phosphor-icons/react";
+import Draw from "ol/interaction/Draw";
+import VectorLayer from "ol/layer/Vector";
+import MapBrowserEvent from "ol/MapBrowserEvent";
+import { Vector as VectorSource } from "ol/source";
+import { FC, useEffect, useRef } from "react";
+
+interface DrawNoteButtonProps {
+	layerId: string;
+}
+
+export const DrawNoteButton: FC<DrawNoteButtonProps> = ({ layerId }) => {
+	const map = useMapStore((state) => state.map);
+	const hasLayer = useLayersStore((state) => state.layers.has(layerId));
+	const setLayerVisibility = useLayersStore(
+		(state) => state.setLayerVisibility,
+	);
+	const isDrawing = useUiStore((state) => state.isDrawingNote);
+	const setIsDrawing = useUiStore((state) => state.setIsDrawingNote);
+	const resetDrawInteractions = useUiStore(
+		(state) => state.resetDrawInteractions,
+	);
+
+	const drawRef = useRef<Draw | null>(null);
+
+	useEffect(() => {
+		if (!map || !layerId || !hasLayer) return;
+
+		setLayerVisibility(layerId, true);
+	}, [layerId, map, hasLayer, setLayerVisibility]);
+
+	useEffect(() => {
+		return () => {
+			if (map && drawRef.current) {
+				map.removeInteraction(drawRef.current);
+				drawRef.current = null;
+			}
+		};
+	}, [map]);
+
+	useEffect(() => {
+		if (!isDrawing && drawRef.current && map) {
+			map.removeInteraction(drawRef.current);
+			drawRef.current = null;
+		}
+	}, [isDrawing, map]);
+
+	const toggleDraw = () => {
+		if (!map) return;
+
+		if (drawRef.current) {
+			map.removeInteraction(drawRef.current);
+			drawRef.current = null;
+			setIsDrawing(false);
+			return;
+		}
+
+		resetDrawInteractions();
+
+		const layer = map
+			.getAllLayers()
+			.find((l) => l.get("id") === layerId) as VectorLayer<VectorSource>;
+
+		if (!layer || !(layer.getSource() instanceof VectorSource)) {
+			console.error("Layer not found or is not a vector layer");
+			return;
+		}
+
+		drawRef.current = new Draw({
+			source: layer.getSource()!,
+			type: "Point",
+		});
+
+		drawRef.current.on("drawend", (event) => {
+			const geometry = event.feature.getGeometry();
+			if (geometry && geometry.getType() === "Point") {
+				const coordinate = (geometry as any).getCoordinates();
+				const pixel = map.getPixelFromCoordinate(coordinate);
+
+				setIsDrawing(false);
+				if (drawRef.current) {
+					map.removeInteraction(drawRef.current);
+					drawRef.current = null;
+				}
+
+				const clickEvent = new MapBrowserEvent("click", map, {
+					type: "click",
+					target: map.getViewport(),
+					clientX: pixel[0],
+					clientY: pixel[1],
+				} as any);
+
+				clickEvent.pixel = pixel;
+				clickEvent.coordinate = coordinate;
+
+				requestAnimationFrame(() => {
+					map.dispatchEvent(clickEvent);
+				});
+			}
+		});
+
+		map.addInteraction(drawRef.current);
+		setIsDrawing(true);
+	};
+
+	return (
+		<Button variant="outline" onClick={toggleDraw}>
+			<NoteIcon />
+			{isDrawing ? "Stop Drawing" : "Notiz"}
+		</Button>
+	);
+};

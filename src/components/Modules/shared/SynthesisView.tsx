@@ -1,0 +1,254 @@
+/* eslint-disable no-nested-ternary */
+"use client";
+
+import { SynthesisBadge } from "@/components/Modules/shared/SynthesisBadge";
+import { getModuleSteps } from "@/components/Modules/shared/moduleConfig";
+import { Button } from "@/components/ui/button";
+import { useMapReady } from "@/hooks/useMapReady";
+import { checkForQuestion } from "@/lib/helpers/questionCheck";
+import { SectionId } from "@/lib/helpers/sectionIds";
+import { useProjectStore } from "@/store";
+import { useAnswersStore } from "@/store/answers";
+import { useLayersStore } from "@/store/layers";
+import { useUiStore } from "@/store/ui";
+import {
+	EyeIcon,
+	EyeSlashIcon,
+	PencilRulerIcon,
+	ShovelIcon,
+	XIcon,
+} from "@phosphor-icons/react";
+import { useParams, useRouter } from "next/navigation";
+import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useShallow } from "zustand/react/shallow";
+
+interface SynthesisViewProps {
+	moduleId: "needForAction" | "feasibility";
+	synthesisViewId: string;
+	description: string;
+	onBackToQuestions: () => void;
+	layerOverrides?: Record<string, string>;
+	onBackToSpecificQuestion: (configId: string, sectionId: SectionId) => void;
+}
+
+export function SynthesisView({
+	moduleId,
+	synthesisViewId,
+	description,
+	onBackToQuestions,
+	onBackToSpecificQuestion,
+	layerOverrides = {},
+}: SynthesisViewProps) {
+	const answers = useAnswersStore((state) => state.answers);
+	const moduleSavedState = useUiStore((state) => state.moduleSavedState);
+	const isMapReady = useMapReady();
+	const moduleSteps = getModuleSteps(moduleId);
+	const hasInitialized = useRef(false);
+	const router = useRouter();
+	const params = useParams<{ projectId?: string }>();
+	const getProject = useProjectStore((state) => state.getProject);
+	const project = getProject();
+	const projectId = params?.projectId ?? project?.id;
+	const { layerConfig, layers, setLayerVisibility, applyConfigLayers } =
+		useLayersStore(
+			useShallow((state) => ({
+				layerConfig: state.layerConfig,
+				layers: state.layers,
+				setLayerVisibility: state.setLayerVisibility,
+				applyConfigLayers: state.applyConfigLayers,
+			})),
+		);
+
+	const visibleModuleStep = useMemo(
+		() => moduleSteps.filter((step) => step.displayInSynthesis !== false),
+		[moduleSteps],
+	);
+	const layerConfigById = useMemo(
+		() => new Map(layerConfig.map((config) => [config.id, config])),
+		[layerConfig],
+	);
+	const getLayerConfig = useCallback(
+		(configId: string) => layerConfigById.get(configId),
+		[layerConfigById],
+	);
+
+	const getLayerData = useCallback(
+		(drawLayerId: string | undefined) => {
+			if (!drawLayerId) return { id: null, isVisible: false };
+			const effectiveId =
+				layerOverrides[drawLayerId] && layers.has(layerOverrides[drawLayerId])
+					? layerOverrides[drawLayerId]
+					: drawLayerId;
+
+			return {
+				id: effectiveId,
+				isVisible: layers.get(effectiveId)?.visibility ?? false,
+			};
+		},
+		[layers, layerOverrides],
+	);
+
+	useEffect(() => {
+		if (!isMapReady || hasInitialized.current) return;
+		hasInitialized.current = true;
+
+		applyConfigLayers(synthesisViewId, true);
+
+		if (moduleSavedState?.sectionId) {
+			const step = moduleSteps.find((s) => s.id === moduleSavedState.sectionId);
+			step?.questions?.forEach((qId) => {
+				if (checkForQuestion(qId, true)) return;
+				const config = getLayerConfig(qId);
+				const { id } = getLayerData(config?.drawLayerId);
+
+				if (id && answers[qId] === true) {
+					setLayerVisibility(id, true);
+				}
+			});
+		}
+	}, [
+		isMapReady,
+		applyConfigLayers,
+		synthesisViewId,
+		moduleSteps,
+		moduleSavedState,
+		getLayerConfig,
+		setLayerVisibility,
+		getLayerData,
+		answers,
+	]);
+
+	const handleToggleLayer = (configId: string) => {
+		if (answers[configId] !== true) return;
+		const config = getLayerConfig(configId);
+		const { id, isVisible } = getLayerData(config?.drawLayerId);
+		if (id) setLayerVisibility(id, !isVisible);
+	};
+
+	const handleToggleStepLayers = (stepConfigIds: string[]) => {
+		const relevantLayers = stepConfigIds
+			.filter((configId) => answers[configId] === true)
+			.map((configId) => getLayerData(getLayerConfig(configId)?.drawLayerId))
+			.filter((item) => item.id !== null);
+
+		const anyVisible = relevantLayers.some((l) => l.isVisible);
+		relevantLayers.forEach((l) => setLayerVisibility(l.id!, !anyVisible));
+	};
+
+	const onNextModule = () => {
+		const nextModulePath =
+			moduleId === "needForAction" ? "machbarkeit" : "planung";
+		router.push(`/${projectId}/${nextModulePath}`);
+	};
+
+	return (
+		<div className="flex h-full w-full flex-col">
+			<div className="flex-1 overflow-y-auto px-6 pb-6">
+				<p className="text-primary mt-2">{description}</p>
+				{visibleModuleStep.map((step) => {
+					const sectionQuestions = step.questions || [];
+					const anyLayerVisible = sectionQuestions.some(
+						(qId) => getLayerData(getLayerConfig(qId)?.drawLayerId).isVisible,
+					);
+
+					const sectionAnswers = sectionQuestions
+						.filter((q) => checkForQuestion(q))
+						.map((q) => answers[q]);
+					const allTrue =
+						sectionAnswers.length > 0 &&
+						sectionAnswers.every((a) => a === true);
+					const allFalse =
+						sectionAnswers.length > 0 &&
+						sectionAnswers.every((a) => a === false);
+					const anyAnswered = sectionAnswers.some((a) => a !== undefined);
+
+					const iconColor =
+						moduleId === "needForAction"
+							? allTrue
+								? "bg-red text-white"
+								: allFalse
+									? "bg-green"
+									: "bg-yellow"
+							: allTrue
+								? "bg-green text-white"
+								: allFalse
+									? "bg-red"
+									: "bg-yellow";
+
+					return (
+						<div key={step.id} className="my-6">
+							<div className="mb-3 flex items-center gap-2">
+								<div
+									className={`${anyAnswered ? iconColor : "bg-neutral-light"} rounded-full p-1`}
+								>
+									{step.icon}
+								</div>
+								<h3 className="text-primary text-lg font-medium">
+									{step.title}
+								</h3>
+								<button
+									onClick={() => handleToggleStepLayers(sectionQuestions)}
+									className="transition-opacity hover:opacity-70"
+									aria-label={
+										anyLayerVisible
+											? "Alle Layer ausblenden"
+											: "Alle Layer einblenden"
+									}
+								>
+									{anyLayerVisible ? (
+										<EyeIcon size={20} />
+									) : (
+										<EyeSlashIcon size={20} />
+									)}
+								</button>
+							</div>
+							<div className="flex flex-wrap gap-2">
+								{sectionQuestions.map((configId) => {
+									if (checkForQuestion(configId, true)) return null;
+									const { isVisible } = getLayerData(
+										getLayerConfig(configId)?.drawLayerId,
+									);
+									return (
+										<SynthesisBadge
+											key={configId}
+											configId={configId}
+											answer={answers[configId]}
+											onToggle={() => handleToggleLayer(configId)}
+											isVisible={isVisible}
+											onBackToSpecificQuestion={onBackToSpecificQuestion}
+										/>
+									);
+								})}
+							</div>
+						</div>
+					);
+				})}
+			</div>
+			<div className="border-muted bg-secondary flex shrink-0 border-t px-4">
+				<Button
+					onClick={onBackToQuestions}
+					className="text-md my-4 flex-1 text-white hover:text-white"
+					size="lg"
+					variant="ghost"
+				>
+					<XIcon className="h-4 w-4" />
+					zu den Checkfragen
+				</Button>
+				<div className="w-px self-stretch bg-white" />
+				<Button
+					onClick={onNextModule}
+					className="text-md my-4 flex-1 text-white hover:text-white"
+					size="lg"
+					variant="ghost"
+				>
+					{moduleId === "needForAction" ? (
+						<ShovelIcon className="h-4 w-4" />
+					) : (
+						<PencilRulerIcon className="h-4 w-4" />
+					)}
+					zu Modul {moduleId === "needForAction" ? "2" : "3"}
+				</Button>
+			</div>
+		</div>
+	);
+}

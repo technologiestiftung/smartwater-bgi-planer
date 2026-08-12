@@ -1,0 +1,6 @@
+.Map-root .ol-attribution,
+.Map-root .ol-rotate,
+.Map-root .ol-zoom-in,
+.Map-root .ol-zoom-out {
+	display: none;
+}

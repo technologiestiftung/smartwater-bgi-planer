@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="426" height="340" viewBox="0 0 426 340">
+  <defs>
+    <style>
+      @import url("https://fonts.cdnfonts.com/css/arthouse-owned");
+      text { font-family: "Arthouse Owned", Arial, sans-serif; }
+    </style>
+  </defs>
+  <rect width="100%" height="100%" fill="transparent"/>
+  <rect x="16" y="12.0" width="24" height="16" rx="2" ry="2" fill="#DDCBCB" stroke="#0C4C38" stroke-width="1"/>
+  <text x="56" y="25" font-size="14" fill="#0C4C38">Mischwasserkanalisation</text>
+  <rect x="16" y="52.0" width="24" height="16" rx="2" ry="2" fill="#FFFF40" stroke="#0C4C38" stroke-width="1"/>
+  <text x="56" y="65" font-size="14" fill="#0C4C38">Schutzwasserkanalisation und Regenwasserkanalisation</text>
+  <rect x="16" y="92.0" width="24" height="16" rx="2" ry="2" fill="#FFBF40" stroke="#0C4C38" stroke-width="1"/>
+  <text x="56" y="105" font-size="14" fill="#0C4C38">Schmutzwasserkanalisation und Regenwasserkanalisation</text> <text x="56" y="123" font-size="14" fill="#0C4C38">die Regenwasserkanalisation leitet in die Regen&#252;berl&#228;ufe</text>
+  <text x="56" y="141" font-size="14" fill="#0C4C38">der Mischkanalisation ein</text>
+  <rect x="16" y="162.0" width="24" height="16" rx="2" ry="2" fill="#40BE96" stroke="#0C4C38" stroke-width="1"/>
+  <text x="56" y="175" font-size="14" fill="#0C4C38">Schmutzwasserkanalisation ohne Regenwasserkanalisation</text>
+  <rect x="16" y="202.0" width="24" height="16" rx="2" ry="2" fill="#E68840" stroke="#0C4C38" stroke-width="1"/>
+  <text x="56" y="215" font-size="14" fill="#0C4C38">Regenwasserkanalisation ohne Schmutzwasserkanalisation</text>
+  <rect x="16" y="242.0" width="24" height="16" rx="2" ry="2" fill="#E6AC80" stroke="#0C4C38" stroke-width="1"/>
+  <text x="56" y="255" font-size="14" fill="#0C4C38">Regenwasserkanalisation ohne Schmutzwasserkanalisation</text>
+  <text x="56" y="273" font-size="14" fill="#0C4C38">die Regenwasserkanalisation leitet in die Regen&#252;berl&#228;ufe</text>
+  <text x="56" y="291" font-size="14" fill="#0C4C38">der Mischkanalisation ein</text>
+  <rect x="16" y="312.0" width="24" height="16" rx="2" ry="2" fill="#8FA040" stroke="#0C4C38" stroke-width="1"/>
+  <text x="56" y="325" font-size="14" fill="#0C4C38">Bebaute Siedlungsgebiete ohne Kanalisation</text>
+</svg>

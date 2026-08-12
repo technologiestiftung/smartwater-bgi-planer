@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="src/logos/smartwater-bgi-planer-logo.svg" alt="Smartwater BGI Planer Logo" width="300" />
+  <img src="src/logos/SWLogo.svg" alt="Smartwater BGI-Planer Logo" width="300" />
 </div>
 
 <br>
@@ -13,7 +13,7 @@
 
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-# Smartwater BGI Planer
+# Smartwater BGI-Planer
 
 The BGI Planner is a map-based web application designed to support staff in Berlin’s planning departments at both Senate and district levels in integrating blue-green infrastructure measures into new and existing planning processes. The aim is to increase Berlin’s resilience to the impacts of climate change, such as heavy rainfall and heat. The tool is intended to facilitate strategic decision-making in early planning phases and to provide guidance for the implementation of concrete measures in later phases.
 
@@ -184,26 +184,6 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
         <a title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> 
         <a href="https://github.com/technologiestiftung/smartwater-bgi-planer/pulls?q=is%3Apr+reviewed-by%3AJonathanHaudenschild" title="Reviewed Pull Requests">👀</a>
       </td>
-      <!--  -->
-      <!--  -->
-      <!--  -->
-      <!--  -->
-      <!--  -->
-      <!--  -->
-      <td align="center" valign="top">
-        <a href="https://github.com/guadiromero">
-          <img src="https://avatars.githubusercontent.com/u/32439356?v=4" width="64px;" alt="Guadalupe Romero"/>
-          <br />
-          <sub text-decoration="none">
-            <b>Guadalupe Romero</b>
-          </sub>
-        </a>
-        <br />
-        <a href="https://github.com/technologiestiftung/smartwater-bgi-planer/commits?author=guadiromero" title="Code">💻</a> 
-        <a href="https://github.com/technologiestiftung/smartwater-bgi-planer/commits?author=guadiromero&path=docs" title="Documentation">📖</a>
-        <a title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> 
-        <a href="https://github.com/technologiestiftung/smartwater-bgi-planer/pulls?q=is%3Apr+reviewed-by%3Aguadiromero" title="Reviewed Pull Requests">👀</a>
-      </td>
       <td align="center" valign="top">
         <a href="https://github.com/JS-TSB">
         <img src="https://avatars.githubusercontent.com/u/185074060?v=4" width="64px;" alt="Jakob Sawal"/>
@@ -219,8 +199,6 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
   </tbody>
 </table>
-
-<!-- <a href="#design-LuiseBrandenburger" title="Design">🎨</a> -->
 
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
