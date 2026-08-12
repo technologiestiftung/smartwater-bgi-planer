@@ -12,9 +12,10 @@ import { useConnectedAreaFeatureSync } from "@/hooks/useConnectedAreaFeatureSync
 import { selectActiveLayerConfig, useLayersStore } from "@/store/layers";
 import { useUiStore } from "@/store/ui";
 import { useTutorialStore } from "@/store/tutorial";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { DrawTreeMeasureButton } from "./DrawTreeMeasureButton/DrawTreeMeasureButton";
 import { Tutorial } from "@/components/Tutorial/Tutorial";
+import { cn } from "@/lib/utils";
 
 interface DrawControlsContainerProps {
 	projectId?: string;
@@ -23,6 +24,7 @@ interface DrawControlsContainerProps {
 // eslint-disable-next-line complexity
 export function DrawControlsContainer({}: DrawControlsContainerProps) {
 	const pathname = usePathname();
+	const searchParams = useSearchParams();
 	const currentStepId = useUiStore((state) => state.currentStepId);
 	const showTutorialOnFirstQuestion = useTutorialStore(
 		(state) => state.showTutorialOnFirstQuestion,
@@ -47,6 +49,9 @@ export function DrawControlsContainer({}: DrawControlsContainerProps) {
 		pathname.endsWith("/planung");
 
 	const isPlanningModule = pathname?.endsWith("/planung");
+	const isClimateSimulationActive =
+		pathname?.endsWith("/planung") &&
+		searchParams?.get("climateSimulation") !== null;
 
 	let controls: React.ReactNode = null;
 
@@ -103,7 +108,12 @@ export function DrawControlsContainer({}: DrawControlsContainerProps) {
 	if (!controls) return null;
 
 	return (
-		<div className="absolute right-4 bottom-8 z-52">
+		<div
+			className={cn(
+				"absolute right-4 bottom-8",
+				isClimateSimulationActive ? "" : "z-52",
+			)}
+		>
 			<Tutorial type="controls" />
 			<div
 				className="relative mt-2 flex justify-center gap-2"
