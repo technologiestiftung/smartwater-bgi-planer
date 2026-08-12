@@ -52,7 +52,11 @@ const MeasureInfos: FC<MeasureInfosProps> = ({ liveMeasureInfo }) => {
 
 	return (
 		<div className="MeasureInfos-root">
-			<div className="bg-background border-primary text-primary absolute right-0 bottom-full z-10 mb-2 w-64 border-2 p-2 text-xs shadow-lg">
+			<div
+				role="status"
+				aria-live="polite"
+				className="bg-background border-primary text-primary absolute right-0 bottom-full z-10 mb-2 w-64 border-2 p-2 text-xs shadow-lg"
+			>
 				<p
 					className={`font-semibold ${liveMeasureInfo.isOverPotential ? "text-destructive" : ""}`}
 				>

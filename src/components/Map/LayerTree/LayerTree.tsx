@@ -319,9 +319,10 @@ export const LayerTree: FC = () => {
 					<input
 						type="text"
 						placeholder="Karte suchen"
+						aria-label="Karte suchen"
 						value={search}
 						onChange={(e) => setSearch(e.target.value)}
-						className="bg-neutral-mid text-foreground placeholder:text-muted-foreground w-full rounded-sm px-2 py-1 text-xs outline-none"
+						className="bg-neutral-mid text-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 w-full rounded-sm px-2 py-1 text-xs outline-none focus-visible:ring-[3px]"
 					/>
 				</div>
 

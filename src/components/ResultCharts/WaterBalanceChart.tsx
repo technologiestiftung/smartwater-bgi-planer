@@ -19,7 +19,12 @@ const WaterBalanceChart: FC<WaterBalanceChartProps> = ({
 	isLoading,
 }) => {
 	if (isLoading || !stats) {
-		return <SpinnerIcon className="animate-spin" size={24} />;
+		return (
+			<div role="status" aria-live="polite">
+				<SpinnerIcon className="animate-spin" size={24} />
+				<span className="sr-only">Ergebnisse werden geladen</span>
+			</div>
+		);
 	}
 
 	const original = stats.water_balance.status_quo[0]!;
