@@ -1,45 +1,50 @@
-import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
+import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-	"w-max flex gap-4 items-center py-2 px-4 rounded-[2px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 transition-colors",
+	"inline-flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap text-sm transition-all disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-6 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
 	{
 		variants: {
 			variant: {
-				primary:
-					"cursor-pointer bg-primary hover:bg-secondary text-white fill-white",
+				default:
+					"bg-primary text-primary-foreground hover:bg-secondary disabled:bg-muted-darker disabled:text-muted",
+				destructive:
+					"bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+				outline:
+					"border-primary bg-background border-2 disabled:bg-muted disabled:border-muted-darker disabled:text-muted-darker text-primary shadow-xs hover:bg-light dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
 				secondary:
-					"cursor-pointer bg-white hover:bg-light border-2 border-primary text-primary",
+					"bg-secondary text-secondary-foreground hover:bg-secondary/80",
+				ghost:
+					"hover:text-muted-darker hover:[&_svg]:text-muted-darker dark:hover:bg-primary/50 disabled:text-muted-darker",
+				link: "text-primary underline-offset-4 hover:underline",
+				"map-control": "shadow-md bg-background [&_svg]:size-6",
+				"map-zoom":
+					"shadow-none rounded-none p-0 px-1 w-auto [&_svg]:size-8 [&_img]:w-6 [&_img]:h-6",
 			},
-			disabled: {
-				true: "cursor-not-allowed",
+			size: {
+				default: "h-11 px-4 py-2 has-[>svg]:px-4 rounded-xs",
+				sm: "h-8 rounded-xs gap-1.5 px-3 has-[>svg]:px-2.5",
+				lg: "h-10 rounded-xs px-6 has-[>svg]:px-4",
+				icon: "size-9",
+				"icon-only": "h-12 w-12 rounded-xs",
+				"icon-sm": "size-8",
+				"icon-lg": "size-10",
 			},
 		},
-		compoundVariants: [
-			{
-				variant: "primary",
-				disabled: true,
-				class: "bg-mid-darker hover:bg-mid-darker",
-			},
-			{
-				variant: "secondary",
-				disabled: true,
-				class:
-					"bg-lighter border-2 border-mid-darker text-mid-darker hover:bg-lighter",
-			},
-		],
 		defaultVariants: {
-			variant: "primary",
+			variant: "default",
+			size: "default",
 		},
 	},
 );
 
-function ShadButton({
+function Button({
 	className,
 	variant,
+	size,
 	asChild = false,
 	...props
 }: React.ComponentProps<"button"> &
@@ -51,10 +56,10 @@ function ShadButton({
 	return (
 		<Comp
 			data-slot="button"
-			className={cn(buttonVariants({ variant, className }))}
+			className={cn(buttonVariants({ variant, size, className }))}
 			{...props}
 		/>
 	);
 }
 
-export { ShadButton, buttonVariants };
+export { Button, buttonVariants };

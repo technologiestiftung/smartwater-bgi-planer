@@ -1,0 +1,201 @@
+"use client";
+import { useConfirmDialog } from "@/components/ConfirmDialog";
+import { PageModal } from "@/components/Modal";
+import {
+	ProjectModalContent,
+	type ProjectFormData,
+} from "@/components/ProjectModal/ProjectModalContent";
+import { Button } from "@/components/ui/button";
+import Background from "@/images/background.svg";
+import { useProjectStore } from "@/store/project";
+import { UseCase } from "@/store/project/types";
+import {
+	ArrowLeftIcon,
+	FloppyDiskBackIcon,
+	TrashIcon,
+	XIcon,
+} from "@phosphor-icons/react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+
+interface ProjectModalProps {
+	mode: "new" | "edit";
+	projectId?: string;
+}
+
+export function ProjectModal({ mode, projectId }: ProjectModalProps) {
+	const router = useRouter();
+	const { createProject, updateProject, getProject, deleteProject } =
+		useProjectStore();
+
+	const { ConfirmDialog, confirm } = useConfirmDialog({
+		title: "Projekt löschen",
+		content: (
+			<div className="border-destructive bg-destructive/10 m-4 flex flex-col items-center gap-4 rounded-xs border-2 border-dashed p-4 text-center">
+				<p className="max-w-sm">
+					Wollen Sie das aktuelle Projekt <b>endgültig löschen?</b>
+				</p>
+				<p className="max-w-sm">
+					Klicken Sie auf “Löschen” um ein neues Projekt anfangen zu können.
+				</p>
+			</div>
+		),
+		cancelButton: (
+			<Button variant="outline">
+				<ArrowLeftIcon />
+				Nicht löschen
+			</Button>
+		),
+		confirmButton: (
+			<Button>
+				<TrashIcon />
+				Löschen
+			</Button>
+		),
+	});
+
+	const existingProject =
+		mode === "edit" && projectId ? getProject() : undefined;
+
+	const [formData, setFormData] = useState<ProjectFormData>({
+		name: existingProject?.name || "",
+		description: existingProject?.description || "",
+		useCase: existingProject?.useCase || UseCase.Individual,
+	});
+	const [isSaving, setIsSaving] = useState(false);
+	const [isOpen, setIsOpen] = useState(true);
+	const [deleted, setDeleted] = useState(false);
+
+	useEffect(() => {
+		if (mode === "edit" && projectId) {
+			const project = getProject();
+			if (project) {
+				setFormData({
+					name: project.name,
+					description: project.description,
+					useCase: project.useCase,
+				});
+			}
+		}
+	}, [mode, projectId, getProject]);
+
+	const handleDelete = async () => {
+		const confirmed = await confirm();
+		if (confirmed) {
+			try {
+				deleteProject();
+				setDeleted(true);
+				setTimeout(() => router.push(`/`), 500);
+				setTimeout(() => setIsOpen(false), 1000);
+			} catch (error) {
+				console.error("Fehler beim Löschen des Projekts:", error);
+				alert("Fehler beim Löschen des Projekts.");
+			}
+		}
+	};
+
+	const handleClose = () => {
+		if (deleted) return;
+		setIsOpen(false);
+		router.back();
+	};
+
+	const handleSave = async () => {
+		if (!formData.name.trim()) {
+			alert("Bitte geben Sie einen Projektnamen ein.");
+			return;
+		}
+
+		setIsSaving(true);
+
+		try {
+			if (mode === "new") {
+				const slug = formData.name
+					.toLowerCase()
+					.trim()
+					.replace(/[^\w\s-]/g, "")
+					.replace(/\s+/g, "-")
+					.replace(/-+/g, "-");
+
+				const now = new Date();
+				const dateStr = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, "0")}${String(now.getDate()).padStart(2, "0")}`;
+
+				const newProjectId = `${dateStr}_${slug}`;
+
+				createProject({
+					id: newProjectId,
+					name: formData.name,
+					description: formData.description,
+					useCase: formData.useCase,
+				});
+
+				router.push(`/${newProjectId}`);
+			} else if (projectId) {
+				updateProject({
+					name: formData.name,
+					description: formData.description,
+					useCase: formData.useCase,
+				});
+				handleClose();
+			}
+		} catch (error) {
+			console.error("Error saving project:", error);
+			alert("Fehler beim Speichern des Projekts.");
+		} finally {
+			setIsSaving(false);
+		}
+	};
+
+	const title = mode === "new" ? "Neues Projekt" : "Projektinformationen";
+	const description =
+		mode === "new"
+			? "Erstellen Sie ein neues Projekt mit Namen, Beschreibung und Anwendungsfall"
+			: "Bearbeiten Sie die Projektinformationen";
+
+	const footer = (
+		<div className="flex gap-2">
+			{mode === "edit" && projectId && (
+				<Button variant="outline" onClick={handleDelete} disabled={isSaving}>
+					<TrashIcon />
+					Projekt löschen
+				</Button>
+			)}
+			<Button variant="outline" onClick={handleClose} disabled={isSaving}>
+				<XIcon />
+				Änderungen Verwerfen
+			</Button>
+			<Button onClick={handleSave} disabled={isSaving}>
+				<FloppyDiskBackIcon />
+				{isSaving ? "Speichern..." : "Änderungen Speichern"}
+			</Button>
+		</div>
+	);
+
+	const customBackdrop = (
+		<div className="bg-primary absolute -z-99 flex h-full w-full items-center justify-center overflow-hidden">
+			<Background className="min-h-full min-w-full shrink-0" />
+		</div>
+	);
+
+	return (
+		<>
+			<ConfirmDialog />
+			<PageModal
+				open={isOpen}
+				onOpenChange={() => handleClose()}
+				title={title}
+				description={description}
+				footer={deleted ? undefined : footer}
+				customBackdrop={customBackdrop}
+			>
+				<ProjectModalContent
+					mode={mode}
+					projectId={projectId}
+					onFormChange={setFormData}
+					initialData={formData}
+					deleted={deleted}
+				/>
+			</PageModal>
+		</>
+	);
+}

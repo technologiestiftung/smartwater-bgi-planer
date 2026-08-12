@@ -1,0 +1,34 @@
+<svg width="464" height="144" viewBox="0 0 464 144" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="464" height="144" fill="white"/>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="16" y="26.887">Vegetationsh&#xf6;he in m</tspan></text>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="16" y="52.887">0,1</tspan></text>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="68.75" y="52.887">0,2</tspan></text>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="125.5" y="52.887">1</tspan></text>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="168.25" y="52.887">2.5</tspan></text>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="225" y="52.887">5</tspan></text>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="270.75" y="52.887">10</tspan></text>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="321.5" y="52.887">15</tspan></text>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="372.25" y="52.887">20</tspan></text>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="426" y="52.887">25+</tspan></text>
+<rect x="16" y="64" width="432" height="16" fill="url(#paint0_linear_5545_17491)"/>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="16" y="102.887">Altbaumbestand</tspan></text>
+<rect x="16" y="115" width="16" height="16" rx="8" fill="#6BBA44" stroke="black"/>
+<rect x="22" y="121" width="4" height="4" rx="2" fill="black" stroke="black"/>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="40" y="128.887">Stra&#xdf;enbaum</tspan></text>
+<rect x="135" y="115" width="16" height="16" rx="8" fill="#B4F593" stroke="black"/>
+<rect x="141" y="121" width="4" height="4" rx="2" fill="black" stroke="black"/>
+<text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="159" y="128.887">Anlagebaum</tspan></text>
+<defs>
+<linearGradient id="paint0_linear_5545_17491" x1="16" y1="72" x2="448" y2="72" gradientUnits="userSpaceOnUse">
+<stop offset="0.05" stop-color="#E9FFBE"/>
+<stop offset="0.150645" stop-color="#D3FFBE"/>
+<stop offset="0.264799" stop-color="#A3FF73"/>
+<stop offset="0.37741" stop-color="#55FF00"/>
+<stop offset="0.5" stop-color="#4CE600"/>
+<stop offset="0.605718" stop-color="#38A800"/>
+<stop offset="0.729127" stop-color="#70A800"/>
+<stop offset="0.847909" stop-color="#267300"/>
+<stop offset="0.95" stop-color="#897044"/>
+</linearGradient>
+</defs>
+</svg>

@@ -1,0 +1,390 @@
+/* eslint-disable complexity */
+"use client";
+
+import { FeatureDetailsModal } from "@/components/FeatureDetailViews/FeatureDetailsModal/FeatureDetailsModal";
+import { resolveMeasureId } from "@/lib/helpers/ol/measureFeature";
+import { fetchFeatureInfo } from "@/lib/helpers/wmsFeatureInfo";
+import { useMapStore } from "@/store/map";
+import { useProjectStore } from "@/store/project";
+import { useScenarioStore } from "@/store/scenario";
+import { useUiStore } from "@/store/ui";
+import Feature from "ol/Feature";
+import Overlay, { Options } from "ol/Overlay";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
+
+interface ClickControlProps {
+	layerIds: string[];
+	vectorLayerIds: string[];
+	wmsLayerIds: string[];
+	currentConfig?: any;
+	overlayOptions?: Options;
+	renderContent: (
+		feature: any,
+		layerId: string,
+		onClose: () => void,
+	) => React.ReactNode;
+	minZoomForClick?: number;
+}
+
+type Selection = {
+	feature: any;
+	layerId: string;
+	coordinate: [number, number];
+	displayMode: "overlay" | "modal";
+};
+
+type OverlayPositioning =
+	"bottom-left" | "bottom-right" | "top-left" | "top-right";
+
+const POSITION_OFFSETS: Record<OverlayPositioning, [number, number]> = {
+	"top-left": [5, 15],
+	"top-right": [-5, 15],
+	"bottom-left": [15, -5],
+	"bottom-right": [-15, -5],
+};
+
+export const ClickControl: FC<ClickControlProps> = ({
+	vectorLayerIds,
+	wmsLayerIds,
+	currentConfig,
+	overlayOptions,
+	renderContent,
+	minZoomForClick = 0,
+}) => {
+	const map = useMapStore((state) => state.map);
+	const { isDrawing, isBlockAreaSelecting, isDrawingNote } = useUiStore();
+	const setActiveArea = useProjectStore((state) => state.setActiveArea);
+	const activeScenarioId = useScenarioStore((state) => state.activeScenarioId);
+	const measures = useScenarioStore((state) => {
+		if (!state.activeScenarioId) {
+			return [];
+		}
+		return state.scenarios[state.activeScenarioId]?.measures ?? [];
+	});
+
+	const [selection, setSelection] = useState<Selection | null>(null);
+	const [cardPosition, setCardPosition] =
+		useState<OverlayPositioning>("bottom-left");
+	const [isLoading, setIsLoading] = useState(false);
+	const [isVisible, setIsVisible] = useState(false);
+	const [overlayReady, setOverlayReady] = useState(false);
+
+	const overlayRef = useRef<HTMLDivElement>(null);
+	const overlayInstanceRef = useRef<Overlay | null>(null);
+	const overlaySizeRef = useRef({ width: 0, height: 0 });
+	const showTimeoutRef = useRef<number | null>(null);
+	const hideTimeoutRef = useRef<number | null>(null);
+
+	const clearTimeouts = useCallback(() => {
+		if (showTimeoutRef.current) {
+			clearTimeout(showTimeoutRef.current);
+			showTimeoutRef.current = null;
+		}
+		if (hideTimeoutRef.current) {
+			clearTimeout(hideTimeoutRef.current);
+			hideTimeoutRef.current = null;
+		}
+	}, []);
+
+	const handleClose = useCallback(() => {
+		clearTimeouts();
+		setIsVisible(false);
+		hideTimeoutRef.current = setTimeout(() => {
+			setSelection(null);
+		}, 200) as unknown as number;
+	}, [clearTimeouts]);
+
+	const onCloseRender = useCallback(() => {
+		setIsVisible(false);
+		setSelection(null);
+	}, []);
+
+	const calculatePositioning = useCallback(
+		(pixel: [number, number]): OverlayPositioning => {
+			if (!map) return "top-left";
+			const mapSize = map.getSize();
+			if (!mapSize) return "top-left";
+
+			const { width, height } = overlaySizeRef.current;
+			const [pX, pY] = pixel;
+			const [mW, mH] = mapSize;
+			const buffer = 15;
+
+			const vertical = pY + height + buffer > mH ? "bottom" : "top";
+			const horizontal = pX + width + buffer > mW ? "right" : "left";
+			return `${vertical}-${horizontal}` as OverlayPositioning;
+		},
+		[map],
+	);
+
+	const findVectorFeature = useCallback(
+		(pixel: [number, number]) => {
+			if (!map) return null;
+
+			return map.forEachFeatureAtPixel(
+				pixel,
+				(feature, layer) => {
+					const id = layer?.get("id");
+					if (!id) return;
+
+					if (id === "project_notes") {
+						const clusteredFeatures = feature.get("features");
+						if (clusteredFeatures && clusteredFeatures.length > 1) return;
+						return { feature, layerId: id };
+					}
+
+					if (vectorLayerIds.includes(id)) {
+						return { feature, layerId: id };
+					}
+				},
+				{
+					hitTolerance: 4,
+				},
+			);
+		},
+		[map, vectorLayerIds],
+	);
+
+	const findWmsFeature = useCallback(
+		async (coordinate: [number, number]) => {
+			if (!map || wmsLayerIds.length === 0) return null;
+
+			const activeWmsLayers = map
+				.getAllLayers()
+				.filter((l) => l.getVisible() && wmsLayerIds.includes(l.get("id")))
+				.reverse();
+
+			const fetchPromises = activeWmsLayers.map(async (layer) => {
+				const layerId = layer.get("id");
+				try {
+					const result = await fetchFeatureInfo({ coordinate, layerId, map });
+					if (result?.attributes && Object.keys(result.attributes).length > 0) {
+						return { feature: result.attributes, layerId };
+					}
+				} catch (e) {
+					console.error(e);
+					return null;
+				}
+				return null;
+			});
+
+			const results = await Promise.all(fetchPromises);
+			return results.find((res) => res !== null) || null;
+		},
+		[map, wmsLayerIds],
+	);
+
+	const setActiveAreaFromCode = useCallback(
+		(code: string | null) => {
+			setActiveArea(code);
+		},
+		[setActiveArea],
+	);
+
+	useEffect(() => {
+		if (!map || !overlayRef.current) return;
+
+		const overlay = new Overlay({
+			element: overlayRef.current,
+			id: "ClickControl-overlay",
+			stopEvent: true,
+			...overlayOptions,
+		});
+
+		map.addOverlay(overlay);
+		overlayInstanceRef.current = overlay;
+
+		return () => {
+			map.removeOverlay(overlay);
+		};
+	}, [map, overlayOptions]);
+
+	useEffect(() => {
+		if (isDrawing || isBlockAreaSelecting || isDrawingNote) {
+			handleClose();
+		}
+	}, [isDrawing, isBlockAreaSelecting, isDrawingNote, handleClose]);
+
+	useEffect(() => {
+		if (!map) return;
+
+		const handleClick = async (evt: any) => {
+			if (isDrawing || isBlockAreaSelecting || isDrawingNote) return;
+
+			if ((map.getView().getZoom() ?? 0) < minZoomForClick) return;
+
+			const vectorMatch = findVectorFeature(evt.pixel);
+
+			if (vectorMatch) {
+				const clickedFeature =
+					vectorMatch.feature instanceof Feature
+						? vectorMatch.feature
+						: undefined;
+
+				let code = clickedFeature?.get("code") as string | undefined;
+
+				if (!code) {
+					const measureId = resolveMeasureId(clickedFeature);
+					if (measureId && activeScenarioId) {
+						const clickedMeasure = measures.find(
+							(item) => item.id === measureId,
+						);
+						code = clickedMeasure?.code ?? undefined;
+					}
+				}
+
+				setActiveAreaFromCode(code ?? null);
+
+				clearTimeouts();
+				setCardPosition(calculatePositioning(evt.pixel));
+				setSelection({
+					...vectorMatch,
+					coordinate: evt.coordinate,
+					displayMode: "overlay",
+				});
+				showTimeoutRef.current = setTimeout(() => {
+					setIsVisible(true);
+				}, 50) as unknown as number;
+				return;
+			}
+
+			if (wmsLayerIds.length > 0) {
+				setIsLoading(true);
+
+				try {
+					const wmsMatch = await findWmsFeature(evt.coordinate);
+					if (wmsMatch) {
+						const isModal =
+							currentConfig?.featureDisplay === "modal" &&
+							currentConfig?.canQueryFeatures?.includes(wmsMatch.layerId);
+
+						clearTimeouts();
+						setCardPosition(calculatePositioning(evt.pixel));
+						setSelection({
+							...wmsMatch,
+							coordinate: evt.coordinate,
+							displayMode: isModal ? "modal" : "overlay",
+						});
+
+						if (!isModal) {
+							showTimeoutRef.current = setTimeout(() => {
+								setIsVisible(true);
+							}, 50) as unknown as number;
+						}
+					} else {
+						handleClose();
+					}
+				} finally {
+					setIsLoading(false);
+					document.body.style.cursor = "auto";
+				}
+			} else {
+				handleClose();
+			}
+		};
+
+		map.on("click", handleClick);
+
+		return () => {
+			clearTimeouts();
+			map.un("click", handleClick);
+			document.body.style.cursor = "auto";
+		};
+	}, [
+		map,
+		isDrawing,
+		isBlockAreaSelecting,
+		isDrawingNote,
+		minZoomForClick,
+		findVectorFeature,
+		findWmsFeature,
+		activeScenarioId,
+		measures,
+		setActiveAreaFromCode,
+		calculatePositioning,
+		currentConfig,
+		wmsLayerIds,
+		clearTimeouts,
+		handleClose,
+	]);
+
+	useEffect(() => {
+		const overlay = overlayInstanceRef.current;
+		if (!overlay) return;
+
+		if (selection?.displayMode === "overlay" && selection.coordinate) {
+			overlay.setPositioning(cardPosition);
+			overlay.setOffset(POSITION_OFFSETS[cardPosition]);
+			overlay.setPosition(selection.coordinate);
+		} else {
+			overlay.setPosition(undefined);
+		}
+	}, [selection, cardPosition]);
+
+	useEffect(() => {
+		if (!overlayRef.current) return;
+
+		const updateSize = () => {
+			requestAnimationFrame(() => {
+				const rect = overlayRef.current?.getBoundingClientRect();
+				if (rect) {
+					overlaySizeRef.current = {
+						width: rect.width,
+						height: rect.height,
+					};
+					setOverlayReady(true);
+				}
+			});
+		};
+
+		updateSize();
+
+		const observer = new ResizeObserver((entries) => {
+			for (const entry of entries) {
+				overlaySizeRef.current = {
+					width: entry.contentRect.width,
+					height: entry.contentRect.height,
+				};
+			}
+		});
+		observer.observe(overlayRef.current);
+		return () => observer.disconnect();
+	}, [selection]);
+
+	return (
+		<>
+			<div
+				ref={overlayRef}
+				className="ClickControl-root"
+				style={{
+					pointerEvents: selection?.displayMode === "overlay" ? "auto" : "none",
+					visibility: overlayReady ? "visible" : "hidden",
+					opacity: isVisible ? 1 : 0,
+					transition: "opacity 200ms ease-out",
+				}}
+			>
+				{selection?.displayMode === "overlay" &&
+					renderContent(selection.feature, selection.layerId, onCloseRender)}
+			</div>
+
+			{selection?.displayMode === "modal" && (
+				<FeatureDetailsModal
+					attributes={
+						selection.feature?.getProperties
+							? selection.feature.getProperties()
+							: selection.feature
+					}
+					layerId={selection.layerId}
+					coordinate={selection.coordinate}
+					onClose={handleClose}
+				/>
+			)}
+
+			{isLoading && (
+				<div className="pointer-events-none fixed right-4 bottom-4 animate-pulse rounded bg-white/80 p-2 text-xs shadow-sm">
+					Lade Feature-Info...
+				</div>
+			)}
+		</>
+	);
+};
