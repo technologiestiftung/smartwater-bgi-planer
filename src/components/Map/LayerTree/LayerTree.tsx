@@ -185,7 +185,9 @@ export const LayerTree: FC = () => {
 
 	const handleUploadedToggle = (id: string, visible: boolean) => {
 		setLayerVisibility(id, !visible);
-		saveLayer(id);
+		saveLayer(id).catch((error) => {
+			console.error(`[LayerTree] Error saving layer ${id}:`, error);
+		});
 	};
 	const [activeLayersInModule3, setActiveLayersInModule3] = useState<string[]>(
 		[],
