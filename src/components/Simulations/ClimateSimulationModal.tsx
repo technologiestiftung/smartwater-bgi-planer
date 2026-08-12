@@ -1,14 +1,14 @@
 "use client";
 
-import { ModuleMeasurementConfig } from "@/types/shared";
 import {
 	DropdownMenu,
-	DropdownMenuTrigger,
 	DropdownMenuContent,
 	DropdownMenuItem,
+	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useEffect, useState } from "react";
+import { ModuleMeasurementConfig } from "@/types/shared";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { getModuleStepMeasure } from "../Modules/shared/moduleConfig";
 import dropdownMenus from "./dropDownMenus.json";
 
@@ -119,8 +119,9 @@ export function ClimateSimulationModal({
 				<div className="flex min-h-0 flex-1 flex-col items-center gap-2 overflow-hidden">
 					{imgError && (
 						<>
-							<p className="text-red font-bold">Fehler beim Laden des Bildes</p>
-							<p>Dateienpfad: {fileName}</p>
+							<p className="text-red font-bold">
+								Simulation noch nicht verfügbar
+							</p>
 						</>
 					)}
 					{fileName && !imgError && (

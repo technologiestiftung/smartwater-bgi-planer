@@ -221,7 +221,6 @@ export const useDrawTree = () => {
 					drawLayerId: drawLayerId ?? null,
 				};
 
-				console.log("[DrawTree] addMeasure", measure);
 				drawnFeature.set("measureId", measure.id);
 				useScenarioStore.getState().addMeasure(activeScenarioId, measure);
 				useUiStore.getState().addDraftMeasureId(measure.id);

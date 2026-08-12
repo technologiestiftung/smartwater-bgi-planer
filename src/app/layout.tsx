@@ -1,4 +1,3 @@
-import StoreGuard from "@/components/Debugging/StoreGuard";
 import { LayerInitializer } from "@/components/Map/Initializer/LayerInitializer/LayerInitializer";
 import { MapInitializer } from "@/components/Map/Initializer/MapInitializer/MapInitializer";
 import Background from "@/images/background.svg";
@@ -70,7 +69,6 @@ export default function RootLayout({
 						{children}
 						{modal}
 					</div>
-					<StoreGuard />
 					<div className="bg-primary absolute -z-99 flex h-full w-full items-center justify-center overflow-hidden">
 						<Background className="min-h-full min-w-full shrink-0" />
 					</div>
