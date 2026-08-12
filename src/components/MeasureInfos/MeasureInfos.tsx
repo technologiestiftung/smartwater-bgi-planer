@@ -61,6 +61,7 @@ const MeasureInfos: FC<MeasureInfosProps> = ({ liveMeasureInfo }) => {
 					className={`font-semibold ${liveMeasureInfo.isOverPotential ? "text-destructive" : ""}`}
 				>
 					{liveMeasureInfo.area} {measureName} geplant
+					{liveMeasureInfo.isOverPotential && " – Kapazität überschritten"}
 				</p>
 				{activeRemaining !== null && (
 					<p>{Math.round(activeRemaining)} m² Kapazität</p>

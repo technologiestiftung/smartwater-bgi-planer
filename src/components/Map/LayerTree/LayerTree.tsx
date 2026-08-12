@@ -83,6 +83,7 @@ const LayerCard: FC<LayerCardProps> = ({ layer, onToggle, onOpacity }) => {
 					value={[layer.opacity]}
 					onValueChange={([v]) => onOpacity(layer.id, v)}
 					disabled={!layer.visibility}
+					aria-label={`Deckkraft ${name}`}
 					className="min-h-6 w-full"
 				/>
 			</div>
