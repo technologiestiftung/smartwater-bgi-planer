@@ -5,7 +5,11 @@ import restoreUmlaute from "@/lib/helpers/restoreUmlaute";
 import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";
 import { ModuleMeasurementConfig, ModuleStepConfig } from "@/types/shared";
-import { ArrowRightIcon, PencilRulerIcon } from "@phosphor-icons/react";
+import {
+	ArrowRightIcon,
+	InfoIcon,
+	PencilRulerIcon,
+} from "@phosphor-icons/react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { getCenter } from "ol/extent";
@@ -78,9 +82,29 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 	const [showCurrentState, setShowCurrentState] = useState(false);
 	const [mapWasZoomed, setMapWasZoomed] = useState(false);
 	const [activeChart, setActiveChart] = useState<string>(useCharts[0]);
+	const [currentZoom, setCurrentZoom] = useState(0);
 	const layers = useLayersStore((state) => state.layers);
 	const map = useMapStore((state) => state.map);
 	const floodRiskLayerConfigIdRef = useRef(floodRiskLayerConfigId);
+
+	useEffect(() => {
+		if (!map) return;
+
+		const view = map.getView();
+		if (!view) return;
+
+		const updateZoom = () => {
+			const zoom = view.getZoom();
+			setCurrentZoom(Math.round(zoom || 0));
+		};
+
+		updateZoom();
+
+		view.on("change:resolution", updateZoom);
+		return () => {
+			view.un("change:resolution", updateZoom);
+		};
+	}, [map]);
 
 	useEffect(() => {
 		if (!activeSimulation || !floodRiskLayerConfigId || layers.size === 0)
@@ -190,6 +214,27 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 						<p className="text-muted-foreground text-sm">
 							Erneut klicken, um mit dem Ist-Zustand zu vergleichen.
 						</p>
+						<div className="border-primary bg-primary-50 text-primary mb-3 flex items-start gap-2 rounded-sm border border-dashed p-3 text-sm">
+							<span className="text-primary mt-0.5">
+								<InfoIcon size={20} weight="duotone" />
+							</span>
+							<span>
+								Bitte beachten Sie, dass Sie zum Darstellen der Karten ein
+								Zoomlevel von mindestens
+								<span className="font-bold"> 4 </span>
+								benötigen.
+								<br />
+								Ihr aktuelles Zoomlevel ist
+								<span
+									className={
+										currentZoom < 4 ? "text-red font-bold" : "font-bold"
+									}
+								>
+									&nbsp;{currentZoom}
+								</span>
+								.
+							</span>
+						</div>
 						<div className="flex gap-2">
 							{SCENARIOS.map((scenario) => (
 								<Button

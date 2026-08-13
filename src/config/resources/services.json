@@ -224,6 +224,7 @@
 		"format": "image/png",
 		"datasets": false,
 		"layers": "Gefaehrdungsstufe_Baeume",
+		"maxScale": "25000",
 		"gfiAttributes": "ignore"
 	},
 	{
@@ -236,6 +237,7 @@
 		"format": "image/png",
 		"datasets": false,
 		"layers": "Gefaehrdungsstufe_Gruendaecher",
+		"maxScale": "25000",
 		"gfiAttributes": "ignore"
 	},
 	{
@@ -248,6 +250,7 @@
 		"format": "image/png",
 		"datasets": false,
 		"layers": "Gefaehrdungsstufe_Mulde",
+		"maxScale": "25000",
 		"gfiAttributes": "ignore"
 	},
 	{
@@ -260,6 +263,7 @@
 		"format": "image/png",
 		"datasets": false,
 		"layers": "Gefaehrdungsstufe_Mulde-Rigole",
+		"maxScale": "25000",
 		"gfiAttributes": "ignore"
 	},
 	{
@@ -272,6 +276,7 @@
 		"format": "image/png",
 		"datasets": false,
 		"layers": "Gefaehrdungsstufe_Rigole",
+		"maxScale": "25000",
 		"gfiAttributes": "ignore"
 	},
 	{
@@ -284,6 +289,7 @@
 		"format": "image/png",
 		"datasets": false,
 		"layers": "Wasserstand_Baeume",
+		"maxScale": "25000",
 		"gfiAttributes": "ignore"
 	},
 	{
@@ -296,6 +302,7 @@
 		"format": "image/png",
 		"datasets": false,
 		"layers": "Wasserstand_Gruendaecher",
+		"maxScale": "25000",
 		"gfiAttributes": "ignore"
 	},
 	{
@@ -308,6 +315,7 @@
 		"format": "image/png",
 		"datasets": false,
 		"layers": "Wasserstand_Mulde",
+		"maxScale": "25000",
 		"gfiAttributes": "ignore"
 	},
 	{
@@ -320,6 +328,7 @@
 		"format": "image/png",
 		"datasets": false,
 		"layers": "Wasserstand_Mulde-Rigole",
+		"maxScale": "25000",
 		"gfiAttributes": "ignore"
 	},
 	{
@@ -332,6 +341,7 @@
 		"format": "image/png",
 		"datasets": false,
 		"layers": "Wasserstand_Rigole",
+		"maxScale": "25000",
 		"gfiAttributes": "ignore"
 	},
 	{
@@ -441,6 +451,7 @@
 		"format": "image/png",
 		"datasets": false,
 		"layers": "Wasserstand_Ist-Zustand",
+		"maxScale": "25000",
 		"gfiAttributes": "ignore"
 	},
 	{
@@ -453,6 +464,7 @@
 		"format": "image/png",
 		"datasets": false,
 		"layers": "Gefaehrdungsstufe_Ist-Zustand",
+		"maxScale": "25000",
 		"gfiAttributes": "ignore"
 	},
 	{
