@@ -72,6 +72,8 @@ export const LayerInitializer: FC = () => {
 				config: initialConfig,
 			});
 
+			const isBaseLayer = baseLayerIds.has(layerElement.id);
+
 			if (!olLayer) {
 				newManagedLayersMap.set(layerElement.id, {
 					id: layerElement.id,
@@ -81,13 +83,12 @@ export const LayerInitializer: FC = () => {
 					visibility: layerElement.visibility,
 					opacity: 1,
 					zIndex: 0,
-					layerType: "subject",
+					layerType: isBaseLayer ? "base" : "subject",
 					error: error || "Layer creation failed",
 				});
 				return;
 			}
 
-			const isBaseLayer = baseLayerIds.has(layerElement.id);
 			const isDrawLayer = drawLayerIds.includes(layerElement.id);
 			const zIndex = calculateZIndex(isBaseLayer, isDrawLayer, index);
 
