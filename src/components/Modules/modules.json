@@ -293,18 +293,7 @@
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
 								],
-								"climateSimulationFileSlug": "DachInt",
-								"floodRiskLayerConfigId": "Gruendaecher",
-								"floodRiskChartFolderSlug": "Gruendaecher",
-								"floodRiskChartFileSlug": "Gr_nd_cher",
-								"floodRiskText": [
-									"Für die Bewertung der Effekte auf die Überflutungsgefährdung wurde ein Modellgebiet mit einer Größe von ca. 4,5 km² im Bezirk Friedrichshain-Kreuzberg betrachtet.",
-									"Die Karte „Wasserstand“ zeigt die räumliche Ausdehnung von Überflutungen in diesem Gebiet durch ein außergewöhnliches Starkregenereignis. Dargestellt werden neben Überflutungstiefen auch die Fließgeschwindigkeit sowie Fließrichtung bei einer vollständigen Implementierung der potenziellen Flächen für Gründächer sowie im derzeitigen Zustand. Berechnet wurden diese Werte auf Basis eines gekoppelten 1D-Kanalnetz- und eines 2D-Oberflächenabflussmodells.",
-									"Die Karte „Gefährdungsstufe“ ermöglicht einen Vergleich der Gefährdung in diesem Gebiet durch ein außergewöhnliches Starkregenereignis im IST-Zustand sowie bei einer vollständigen Implementierung der potenziellen Flächen für Gründächer. Die Gefährdungsklassen leiten sich dabei aus Fließgeschwindigkeiten und Wasserständen ab, welche mit Hilfe eines gekoppelten 1D-Kanalnetz-/2D-Oberflächenabflussmodells bestimmt wurden. Die Klassifizierung in die vorliegenden 4 Klassen erfolgt nach der Methodik des Naturgefahrenportals.",
-									"Eine Implementierung von 100 % entspricht einer potenziellen Fläche von ca. 564 000 m² Gründächer für das betrachtete Gebiet.",
-									"Durch die vorliegenden Diagramme werden zudem auch die Effekte bei geringeren Implementierungsgraden auf die gefährdeten Flächen (Diagramm 1) sowie auf das Überflutungsvolumen (Diagramm 2) deutlich.",
-									"Neben den Effekten einzelner Maßnahmen und ihren unterschiedlichen Implementierungsgraden werden außerdem Kombinationen verschiedener Maßnahme betrachtet (Diagramm 3 und 4)."
-								]
+								"climateSimulationFileSlug": "DachInt"
 							}
 						},
 						{
@@ -485,6 +474,7 @@
 									}
 								],
 								"climateSimulationFileSlug": "TeilEntsiegelung",
+								"floodRiskLayerConfigId": "Teilentsiegelung",
 								"floodRiskChartFolderSlug": "Teilentsiegelung",
 								"floodRiskText": [
 									"Für die Bewertung der Effekte auf die Überflutungsgefährdung wurde ein Modellgebiet mit einer Größe von ca. 4,5 km² im Bezirk Friedrichshain-Kreuzberg betrachtet.",
@@ -575,6 +565,7 @@
 									}
 								],
 								"climateSimulationFileSlug": "VollEntsiegelung",
+								"floodRiskLayerConfigId": "Gruenflaechen",
 								"floodRiskChartFolderSlug": "Gruenflaechen",
 								"floodRiskChartFileSlug": "Gr_nfl_chen",
 								"floodRiskText": [
@@ -667,6 +658,7 @@
 									}
 								],
 								"climateSimulationFileSlug": "Gruen",
+								"floodRiskLayerConfigId": "Gruenflaechen",
 								"floodRiskChartFolderSlug": "Gruenflaechen",
 								"floodRiskChartFileSlug": "Gr_nfl_chen",
 								"floodRiskText": [
