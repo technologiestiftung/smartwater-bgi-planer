@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import restoreUmlaute from "@/lib/helpers/restoreUmlaute";
+import { cn } from "@/lib/utils";
 import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";
 import { ModuleMeasurementConfig, ModuleStepConfig } from "@/types/shared";
@@ -211,10 +212,54 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 						<p className="text-primary text-lg font-bold">
 							Simulation auswählen
 						</p>
-						<p className="text-muted-foreground text-sm">
-							Erneut klicken, um mit dem Ist-Zustand zu vergleichen.
-						</p>
-						<div className="border-primary bg-primary-50 text-primary mb-3 flex items-start gap-2 rounded-sm border border-dashed p-3 text-sm">
+
+						<div className="mb-4 flex flex-wrap gap-6">
+							{SCENARIOS.map((scenario) => {
+								const isActiveScenario = activeSimulation === scenario.id;
+								const showsCurrentState = isActiveScenario && showCurrentState;
+								const showsSimulation = isActiveScenario && !showCurrentState;
+								return (
+									<div key={scenario.id} className="flex flex-col gap-2">
+										<p className="text-primary text-sm font-medium">
+											{scenario.label}
+										</p>
+										<div className="border-primary inline-flex overflow-hidden rounded-xs border-2">
+											<button
+												type="button"
+												onClick={() => {
+													setActiveSimulation(scenario.id);
+													setShowCurrentState(true);
+												}}
+												className={cn(
+													"focus-visible:ring-ring/50 flex h-8 flex-1 cursor-pointer items-center justify-center px-3 text-sm font-medium whitespace-nowrap transition-colors outline-none focus-visible:ring-[3px]",
+													showsCurrentState
+														? "bg-primary text-primary-foreground"
+														: "bg-background text-primary hover:bg-light",
+												)}
+											>
+												Ist-Zustand
+											</button>
+											<button
+												type="button"
+												onClick={() => {
+													setActiveSimulation(scenario.id);
+													setShowCurrentState(false);
+												}}
+												className={cn(
+													"border-primary focus-visible:ring-ring/50 flex h-8 flex-1 cursor-pointer items-center justify-center border-l-2 px-3 text-sm font-medium whitespace-nowrap transition-colors outline-none focus-visible:ring-[3px]",
+													showsSimulation
+														? "bg-primary text-primary-foreground"
+														: "bg-background text-primary hover:bg-light",
+												)}
+											>
+												Simulation
+											</button>
+										</div>
+									</div>
+								);
+							})}
+						</div>
+						<div className="border-primary bg-primary-50 text-primary mb-4 flex items-start gap-2 rounded-sm border border-dashed p-3 text-sm">
 							<span className="text-primary mt-0.5">
 								<InfoIcon size={20} weight="duotone" />
 							</span>
@@ -234,31 +279,6 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 								</span>
 								.
 							</span>
-						</div>
-						<div className="flex gap-2">
-							{SCENARIOS.map((scenario) => (
-								<Button
-									key={scenario.id}
-									variant={
-										activeSimulation === scenario.id ? "default" : "outline"
-									}
-									size="sm"
-									onClick={() => {
-										if (activeSimulation === scenario.id) {
-											setShowCurrentState((prev) => !prev);
-											return;
-										}
-										setActiveSimulation(scenario.id);
-										setShowCurrentState(false);
-									}}
-									className="text-sm"
-								>
-									{scenario.label}
-									{activeSimulation === scenario.id && showCurrentState
-										? " (Ist-Zustand)"
-										: ""}
-								</Button>
-							))}
 						</div>
 						<div className="mb-4 flex flex-col gap-2">
 							{SCENARIOS.map((scenario) => (
