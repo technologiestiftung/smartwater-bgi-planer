@@ -220,7 +220,7 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 								const showsSimulation = isActiveScenario && !showCurrentState;
 								return (
 									<div key={scenario.id} className="flex flex-col gap-2">
-										<p className="text-primary text-sm font-medium">
+										<p className="text-primary text-sm font-bold">
 											{scenario.label}
 										</p>
 										<div className="border-primary inline-flex overflow-hidden rounded-xs border-2">
