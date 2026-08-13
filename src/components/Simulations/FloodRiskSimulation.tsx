@@ -174,7 +174,7 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 			duration,
 			padding,
 		});
-	}, [activeSimulation, map]);
+	}, [activeSimulation, map, mapWasZoomed, setMapWasZoomed]);
 
 	useEffect(() => {
 		floodRiskLayerConfigIdRef.current = floodRiskLayerConfigId;
@@ -291,7 +291,7 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 										alt="Legende für die Karte"
 										width={400}
 										height={200}
-										className="h-[18px] w-auto"
+										className="h-4.5 w-auto"
 									/>
 								</div>
 							))}
@@ -324,7 +324,7 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 								<Image
 									src={imageSRC}
 									alt={`${activeChart}${floodRiskChartFolderSlug}`}
-									className="mt-4 h-full max-h-[100%] w-full object-contain object-top align-top"
+									className="mt-4 h-full max-h-full w-full object-contain object-top align-top"
 									onError={() => {
 										console.error(`Error loading image: ${imageSRC}`);
 									}}
