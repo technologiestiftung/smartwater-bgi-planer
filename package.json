@@ -31,7 +31,6 @@
 		"@types/jszip": "^3.4.0",
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",
-		"docx": "^9.7.1",
 		"docxtemplater": "^3.69.0",
 		"docxtemplater-image-module-free": "^1.1.1",
 		"embla-carousel-react": "^8.6.0",
