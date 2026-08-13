@@ -455,6 +455,58 @@
 		"gfiAttributes": "ignore"
 	},
 	{
+		"id": "bgi-planer:Gefaehrdungsstufe_Gruenflaechen",
+		"name": "Gefährdungsstufe Ist-Zustand",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "Gefaehrdungsstufe_Gruenflaechen",
+		"maxScale": "25000",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:Gefaehrdungsstufe_Teilentsiegelung",
+		"name": "Gefährdungsstufe Ist-Zustand",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "Gefaehrdungsstufe_Teilentsiegelung",
+		"maxScale": "25000",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:Wasserstand_Gruenflaechen",
+		"name": "Gefährdungsstufe Ist-Zustand",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "Wasserstand_Gruenflaechen",
+		"maxScale": "25000",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:Wasserstand_Teilentsiegelung",
+		"name": "Gefährdungsstufe Ist-Zustand",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "Wasserstand_Teilentsiegelung ",
+		"maxScale": "25000",
+		"gfiAttributes": "ignore"
+	},
+	{
 		"id": "bgi-planer:Gefaehrdungsstufe_Ist-Zustand",
 		"name": "Gefährdungsstufe Ist-Zustand",
 		"crs": "EPSG:25833",
