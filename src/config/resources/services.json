@@ -429,6 +429,33 @@
 		"gfiAttributes": "ignore"
 	},
 	{
+		"id": "UPDATE 20260813"
+	},
+	{
+		"id": "bgi-planer:Wasserstand_Ist-Zustand",
+		"name": "Wasserstand Ist-Zustand",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "Wasserstand_Ist-Zustand",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:Gefaehrdungsstufe_Ist-Zustand",
+		"name": "Gefährdungsstufe Ist-Zustand",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "Gefaehrdungsstufe_Ist-Zustand",
+		"gfiAttributes": "ignore"
+	},
+	{
 		"id": "BGI DRAW MAPS"
 	},
 	{

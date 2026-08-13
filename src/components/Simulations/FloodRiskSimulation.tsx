@@ -1,20 +1,20 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { PencilRulerIcon, ArrowRightIcon } from "@phosphor-icons/react";
+import restoreUmlaute from "@/lib/helpers/restoreUmlaute";
+import { useLayersStore } from "@/store/layers";
+import { useMapStore } from "@/store/map";
+import { ModuleMeasurementConfig, ModuleStepConfig } from "@/types/shared";
+import { ArrowRightIcon, PencilRulerIcon } from "@phosphor-icons/react";
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
+import { getCenter } from "ol/extent";
+import { transformExtent } from "ol/proj";
+import { useEffect, useRef, useState } from "react";
 import {
 	getModuleStep,
 	getModuleStepMeasure,
 } from "../Modules/shared//moduleConfig";
-import { ModuleMeasurementConfig, ModuleStepConfig } from "@/types/shared";
-import { useEffect, useRef, useState } from "react";
-import { useLayersStore } from "@/store/layers";
-import { useMapStore } from "@/store/map";
-import restoreUmlaute from "@/lib/helpers/restoreUmlaute";
-import Image from "next/image";
-import { getCenter } from "ol/extent";
-import { transformExtent } from "ol/proj";
 
 interface FloodRiskProps {
 	floodRisk: string;
@@ -75,6 +75,7 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 
 	const [activeSimulation, setActiveSimulation] =
 		useState<ActiveSimulation>("waterLevel");
+	const [showCurrentState, setShowCurrentState] = useState(false);
 	const [mapWasZoomed, setMapWasZoomed] = useState(false);
 	const [activeChart, setActiveChart] = useState<string>(useCharts[0]);
 	const layers = useLayersStore((state) => state.layers);
@@ -85,28 +86,39 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 		if (!activeSimulation || !floodRiskLayerConfigId || layers.size === 0)
 			return;
 
-		const configIdWaterLevel = `bgi-planer:Wasserstand_${floodRiskLayerConfigId}`;
-		const configIdHazardLevel = `bgi-planer:Gefaehrdungsstufe_${floodRiskLayerConfigId}`;
+		const layerIds = {
+			waterLevel: `bgi-planer:Wasserstand_${floodRiskLayerConfigId}`,
+			waterLevelCurrentState: "bgi-planer:Wasserstand_Ist-Zustand",
+			hazardLevel: `bgi-planer:Gefaehrdungsstufe_${floodRiskLayerConfigId}`,
+			hazardLevelCurrentState: "bgi-planer:Gefaehrdungsstufe_Ist-Zustand",
+		};
 
-		const activeConfigId =
+		const scenarioConfigId =
 			activeSimulation === "waterLevel"
-				? configIdWaterLevel
-				: configIdHazardLevel;
-		const inactiveConfigId =
+				? layerIds.waterLevel
+				: layerIds.hazardLevel;
+		const currentStateConfigId =
 			activeSimulation === "waterLevel"
-				? configIdHazardLevel
-				: configIdWaterLevel;
+				? layerIds.waterLevelCurrentState
+				: layerIds.hazardLevelCurrentState;
+		const activeConfigId = showCurrentState
+			? currentStateConfigId
+			: scenarioConfigId;
 
-		const activeLayer = layers.get(activeConfigId);
-		const inactiveLayer = layers.get(inactiveConfigId);
-
-		if (activeLayer && !activeLayer.visibility) {
-			setLayerVisibility(activeConfigId, true);
-		}
-		if (inactiveLayer && inactiveLayer.visibility) {
-			setLayerVisibility(inactiveConfigId, false);
-		}
-	}, [activeSimulation, floodRiskLayerConfigId, layers, setLayerVisibility]);
+		Object.values(layerIds).forEach((configId) => {
+			const layer = layers.get(configId);
+			const shouldBeVisible = configId === activeConfigId;
+			if (layer && layer.visibility !== shouldBeVisible) {
+				setLayerVisibility(configId, shouldBeVisible);
+			}
+		});
+	}, [
+		activeSimulation,
+		showCurrentState,
+		floodRiskLayerConfigId,
+		layers,
+		setLayerVisibility,
+	]);
 
 	useEffect(() => {
 		if (!map || mapWasZoomed) return;
@@ -149,6 +161,8 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 			if (currentId) {
 				setLayerVisibility(`bgi-planer:Wasserstand_${currentId}`, false);
 				setLayerVisibility(`bgi-planer:Gefaehrdungsstufe_${currentId}`, false);
+				setLayerVisibility("bgi-planer:Wasserstand_Ist-Zustand", false);
+				setLayerVisibility("bgi-planer:Gefaehrdungsstufe_Ist-Zustand", false);
 			}
 		};
 	}, [setLayerVisibility]);
@@ -173,6 +187,9 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 						<p className="text-primary text-lg font-bold">
 							Simulation auswählen
 						</p>
+						<p className="text-muted-foreground text-sm">
+							Erneut klicken, um mit dem Ist-Zustand zu vergleichen.
+						</p>
 						<div className="flex gap-2">
 							{SCENARIOS.map((scenario) => (
 								<Button
@@ -181,10 +198,20 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 										activeSimulation === scenario.id ? "default" : "outline"
 									}
 									size="sm"
-									onClick={() => setActiveSimulation(scenario.id)}
+									onClick={() => {
+										if (activeSimulation === scenario.id) {
+											setShowCurrentState((prev) => !prev);
+											return;
+										}
+										setActiveSimulation(scenario.id);
+										setShowCurrentState(false);
+									}}
 									className="text-sm"
 								>
 									{scenario.label}
+									{activeSimulation === scenario.id && showCurrentState
+										? " (Ist-Zustand)"
+										: ""}
 								</Button>
 							))}
 						</div>
