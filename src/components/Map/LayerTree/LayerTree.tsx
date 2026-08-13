@@ -1,5 +1,6 @@
 "use client";
 
+import { useLayerPersistence } from "@/components/Map/LayerManager/hooks/useLayerPersistence";
 import { Separator } from "@/components/ui/separator";
 import { Slider } from "@/components/ui/slider";
 import {
@@ -176,7 +177,18 @@ export const LayerTree: FC = () => {
 		);
 	const isLayerTreeVisible = useUiStore((state) => state.isLayerTreeVisible);
 	const isAddMeasureActive = useUiStore((state) => state.isAddMeasureActive);
+	const { saveLayer } = useLayerPersistence({
+		autoSave: false,
+		autoRestore: false,
+	});
 	const [search, setSearch] = useState("");
+
+	const handleUploadedToggle = (id: string, visible: boolean) => {
+		setLayerVisibility(id, !visible);
+		saveLayer(id).catch((error) => {
+			console.error(`[LayerTree] Error saving layer ${id}:`, error);
+		});
+	};
 	const [activeLayersInModule3, setActiveLayersInModule3] = useState<string[]>(
 		[],
 	);
@@ -331,7 +343,7 @@ export const LayerTree: FC = () => {
 							<LayerSection
 								title="Zusatzkarten"
 								layers={filteredUploaded}
-								onToggle={(id, v) => setLayerVisibility(id, !v)}
+								onToggle={handleUploadedToggle}
 								onOpacity={setLayerOpacity}
 							/>
 						)}

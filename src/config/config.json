@@ -84,15 +84,15 @@
 							"visibility": false
 						},
 						{
+							"id": "ua_srhk:dc_wasserstand_aussergew_kostra",
+							"visibility": false
+						},
+						{
 							"id": "ua_srhk:da_fr_aussergewoehnlich",
 							"visibility": false
 						},
 						{
 							"id": "ua_srgk:bb_fliessgeschwindigkeit_aussergewoehnlich",
-							"visibility": false
-						},
-						{
-							"id": "ua_srhk:dc_wasserstand_aussergew_kostra",
 							"visibility": false
 						},
 						{

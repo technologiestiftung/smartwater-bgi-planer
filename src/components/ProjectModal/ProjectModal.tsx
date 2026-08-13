@@ -11,7 +11,6 @@ import { useProjectStore } from "@/store/project";
 import { UseCase } from "@/store/project/types";
 import {
 	ArrowLeftIcon,
-	DownloadIcon,
 	FloppyDiskBackIcon,
 	TrashIcon,
 	XIcon,
@@ -37,10 +36,6 @@ export function ProjectModal({ mode, projectId }: ProjectModalProps) {
 					Wollen Sie das aktuelle Projekt <b>endgültig löschen?</b>
 				</p>
 				<p className="max-w-sm">
-					Sollten Sie später weiter arbeiten wollen, klicken Sie bitte “Download
-					und speichern”.
-				</p>
-				<p className="max-w-sm">
 					Klicken Sie auf “Löschen” um ein neues Projekt anfangen zu können.
 				</p>
 			</div>
@@ -55,16 +50,6 @@ export function ProjectModal({ mode, projectId }: ProjectModalProps) {
 			<Button>
 				<TrashIcon />
 				Löschen
-			</Button>
-		),
-		additionalButtons: (
-			<Button
-				disabled
-				variant="outline"
-				onClick={() => console.log("Download")}
-			>
-				<DownloadIcon />
-				Download und speichern
 			</Button>
 		),
 	});

@@ -18,6 +18,11 @@ import VectorLayer from "ol/layer/Vector";
 import { Vector as VectorSource } from "ol/source";
 import { FC, useState } from "react";
 
+const PARAM_LABELS: Partial<Record<string, string>> = {
+	area: "Fläche",
+	connectedArea: "Angeschlossene Fläche",
+};
+
 const getDisplayName = (configId: string): string => {
 	const layer = (layerConfig as Array<{ id?: string; name?: string }>).find(
 		(item) => item.id === configId,
@@ -70,7 +75,10 @@ export const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
 		return null;
 	}
 
-	const measureValues: Record<string, MeasureValue> = { area: measure.area };
+	const measureValues: Record<string, MeasureValue> = {
+		area: measure.area,
+		connectedArea: measure.connectedArea ?? null,
+	};
 
 	const handleSave = () => {
 		const nextValues = measureConfig.parameters.reduce<
@@ -127,7 +135,7 @@ export const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
 					<label key={param.key} className="flex flex-col gap-1">
 						<div className="flex items-center justify-between gap-2">
 							<span className="text-sm font-medium">
-								{param.key === "area" ? "Fläche" : param.key}
+								{PARAM_LABELS[param.key] ?? param.key}
 							</span>
 							{param.unit && (
 								<span className="text-xs text-gray-500">{param.unit}</span>

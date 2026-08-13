@@ -546,7 +546,9 @@
 		"drawLayerId": "module_3_3G1_draw",
 		"visibleLayerIds": [
 			"project_boundary",
-			"potenziale_regenwasserbewirtschaftung:ca_dachbegruenungspotenzial"
+			"potenziale_regenwasserbewirtschaftung:ca_dachbegruenungspotenzial",
+			"ua_gruendaecher_2020:b_begruente_dachteilfl_geb",
+			"ua_gruendaecher_2020:c_begruente_dachteilfl_tief"
 		],
 		"canDrawMeasures": true,
 		"measurementSrc": "/legends/measures.svg"
@@ -556,7 +558,9 @@
 		"drawLayerId": "module_3_3G2_draw",
 		"visibleLayerIds": [
 			"project_boundary",
-			"potenziale_regenwasserbewirtschaftung:ca_dachbegruenungspotenzial"
+			"potenziale_regenwasserbewirtschaftung:ca_dachbegruenungspotenzial",
+			"ua_gruendaecher_2020:b_begruente_dachteilfl_geb",
+			"ua_gruendaecher_2020:c_begruente_dachteilfl_tief"
 		],
 		"canDrawMeasures": true,
 		"measurementSrc": "/legends/measures.svg"
@@ -604,12 +608,8 @@
 	{
 		"id": "3B2",
 		"drawLayerId": "module_3_3B2_draw",
-		"visibleLayerIds": [
-			"project_boundary",
-			"ua_entsiegelung:b_entsieg_klasse_teil"
-		],
+		"visibleLayerIds": ["project_boundary"],
 		"canDrawTrees": true,
-		"legendSrc": "/legends/2e1.svg",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
@@ -617,7 +617,8 @@
 		"drawLayerId": "module_3_3V1_draw",
 		"visibleLayerIds": [
 			"project_boundary",
-			"bgi-planer:versickerungspotenzial_gp_muldenversickerung"
+			"bgi-planer:versickerungspotenzial_gp_muldenversickerung",
+			"module_3_connected_area_draw"
 		],
 		"canDrawMeasures": true,
 		"measurementSrc": "/legends/measures.svg"
@@ -627,7 +628,8 @@
 		"drawLayerId": "module_3_3V2_draw",
 		"visibleLayerIds": [
 			"project_boundary",
-			"bgi-planer:versickerungspotenzial_gp_flaechenversickerung"
+			"bgi-planer:versickerungspotenzial_gp_flaechenversickerung",
+			"module_3_connected_area_draw"
 		],
 		"canDrawMeasures": true,
 		"measurementSrc": "/legends/measures.svg"
@@ -637,7 +639,8 @@
 		"drawLayerId": "module_3_3V3_draw",
 		"visibleLayerIds": [
 			"project_boundary",
-			"bgi-planer:versickerungspotenzial_gp_mulden_rigolenelement"
+			"bgi-planer:versickerungspotenzial_gp_mulden_rigolenelement",
+			"module_3_connected_area_draw"
 		],
 		"canDrawMeasures": true,
 		"measurementSrc": "/legends/measures.svg"
@@ -647,7 +650,8 @@
 		"drawLayerId": "module_3_3V4_draw",
 		"visibleLayerIds": [
 			"project_boundary",
-			"bgi-planer:versickerungspotenzial_gp_muldenversickerung"
+			"bgi-planer:versickerungspotenzial_gp_muldenversickerung",
+			"module_3_connected_area_draw"
 		],
 		"canDrawMeasures": true,
 		"measurementSrc": "/legends/measures.svg"
@@ -657,7 +661,8 @@
 		"drawLayerId": "module_3_3V5_draw",
 		"visibleLayerIds": [
 			"project_boundary",
-			"bgi-planer:optimierter_Baumstandort"
+			"bgi-planer:optimierter_Baumstandort",
+			"module_3_connected_area_draw"
 		],
 		"canDrawTrees": true,
 		"measurementSrc": "/legends/measures.svg"
@@ -667,7 +672,8 @@
 		"drawLayerId": "module_3_3V6_draw",
 		"visibleLayerIds": [
 			"project_boundary",
-			"bgi-planer:versickerungspotenzial_gp_rigolenanlage"
+			"bgi-planer:versickerungspotenzial_gp_rigolenanlage",
+			"module_3_connected_area_draw"
 		],
 		"canDrawMeasures": true,
 		"measurementSrc": "/legends/measures.svg"
@@ -675,12 +681,8 @@
 	{
 		"id": "3S1",
 		"drawLayerId": "module_3_3S1_draw",
-		"visibleLayerIds": [
-			"project_boundary",
-			"ua_entsiegelung:b_entsieg_klasse_teil"
-		],
+		"visibleLayerIds": ["project_boundary"],
 		"canDrawMeasures": true,
-		"legendSrc": "/legends/2e1.svg",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
@@ -693,23 +695,15 @@
 	{
 		"id": "3S4",
 		"drawLayerId": "module_3_3S4_draw",
-		"visibleLayerIds": [
-			"project_boundary",
-			"ua_entsiegelung:b_entsieg_klasse_teil"
-		],
+		"visibleLayerIds": ["project_boundary"],
 		"canDrawMeasures": true,
-		"legendSrc": "/legends/2e1.svg",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
 		"id": "3S5",
 		"drawLayerId": "module_3_3S5_draw",
-		"visibleLayerIds": [
-			"project_boundary",
-			"ua_entsiegelung:b_entsieg_klasse_teil"
-		],
+		"visibleLayerIds": ["project_boundary"],
 		"canDrawMeasures": true,
-		"legendSrc": "/legends/2e1.svg",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{

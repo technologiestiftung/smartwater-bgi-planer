@@ -69,10 +69,6 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 	});
 
 	useEffect(() => {
-		console.log("[SynthesisView] error::", error);
-	}, [error]);
-
-	useEffect(() => {
 		applyConfigLayers("measure_planning_synthesis_view", true);
 	}, [applyConfigLayers]);
 
@@ -248,26 +244,43 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 						plotState={plotState}
 					/>
 
-					<p className="mt-4">
-						Die Auswirkungen geplanter BGI-Maßnahmen auf die Gewässerbelastung
-						werden mithilfe eines vereinfachten, datenbasierten Modells
-						abgeschätzt. Grundlage sind umfangreiche hydrodynamische
-						Simulationen des Berliner Mischwassersystems mit den Modellen
-						InfoWorks ICM, GERRIS, HYDRAX und QSim. Aus den geplanten Maßnahmen
-						wird zunächst die Verringerung des Regenabflusses in die
-						Mischkanalisation ermittelt. Diese wird auf die angeschlossenen
-						versiegelten Flächen aller 18 Berliner Mischwassereinzugsgebiete
-						hochgerechnet und über die aus den Modellrechnungen abgeleiteten
-						Wirkungszusammenhänge in Veränderungen der Gewässerbelastung
-						übersetzt. Die Ergebnisse werden anhand der Kennwerte
-						„Unterschreitungsdauer in Stunden“ und „Anzahl kritischer
-						O₂-Ereignisse“ dargestellt. Beide Kennwerte beziehen sich auf
-						Sauerstoffkonzentrationen unter 1,5 mg/L, die als fischkritisch
-						gelten und zu Fischsterben führen können. Je geringer die
-						Unterschreitungsdauer und je weniger kritische O₂-Ereignisse
-						auftreten, desto geringer ist die Belastung der Gewässer durch
-						Mischwasserüberläufe.
-					</p>
+					<div className="mt-4 flex flex-col gap-2">
+						<p>
+							Die Auswirkungen geplanter BGI-Maßnahmen auf die Gewässerbelastung
+							werden mithilfe eines vereinfachten, datenbasierten Modells
+							abgeschätzt. Grundlage sind umfangreiche hydrodynamische
+							Simulationen des Berliner Mischwassersystems mit dem
+							Mischkanalnetzmodell (InfoWorks ICM) und dem gekoppelten
+							Gewässergütemodell (GERRIS/HYDRAX/QSim).
+						</p>
+						<p>
+							Aus den geplanten Maßnahmen wird zunächst die Verringerung des
+							Regenabflusses in die Mischkanalisation ermittelt. Für die
+							Wirkungsabschätzung wird diese Abflussreduktion auf die
+							angeschlossenen versiegelten Flächen aller 18 Berliner
+							Mischwassereinzugsgebiete hochgerechnet und über die aus den
+							Modellrechnungen abgeleiteten Wirkungszusammenhänge in
+							Veränderungen der Gewässerbelastung übersetzt.
+						</p>
+						<p>
+							Die Ergebnisse werden anhand der Kennwerte „Unterschreitungsdauer
+							in Stunden“ und „Anzahl kritischer O₂-Ereignisse“ dargestellt.
+							Beide Kennwerte beziehen sich auf Sauerstoffkonzentrationen unter
+							1,5 mg/L, die als fischkritisch gelten und zu Fischsterben führen
+							können. Je geringer die Unterschreitungsdauer und je weniger
+							kritische O₂-Ereignisse auftreten, desto geringer ist die
+							Belastung der Gewässer durch Mischwasserüberläufe.
+						</p>
+						<p>
+							Für den berlinweiten Vorher-Nachher-Vergleich werden die
+							Ergebnisse aller Gewässerabschnitte zu einem Kennwert
+							zusammengefasst. Hierfür wird für die Unterschreitungsdauer der
+							Median und für die Anzahl kritischer O₂-Ereignisse der Mittelwert
+							über alle Gewässerabschnitte gebildet. Die Kartendarstellung zeigt
+							dagegen die berechneten Kennwerte für jeden Gewässerabschnitt
+							separat.
+						</p>
+					</div>
 				</div>
 
 				<div className="mt-auto pt-6">

@@ -374,8 +374,6 @@ export const useDrawMeasure = () => {
 				if (v !== null && v !== undefined && v !== "") drawnFeature.set(k, v);
 			});
 
-			console.log("[useDrawMeasure] measure::", measure);
-
 			useScenarioStore.getState().addMeasure(activeScenarioId, measure);
 			useUiStore.getState().addDraftMeasureId(measure.id);
 
