@@ -96,7 +96,7 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 
 		const updateZoom = () => {
 			const zoom = view.getZoom();
-			setCurrentZoom(Math.round(zoom || 0));
+			setCurrentZoom(Math.floor(zoom || 0));
 		};
 
 		updateZoom();
@@ -186,9 +186,9 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 			if (currentId) {
 				setLayerVisibility(`bgi-planer:Wasserstand_${currentId}`, false);
 				setLayerVisibility(`bgi-planer:Gefaehrdungsstufe_${currentId}`, false);
-				setLayerVisibility("bgi-planer:Wasserstand_Ist-Zustand", false);
-				setLayerVisibility("bgi-planer:Gefaehrdungsstufe_Ist-Zustand", false);
 			}
+			setLayerVisibility("bgi-planer:Wasserstand_Ist-Zustand", false);
+			setLayerVisibility("bgi-planer:Gefaehrdungsstufe_Ist-Zustand", false);
 		};
 	}, [setLayerVisibility]);
 
@@ -226,6 +226,7 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 										<div className="border-primary inline-flex overflow-hidden rounded-xs border-2">
 											<button
 												type="button"
+												aria-pressed={showsCurrentState}
 												onClick={() => {
 													setActiveSimulation(scenario.id);
 													setShowCurrentState(true);
@@ -241,6 +242,7 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 											</button>
 											<button
 												type="button"
+												aria-pressed={showsSimulation}
 												onClick={() => {
 													setActiveSimulation(scenario.id);
 													setShowCurrentState(false);
