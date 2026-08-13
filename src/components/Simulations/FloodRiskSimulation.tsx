@@ -14,7 +14,7 @@ import { useEffect, useRef, useState } from "react";
 import {
 	getModuleStep,
 	getModuleStepMeasure,
-} from "../Modules/shared//moduleConfig";
+} from "../Modules/shared/moduleConfig";
 
 interface FloodRiskProps {
 	floodRisk: string;
