@@ -131,8 +131,19 @@ export const createGetLastPath = (get: GetState) => {
 	};
 };
 
+const INPUT_FEATURES_SIZE_LIMIT_BYTES = 4 * 1024 * 1024; // 4 MB — other 6 persisted stores total well under 100 KB combined, so this leaves headroom against the ~5 MB per-origin quota floor
+
 export const createSetInputFeatures = (set: SetState) => {
 	return (features: InputFeature[]) => {
+		if (JSON.stringify(features).length > INPUT_FEATURES_SIZE_LIMIT_BYTES) {
+			useUiStore
+				.getState()
+				.setInputFeaturesError(
+					"Die gezeichnete Fläche ist leider zu groß, um gespeichert zu werden. Bitte zeichnen Sie eine kleinere Fläche.",
+				);
+			return false;
+		}
+
 		const stats = simulationEngine.preprocessInput(features);
 
 		const computedFeatures: ComputedFeatures[] = stats.features.map((item) => ({
@@ -152,6 +163,10 @@ export const createSetInputFeatures = (set: SetState) => {
 			},
 			computedFeatures,
 		});
+
+		useUiStore.getState().setInputFeaturesError(null);
+
+		return true;
 	};
 };
 
