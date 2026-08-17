@@ -233,9 +233,9 @@ function ProjectBoundaryStep() {
 			</div>
 
 			<UploadStatusMessages error={uploadError} success={uploadSuccess} />
-			{(mapError || inputFeaturesError) && (
+			{(inputFeaturesError || mapError) && (
 				<div className="border-primary text-red mt-4 rounded-sm border border-dashed bg-red-50 p-2 text-sm">
-					{mapError || inputFeaturesError}
+					{inputFeaturesError || mapError}
 				</div>
 			)}
 		</div>

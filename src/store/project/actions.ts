@@ -133,9 +133,12 @@ export const createGetLastPath = (get: GetState) => {
 
 const INPUT_FEATURES_SIZE_LIMIT_BYTES = 4 * 1024 * 1024; // 4 MB — other 6 persisted stores total well under 100 KB combined, so this leaves headroom against the ~5 MB per-origin quota floor
 
+const getSerializedByteSize = (value: unknown): number =>
+	new TextEncoder().encode(JSON.stringify(value)).length;
+
 export const createSetInputFeatures = (set: SetState) => {
 	return (features: InputFeature[]) => {
-		if (JSON.stringify(features).length > INPUT_FEATURES_SIZE_LIMIT_BYTES) {
+		if (getSerializedByteSize(features) > INPUT_FEATURES_SIZE_LIMIT_BYTES) {
 			useUiStore
 				.getState()
 				.setInputFeaturesError(
