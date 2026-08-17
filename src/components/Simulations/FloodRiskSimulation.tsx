@@ -326,7 +326,7 @@ export function FloodRisk({ floodRisk, onActivate }: FloodRiskProps) {
 								<Image
 									src={imageSRC}
 									alt={`${activeChart}${floodRiskChartFolderSlug}`}
-									className="mt-4 h-full max-h-full w-full object-contain object-top align-top"
+									className="mt-4 max-h-full w-full object-contain object-top align-top"
 									onError={() => {
 										console.error(`Error loading image: ${imageSRC}`);
 									}}
