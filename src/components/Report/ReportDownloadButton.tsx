@@ -45,11 +45,12 @@ function triggerDownload(blob: Blob, filename: string) {
 	a.remove();
 }
 
-function getAllNotes(map: Map) {
+function getAllNotes(map: Map): Record<string, string[]> {
 	if (!map) {
-		return [];
+		return {};
 	}
-	return map.getAllLayers().flatMap((layer) => {
+
+	const noteFeatures = map.getAllLayers().flatMap((layer) => {
 		if (!(layer instanceof VectorLayer)) return [];
 
 		const source = layer.getSource();
@@ -57,13 +58,20 @@ function getAllNotes(map: Map) {
 
 		return source
 			.getFeatures()
-			.filter((feature) => feature.get("note"))
-			.map((feature) => ({
-				layerId: layer.get("id"),
-				feature,
-				note: feature.get("note"),
-			}));
+			.filter((feature) => feature.get("note") && !feature.get("noteType"));
 	});
+
+	const notesByCheckfrage: Record<string, string[]> = {};
+	noteFeatures.forEach((feature) => {
+		const checkfrageId = feature.get("checkfrageId") ?? "unbekannt";
+		const key = `${checkfrageId}_notes`;
+		if (!notesByCheckfrage[key]) {
+			notesByCheckfrage[key] = [];
+		}
+		notesByCheckfrage[key].push(feature.get("note"));
+	});
+
+	return notesByCheckfrage;
 }
 
 const fetchPlots = async (runoffReduction: number) => {
@@ -129,6 +137,12 @@ const ReportDownloadButton: FC<ReportDownloadButtonProps> = ({}) => {
 				measures[id] = answers[id] ?? null;
 			});
 
+			const notesByCheckfrage: Record<string, string[]> = {};
+			allQuestionIDs.forEach((id) => {
+				notesByCheckfrage[`${id}_notes`] = [];
+			});
+			Object.assign(notesByCheckfrage, notes);
+
 			const plots = await fetchPlots(stats?.runoff_reduction_percent[0] ?? 0);
 
 			const body = {
@@ -137,7 +151,7 @@ const ReportDownloadButton: FC<ReportDownloadButtonProps> = ({}) => {
 				stats,
 				datum: new Date().toLocaleDateString("de-DE"),
 				measures,
-				notes: notes.map((n) => n.note),
+				notes: notesByCheckfrage,
 				plot_critical_hours: plots?.critical_hours ?? null,
 				plot_critical_events: plots?.critical_events ?? null,
 			};

@@ -35,7 +35,9 @@ interface ReportBody {
 	measures: {
 		[key: string]: boolean | null;
 	};
-	notes: string[];
+	notes: {
+		[key: string]: string[];
+	};
 	plot_critical_hours?: string;
 	plot_critical_events?: string;
 }
@@ -131,12 +133,8 @@ function buildMeasureFields(measures: ReportBody["measures"]) {
 	);
 }
 
-// eslint-disable-next-line complexity
 function buildPlanningNotes(notes: ReportBody["notes"]) {
-	if (notes.length === 0) {
-		return { notes: ["Keine Anmerkungen vorhanden."] };
-	}
-	return { notes };
+	return { ...notes };
 }
 
 function buildStatsFields(stats: ReportBody["stats"]) {
@@ -277,6 +275,8 @@ export async function POST(req: Request) {
 			paragraphLoop: true,
 			linebreaks: true,
 		});
+
+		console.log("buildRenderData(body) :>> ", buildRenderData(body));
 
 		doc.render(buildRenderData(body));
 		const docxBuffer = doc.getZip().generate({ type: "nodebuffer" });
