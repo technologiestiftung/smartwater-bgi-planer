@@ -2,6 +2,8 @@ import { getLayerById } from "@/lib/helpers/ol";
 import type { AreaProps, InputFeature } from "@/store/project/types";
 import { LAYER_IDS } from "@/types/shared";
 import booleanIntersects from "@turf/boolean-intersects";
+import type { Extent } from "ol/extent";
+import { isEmpty as isEmptyExtent } from "ol/extent";
 import { GeoJSON } from "ol/format";
 import VectorLayer from "ol/layer/Vector";
 import type Map from "ol/Map";
@@ -85,6 +87,75 @@ export const performProjectBoundaryIntersection = (map: Map | null) => {
 		} catch (error) {
 			console.warn("Error processing feature:", error);
 		}
+	});
+};
+
+/**
+ * Explicitly requests the rabimo_input WFS layer to load features covering
+ * `extent`, resolving once that fetch (if one was needed) has settled.
+ *
+ * The source's `url`/`strategy` config only loads whatever extent the map
+ * happens to be rendering, so `useLayerReady` being "ready" only means *some*
+ * extent has loaded — not necessarily the project boundary's. Call this
+ * before running the boundary intersection to make sure the right BTFs are
+ * actually available first.
+ */
+export const ensureRabimoInputCoversExtent = (
+	map: Map | null,
+	extent: Extent,
+	timeoutMs = 8000,
+): Promise<void> => {
+	return new Promise((resolve) => {
+		if (!map || isEmptyExtent(extent)) {
+			resolve();
+			return;
+		}
+
+		const source = getLayerById(map, LAYER_IDS.INPUT)?.getSource();
+		
+		console.log(
+			"[projectBoundary] ensureRabimoInputCoversExtent INSIDEEEE::",
+			source,
+		);
+
+		if (!(source instanceof VectorSource)) {
+			resolve();
+			return;
+		}
+
+		let settled = false;
+		const finish = () => {
+			if (settled) return;
+			settled = true;
+			source.un("featuresloadend", onLoadSettled);
+			source.un("featuresloaderror", onLoadSettled);
+			clearTimeout(timer);
+			resolve();
+		};
+
+		const onLoadSettled = () => {
+			console.log('[projectBoundary] source.loading::', source.loading);
+			if (source.loading === 0) finish();
+		};
+
+		const timer = setTimeout(() => {
+			console.warn(
+				"[projectBoundary] Timed out waiting for rabimo_input WFS data to cover the project boundary extent.",
+			);
+			finish();
+		}, timeoutMs);
+
+		source.on("featuresloadend", onLoadSettled);
+		source.on("featuresloaderror", onLoadSettled);
+
+		const view = map.getView();
+		source.loadFeatures(
+			extent,
+			view.getResolution() ?? 1,
+			view.getProjection(),
+		);
+
+		if (source.loading === 0) finish();
 	});
 };
 
