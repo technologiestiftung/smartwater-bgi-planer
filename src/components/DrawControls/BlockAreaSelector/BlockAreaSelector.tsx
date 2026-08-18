@@ -16,7 +16,9 @@ import { FC, useCallback, useEffect, useRef } from "react";
 export const BlockAreaSelector: FC = () => {
 	const map = useMapStore((state) => state.map);
 	const drawLayerId = useLayersStore((state) => state.drawLayerId);
-	const setLayerVisibility = useLayersStore((state) => state.setLayerVisibility);
+	const setLayerVisibility = useLayersStore(
+		(state) => state.setLayerVisibility,
+	);
 	const isActive = useUiStore((state) => state.isBlockAreaSelecting);
 	const setIsActive = useUiStore((state) => state.setIsBlockAreaSelecting);
 	const resetDrawInteractions = useUiStore(
