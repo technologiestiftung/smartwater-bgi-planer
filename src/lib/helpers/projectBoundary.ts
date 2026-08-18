@@ -112,7 +112,7 @@ export const ensureRabimoInputCoversExtent = (
 		}
 
 		const source = getLayerById(map, LAYER_IDS.INPUT)?.getSource();
-		
+
 		console.log(
 			"[projectBoundary] ensureRabimoInputCoversExtent INSIDEEEE::",
 			source,
@@ -134,7 +134,7 @@ export const ensureRabimoInputCoversExtent = (
 		};
 
 		const onLoadSettled = () => {
-			console.log('[projectBoundary] source.loading::', source.loading);
+			console.log("[projectBoundary] source.loading::", source.loading);
 			if (source.loading === 0) finish();
 		};
 
