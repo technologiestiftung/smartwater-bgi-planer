@@ -171,8 +171,8 @@ export function AddressSearch() {
 					<MagnifyingGlassIcon className="pointer-events-none absolute top-1/2 left-3 z-10 size-6 -translate-y-1/2" />
 					<Input
 						ref={inputRef}
-						placeholder="Search for an address..."
 						aria-label="Adresse suchen"
+						placeholder="Adresse suchen..."
 						value={query}
 						className="bg-background min-h-12 w-full border-none pr-12 pl-12"
 						onChange={handleInputChange}
