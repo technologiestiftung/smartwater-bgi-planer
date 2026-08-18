@@ -96,6 +96,7 @@ function MeasurePlanningFooter({
 			<Button
 				onClick={onShowSynthesis}
 				variant="ghost"
+				aria-label="Zusammenfassung anzeigen"
 				className="bg-secondary z-101 flex h-full w-18 items-center justify-center rounded-none"
 			>
 				<ListChecksIcon className="h-6 w-6 text-white" />

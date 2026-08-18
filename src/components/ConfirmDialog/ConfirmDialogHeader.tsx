@@ -26,6 +26,7 @@ export function ConfirmDialogHeader({
 			</div>
 			<button
 				onClick={onClose}
+				aria-label="Schließen"
 				className="bg-secondary absolute top-0 right-0 flex size-14 cursor-pointer items-center justify-center"
 			>
 				<XCircleIcon className="size-6 text-white" />

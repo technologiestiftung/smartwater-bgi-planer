@@ -124,6 +124,7 @@ export const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
 					<button
 						type="button"
 						onClick={onClose}
+						aria-label="Schließen"
 						className="flex h-full w-full items-center justify-center"
 					>
 						<XCircleIcon />
