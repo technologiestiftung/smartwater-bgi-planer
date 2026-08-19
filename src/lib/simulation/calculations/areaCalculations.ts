@@ -6,7 +6,6 @@ import type {
 import type { AreaProps } from "@/store/project/types";
 import type { MeasureValues } from "@/types/measures";
 
-// todo: do we actually need this
 type RabimoLikeAreaValues = AreaProps & {
 	srf1_pvd: number;
 	srf2_pvd: number;
@@ -66,7 +65,6 @@ function toComputedArea(area: OLFeature): ComputedArea {
 	const pvd = total * Number(values.pvd);
 
 	const current: ComputedArea = {
-		// todo: add correct calculation
 		total: calculatePrecisely(total),
 		roof: calculatePrecisely(roof),
 		pvd: 0,
@@ -99,7 +97,6 @@ function toAreaPotential(areas: ComputedArea): MeasureValues {
 		areas.roof - areas.green_roof_ext - areas.green_roof_int;
 
 	return {
-		// todo: add correct calculation
 		green_roof_ext: calculatePrecisely(availableGreenRoof),
 		green_roof_int: calculatePrecisely(availableGreenRoof),
 		unpaving: calculatePrecisely(areas.pvd),
@@ -180,18 +177,12 @@ function addComputedAreas(
 		),
 		to_trench: calculatePrecisely(acc.to_trench + value.to_trench),
 		to_cistern: calculatePrecisely(acc.to_cistern + value.to_cistern),
-
-		// todo: add correct calculation
 		to_surf_infil: calculatePrecisely(acc.to_surf_infil + value.to_surf_infil),
 		to_tree_pit: calculatePrecisely(acc.to_tree_pit + value.to_tree_pit),
 		unpaving: calculatePrecisely(acc.unpaving + value.unpaving),
 		permeable_paving: calculatePrecisely(
 			acc.permeable_paving + value.permeable_paving,
 		),
-
-		// trees_sm: acc.trees_sm + value.trees_sm,
-		// trees_md: acc.trees_md + value.trees_md,
-		// trees_lg: acc.trees_lg + value.trees_lg,
 	};
 }
 
@@ -216,8 +207,6 @@ function addAreaPotentials(
 		),
 		to_trench: calculatePrecisely(acc.to_trench + value.to_trench),
 		to_cistern: calculatePrecisely(acc.to_cistern + value.to_cistern),
-
-		// todo: add correct calculation
 		to_surf_infil: calculatePrecisely(acc.to_surf_infil + value.to_surf_infil),
 		to_tree_pit: calculatePrecisely(acc.to_tree_pit + value.to_tree_pit),
 	};
