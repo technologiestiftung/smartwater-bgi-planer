@@ -3,20 +3,16 @@
 import { useLayerPersistence } from "@/components/Map/LayerManager/hooks/useLayerPersistence";
 import { Separator } from "@/components/ui/separator";
 import { Slider } from "@/components/ui/slider";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
+import viewLayerConfig from "@/config/layerConfig.json";
+import visibleLayerIdsModule3 from "@/config/visibleLayerIdsModule3.json";
 import { selectActiveLayerConfig, useLayersStore } from "@/store/layers";
 import { ManagedLayer } from "@/store/layers/types";
 import { useUiStore } from "@/store/ui";
 import { EyeIcon, EyeSlashIcon } from "@phosphor-icons/react";
-import { FC, useMemo, useState, useEffect } from "react";
-import { useShallow } from "zustand/react/shallow";
-import viewLayerConfig from "@/config/layerConfig.json";
-import visibleLayerIdsModule3 from "@/config/visibleLayerIdsModule3.json";
 import { usePathname } from "next/navigation";
+import { FC, useEffect, useMemo, useState } from "react";
+import { useShallow } from "zustand/react/shallow";
 
 const HIDDEN_LAYER_IDS = new Set([
 	"rabimo_input_2025",
@@ -106,7 +102,6 @@ const LayerCard: FC<LayerCardProps> = ({ layer, onToggle, onOpacity }) => {
 							)}
 						</button>
 					</TooltipTrigger>
-					<TooltipContent side="top">{name}</TooltipContent>
 				</Tooltip>
 			</div>
 		</div>
