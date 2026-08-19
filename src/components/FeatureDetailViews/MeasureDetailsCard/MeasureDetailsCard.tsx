@@ -1,22 +1,23 @@
 "use client";
 
+import { highlightedConnectedAreaStyle } from "@/components/Modules/MeasurePlanningModule/ConnectedAreaSelection";
+import { getModuleStepMeasure } from "@/components/Modules/shared/moduleConfig";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import layerConfig from "@/config/layerConfig.json";
-import { getModuleStepMeasure } from "@/components/Modules/shared/moduleConfig";
 import { measureConfigById } from "@/config/measuresConfig";
-import {
-	formatMeasureValue,
-	parseMeasureValue,
-} from "@/lib/helpers/measures/values";
+import { formatMeasureValue } from "@/lib/helpers/measures/values";
+import { getLayerById } from "@/lib/helpers/ol";
 import { useMapStore } from "@/store/map";
 import { useScenarioStore } from "@/store/scenario";
-import { useUiStore } from "@/store/ui";
 import type { MeasureValue } from "@/store/scenario/types";
-import { CheckIcon, TrashIcon, XCircleIcon } from "@phosphor-icons/react";
+import { useUiStore } from "@/store/ui";
+import { LAYER_IDS } from "@/types/shared";
+import { TrashIcon, XCircleIcon } from "@phosphor-icons/react";
 import VectorLayer from "ol/layer/Vector";
 import { Vector as VectorSource } from "ol/source";
-import { FC, useState } from "react";
+import type { StyleLike } from "ol/style/Style";
+import { FC, useEffect, useRef } from "react";
 
 const PARAM_LABELS: Partial<Record<string, string>> = {
 	area: "Fläche",
@@ -47,8 +48,6 @@ export const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
 	measureId,
 	onClose,
 }) => {
-	const [draftValues, setDraftValues] = useState<Record<string, string>>({});
-
 	const activeScenarioId = useScenarioStore((state) => state.activeScenarioId);
 	const measure = useScenarioStore((state) => {
 		if (!state.activeScenarioId) return null;
@@ -58,13 +57,42 @@ export const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
 			) ?? null
 		);
 	});
-	const updateMeasureValues = useScenarioStore(
-		(state) => state.updateMeasureValues,
-	);
 	const addPendingDeleteMeasureId = useUiStore(
 		(state) => state.addPendingDeleteMeasureId,
 	);
 	const map = useMapStore((state) => state.map);
+
+	const connectedAreas = useScenarioStore((state) =>
+		state.activeScenarioId
+			? (state.scenarios[state.activeScenarioId]?.connectedAreas ?? [])
+			: [],
+	);
+
+	const relatedConnectedAreaId = measure
+		? connectedAreas.find((ca) => ca.usedByMeasureId === measure.id)?.id
+		: undefined;
+
+	const previousStyleRef = useRef<StyleLike | undefined>(undefined);
+
+	useEffect(() => {
+		if (!map || !relatedConnectedAreaId) return;
+
+		const layer = getLayerById(
+			map,
+			LAYER_IDS.CONNECTED_AREA_DRAW,
+		) as VectorLayer<VectorSource> | null;
+		const feature = layer
+			?.getSource()
+			?.getFeatures()
+			.find((f) => f.get("connectedAreaId") === relatedConnectedAreaId);
+		if (!feature) return;
+
+		previousStyleRef.current = feature.getStyle();
+		feature.setStyle(highlightedConnectedAreaStyle);
+		return () => {
+			feature.setStyle(previousStyleRef.current);
+		};
+	}, [map, relatedConnectedAreaId]);
 
 	if (!measure || !activeScenarioId) {
 		return null;
@@ -78,18 +106,6 @@ export const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
 	const measureValues: Record<string, MeasureValue> = {
 		area: measure.area,
 		connectedArea: measure.connectedArea ?? null,
-	};
-
-	const handleSave = () => {
-		const nextValues = measureConfig.parameters.reduce<
-			Record<string, MeasureValue>
-		>((acc, param) => {
-			acc[param.key] = parseMeasureValue(draftValues[param.key] ?? "", param);
-			return acc;
-		}, {});
-
-		updateMeasureValues(activeScenarioId, measure.id, nextValues);
-		onClose?.();
 	};
 
 	const handleDelete = () => {
@@ -109,10 +125,6 @@ export const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
 		addPendingDeleteMeasureId(measure.id);
 		onClose?.();
 	};
-
-	const hasInputParams = measureConfig.parameters.some(
-		(p) => p.source === "input",
-	);
 
 	return (
 		<div className="MeasureDetailsCard-root bg-background w-90 max-w-sm shadow-lg sm:max-w-90">
@@ -144,29 +156,14 @@ export const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
 						</div>
 						<Input
 							type={param.type === "string" ? "text" : "number"}
-							value={
-								draftValues[param.key] ??
-								formatMeasureValue(measureValues[param.key])
-							}
-							readOnly={param.source === "drawn"}
-							disabled={param.source === "drawn"}
-							onChange={(e) =>
-								setDraftValues((prev) => ({
-									...prev,
-									[param.key]: e.target.value,
-								}))
-							}
+							value={formatMeasureValue(measureValues[param.key])}
+							readOnly
+							disabled
 						/>
 					</label>
 				))}
 
 				<div className="flex gap-2">
-					{hasInputParams && (
-						<Button onClick={handleSave} className="flex-1">
-							<CheckIcon />
-							Speichern
-						</Button>
-					)}
 					<Button variant="outline" onClick={handleDelete} className="flex-1">
 						<TrashIcon size={16} />
 						Löschen

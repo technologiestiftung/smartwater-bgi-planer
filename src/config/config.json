@@ -228,10 +228,6 @@
 							"visibility": false
 						},
 						{
-							"id": "bgi-planer:ua_versiegelung_2021_raster",
-							"visibility": false
-						},
-						{
 							"id": "ua_vegetationshoehen_2020:c_vegetationshoehe_2020_raster",
 							"visibility": false
 						},
