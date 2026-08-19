@@ -81,7 +81,11 @@ export const StepContent: FC<StepContentProps> = ({
 								<div className="mb-2">
 									<Image
 										src={layerConfig.embeddedImage}
-										alt="Embedded Image"
+										alt={
+											layerConfig.name
+												? `Abbildung zu ${layerConfig.name}`
+												: "Erläuterungsbild"
+										}
 										width={1200}
 										height={800}
 										sizes="100vw"
@@ -96,7 +100,11 @@ export const StepContent: FC<StepContentProps> = ({
 								<div className="my-2">
 									<Image
 										src={layerConfig.embeddedImageAfterText}
-										alt="Embedded Image"
+										alt={
+											layerConfig.name
+												? `Abbildung zu ${layerConfig.name}`
+												: "Erläuterungsbild"
+										}
 										width={1200}
 										height={800}
 										sizes="100vw"

@@ -98,14 +98,28 @@ export function FileUploadZone({
 
 	const currentFile = files[0];
 
+	const handleDropzoneKeyDown = useCallback(
+		(e: React.KeyboardEvent<HTMLDivElement>) => {
+			if (e.key === "Enter" || e.key === " ") {
+				e.preventDefault();
+				handleFileSelect();
+			}
+		},
+		[handleFileSelect],
+	);
+
 	return (
 		<div className={cn("flex flex-col gap-4", className)}>
 			{!currentFile ? (
 				<div
+					role="button"
+					tabIndex={0}
+					aria-label="Projektdatei hochladen"
 					onDragOver={handleDragOver}
 					onDragLeave={handleDragLeave}
 					onDrop={handleDrop}
 					onClick={handleFileSelect}
+					onKeyDown={handleDropzoneKeyDown}
 					className={cn(
 						"UploadSection-root border-primary bg-light flex cursor-pointer flex-col gap-2 border-2 border-dashed p-4 text-center transition-colors",
 						isDragging && "bg-primary/10 border-primary/50",
@@ -122,11 +136,15 @@ export function FileUploadZone({
 				</div>
 			) : (
 				<div
+					role="button"
+					tabIndex={0}
+					aria-label="Projektdatei hochladen"
 					className="UploadSection-root border-primary flex cursor-pointer flex-col gap-2 border-2 border-dashed p-4 text-center transition-colors"
 					onDragOver={handleDragOver}
 					onDragLeave={handleDragLeave}
 					onDrop={handleDrop}
 					onClick={handleFileSelect}
+					onKeyDown={handleDropzoneKeyDown}
 				>
 					<div className="flex items-center justify-between">
 						<div className="flex items-center gap-3 overflow-hidden">

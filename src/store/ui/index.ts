@@ -27,6 +27,7 @@ const initialState: UiState = {
 	currentStepId: null,
 	uploadError: null,
 	uploadSuccess: null,
+	inputFeaturesError: null,
 	isDrawing: false,
 	isBlockAreaSelecting: false,
 	isConnectedAreaSelecting: false,
@@ -72,6 +73,7 @@ export const useUiStore = create<UiState & UiActions>()(
 			setUploadSuccess: (success) =>
 				set({ uploadSuccess: success, uploadError: null }),
 			clearUploadStatus: () => set({ uploadError: null, uploadSuccess: null }),
+			setInputFeaturesError: (error) => set({ inputFeaturesError: error }),
 			setIsDrawing: (isDrawing) => set({ isDrawing }),
 			setIsBlockAreaSelecting: (isSelecting) =>
 				set({ isBlockAreaSelecting: isSelecting }),

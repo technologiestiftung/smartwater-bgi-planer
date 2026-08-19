@@ -42,41 +42,45 @@ export const useWmtsCapabilities = (
 				return;
 			}
 
-			try {
-				const capabilitiesPromises = uniqueCapabilitiesUrls.map(async (url) => {
-					const response = await fetch(
-						`/api/wmts-capabilities?url=${encodeURIComponent(url)}`,
-					);
-					if (!response.ok) {
-						throw new Error(
-							`Failed to fetch WMTS capabilities from ${url}: ${response.status} ${response.statusText}`,
-						);
-					}
-
-					const { xml } = await response.json();
-					const parser = new WMTSCapabilities();
-					return { url, capabilities: parser.read(xml) };
-				});
-
-				const results = await Promise.all(capabilitiesPromises);
-				const capabilitiesMap = results.reduce((acc, { url, capabilities }) => {
-					acc[url] = capabilities;
-					return acc;
-				}, {} as WMTSCapabilitiesMap);
-
-				setWmtsCapabilities(capabilitiesMap);
-			} catch (error) {
-				console.error(
-					"[useWmtsCapabilities] Error loading WMTS capabilities",
-					error,
+			const capabilitiesPromises = uniqueCapabilitiesUrls.map(async (url) => {
+				const response = await fetch(
+					`/api/wmts-capabilities?url=${encodeURIComponent(url)}`,
 				);
+				if (!response.ok) {
+					throw new Error(
+						`Failed to fetch WMTS capabilities from ${url}: ${response.status} ${response.statusText}`,
+					);
+				}
+
+				const { xml } = await response.json();
+				const parser = new WMTSCapabilities();
+				return { url, capabilities: parser.read(xml) };
+			});
+
+			const results = await Promise.allSettled(capabilitiesPromises);
+			const capabilitiesMap: WMTSCapabilitiesMap = {};
+			let hasFailure = false;
+
+			results.forEach((result) => {
+				if (result.status === "fulfilled") {
+					capabilitiesMap[result.value.url] = result.value.capabilities;
+				} else {
+					hasFailure = true;
+					console.error(
+						"[useWmtsCapabilities] Error loading WMTS capabilities",
+						result.reason,
+					);
+				}
+			});
+
+			setWmtsCapabilities(capabilitiesMap);
+			if (hasFailure && Object.keys(capabilitiesMap).length === 0) {
 				setMapError(
 					true,
 					"Fehler beim Laden der Karten. Bitte versuchen Sie es später erneut.",
 				);
-			} finally {
-				setCapabilitiesLoaded(true);
 			}
+			setCapabilitiesLoaded(true);
 		};
 
 		loadAllWmtsCapabilities();

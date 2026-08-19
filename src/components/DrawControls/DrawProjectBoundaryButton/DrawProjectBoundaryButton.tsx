@@ -31,15 +31,6 @@ export const DrawProjectBoundaryButton: FC = () => {
 	const { isReady: isBTFLayerReady, isLoading: isBTFLayerLoading } =
 		useLayerReady(LAYER_IDS.INPUT);
 
-	const syncPlanningLayerFeatures = useCallback(() => {
-		setInputFeatures(getInputFeatures(map));
-	}, [map, setInputFeatures]);
-
-	const performIntersection = useCallback(() => {
-		performProjectBoundaryIntersection(map);
-		syncPlanningLayerFeatures();
-	}, [map, syncPlanningLayerFeatures]);
-
 	const removeInteractions = useCallback(() => {
 		if (drawRef.current) {
 			map?.removeInteraction(drawRef.current);
@@ -51,6 +42,15 @@ export const DrawProjectBoundaryButton: FC = () => {
 		}
 		setIsDrawing(false);
 	}, [map, setIsDrawing]);
+
+	const syncPlanningLayerFeatures = useCallback(() => {
+		setInputFeatures(getInputFeatures(map));
+	}, [map, setInputFeatures]);
+
+	const performIntersection = useCallback(() => {
+		performProjectBoundaryIntersection(map);
+		syncPlanningLayerFeatures();
+	}, [map, syncPlanningLayerFeatures]);
 
 	const startDrawMode = useCallback(() => {
 		const projectBoundaryLayer = getLayerById(map, LAYER_IDS.PROJECT_BOUNDARY);

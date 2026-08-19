@@ -16,19 +16,24 @@ import {
 	getVectorLayer,
 	importLayerFromGeoJSON,
 } from "@/lib/helpers/ol";
-import { getInputFeatures } from "@/lib/helpers/projectBoundary";
+import {
+	getInputFeatures,
+	performProjectBoundaryIntersection,
+} from "@/lib/helpers/projectBoundary";
+import { useLayerReady } from "@/hooks/useLayerReady";
 import { useLayersStore } from "@/store";
 import { useFilesStore } from "@/store/files";
 import { LayerService } from "@/store/layers/types";
 import { useMapStore } from "@/store/map";
 import { useProjectStore } from "@/store/project";
 import { useScenarioStore } from "@/store/scenario";
+import { LAYER_IDS } from "@/types/shared";
 import { Map } from "ol";
 import GeoJSON from "ol/format/GeoJSON";
 import VectorLayer from "ol/layer/Vector";
 import TileWMS from "ol/source/TileWMS";
 import VectorSource from "ol/source/Vector";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 interface UseLayerPersistenceOptions {
 	debounceDelay?: number;
@@ -51,6 +56,7 @@ export const useLayerPersistence = (
 	const filesHydrated = useFilesStore((state) => state.hasHydrated);
 	const addLayer = useLayersStore((state) => state.addLayer);
 	const layers = useLayersStore((state) => state.layers);
+	const { isReady: isRabimoInputReady } = useLayerReady(LAYER_IDS.INPUT);
 
 	const debounceTimersRef = useRef<
 		Record<string, ReturnType<typeof setTimeout>>
@@ -58,6 +64,8 @@ export const useLayerPersistence = (
 	const layerListenersRef = useRef<Record<string, () => void>>({});
 	const hasRestoredRef = useRef(false);
 	const isRestoringRef = useRef(false);
+	const hasSyncedBtfPlanningRef = useRef(false);
+	const [restoreCompleted, setRestoreCompleted] = useState(false);
 
 	const saveWmsLayer = useCallback(
 		async (layerId: string, project: any) => {
@@ -484,6 +492,7 @@ export const useLayerPersistence = (
 				isRestoringRef.current = false;
 			}
 			hasRestoredRef.current = true;
+			setRestoreCompleted(true);
 			setupAutoSave();
 		})();
 	}, [
@@ -497,6 +506,20 @@ export const useLayerPersistence = (
 		restoreUploadedLayers,
 		setupAutoSave,
 	]);
+
+	useEffect(() => {
+		if (
+			!map ||
+			!restoreCompleted ||
+			!isRabimoInputReady ||
+			hasSyncedBtfPlanningRef.current
+		)
+			return;
+
+		hasSyncedBtfPlanningRef.current = true;
+		performProjectBoundaryIntersection(map);
+		setInputFeatures(getInputFeatures(map));
+	}, [map, restoreCompleted, isRabimoInputReady, setInputFeatures]);
 
 	// Cleanup timers and listeners
 	useEffect(() => {

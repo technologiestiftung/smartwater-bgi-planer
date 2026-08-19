@@ -9,6 +9,7 @@ export interface UiState {
 	currentStepId: string | null;
 	uploadError: string | null;
 	uploadSuccess: string | null;
+	inputFeaturesError: string | null;
 	isDrawing: boolean;
 	isBlockAreaSelecting: boolean;
 	isConnectedAreaSelecting: boolean;
@@ -41,6 +42,7 @@ export interface UiActions {
 	setUploadError: (error: string | null) => void;
 	setUploadSuccess: (success: string | null) => void;
 	clearUploadStatus: () => void;
+	setInputFeaturesError: (error: string | null) => void;
 	setIsDrawing: (isDrawing: boolean) => void;
 	setIsBlockAreaSelecting: (isSelecting: boolean) => void;
 	setIsConnectedAreaSelecting: (isSelecting: boolean) => void;
