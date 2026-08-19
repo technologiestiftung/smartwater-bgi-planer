@@ -35,8 +35,6 @@ const applyMeasures = (
 
 	const areaPotential = areaCalculations.toAreaPotential(computedArea);
 
-	// todo: I need to update the store with the new values!
-
 	return {
 		computedArea,
 		areaPotential,

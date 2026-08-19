@@ -332,6 +332,18 @@
 							"visibility": false
 						},
 						{
+							"id": "bgi-planer:Gefaehrdungsstufe_Ist-Zustand",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:Gefaehrdungsstufe_Gruenflaechen",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:Gefaehrdungsstufe_Teilentsiegelung",
+							"visibility": false
+						},
+						{
 							"id": "bgi-planer:Wasserstand_Baeume",
 							"visibility": false
 						},
@@ -349,6 +361,18 @@
 						},
 						{
 							"id": "bgi-planer:Wasserstand_Rigole",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:Wasserstand_Ist-Zustand",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:Wasserstand_Gruenflaechen",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:Wasserstand_Teilentsiegelung",
 							"visibility": false
 						},
 						{

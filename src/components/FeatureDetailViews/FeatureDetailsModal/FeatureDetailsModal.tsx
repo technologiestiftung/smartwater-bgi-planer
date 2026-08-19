@@ -61,10 +61,15 @@ export const FeatureDetailsModal: FC<FeatureDetailsModalProps> = ({
 	}
 
 	return (
-		<div className="FeatureDetailsModal-root fixed inset-0 z-9999 ml-136 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
+		<div
+			className="FeatureDetailsModal-root fixed inset-0 z-9999 ml-136 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+			role="dialog"
+			aria-modal="true"
+			aria-labelledby="feature-details-modal-title"
+		>
 			<div className="bg-background flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-sm shadow-2xl">
 				<div className="border-muted flex h-8 min-h-12 w-full items-center justify-between border-b pl-2">
-					<h2 className="text-xl font-bold">
+					<h2 id="feature-details-modal-title" className="text-xl font-bold">
 						Bohrprofil{" "}
 						{externalLoading && (
 							<SpinnerIcon className="inline animate-spin" size={16} />
@@ -75,6 +80,7 @@ export const FeatureDetailsModal: FC<FeatureDetailsModalProps> = ({
 						<button
 							className="flex h-full w-full items-center justify-center"
 							onClick={onClose}
+							aria-label="Schließen"
 						>
 							<XCircleIcon />
 						</button>

@@ -21,13 +21,13 @@ export default async function ProjectLayout({
 	return (
 		<ProjectGuard projectId={id}>
 			<div className="grid h-full w-full grid-cols-[34rem_1fr]">
-				<div className="relative">{children}</div>
-				<div className="relative">
+				<main className="relative">{children}</main>
+				<aside className="relative" aria-label="Karte">
 					<Map />
 					<DrawControlsContainer projectId={id} />
 					<MenuToggleButton projectId={id} />
 					<AddressSearch />
-				</div>
+				</aside>
 			</div>
 			<LayerManager />
 			<ConfigManager />
