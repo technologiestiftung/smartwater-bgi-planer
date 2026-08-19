@@ -1,19 +1,23 @@
 "use client";
 
+import { highlightedConnectedAreaStyle } from "@/components/Modules/MeasurePlanningModule/ConnectedAreaSelection";
+import { getModuleStepMeasure } from "@/components/Modules/shared/moduleConfig";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import layerConfig from "@/config/layerConfig.json";
-import { getModuleStepMeasure } from "@/components/Modules/shared/moduleConfig";
 import { measureConfigById } from "@/config/measuresConfig";
 import { formatMeasureValue } from "@/lib/helpers/measures/values";
+import { getLayerById } from "@/lib/helpers/ol";
 import { useMapStore } from "@/store/map";
 import { useScenarioStore } from "@/store/scenario";
-import { useUiStore } from "@/store/ui";
 import type { MeasureValue } from "@/store/scenario/types";
+import { useUiStore } from "@/store/ui";
+import { LAYER_IDS } from "@/types/shared";
 import { TrashIcon, XCircleIcon } from "@phosphor-icons/react";
 import VectorLayer from "ol/layer/Vector";
 import { Vector as VectorSource } from "ol/source";
-import { FC } from "react";
+import type { StyleLike } from "ol/style/Style";
+import { FC, useEffect, useRef } from "react";
 
 const PARAM_LABELS: Partial<Record<string, string>> = {
 	area: "Fläche",
@@ -57,6 +61,38 @@ export const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
 		(state) => state.addPendingDeleteMeasureId,
 	);
 	const map = useMapStore((state) => state.map);
+
+	const connectedAreas = useScenarioStore((state) =>
+		state.activeScenarioId
+			? (state.scenarios[state.activeScenarioId]?.connectedAreas ?? [])
+			: [],
+	);
+
+	const relatedConnectedAreaId = measure
+		? connectedAreas.find((ca) => ca.usedByMeasureId === measure.id)?.id
+		: undefined;
+
+	const previousStyleRef = useRef<StyleLike | undefined>(undefined);
+
+	useEffect(() => {
+		if (!map || !relatedConnectedAreaId) return;
+
+		const layer = getLayerById(
+			map,
+			LAYER_IDS.CONNECTED_AREA_DRAW,
+		) as VectorLayer<VectorSource> | null;
+		const feature = layer
+			?.getSource()
+			?.getFeatures()
+			.find((f) => f.get("connectedAreaId") === relatedConnectedAreaId);
+		if (!feature) return;
+
+		previousStyleRef.current = feature.getStyle();
+		feature.setStyle(highlightedConnectedAreaStyle);
+		return () => {
+			feature.setStyle(previousStyleRef.current);
+		};
+	}, [map, relatedConnectedAreaId]);
 
 	if (!measure || !activeScenarioId) {
 		return null;
