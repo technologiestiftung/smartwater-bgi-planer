@@ -24,7 +24,7 @@ interface ConnectedAreaSelectionProps {
 	layerName: string;
 }
 
-const selectedConnectedAreaStyle = new Style({
+export const selectedConnectedAreaStyle = new Style({
 	fill: new Fill({ color: "rgba(0, 153, 255, 0.1)" }),
 	stroke: new Stroke({ color: "rgba(0, 153, 255, 1)", width: 2 }),
 });
@@ -34,6 +34,15 @@ const usedConnectedAreaStyle = new Style({
 	stroke: new Stroke({
 		color: "rgba(150, 150, 150, 0.6)",
 		width: 1.5,
+		lineDash: [6, 4],
+	}),
+});
+
+export const highlightedConnectedAreaStyle = new Style({
+	fill: new Fill({ color: "rgba(248, 237, 68, 0.25)" }),
+	stroke: new Stroke({
+		color: "rgba(248, 237, 68, 1)",
+		width: 2,
 		lineDash: [6, 4],
 	}),
 });
