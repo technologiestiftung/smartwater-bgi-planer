@@ -15,6 +15,14 @@ const nextConfig: NextConfig = {
 				protocol: "https",
 				hostname: "*smartwater-bgi-planer.netlify.app/",
 			},
+			{
+				protocol: "https",
+				hostname: "bgi-planer.ts.berlin/",
+			},
+			{
+				protocol: "https",
+				hostname: "*bgi-planer.ts.berlin/",
+			},
 		],
 	},
 	turbopack: {
