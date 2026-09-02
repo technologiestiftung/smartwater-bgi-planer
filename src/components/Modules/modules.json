@@ -299,7 +299,7 @@
 						{
 							"id": "3G5",
 							"layerConfigId": "3G5",
-							"title": "Erdgebundene Fassadenbegrünung",
+							"title": "Bodengebundene Fassadenbegrünung",
 							"metricIcons": ["Drop", "ThermometerHot"],
 							"info": {
 								"description": "Eine bodengebundene Fassadenbegrünung ist eine kostengünstige Möglichkeit, um eine Hausfassade zu begrünen. Hierbei werden Kletterpflanzen direkt in eine Pflanzgrube in den Boden oder in Pflanzkübel gepflanzt. Es gibt Gerüstkletterpflanzen, die eine Rankhilfe benötigen und sogenannte Selbstklimmer, die selbständig an der Fassade haften.",
@@ -795,7 +795,7 @@
 							"title": "Mulde",
 							"metricIcons": ["Tree", "ThermometerHot", "Drop"],
 							"info": {
-								"description": "Eine Mulde ist eine naturnahe Versickerungsanlage mit einer 10 bis 30 cm mächtigen Geländevertiefung. Niederschlagswasser von angeschlossenen Flächen wird kurzzeitig zwischengespeichert und versickert durch die bewachsene Bodenzone, in der es gereinigt wird.",
+								"description": "Eine Mulde ist eine natur-nahe Versickerungsanlage mit einer maximalen Einstauhöhe von 30 cm. Niederschlagswasser von angeschlossenen Flächen wird kurzzeitig zwischengespeichert und versickert durch die bewachsene Bodenzone, in der es gereinigt wird.",
 								"scores": {
 									"CloudRain": 2,
 									"ThermometerHot": 2,
@@ -934,7 +934,6 @@
 											"Flächenbedarf: 30 bis 70 % der angeschlossenen abflusswirksamen Fläche",
 											"Altlasten und Bodenverunreinigungen sind zu beachten, ggf. Bodenaustausch",
 											"Bewachsene Bodenzone: mind. 30 cm",
-											"Einstauhöhe kleiner 10 cm",
 											"Breitflächiges Zuleiten des Niederschlagswassers für die gleichmäßige Versickerung notwendig",
 											"Hochanstehendes Grundwasser beachten",
 											"Abstand zu Gebäuden ohne wasserdruckhaltende Abdichtung: > 1,5-Fache der Baugrubentiefe"
