@@ -62,9 +62,9 @@ export function ClimateSimulation({
 					04:00 (nächtliche Abkühlung), 14:00 (Tagesmaximum) oder 22:00 Uhr.
 				</p>
 				<p>
-					<span className="font-bold">Klimatisches Szenario</span> - meteorologisches
-					Szenario: Hitzetag / Tropennacht (extreme Hitze) oder Sommertag
-					(durchschnittlich warmer Tag).
+					<span className="font-bold">Klimatisches Szenario</span> -
+					meteorologisches Szenario: Hitzetag / Tropennacht (extreme Hitze) oder
+					Sommertag (durchschnittlich warmer Tag).
 				</p>
 				<p>
 					<span className="font-bold">Ansicht</span> - Schnittebene im

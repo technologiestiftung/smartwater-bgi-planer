@@ -21,9 +21,9 @@ interface FeatureDetailsModalProps {
 }
 
 const LABELS = {
-	"schlecht": "Aufschüttung vorhanden",
-	"gut": "Nicht vorhanden"
-}
+	schlecht: "Aufschüttung vorhanden",
+	gut: "Nicht vorhanden",
+};
 
 export const FeatureDetailsModal: FC<FeatureDetailsModalProps> = ({
 	attributes,
@@ -133,9 +133,7 @@ export const FeatureDetailsModal: FC<FeatureDetailsModalProps> = ({
 					<Button onClick={() => handleClick("schlecht")}>
 						{LABELS["schlecht"]}
 					</Button>
-					<Button onClick={() => handleClick("gut")}>
-						{LABELS["gut"]}
-					</Button>
+					<Button onClick={() => handleClick("gut")}>{LABELS["gut"]}</Button>
 				</div>
 			</div>
 		</div>
