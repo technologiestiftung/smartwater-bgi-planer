@@ -213,9 +213,10 @@ export const LayerTree: FC = () => {
 					!HIDDEN_LAYER_IDS.has(l.id) &&
 					(currentVisibleLayerIds === null ||
 						currentVisibleLayerIds.has(l.id) ||
-						visibleLayerIdsModule3.includes(l.id)),
+						visibleLayerIdsModule3.includes(l.id) ||
+						activeLayerConfig?.optionalLayerIds?.includes(l.id)),
 			),
-		[allLayers, currentVisibleLayerIds],
+		[allLayers, currentVisibleLayerIds, activeLayerConfig],
 	);
 
 	const pathname = usePathname();
