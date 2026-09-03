@@ -1,6 +1,7 @@
 import { getLayerIdsInFolder } from "@/lib/helpers/ol";
 import { LayersState, ManagedLayer } from "@/store/layers/types";
 import { MapConfig } from "@/store/map/types";
+import { useScenarioStore } from "@/store/scenario";
 // import { LayerStatus } from "@/types/shared";
 
 type SetState = (fn: (state: LayersState) => Partial<LayersState>) => void;
@@ -122,6 +123,20 @@ export const createApplyConfigLayers =
 		if (layerConfigItem.drawLayerId) {
 			keepVisibleDrawLayers.add(layerConfigItem.drawLayerId);
 		}
+
+		/**
+		 * Keep draw layers holding already placed measures visible, regardless
+		 * of which question/config is currently active.
+		 */
+		const { scenarios, activeScenarioId } = useScenarioStore.getState();
+		const activeMeasures = activeScenarioId
+			? (scenarios[activeScenarioId]?.measures ?? [])
+			: [];
+		activeMeasures.forEach((measure) => {
+			if (measure.drawLayerId) {
+				keepVisibleDrawLayers.add(measure.drawLayerId);
+			}
+		});
 
 		/**
 		 * Hide other draw layers (optional)
