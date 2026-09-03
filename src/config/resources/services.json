@@ -35,10 +35,11 @@
 		"typ": "WMTS",
 		"layers": "truedop_2026",
 		"tileMatrixSet": "GDIBE:25833",
+		"format": "image/png",
 		"datasets": [
 			{
 				"md_id": "63016b8d-281e-460c-bfc0-600699a7618b",
-				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/f8e73787-217b-3242-8aa5-80dedf9f05cf",
+				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/63016b8d-281e-460c-bfc0-600699a7618b",
 				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
 			}
 		],
