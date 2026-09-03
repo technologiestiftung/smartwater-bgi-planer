@@ -725,6 +725,7 @@
 			"result_evapor",
 			"result_infiltr"
 		],
+		"optionalLayerIds": ["ua_wasserhaushalt_2022:f_deltaw_2022"],
 		"legendSrc": "/legends/effektbewertung.svg"
 	}
 ]
