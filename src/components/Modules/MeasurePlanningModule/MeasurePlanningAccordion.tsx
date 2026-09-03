@@ -97,7 +97,7 @@ function MeasurePlanningFooter({
 				onClick={onShowSynthesis}
 				variant="ghost"
 				aria-label="Zusammenfassung anzeigen"
-				className="bg-secondary z-101 flex h-full flex-1 items-center justify-center rounded-none text-md text-white hover:text-white"
+				className="bg-secondary text-md z-101 flex h-full flex-1 items-center justify-center rounded-none text-white hover:text-white"
 			>
 				<ListChecksIcon className="h-6 w-6 text-white" />
 				Effektbewertung
