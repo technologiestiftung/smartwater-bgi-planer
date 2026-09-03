@@ -51,7 +51,11 @@ export const createApplyConfigLayers =
 		getMapConfig: () => MapConfig | null;
 		getMapReady: () => boolean;
 	}) =>
-	(configId: string, hideOtherDrawLayers = false) => {
+	(
+		configId: string,
+		hideOtherDrawLayers = false,
+		keepMeasureLayersVisible = false,
+	) => {
 		const state = get();
 		const currentMapLayers = state.layers;
 
@@ -125,18 +129,20 @@ export const createApplyConfigLayers =
 		}
 
 		/**
-		 * Keep draw layers holding already placed measures visible, regardless
-		 * of which question/config is currently active.
+		 * Keep draw layers holding already placed measures visible while
+		 * navigating within Modul 3, but not when leaving it for Modul 1/2.
 		 */
-		const { scenarios, activeScenarioId } = useScenarioStore.getState();
-		const activeMeasures = activeScenarioId
-			? (scenarios[activeScenarioId]?.measures ?? [])
-			: [];
-		activeMeasures.forEach((measure) => {
-			if (measure.drawLayerId) {
-				keepVisibleDrawLayers.add(measure.drawLayerId);
-			}
-		});
+		if (keepMeasureLayersVisible) {
+			const { scenarios, activeScenarioId } = useScenarioStore.getState();
+			const activeMeasures = activeScenarioId
+				? (scenarios[activeScenarioId]?.measures ?? [])
+				: [];
+			activeMeasures.forEach((measure) => {
+				if (measure.drawLayerId) {
+					keepVisibleDrawLayers.add(measure.drawLayerId);
+				}
+			});
+		}
 
 		/**
 		 * Hide other draw layers (optional)
