@@ -129,8 +129,10 @@ export const createApplyConfigLayers =
 		}
 
 		/**
-		 * Keep draw layers holding already placed measures visible while
-		 * navigating within Modul 3, but not when leaving it for Modul 1/2.
+		 * Draw layers holding already placed measures are always shown while
+		 * anywhere in Modul 3 (not just protected from being hidden), so they
+		 * don't stay hidden after a round trip through Modul 1/2. Not applied
+		 * when leaving Modul 3.
 		 */
 		if (keepMeasureLayersVisible) {
 			const { scenarios, activeScenarioId } = useScenarioStore.getState();
@@ -140,6 +142,7 @@ export const createApplyConfigLayers =
 			activeMeasures.forEach((measure) => {
 				if (measure.drawLayerId) {
 					keepVisibleDrawLayers.add(measure.drawLayerId);
+					showLayer(measure.drawLayerId);
 				}
 			});
 		}
