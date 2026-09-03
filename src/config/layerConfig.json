@@ -238,11 +238,10 @@
 	{
 		"id": "sealing_green_volume_low",
 		"name": "Grünvolumenzahl",
-		"question": "Gibt es Bereiche mit einer niedrigen Grünvolumenzahl (unter 30 %)?",
+		"question": "Gibt es Bereiche mit einer niedrigen Grünvolumenzahl?",
 		"description": [
 			"Die Grünvolumenzahl berechnet sich aus dem Grünvolumen [m³] pro Flächeneinheit [m²].",
-			"Aus klimatischer Sicht ist ein Zielwert von 30-40 % Grünvolumen sinnvoll und erstrebenswert.",
-			"Mit Klick auf in die Karte kann zudem geprüft werden, ob in einer Blockteilfläche die für den Flächentyp* durchschnittliche Grünvolumenzahl um mehr als 20 % unterschritten wird. Dies gibt einen Hinweis darüber, welche Flächen priorisiert werden sollten.",
+			"Mit Klick in die Karte kann zudem geprüft werden, ob in einer Blockteilfläche die für den Flächentyp* durchschnittliche Grünvolumenzahl um mehr als 20 % unterschritten wird. Dies gibt einen Hinweis darüber, welche Flächen priorisiert werden sollten.",
 			"Hinweis: Die gesamte Landesfläche Berlins ist mit 52 Flächentypen gekennzeichnet."
 		],
 		"drawLayerId": "module_1_impermeability_hotspots_q2",
@@ -256,7 +255,7 @@
 	{
 		"id": "waterBalance_starter_question",
 		"name": "",
-		"question": "Saubere Gewässer erhöhen die Aufenthaltsqualität unserer Stadt und bieten einen wichtigen Lebensraum für Flora und Fauna. Außerdem sind sie essenziell für den Berliner Wasserkreislauf und damit für die Trinkwasserversorgung.",
+		"question": "Ein veränderter Wasserhaushalt spiegelt die Herausforderungen in Bezug auf Hitzebelastung, Überflutungsrisiko, Versiegelung und Gewässerbelastung wieder.",
 		"description": "Projekte zur Regenwasserbewirtschaftung können die Kanalisation entlasten (Abkopplung) und sich damit positiv auf die aufnehmenden Fließgewässer auswirken oder gezielt Kleingewässer stützen.",
 		"drawLayerId": "",
 		"visibleLayerIds": ["project_boundary", "project_new_development"],
@@ -285,7 +284,7 @@
 	{
 		"id": "waterProtection_starter_question",
 		"name": "",
-		"question": "Ein veränderter Wasserhaushalt spiegelt die Herausforderungen in Bezug auf Hitzebelastung, Überflutungsrisiko, Versiegelung und Gewässerbelastung wieder.",
+		"question": "Saubere Gewässer erhöhen die Aufenthaltsqualität unserer Stadt und bieten einen wichtigen Lebensraum für Flora und Fauna. Außerdem sind sie essenziell für den Berliner Wasserkreislauf und damit für die Trinkwasserversorgung.",
 		"description": "Ziel ist es durch die Planungen den natürlichen Zustand möglichst nah zu erreichen. In der Regel muss dafür v.a. die Verdunstungskomponente (Evaporation) gestärkt werden.",
 		"drawLayerId": "",
 		"visibleLayerIds": ["project_boundary", "project_new_development"],
@@ -343,7 +342,7 @@
 	{
 		"id": "feasibility_module_introduction",
 		"name": "",
-		"question": "Bevor konkrete Maßnahmen geplant werden können, soll sichtbar gemacht werden, welche Rahmenbedingungen die Umsetzbarkeit von verschiedenen Maßnahmengruppen beeinflussen. Die Maßnahmengruppen sind in grüne (Gebäudebegrünung, Begrünung/Bepflanzung, Entsiegelung) und blaue (Versickerung, Speicherung) Maßnahmen unterteilt.",
+		"question": "Bevor konkrete Maßnahmen geplant werden können, soll sichtbar gemacht werden, welche Rahmenbedingungen die Umsetzbarkeit von verschiedenen Maßnahmengruppen beeinflussen.",
 		"description": "Während einerseits sehr allgemeine Rahmenbedingungen zu prüfen sind, die auf die Machbarkeiten von verschiedenen Maßnahmengruppen hinweisen, gibt es auch sehr konkrete Fragen, die es zu klären gilt. Dafür stehen nicht immer die notwendigen Geodaten zur Verfügung, weswegen hier stellenweise zusätzliche Recherche notwendig ist.",
 		"drawLayerId": "",
 		"visibleLayerIds": ["project_boundary", "project_new_development"],
@@ -373,6 +372,7 @@
 		"name": "Versickerungspotenzial",
 		"question": "",
 		"description": [
+			"Im Modul 3 wird die Karte „gängige Praxis“ bei den betrachteten Versickerungsarten angezeigt.",
 			"Die Versickerungspotenzialkarte zeigt die Potenzialflächen der betrachteten Versickerungsmaßnahmen an. Je dunkler eine Fläche ist, desto mehr Maßnahmen sind in diesem Bereich möglich. Mit Klick in die Karte werden die jeweils möglichen Maßnahmen sowie weitere Informationen zu den spezifischen Rahmenbedingungen vor Ort angezeigt:",
 			{
 				"type": "bullets",

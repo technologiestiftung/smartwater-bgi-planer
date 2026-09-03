@@ -871,7 +871,7 @@
 	},
 	{
 		"id": "module_3_3G5_draw",
-		"name": "Erdgebundene Fassadenbegrünung",
+		"name": "Bodengebundene Fassadenbegrünung",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",

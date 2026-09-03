@@ -105,7 +105,7 @@ export function Tutorial({ type, isAddMeasure }: TutorialProps) {
 			return (
 				<p className="text-dark">
 					Die <span className="font-bold">Effektbewertung</span> erlaubt Ihnen,
-					die simulierte Effekte Ihrer bisherige Planung hinsichtlich
+					die simulierten Effekte Ihrer bisherigen Planung hinsichtlich
 					Wasserhaushalt und Gewässerbelastung zu entdecken.
 				</p>
 			);
