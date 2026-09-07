@@ -131,7 +131,7 @@ export function Tutorial({ type, isAddMeasure }: TutorialProps) {
 			height={type === "synthesis" ? 32 : 16}
 			className={cn(
 				"relative shrink-0 object-contain",
-				type === "synthesis" && "self-end translate-y-[6.5px] transform",
+				type === "synthesis" && "translate-y-[6.5px] transform self-end",
 				(type === "synthesisModule3" || type === "controls") && "mx-auto",
 				type === "layerTree" && "ml-5",
 			)}
