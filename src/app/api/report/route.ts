@@ -193,22 +193,27 @@ function buildRenderData(body: ReportBody) {
 }
 
 async function convertWithGotenberg(docxBuffer: Buffer): Promise<ArrayBuffer> {
+	const { GOTENBERG_URL, GOTENBERG_USERNAME, GOTENBERG_PASSWORD } = process.env;
+	if (!GOTENBERG_URL || !GOTENBERG_USERNAME || !GOTENBERG_PASSWORD) {
+		throw new Error(
+			"Gotenberg Konfiguration fehlt (GOTENBERG_URL/GOTENBERG_USERNAME/GOTENBERG_PASSWORD)",
+		);
+	}
 	const formData = new FormData();
 	const docxBlob = new Blob([new Uint8Array(docxBuffer)], {
 		type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 	});
 	formData.append("files", docxBlob, "report.docx");
 
-	const res = await fetch(
-		`${process.env.GOTENBERG_URL}/forms/libreoffice/convert`,
-		{
-			method: "POST",
-			body: formData,
-			headers: {
-				Authorization: `Basic ${btoa(process.env.GOTENBERG_USERNAME + ":" + process.env.GOTENBERG_PASSWORD)}`,
-			},
-		},
-	);
+	const credentials = Buffer.from(
+		`${GOTENBERG_USERNAME}:${GOTENBERG_PASSWORD}`,
+	).toString("base64");
+
+	const res = await fetch(`${GOTENBERG_URL}/forms/libreoffice/convert`, {
+		method: "POST",
+		body: formData,
+		headers: { Authorization: `Basic ${credentials}` },
+	});
 
 	if (!res.ok) throw new Error("Gotenberg Konvertierung fehlgeschlagen");
 	return res.arrayBuffer();

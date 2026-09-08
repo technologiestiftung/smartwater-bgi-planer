@@ -43,6 +43,7 @@ function triggerDownload(blob: Blob, filename: string) {
 	document.body.appendChild(a);
 	a.click();
 	a.remove();
+	window.URL.revokeObjectURL(url);
 }
 
 function getAllNotes(map: Map): Record<string, string[]> {
