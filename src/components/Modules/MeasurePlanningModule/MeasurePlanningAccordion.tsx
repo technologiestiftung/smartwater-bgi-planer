@@ -102,7 +102,7 @@ function MeasurePlanningFooter({
 				<ListChecksIcon className="h-6 w-6 text-white" />
 				Effektbewertung
 			</Button>
-			<Tutorial type="synthesis" isAddMeasure={isAddMeasure} />
+			<Tutorial type="synthesisModule3" isAddMeasure={isAddMeasure} />
 			{showBackToQuestions && (
 				<Button
 					variant="ghost"
