@@ -44,7 +44,8 @@ export const Map: FC = () => {
 					<div>
 						{hasMapError ? (
 							<div className="bg-destructive/10 border-destructive flex flex-col gap-2 border-2 border-dashed p-4 text-center">
-								{errorMessage || "Fehler beim Laden der Karte"}
+								<p>Fehler beim Laden der Karte</p>
+								<p className="text-sm">{errorMessage}</p>
 							</div>
 						) : (
 							<div className="flex flex-col items-center gap-3">

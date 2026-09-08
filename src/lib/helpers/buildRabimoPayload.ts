@@ -19,8 +19,6 @@ const MEASURE_KEY_TO_RABIMO: Partial<Record<string, keyof RabimoMeasure>> = {
 	to_surf_infil: "to_surf_infil",
 	to_swale_trench: "to_swale_trench",
 	to_tree_pit: "to_tree_pit",
-	// todo: trees -> trees_sm / trees_md / trees_lg (size from measure values)
-	// todo: to_trench mapping
 	to_cistern: "to_cistern",
 	to_trench: "to_trench",
 };

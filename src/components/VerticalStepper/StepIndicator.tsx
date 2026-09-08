@@ -27,7 +27,10 @@ export function StepIndicator({ className }: StepIndicatorProps) {
 						)}
 					>
 						<button
+							type="button"
 							onClick={() => goToStep(step.id)}
+							aria-label={step.title}
+							aria-current={isActive ? "step" : undefined}
 							className={cn(
 								"flex h-12 w-12 items-center justify-center rounded-full transition-all duration-500 [&_svg]:size-6",
 								isActive &&

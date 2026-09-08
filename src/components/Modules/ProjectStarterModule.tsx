@@ -190,6 +190,7 @@ function ProjectBoundaryStep() {
 	const { setStepValidation } = useVerticalStepper();
 	const clearUploadStatus = useUiStore((state) => state.clearUploadStatus);
 	const { uploadError, uploadSuccess } = useUploadStatusAutoHide();
+	const inputFeaturesError = useUiStore((state) => state.inputFeaturesError);
 	const [mapError, setMapError] = useState("");
 
 	useEffect(() => {
@@ -201,7 +202,7 @@ function ProjectBoundaryStep() {
 			setMapError("Bitte zeichnen Sie zuerst ein Projektgebiet ein.");
 			return false;
 		}
-		if (uploadError) return false;
+		if (uploadError || inputFeaturesError) return false;
 		clearUploadStatus();
 		return true;
 	};
@@ -226,15 +227,15 @@ function ProjectBoundaryStep() {
 			<div className="mt-8">
 				<ConfirmButton
 					onConfirm={handleConfirm}
-					validate={() => hasFeatures && !uploadError}
+					validate={() => hasFeatures && !uploadError && !inputFeaturesError}
 					displayText={formattedArea}
 				/>
 			</div>
 
 			<UploadStatusMessages error={uploadError} success={uploadSuccess} />
-			{mapError && (
+			{(inputFeaturesError || mapError) && (
 				<div className="border-primary text-red mt-4 rounded-sm border border-dashed bg-red-50 p-2 text-sm">
-					{mapError}
+					{inputFeaturesError || mapError}
 				</div>
 			)}
 		</div>

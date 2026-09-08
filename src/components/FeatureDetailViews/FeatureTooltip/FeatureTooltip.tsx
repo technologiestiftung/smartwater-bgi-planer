@@ -18,6 +18,8 @@ export const FeatureTooltip: FC<FeatureTooltipProps> = ({
 					Attribute dieser Region / Blockteilfläche
 				</h3>
 				<button
+					type="button"
+					aria-label="Schließen"
 					className="bg-secondary flex h-8 w-8 items-center justify-center text-white"
 					onClick={onClose}
 				>

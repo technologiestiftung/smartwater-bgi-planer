@@ -16,6 +16,9 @@ import { FC, useCallback, useEffect, useRef } from "react";
 export const BlockAreaSelector: FC = () => {
 	const map = useMapStore((state) => state.map);
 	const drawLayerId = useLayersStore((state) => state.drawLayerId);
+	const setLayerVisibility = useLayersStore(
+		(state) => state.setLayerVisibility,
+	);
 	const isActive = useUiStore((state) => state.isBlockAreaSelecting);
 	const setIsActive = useUiStore((state) => state.setIsBlockAreaSelecting);
 	const resetDrawInteractions = useUiStore(
@@ -26,16 +29,9 @@ export const BlockAreaSelector: FC = () => {
 
 	const toggleRabimoInputVisibility = useCallback(
 		(visible: boolean) => {
-			const inputLayer = getLayerById(map, "project_btf_planning");
-			if (inputLayer) {
-				inputLayer.setVisible(visible);
-			} else {
-				console.warn(
-					"[BlockAreaSelector] 'project_btf_planning' layer not found.",
-				);
-			}
+			setLayerVisibility("project_btf_planning", visible);
 		},
-		[map],
+		[setLayerVisibility],
 	);
 
 	const toggleSelectionMode = useCallback(() => {

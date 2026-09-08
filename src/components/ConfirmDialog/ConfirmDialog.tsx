@@ -52,7 +52,9 @@ export function ConfirmDialog({
 	};
 
 	const cancelButtonElement = cancelButton ? (
-		<span onClick={handleCancel}>{cancelButton}</span>
+		<button type="button" onClick={handleCancel}>
+			{cancelButton}
+		</button>
 	) : (
 		<Button variant="outline" onClick={handleCancel}>
 			{cancelText}
@@ -60,7 +62,9 @@ export function ConfirmDialog({
 	);
 
 	const confirmButtonElement = confirmButton ? (
-		<span onClick={handleConfirm}>{confirmButton}</span>
+		<button type="button" onClick={handleConfirm}>
+			{confirmButton}
+		</button>
 	) : (
 		<Button variant={variant} onClick={handleConfirm}>
 			{confirmText}

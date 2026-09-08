@@ -49,6 +49,7 @@ const createWMTSLayer = (
 		const options = optionsFromCapabilities(capabilities, {
 			layer: serviceConfig.layers!,
 			matrixSet: serviceConfig.tileMatrixSet!,
+			format: serviceConfig.format,
 		});
 
 		if (!options) {

@@ -50,8 +50,10 @@ const arthouseOwned = localFont({
 });
 
 export const metadata: Metadata = {
-	title: "Smartwater BGI-Planer",
-	description: "Technische Umsetzung von der Technologiestiftung Berlin",
+	title:
+		"SmartWater BGI-Planer | Bessere Entscheidungen rund um blau-grüner Infrastruktur",
+	description:
+		"Der SmartWater BGI-Planer erlaubt Ihnen, Handlungsbedarfe und mögliche Hindernisse zu erkennen, sowie Maßnahmen zu planen und die Effekte davon zu simulieren.",
 };
 
 export default function RootLayout({

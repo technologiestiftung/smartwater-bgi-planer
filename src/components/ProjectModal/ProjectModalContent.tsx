@@ -101,19 +101,21 @@ export function ProjectModalContent({
 					>
 						<div className="flex items-center gap-3">
 							<RadioGroupItem value={UseCase.Individual} id="r1" />
-							<p>individuelles Gebiet</p>
+							<label htmlFor="r1">individuelles Gebiet</label>
 						</div>
 						<div className="flex items-center gap-3">
 							<RadioGroupItem value={UseCase.District} id="r2" />
-							<p>Quartier</p>
+							<label htmlFor="r2">Quartier</label>
 						</div>
 						<div className="flex items-center gap-3">
 							<RadioGroupItem value={UseCase.Property} id="r3" />
-							<p>Grundstück</p>
+							<label htmlFor="r3">Grundstück</label>
 						</div>
 						<div className="flex items-center gap-3">
 							<RadioGroupItem value={UseCase.PublicSpace} id="r4" />
-							<p>Straßen, Wege, Plätze / Grün- und Freiflächen</p>
+							<label htmlFor="r4">
+								Straßen, Wege, Plätze / Grün- und Freiflächen
+							</label>
 						</div>
 					</RadioGroup>
 				</Field>

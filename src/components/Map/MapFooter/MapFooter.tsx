@@ -18,6 +18,14 @@ export const MapFooter: FC = () => {
 				<p className="hover:text-accent text-xs font-bold">Impressum</p>
 			</a>
 			<span>|</span>
+			<a
+				href="https://www.technologiestiftung-berlin.de/datenschutz/"
+				target="_blank"
+				rel="noopener noreferrer"
+			>
+				<p className="hover:text-accent text-xs font-bold">Datenschutz</p>
+			</a>
+			<span>|</span>
 			<p className="text-xs">
 				<span className="font-bold">Kartenquelle: </span>
 				<a

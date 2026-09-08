@@ -48,6 +48,7 @@ export const MiniBarChart: FC<MiniBarChartProps> = ({
 				{roundedOrig}
 			</span>
 			<div
+				aria-hidden="true"
 				className="self-end rounded-sm"
 				style={{
 					height: origHeight,
@@ -55,6 +56,7 @@ export const MiniBarChart: FC<MiniBarChartProps> = ({
 				}}
 			/>
 			<div
+				aria-hidden="true"
 				className="self-end rounded-sm"
 				style={{
 					height: measHeight,
@@ -72,6 +74,7 @@ export const MiniBarChart: FC<MiniBarChartProps> = ({
 						Ist-Zustand
 					</span>
 					<div
+						aria-hidden="true"
 						className="rounded-sm"
 						style={{
 							width: BAR_WIDTH,
@@ -80,6 +83,7 @@ export const MiniBarChart: FC<MiniBarChartProps> = ({
 						}}
 					/>
 					<div
+						aria-hidden="true"
 						className="rounded-sm"
 						style={{
 							width: BAR_WIDTH,

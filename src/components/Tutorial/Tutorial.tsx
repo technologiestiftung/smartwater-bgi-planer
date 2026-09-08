@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
 interface TutorialProps {
-	type: "synthesis" | "controls" | "layerTree";
+	type: "synthesis" | "synthesisModule3" | "controls" | "layerTree";
 	isAddMeasure?: boolean;
 }
 
@@ -105,7 +105,7 @@ export function Tutorial({ type, isAddMeasure }: TutorialProps) {
 			return (
 				<p className="text-dark">
 					Die <span className="font-bold">Effektbewertung</span> erlaubt Ihnen,
-					die simulierte Effekte Ihrer bisherige Planung hinsichtlich
+					die simulierten Effekte Ihrer bisherigen Planung hinsichtlich
 					Wasserhaushalt und Gewässerbelastung zu entdecken.
 				</p>
 			);
@@ -130,16 +130,16 @@ export function Tutorial({ type, isAddMeasure }: TutorialProps) {
 			width={type === "synthesis" ? 32 : 16}
 			height={type === "synthesis" ? 32 : 16}
 			className={cn(
-				"relative shrink-0 self-end object-contain",
-				type === "synthesis" && "translate-y-[6.5px] transform",
-				type === "controls" && "mx-auto",
+				"relative shrink-0 object-contain",
+				type === "synthesis" && "translate-y-[6.5px] transform self-end",
+				(type === "synthesisModule3" || type === "controls") && "mx-auto",
 				type === "layerTree" && "ml-5",
 			)}
 		/>
 	);
 
 	useEffect(() => {
-		if (type !== "synthesis") return;
+		if (type !== "synthesis" && type !== "synthesisModule3") return;
 		if (
 			currentLayerConfig &&
 			(currentLayerConfig.canDrawNotes ||
@@ -169,9 +169,12 @@ export function Tutorial({ type, isAddMeasure }: TutorialProps) {
 
 	return (
 		<>
-			{type === "synthesis" && (
+			{(type === "synthesis" || type === "synthesisModule3") && (
 				<div
-					className="fixed inset-0 bg-black/58"
+					className={cn(
+						"fixed inset-0 bg-black/58",
+						type === "synthesisModule3" && "z-100",
+					)}
 					onClick={() => {
 						if (isPlanningModule) {
 							setTutorialOnFirstMeasureDraw(false);
@@ -184,6 +187,8 @@ export function Tutorial({ type, isAddMeasure }: TutorialProps) {
 			<div
 				className={cn(
 					type === "synthesis" && "absolute bottom-7 left-24 flex",
+					type === "synthesisModule3" &&
+						"absolute bottom-18 left-24 z-102 flex flex-col items-center",
 					type === "controls" && "relative",
 					type === "layerTree" && "absolute bottom-16 min-w-[300px]",
 				)}
@@ -194,7 +199,10 @@ export function Tutorial({ type, isAddMeasure }: TutorialProps) {
 						{renderContent()}
 					</div>
 				</div>
-				{(type === "controls" || type === "layerTree") && renderArrow()}
+				{(type === "synthesisModule3" ||
+					type === "controls" ||
+					type === "layerTree") &&
+					renderArrow()}
 			</div>
 		</>
 	);

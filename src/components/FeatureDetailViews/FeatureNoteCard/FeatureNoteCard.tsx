@@ -81,6 +81,8 @@ export const FeatureNoteCard: FC<FeatureNoteCardProps> = ({
 				<h3 className="text-sm font-semibold">Notiz einfügen</h3>
 				<div className="bg-secondary h-8 w-8 text-white">
 					<button
+						type="button"
+						aria-label="Schließen"
 						className="flex h-full w-full items-center justify-center"
 						onClick={onClose}
 					>

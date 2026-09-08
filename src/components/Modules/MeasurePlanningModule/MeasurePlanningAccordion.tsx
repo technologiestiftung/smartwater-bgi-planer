@@ -96,11 +96,13 @@ function MeasurePlanningFooter({
 			<Button
 				onClick={onShowSynthesis}
 				variant="ghost"
-				className="bg-secondary z-101 flex h-full w-18 items-center justify-center rounded-none"
+				aria-label="Zusammenfassung anzeigen"
+				className="bg-secondary text-md z-101 flex h-full flex-1 items-center justify-center rounded-none text-white hover:text-white"
 			>
 				<ListChecksIcon className="h-6 w-6 text-white" />
+				Effektbewertung
 			</Button>
-			<Tutorial type="synthesis" isAddMeasure={isAddMeasure} />
+			<Tutorial type="synthesisModule3" isAddMeasure={isAddMeasure} />
 			{showBackToQuestions && (
 				<Button
 					variant="ghost"

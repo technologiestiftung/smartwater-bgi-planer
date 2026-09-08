@@ -31,6 +31,7 @@ export const DrawTreeMeasureButton: FC = () => {
 				<Button
 					key={size}
 					variant={isDrawing && activeSize === size ? "default" : "outline"}
+					aria-pressed={isDrawing && activeSize === size}
 					onClick={() => startDraw(size)}
 					disabled={!canDraw && !isDrawing}
 				>

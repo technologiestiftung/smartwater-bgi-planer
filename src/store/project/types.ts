@@ -92,7 +92,7 @@ export interface ProjectActions {
 	updateProject: (updates: Partial<Project>) => void;
 	deleteProject: () => void;
 	getProject: () => Project | null;
-	setInputFeatures: (features: InputFeature[]) => void;
+	setInputFeatures: (features: InputFeature[]) => boolean;
 	setActiveArea: (
 		code: string | null,
 		potential?: MeasureValues | null,

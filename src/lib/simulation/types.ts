@@ -6,7 +6,6 @@ import type Feature from "ol/Feature";
 import type { Geometry } from "ol/geom";
 
 // OpenLayers feature used by simulation modules.
-// todo: check if this is needed
 export type OLFeature = Feature<Geometry>;
 
 // Derived partial areas in m2 for one block part.
