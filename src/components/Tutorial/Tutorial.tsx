@@ -25,10 +25,11 @@ export function Tutorial({ type, isAddMeasure }: TutorialProps) {
 	const setTutorialOnFirstMeasureDraw = useTutorialStore(
 		(state) => state.setTutorialOnFirstMeasureDraw,
 	);
-	const showTutorial =
-		showTutorialOnFirstQuestion || showTutorialOnFirstMeasureDraw;
 	const pathname = usePathname();
 	const isPlanningModule = pathname.endsWith("/planung");
+	const showTutorial = isPlanningModule
+		? showTutorialOnFirstMeasureDraw
+		: showTutorialOnFirstQuestion;
 
 	const currentLayerConfig = useLayersStore(selectActiveLayerConfig);
 
@@ -140,6 +141,12 @@ export function Tutorial({ type, isAddMeasure }: TutorialProps) {
 
 	useEffect(() => {
 		if (type !== "synthesis" && type !== "synthesisModule3") return;
+		if (isPlanningModule && isAddMeasure) {
+			if (showTutorialOnFirstMeasureDraw === null) {
+				setTutorialOnFirstMeasureDraw(true);
+			}
+			return;
+		}
 		if (
 			currentLayerConfig &&
 			(currentLayerConfig.canDrawNotes ||
@@ -149,12 +156,6 @@ export function Tutorial({ type, isAddMeasure }: TutorialProps) {
 			if (showTutorialOnFirstQuestion === null) {
 				setTutorialOnFirstQuestion(true);
 			}
-		} else if (
-			isPlanningModule &&
-			isAddMeasure &&
-			showTutorialOnFirstMeasureDraw === null
-		) {
-			setTutorialOnFirstMeasureDraw(true);
 		}
 	}, [
 		type,
