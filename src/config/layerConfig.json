@@ -316,7 +316,6 @@
 		"canDrawBTF": true,
 		"canDrawNotes": true,
 		"visibleLayerIds": [
-			"bgi-planer:HA4_Kleingewaesser_trocken_pkt",
 			"ua_kanalisation_2022:sp02_09kanalisation2022_2"
 		],
 		"legendSrc": "/legends/1g2.svg"
