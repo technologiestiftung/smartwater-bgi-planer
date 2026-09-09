@@ -718,14 +718,6 @@
 		"styleId": "groundwaterHotspots"
 	},
 	{
-		"id": "module_1_groundwater_hotspots_q3",
-		"name": "Gewässerschutz Hotspots Q3",
-		"crs": "urn:ogc:def:crs:EPSG::25833",
-		"typ": "GEOJSON",
-		"gfiAttributes": "showAll",
-		"styleId": "groundwaterHotspots"
-	},
-	{
 		"id": "module_1_waterbalance_hotspots_q1",
 		"name": "Wasserhaushalt Hotspots Q1",
 		"crs": "urn:ogc:def:crs:EPSG::25833",

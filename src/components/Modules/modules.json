@@ -56,8 +56,7 @@
 					"questions": [
 						"waterProtection_starter_question",
 						"water_protection_sewer_type",
-						"water_protection_decoupling_requirements",
-						"water_protection_small_waters_demand"
+						"water_protection_decoupling_requirements"
 					]
 				}
 			]
