@@ -218,7 +218,7 @@ export function MeasurePlanningStepContent({
 	return (
 		<div className="flex h-full flex-col p-6">
 			<div className="flex justify-between">
-				<h3 className="text-primary shrink-0 text-xl font-semibold">
+				<h3 className="text-primary text-xl font-semibold">
 					{layerConfig.name}
 				</h3>
 				<Link
