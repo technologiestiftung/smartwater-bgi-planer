@@ -292,17 +292,7 @@
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
 								],
-								"climateSimulationFileSlug": "DachInt",
-								"floodRiskLayerConfigId": "Gruendaecher",
-								"floodRiskChartFolderSlug": "Gruendaecher",
-								"floodRiskChartFileSlug": "Gr_nd_cher",
-								"floodRiskText": [
-									"Für die Bewertung der Auswirkungen auf die Überflutungsgefährdung wurde ein ca. 4,5 km² großes Modellgebiet im Bezirk Friedrichshain-Kreuzberg betrachtet.",
-									"Über die Karten „Wasserstand“ und „Gefährdungsstufe“ können der Ist-Zustand und das Simulations-szenario einer vollständigen Umsetzung der potenziellen Flächen (100 %) miteinander verglichen werden. Die Darstellung basiert auf einem gekoppelten 1D-Kanalnetz-/2D-Oberflächenabflussmodell für ein außergewöhnliches Starkregenereignis.",
-									"Die Karte „Wasserstand“ zeigt Überflutungstiefen, während die Karte „Gefährdungsstufe“ die nach der Methodik des Naturgefahrenportals abgeleitete Gefährdung darstellt.",
-									"Eine Umsetzung von 100 % Gründachpotenzial entspricht ca. 564.000 m².",
-									"Die Diagramme zeigen zusätzlich die Auswirkungen unterschiedlicher Umsetzungsgrade sowie die Effekte kombinierter Maßnahmen auf gefährdete Flächen und Überflutungsvolumen."
-								]
+								"climateSimulationFileSlug": "DachInt"
 							}
 						},
 						{
