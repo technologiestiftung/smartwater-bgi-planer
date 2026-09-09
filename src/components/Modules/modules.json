@@ -194,12 +194,11 @@
 								"floodRiskChartFolderSlug": "Gruendaecher",
 								"floodRiskChartFileSlug": "Gr_nd_cher",
 								"floodRiskText": [
-									"Für die Bewertung der Effekte auf die Überflutungsgefährdung wurde ein Modellgebiet mit einer Größe von ca. 4,5 km² im Bezirk Friedrichshain-Kreuzberg betrachtet.",
-									"Die Karte „Wasserstand“ zeigt die räumliche Ausdehnung von Überflutungen in diesem Gebiet durch ein außergewöhnliches Starkregenereignis. Dargestellt werden neben Überflutungstiefen auch die Fließgeschwindigkeit sowie Fließrichtung bei einer vollständigen Implementierung der potenziellen Flächen für Gründächer sowie im derzeitigen Zustand. Berechnet wurden diese Werte auf Basis eines gekoppelten 1D-Kanalnetz- und eines 2D-Oberflächenabflussmodells.",
-									"Die Karte „Gefährdungsstufe“ ermöglicht einen Vergleich der Gefährdung in diesem Gebiet durch ein außergewöhnliches Starkregenereignis im IST-Zustand sowie bei einer vollständigen Implementierung der potenziellen Flächen für Gründächer. Die Gefährdungsklassen leiten sich dabei aus Fließgeschwindigkeiten und Wasserständen ab, welche mit Hilfe eines gekoppelten 1D-Kanalnetz-/2D-Oberflächenabflussmodells bestimmt wurden. Die Klassifizierung in die vorliegenden 4 Klassen erfolgt nach der Methodik des Naturgefahrenportals.",
-									"Eine Implementierung von 100 % entspricht einer potenziellen Fläche von ca. 564 000 m² Gründächer für das betrachtete Gebiet.",
-									"Durch die vorliegenden Diagramme werden zudem auch die Effekte bei geringeren Implementierungsgraden auf die gefährdeten Flächen (Diagramm 1) sowie auf das Überflutungsvolumen (Diagramm 2) deutlich.",
-									"Neben den Effekten einzelner Maßnahmen und ihren unterschiedlichen Implementierungsgraden werden außerdem Kombinationen verschiedener Maßnahme betrachtet (Diagramm 3 und 4)."
+									"Für die Bewertung der Auswirkungen auf die Überflutungsgefährdung wurde ein ca. 4,5 km² großes Modellgebiet im Bezirk Friedrichshain-Kreuzberg betrachtet.",
+									"Über die Karten „Wasserstand“ und „Gefährdungsstufe“ können der Ist-Zustand und das Simulations-szenario einer vollständigen Umsetzung der potenziellen Flächen (100 %) miteinander verglichen werden. Die Darstellung basiert auf einem gekoppelten 1D-Kanalnetz-/2D-Oberflächenabflussmodell für ein außergewöhnliches Starkregenereignis.",
+									"Die Karte „Wasserstand“ zeigt Überflutungstiefen, während die Karte „Gefährdungsstufe“ die nach der Methodik des Naturgefahrenportals abgeleitete Gefährdung darstellt.",
+									"Eine Umsetzung von 100 % Gründachpotenzial entspricht ca. 564.000 m².",
+									"Die Diagramme zeigen zusätzlich die Auswirkungen unterschiedlicher Umsetzungsgrade sowie die Effekte kombinierter Maßnahmen auf gefährdete Flächen und Überflutungsvolumen."
 								]
 							}
 						},
@@ -476,12 +475,11 @@
 								"floodRiskLayerConfigId": "Teilentsiegelung",
 								"floodRiskChartFolderSlug": "Teilentsiegelung",
 								"floodRiskText": [
-									"Für die Bewertung der Effekte auf die Überflutungsgefährdung wurde ein Modellgebiet mit einer Größe von ca. 4,5 km² im Bezirk Friedrichshain-Kreuzberg betrachtet.",
-									"Die Karte „Wasserstand“ zeigt die räumliche Ausdehnung von Überflutungen in diesem Gebiet durch ein außergewöhnliches Starkregenereignis. Dargestellt werden neben Überflutungstiefen auch die Fließgeschwindigkeit sowie Fließrichtung bei einer vollständigen Implementierung der potenziellen Flächen für teildurchlässige Flächenbelag sowie im derzeitigen Zustand. Berechnet wurden diese Werte auf Basis eines gekoppelten 1D-Kanalnetz- und eines 2D-Oberflächenabflussmodells.",
-									"Die Karte „Gefährdungsstufe“ ermöglicht einen Vergleich der Gefährdung in diesem Gebiet durch ein außergewöhnliches Starkregenereignis im IST-Zustand sowie bei einer vollständigen Implementierung der potenziellen Flächen für teildurchlässige Flächenbelag. Die Gefährdungsklassen leiten sich dabei aus Fließgeschwindigkeiten und Wasserständen ab, welche mit Hilfe eines gekoppelten 1D-Kanalnetz-/2D-Oberflächenabflussmodells bestimmt wurden. Die Klassifizierung in die vorliegenden 4 Klassen erfolgt nach der Methodik des Naturgefahrenportals.",
-									"Eine Implementierung von 100 % entspricht einer potenziellen Fläche von ca. 357 000 m² für zusätzliche Grünflächen/Teilentsiegelung für das betrachtete Gebiet.",
-									"Durch die vorliegenden Diagramme werden zudem auch die Effekte bei geringeren Implementierungsgraden auf die gefährdeten Flächen (Diagramm 1) sowie auf das Überflutungsvolumen (Diagramm 2) deutlich.",
-									"Neben den Effekten einzelner Maßnahmen und ihren unterschiedlichen Implementierungsgraden werden außerdem Kombinationen verschiedener Maßnahme betrachtet (Diagramm 3 und 4)."
+									"Für die Bewertung der Auswirkungen auf die Überflutungsgefährdung wurde ein ca. 4,5 km² großes Modellgebiet im Bezirk Friedrichshain-Kreuzberg betrachtet.",
+									"Über die Karten „Wasserstand“ und „Gefährdungsstufe“ können der Ist-Zustand und das Simulations-szenario einer vollständigen Umsetzung der potenziellen Flächen (100 %) miteinander verglichen werden. Die Darstellung basiert auf einem gekoppelten 1D-Kanalnetz-/2D-Oberflächenabflussmodell für ein außergewöhnliches Starkregenereignis.",
+									"Die Karte „Wasserstand“ zeigt Überflutungstiefen, während die Karte „Gefährdungsstufe“ die nach der Methodik des Naturgefahrenportals abgeleitete Gefährdung darstellt.",
+									"Eine Umsetzung von 100 % Entsiegelungspotenzial entspricht ca. 357.000 m².",
+									"Die Diagramme zeigen zusätzlich die Auswirkungen unterschiedlicher Umsetzungsgrade sowie die Effekte kombinierter Maßnahmen auf gefährdete Flächen und Überflutungsvolumen."
 								]
 							}
 						},
@@ -492,7 +490,7 @@
 							"metricIcons": ["RoadHorizon", "Drop"],
 							"info": {
 								"description": "Eine vollständige Entsiegelung ist eine umfangreiche und wirkungsvolle Maßnahme, um begrünen zu können, den Oberflächenabfluss in den Kanal zu reduzieren und Regenwasser wieder über die natürliche Bodenzone versickern zu lassen. Dafür müssen zunächst die undurchlässigen Oberflächenbelege entfernt und anschließend der verdichtete Boden gelockert bzw. ausgetauscht und bepflanzt werden. Ziel ist es, die natürlichen Bodenfunktionen so weitgehend wie möglich wieder herzustellen.",
-								"subDescription": "Eine Entsieglung kann auch im kleineren Maßstab umgesetzt werden, wie z.B. bei einer Baumscheibenerweiterung. Die empfohlene Mindestgröße von Pflanzgruben für Bäume beträgt 12 m³ gemäß FLL Richtlinie. Je nach Größe des Baumes sind offene Baumscheiben von min. 9 m², min. 12 m² oder min. 15 m² empfohlen. Kleinere Baumscheiben bieten das Potenzial, diese zu vergrößern oder miteinander zu verbinden. [Berliner Standards für die Pflanzung und die anschließende Pflege von Straßenbäumen: https://www.berlin.de/sen/uvk/natur-und-gruen/stadtgruen/stadtbaeume/strassen-und-parkbaeume/baumpflege/] Auf bestimmen Straßenteilflächen sind Entsiegelungspotenziale zu vermuten:  -auf Trennstreifen -auf überdurchschnittlich breiten Straßenabschnitten (Straßenbreiten von 25-50 m Breite je nach Nutzung) -auf Straßenflächen mit einem Parkplatzanteil von über 20 %. (Der durchschnittliche Anteil an Parkplatzflächen in Berlin liegt zwischen 11 % und 22 %).",
+								"subDescription": "Eine Entsieglung kann auch im kleineren Maßstab umgesetzt werden, wie z.B. bei einer Baumscheibenerweiterung. Die empfohlene Mindestgröße von Pflanzgruben für Bäume beträgt 12 m³ gemäß FLL Richtlinie. Je nach Größe des Baumes sind offene Baumscheiben von min. 9 m², min. 12 m² oder min. 15 m² empfohlen. Kleinere Baumscheiben bieten das Potenzial, diese zu vergrößern oder miteinander zu verbinden. [Berliner Standards für die Pflanzung und die anschließende Pflege von Straßenbäumen.](https://www.berlin.de/sen/uvk/natur-und-gruen/stadtgruen/stadtbaeume/strassen-und-parkbaeume/baumpflege/) Auf bestimmen Straßenteilflächen sind Entsiegelungspotenziale zu vermuten:  -auf Trennstreifen -auf überdurchschnittlich breiten Straßenabschnitten (Straßenbreiten von 25-50 m Breite je nach Nutzung) -auf Straßenflächen mit einem Parkplatzanteil von über 20 %. (Der durchschnittliche Anteil an Parkplatzflächen in Berlin liegt zwischen 11 % und 22 %).",
 								"scores": {
 									"CloudRain": 2,
 									"ThermometerHot": 2,
@@ -568,12 +566,11 @@
 								"floodRiskChartFolderSlug": "Gruenflaechen",
 								"floodRiskChartFileSlug": "Gr_nfl_chen",
 								"floodRiskText": [
-									"Für die Bewertung der Effekte auf die Überflutungsgefährdung wurde ein Modellgebiet mit einer Größe von ca. 4,5 km² im Bezirk Friedrichshain-Kreuzberg betrachtet.",
-									"Die Karte „Wasserstand“ zeigt die räumliche Ausdehnung von Überflutungen in diesem Gebiet durch ein außergewöhnliches Starkregenereignis. Dargestellt werden neben Überflutungstiefen auch die Fließgeschwindigkeit sowie Fließrichtung bei einer vollständigen Implementierung der potenziellen Flächen für Grünflächen sowie im derzeitigen Zustand. Berechnet wurden diese Werte auf Basis eines gekoppelten 1D-Kanalnetz- und eines 2D-Oberflächenabflussmodells.",
-									"Die Karte „Gefährdungsstufe“ ermöglicht einen Vergleich der Gefährdung in diesem Gebiet durch ein außergewöhnliches Starkregenereignis im IST-Zustand sowie bei einer vollständigen Implementierung der potenziellen Flächen für Grünflächen. Die Gefährdungsklassen leiten sich dabei aus Fließgeschwindigkeiten und Wasserständen ab, welche mit Hilfe eines gekoppelten 1D-Kanalnetz-/2D-Oberflächenabflussmodells bestimmt wurden. Die Klassifizierung in die vorliegenden 4 Klassen erfolgt nach der Methodik des Naturgefahrenportals.",
-									"Eine Implementierung von 100 % entspricht einer potenziellen Fläche von ca. 357 000 m² für zusätzliche Grünflächen/Teilentsiegelung für das betrachtete Gebiet.",
-									"Durch die vorliegenden Diagramme werden zudem auch die Effekte bei geringeren Implementierungsgraden auf die gefährdeten Flächen (Diagramm 1) sowie auf das Überflutungsvolumen (Diagramm 2) deutlich.",
-									"Neben den Effekten einzelner Maßnahmen und ihren unterschiedlichen Implementierungsgraden werden außerdem Kombinationen verschiedener Maßnahme betrachtet (Diagramm 3 und 4)."
+									"Für die Bewertung der Auswirkungen auf die Überflutungsgefährdung wurde ein ca. 4,5 km² großes Modellgebiet im Bezirk Friedrichshain-Kreuzberg betrachtet.",
+									"Über die Karten „Wasserstand“ und „Gefährdungsstufe“ können der Ist-Zustand und das Simulations-szenario einer vollständigen Umsetzung der potenziellen Flächen (100 %) miteinander verglichen werden. Die Darstellung basiert auf einem gekoppelten 1D-Kanalnetz-/2D-Oberflächenabflussmodell für ein außergewöhnliches Starkregenereignis.",
+									"Die Karte „Wasserstand“ zeigt Überflutungstiefen, während die Karte „Gefährdungsstufe“ die nach der Methodik des Naturgefahrenportals abgeleitete Gefährdung darstellt.",
+									"Eine Umsetzung von 100 % Entsiegelungspotenzial entspricht ca. 357.000 m².",
+									"Die Diagramme zeigen zusätzlich die Auswirkungen unterschiedlicher Umsetzungsgrade sowie die Effekte kombinierter Maßnahmen auf gefährdete Flächen und Überflutungsvolumen."
 								]
 							}
 						}
@@ -661,12 +658,12 @@
 								"floodRiskChartFolderSlug": "Gruenflaechen",
 								"floodRiskChartFileSlug": "Gr_nfl_chen",
 								"floodRiskText": [
-									"Für die Bewertung der Effekte auf die Überflutungsgefährdung wurde ein Modellgebiet mit einer Größe von ca. 4,5 km² im Bezirk Friedrichshain-Kreuzberg betrachtet.",
-									"Die Karte „Wasserstand“ zeigt die räumliche Ausdehnung von Überflutungen in diesem Gebiet durch ein außergewöhnliches Starkregenereignis. Dargestellt werden neben Überflutungstiefen auch die Fließgeschwindigkeit sowie Fließrichtung bei einer vollständigen Implementierung der potenziellen Flächen für Grünflächen sowie im derzeitigen Zustand. Berechnet wurden diese Werte auf Basis eines gekoppelten 1D-Kanalnetz- und eines 2D-Oberflächenabflussmodells.",
-									"Die Karte „Gefährdungsstufe“ ermöglicht einen Vergleich der Gefährdung in diesem Gebiet durch ein außergewöhnliches Starkregenereignis im IST-Zustand sowie bei einer vollständigen Implementierung der potenziellen Flächen für Grünflächen. Die Gefährdungsklassen leiten sich dabei aus Fließgeschwindigkeiten und Wasserständen ab, welche mit Hilfe eines gekoppelten 1D-Kanalnetz-/2D-Oberflächenabflussmodells bestimmt wurden. Die Klassifizierung in die vorliegenden 4 Klassen erfolgt nach der Methodik des Naturgefahrenportals.",
-									"Eine Implementierung von 100 % entspricht einer potenziellen Fläche von ca. 357 000 m² für zusätzliche Grünflächen/Teilentsiegelung für das betrachtete Gebiet.",
-									"Durch die vorliegenden Diagramme werden zudem auch die Effekte bei geringeren Implementierungsgraden auf die gefährdeten Flächen (Diagramm 1) sowie auf das Überflutungsvolumen (Diagramm 2) deutlich.",
-									"Neben den Effekten einzelner Maßnahmen und ihren unterschiedlichen Implementierungsgraden werden außerdem Kombinationen verschiedener Maßnahme betrachtet (Diagramm 3 und 4)."
+									"Für die Bewertung der Auswirkungen auf die Überflutungsgefährdung wurde ein ca. 4,5 km² großes Modellgebiet im Bezirk Friedrichshain-Kreuzberg betrachtet.",
+									"Über die Karten „Wasserstand“ und „Gefährdungsstufe“ können der Ist-Zustand und das Simulations-szenario einer vollständigen Umsetzung der potenziellen Flächen (100 %) miteinander verglichen werden. Die Darstellung basiert auf einem gekoppelten 1D-Kanalnetz-/2D-Oberflächenabflussmodell für ein außergewöhnliches Starkregenereignis.",
+									"Die Karte „Wasserstand“ zeigt Überflutungstiefen, während die Karte „Gefährdungsstufe“ die nach der Methodik des Naturgefahrenportals abgeleitete Gefährdung darstellt.",
+									"Durch die im Vergleich zum Gesamtgebiet geringe Fläche, welche durch die Implementierung von Baumscheiben entsiegelt wird, sind die Effekte in Bezug auf die Überflutungsgefährdung sowie auf die Reduktion des Überflutungsvolumens bei einem außergewöhnlichen Starkregenereignis nur gering.",
+									"Eine Umsetzung von 100 % Grünflächenpotenzial entspricht ca. 357.000 m².",
+									"Die Diagramme zeigen zusätzlich die Auswirkungen unterschiedlicher Umsetzungsgrade sowie die Effekte kombinierter Maßnahmen auf gefährdete Flächen und Überflutungsvolumen."
 								]
 							}
 						},
@@ -767,12 +764,12 @@
 									"Reduktion_des_Ueberflutungsvolumens"
 								],
 								"floodRiskText": [
-									"Für die Bewertung der Effekte auf die Überflutungsgefährdung wurde ein Modellgebiet mit einer Größe von ca. 4,5 km² im Bezirk Friedrichshain-Kreuzberg betrachtet.",
-									"Die Karte „Wasserstand“ zeigt die räumliche Ausdehnung von Überflutungen in diesem Gebiet durch ein außergewöhnliches Starkregenereignis. Dargestellt werden neben Überflutungstiefen auch die Fließgeschwindigkeit sowie Fließrichtung bei einer vollständigen Implementierung der potenziellen Flächen für Bäume sowie im derzeitigen Zustand. Berechnet wurden diese Werte auf Basis eines gekoppelten 1D-Kanalnetz- und eines 2D-Oberflächenabflussmodells.",
-									"Die Karte „Gefährdungsstufe“ ermöglicht einen Vergleich der Gefährdung in diesem Gebiet durch ein außergewöhnliches Starkregenereignis im IST-Zustand sowie bei einer vollständigen Implementierung der potenziellen Flächen für Bäume. Die Gefährdungsklassen leiten sich dabei aus Fließgeschwindigkeiten und Wasserständen ab, welche mit Hilfe eines gekoppelten 1D-Kanalnetz-/2D-Oberflächenabflussmodells bestimmt wurden. Die Klassifizierung in die vorliegenden 4 Klassen erfolgt nach der Methodik des Naturgefahrenportals.",
-									"Eine Implementierung von 100 % entspricht einer potenziellen Fläche von ca. 31 000 m² Fläche für Baumscheiben für das betrachtete Gebiet. Durch die im Vergleich zum Gesamtgebiet geringe Fläche, welche durch die Implementierung von Baumscheiben entsiegelt wird, sind die Effekte in Bezug auf die Überflutungsgefährdung sowie auf die Reduktion des Überflutungsvolumens bei einem außergewöhnlichen Starkregenereignis nur gering.",
-									"Durch die vorliegenden Diagramme werden zudem auch die Effekte bei geringeren Implementierungsgraden auf die gefährdeten Flächen (Diagramm 1) sowie auf das Überflutungsvolumen (Diagramm 2) deutlich.",
-									"Neben den Effekten einzelner Maßnahmen und ihren unterschiedlichen Implementierungsgraden werden außerdem Kombinationen verschiedener Maßnahme betrachtet (Diagramm 3 und 4)."
+									"Für die Bewertung der Auswirkungen auf die Überflutungsgefährdung wurde ein ca. 4,5 km² großes Modellgebiet im Bezirk Friedrichshain-Kreuzberg betrachtet.",
+									"Über die Karten „Wasserstand“ und „Gefährdungsstufe“ können der Ist-Zustand und das Simulations-szenario einer vollständigen Umsetzung der potenziellen Flächen (100 %) miteinander verglichen werden. Die Darstellung basiert auf einem gekoppelten 1D-Kanalnetz-/2D-Oberflächenabflussmodell für ein außergewöhnliches Starkregenereignis.",
+									"Die Karte „Wasserstand“ zeigt Überflutungstiefen, während die Karte „Gefährdungsstufe“ die nach der Methodik des Naturgefahrenportals abgeleitete Gefährdung darstellt.",
+									"Durch die im Vergleich zum Gesamtgebiet geringe Fläche, welche durch die Implementierung von Baumscheiben entsiegelt wird, sind die Effekte in Bezug auf die Überflutungsgefährdung sowie auf die Reduktion des Überflutungsvolumens bei einem außergewöhnlichen Starkregenereignis nur gering.",
+									"Eine Umsetzung von 100 % Baumscheibenpotenzial entspricht 31 000 m².",
+									"Die Diagramme zeigen zusätzlich die Auswirkungen unterschiedlicher Umsetzungsgrade sowie die Effekte kombinierter Maßnahmen auf gefährdete Flächen und Überflutungsvolumen."
 								]
 							}
 						}
@@ -786,7 +783,7 @@
 						{
 							"id": "connected_area",
 							"layerConfigId": "connected_area",
-							"title": "Angeschlossene Fläche zeichnen"
+							"title": "Anzuschließende Fläche zeichnen"
 						},
 						{
 							"id": "3V1",
@@ -885,11 +882,11 @@
 								"floodRiskLayerConfigId": "Mulde",
 								"floodRiskChartFolderSlug": "Mulde",
 								"floodRiskText": [
-									"Die Karte „Wasserstand“ zeigt die räumliche Ausdehnung von Überflutungen in diesem Gebiet durch ein außergewöhnliches Starkregenereignis. Dargestellt werden neben Überflutungstiefen auch die Fließgeschwindigkeit sowie Fließrichtung bei einer vollständigen Implementierung der potenziellen Flächen für Mulden sowie im derzeitigen Zustand. Berechnet wurden diese Werte auf Basis eines gekoppelten 1D-Kanalnetz- und eines 2D-Oberflächenabflussmodells.",
-									"Die Karte „Gefährdungsstufe“ ermöglicht einen Vergleich der Gefährdung in diesem Gebiet durch ein außergewöhnliches Starkregenereignis im IST-Zustand sowie bei einer vollständigen Implementierung der potenziellen Flächen für Mulden. Die Gefährdungsklassen leiten sich dabei aus Fließgeschwindigkeiten und Wasserständen ab, welche mit Hilfe eines gekoppelten 1D-Kanalnetz-/2D-Oberflächenabflussmodells bestimmt wurden. Die Klassifizierung in die vorliegenden 4 Klassen erfolgt nach der Methodik des Naturgefahrenportals.",
-									"Eine Implementierung von 100 % entspricht einer potenziellen Fläche von ca. 1 241 000 m² angeschlossener Dachfläche für das betrachtete Gebiet.",
-									"Durch die vorliegenden Diagramme werden zudem auch die Effekte bei geringeren Implementierungsgraden auf die gefährdeten Flächen (Diagramm 1) sowie auf das Überflutungsvolumen (Diagramm 2) deutlich.",
-									"Neben den Effekten einzelner Maßnahmen und ihren unterschiedlichen Implementierungsgraden werden außerdem Kombinationen verschiedener Maßnahme betrachtet (Diagramm 3 und 4)."
+									"Für die Bewertung der Auswirkungen auf die Überflutungsgefährdung wurde ein ca. 4,5 km² großes Modellgebiet im Bezirk Friedrichshain-Kreuzberg betrachtet.",
+									"Über die Karten „Wasserstand“ und „Gefährdungsstufe“ können der Ist-Zustand und das Simulations-szenario einer vollständigen Umsetzung der potenziellen Flächen (100 %) miteinander verglichen werden. Die Darstellung basiert auf einem gekoppelten 1D-Kanalnetz-/2D-Oberflächenabflussmodell für ein außergewöhnliches Starkregenereignis.",
+									"Die Karte „Wasserstand“ zeigt Überflutungstiefen, während die Karte „Gefährdungsstufe“ die nach der Methodik des Naturgefahrenportals abgeleitete Gefährdung darstellt.",
+									"Eine Umsetzung von 100 % Potenzial für angeschlossene Dachflächen für Mulden entspricht 1.241.000 m².",
+									"Die Diagramme zeigen zusätzlich die Auswirkungen unterschiedlicher Umsetzungsgrade sowie die Effekte kombinierter Maßnahmen auf gefährdete Flächen und Überflutungsvolumen."
 								]
 							}
 						},
@@ -1082,11 +1079,11 @@
 								"floodRiskChartFolderSlug": "Mulde-Rigole-Element",
 								"floodRiskChartFileSlug": "Mulde_Rigole",
 								"floodRiskText": [
-									"Die Karte „Wasserstand“ zeigt die räumliche Ausdehnung von Überflutungen in diesem Gebiet durch ein außergewöhnliches Starkregenereignis. Dargestellt werden neben Überflutungstiefen auch die Fließgeschwindigkeit sowie Fließrichtung bei einer vollständigen Implementierung der potenziellen Flächen für Mulden-Rigolen-Elemente sowie im derzeitigen Zustand. Berechnet wurden diese Werte auf Basis eines gekoppelten 1D-Kanalnetz- und eines 2D-Oberflächenabflussmodells.",
-									"Die Karte „Gefährdungsstufe“ ermöglicht einen Vergleich der Gefährdung in diesem Gebiet durch ein außergewöhnliches Starkregenereignis im IST-Zustand sowie bei einer vollständigen Implementierung der potenziellen Flächen für Mulden-Rigolen-Elemente. Die Gefährdungsklassen leiten sich dabei aus Fließgeschwindigkeiten und Wasserständen ab, welche mit Hilfe eines gekoppelten 1D-Kanalnetz-/2D-Oberflächenabflussmodells bestimmt wurden. Die Klassifizierung in die vorliegenden 4 Klassen erfolgt nach der Methodik des Naturgefahrenportals.",
-									"Eine Implementierung von 100 % entspricht einer potenziellen Fläche von ca. 1 241 000 m² angeschlossener Dachfläche für das betrachtete Gebiet.",
-									"Durch die vorliegenden Diagramme werden zudem auch die Effekte bei geringeren Implementierungsgraden auf die gefährdeten Flächen (Diagramm 1) sowie auf das Überflutungsvolumen (Diagramm 2) deutlich.",
-									"Neben den Effekten einzelner Maßnahmen und ihren unterschiedlichen Implementierungsgraden werden außerdem Kombinationen verschiedener Maßnahme betrachtet (Diagramm 3 und 4)."
+									"Für die Bewertung der Auswirkungen auf die Überflutungsgefährdung wurde ein ca. 4,5 km² großes Modellgebiet im Bezirk Friedrichshain-Kreuzberg betrachtet.",
+									"Über die Karten „Wasserstand“ und „Gefährdungsstufe“ können der Ist-Zustand und das Simulations-szenario einer vollständigen Umsetzung der potenziellen Flächen (100 %) miteinander verglichen werden. Die Darstellung basiert auf einem gekoppelten 1D-Kanalnetz-/2D-Oberflächenabflussmodell für ein außergewöhnliches Starkregenereignis.",
+									"Die Karte „Wasserstand“ zeigt Überflutungstiefen, während die Karte „Gefährdungsstufe“ die nach der Methodik des Naturgefahrenportals abgeleitete Gefährdung darstellt.",
+									"Eine Umsetzung von 100 % Potenzial für angeschlossene Dachflächen für Mulden-Rigolen-Elemente entspricht 1.241.000 m².",
+									"Die Diagramme zeigen zusätzlich die Auswirkungen unterschiedlicher Umsetzungsgrade sowie die Effekte kombinierter Maßnahmen auf gefährdete Flächen und Überflutungsvolumen."
 								]
 							}
 						},
@@ -1347,11 +1344,11 @@
 								"floodRiskLayerConfigId": "Rigole",
 								"floodRiskChartFolderSlug": "Rigole",
 								"floodRiskText": [
-									"Die Karte „Wasserstand“ zeigt die räumliche Ausdehnung von Überflutungen in diesem Gebiet durch ein außergewöhnliches Starkregenereignis. Dargestellt werden neben Überflutungstiefen auch die Fließgeschwindigkeit sowie Fließrichtung bei einer vollständigen Implementierung der potenziellen Flächen für Rigolen sowie im derzeitigen Zustand. Berechnet wurden diese Werte auf Basis eines gekoppelten 1D-Kanalnetz- und eines 2D-Oberflächenabflussmodells.",
-									"Die Karte „Gefährdungsstufe“ ermöglicht einen Vergleich der Gefährdung in diesem Gebiet durch ein außergewöhnliches Starkregenereignis im IST-Zustand sowie bei einer vollständigen Implementierung der potenziellen Flächen für Rigolen. Die Gefährdungsklassen leiten sich dabei aus Fließgeschwindigkeiten und Wasserständen ab, welche mit Hilfe eines gekoppelten 1D-Kanalnetz-/2D-Oberflächenabflussmodells bestimmt wurden. Die Klassifizierung in die vorliegenden 4 Klassen erfolgt nach der Methodik des Naturgefahrenportals.",
-									"Eine Implementierung von 100 % entspricht einer potenziellen Fläche von ca. 1 241 000 m² angeschlossener Dachfläche für das betrachtete Gebiet.",
-									"Durch die vorliegenden Diagramme werden zudem auch die Effekte bei geringeren Implementierungsgraden auf die gefährdeten Flächen (Diagramm 1) sowie auf das Überflutungsvolumen (Diagramm 2) deutlich.",
-									"Neben den Effekten einzelner Maßnahmen und ihren unterschiedlichen Implementierungsgraden werden außerdem Kombinationen verschiedener Maßnahme betrachtet (Diagramm 3 und 4)."
+									"Für die Bewertung der Auswirkungen auf die Überflutungsgefährdung wurde ein ca. 4,5 km² großes Modellgebiet im Bezirk Friedrichshain-Kreuzberg betrachtet.",
+									"Über die Karten „Wasserstand“ und „Gefährdungsstufe“ können der Ist-Zustand und das Simulations-szenario einer vollständigen Umsetzung der potenziellen Flächen (100 %) miteinander verglichen werden. Die Darstellung basiert auf einem gekoppelten 1D-Kanalnetz-/2D-Oberflächenabflussmodell für ein außergewöhnliches Starkregenereignis.",
+									"Die Karte „Wasserstand“ zeigt Überflutungstiefen, während die Karte „Gefährdungsstufe“ die nach der Methodik des Naturgefahrenportals abgeleitete Gefährdung darstellt.",
+									"Eine Umsetzung von 100 % Potenzial für angeschlossene Dachflächen für Rigolen entspricht 1.241.000 m².",
+									"Die Diagramme zeigen zusätzlich die Auswirkungen unterschiedlicher Umsetzungsgrade sowie die Effekte kombinierter Maßnahmen auf gefährdete Flächen und Überflutungsvolumen."
 								]
 							}
 						}

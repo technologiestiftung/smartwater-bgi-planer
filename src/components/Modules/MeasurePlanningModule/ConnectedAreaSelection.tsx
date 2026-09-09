@@ -194,21 +194,21 @@ export function ConnectedAreaSelection({
 
 	return (
 		<div className="border-muted mb-4 rounded-sm border p-3">
-			<p className="text-sm font-semibold">Angeschlossene Fläche auswählen</p>
+			<p className="text-sm font-semibold">Anzuschließende Fläche auswählen</p>
 			<p className="text-muted-foreground mt-1 mb-2 text-xs">
-				Wähle eine angeschlossene Fläche direkt durch Klick auf die Karte. Die
+				Wähle eine anzuschließende Fläche direkt durch Klick auf die Karte. Die
 				ausgewählte Fläche wird markiert und ihr Wert in der Maßnahme
 				gespeichert.
 			</p>
 			{connectedAreas.length === 0 ? (
 				<p className="text-muted-foreground text-xs">
-					Keine angeschlossene Fläche vorhanden.
+					Keine anzuschließende Fläche vorhanden.
 				</p>
 			) : (
 				<div className="border-muted rounded-sm border p-2 text-sm">
 					<p className="mb-1 font-semibold">{layerName}</p>
 					<div className="grid grid-cols-[1fr_auto] gap-x-4 gap-y-1">
-						<span>Angeschlossene Fläche</span>
+						<span>Anzuschließende Fläche</span>
 						<span>{areaFormatter.format(summary.connectedArea)} m²</span>
 						<span>Potentialfläche</span>
 						<span>{areaFormatter.format(summary.potentialArea)} m²</span>
