@@ -552,6 +552,8 @@
 		],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
+		"legendSrc": "/legends/2g1.svg",
+		"legendTitle": "Gründachpotenzial",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
@@ -565,6 +567,8 @@
 		],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
+		"legendSrc": "/legends/2g1.svg",
+		"legendTitle": "Gründachpotenzial",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
@@ -629,6 +633,7 @@
 		],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
+		"legendSrc": "/legends/Vers_potentialflaeche.svg",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
@@ -641,6 +646,7 @@
 		],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
+		"legendSrc": "/legends/Vers_potentialflaeche.svg",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
@@ -653,6 +659,7 @@
 		],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
+		"legendSrc": "/legends/Vers_potentialflaeche.svg",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
@@ -665,6 +672,7 @@
 		],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
+		"legendSrc": "/legends/Vers_potentialflaeche.svg",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
@@ -677,6 +685,7 @@
 		],
 		"canDrawTrees": true,
 		"canDrawNotes": true,
+		"legendSrc": "/legends/Vers_potentialflaeche.svg",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
@@ -689,6 +698,7 @@
 		],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
+		"legendSrc": "/legends/Vers_potentialflaeche.svg",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
