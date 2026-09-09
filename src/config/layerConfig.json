@@ -34,7 +34,7 @@
 		"id": "heavyRain_starter_question",
 		"name": "",
 		"question": "Durch Überflutungen in Folge von Starkregen kann es zu Gefährdungen von Lebewesen, Gebäuden, Infrastruktur und weiteren Sachwerten kommen.",
-		"description": "(Um dem vorzubeugen, können bestimmte Bereiche des Quartiers von einer Bebauung oder einer vulnerablen Nutzung freigehalten bzw. Maßnahmen zur Überflutungsvorsorge implementiert werden.)",
+		"description": "Um dem vorzubeugen, können bestimmte Bereiche des Quartiers von einer Bebauung oder einer vulnerablen Nutzung freigehalten bzw. Maßnahmen zur Überflutungsvorsorge implementiert werden.",
 		"drawLayerId": "",
 		"visibleLayerIds": ["project_boundary", "project_new_development"],
 		"legendSrc": ""
@@ -224,7 +224,6 @@
 		"question": "Gibt es Blockteilflächen mit hohen Versiegelungsgraden (über 60-70 %)?",
 		"description": [
 			"Große versiegelte Bereiche können die thermische Belastung erhöhen und führen zu hohen Oberflächenabflüssen. Dadurch sind im urbanen Wasserhaushalt die Komponenten Versickerung und Verdunstung im Vergleich zum natürlichen Zustand stark reduziert.",
-			"Mit Klick in die Karte kann geprüft werden, ob der durchschnittliche Versiegelungsgrad des jeweiligen Flächentyps einer Blockteilfläche um mehr als 20 % überschritten wird. Dies gibt einen Hinweis auf eine untypisch hohe Versiegelung eines Flächentyps und zeigt den Entsiegelungsbedarf. ",
 			"Hinweis: Die gesamte Landesfläche Berlins ist mit 52 Flächentypen gekennzeichnet. Die Kartenbeschreibung finden Sie [hier](https://www.berlin.de/umweltatlas/boden/versiegelung/2021/kartenbeschreibung/)."
 		],
 		"drawLayerId": "module_1_impermeability_hotspots_q1",
@@ -241,7 +240,6 @@
 		"question": "Gibt es Bereiche mit einer niedrigen Grünvolumenzahl?",
 		"description": [
 			"Die Grünvolumenzahl berechnet sich aus dem Grünvolumen [m³] pro Flächeneinheit [m²].",
-			"Mit Klick in die Karte kann zudem geprüft werden, ob in einer Blockteilfläche die für den Flächentyp* durchschnittliche Grünvolumenzahl um mehr als 20 % unterschritten wird. Dies gibt einen Hinweis darüber, welche Flächen priorisiert werden sollten.",
 			"Hinweis: Die gesamte Landesfläche Berlins ist mit 52 Flächentypen gekennzeichnet."
 		],
 		"drawLayerId": "module_1_impermeability_hotspots_q2",
@@ -270,7 +268,6 @@
 			"- Verdunstung",
 			"- Versickerung",
 			"- Oberflächenabfluss",
-			"Durch Anklicken einer Blockteilfläche können die absoluten Werte dieser Komponenten sowohl für den natürlichen Zustand als auch für den Ist-Zustand eingesehen werden.",
 			"Gemäß EU-Wasserrahmenrichtlinie gilt eine Abweichung von mehr als 20 % vom natürlichen Wasserhaushalt als ökologisch schlecht und sollte vermieden werden. Die entsprechenden Anforderungen werden im Regelwerk DWA-M 102-4 weiter konkretisiert."
 		],
 		"drawLayerId": "module_1_waterbalance_hotspots_q1",
@@ -308,8 +305,8 @@
 		"name": "Erstaufnehmendes Gewässer im Einzugsbereich der Trennkanalisation",
 		"question": "In welches Gewässer wird das Regenwasser eingeleitet?",
 		"description": [
-			"Falls sich das Untersuchungsgebiet im Einzugsbereich der Trennkanalisation befindet, kann die Information zum erstaufnehmenden Gewässer durch Klick in die Karte abgerufen werden. Die Karte gibt Auskunft darüber, in welches Gewässer das in die Regenwasserkanalisation eingeleitete Regenwasser gelangt. Ziel ist es durch Abkopplung die Belastung der Gewässer zu reduzieren (hydraulisch & stofflich).",
-			"In Einzugsgebieten von Fließgewässern (z.B. Spree, Landwehrkanal, Panke) ist eine Abkopplung geboten. Bei stehenden Gewässern (z.B. Seen, Teiche) ist zu prüfen, ob es einen Wasserbedarf gibt und daher keine Abkopplung forciert werden sollte (siehe nächste Frage)."
+			"Falls sich das Untersuchungsgebiet im Einzugsbereich der Trennkanalisation befindet, kann die Information zum erstaufnehmenden Gewässer eingesehen werden. Ziel ist es durch Abkopplung die Belastung der Gewässer zu reduzieren (hydraulisch & stofflich).",
+			"In Einzugsgebieten von Fließgewässern (z.B. Spree, Landwehrkanal, Panke) ist eine Abkopplung geboten. Bei stehenden Gewässern (z.B. Seen, Teiche) ist zu prüfen, ob es einen Wasserbedarf gibt und daher keine Abkopplung forciert werden sollte. Durch eine frühzeitige Einbindung des bezirklichen Umwelt- und Naturschutzamtes kann abgefragt werden, ob umliegende Kleingewässer Bedarf an zusätzlichen Wassermengen haben. In einem solchen Fall kann geprüft werden, ob eine Zuleitung von Regenwasser realisierbar ist."
 		],
 		"drawLayerId": "module_1_groundwater_hotspots_q2",
 		"canDrawPolygons": true,
@@ -725,7 +722,7 @@
 	},
 	{
 		"id": "connected_area",
-		"name": "Angeschlossene Fläche",
+		"name": "Anzuschließende Fläche",
 		"drawLayerId": "module_3_connected_area_draw",
 		"visibleLayerIds": ["project_boundary"],
 		"canDrawMeasures": true,

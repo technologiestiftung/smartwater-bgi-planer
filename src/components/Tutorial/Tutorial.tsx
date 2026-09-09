@@ -38,26 +38,20 @@ export function Tutorial({ type, isAddMeasure }: TutorialProps) {
 			if (isPlanningModule) {
 				return (
 					<p className="text-dark">
-						Im <span className="font-bold">Layer Tree</span> können Sie auf Ihr
-						Inhalt aus Module 1 und 2 jederzeit zugreifen bzw. ein- und
+						Im <span className="font-bold">Layer Tree</span> können Sie auf Ihre
+						Inhalte aus Modul 1 und 2 jederzeit zugreifen bzw. ein- und
 						ausschalten.
 					</p>
 				);
 			}
 			return (
-				<>
-					<p className="text-dark">
-						Tippen Sie hier, um die aktuelle Hintegrundkarte zwischen{" "}
-						<span className="font-bold">Digitale Orthophoto</span> und{" "}
-						<span className="font-bold">basemap.de Vector</span> zu wechseln.
-					</p>
-					<p className="text-dark">
-						Beim Hover können Sie die aktuelle inhaltliche{" "}
-						<span className="font-bold">Layers</span> und{" "}
-						<span className="font-bold">Zusatzkarten</span> steuern, inklusive
-						Deckkraft anpassen und ein- und ausschalten.
-					</p>
-				</>
+				<p className="text-dark">
+					Tippen Sie hier, um die aktuelle Hintergrundkarte zwischen{" "}
+					<span className="font-bold">Digitalem Orthophoto</span> und{" "}
+					<span className="font-bold">basemap.de Vector</span> zu wechseln. Per
+					Hover können Sie die aktuellen inhaltlichen Layer und Zusatzkarten
+					steuern, inklusive Deckkraft anpassen und ein- und ausschalten.
+				</p>
 			);
 		}
 		if (type === "controls") {
@@ -65,15 +59,15 @@ export function Tutorial({ type, isAddMeasure }: TutorialProps) {
 				return (
 					<>
 						<p className="text-dark">
-							Verwenden Sie die Zeichentools um Ihre Maßnahmen zu platzieren.
+							Verwenden Sie die Zeichentools, um Ihre Maßnahmen zu platzieren.
 						</p>
 						<p className="text-dark">
 							Bei <span className="font-bold">Versickerungsmaßnahmen</span>{" "}
-							erfolgt der Prozess zweistufig: Erstmal müssen Sie angeschlossene
-							Flächen zeichnen - das heißt, von welche versiegelten Fläche oder
-							Dächern das Wasser abgeleitet werden soll. Dann wählen Sie die
-							angeschlossene Fläche aus und zeichnen Sie die Maßnahme, die daran
-							angeschlossen werden soll.
+							erfolgt der Prozess zweistufig: Erstmal müssen Sie die
+							anzuschließende Flächen zeichnen - das heißt, von welchen
+							versiegelten Flächen oder Dächern das Wasser abgeleitet werden
+							soll. Dann wählen Sie die anzuschließende Fläche aus und zeichnen
+							die Maßnahme, die daran angeschlossen werden soll.
 						</p>
 					</>
 				);
@@ -81,23 +75,19 @@ export function Tutorial({ type, isAddMeasure }: TutorialProps) {
 			return (
 				<>
 					<p className="text-dark">
-						Verwenden Sie die Zeichentools um Ihre Auswahl zu treffen.
+						Verwenden Sie die Zeichentools, um Ihre Auswahl zu treffen.
 					</p>
 					<p className="text-dark">
 						<span className="font-bold">Zeichnen</span> gibt Ihnen die
-						Möglichkeit ein frei setzbares Polygon einzuzeichnen.
-					</p>
-					<p className="text-dark text-sm font-light italic">
-						Wenn Sie ein Polygon schließen möchten, klicken Sie entweder den
-						Anfangspunkt erneut oder führen einen Doppelklick durch.
+						Möglichkeit ein frei setzbares Polygon einzuzeichnen. Wenn Sie ein
+						Polygon schließen möchten, klicken Sie entweder erneut auf den
+						Anfangspunkt oder führen Sie einen Doppelklick durch.
 					</p>
 					<p className="text-dark">
 						<span className="font-bold">Blockteilflächen selektieren</span>{" "}
-						markiert die offiziellen Blockteilflächen nach ISO-5.
-					</p>
-					<p className="text-dark text-sm font-light italic">
-						Bereits ausgewählte Blockteilflächen können Sie bei Bedarf durch
-						einen weiteren Klick auch wieder abwählen.
+						markiert die offiziellen Blockteilflächen nach ISO-5. Bereits
+						ausgewählte Blockteilflächen können Sie bei Bedarf durch einen
+						weiteren Klick auch wieder abwählen.
 					</p>
 				</>
 			);

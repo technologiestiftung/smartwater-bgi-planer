@@ -21,7 +21,7 @@ import { FC, useEffect, useRef } from "react";
 
 const PARAM_LABELS: Partial<Record<string, string>> = {
 	area: "Fläche",
-	connectedArea: "Angeschlossene Fläche",
+	connectedArea: "Anzuschließende Fläche",
 };
 
 const getDisplayName = (configId: string): string => {

@@ -911,7 +911,7 @@
 	},
 	{
 		"id": "module_3_connected_area_draw",
-		"name": "Angeschlossene Fläche",
+		"name": "Anzuschließende Fläche",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
