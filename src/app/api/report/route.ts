@@ -4,7 +4,6 @@ import fs from "fs";
 import { NextResponse } from "next/server";
 import path from "path";
 import PizZip from "pizzip";
-import sizeOf from "image-size";
 import ImageModule from "docxtemplater-image-module-free";
 
 // ---------- body types ----------
@@ -260,18 +259,10 @@ export async function POST(req: Request) {
 				}
 				return fs.readFileSync(imagePath);
 			},
-			getSize(img: Buffer) {
-				const dimensions = sizeOf(img);
-				// scale down if needed, e.g. max width 500px
-				const maxWidth = 500;
-				const ratio =
-					dimensions.width && dimensions.width > maxWidth
-						? maxWidth / dimensions.width
-						: 1;
-				return [
-					Math.round((dimensions.width ?? maxWidth) * ratio),
-					Math.round((dimensions.height ?? maxWidth) * ratio),
-				];
+			getSize() {
+				// docxtemplater-image-module-free assumes 96 DPI when converting
+				// px to EMU, so 6in x 4in is 576 x 384 px.
+				return [576, 384];
 			},
 		});
 
