@@ -68,7 +68,7 @@ const MeasureInfos: FC<MeasureInfosProps> = ({ liveMeasureInfo }) => {
 				)}
 				{isSwaleMeasure && selectedConnectedArea && (
 					<p>
-						{Math.round(selectedConnectedArea.area)} m² angeschlossene Fläche
+						{Math.round(selectedConnectedArea.area)} m² anzuschließende Fläche
 					</p>
 				)}
 			</div>

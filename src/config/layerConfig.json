@@ -723,7 +723,7 @@
 	},
 	{
 		"id": "connected_area",
-		"name": "Anzuschließende Fläche",
+		"name": "Angeschlossene Fläche",
 		"drawLayerId": "module_3_connected_area_draw",
 		"visibleLayerIds": ["project_boundary"],
 		"canDrawMeasures": true,

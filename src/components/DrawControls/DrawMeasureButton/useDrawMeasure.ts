@@ -417,7 +417,7 @@ export const useDrawMeasure = () => {
 
 		if (!canDraw) {
 			setUploadError(
-				"Bitte zuerst eine angeschlossene Fläche für die Versickerungsmassnahme auswählen.",
+				"Bitte zuerst eine anzuschließende Fläche für die Versickerungsmassnahme auswählen.",
 			);
 			return;
 		}
@@ -475,9 +475,9 @@ export const useDrawMeasure = () => {
 	const label = isDrawing
 		? "Stop Zeichnen"
 		: isConnectedArea
-			? "Angeschlossene Fläche zeichnen"
+			? "Anzuschließende Fläche zeichnen"
 			: isSwaleMeasure && !canDraw
-				? "Erst angeschlossene Fläche auswählen"
+				? "Erst anzuschließende Fläche auswählen"
 				: "Maßnahme zeichnen";
 
 	return { isDrawing, canDraw, liveMeasureInfo, label, toggleDraw };

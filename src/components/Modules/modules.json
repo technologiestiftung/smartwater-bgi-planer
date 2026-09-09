@@ -783,7 +783,7 @@
 						{
 							"id": "connected_area",
 							"layerConfigId": "connected_area",
-							"title": "Angeschlossene Fläche zeichnen"
+							"title": "Anzuschließende Fläche zeichnen"
 						},
 						{
 							"id": "3V1",
