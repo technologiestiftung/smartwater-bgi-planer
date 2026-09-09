@@ -39,6 +39,7 @@ interface ReportBody {
 	};
 	plot_critical_hours?: string;
 	plot_critical_events?: string;
+	format?: "pdf" | "docx";
 }
 
 // ---------- helpers ----------
@@ -277,12 +278,24 @@ export async function POST(req: Request) {
 		doc.render(buildRenderData(body));
 		const docxBuffer = doc.getZip().generate({ type: "nodebuffer" });
 
+		const reportName = body.project?.name ?? "Report";
+
+		if (body.format === "docx") {
+			return new Response(new Uint8Array(docxBuffer), {
+				headers: {
+					"Content-Type":
+						"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+					"Content-Disposition": `attachment; filename="Bericht_${reportName}.docx"`,
+				},
+			});
+		}
+
 		const pdfBuffer = await convertWithGotenberg(docxBuffer);
 
 		return new Response(pdfBuffer, {
 			headers: {
 				"Content-Type": "application/pdf",
-				"Content-Disposition": `attachment; filename="Bericht_${body.project?.name ?? "Report"}.pdf"`,
+				"Content-Disposition": `attachment; filename="Bericht_${reportName}.pdf"`,
 			},
 		});
 	} catch (error) {

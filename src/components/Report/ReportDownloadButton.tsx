@@ -6,9 +6,15 @@ import {
 	useResultStore,
 } from "@/store";
 import Map from "ol/Map";
-import { BookOpenTextIcon, SpinnerIcon } from "@phosphor-icons/react";
+import {
+	BookOpenTextIcon,
+	FileDocIcon,
+	FilePdfIcon,
+	SpinnerIcon,
+} from "@phosphor-icons/react";
 import { FC, useState } from "react";
 import { Button } from "../ui/button";
+import { useConfirmDialog } from "@/components/ConfirmDialog";
 import modulesData from "@/components/Modules/modules.json";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
@@ -16,6 +22,8 @@ import { ResultStatistics } from "@/types/result";
 import { PlotType } from "@/server/rabimo/types";
 
 interface ReportDownloadButtonProps {}
+
+type ReportFormat = "pdf" | "docx";
 
 async function fetchReport(body: object): Promise<Blob> {
 	const response = await fetch("/api/report", {
@@ -110,7 +118,24 @@ const ReportDownloadButton: FC<ReportDownloadButtonProps> = ({}) => {
 		? (result.data as { statistics: ResultStatistics }).statistics
 		: null;
 
-	const generateReport = async () => {
+	const { ConfirmDialog, confirm } = useConfirmDialog({
+		title: "Report herunterladen",
+		description: "In welchem Format möchten Sie den Report herunterladen?",
+		cancelButton: (
+			<Button variant="outline">
+				<FileDocIcon />
+				Word (.docx)
+			</Button>
+		),
+		confirmButton: (
+			<Button>
+				<FilePdfIcon />
+				PDF
+			</Button>
+		),
+	});
+
+	const generateReport = async (format: ReportFormat) => {
 		setLoading(true);
 		setError(null);
 
@@ -155,18 +180,25 @@ const ReportDownloadButton: FC<ReportDownloadButtonProps> = ({}) => {
 				notes: notesByCheckfrage,
 				plot_critical_hours: plots?.critical_hours ?? null,
 				plot_critical_events: plots?.critical_events ?? null,
+				format,
 			};
 
 			const blob = await fetchReport(body);
-			triggerDownload(blob, `Report_${project?.name}.pdf`);
+			triggerDownload(blob, `Report_${project?.name}.${format}`);
 		} catch (err) {
 			console.error("Report generation error:", err);
 			const errorMessage =
 				err instanceof Error ? err.message : "Unbekannter Fehler";
-			setError(`Fehler beim Erstellen des PDF: ${errorMessage}`);
+			setError(`Fehler beim Erstellen des Reports: ${errorMessage}`);
 		} finally {
 			setTimeout(() => setLoading(false), 500);
 		}
+	};
+
+	const handleClick = async () => {
+		const choice = await confirm();
+		if (choice === null) return;
+		void generateReport(choice ? "pdf" : "docx");
 	};
 
 	return (
@@ -177,11 +209,12 @@ const ReportDownloadButton: FC<ReportDownloadButtonProps> = ({}) => {
 				</div>
 			)}
 
-			<Button variant="outline" onClick={generateReport} disabled={loading}>
+			<Button variant="outline" onClick={handleClick} disabled={loading}>
 				{loading && <SpinnerIcon className="animate-spin" />}
 				<BookOpenTextIcon />
-				{loading ? "Generiere PDF..." : "Gesamter Report"}
+				{loading ? "Generiere Report..." : "Gesamter Report"}
 			</Button>
+			<ConfirmDialog />
 		</div>
 	);
 };
