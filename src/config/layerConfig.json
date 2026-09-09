@@ -315,9 +315,7 @@
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
 		"canDrawNotes": true,
-		"visibleLayerIds": [
-			"ua_kanalisation_2022:sp02_09kanalisation2022_2"
-		],
+		"visibleLayerIds": ["ua_kanalisation_2022:sp02_09kanalisation2022_2"],
 		"legendSrc": "/legends/1g2.svg"
 	},
 	{
