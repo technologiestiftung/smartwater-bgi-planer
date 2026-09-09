@@ -315,26 +315,8 @@
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
 		"canDrawNotes": true,
-		"visibleLayerIds": [
-			"bgi-planer:HA4_Kleingewaesser_trocken_pkt",
-			"ua_kanalisation_2022:sp02_09kanalisation2022_2"
-		],
+		"visibleLayerIds": ["ua_kanalisation_2022:sp02_09kanalisation2022_2"],
 		"legendSrc": "/legends/1g2.svg"
-	},
-	{
-		"id": "water_protection_small_waters_demand",
-		"name": "Kleingewässer",
-		"question": "Gibt es im Untersuchungsgebiet oder in der Umgebung Kleingewässer?",
-		"description": "Die Karte zeigt Kleingewässer und Feuchtbiotope. Durch eine frühzeitige Einbindung des bezirklichen Umwelt- und Naturschutzamtes kann abgefragt werden, ob umliegende Gewässer Bedarf an zusätzlichen Wassermengen haben. In einem solchen Fall kann geprüft werden, ob eine Zuleitung von Regenwasser realisierbar ist.",
-		"drawLayerId": "module_1_groundwater_hotspots_q3",
-		"canDrawPolygons": true,
-		"canDrawBTF": true,
-		"canDrawNotes": true,
-		"visibleLayerIds": [
-			"bgi-planer:HA4_Kleingewaesser_trocken_pkt",
-			"bgi-planer:HA4_Kleingewaesser_trocken_topoEZG_pl"
-		],
-		"legendSrc": "/legends/1g3.svg"
 	},
 	{
 		"id": "NOTE: MODULE 2"
@@ -552,6 +534,8 @@
 		],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
+		"legendSrc": "/legends/2g1.svg",
+		"legendTitle": "Gründachpotenzial",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
@@ -565,6 +549,8 @@
 		],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
+		"legendSrc": "/legends/2g1.svg",
+		"legendTitle": "Gründachpotenzial",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
@@ -629,6 +615,7 @@
 		],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
+		"legendSrc": "/legends/Vers_potentialflaeche.svg",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
@@ -641,6 +628,7 @@
 		],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
+		"legendSrc": "/legends/Vers_potentialflaeche.svg",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
@@ -653,6 +641,7 @@
 		],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
+		"legendSrc": "/legends/Vers_potentialflaeche.svg",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
@@ -665,6 +654,7 @@
 		],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
+		"legendSrc": "/legends/Vers_potentialflaeche.svg",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
@@ -677,6 +667,7 @@
 		],
 		"canDrawTrees": true,
 		"canDrawNotes": true,
+		"legendSrc": "/legends/Vers_potentialflaeche.svg",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
@@ -689,6 +680,7 @@
 		],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
+		"legendSrc": "/legends/Vers_potentialflaeche.svg",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
