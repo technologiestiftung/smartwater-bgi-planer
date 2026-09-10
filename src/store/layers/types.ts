@@ -108,6 +108,7 @@ export interface LayerConfigItem {
 	embeddedImageAfterTextDescription?: string;
 	drawLayerId: string;
 	visibleLayerIds: string[];
+	optionalLayerIds?: string[];
 	canDrawPolygons?: boolean;
 	canDrawBTF?: boolean;
 	canDrawNotes?: boolean;
