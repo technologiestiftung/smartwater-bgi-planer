@@ -127,7 +127,7 @@ export function MenuModalContent({ projectId }: MenuModalProps) {
 						</div>
 					}
 				/>
-				<div className="flex flex-col justify-end items-end gap-2 p-6">
+				<div className="flex flex-col items-end justify-end gap-2 p-6">
 					<Button
 						variant="outline"
 						className="min-w-[265px]"
