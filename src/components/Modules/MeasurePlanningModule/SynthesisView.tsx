@@ -2,6 +2,7 @@
 
 import WaterBalanceChart from "@/components/ResultCharts/WaterBalanceChart";
 import WaterQualityChart from "@/components/ResultCharts/WaterQualityChart";
+import { Tutorial } from "@/components/Tutorial/Tutorial";
 import { Button } from "@/components/ui/button";
 import { useRabimoPayload } from "@/hooks/useRabimoPayload";
 import { useResultLayer } from "@/hooks/useResultLayer";
@@ -207,6 +208,7 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 
 	return (
 		<div className="flex h-full w-full flex-col">
+			<Tutorial type="synthesisModule3" isAddMeasure={false} />
 			<div className="flex-1 overflow-y-auto px-6 pb-6">
 				<h3>Effektbewertung</h3>
 				{error && (
