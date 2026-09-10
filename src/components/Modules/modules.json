@@ -754,6 +754,7 @@
 									}
 								],
 								"climateSimulationFileSlug": "Baum",
+								"climateSimulationGraphic": "/images/climateSimulation/BGI_Szenario_Baumentscheid.webp",
 								"floodRiskLayerConfigId": "Baeume",
 								"floodRiskChartFolderSlug": "Baeume",
 								"floodRiskChartFileSlug": "B_ume",
