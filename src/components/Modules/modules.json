@@ -753,6 +753,7 @@
 										"link": "https://www.berlin.de/sen/uvk/_assets/umwelt/wasser-und-geologie/publikationen-und-merkblaetter/hinweisblatt2-versick.pdf?ts=1754465106"
 									}
 								],
+								"climateSimulationFileSlug": "Baum",
 								"floodRiskLayerConfigId": "Baeume",
 								"floodRiskChartFolderSlug": "Baeume",
 								"floodRiskChartFileSlug": "B_ume",

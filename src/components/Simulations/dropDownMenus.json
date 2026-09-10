@@ -30,6 +30,7 @@
 	},
 	{
 		"title": "Ausschöpfung\nPotentialfläche",
+		"excludeForMeasureIds": ["3B2"],
 		"options": [
 			{
 				"display": "100%",
@@ -38,6 +39,28 @@
 			{
 				"display": "50%",
 				"value": "50"
+			}
+		]
+	},
+	{
+		"title": "Baum Alter",
+		"onlyForMeasureIds": ["3B2"],
+		"options": [
+			{
+				"display": "0 Jahre",
+				"value": "Baum0"
+			},
+			{
+				"display": "15 Jahre",
+				"value": "Baum15"
+			},
+			{
+				"display": "30 Jahre",
+				"value": "Baum30"
+			},
+			{
+				"display": "45 Jahre",
+				"value": "Baum45"
 			}
 		]
 	},
