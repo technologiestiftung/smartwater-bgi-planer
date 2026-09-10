@@ -20,6 +20,11 @@ interface FeatureDetailsModalProps {
 	isLoading?: boolean;
 }
 
+const LABELS = {
+	schlecht: "Aufschüttung vorhanden",
+	gut: "Nicht vorhanden",
+};
+
 export const FeatureDetailsModal: FC<FeatureDetailsModalProps> = ({
 	attributes,
 	coordinate,
@@ -41,10 +46,7 @@ export const FeatureDetailsModal: FC<FeatureDetailsModalProps> = ({
 			if (layer && layer.getSource()) {
 				const pointFeature = new Feature({
 					geometry: new Point(coordinate),
-					note:
-						noteType === "schlecht"
-							? "Schlecht Versickerungsfähig"
-							: "Gut Versickerungsfähig",
+					note: LABELS[noteType],
 					noteType,
 					timestamp: new Date().toISOString(),
 				});
@@ -129,11 +131,9 @@ export const FeatureDetailsModal: FC<FeatureDetailsModalProps> = ({
 
 				<div className="bg-muted/10 border-muted flex justify-end gap-2 border-t p-4">
 					<Button onClick={() => handleClick("schlecht")}>
-						Schlecht Versickerungsfähig
+						{LABELS["schlecht"]}
 					</Button>
-					<Button onClick={() => handleClick("gut")}>
-						Gut Versickerungsfähig
-					</Button>
+					<Button onClick={() => handleClick("gut")}>{LABELS["gut"]}</Button>
 				</div>
 			</div>
 		</div>

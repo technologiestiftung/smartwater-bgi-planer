@@ -218,16 +218,18 @@ export function MeasurePlanningStepContent({
 	return (
 		<div className="flex h-full flex-col p-6">
 			<div className="flex justify-between">
-				<h3 className="text-primary shrink-0 text-xl font-semibold">
+				<h3 className="text-primary text-xl font-semibold">
 					{layerConfig.name}
 				</h3>
-				<Link
-					href={`?info=${layerConfig.id}`}
-					className="text-primary hover:text-primary/80 inline-flex h-9 w-9 cursor-pointer items-center justify-center rounded-full"
-					aria-label={`Informationen zu ${layerConfig.name}`}
-				>
-					<InfoIcon className="MeasuresInfosIcon h-5 w-5" />
-				</Link>
+				{layerConfig.id !== "connected_area" && (
+					<Link
+						href={`?info=${layerConfig.id}`}
+						className="text-primary hover:text-primary/80 inline-flex h-9 w-9 cursor-pointer items-center justify-center rounded-full"
+						aria-label={`Informationen zu ${layerConfig.name}`}
+					>
+						<InfoIcon className="MeasuresInfosIcon h-5 w-5" />
+					</Link>
+				)}
 			</div>
 			<div className="flex min-h-0 flex-1 flex-col">
 				<div className="mt-4">

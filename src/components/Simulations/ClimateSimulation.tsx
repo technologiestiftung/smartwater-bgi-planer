@@ -1,8 +1,11 @@
 "use client";
 
+import { PageModal } from "@/components/Modal/Modal";
 import { Button } from "@/components/ui/button";
 import { PencilRulerIcon, ArrowRightIcon } from "@phosphor-icons/react";
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 import {
 	getModuleStep,
 	getModuleStepMeasure,
@@ -28,7 +31,11 @@ export function ClimateSimulation({
 		"measurePlanning",
 		climateSimulation,
 	) as ModuleStepConfig;
-	const { title } = getModuleInfo || {};
+	const {
+		title,
+		info: { climateSimulationGraphic: climateSimulationGraphicImage } = {},
+	} = getModuleInfo || {};
+	const [climateSimulationGraphic, setClimateSimulationGraphic] = useState("");
 
 	return (
 		<div className="flex h-full w-full flex-col">
@@ -37,44 +44,62 @@ export function ClimateSimulation({
 					Simulationsergebnisse Stadtklima - {title}
 				</h3>
 				<p>
-					Die Karte zeigt die mikroklimatische Wirkung der Maßnahme XXX im
+					Die Karte zeigt die mikroklimatische Wirkung der Maßnahme im
 					Pilotgebiet Friedrichshain. Über die Auswahlfelder am oberen Rand
 					steuern Sie, was dargestellt wird:
 				</p>
 				<p>
-					<span className="font-bold">Delta / Absolut</span> - Delta zeigt die
-					Veränderung gegenüber dem Zustand ohne Maßnahme (die reine Wirkung der
-					Begrünung); Absolut die simulierten Ist-Werte inkl. Maßnahme.
+					<span className="font-bold">Delta / Absolut:</span> Unter „Absolut“
+					werden die tatsächlichen simulierten Parameterwerte dargestellt. Die
+					Ansicht „Delta“ zeigt die Differenz zum IST-Zustand.
 				</p>
 				<p>
-					<span className="font-bold">Messwert</span> - dargestellter Parameter:
-					Lufttemperatur (°C), Physiologisch Äquivalente Temperatur / PET (°C -
-					thermisches Empfinden inkl. Strahlung und Wind) oder relative
-					Luftfeuchtigkeit (%).
+					<span className="font-bold">Messwert:</span> Für die Darstellung von
+					Veränderungen stehen drei Parameter zur Verfügung: Temperatur (in °C),
+					Physiologisch Äquivalente Temperatur (PET, in °C) und Luftfeuchtigkeit
+					(in %). Hinweis: PET wird nur bis zu einer Höhe von 10 m dargestellt.
 				</p>
 				<p>
-					<span className="font-bold">Ausschöpfung Potentialfläche</span> -
-					Umsetzungsgrad der jeweiligen BGI Maßnahme: 100 % (alle Potentiale,
-					basierend auf Machbarkeiten ausgeschöpft) oder 50 %.
+					<span className="font-bold">Ausschöpfung Potentialfläche:</span> Der
+					Umsetzungsgrad der jeweiligen BGI-Maßnahme wird auf Grundlage von
+					Potenzialkarten und der ermittelten Machbarkeiten dargestellt. Dabei
+					wird zwischen einer Nutzung von 100 % und 50 % der möglichen Fläche
+					unterschieden.
 				</p>
 				<p>
-					<span className="font-bold">Uhrzeit</span> - Simulationszeitpunkt:
-					04:00 (nächtliche Abkühlung), 14:00 (Tagesmaximum) oder 22:00 Uhr.
+					<span className="font-bold">Uhrzeit - Simulationszeitpunkt:</span> Es
+					kann zwischen drei Simulationszeitpunkten gewählt werden: 04:00 Uhr,
+					14:00 Uhr und 22:00 Uhr.
 				</p>
 				<p>
-					<span className="font-bold">Jahreszeit</span> - meteorologisches
-					Szenario: Hitzetag / Tropennacht (extreme Hitze) oder Sommertag
-					(durchschnittlich warmer Tag).
+					<span className="font-bold">Klimaszenarien:</span> Es wurden zwei
+					Klimaszenarien berechnet: der Hitzetag mit Höchsttemperaturen von über
+					30 °C und vorrausgegangener Tropennacht sowie der Sommertag mit
+					Höchsttemperaturen von über 25 °C.
 				</p>
 				<p>
-					<span className="font-bold">Ansicht</span> - Schnittebene im
-					3D-Modell: Grundriss (xy, horizontal, z. B. 2 m Höhe) oder vertikale
-					Schnitte (xz / yz) entlang von Straßen und Gebäudehöhen.
+					<span className="font-bold">Ansicht:</span> Die Karten werden in drei
+					unterschiedlichen Höhen dargestellt: 2m, 10m und 25m. Zusätzlich
+					stehen zwei beispielhafte Querschnitte zur Verfügung.
 				</p>
 				<p>
-					<span className="font-bold">Farbskala</span> - Kräftigeres Rot =
-					stärkere Wirkung (in der Delta-Ansicht: größere PET-Reduktion /
-					Abkühlung). Weiße Flächen sind Gebäude, grüne Punkte Bestandsbäume.
+					<span className="font-bold">Farbskala:</span> Die Farbskalen verlaufen
+					grundsätzlich von Blau nach Rot. Blau steht dabei für eine niedrige
+					Temperaturen und niedrigere Luftfeuchtigkeit . Die grünen Punkte
+					kennzeichnen Bäume, während weiße Flächen Gebäude darstellen.
+				</p>
+				<p>
+					Ein erklärende Grafik finden Sie{" "}
+					<button
+						type="button"
+						onClick={() =>
+							setClimateSimulationGraphic(climateSimulationGraphicImage || "")
+						}
+						className="text-primary hover:text-primary-dark cursor-pointer underline"
+					>
+						hier
+					</button>
+					.
 				</p>
 			</div>
 			<div className="border-muted bg-secondary flex shrink-0 border-t px-4">
@@ -103,6 +128,24 @@ export function ClimateSimulation({
 					<ArrowRightIcon className="h-4 w-4" />
 				</Button>
 			</div>
+			<PageModal
+				open={!!climateSimulationGraphic}
+				onOpenChange={() => setClimateSimulationGraphic("")}
+				title="Erklärende Grafik"
+				bodyClassName="p-0"
+				className="max-w-5xl"
+			>
+				{!!climateSimulationGraphic && (
+					<Image
+						src={climateSimulationGraphic}
+						alt="Erklärende Grafik"
+						width={1600}
+						height={900}
+						className="h-auto w-full"
+						unoptimized
+					/>
+				)}
+			</PageModal>
 		</div>
 	);
 }

@@ -17,7 +17,12 @@ interface UseConfirmDialogOptions {
 
 interface UseConfirmDialogReturn {
 	ConfirmDialog: React.FC;
-	confirm: () => Promise<boolean>;
+	/**
+	 * Resolves `true` for the confirm button, `false` for the cancel button,
+	 * or `null` if the dialog was dismissed without an explicit choice (the
+	 * header close button, Escape, or an outside click).
+	 */
+	confirm: () => Promise<boolean | null>;
 }
 
 /**
@@ -36,11 +41,13 @@ export function useConfirmDialog({
 	additionalButtons,
 }: UseConfirmDialogOptions): UseConfirmDialogReturn {
 	const [open, setOpen] = React.useState(false);
-	const resolveRef = React.useRef<((value: boolean) => void) | null>(null);
+	const resolveRef = React.useRef<((value: boolean | null) => void) | null>(
+		null,
+	);
 
 	const confirm = React.useCallback(() => {
 		setOpen(true);
-		return new Promise<boolean>((resolve) => {
+		return new Promise<boolean | null>((resolve) => {
 			resolveRef.current = resolve;
 		});
 	}, []);
@@ -55,15 +62,21 @@ export function useConfirmDialog({
 		setOpen(false);
 	}, []);
 
+	const handleDismiss = React.useCallback(() => {
+		resolveRef.current?.(null);
+		setOpen(false);
+	}, []);
+
 	const DialogComponent = React.useCallback(
 		() => (
 			<ConfirmDialog
 				open={open}
-				onOpenChange={handleCancel}
+				onOpenChange={handleDismiss}
 				title={title}
 				description={description}
 				content={content}
 				onConfirm={handleConfirm}
+				onCancel={handleCancel}
 				confirmText={confirmText}
 				confirmButton={confirmButton}
 				cancelText={cancelText}
@@ -84,6 +97,7 @@ export function useConfirmDialog({
 			variant,
 			handleConfirm,
 			handleCancel,
+			handleDismiss,
 			additionalButtons,
 		],
 	);

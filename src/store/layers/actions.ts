@@ -1,6 +1,7 @@
 import { getLayerIdsInFolder } from "@/lib/helpers/ol";
 import { LayersState, ManagedLayer } from "@/store/layers/types";
 import { MapConfig } from "@/store/map/types";
+import { useScenarioStore } from "@/store/scenario";
 // import { LayerStatus } from "@/types/shared";
 
 type SetState = (fn: (state: LayersState) => Partial<LayersState>) => void;
@@ -50,7 +51,11 @@ export const createApplyConfigLayers =
 		getMapConfig: () => MapConfig | null;
 		getMapReady: () => boolean;
 	}) =>
-	(configId: string, hideOtherDrawLayers = false) => {
+	(
+		configId: string,
+		hideOtherDrawLayers = false,
+		keepMeasureLayersVisible = false,
+	) => {
 		const state = get();
 		const currentMapLayers = state.layers;
 
@@ -121,6 +126,25 @@ export const createApplyConfigLayers =
 
 		if (layerConfigItem.drawLayerId) {
 			keepVisibleDrawLayers.add(layerConfigItem.drawLayerId);
+		}
+
+		/**
+		 * Draw layers holding already placed measures are always shown while
+		 * anywhere in Modul 3 (not just protected from being hidden), so they
+		 * don't stay hidden after a round trip through Modul 1/2. Not applied
+		 * when leaving Modul 3.
+		 */
+		if (keepMeasureLayersVisible) {
+			const { scenarios, activeScenarioId } = useScenarioStore.getState();
+			const activeMeasures = activeScenarioId
+				? (scenarios[activeScenarioId]?.measures ?? [])
+				: [];
+			activeMeasures.forEach((measure) => {
+				if (measure.drawLayerId) {
+					keepVisibleDrawLayers.add(measure.drawLayerId);
+					showLayer(measure.drawLayerId);
+				}
+			});
 		}
 
 		/**

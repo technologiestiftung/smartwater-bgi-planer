@@ -25,9 +25,18 @@ type DropdownMenuOption = {
 type DropdownMenuConfig = {
 	title: string;
 	options: DropdownMenuOption[];
+	onlyForMeasureIds?: string[];
+	excludeForMeasureIds?: string[];
 };
 
 const typedDropdownMenus = dropdownMenus as DropdownMenuConfig[];
+
+function isMenuVisible(menu: DropdownMenuConfig, measureId: string): boolean {
+	if (menu.onlyForMeasureIds) return menu.onlyForMeasureIds.includes(measureId);
+	if (menu.excludeForMeasureIds)
+		return !menu.excludeForMeasureIds.includes(measureId);
+	return true;
+}
 
 type DropdownSelection = {
 	display: string;
@@ -56,8 +65,15 @@ export function ClimateSimulationModal({
 				};
 			}) || [],
 	);
-	const fileName = `/images/climateSimulation/${climateSimulationFileSlug}_${selections
-		.map((s) => sanitizeString(s.value || s.display))
+	const visibleMenuEntries = typedDropdownMenus
+		.map((menu, index) => ({ menu, index }))
+		.filter(({ menu }) => isMenuVisible(menu, climateSimulation));
+
+	const fileName = `/images/climateSimulation/${climateSimulationFileSlug}_${visibleMenuEntries
+		.map(({ index }) => {
+			const selection = selections[index];
+			return sanitizeString(selection?.value || selection?.display || "");
+		})
 		.join("_")}${fileType}`;
 
 	function sanitizeString(input: string) {
@@ -84,8 +100,8 @@ export function ClimateSimulationModal({
 		return null;
 	}
 
-	const imageAlt = typedDropdownMenus
-		.map((menu, index) => `${menu.title}: ${selections[index]?.display}`)
+	const imageAlt = visibleMenuEntries
+		.map(({ menu, index }) => `${menu.title}: ${selections[index]?.display}`)
 		.join(", ");
 
 	return (
@@ -97,7 +113,7 @@ export function ClimateSimulationModal({
 		>
 			<div className="flex h-full w-full max-w-6xl flex-col gap-4 bg-white p-6">
 				<div className="flex flex-wrap items-end justify-between gap-2">
-					{typedDropdownMenus.map((menu, index) => (
+					{visibleMenuEntries.map(({ menu, index }) => (
 						<div key={index}>
 							<p className="text-primary mb-2 font-bold whitespace-pre-line">
 								{menu.title}
@@ -132,6 +148,9 @@ export function ClimateSimulationModal({
 								Simulation noch nicht verfügbar
 							</p>
 						</>
+					)}
+					{window.location.href.includes("localhost") && (
+						<p className="text-red font-bold">{fileName}</p>
 					)}
 					{fileName && !imgError && (
 						<Image

@@ -144,7 +144,7 @@ export const useDrawTree = () => {
 
 		if (!canDraw) {
 			setUploadError(
-				"Bitte zuerst eine angeschlossene Fläche für den optimierten Baumstandort auswählen.",
+				"Bitte zuerst eine anzuschließende Fläche für den optimierten Baumstandort auswählen.",
 			);
 			return;
 		}

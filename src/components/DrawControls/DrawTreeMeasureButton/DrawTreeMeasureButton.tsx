@@ -24,7 +24,7 @@ export const DrawTreeMeasureButton: FC = () => {
 		<div className="flex gap-2">
 			{isTreePit && !canDraw && (
 				<span className="text-muted-foreground text-sm">
-					Erst angeschlossene Fläche auswählen
+					Erst anzuschließende Fläche auswählen
 				</span>
 			)}
 			{TREE_SIZES.map(({ size, label, icon: Icon }) => (

@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
 interface TutorialProps {
-	type: "synthesis" | "controls" | "layerTree";
+	type: "synthesis" | "synthesisModule3" | "controls" | "layerTree";
 	isAddMeasure?: boolean;
 }
 
@@ -25,10 +25,11 @@ export function Tutorial({ type, isAddMeasure }: TutorialProps) {
 	const setTutorialOnFirstMeasureDraw = useTutorialStore(
 		(state) => state.setTutorialOnFirstMeasureDraw,
 	);
-	const showTutorial =
-		showTutorialOnFirstQuestion || showTutorialOnFirstMeasureDraw;
 	const pathname = usePathname();
 	const isPlanningModule = pathname.endsWith("/planung");
+	const showTutorial = isPlanningModule
+		? showTutorialOnFirstMeasureDraw
+		: showTutorialOnFirstQuestion;
 
 	const currentLayerConfig = useLayersStore(selectActiveLayerConfig);
 
@@ -37,26 +38,20 @@ export function Tutorial({ type, isAddMeasure }: TutorialProps) {
 			if (isPlanningModule) {
 				return (
 					<p className="text-dark">
-						Im <span className="font-bold">Layer Tree</span> können Sie auf Ihr
-						Inhalt aus Module 1 und 2 jederzeit zugreifen bzw. ein- und
+						Im <span className="font-bold">Layer Tree</span> können Sie auf Ihre
+						Inhalte aus Modul 1 und 2 jederzeit zugreifen bzw. ein- und
 						ausschalten.
 					</p>
 				);
 			}
 			return (
-				<>
-					<p className="text-dark">
-						Tippen Sie hier, um die aktuelle Hintegrundkarte zwischen{" "}
-						<span className="font-bold">Digitale Orthophoto</span> und{" "}
-						<span className="font-bold">basemap.de Vector</span> zu wechseln.
-					</p>
-					<p className="text-dark">
-						Beim Hover können Sie die aktuelle inhaltliche{" "}
-						<span className="font-bold">Layers</span> und{" "}
-						<span className="font-bold">Zusatzkarten</span> steuern, inklusive
-						Deckkraft anpassen und ein- und ausschalten.
-					</p>
-				</>
+				<p className="text-dark">
+					Tippen Sie hier, um die aktuelle Hintergrundkarte zwischen{" "}
+					<span className="font-bold">Digitalem Orthophoto</span> und{" "}
+					<span className="font-bold">basemap.de Vector</span> zu wechseln. Per
+					Hover können Sie die aktuellen inhaltlichen Layer und Zusatzkarten
+					steuern, inklusive Deckkraft anpassen und ein- und ausschalten.
+				</p>
 			);
 		}
 		if (type === "controls") {
@@ -64,15 +59,15 @@ export function Tutorial({ type, isAddMeasure }: TutorialProps) {
 				return (
 					<>
 						<p className="text-dark">
-							Verwenden Sie die Zeichentools um Ihre Maßnahmen zu platzieren.
+							Verwenden Sie die Zeichentools, um Ihre Maßnahmen zu platzieren.
 						</p>
 						<p className="text-dark">
 							Bei <span className="font-bold">Versickerungsmaßnahmen</span>{" "}
-							erfolgt der Prozess zweistufig: Erstmal müssen Sie angeschlossene
-							Flächen zeichnen - das heißt, von welche versiegelten Fläche oder
-							Dächern das Wasser abgeleitet werden soll. Dann wählen Sie die
-							angeschlossene Fläche aus und zeichnen Sie die Maßnahme, die daran
-							angeschlossen werden soll.
+							erfolgt der Prozess zweistufig: Erstmal müssen Sie die
+							anzuschließende Flächen zeichnen - das heißt, von welchen
+							versiegelten Flächen oder Dächern das Wasser abgeleitet werden
+							soll. Dann wählen Sie die anzuschließende Fläche aus und zeichnen
+							die Maßnahme, die daran angeschlossen werden soll.
 						</p>
 					</>
 				);
@@ -80,23 +75,19 @@ export function Tutorial({ type, isAddMeasure }: TutorialProps) {
 			return (
 				<>
 					<p className="text-dark">
-						Verwenden Sie die Zeichentools um Ihre Auswahl zu treffen.
+						Verwenden Sie die Zeichentools, um Ihre Auswahl zu treffen.
 					</p>
 					<p className="text-dark">
 						<span className="font-bold">Zeichnen</span> gibt Ihnen die
-						Möglichkeit ein frei setzbares Polygon einzuzeichnen.
-					</p>
-					<p className="text-dark text-sm font-light italic">
-						Wenn Sie ein Polygon schließen möchten, klicken Sie entweder den
-						Anfangspunkt erneut oder führen einen Doppelklick durch.
+						Möglichkeit ein frei setzbares Polygon einzuzeichnen. Wenn Sie ein
+						Polygon schließen möchten, klicken Sie entweder erneut auf den
+						Anfangspunkt oder führen Sie einen Doppelklick durch.
 					</p>
 					<p className="text-dark">
 						<span className="font-bold">Blockteilflächen selektieren</span>{" "}
-						markiert die offiziellen Blockteilflächen nach ISO-5.
-					</p>
-					<p className="text-dark text-sm font-light italic">
-						Bereits ausgewählte Blockteilflächen können Sie bei Bedarf durch
-						einen weiteren Klick auch wieder abwählen.
+						markiert die offiziellen Blockteilflächen nach ISO-5. Bereits
+						ausgewählte Blockteilflächen können Sie bei Bedarf durch einen
+						weiteren Klick auch wieder abwählen.
 					</p>
 				</>
 			);
@@ -105,7 +96,7 @@ export function Tutorial({ type, isAddMeasure }: TutorialProps) {
 			return (
 				<p className="text-dark">
 					Die <span className="font-bold">Effektbewertung</span> erlaubt Ihnen,
-					die simulierte Effekte Ihrer bisherige Planung hinsichtlich
+					die simulierten Effekte Ihrer bisherigen Planung hinsichtlich
 					Wasserhaushalt und Gewässerbelastung zu entdecken.
 				</p>
 			);
@@ -130,16 +121,22 @@ export function Tutorial({ type, isAddMeasure }: TutorialProps) {
 			width={type === "synthesis" ? 32 : 16}
 			height={type === "synthesis" ? 32 : 16}
 			className={cn(
-				"relative shrink-0 self-end object-contain",
-				type === "synthesis" && "translate-y-[6.5px] transform",
-				type === "controls" && "mx-auto",
+				"relative shrink-0 object-contain",
+				type === "synthesis" && "translate-y-[6.5px] transform self-end",
+				(type === "synthesisModule3" || type === "controls") && "mx-auto",
 				type === "layerTree" && "ml-5",
 			)}
 		/>
 	);
 
 	useEffect(() => {
-		if (type !== "synthesis") return;
+		if (type !== "synthesis" && type !== "synthesisModule3") return;
+		if (isPlanningModule && isAddMeasure) {
+			if (showTutorialOnFirstMeasureDraw === null) {
+				setTutorialOnFirstMeasureDraw(true);
+			}
+			return;
+		}
 		if (
 			currentLayerConfig &&
 			(currentLayerConfig.canDrawNotes ||
@@ -149,12 +146,6 @@ export function Tutorial({ type, isAddMeasure }: TutorialProps) {
 			if (showTutorialOnFirstQuestion === null) {
 				setTutorialOnFirstQuestion(true);
 			}
-		} else if (
-			isPlanningModule &&
-			isAddMeasure &&
-			showTutorialOnFirstMeasureDraw === null
-		) {
-			setTutorialOnFirstMeasureDraw(true);
 		}
 	}, [
 		type,
@@ -169,9 +160,12 @@ export function Tutorial({ type, isAddMeasure }: TutorialProps) {
 
 	return (
 		<>
-			{type === "synthesis" && (
+			{(type === "synthesis" || type === "synthesisModule3") && (
 				<div
-					className="fixed inset-0 bg-black/58"
+					className={cn(
+						"fixed inset-0 bg-black/58",
+						type === "synthesisModule3" && "z-100",
+					)}
 					onClick={() => {
 						if (isPlanningModule) {
 							setTutorialOnFirstMeasureDraw(false);
@@ -184,6 +178,8 @@ export function Tutorial({ type, isAddMeasure }: TutorialProps) {
 			<div
 				className={cn(
 					type === "synthesis" && "absolute bottom-7 left-24 flex",
+					type === "synthesisModule3" &&
+						"absolute bottom-18 left-24 z-102 flex flex-col items-center",
 					type === "controls" && "relative",
 					type === "layerTree" && "absolute bottom-16 min-w-[300px]",
 				)}
@@ -194,7 +190,10 @@ export function Tutorial({ type, isAddMeasure }: TutorialProps) {
 						{renderContent()}
 					</div>
 				</div>
-				{(type === "controls" || type === "layerTree") && renderArrow()}
+				{(type === "synthesisModule3" ||
+					type === "controls" ||
+					type === "layerTree") &&
+					renderArrow()}
 			</div>
 		</>
 	);

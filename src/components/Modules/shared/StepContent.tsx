@@ -45,7 +45,7 @@ export const StepContent: FC<StepContentProps> = ({
 	};
 
 	const handleNotApplicable = (): boolean => {
-		if (area > 0) {
+		if (area > 0 || hasFeatures) {
 			clearDrawLayerFeatures();
 			setTimeout(() => {
 				onAnswer(false);
@@ -162,7 +162,7 @@ export const StepContent: FC<StepContentProps> = ({
 									displayText={formattedArea}
 									autoAdvanceStep={false}
 									buttonText="Auswahl bestätigen"
-									disabled={area === 0}
+									disabled={!hasFeatures}
 								/>
 							</div>
 						);

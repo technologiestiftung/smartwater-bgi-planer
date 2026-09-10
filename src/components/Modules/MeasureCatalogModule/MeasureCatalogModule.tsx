@@ -37,6 +37,7 @@ const MeasureCatalogModule: FC<MeasureCatalogModuleProps> = ({
 			policiesGuidelines,
 			floodRiskLayerConfigId,
 			floodRiskChartFolderSlug,
+			climateSimulationFileSlug,
 		} = {},
 	} = getModuleInfo || {};
 	const router = useRouter();
@@ -51,6 +52,7 @@ const MeasureCatalogModule: FC<MeasureCatalogModuleProps> = ({
 					<Button
 						variant="outline"
 						onClick={() => router.push(`?climateSimulation=${id}`)}
+						disabled={!climateSimulationFileSlug}
 					>
 						Modellierung Stadtklima
 					</Button>

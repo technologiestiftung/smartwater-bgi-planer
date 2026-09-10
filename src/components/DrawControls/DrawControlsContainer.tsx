@@ -93,7 +93,9 @@ export function DrawControlsContainer({}: DrawControlsContainerProps) {
 				controlsArray.push(<DrawTreeMeasureButton key="treeMeasure" />);
 			}
 
-			controls = <>{controlsArray}</>;
+			if (controlsArray.length > 0) {
+				controls = <>{controlsArray}</>;
+			}
 		} else {
 			controls = (
 				<>

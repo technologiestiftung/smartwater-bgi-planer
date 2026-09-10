@@ -3,18 +3,19 @@
 import { MenuModule } from "@/components/MenuModal/MenuModule";
 import modulesData from "@/components/Modules/modules.json";
 import { ProjectDownloadButton } from "@/components/ProjectDownloadButton/ProjectDownloadButton";
+import ReportDownloadButton from "@/components/Report/ReportDownloadButton";
 import { Button } from "@/components/ui/button";
 import { checkForQuestion } from "@/lib/helpers/questionCheck";
 import { useAnswersStore } from "@/store";
 import { useProjectStore } from "@/store/project";
 import {
 	ArrowCircleRightIcon,
-	BookOpenTextIcon,
 	InfoIcon,
 	ListMagnifyingGlassIcon,
 	PencilRulerIcon,
 	PolygonIcon,
 	ShovelIcon,
+	ArrowSquareOutIcon,
 } from "@phosphor-icons/react";
 import Link from "next/link";
 
@@ -126,11 +127,22 @@ export function MenuModalContent({ projectId }: MenuModalProps) {
 						</div>
 					}
 				/>
-				<div className="flex items-end justify-end px-6 py-4">
-					<Button disabled variant="outline">
-						<BookOpenTextIcon />
-						Gesamter Report
+				<div className="flex flex-col items-end justify-end gap-2 p-6">
+					<Button
+						variant="outline"
+						className="min-w-[265px]"
+						onClick={() =>
+							window.open(
+								"https://www.berlin.de/umweltatlas/wasser/bgi-planer/",
+								"_blank",
+								"noopener,noreferrer",
+							)
+						}
+					>
+						<ArrowSquareOutIcon />
+						FAQ und Methodik
 					</Button>
+					<ReportDownloadButton />
 				</div>
 			</div>
 		</>

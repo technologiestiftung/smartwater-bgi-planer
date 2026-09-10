@@ -34,7 +34,7 @@
 		"id": "heavyRain_starter_question",
 		"name": "",
 		"question": "Durch Überflutungen in Folge von Starkregen kann es zu Gefährdungen von Lebewesen, Gebäuden, Infrastruktur und weiteren Sachwerten kommen.",
-		"description": "(Um dem vorzubeugen, können bestimmte Bereiche des Quartiers von einer Bebauung oder einer vulnerablen Nutzung freigehalten bzw. Maßnahmen zur Überflutungsvorsorge implementiert werden.)",
+		"description": "Um dem vorzubeugen, können bestimmte Bereiche des Quartiers von einer Bebauung oder einer vulnerablen Nutzung freigehalten bzw. Maßnahmen zur Überflutungsvorsorge implementiert werden.",
 		"drawLayerId": "",
 		"visibleLayerIds": ["project_boundary", "project_new_development"],
 		"legendSrc": ""
@@ -224,7 +224,6 @@
 		"question": "Gibt es Blockteilflächen mit hohen Versiegelungsgraden (über 60-70 %)?",
 		"description": [
 			"Große versiegelte Bereiche können die thermische Belastung erhöhen und führen zu hohen Oberflächenabflüssen. Dadurch sind im urbanen Wasserhaushalt die Komponenten Versickerung und Verdunstung im Vergleich zum natürlichen Zustand stark reduziert.",
-			"Mit Klick in die Karte kann geprüft werden, ob der durchschnittliche Versiegelungsgrad des jeweiligen Flächentyps einer Blockteilfläche um mehr als 20 % überschritten wird. Dies gibt einen Hinweis auf eine untypisch hohe Versiegelung eines Flächentyps und zeigt den Entsiegelungsbedarf. ",
 			"Hinweis: Die gesamte Landesfläche Berlins ist mit 52 Flächentypen gekennzeichnet. Die Kartenbeschreibung finden Sie [hier](https://www.berlin.de/umweltatlas/boden/versiegelung/2021/kartenbeschreibung/)."
 		],
 		"drawLayerId": "module_1_impermeability_hotspots_q1",
@@ -238,11 +237,10 @@
 	{
 		"id": "sealing_green_volume_low",
 		"name": "Grünvolumenzahl",
-		"question": "Gibt es Bereiche mit einer niedrigen Grünvolumenzahl (unter 30 %)?",
+		"question": "Gibt es Bereiche mit einer niedrigen Grünvolumenzahl?",
 		"description": [
 			"Die Grünvolumenzahl berechnet sich aus dem Grünvolumen [m³] pro Flächeneinheit [m²].",
 			"Aus klimatischer Sicht ist ein Zielwert von 30-40 % Grünvolumen sinnvoll und erstrebenswert.",
-			"Mit Klick auf in die Karte kann zudem geprüft werden, ob in einer Blockteilfläche die für den Flächentyp* durchschnittliche Grünvolumenzahl um mehr als 20 % unterschritten wird. Dies gibt einen Hinweis darüber, welche Flächen priorisiert werden sollten.",
 			"Hinweis: Die gesamte Landesfläche Berlins ist mit 52 Flächentypen gekennzeichnet."
 		],
 		"drawLayerId": "module_1_impermeability_hotspots_q2",
@@ -256,7 +254,7 @@
 	{
 		"id": "waterBalance_starter_question",
 		"name": "",
-		"question": "Saubere Gewässer erhöhen die Aufenthaltsqualität unserer Stadt und bieten einen wichtigen Lebensraum für Flora und Fauna. Außerdem sind sie essenziell für den Berliner Wasserkreislauf und damit für die Trinkwasserversorgung.",
+		"question": "Ein veränderter Wasserhaushalt spiegelt die Herausforderungen in Bezug auf Hitzebelastung, Überflutungsrisiko, Versiegelung und Gewässerbelastung wieder.",
 		"description": "Projekte zur Regenwasserbewirtschaftung können die Kanalisation entlasten (Abkopplung) und sich damit positiv auf die aufnehmenden Fließgewässer auswirken oder gezielt Kleingewässer stützen.",
 		"drawLayerId": "",
 		"visibleLayerIds": ["project_boundary", "project_new_development"],
@@ -271,7 +269,6 @@
 			"- Verdunstung",
 			"- Versickerung",
 			"- Oberflächenabfluss",
-			"Durch Anklicken einer Blockteilfläche können die absoluten Werte dieser Komponenten sowohl für den natürlichen Zustand als auch für den Ist-Zustand eingesehen werden.",
 			"Gemäß EU-Wasserrahmenrichtlinie gilt eine Abweichung von mehr als 20 % vom natürlichen Wasserhaushalt als ökologisch schlecht und sollte vermieden werden. Die entsprechenden Anforderungen werden im Regelwerk DWA-M 102-4 weiter konkretisiert."
 		],
 		"drawLayerId": "module_1_waterbalance_hotspots_q1",
@@ -285,7 +282,7 @@
 	{
 		"id": "waterProtection_starter_question",
 		"name": "",
-		"question": "Ein veränderter Wasserhaushalt spiegelt die Herausforderungen in Bezug auf Hitzebelastung, Überflutungsrisiko, Versiegelung und Gewässerbelastung wieder.",
+		"question": "Saubere Gewässer erhöhen die Aufenthaltsqualität unserer Stadt und bieten einen wichtigen Lebensraum für Flora und Fauna. Außerdem sind sie essenziell für den Berliner Wasserkreislauf und damit für die Trinkwasserversorgung.",
 		"description": "Ziel ist es durch die Planungen den natürlichen Zustand möglichst nah zu erreichen. In der Regel muss dafür v.a. die Verdunstungskomponente (Evaporation) gestärkt werden.",
 		"drawLayerId": "",
 		"visibleLayerIds": ["project_boundary", "project_new_development"],
@@ -309,33 +306,15 @@
 		"name": "Erstaufnehmendes Gewässer im Einzugsbereich der Trennkanalisation",
 		"question": "In welches Gewässer wird das Regenwasser eingeleitet?",
 		"description": [
-			"Falls sich das Untersuchungsgebiet im Einzugsbereich der Trennkanalisation befindet, kann die Information zum erstaufnehmenden Gewässer durch Klick in die Karte abgerufen werden. Die Karte gibt Auskunft darüber, in welches Gewässer das in die Regenwasserkanalisation eingeleitete Regenwasser gelangt. Ziel ist es durch Abkopplung die Belastung der Gewässer zu reduzieren (hydraulisch & stofflich).",
-			"In Einzugsgebieten von Fließgewässern (z.B. Spree, Landwehrkanal, Panke) ist eine Abkopplung geboten. Bei stehenden Gewässern (z.B. Seen, Teiche) ist zu prüfen, ob es einen Wasserbedarf gibt und daher keine Abkopplung forciert werden sollte (siehe nächste Frage)."
+			"Falls sich das Untersuchungsgebiet im Einzugsbereich der Trennkanalisation befindet, kann die Information zum erstaufnehmenden Gewässer eingesehen werden. Ziel ist es durch Abkopplung die Belastung der Gewässer zu reduzieren (hydraulisch & stofflich).",
+			"In Einzugsgebieten von Fließgewässern (z.B. Spree, Landwehrkanal, Panke) ist eine Abkopplung geboten. Bei stehenden Gewässern (z.B. Seen, Teiche) ist zu prüfen, ob es einen Wasserbedarf gibt und daher keine Abkopplung forciert werden sollte. Durch eine frühzeitige Einbindung des bezirklichen Umwelt- und Naturschutzamtes kann abgefragt werden, ob umliegende Kleingewässer Bedarf an zusätzlichen Wassermengen haben. In einem solchen Fall kann geprüft werden, ob eine Zuleitung von Regenwasser realisierbar ist."
 		],
 		"drawLayerId": "module_1_groundwater_hotspots_q2",
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
 		"canDrawNotes": true,
-		"visibleLayerIds": [
-			"bgi-planer:HA4_Kleingewaesser_trocken_pkt",
-			"ua_kanalisation_2022:sp02_09kanalisation2022_2"
-		],
+		"visibleLayerIds": ["ua_kanalisation_2022:sp02_09kanalisation2022_2"],
 		"legendSrc": "/legends/1g2.svg"
-	},
-	{
-		"id": "water_protection_small_waters_demand",
-		"name": "Kleingewässer",
-		"question": "Gibt es im Untersuchungsgebiet oder in der Umgebung Kleingewässer?",
-		"description": "Die Karte zeigt Kleingewässer und Feuchtbiotope. Durch eine frühzeitige Einbindung des bezirklichen Umwelt- und Naturschutzamtes kann abgefragt werden, ob umliegende Gewässer Bedarf an zusätzlichen Wassermengen haben. In einem solchen Fall kann geprüft werden, ob eine Zuleitung von Regenwasser realisierbar ist.",
-		"drawLayerId": "module_1_groundwater_hotspots_q3",
-		"canDrawPolygons": true,
-		"canDrawBTF": true,
-		"canDrawNotes": true,
-		"visibleLayerIds": [
-			"bgi-planer:HA4_Kleingewaesser_trocken_pkt",
-			"bgi-planer:HA4_Kleingewaesser_trocken_topoEZG_pl"
-		],
-		"legendSrc": "/legends/1g3.svg"
 	},
 	{
 		"id": "NOTE: MODULE 2"
@@ -343,7 +322,7 @@
 	{
 		"id": "feasibility_module_introduction",
 		"name": "",
-		"question": "Bevor konkrete Maßnahmen geplant werden können, soll sichtbar gemacht werden, welche Rahmenbedingungen die Umsetzbarkeit von verschiedenen Maßnahmengruppen beeinflussen. Die Maßnahmengruppen sind in grüne (Gebäudebegrünung, Begrünung/Bepflanzung, Entsiegelung) und blaue (Versickerung, Speicherung) Maßnahmen unterteilt.",
+		"question": "Bevor konkrete Maßnahmen geplant werden können, soll sichtbar gemacht werden, welche Rahmenbedingungen die Umsetzbarkeit von verschiedenen Maßnahmengruppen beeinflussen.",
 		"description": "Während einerseits sehr allgemeine Rahmenbedingungen zu prüfen sind, die auf die Machbarkeiten von verschiedenen Maßnahmengruppen hinweisen, gibt es auch sehr konkrete Fragen, die es zu klären gilt. Dafür stehen nicht immer die notwendigen Geodaten zur Verfügung, weswegen hier stellenweise zusätzliche Recherche notwendig ist.",
 		"drawLayerId": "",
 		"visibleLayerIds": ["project_boundary", "project_new_development"],
@@ -373,6 +352,7 @@
 		"name": "Versickerungspotenzial",
 		"question": "",
 		"description": [
+			"Im Modul 3 wird die Karte „gängige Praxis“ bei den betrachteten Versickerungsarten angezeigt.",
 			"Die Versickerungspotenzialkarte zeigt die Potenzialflächen der betrachteten Versickerungsmaßnahmen an. Je dunkler eine Fläche ist, desto mehr Maßnahmen sind in diesem Bereich möglich. Mit Klick in die Karte werden die jeweils möglichen Maßnahmen sowie weitere Informationen zu den spezifischen Rahmenbedingungen vor Ort angezeigt:",
 			{
 				"type": "bullets",
@@ -551,6 +531,9 @@
 			"ua_gruendaecher_2020:c_begruente_dachteilfl_tief"
 		],
 		"canDrawMeasures": true,
+		"canDrawNotes": true,
+		"legendSrc": "/legends/2g1.svg",
+		"legendTitle": "Gründachpotenzial",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
@@ -563,6 +546,9 @@
 			"ua_gruendaecher_2020:c_begruente_dachteilfl_tief"
 		],
 		"canDrawMeasures": true,
+		"canDrawNotes": true,
+		"legendSrc": "/legends/2g1.svg",
+		"legendTitle": "Gründachpotenzial",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
@@ -570,39 +556,31 @@
 		"drawLayerId": "module_3_3G5_draw",
 		"visibleLayerIds": ["project_boundary"],
 		"canDrawMeasures": true,
+		"canDrawNotes": true,
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
 		"id": "3E1",
 		"drawLayerId": "module_3_3E1_draw",
-		"visibleLayerIds": [
-			"project_boundary",
-			"ua_entsiegelung:b_entsieg_klasse_teil"
-		],
+		"visibleLayerIds": ["project_boundary"],
 		"canDrawMeasures": true,
-		"legendSrc": "/legends/2e1.svg",
+		"canDrawNotes": true,
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
 		"id": "3E2",
 		"drawLayerId": "module_3_3E2_draw",
-		"visibleLayerIds": [
-			"project_boundary",
-			"ua_entsiegelung:b_entsieg_klasse_teil"
-		],
+		"visibleLayerIds": ["project_boundary"],
 		"canDrawMeasures": true,
-		"legendSrc": "/legends/2e1.svg",
+		"canDrawNotes": true,
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
 		"id": "3B1",
 		"drawLayerId": "module_3_3B1_draw",
-		"visibleLayerIds": [
-			"project_boundary",
-			"ua_entsiegelung:b_entsieg_klasse_teil"
-		],
+		"visibleLayerIds": ["project_boundary"],
 		"canDrawMeasures": true,
-		"legendSrc": "/legends/2e1.svg",
+		"canDrawNotes": true,
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
@@ -610,6 +588,7 @@
 		"drawLayerId": "module_3_3B2_draw",
 		"visibleLayerIds": ["project_boundary"],
 		"canDrawTrees": true,
+		"canDrawNotes": true,
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
@@ -621,6 +600,8 @@
 			"module_3_connected_area_draw"
 		],
 		"canDrawMeasures": true,
+		"canDrawNotes": true,
+		"legendSrc": "/legends/Vers_potentialflaeche.svg",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
@@ -632,6 +613,8 @@
 			"module_3_connected_area_draw"
 		],
 		"canDrawMeasures": true,
+		"canDrawNotes": true,
+		"legendSrc": "/legends/Vers_potentialflaeche.svg",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
@@ -643,6 +626,8 @@
 			"module_3_connected_area_draw"
 		],
 		"canDrawMeasures": true,
+		"canDrawNotes": true,
+		"legendSrc": "/legends/Vers_potentialflaeche.svg",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
@@ -654,6 +639,8 @@
 			"module_3_connected_area_draw"
 		],
 		"canDrawMeasures": true,
+		"canDrawNotes": true,
+		"legendSrc": "/legends/Vers_potentialflaeche.svg",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
@@ -665,6 +652,8 @@
 			"module_3_connected_area_draw"
 		],
 		"canDrawTrees": true,
+		"canDrawNotes": true,
+		"legendSrc": "/legends/Vers_potentialflaeche.svg",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
@@ -676,6 +665,8 @@
 			"module_3_connected_area_draw"
 		],
 		"canDrawMeasures": true,
+		"canDrawNotes": true,
+		"legendSrc": "/legends/Vers_potentialflaeche.svg",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
@@ -683,6 +674,7 @@
 		"drawLayerId": "module_3_3S1_draw",
 		"visibleLayerIds": ["project_boundary"],
 		"canDrawMeasures": true,
+		"canDrawNotes": true,
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
@@ -690,6 +682,7 @@
 		"drawLayerId": "module_3_3S2_draw",
 		"visibleLayerIds": ["project_boundary"],
 		"canDrawMeasures": true,
+		"canDrawNotes": true,
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
@@ -697,6 +690,7 @@
 		"drawLayerId": "module_3_3S4_draw",
 		"visibleLayerIds": ["project_boundary"],
 		"canDrawMeasures": true,
+		"canDrawNotes": true,
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
@@ -704,6 +698,7 @@
 		"drawLayerId": "module_3_3S5_draw",
 		"visibleLayerIds": ["project_boundary"],
 		"canDrawMeasures": true,
+		"canDrawNotes": true,
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
@@ -712,6 +707,7 @@
 		"drawLayerId": "module_3_connected_area_draw",
 		"visibleLayerIds": ["project_boundary"],
 		"canDrawMeasures": true,
+		"canDrawNotes": true,
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
@@ -725,6 +721,7 @@
 			"result_evapor",
 			"result_infiltr"
 		],
+		"optionalLayerIds": ["ua_wasserhaushalt_2022:f_deltaw_2022"],
 		"legendSrc": "/legends/effektbewertung.svg"
 	}
 ]

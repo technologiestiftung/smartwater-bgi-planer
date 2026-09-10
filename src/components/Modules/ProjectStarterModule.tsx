@@ -211,17 +211,17 @@ function ProjectBoundaryStep() {
 		<div className="space-y-4">
 			<h3 className="text-primary">Untersuchungsgebiet</h3>
 			<p className="text-muted-foreground">
-				Das Untersuchungsgebiet soll das ganze Gebiet umfassen, wo Änderungen im
-				Rahmen des aktuellen Projektes eingeführt werden können. Sie können
-				entweder freihand zeichnen oder eine Shapefile (in .zip format) oder
-				GeoJSON Datei hochladen. Hochgeladene Dateien müssen in EPSG: 25833 oder
-				EPSG:4326 Koordinatensysteme sein.
+				Das Untersuchungsgebiet soll das ganze Gebiet umfassen, in dem
+				Änderungen im Rahmen des aktuellen Projektes durchgeführt werden. Sie
+				können entweder freihand zeichnen oder eine Shapefile (im .zip format)
+				oder GeoJSON-Datei hochladen. Hochgeladene Dateien müssen im EPSG: 25833
+				oder EPSG:4326 Koordinatensystem sein.
 			</p>
 			<p>
-				Die Blockteilflächen werden automatisch auch selektiert, die mit der
-				Projektgrenze überschneiden. Diese sind für die Effektbewertung
-				relevant, denn manche Simulationen können nur anhand von ganzen
-				Blockteilflächen durchgeführt werden.
+				Es werden automatisch auch die Blockteilflächen selektiert, die sich mit
+				der Projektgrenze überschneiden. Diese sind für die Effektbewertung
+				relevant, da manche Simulationen nur anhand von ganzen Blockteilflächen
+				durchgeführt werden können.
 			</p>
 
 			<div className="mt-8">
@@ -249,18 +249,13 @@ function NewDevelopmentStep() {
 	return (
 		<div className="space-y-4">
 			<h3 className="text-primary">Neubauten und versiegelte Flächen</h3>
-			<h4>Welche Bauwerke werden schon geplant?</h4>
+			<h4>Welche Bauwerke sind geplant?</h4>
 			<p className="text-muted-foreground">
-				Falls Ihr Projekt Bauvorhaben umfasst, die noch nicht auf der Karte zu
-				sehen sind, können Sie diese jetzt entweder einzeichnen oder als eine
-				Shapefile (in .zip format) oder GeoJSON Datei hochladen. Hochgeladene
-				Dateien müssen in EPSG: 25833 oder EPSG:4326 Koordinatensysteme sein.
-			</p>
-			<p>
-				Auch wenn die Planung noch nicht komplett festgelegt ist, können Sie
-				Platzhalter einzeichnen, die den Ausmaß der geplanten Gebauten grob
-				entsprechen. Diese sind für Simulationen relevant, weil die Gesamtmengen
-				von versiegelten und unversiegelten Flächen wichtige Basiswerte sind.
+				Falls Ihr Projekt Bauvorhaben umfasst, welche noch nicht auf der Karte
+				zu sehen sind, können Sie diese jetzt entweder einzeichnen, als
+				Shapefile (im .zip format) oder als GeoJSON-Datei hochladen.
+				Hochgeladene Dateien müssen im EPSG: 25833 oder EPSG:4326
+				Koordinatensystem sein.
 			</p>
 			<div className="mt-8">
 				<ConfirmButton
@@ -328,8 +323,8 @@ function AdditionalMapsStep({ projectId }: { projectId: string }) {
 				Falls Sie weitere Karten über das Untersuchungsgebiet zur Verfügung
 				haben, die nicht im GeoPortal sind, können Sie diese gerne hier als
 				Dateien oder als WMS verlinken. Akzeptierte Datenformate sind Shapefile
-				(in .zip format) oder GeoJSON. Hochgeladene Dateien müssen in EPSG:
-				25833 oder EPSG:4326 Koordinatensysteme sein.
+				(in .zip format) oder GeoJSON. Hochgeladene Dateien müssen im EPSG:
+				25833 oder EPSG:4326 Koordinatensystem sein.
 			</p>
 
 			<div className="flex w-full gap-2 py-4">

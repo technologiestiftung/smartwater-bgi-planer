@@ -97,11 +97,12 @@ function MeasurePlanningFooter({
 				onClick={onShowSynthesis}
 				variant="ghost"
 				aria-label="Zusammenfassung anzeigen"
-				className="bg-secondary z-101 flex h-full w-18 items-center justify-center rounded-none"
+				className="bg-secondary text-md z-101 flex h-full flex-1 items-center justify-center rounded-none text-white hover:text-white"
 			>
 				<ListChecksIcon className="h-6 w-6 text-white" />
+				Effektbewertung
 			</Button>
-			<Tutorial type="synthesis" isAddMeasure={isAddMeasure} />
+			<Tutorial type="synthesisModule3" isAddMeasure={isAddMeasure} />
 			{showBackToQuestions && (
 				<Button
 					variant="ghost"
@@ -239,7 +240,7 @@ export function MeasurePlanningAccordion({
 			setExpandedStepId(stepId);
 			setSelectedConfigId(configId);
 			resetDrawInteractions();
-			applyConfigLayers(configId, true);
+			applyConfigLayers(configId, true, true);
 		},
 		[resetDrawInteractions, applyConfigLayers],
 	);
@@ -264,7 +265,7 @@ export function MeasurePlanningAccordion({
 		setSelectedConfigId(null);
 		setIsSynthesisMode(false);
 		resetDrawInteractions();
-		applyConfigLayers("measure_start", true);
+		applyConfigLayers("measure_start", true, true);
 	}, [setIsSynthesisMode, resetDrawInteractions, applyConfigLayers]);
 
 	const handleBackToSpecificQuestion = useCallback(
@@ -288,7 +289,7 @@ export function MeasurePlanningAccordion({
 			layerConfig.length === 0
 		)
 			return;
-		applyConfigLayers("measure_start", true);
+		applyConfigLayers("measure_start", true, true);
 		hasInitializedRef.current = true;
 	}, [open, isMapReady, layerConfig.length, applyConfigLayers]);
 
