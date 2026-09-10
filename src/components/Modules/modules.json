@@ -52,7 +52,7 @@
 				{
 					"id": "waterProtection",
 					"icon": "Fish",
-					"title": "Gewässerschutz",
+					"title": "Gewässerbelastung",
 					"questions": [
 						"waterProtection_starter_question",
 						"water_protection_sewer_type",
