@@ -133,6 +133,7 @@ export function ClimateSimulation({
 				onOpenChange={() => setClimateSimulationGraphic("")}
 				title="Erklärende Grafik"
 				bodyClassName="p-0"
+				className="max-w-5xl"
 			>
 				{!!climateSimulationGraphic && (
 					<Image
