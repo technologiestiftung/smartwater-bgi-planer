@@ -69,7 +69,7 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 	});
 
 	useEffect(() => {
-		applyConfigLayers("measure_planning_synthesis_view", true);
+		applyConfigLayers("measure_planning_synthesis_view", true, true);
 	}, [applyConfigLayers]);
 
 	const restoreFromCache = useCallback(

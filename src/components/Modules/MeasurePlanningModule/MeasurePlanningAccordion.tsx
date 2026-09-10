@@ -240,7 +240,7 @@ export function MeasurePlanningAccordion({
 			setExpandedStepId(stepId);
 			setSelectedConfigId(configId);
 			resetDrawInteractions();
-			applyConfigLayers(configId, true);
+			applyConfigLayers(configId, true, true);
 		},
 		[resetDrawInteractions, applyConfigLayers],
 	);
@@ -265,7 +265,7 @@ export function MeasurePlanningAccordion({
 		setSelectedConfigId(null);
 		setIsSynthesisMode(false);
 		resetDrawInteractions();
-		applyConfigLayers("measure_start", true);
+		applyConfigLayers("measure_start", true, true);
 	}, [setIsSynthesisMode, resetDrawInteractions, applyConfigLayers]);
 
 	const handleBackToSpecificQuestion = useCallback(
@@ -289,7 +289,7 @@ export function MeasurePlanningAccordion({
 			layerConfig.length === 0
 		)
 			return;
-		applyConfigLayers("measure_start", true);
+		applyConfigLayers("measure_start", true, true);
 		hasInitializedRef.current = true;
 	}, [open, isMapReady, layerConfig.length, applyConfigLayers]);
 

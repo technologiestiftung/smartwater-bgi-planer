@@ -138,7 +138,11 @@ export interface LayersActions {
 	removeLayer: (layerId: string) => void;
 	setLayerVisibility: (layerId: string, visible: boolean) => void;
 	setLayerConfig: (config: LayerConfigItem[]) => void;
-	applyConfigLayers: (configId: string, hideOtherDrawLayers?: boolean) => void;
+	applyConfigLayers: (
+		configId: string,
+		hideOtherDrawLayers?: boolean,
+		keepMeasureLayersVisible?: boolean,
+	) => void;
 	hideLayersByPattern: (pattern: string | string[]) => void;
 	createFilteredLayer: (
 		layerId: string,
