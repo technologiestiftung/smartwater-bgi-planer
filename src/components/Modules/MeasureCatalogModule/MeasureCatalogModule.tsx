@@ -37,7 +37,7 @@ const MeasureCatalogModule: FC<MeasureCatalogModuleProps> = ({
 			policiesGuidelines,
 			floodRiskLayerConfigId,
 			floodRiskChartFolderSlug,
-			climateSimulationFileSlug
+			climateSimulationFileSlug,
 		} = {},
 	} = getModuleInfo || {};
 	const router = useRouter();
