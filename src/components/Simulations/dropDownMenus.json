@@ -83,7 +83,7 @@
 			},
 			{
 				"display": "Grundriss 25m Höhe",
-				"value": "xy25",
+				"value": "xy20",
 				"disableIfFileNameIncludes": "PET"
 			},
 			{
