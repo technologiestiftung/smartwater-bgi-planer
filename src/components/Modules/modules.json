@@ -785,7 +785,10 @@
 							"title": "Anzuschließende Fläche zeichnen",
 							"info": {
 								"description": [
-									"Zeichnen Sie hier eine oder mehrere versiegelte Flächen ein, die an Versickerungsmaßnahmen angeschlossen werden sollen.",
+									{
+										"type": "bold",
+										"text": "Zeichnen Sie hier eine oder mehrere versiegelte Flächen ein, die an Versickerungsmaßnahmen angeschlossen werden sollen."
+									},
 									"Anschließend können Sie eine Versickerungsmaßnahme auswählen, eine anzuschließende Fläche auswählen und die Versickerungsmaßnahme einzeichnen.",
 									"Sie können anzuschließende Flächen jederzeit zeichnen oder löschen.",
 									"Wenn Sie eine Versickerungsmaßnahme löschen, steht die daran angeschlossene Fläche danach wieder für andere Maßnahmen zur Verfügung."

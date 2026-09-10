@@ -6,6 +6,10 @@ export type RichTextContent =
 	| {
 			type: "bullets";
 			items: string[];
+	  }
+	| {
+			type: "bold";
+			text: string;
 	  };
 
 interface RichTextWithLinksProps {
@@ -105,6 +109,11 @@ export function RichTextWithLinks({
 				</ul>
 			);
 		}
+		if (text.type === "bold") {
+			return (
+				<strong className={className}>{renderTextWithLinks(text.text)}</strong>
+			);
+		}
 		return null;
 	}
 
@@ -121,6 +130,13 @@ export function RichTextWithLinks({
 								<li key={i}>{renderTextWithLinks(bullet)}</li>
 							))}
 						</ul>
+					);
+				}
+				if (item && item.type === "bold") {
+					return (
+						<p key={idx} className="font-semibold">
+							{renderTextWithLinks(item.text)}
+						</p>
 					);
 				}
 				return null;
