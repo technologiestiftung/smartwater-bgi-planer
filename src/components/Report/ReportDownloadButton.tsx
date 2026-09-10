@@ -12,7 +12,7 @@ import {
 	FilePdfIcon,
 	SpinnerIcon,
 } from "@phosphor-icons/react";
-import { FC, useState } from "react";
+import { FC, useState, type ComponentProps } from "react";
 import { Button } from "../ui/button";
 import { useConfirmDialog } from "@/components/ConfirmDialog";
 import modulesData from "@/components/Modules/modules.json";
@@ -21,7 +21,11 @@ import VectorSource from "ol/source/Vector";
 import { ResultStatistics } from "@/types/result";
 import { PlotType } from "@/server/rabimo/types";
 
-interface ReportDownloadButtonProps {}
+interface ReportDownloadButtonProps {
+	className?: string;
+	variant?: ComponentProps<typeof Button>["variant"];
+	size?: ComponentProps<typeof Button>["size"];
+}
 
 type ReportFormat = "pdf" | "docx";
 
@@ -98,7 +102,11 @@ const fetchPlots = async (runoffReduction: number) => {
 	}
 };
 
-const ReportDownloadButton: FC<ReportDownloadButtonProps> = ({}) => {
+const ReportDownloadButton: FC<ReportDownloadButtonProps> = ({
+	className,
+	variant = "outline",
+	size,
+}) => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
@@ -210,8 +218,9 @@ const ReportDownloadButton: FC<ReportDownloadButtonProps> = ({}) => {
 			)}
 
 			<Button
-				variant="outline"
-				className="min-w-[265px]"
+				variant={variant}
+				size={size}
+				className={className ?? "min-w-[265px]"}
 				onClick={handleClick}
 				disabled={loading}
 			>

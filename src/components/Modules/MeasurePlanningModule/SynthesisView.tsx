@@ -1,5 +1,6 @@
 "use client";
 
+import ReportDownloadButton from "@/components/Report/ReportDownloadButton";
 import WaterBalanceChart from "@/components/ResultCharts/WaterBalanceChart";
 import WaterQualityChart from "@/components/ResultCharts/WaterQualityChart";
 import { Tutorial } from "@/components/Tutorial/Tutorial";
@@ -11,7 +12,7 @@ import { PlotType } from "@/server/rabimo/types";
 import { useLayersStore, useResultStore, useScenarioStore } from "@/store";
 import type { Result } from "@/store/result/types";
 import { ResultStatistics } from "@/types/result";
-import { DownloadSimpleIcon, XIcon } from "@phosphor-icons/react";
+import { XIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 
@@ -309,15 +310,13 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 					Zu den Maßnahmen
 				</Button>
 				<div className="w-px self-stretch bg-white" />
-				<Button
-					onClick={() => undefined}
-					className="text-md my-4 flex-1 text-white hover:text-white"
-					size="lg"
-					variant="ghost"
-				>
-					<DownloadSimpleIcon className="h-4 w-4" />
-					Exportieren
-				</Button>
+				<div className="flex flex-1 items-center justify-center">
+					<ReportDownloadButton
+						variant="ghost"
+						size="lg"
+						className="text-md my-4 w-full text-white hover:text-white"
+					/>
+				</div>
 			</div>
 		</div>
 	);
