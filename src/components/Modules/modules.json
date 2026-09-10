@@ -191,6 +191,7 @@
 									}
 								],
 								"climateSimulationFileSlug": "DachExt",
+								"climateSimulationGraphic": "/images/climateSimulation/BGI_Szenario_Gruendach.webp",
 								"floodRiskLayerConfigId": "Gruendaecher",
 								"floodRiskChartFolderSlug": "Gruendaecher",
 								"floodRiskChartFileSlug": "Gr_nd_cher",
@@ -380,7 +381,8 @@
 										"link": "https://www.gebaeudegruen.info/wp-content/uploads/2024/11/BuGG_Fachinfo_Brandschutz_FB_20231030_FINAL.pdf"
 									}
 								],
-								"climateSimulationFileSlug": "Fassade"
+								"climateSimulationFileSlug": "Fassade",
+								"climateSimulationGraphic": "/images/climateSimulation/BGI_Szenario_Fassade.webp"
 							}
 						}
 					]
@@ -878,6 +880,7 @@
 									}
 								],
 								"climateSimulationFileSlug": "Mulde",
+								"climateSimulationGraphic": "/images/climateSimulation/BGI_Szenario_Mulde.webp",
 								"floodRiskLayerConfigId": "Mulde",
 								"floodRiskChartFolderSlug": "Mulde",
 								"floodRiskText": [

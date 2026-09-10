@@ -15,6 +15,7 @@ import {
 	PencilRulerIcon,
 	PolygonIcon,
 	ShovelIcon,
+	ArrowSquareOutIcon,
 } from "@phosphor-icons/react";
 import Link from "next/link";
 
@@ -126,7 +127,21 @@ export function MenuModalContent({ projectId }: MenuModalProps) {
 						</div>
 					}
 				/>
-				<div className="flex items-end justify-end px-6 py-4">
+				<div className="flex flex-col justify-end items-end gap-2 p-6">
+					<Button
+						variant="outline"
+						className="min-w-[265px]"
+						onClick={() =>
+							window.open(
+								"https://www.berlin.de/umweltatlas/wasser/bgi-planer/",
+								"_blank",
+								"noopener,noreferrer",
+							)
+						}
+					>
+						<ArrowSquareOutIcon />
+						FAQ und Methodik
+					</Button>
 					<ReportDownloadButton />
 				</div>
 			</div>

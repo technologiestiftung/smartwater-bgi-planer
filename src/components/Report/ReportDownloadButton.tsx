@@ -209,7 +209,12 @@ const ReportDownloadButton: FC<ReportDownloadButtonProps> = ({}) => {
 				</div>
 			)}
 
-			<Button variant="outline" onClick={handleClick} disabled={loading}>
+			<Button
+				variant="outline"
+				className="min-w-[265px]"
+				onClick={handleClick}
+				disabled={loading}
+			>
 				{loading && <SpinnerIcon className="animate-spin" />}
 				<BookOpenTextIcon />
 				{loading ? "Generiere Report..." : "Gesamter Report"}
