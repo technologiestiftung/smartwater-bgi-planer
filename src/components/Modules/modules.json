@@ -292,8 +292,7 @@
 										"title": "Kostenüberblick Berliner Regenwasseragentur",
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
-								],
-								"climateSimulationFileSlug": "DachInt"
+								]
 							}
 						},
 						{
@@ -473,7 +472,6 @@
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
 								],
-								"climateSimulationFileSlug": "TeilEntsiegelung",
 								"floodRiskLayerConfigId": "Teilentsiegelung",
 								"floodRiskChartFolderSlug": "Teilentsiegelung",
 								"floodRiskText": [
@@ -564,7 +562,6 @@
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
 								],
-								"climateSimulationFileSlug": "VollEntsiegelung",
 								"floodRiskLayerConfigId": "Gruenflaechen",
 								"floodRiskChartFolderSlug": "Gruenflaechen",
 								"floodRiskChartFileSlug": "Gr_nfl_chen",
@@ -657,7 +654,6 @@
 										"link": "https://www.fll.de/fachgremien/pflege-von-gruen/"
 									}
 								],
-								"climateSimulationFileSlug": "Gruen",
 								"floodRiskLayerConfigId": "Gruenflaechen",
 								"floodRiskChartFolderSlug": "Gruenflaechen",
 								"floodRiskChartFileSlug": "Gr_nfl_chen",
@@ -759,7 +755,6 @@
 										"link": "https://www.berlin.de/sen/uvk/_assets/umwelt/wasser-und-geologie/publikationen-und-merkblaetter/hinweisblatt2-versick.pdf?ts=1754465106"
 									}
 								],
-								"climateSimulationFileSlug": "Baum",
 								"floodRiskLayerConfigId": "Baeume",
 								"floodRiskChartFolderSlug": "Baeume",
 								"floodRiskChartFileSlug": "B_ume",
@@ -984,8 +979,7 @@
 										"title": "Kostenüberblick Berliner Regenwasseragentur",
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
-								],
-								"climateSimulationFileSlug": "Flaechenvers"
+								]
 							}
 						},
 						{
@@ -1078,7 +1072,6 @@
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
 								],
-								"climateSimulationFileSlug": "MuldRigElem",
 								"floodRiskLayerConfigId": "Mulde-Rigole",
 								"floodRiskChartFolderSlug": "Mulde-Rigole-Element",
 								"floodRiskChartFileSlug": "Mulde_Rigole",
@@ -1172,8 +1165,7 @@
 										"title": "Kostenüberblick Berliner Regenwasseragentur",
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
-								],
-								"climateSimulationFileSlug": "Tiefbeet"
+								]
 							}
 						},
 						{
@@ -1265,8 +1257,7 @@
 										"title": "SenMVKU-Rundschreiben III C 2-1/ 2025 über die Pflanzung und Pflege von Straßengrün",
 										"link": "https://www.berlin.de/sen/uvk/_assets/natur-gruen/service/rechtsvorschriften/stadtgruen/rundschreiben_str.pdf"
 									}
-								],
-								"climateSimulationFileSlug": "OptBaum"
+								]
 							}
 						},
 						{
@@ -1344,7 +1335,6 @@
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/szenarien-kosten-regenwasserbewirtschaftung/"
 									}
 								],
-								"climateSimulationFileSlug": "Rigole",
 								"floodRiskLayerConfigId": "Rigole",
 								"floodRiskChartFolderSlug": "Rigole",
 								"floodRiskText": [
@@ -1429,8 +1419,7 @@
 										"title": "FLL Richtliniefür Planung, Bau und Instandhaltung, von privaten Schwimm- und Badeteichen (2017)",
 										"link": "https://shop.fll.de/de/richtlinien-fuer-planung-bau-und-instandhaltung-von-privaten-schwimm-und-badeteichen-2017-broschuere.html"
 									}
-								],
-								"climateSimulationFileSlug": "Wasserfl"
+								]
 							}
 						},
 						{
@@ -1508,8 +1497,7 @@
 										"title": "Zisternen-Rechner",
 										"link": "https://regenwasseragentur.berlin/planen-und-umsetzen/zisternengroesse-berechnen/"
 									}
-								],
-								"climateSimulationFileSlug": "Speicher"
+								]
 							}
 						},
 						{
@@ -1598,8 +1586,7 @@
 										"title": "DWA-M 119 - Risikomanagement in der kommunalen Überflutungsvorsorge für Entwässerungssysteme bei Starkregen",
 										"link": "https://shop.dwa.de/DWA-M-119-Risikomanagement-in-der-kommunalen-UEberflutungsvorsorge-fuer-Entwaesserungssysteme-bei-Starkregen-November-2016/M-119-Hauptprodukt-16-main"
 									}
-								],
-								"climateSimulationFileSlug": "RetFlaeche"
+								]
 							}
 						},
 						{
@@ -1671,8 +1658,7 @@
 										"title": "BlueGreenStreets B",
 										"link": "https://repos.hcu-hamburg.de/bitstream/hcu/638/6/2022-04-06_BlueGreenStreets_BlueGreenStreets_als_multicodierte_Strategie_zur_Klimafolgenanpassung_B.pdf"
 									}
-								],
-								"climateSimulationFileSlug": "Verdunstung"
+								]
 							}
 						}
 					]
