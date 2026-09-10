@@ -1,5 +1,6 @@
 "use client";
 
+import { cloneElement, isValidElement } from "react";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -18,6 +19,7 @@ interface ConfirmDialogProps {
 	description?: string;
 	content?: React.ReactNode;
 	onConfirm: () => void;
+	onCancel: () => void;
 	confirmText?: string;
 	confirmButton?: React.ReactNode;
 	cancelText?: string;
@@ -34,6 +36,7 @@ export function ConfirmDialog({
 	description,
 	content,
 	onConfirm,
+	onCancel,
 	confirmText = "Bestätigen",
 	confirmButton,
 	cancelText = "Abbrechen",
@@ -42,31 +45,30 @@ export function ConfirmDialog({
 	className,
 	additionalButtons,
 }: ConfirmDialogProps) {
-	const handleConfirm = () => {
-		onConfirm();
-		onOpenChange(false);
-	};
-
-	const handleCancel = () => {
-		onOpenChange(false);
-	};
-
 	const cancelButtonElement = cancelButton ? (
-		<button type="button" onClick={handleCancel}>
-			{cancelButton}
-		</button>
+		isValidElement<{ onClick?: () => void }>(cancelButton) ? (
+			cloneElement(cancelButton, { onClick: onCancel })
+		) : (
+			<button type="button" onClick={onCancel}>
+				{cancelButton}
+			</button>
+		)
 	) : (
-		<Button variant="outline" onClick={handleCancel}>
+		<Button variant="outline" onClick={onCancel}>
 			{cancelText}
 		</Button>
 	);
 
 	const confirmButtonElement = confirmButton ? (
-		<button type="button" onClick={handleConfirm}>
-			{confirmButton}
-		</button>
+		isValidElement<{ onClick?: () => void }>(confirmButton) ? (
+			cloneElement(confirmButton, { onClick: onConfirm })
+		) : (
+			<button type="button" onClick={onConfirm}>
+				{confirmButton}
+			</button>
+		)
 	) : (
-		<Button variant={variant} onClick={handleConfirm}>
+		<Button variant={variant} onClick={onConfirm}>
 			{confirmText}
 		</Button>
 	);
@@ -94,7 +96,10 @@ export function ConfirmDialog({
 				<DialogDescription className="sr-only">
 					{description || ""}
 				</DialogDescription>
-				<ConfirmDialogHeader title={title} onClose={handleCancel} />
+				<ConfirmDialogHeader
+					title={title}
+					onClose={() => onOpenChange(false)}
+				/>
 				<div className="ConfirmDialog-root flex-1 overflow-y-auto p-6 pt-4">
 					{bodyContent}
 				</div>

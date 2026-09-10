@@ -80,6 +80,9 @@ export const DrawNoteButton: FC<DrawNoteButtonProps> = ({ layerId }) => {
 		drawRef.current.on("drawend", (event) => {
 			const geometry = event.feature.getGeometry();
 			if (geometry && geometry.getType() === "Point") {
+				const { layerConfigId } = useLayersStore.getState();
+				event.feature.set("checkfrageId", layerConfigId);
+
 				const coordinate = (geometry as any).getCoordinates();
 				const pixel = map.getPixelFromCoordinate(coordinate);
 
