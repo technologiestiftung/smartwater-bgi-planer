@@ -562,37 +562,25 @@
 	{
 		"id": "3E1",
 		"drawLayerId": "module_3_3E1_draw",
-		"visibleLayerIds": [
-			"project_boundary",
-			"ua_entsiegelung:b_entsieg_klasse_teil"
-		],
+		"visibleLayerIds": ["project_boundary"],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
-		"legendSrc": "/legends/2e1.svg",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
 		"id": "3E2",
 		"drawLayerId": "module_3_3E2_draw",
-		"visibleLayerIds": [
-			"project_boundary",
-			"ua_entsiegelung:b_entsieg_klasse_teil"
-		],
+		"visibleLayerIds": ["project_boundary"],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
-		"legendSrc": "/legends/2e1.svg",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
 		"id": "3B1",
 		"drawLayerId": "module_3_3B1_draw",
-		"visibleLayerIds": [
-			"project_boundary",
-			"ua_entsiegelung:b_entsieg_klasse_teil"
-		],
+		"visibleLayerIds": ["project_boundary"],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
-		"legendSrc": "/legends/2e1.svg",
 		"measurementSrc": "/legends/measures.svg"
 	},
 	{
