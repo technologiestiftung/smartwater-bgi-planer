@@ -239,9 +239,7 @@
 		"name": "Grünvolumenzahl",
 		"question": "Gibt es Bereiche mit einer niedrigen Grünvolumenzahl?",
 		"description": [
-			"Die Grünvolumenzahl berechnet sich aus dem Grünvolumen [m³] pro Flächeneinheit [m²].",
-			"Aus klimatischer Sicht ist ein Zielwert von 30-40 % Grünvolumen sinnvoll und erstrebenswert.",
-			"Hinweis: Die gesamte Landesfläche Berlins ist mit 52 Flächentypen gekennzeichnet."
+			"Die Grünvolumenzahl berechnet sich aus dem Grünvolumen [m³] pro Flächeneinheit [m²]."
 		],
 		"drawLayerId": "module_1_impermeability_hotspots_q2",
 		"canDrawPolygons": true,
