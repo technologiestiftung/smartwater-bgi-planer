@@ -273,8 +273,6 @@ export async function POST(req: Request) {
 			linebreaks: true,
 		});
 
-		console.log("buildRenderData(body) :>> ", buildRenderData(body));
-
 		doc.render(buildRenderData(body));
 		const docxBuffer = doc.getZip().generate({ type: "nodebuffer" });
 

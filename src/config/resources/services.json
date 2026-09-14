@@ -29,22 +29,21 @@
 	},
 	{
 		"id": "hintergrund_orthophoto",
-		"name": "Digitale Orthophotos 2026",
+		"name": "Digitale TrueOrthophotos 2026",
 		"url": "https://gdi.berlin.de/services/wmts/truedop_2026",
-		"capabilitiesUrl": "https://gdi.berlin.de/services/wmts/truedop_2026?request=getcapabilities&service=WMTS&version=1.0.0",
+		"capabilitiesUrl": "https://gdi.berlin.de/services/wmts/truedop_2026?request=GetCapabilities&service=WMTS",
 		"typ": "WMTS",
 		"layers": "truedop_2026",
 		"tileMatrixSet": "GDIBE:25833",
 		"format": "image/png",
 		"datasets": [
 			{
-				"md_id": "63016b8d-281e-460c-bfc0-600699a7618b",
+				"md_id": "6067c376-47e9-49d7-8d17-d3e56c0b8dd0",
 				"rs_id": "https://registry.gdi-de.org/id/de.be.csw/63016b8d-281e-460c-bfc0-600699a7618b",
 				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
 			}
 		],
 		"optionsFromCapabilities": true,
-		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
 		"preview": {
 			"src": "/preview-img/basemap-satelite.png"
 		}
