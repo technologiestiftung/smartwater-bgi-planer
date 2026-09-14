@@ -787,11 +787,9 @@
 								"description": [
 									{
 										"type": "bold",
-										"text": "Zeichnen Sie hier eine oder mehrere versiegelte Flächen ein, die an Versickerungsmaßnahmen angeschlossen werden sollen."
+										"text": "Zeichnen Sie zunächst eine Fläche ein, die an die Versickerungsmaßnahme angeschlossen werden soll."
 									},
-									"Anschließend können Sie eine Versickerungsmaßnahme auswählen, eine anzuschließende Fläche auswählen und die Versickerungsmaßnahme einzeichnen.",
-									"Sie können anzuschließende Flächen jederzeit zeichnen oder löschen.",
-									"Wenn Sie eine Versickerungsmaßnahme löschen, steht die daran angeschlossene Fläche danach wieder für andere Maßnahmen zur Verfügung."
+									"Die anzuschließende Fläche könnte z. B. ein Dach oder eine Straße sein, von wo aus das Wasser in die Versickerungsanlage fließt. Wenn Sie im nächsten Schritt die Maßnahme platzieren, klicken Sie zuerst die anzuschließende Fläche an und zeichnen dann die Maßnahme."
 								]
 							}
 						},
