@@ -10,12 +10,12 @@ import { useAnswersStore } from "@/store";
 import { useProjectStore } from "@/store/project";
 import {
 	ArrowCircleRightIcon,
+	ArrowSquareOutIcon,
 	InfoIcon,
 	ListMagnifyingGlassIcon,
 	PencilRulerIcon,
 	PolygonIcon,
 	ShovelIcon,
-	// ArrowSquareOutIcon,
 } from "@phosphor-icons/react";
 import Link from "next/link";
 
@@ -128,7 +128,7 @@ export function MenuModalContent({ projectId }: MenuModalProps) {
 					}
 				/>
 				<div className="flex flex-col items-end justify-end gap-2 p-6">
-					{/* <Button
+					<Button
 						variant="outline"
 						className="min-w-[265px]"
 						onClick={() =>
@@ -141,7 +141,7 @@ export function MenuModalContent({ projectId }: MenuModalProps) {
 					>
 						<ArrowSquareOutIcon />
 						FAQ und Methodik
-					</Button> */}
+					</Button>
 					<ReportDownloadButton />
 				</div>
 			</div>
