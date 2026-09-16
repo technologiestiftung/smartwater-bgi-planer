@@ -133,7 +133,7 @@ export function MenuModalContent({ projectId }: MenuModalProps) {
 						className="min-w-[265px]"
 						onClick={() =>
 							window.open(
-								"https://www.berlin.de/umweltatlas/wasser/blau-gruener-infrastrukturplaner",
+								"https://www.berlin.de/umweltatlas/wasser/bgi-planer/",
 								"_blank",
 								"noopener,noreferrer",
 							)
