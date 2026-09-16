@@ -29,6 +29,7 @@ const initialState: UiState = {
 	uploadSuccess: null,
 	inputFeaturesError: null,
 	isDrawing: false,
+	isBoundaryIntersecting: false,
 	isBlockAreaSelecting: false,
 	isConnectedAreaSelecting: false,
 	isDrawingNote: false,
@@ -75,6 +76,8 @@ export const useUiStore = create<UiState & UiActions>()(
 			clearUploadStatus: () => set({ uploadError: null, uploadSuccess: null }),
 			setInputFeaturesError: (error) => set({ inputFeaturesError: error }),
 			setIsDrawing: (isDrawing) => set({ isDrawing }),
+			setIsBoundaryIntersecting: (isIntersecting) =>
+				set({ isBoundaryIntersecting: isIntersecting }),
 			setIsBlockAreaSelecting: (isSelecting) =>
 				set({ isBlockAreaSelecting: isSelecting }),
 			setIsConnectedAreaSelecting: (isSelecting) =>
