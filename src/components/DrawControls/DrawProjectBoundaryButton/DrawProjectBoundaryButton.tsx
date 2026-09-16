@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useLayerReady } from "@/hooks/useLayerReady";
 import { getLayerById } from "@/lib/helpers/ol";
 import {
+	ensureRabimoInputLoaded,
 	getInputFeatures,
 	performProjectBoundaryIntersection,
 } from "@/lib/helpers/projectBoundary";
@@ -26,6 +27,10 @@ export const DrawProjectBoundaryButton: FC = () => {
 	const drawRef = useRef<Draw | null>(null);
 	const modifyRef = useRef<Modify | null>(null);
 	const [mode, setMode] = useState<"idle" | "drawing" | "modifying">("idle");
+	const isIntersecting = useUiStore((state) => state.isBoundaryIntersecting);
+	const setIsIntersecting = useUiStore(
+		(state) => state.setIsBoundaryIntersecting,
+	);
 
 	// Check if the BTF planning layer is ready
 	const { isReady: isBTFLayerReady, isLoading: isBTFLayerLoading } =
@@ -47,10 +52,20 @@ export const DrawProjectBoundaryButton: FC = () => {
 		setInputFeatures(getInputFeatures(map));
 	}, [map, setInputFeatures]);
 
-	const performIntersection = useCallback(() => {
-		performProjectBoundaryIntersection(map);
-		syncPlanningLayerFeatures();
-	}, [map, syncPlanningLayerFeatures]);
+	const performIntersection = useCallback(async () => {
+		const boundaryExtent = getLayerById(map, LAYER_IDS.PROJECT_BOUNDARY)
+			?.getSource()
+			?.getExtent();
+
+		setIsIntersecting(true);
+		try {
+			await ensureRabimoInputLoaded(map, boundaryExtent ?? null);
+			performProjectBoundaryIntersection(map);
+			syncPlanningLayerFeatures();
+		} finally {
+			setIsIntersecting(false);
+		}
+	}, [map, syncPlanningLayerFeatures, setIsIntersecting]);
 
 	const startDrawMode = useCallback(() => {
 		const projectBoundaryLayer = getLayerById(map, LAYER_IDS.PROJECT_BOUNDARY);
@@ -62,7 +77,7 @@ export const DrawProjectBoundaryButton: FC = () => {
 
 		drawRef.current = new Draw({ source, type: "Polygon" });
 
-		const handleFeatureAdded = () => {
+		const handleFeatureAdded = async () => {
 			source.un("addfeature", handleFeatureAdded);
 			if (!map) return;
 
@@ -75,11 +90,11 @@ export const DrawProjectBoundaryButton: FC = () => {
 				modifyRef.current = null;
 			}
 
-			performIntersection();
+			await performIntersection();
 
 			modifyRef.current = new Modify({ source });
 			modifyRef.current.on("modifyend", () => {
-				performIntersection();
+				void performIntersection();
 			});
 
 			map.addInteraction(modifyRef.current);
@@ -117,13 +132,13 @@ export const DrawProjectBoundaryButton: FC = () => {
 	}, [removeInteractions]);
 
 	const getButtonText = () => {
-		if (isBTFLayerLoading) return "Layer lädt...";
+		if (isBTFLayerLoading || isIntersecting) return "Layer lädt...";
 		if (mode === "drawing") return "Stop zeichnen";
 		if (mode === "modifying") return "Stop bearbeiten";
 		return "Fläche zeichnen";
 	};
 
-	const isButtonDisabled = !isBTFLayerReady || !map;
+	const isButtonDisabled = !isBTFLayerReady || !map || isIntersecting;
 
 	return (
 		<Button

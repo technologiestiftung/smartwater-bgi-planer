@@ -2,77 +2,56 @@
 
 import { Button } from "@/components/ui/button";
 import { useVectorUpload } from "@/components/UploadControls/hooks/useVectorUpload";
+import { ensureVectorLayer, fitMapToExtent } from "@/lib/helpers/ol";
 import {
-	ensureVectorLayer,
-	fitMapToExtent,
-	getLayerById,
-} from "@/lib/helpers/ol";
+	ensureRabimoInputLoaded,
+	getInputFeatures,
+	performProjectBoundaryIntersection,
+} from "@/lib/helpers/projectBoundary";
 import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";
+import { useProjectStore } from "@/store/project";
+import { useUiStore } from "@/store/ui";
 import { LAYER_IDS } from "@/types/shared";
 import { UploadIcon } from "@phosphor-icons/react";
 import { Feature } from "ol";
-import { intersects } from "ol/extent";
+import VectorLayer from "ol/layer/Vector";
+import VectorSource from "ol/source/Vector";
 import { FC, useCallback, useRef } from "react";
 
 export const UploadDrawLayerButton: FC = () => {
 	const map = useMapStore((state) => state.map);
 	const drawLayerId = useLayersStore((state) => state.drawLayerId);
+	const setInputFeatures = useProjectStore((state) => state.setInputFeatures);
+	const setIsBoundaryIntersecting = useUiStore(
+		(state) => state.setIsBoundaryIntersecting,
+	);
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const { uploading, handleUpload } = useVectorUpload();
 
-	const performIntersection = useCallback(() => {
-		if (!map) return;
+	const applyProjectBoundary = useCallback(
+		async (boundaryLayer: VectorLayer<VectorSource>) => {
+			if (!map) return;
 
-		const projectBoundaryLayer = getLayerById(map, LAYER_IDS.PROJECT_BOUNDARY);
-		const boundaryFeatures =
-			projectBoundaryLayer?.getSource()?.getFeatures() || [];
-
-		const planningLayer = ensureVectorLayer(
-			map,
-			LAYER_IDS.PROJECT_BTF_PLANNING,
-		);
-		const planningSource = planningLayer.getSource()!;
-		planningSource.clear();
-
-		if (boundaryFeatures.length === 0) return;
-
-		const rabimoLayer = getLayerById(map, LAYER_IDS.INPUT);
-		if (!rabimoLayer?.getSource()) return;
-
-		const addedIds = new Set<string>();
-
-		rabimoLayer.getSource()!.forEachFeature((rabimoFeature) => {
-			const rabimoGeometry = rabimoFeature.getGeometry();
-			if (!rabimoGeometry) return;
-
-			const hasIntersection = boundaryFeatures.some((boundaryFeature) => {
-				const boundaryGeometry = boundaryFeature.getGeometry();
-				return (
-					boundaryGeometry &&
-					intersects(
-						boundaryGeometry.getExtent(),
-						rabimoGeometry.getExtent(),
-					) &&
-					boundaryGeometry.intersectsExtent(rabimoGeometry.getExtent())
+			setIsBoundaryIntersecting(true);
+			try {
+				fitMapToExtent(map, boundaryLayer);
+				await ensureRabimoInputLoaded(
+					map,
+					boundaryLayer.getSource()!.getExtent(),
 				);
-			});
 
-			if (hasIntersection) {
-				const featureId =
-					rabimoFeature.getId() !== undefined
-						? String(rabimoFeature.getId())
-						: JSON.stringify(rabimoFeature.getProperties());
-				if (!addedIds.has(featureId)) {
-					planningSource.addFeature(rabimoFeature.clone());
-					addedIds.add(featureId);
-				}
+				performProjectBoundaryIntersection(map);
+				setInputFeatures(getInputFeatures(map));
+			} finally {
+				setIsBoundaryIntersecting(false);
 			}
-		});
-	}, [map]);
+		},
+		[map, setInputFeatures, setIsBoundaryIntersecting],
+	);
 
 	const addFeaturesToDrawLayer = useCallback(
-		(features: Feature[]) => {
+		async (features: Feature[]) => {
 			if (!map || !drawLayerId) return;
 
 			const layer = ensureVectorLayer(map, drawLayerId);
@@ -82,15 +61,15 @@ export const UploadDrawLayerButton: FC = () => {
 				source.clear();
 				source.addFeatures(features);
 				source.changed();
-				performIntersection();
-			} else {
-				source.addFeatures(features);
-				source.changed();
+				await applyProjectBoundary(layer);
+				return;
 			}
 
+			source.addFeatures(features);
+			source.changed();
 			fitMapToExtent(map, layer);
 		},
-		[map, drawLayerId, performIntersection],
+		[map, drawLayerId, applyProjectBoundary],
 	);
 
 	const handleFileChange = async (
@@ -99,9 +78,7 @@ export const UploadDrawLayerButton: FC = () => {
 		const file = event.target.files?.[0];
 		if (!file) return;
 
-		await handleUpload(file, async (features) => {
-			addFeaturesToDrawLayer(features);
-		});
+		await handleUpload(file, (features) => addFeaturesToDrawLayer(features));
 
 		if (fileInputRef.current) fileInputRef.current.value = "";
 	};

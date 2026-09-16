@@ -17,6 +17,7 @@ import {
 	importLayerFromGeoJSON,
 } from "@/lib/helpers/ol";
 import {
+	ensureRabimoInputLoaded,
 	getInputFeatures,
 	performProjectBoundaryIntersection,
 } from "@/lib/helpers/projectBoundary";
@@ -517,8 +518,16 @@ export const useLayerPersistence = (
 			return;
 
 		hasSyncedBtfPlanningRef.current = true;
-		performProjectBoundaryIntersection(map);
-		setInputFeatures(getInputFeatures(map));
+
+		const boundaryExtent = getLayerById(map, LAYER_IDS.PROJECT_BOUNDARY)
+			?.getSource()
+			?.getExtent();
+
+		(async () => {
+			await ensureRabimoInputLoaded(map, boundaryExtent ?? null);
+			performProjectBoundaryIntersection(map);
+			setInputFeatures(getInputFeatures(map));
+		})();
 	}, [map, restoreCompleted, isRabimoInputReady, setInputFeatures]);
 
 	// Cleanup timers and listeners

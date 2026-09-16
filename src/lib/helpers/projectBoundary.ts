@@ -2,10 +2,57 @@ import { getLayerById } from "@/lib/helpers/ol";
 import type { AreaProps, InputFeature } from "@/store/project/types";
 import { LAYER_IDS } from "@/types/shared";
 import booleanIntersects from "@turf/boolean-intersects";
+import type { Extent } from "ol/extent";
 import { GeoJSON } from "ol/format";
 import VectorLayer from "ol/layer/Vector";
 import type Map from "ol/Map";
 import { Vector as VectorSource } from "ol/source";
+
+const RABIMO_LOAD_TIMEOUT_MS = 20000;
+
+/**
+ * The rabimo input layer uses a bbox strategy, so it only holds features for
+ * extents the map has already rendered. Forces a load of the given extent and
+ * resolves once the source is idle again, so an intersection run afterwards
+ * sees the features of that area.
+ */
+export const ensureRabimoInputLoaded = (
+	map: Map | null,
+	extent: Extent | null,
+	timeoutMs = RABIMO_LOAD_TIMEOUT_MS,
+): Promise<void> => {
+	const rabimoSource = getLayerById(map, LAYER_IDS.INPUT)?.getSource();
+
+	if (!map || !rabimoSource || !extent?.every((value) => isFinite(value))) {
+		return Promise.resolve();
+	}
+
+	const view = map.getView();
+	rabimoSource.loadFeatures(
+		extent,
+		view.getResolution() ?? 1,
+		view.getProjection(),
+	);
+
+	if (!rabimoSource.loading) return Promise.resolve();
+
+	return new Promise((resolve) => {
+		const settle = () => {
+			clearTimeout(timeoutId);
+			rabimoSource.un("featuresloadend", handleLoadSettled);
+			rabimoSource.un("featuresloaderror", handleLoadSettled);
+			resolve();
+		};
+
+		const handleLoadSettled = () => {
+			if (!rabimoSource.loading) settle();
+		};
+
+		const timeoutId = setTimeout(settle, timeoutMs);
+		rabimoSource.on("featuresloadend", handleLoadSettled);
+		rabimoSource.on("featuresloaderror", handleLoadSettled);
+	});
+};
 
 /**
  * Performs intersection between project boundary and rabimo input layer
