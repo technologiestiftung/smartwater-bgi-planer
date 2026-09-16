@@ -34,6 +34,14 @@ import { useShallow } from "zustand/react/shallow";
 
 // --- Helpers ---
 
+const FINISH_SNAP_TOLERANCE = 12;
+
+const pixelDistance = (a: number[], b: number[]): number => {
+	const dx = a[0] - b[0];
+	const dy = a[1] - b[1];
+	return Math.sqrt(dx * dx + dy * dy);
+};
+
 const getMeasureArea = (values: Record<string, MeasureValue>): number =>
 	typeof values.area === "number"
 		? values.area
@@ -212,23 +220,29 @@ export const useDrawMeasure = () => {
 		if (!isDrawing) stopDraw();
 	}, [isDrawing, stopDraw]);
 
-	// --- Draw condition ---
+	// --- Draw conditions ---
+
+	const distanceToSketchStart = (pixel: number[]): number | null => {
+		if (!map || !(sketchGeometryRef.current instanceof Polygon)) return null;
+		const first = sketchGeometryRef.current.getCoordinates()[0]?.[0];
+		if (!first) return null;
+		return pixelDistance(pixel, map.getPixelFromCoordinate(first));
+	};
+
+	const finishCondition: Condition = ({ pixel }) => {
+		if (isOverPotentialRef.current) return false;
+		const distance = distanceToSketchStart(pixel);
+		return distance === null || distance <= FINISH_SNAP_TOLERANCE;
+	};
 
 	const createDrawCondition = (
 		getPlanningFeatures: () => Feature<Geometry>[],
 	): Condition => {
 		return ({ coordinate: coord, pixel }) => {
-			if (
-				isOverPotentialRef.current &&
-				sketchGeometryRef.current instanceof Polygon
-			) {
-				const first = sketchGeometryRef.current.getCoordinates()[0]?.[0];
-				if (first) {
-					const fp = map!.getPixelFromCoordinate(first);
-					const dx = pixel[0] - fp[0],
-						dy = pixel[1] - fp[1];
-					if (Math.sqrt(dx * dx + dy * dy) <= 10) return false;
-				}
+			if (isOverPotentialRef.current) {
+				const distance = distanceToSketchStart(pixel);
+				if (distance !== null && distance <= FINISH_SNAP_TOLERANCE)
+					return false;
 			}
 
 			if (!activeBtfFeatureRef.current) {
@@ -459,6 +473,7 @@ export const useDrawMeasure = () => {
 			type: "Polygon",
 			style: getDrawStyle("Polygon"),
 			condition: createDrawCondition(getPlanningFeatures),
+			finishCondition,
 		});
 
 		drawRef.current.on("drawstart", ({ feature }) => handleDrawStart(feature));
