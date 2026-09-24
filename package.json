@@ -42,8 +42,8 @@
 		"ol-mapbox-style": "^13.1.0",
 		"pizzip": "^3.2.0",
 		"proj4": "^2.19.10",
-		"react": "19.2.0",
-		"react-dom": "19.2.0",
+		"react": "19.3.0",
+		"react-dom": "19.3.0",
 		"shpjs": "^6.2.0",
 		"tailwind-merge": "^3.3.1",
 		"zustand": "^5.0.8"
