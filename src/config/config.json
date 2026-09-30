@@ -92,31 +92,11 @@
 							"visibility": false
 						},
 						{
-							"id": "ua_srgk:bb_fliessgeschwindigkeit_aussergewoehnlich",
-							"visibility": false
-						},
-						{
-							"id": "ua_srgk:cb_wasserstand_aussergewoehnlich",
-							"visibility": false
-						},
-						{
 							"id": "ua_srhk:g_srhk_feuerwehreinsaetze",
 							"visibility": false
 						},
 						{
 							"id": "ua_srhk:b_srhk_feuerwehreinsaetze_pkt",
-							"visibility": false
-						},
-						{
-							"id": "ua_klimaanalyse_2022:q_ua_pet_raster_2022",
-							"visibility": false
-						},
-						{
-							"id": "ua_klimaanalyse_2022:g_ua_lufttemp_raster_t2m_04h_2022",
-							"visibility": false
-						},
-						{
-							"id": "ua_klimabewertung_2022:eb_ua_phk_vul_geb_demog_2022",
 							"visibility": false
 						},
 						{
@@ -152,23 +132,7 @@
 							"visibility": false
 						},
 						{
-							"id": "alkis_bezirke:bezirksgrenzen",
-							"visibility": false
-						},
-						{
-							"id": "alkis_flurstuecke:flurstuecke",
-							"visibility": false
-						},
-						{
 							"id": "rabimo_input_2025",
-							"visibility": false
-						},
-						{
-							"id": "bgi-planer:HA4_Kleingewaesser_trocken_pkt",
-							"visibility": false
-						},
-						{
-							"id": "bgi-planer:HA4_Kleingewaesser_trocken_topoEZG_pl",
 							"visibility": false
 						},
 						{
@@ -204,27 +168,11 @@
 							"visibility": false
 						},
 						{
-							"id": "ua_wasserhaushalt_2022:e_verdunstung_2022",
-							"visibility": false
-						},
-						{
-							"id": "ua_wasserhaushalt_2022:b_versickerung_2022",
-							"visibility": false
-						},
-						{
-							"id": "ua_wasserhaushalt_2022:a_oberflaechenabfluss_2022",
-							"visibility": false
-						},
-						{
 							"id": "bgi-planer:dc_ua_phk_bioklim_siedl_nacht_2022",
 							"visibility": false
 						},
 						{
 							"id": "bgi-planer:dd_ua_phk_bioklim_str_nacht_2022",
-							"visibility": false
-						},
-						{
-							"id": "alkis_gebaeude:gebaeude",
 							"visibility": false
 						},
 						{
@@ -273,10 +221,6 @@
 						},
 						{
 							"id": "ua_gruendaecher_2020:c_begruente_dachteilfl_tief",
-							"visibility": false
-						},
-						{
-							"id": "ua_entsiegelung:b_entsieg_klasse_teil",
 							"visibility": false
 						},
 						{
