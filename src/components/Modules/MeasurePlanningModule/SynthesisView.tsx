@@ -14,7 +14,7 @@ import type { Result } from "@/store/result/types";
 import { ResultStatistics } from "@/types/result";
 import { XIcon } from "@phosphor-icons/react";
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const CACHE_MAX_SIZE = 20;
 
@@ -50,6 +50,7 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 		{},
 	);
 	const [plotState, setPlotState] = useState<RequestState>("idle");
+	const requestIdRef = useRef(0);
 
 	const result = useResultStore((storeState) =>
 		activeScenarioId
@@ -122,11 +123,15 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 	const handleRequest = useCallback(async () => {
 		if (!activeScenarioId || !payload) return;
 
+		const requestId = ++requestIdRef.current;
+		const requestScenarioId = activeScenarioId;
+		const isStale = () =>
+			requestId !== requestIdRef.current ||
+			useScenarioStore.getState().activeScenarioId !== requestScenarioId;
 		const payloadKey = JSON.stringify(payload);
 
 		if (restoreFromCache(activeScenarioId, payloadKey)) return;
 
-		const requestScenarioId = activeScenarioId;
 		setState("loading");
 		setStatus(requestScenarioId, "loading");
 		setError("");
@@ -140,14 +145,11 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 				body: JSON.stringify(payload),
 			});
 
-			const data: unknown = await response.json();
+			const data: unknown = await response.json().catch(() => null);
 
-			if (useScenarioStore.getState().activeScenarioId !== requestScenarioId) {
-				return;
-			}
+			if (isStale()) return;
 
 			if (!response.ok) {
-				setStatus(requestScenarioId, "error");
 				const message =
 					(data as { error?: string })?.error ?? "Rabimo request failed";
 				throw new Error(message);
@@ -177,9 +179,7 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 				await fetchPlots(runoffReduction);
 			}
 
-			if (useScenarioStore.getState().activeScenarioId !== requestScenarioId) {
-				return;
-			}
+			if (isStale()) return;
 
 			setWithSizeLimit(lastRequestByScenarioId, requestScenarioId, {
 				payloadKey,
@@ -189,6 +189,8 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 
 			setState("success");
 		} catch (error) {
+			if (isStale()) return;
+			setStatus(requestScenarioId, "error");
 			setState("error");
 			setError(error instanceof Error ? error.message : "Unbekannter Fehler");
 		}
