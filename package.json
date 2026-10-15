@@ -10,7 +10,10 @@
 		"lint:all": "eslint",
 		"prepare": "husky",
 		"format": "prettier --check './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
-		"format:fix": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
+		"format:fix": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
+		"test:e2e": "playwright test",
+		"test:e2e:headed": "playwright test --headed",
+		"test:e2e:ui": "playwright test --ui"
 	},
 	"dependencies": {
 		"@phosphor-icons/react": "^2.1.10",
@@ -51,6 +54,7 @@
 	"devDependencies": {
 		"@commitlint/cli": "^21.0.0",
 		"@commitlint/config-conventional": "^21.0.0",
+		"@playwright/test": "^1.64.1",
 		"@svgr/webpack": "^8.1.0",
 		"@tailwindcss/postcss": "^4",
 		"@types/geojson": "^7946.0.16",

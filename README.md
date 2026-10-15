@@ -79,6 +79,19 @@ npm run format       # Format code with Prettier
 npm run format:fix   # Auto-fix formatting issues
 ```
 
+### E2E Tests
+
+Playwright tests live in `e2e/`. They start `npm run dev` automatically (or reuse a running server); set `BASE_URL` to test another instance.
+
+```bash
+npx playwright install chromium   # once
+npm run test:e2e                  # headless
+npm run test:e2e:headed           # with browser
+npm run test:e2e:ui               # Playwright UI
+```
+
+Map, WMS/WFS, address search and Rabimo hit the live services (Rabimo needs `API_URL`). `RABIMO_MOCK=1 npm run test:e2e` uses `e2e/fixtures/rabimo.json` instead.
+
 ## Docker Deployment
 
 ### Building the Docker Image

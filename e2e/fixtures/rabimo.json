@@ -1,0 +1,25 @@
+{
+	"statistics": {
+		"water_balance": {
+			"status_quo": [
+				{ "runoff": 300, "infiltr": 150, "evapor": 250, "delta_w": 120 }
+			],
+			"with_measures": [
+				{ "runoff": 220, "infiltr": 190, "evapor": 290, "delta_w": 60 }
+			]
+		},
+		"runoff_reduction_percent": [26.7],
+		"water_quality_indicators": {
+			"status_quo": {
+				"overflow_volume": [1200],
+				"critical_hours": [40],
+				"critical_events": [12]
+			},
+			"with_measures": {
+				"overflow_volume": [800],
+				"critical_hours": [25],
+				"critical_events": [7]
+			}
+		}
+	}
+}

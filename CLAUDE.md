@@ -163,10 +163,18 @@ npm run dev          # start dev server (localhost:3000)
 npm run lint         # eslint --quiet
 npm run lint:all     # eslint, all rules including warnings
 npm run format:fix   # prettier --write
+npm run test:e2e     # Playwright E2E (e2e/), starts dev server if needed
 ```
 
 Requires `.env.local` with `MAPTILER_API_KEY`, `MAP_BOUNDING_BOX`, `SEARCH_FILTER_COUNTRY/CITY`,
 and `API_URL` (Rabimo service) — see `.env.example`.
+
+## E2E tests (`e2e/`)
+
+- `walkthrough.spec.ts` is one serial flow with a shared `page`; each test depends on the previous one, so single tests fail in isolation. Its last test writes `test-results/export.zip`, which `import.spec.ts` re-imports (project `import` depends on `walkthrough`; `--no-deps` skips it).
+- Real backends incl. Rabimo, hence long timeouts, `retries: 1`, `workers: 1`. `RABIMO_MOCK=1` mocks Rabimo with `e2e/fixtures/rabimo.json`.
+- Selectors use the German UI strings (`getByRole("button", { name: "Bestätigen" })`) — **renaming UI text breaks tests; update `e2e/` in the same change.**
+- Shared helpers in `e2e/helpers.ts` (`seedTutorialOff`, `waitForMap`, `drawSquare`, `runQuestions`). Comments and test titles in German.
 
 ## If unsure
 

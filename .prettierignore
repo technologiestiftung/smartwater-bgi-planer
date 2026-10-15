@@ -3,4 +3,5 @@ build
 coverage
 .next
 node_modules
-dist
+disttest-results
+playwright-report
