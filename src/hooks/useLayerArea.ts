@@ -7,6 +7,7 @@ import VectorSource from "ol/source/Vector";
 import { getArea } from "ol/sphere";
 import { useEffect, useState } from "react";
 import { useMapReady } from "./useMapReady";
+import { formatNumber } from "@/lib/helpers/common";
 
 export function useLayerArea(layerId: string) {
 	const map = useMapStore((state) => state.map);
@@ -46,8 +47,8 @@ export function useLayerArea(layerId: string) {
 
 			const formattedAreaValue =
 				area > 10000
-					? `${Math.round((area / 1000000) * 100) / 100} km²`
-					: `${Math.round(area * 100) / 100} m²`;
+					? `${formatNumber(area / 1000000)} km²`
+					: `${formatNumber(area)} m²`;
 
 			setFormattedArea(formattedAreaValue);
 			setArea(area);
