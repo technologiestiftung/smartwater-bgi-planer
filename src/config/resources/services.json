@@ -150,6 +150,30 @@
 		"sourceUrl": "https://www.berlin.de/umweltatlas/klima/klimabewertung/"
 	},
 	{
+		"id": "bgi-planer:HA4_Kleingewaesser_trocken_pkt",
+		"name": "Kleingewässer",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "HA4_Kleingewaesser_trocken_pkt",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:HA4_Kleingewaesser_trocken_topoEZG_pl",
+		"name": "Einzugsgebiete Kleingewässer",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/wms?service=wms&request=GetCapabilities",
+		"typ": "WMS",
+		"format": "image/png",
+		"datasets": false,
+		"layers": "HA4_Kleingewaesser_trocken_topoEZG_pl",
+		"gfiAttributes": "ignore"
+	},
+	{
 		"id": "bgi-planer:a_gruenvol2020",
 		"name": "Grünvolumenzahl [m³/m²]",
 		"crs": "EPSG:25833",
@@ -687,6 +711,14 @@
 	{
 		"id": "module_1_groundwater_hotspots_q2",
 		"name": "Gewässerschutz Hotspots Q2",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "groundwaterHotspots"
+	},
+	{
+		"id": "module_1_groundwater_hotspots_q3",
+		"name": "Gewässerschutz Hotspots Q3",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",

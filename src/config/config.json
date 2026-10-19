@@ -136,6 +136,14 @@
 							"visibility": false
 						},
 						{
+							"id": "bgi-planer:HA4_Kleingewaesser_trocken_pkt",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:HA4_Kleingewaesser_trocken_topoEZG_pl",
+							"visibility": false
+						},
+						{
 							"id": "bgi-planer:g_ua_lufttemp_raster_t2m_04h_2022",
 							"visibility": false
 						},
@@ -427,6 +435,10 @@
 						},
 						{
 							"id": "module_1_groundwater_hotspots_q2",
+							"visibility": false
+						},
+						{
+							"id": "module_1_groundwater_hotspots_q3",
 							"visibility": false
 						},
 						{
