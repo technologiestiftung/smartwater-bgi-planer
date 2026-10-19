@@ -85,7 +85,6 @@
 					"id": "potential",
 					"icon": "File",
 					"title": "Potentiale",
-					"displayInSynthesis": false,
 					"questions": ["2V1", "2G1"]
 				}
 			]
