@@ -9,22 +9,24 @@ import type Map from "ol/Map";
 import { Vector as VectorSource } from "ol/source";
 
 const RABIMO_LOAD_TIMEOUT_MS = 20000;
+export const RABIMO_LOAD_ERROR =
+	"Die Blockteilflächen für dieses Gebiet konnten leider nicht geladen werden. Bitte passen Sie die Fläche an oder zeichnen Sie sie erneut.";
 
 /**
  * The rabimo input layer uses a bbox strategy, so it only holds features for
  * extents the map has already rendered. Forces a load of the given extent and
  * resolves once the source is idle again, so an intersection run afterwards
- * sees the features of that area.
+ * sees the features of that area. Resolves to false on load error or timeout.
  */
 export const ensureRabimoInputLoaded = (
 	map: Map | null,
 	extent: Extent | null,
 	timeoutMs = RABIMO_LOAD_TIMEOUT_MS,
-): Promise<void> => {
+): Promise<boolean> => {
 	const rabimoSource = getLayerById(map, LAYER_IDS.INPUT)?.getSource();
 
 	if (!map || !rabimoSource || !extent?.every((value) => isFinite(value))) {
-		return Promise.resolve();
+		return Promise.resolve(true);
 	}
 
 	const view = map.getView();
@@ -34,23 +36,33 @@ export const ensureRabimoInputLoaded = (
 		view.getProjection(),
 	);
 
-	if (!rabimoSource.loading) return Promise.resolve();
+	if (!rabimoSource.loading) return Promise.resolve(true);
 
 	return new Promise((resolve) => {
+		let failed = false;
+
 		const settle = () => {
 			clearTimeout(timeoutId);
 			rabimoSource.un("featuresloadend", handleLoadSettled);
-			rabimoSource.un("featuresloaderror", handleLoadSettled);
-			resolve();
+			rabimoSource.un("featuresloaderror", handleLoadError);
+			resolve(!failed);
 		};
 
 		const handleLoadSettled = () => {
 			if (!rabimoSource.loading) settle();
 		};
 
-		const timeoutId = setTimeout(settle, timeoutMs);
+		const handleLoadError = () => {
+			failed = true;
+			handleLoadSettled();
+		};
+
+		const timeoutId = setTimeout(() => {
+			failed = true;
+			settle();
+		}, timeoutMs);
 		rabimoSource.on("featuresloadend", handleLoadSettled);
-		rabimoSource.on("featuresloaderror", handleLoadSettled);
+		rabimoSource.on("featuresloaderror", handleLoadError);
 	});
 };
 

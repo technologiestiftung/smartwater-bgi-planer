@@ -5,6 +5,7 @@ import { useVectorUpload } from "@/components/UploadControls/hooks/useVectorUplo
 import { ensureVectorLayer, fitMapToExtent } from "@/lib/helpers/ol";
 import {
 	ensureRabimoInputLoaded,
+	RABIMO_LOAD_ERROR,
 	getInputFeatures,
 	performProjectBoundaryIntersection,
 } from "@/lib/helpers/projectBoundary";
@@ -36,10 +37,14 @@ export const UploadDrawLayerButton: FC = () => {
 			setIsBoundaryIntersecting(true);
 			try {
 				fitMapToExtent(map, boundaryLayer);
-				await ensureRabimoInputLoaded(
+				const loaded = await ensureRabimoInputLoaded(
 					map,
 					boundaryLayer.getSource()!.getExtent(),
 				);
+				if (!loaded) {
+					useUiStore.getState().setInputFeaturesError(RABIMO_LOAD_ERROR);
+					return;
+				}
 
 				performProjectBoundaryIntersection(map);
 				setInputFeatures(getInputFeatures(map));

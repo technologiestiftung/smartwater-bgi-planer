@@ -5,6 +5,7 @@ import { useLayerReady } from "@/hooks/useLayerReady";
 import { getLayerById } from "@/lib/helpers/ol";
 import {
 	ensureRabimoInputLoaded,
+	RABIMO_LOAD_ERROR,
 	getInputFeatures,
 	performProjectBoundaryIntersection,
 } from "@/lib/helpers/projectBoundary";
@@ -62,7 +63,10 @@ export const DrawProjectBoundaryButton: FC = () => {
 
 		setIsIntersecting(true);
 		try {
-			await ensureRabimoInputLoaded(map, boundaryExtent ?? null);
+			if (!(await ensureRabimoInputLoaded(map, boundaryExtent ?? null))) {
+				useUiStore.getState().setInputFeaturesError(RABIMO_LOAD_ERROR);
+				return;
+			}
 			performProjectBoundaryIntersection(map);
 			syncPlanningLayerFeatures();
 		} finally {
