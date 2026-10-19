@@ -442,6 +442,10 @@
 							"visibility": false
 						},
 						{
+							"id": "module_2_2V1_draw",
+							"visibility": false
+						},
+						{
 							"id": "module_2_2V2_draw",
 							"visibility": false
 						},
@@ -459,6 +463,10 @@
 						},
 						{
 							"id": "module_2_2V5_draw",
+							"visibility": false
+						},
+						{
+							"id": "module_2_2G1_draw",
 							"visibility": false
 						},
 						{

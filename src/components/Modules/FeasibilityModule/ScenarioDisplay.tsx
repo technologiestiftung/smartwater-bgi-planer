@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { useLayersStore } from "@/store";
 import { useMapStore } from "@/store/map";
+import { useUiStore } from "@/store/ui";
 import {
 	InfoIcon,
 	WaveSineIcon,
@@ -39,6 +40,9 @@ export const ScenarioDisplay: FC<ScenarioDisplayProps> = ({}) => {
 	const [currentZoom, setCurrentZoom] = useState(0);
 	const applyConfigLayers = useLayersStore((state) => state.applyConfigLayers);
 	const map = useMapStore((state) => state.map);
+	const resetDrawInteractions = useUiStore(
+		(state) => state.resetDrawInteractions,
+	);
 
 	useEffect(() => {
 		if (!map) return;
@@ -99,7 +103,10 @@ export const ScenarioDisplay: FC<ScenarioDisplayProps> = ({}) => {
 							selectedScenario === scenario.configId ? "default" : "outline"
 						}
 						size="sm"
-						onClick={() => setSelectedScenario(scenario.configId)}
+						onClick={() => {
+							resetDrawInteractions();
+							setSelectedScenario(scenario.configId);
+						}}
 						className="text-sm"
 					>
 						{scenario.icon}

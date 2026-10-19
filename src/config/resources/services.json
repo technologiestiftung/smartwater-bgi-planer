@@ -733,6 +733,14 @@
 		"styleId": "waterbalanceHotspots"
 	},
 	{
+		"id": "module_2_2V1_draw",
+		"name": "Versickerungspotenzial Machbarkeit",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "feasibilityLayers"
+	},
+	{
 		"id": "module_2_2V2_draw",
 		"name": "Versickerung Machbarkeit",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
@@ -767,6 +775,14 @@
 	{
 		"id": "module_2_2B1_draw",
 		"name": "Speicherung Machbarkeit",
+		"crs": "urn:ogc:def:crs:EPSG::25833",
+		"typ": "GEOJSON",
+		"gfiAttributes": "showAll",
+		"styleId": "feasibilityLayers"
+	},
+	{
+		"id": "module_2_2G1_draw",
+		"name": "Gründachpotenziale Machbarkeit",
 		"crs": "urn:ogc:def:crs:EPSG::25833",
 		"typ": "GEOJSON",
 		"gfiAttributes": "showAll",
