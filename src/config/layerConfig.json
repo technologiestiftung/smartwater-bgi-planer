@@ -230,6 +230,8 @@
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
 		"canDrawNotes": true,
+		"featureDisplay": "tooltip",
+		"canQueryFeatures": ["bgi-planer:versiegelung_2021"],
 		"visibleLayerIds": ["bgi-planer:versiegelung_2021"],
 		"legendSrc": "/legends/1v1.svg",
 		"legendTitle": "Versiegelungsgrad (%)"

@@ -71,7 +71,7 @@ export const buildGetFeatureInfoUrl = (
 	const url = new URL(baseUrl);
 	const extent = view.calculateExtent(mapSize);
 	const params = buildWmsParams(
-		layerId,
+		(source as TileWMS | ImageWMS).getParams().LAYERS ?? layerId,
 		extent,
 		pixel,
 		mapSize,
