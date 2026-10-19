@@ -3,7 +3,11 @@
 import { useLayerPersistence } from "@/components/Map/LayerManager/hooks/useLayerPersistence";
 import { Separator } from "@/components/ui/separator";
 import { Slider } from "@/components/ui/slider";
-import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
 import viewLayerConfig from "@/config/layerConfig.json";
 import visibleLayerIdsModule3 from "@/config/visibleLayerIdsModule3.json";
 import { selectActiveLayerConfig, useLayersStore } from "@/store/layers";
@@ -52,26 +56,33 @@ const LayerCard: FC<LayerCardProps> = ({ layer, onToggle, onOpacity }) => {
 	return (
 		<div className="box-border flex min-h-12 w-full gap-2">
 			<div className="flex h-full flex-1 flex-col">
-				{sourceUrl ? (
-					<a
-						href={sourceUrl}
-						target="_blank"
-						rel="noopener noreferrer"
-						className={`line-clamp-2 text-sm hover:underline ${
-							layer.visibility ? "text-primary" : "text-muted-foreground"
-						}`}
-					>
+				<Tooltip delayDuration={300}>
+					<TooltipTrigger asChild>
+						{sourceUrl ? (
+							<a
+								href={sourceUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								className={`line-clamp-2 text-sm hover:underline ${
+									layer.visibility ? "text-primary" : "text-muted-foreground"
+								}`}
+							>
+								{name}
+							</a>
+						) : (
+							<p
+								className={`line-clamp-2 text-sm ${
+									layer.visibility ? "text-primary" : "text-muted-foreground"
+								}`}
+							>
+								{name}
+							</p>
+						)}
+					</TooltipTrigger>
+					<TooltipContent side="top" className="duration-300 ease-in-out">
 						{name}
-					</a>
-				) : (
-					<p
-						className={`line-clamp-2 text-sm ${
-							layer.visibility ? "text-primary" : "text-muted-foreground"
-						}`}
-					>
-						{name}
-					</p>
-				)}
+					</TooltipContent>
+				</Tooltip>
 				<Slider
 					min={0}
 					max={1}
