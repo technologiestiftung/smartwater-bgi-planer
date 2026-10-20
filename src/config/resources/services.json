@@ -187,6 +187,30 @@
 		"sourceUrl": "https://www.berlin.de/umweltatlas/biotope/gruenvolumen/"
 	},
 	{
+		"id": "ua_gruenvolumen_2020:a_gruenvol2020",
+		"name": "Grünvolumenzahl [m³/m²]",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_gruenvolumen_2020",
+		"typ": "WMS",
+		"layers": "a_gruenvol2020",
+		"legend": true,
+		"datasets": [
+			{
+				"md_id": "0673c86e-9950-4502-97b6-f5d3c2d0564f",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"transparent": true,
+		"gfiAttributes": "showAll",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"singleTile": true
+	},
+	{
 		"id": "rabimo_input_2025",
 		"styleId": "abimoInput",
 		"name": "Abimo Input 2025",

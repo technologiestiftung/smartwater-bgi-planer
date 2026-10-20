@@ -245,7 +245,7 @@ export const LayerTree: FC = () => {
 		setLayerVisibility(id, v);
 	};
 	const toggleSubjectLayer = (id: string, v: boolean) =>
-		isPlanningModule
+		isPlanningModule && id.startsWith("module_")
 			? setLayerVisibilityInModule3(id, !v)
 			: setLayerVisibility(id, !v);
 
