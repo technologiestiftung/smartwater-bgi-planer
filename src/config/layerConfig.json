@@ -636,7 +636,9 @@
 		],
 		"canDrawTrees": true,
 		"canDrawNotes": true,
-		"measurementSrc": "/legends/measures.svg"
+		"measurementSrc": "/legends/measures.svg",
+		"legendSrc": "/legends/3b2.svg",
+		"legendTitle": "Legende"
 	},
 	{
 		"id": "3V1",
