@@ -253,7 +253,10 @@ export const LayerTree: FC = () => {
 		{
 			key: "contentMaps",
 			title: "Inhaltskarten",
-			layers: filterOutModuleLayers(filteredSubject),
+			// topmost map layer first; module sections keep step order from config
+			layers: filterOutModuleLayers(filteredSubject).sort(
+				(a, b) => b.zIndex - a.zIndex,
+			),
 		},
 		{
 			key: "module1Maps",
