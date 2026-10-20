@@ -51,6 +51,7 @@ const createWMTSLayer = (
 			layer: serviceConfig.layers!,
 			matrixSet: serviceConfig.tileMatrixSet!,
 			format: serviceConfig.format,
+			style: serviceConfig.styles,
 		});
 
 		if (!options) {
