@@ -144,6 +144,10 @@
 							"visibility": false
 						},
 						{
+							"id": "bgi-planer:Gewaesser_gesamt",
+							"visibility": false
+						},
+						{
 							"id": "bgi-planer:HA4_Kleingewaesser_trocken_pkt",
 							"visibility": false
 						},
@@ -349,6 +353,14 @@
 						},
 						{
 							"id": "bgi-planer:optimierter_Baumstandort",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:Baumscheiben_kleiner_9qm",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:leere_baumscheiben",
 							"visibility": false
 						}
 					]

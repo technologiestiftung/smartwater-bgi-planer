@@ -337,7 +337,10 @@
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
 		"canDrawNotes": true,
+		"featureDisplay": "tooltip",
+		"canQueryFeatures": ["bgi-planer:Gewaesser_gesamt"],
 		"visibleLayerIds": [
+			"bgi-planer:Gewaesser_gesamt",
 			"bgi-planer:HA4_Kleingewaesser_trocken_pkt",
 			"bgi-planer:HA4_Kleingewaesser_trocken_topoEZG_pl"
 		],
@@ -607,7 +610,10 @@
 	{
 		"id": "3E2",
 		"drawLayerId": "module_3_3E2_draw",
-		"visibleLayerIds": ["project_boundary"],
+		"visibleLayerIds": [
+			"project_boundary",
+			"bgi-planer:Baumscheiben_kleiner_9qm"
+		],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
 		"measurementSrc": "/legends/measures.svg"
@@ -626,7 +632,8 @@
 		"visibleLayerIds": [
 			"project_boundary",
 			"baumbestand:anlagenbaeume",
-			"baumbestand:strassenbaeume"
+			"baumbestand:strassenbaeume",
+			"bgi-planer:leere_baumscheiben"
 		],
 		"canDrawTrees": true,
 		"canDrawNotes": true,

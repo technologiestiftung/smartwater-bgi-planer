@@ -458,6 +458,48 @@
 		"gfiAttributes": "ignore"
 	},
 	{
+		"id": "bgi-planer:Baumscheiben_kleiner_9qm",
+		"name": "Baumscheiben < 9qm",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/gwc/service/wmts",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/gwc/service/wmts?REQUEST=GetCapabilities",
+		"typ": "WMTS",
+		"tileMatrixSet": "EPSG:25833_BGI",
+		"optionsFromCapabilities": true,
+		"format": "image/png",
+		"datasets": false,
+		"layers": "Baumscheiben_kleiner_9qm",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:leere_baumscheiben",
+		"name": "Leere Baumscheiben",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/gwc/service/wmts",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/gwc/service/wmts?REQUEST=GetCapabilities",
+		"typ": "WMTS",
+		"tileMatrixSet": "EPSG:25833_BGI",
+		"optionsFromCapabilities": true,
+		"format": "image/png",
+		"datasets": false,
+		"layers": "leere_baumscheiben",
+		"gfiAttributes": "ignore"
+	},
+	{
+		"id": "bgi-planer:Gewaesser_gesamt",
+		"name": "Gewässer gesamt",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/gwc/service/wmts",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/gwc/service/wmts?REQUEST=GetCapabilities",
+		"typ": "WMTS",
+		"tileMatrixSet": "EPSG:25833_BGI",
+		"optionsFromCapabilities": true,
+		"format": "image/png",
+		"datasets": false,
+		"layers": "Gewaesser_gesamt",
+		"gfiAttributes": "ignore"
+	},
+	{
 		"id": "UPDATE 20260803"
 	},
 	{
