@@ -80,6 +80,14 @@
 							"visibility": false
 						},
 						{
+							"id": "ua_versiegelung_2021:versieg2021",
+							"visibility": false
+						},
+						{
+							"id": "ua_versiegelung_2021:versieg2021_str",
+							"visibility": false
+						},
+						{
 							"id": "ua_srhk:db_fliessgeschw_aussergew_kostra",
 							"visibility": false
 						},

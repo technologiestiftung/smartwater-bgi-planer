@@ -1728,12 +1728,6 @@
 		"sourceUrl": "https://www.berlin.de/umweltatlas/wasser/wasserschutzgebiete/"
 	},
 	{
-		"id": "ABIMO"
-	},
-	{
-		"id": "Themenkarten"
-	},
-	{
 		"id": "ua_vegetationshoehen_2020:c_vegetationshoehe_2020_raster",
 		"name": "Vegetationshöhen 2020 (Raster)",
 		"crs": "EPSG:25833",
@@ -1843,6 +1837,54 @@
 		"datasets": [
 			{
 				"md_id": "d002e10f-d745-49e5-98b1-bde00700f4e4",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"transparent": true,
+		"gfiAttributes": "showAll",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"singleTile": true
+	},
+	{
+		"id": "ua_versiegelung_2021:versieg2021_str",
+		"name": "Versiegelung der Straßenflächen 2021",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_versiegelung_2021",
+		"typ": "WMS",
+		"layers": "versieg2021_str",
+		"legend": true,
+		"datasets": [
+			{
+				"md_id": "2c8a769b-364e-4596-ace4-4c05cd8eb872",
+				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
+			}
+		],
+		"format": "image/png",
+		"version": "1.3.0",
+		"transparent": true,
+		"gfiAttributes": "showAll",
+		"featureCount": "10",
+		"gfiTheme": "default",
+		"infoFormat": "application/json",
+		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar.",
+		"singleTile": true
+	},
+	{
+		"id": "ua_versiegelung_2021:versieg2021",
+		"name": "Versiegelung der Block- und Blockteilflächen 2021",
+		"crs": "EPSG:25833",
+		"url": "https://gdi.berlin.de/services/wms/ua_versiegelung_2021",
+		"typ": "WMS",
+		"layers": "versieg2021",
+		"legend": true,
+		"datasets": [
+			{
+				"md_id": "2c8a769b-364e-4596-ace4-4c05cd8eb872",
 				"csw_url": "https://gdi.berlin.de/geonetwork/srv/ger/csw"
 			}
 		],
