@@ -339,11 +339,7 @@
 		"canDrawNotes": true,
 		"featureDisplay": "tooltip",
 		"canQueryFeatures": ["bgi-planer:Gewaesser_gesamt"],
-		"visibleLayerIds": [
-			"bgi-planer:Gewaesser_gesamt",
-			"bgi-planer:HA4_Kleingewaesser_trocken_pkt",
-			"bgi-planer:HA4_Kleingewaesser_trocken_topoEZG_pl"
-		],
+		"visibleLayerIds": ["bgi-planer:Gewaesser_gesamt"],
 		"legendSrc": "/legends/1g3.svg"
 	},
 	{

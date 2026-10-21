@@ -148,14 +148,6 @@
 							"visibility": false
 						},
 						{
-							"id": "bgi-planer:HA4_Kleingewaesser_trocken_pkt",
-							"visibility": false
-						},
-						{
-							"id": "bgi-planer:HA4_Kleingewaesser_trocken_topoEZG_pl",
-							"visibility": false
-						},
-						{
 							"id": "bgi-planer:g_ua_lufttemp_raster_t2m_04h_2022",
 							"visibility": false
 						},
