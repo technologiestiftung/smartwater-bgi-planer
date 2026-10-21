@@ -21,8 +21,22 @@
 	{
 		"id": "handlungsbedarfe_module_introduction",
 		"name": "",
-		"question": "Die Herausforderungen im Gebiet in Bezug auf Klimafolgen zu kennen, ist eine wichtige Voraussetzung für die Priorisierung von Maßnahmen. Zu Beginn sollen daher Handlungsbedarfe ermittelt werden, die auf aktuelle und künftige Problemlagen hinweisen.",
-		"description": "Während die bekanntesten Folgen des Klimawandels Hitze und Starkregen sind, ist hier auch das Thema Versiegelung separat aufgenommen, da es die Auswirkungen von Hitze und Starkregen unmittelbar verstärkt. Darüber hinaus werden Handlungsbedarfe im Bereich Gewässerschutz aufgezeigt, hier bezogen auf aufnehmende Fließgewässer im Bereich der Mischkanalisation und Kleingewässer. Der Wasserhaushalt ist ein wichtiger Querschnittsindikator für diese vier Themen.",
+		"question": "Die Herausforderungen im Gebiet in Bezug auf Klimafolgen zu kennen, ist eine wichtige Voraussetzung für die Priorisierung von Maßnahmen. In diesem ersten Modul geht es deswegen darum, Handlungsbedarfe im Projektgebiet zu analysieren.",
+		"description": [
+			"Folgende Handlungsbedarfe werden betrachtet:",
+			{
+				"type": "bullets",
+				"items": [
+					"Starkregen",
+					"Hitze",
+					"Versiegelung",
+					"Wasserhaushalt",
+					"Gewässerbelastung"
+				]
+			},
+			"Pro Handlungsbedarf werden unterschiedliche Karten betrachtet. Zu jeder Karte gibt es eine Checkfrage, die beantwortet werden soll, und weitere Hinweise.",
+			"Wie Sie die Analyse durchführen liegt in Ihrem eigenen Ermessen. Sie können z. B. Hotspots mithilfe der Polygon- oder der Blockteilflächen-Wählen-Funktion (unten rechts) einzeichnen, Notizen machen oder sagen, dass die Checkfrage im Gebiet nicht relevant oder überall relevant ist. Die Ergebnisse werden in der Synthese am Ende des Moduls zusammengefasst. Sie haben jedoch keine Auswirkungen auf die Effektbewertung, die im dritten Modul “Planung und Effektbewertung” erstellt wird."
+		],
 		"drawLayerId": "",
 		"visibleLayerIds": ["project_boundary", "project_new_development"],
 		"legendSrc": "",
@@ -349,7 +363,12 @@
 		"id": "feasibility_module_introduction",
 		"name": "",
 		"question": "Bevor konkrete Maßnahmen geplant werden können, soll sichtbar gemacht werden, welche Rahmenbedingungen die Umsetzbarkeit von verschiedenen Maßnahmengruppen beeinflussen.",
-		"description": "Während einerseits sehr allgemeine Rahmenbedingungen zu prüfen sind, die auf die Machbarkeiten von verschiedenen Maßnahmengruppen hinweisen, gibt es auch sehr konkrete Fragen, die es zu klären gilt. Dafür stehen nicht immer die notwendigen Geodaten zur Verfügung, weswegen hier stellenweise zusätzliche Recherche notwendig ist.",
+		"description": [
+			"Dafür werden unterschiedliche Karten betrachtet. Auch hier gibt es pro Karte eine Checkfrage, die beantwortet werden soll, und weitere Hinweise.",
+			"Wie Sie die Analyse durchführen liegt in Ihrem eigenen Ermessen. Sie können z. B. Hotspots mithilfe der Polygon- oder der Blockteilflächen-Wählen-Funktion (unten rechts) einzeichnen, Notizen machen oder sagen, dass die Checkfrage im Gebiet nicht relevant oder überall relevant ist. Die Ergebnisse werden in der Synthese am Ende des Moduls zusammengefasst. Sie haben jedoch keine Auswirkungen auf die Effektbewertung, die im dritten Modul “Planung und Effektbewertung” erstellt wird.",
+			"Wichtig: Für Checkfragen “Altlasten” und “Unterirdische Infrastrukturen” liegen keine öffentlichen Daten vor. Falls Ihnen diese Daten vorliegen, können sie hochgeladen werden.",
+			"Für eine vollständige Prüfung der Machbarkeiten stehen nicht immer die notwendigen Geodaten zur Verfügung, weswegen hier stellenweise zusätzliche Recherche notwendig ist."
+		],
 		"drawLayerId": "",
 		"visibleLayerIds": ["project_boundary", "project_new_development"],
 		"legendSrc": "",

@@ -1,3 +1,5 @@
+import type { RichTextContent } from "@/components/RichTextWithLinks/RichTextWithLinks";
+
 export type LayerType = "WMS" | "WFS" | "WMTS" | "VectorTile" | "GEOJSON";
 export type LayerStatus = "initial" | "loading" | "loaded" | "error";
 
@@ -97,6 +99,8 @@ export interface ModuleConfig {
 	order: number;
 	title: string;
 	description: string;
+	introTitle?: string;
+	intro?: RichTextContent[];
 	steps: ModuleStepConfig[];
 }
 
