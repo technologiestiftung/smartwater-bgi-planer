@@ -193,7 +193,7 @@ export function ConnectedAreaSelection({
 	if (!isSwaleMeasure) return null;
 
 	return (
-		<div className="border-muted mb-4 rounded-sm border p-3">
+		<div className="border-muted mt-4 mb-4 rounded-sm border p-3">
 			<p className="text-sm font-semibold">Anzuschließende Fläche auswählen</p>
 			<p className="text-muted-foreground mt-1 mb-2 text-xs">
 				Wähle eine anzuschließende Fläche direkt durch Klick auf die Karte. Die
