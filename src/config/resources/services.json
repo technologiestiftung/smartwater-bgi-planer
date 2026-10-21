@@ -164,6 +164,21 @@
 		"sourceUrl": "https://www.berlin.de/umweltatlas/klima/klimabewertung/"
 	},
 	{
+		"id": "bgi-planer:a_gruenvol2020",
+		"name": "Grünvolumenzahl [m³/m²]",
+		"crs": "EPSG:25833",
+		"url": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/gwc/service/wmts",
+		"capabilitiesUrl": "https://geoserver.ionos-main.ds-apps.tsb-berlin.de/geoserver/bgi-planer/gwc/service/wmts?REQUEST=GetCapabilities",
+		"typ": "WMTS",
+		"tileMatrixSet": "EPSG:25833_BGI",
+		"optionsFromCapabilities": true,
+		"format": "image/png",
+		"datasets": false,
+		"layers": "gruenvol_2020_mit_durchschnitt",
+		"gfiAttributes": "ignore",
+		"sourceUrl": "https://www.berlin.de/umweltatlas/biotope/gruenvolumen/"
+	},
+	{
 		"id": "ua_gruenvolumen_2020:a_gruenvol2020",
 		"name": "Grünvolumenzahl [m³/m²]",
 		"crs": "EPSG:25833",

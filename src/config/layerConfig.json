@@ -232,12 +232,12 @@
 		"canDrawNotes": true,
 		"featureDisplay": "tooltip",
 		"canQueryFeatures": [
-			"ua_versiegelung_2021:versieg2021",
+			"bgi-planer:versiegelung_2021",
 			"ua_versiegelung_2021:versieg2021_str"
 		],
 		"visibleLayerIds": [
-			"ua_versiegelung_2021:versieg2021_str",
-			"ua_versiegelung_2021:versieg2021"
+			"bgi-planer:versiegelung_2021",
+			"ua_versiegelung_2021:versieg2021_str"
 		],
 		"legendSrc": "/legends/1v1.svg",
 		"legendTitle": "Versiegelungsgrad (%)"
@@ -254,8 +254,8 @@
 		"canDrawBTF": true,
 		"canDrawNotes": true,
 		"featureDisplay": "tooltip",
-		"canQueryFeatures": ["ua_gruenvolumen_2020:a_gruenvol2020"],
-		"visibleLayerIds": ["ua_gruenvolumen_2020:a_gruenvol2020"],
+		"canQueryFeatures": ["bgi-planer:a_gruenvol2020"],
+		"visibleLayerIds": ["bgi-planer:a_gruenvol2020"],
 		"legendSrc": "/legends/1v2.svg",
 		"legendTitle": "Grünvolumenzahl (m³/m²)"
 	},
