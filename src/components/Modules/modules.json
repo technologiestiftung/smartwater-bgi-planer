@@ -799,7 +799,10 @@
 							"title": "Mulde",
 							"metricIcons": ["Tree", "ThermometerHot", "Drop"],
 							"info": {
-								"description": "Eine Mulde ist eine naturnahe Versickerungsanlage mit einer maximalen Einstauhöhe von 30 cm. Niederschlagswasser von angeschlossenen Flächen wird kurzzeitig zwischengespeichert und versickert durch die bewachsene Bodenzone, in der es gereinigt wird.",
+								"description": [
+									"Eine Mulde ist eine naturnahe Versickerungsanlage mit einer maximalen Einstauhöhe von 30 cm. Niederschlagswasser von angeschlossenen Flächen wird kurzzeitig zwischengespeichert und versickert durch die bewachsene Bodenzone, in der es gereinigt wird.",
+									"Die blauen Flächen zeigen die Potenzialflächen der ausgewählten Versickerungsmaßnahme laut Versickerungspotenzialkarte an."
+								],
 								"scores": {
 									"CloudRain": 2,
 									"ThermometerHot": 2,
