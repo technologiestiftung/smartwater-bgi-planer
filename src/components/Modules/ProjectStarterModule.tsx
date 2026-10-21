@@ -342,11 +342,12 @@ function AdditionalMapsStep({ projectId }: { projectId: string }) {
 			<h3 className="text-primary">Zusatzkarten</h3>
 			<h4>Welche andere Information haben Sie?</h4>
 			<p className="text-muted-foreground">
-				Falls Sie weitere Karten über das Untersuchungsgebiet zur Verfügung
-				haben, die nicht im GeoPortal sind, können Sie diese gerne hier als
-				Dateien oder als WMS verlinken. Akzeptierte Datenformate sind Shapefile
-				(in .zip format) oder GeoJSON. Hochgeladene Dateien müssen im EPSG:
-				25833 oder EPSG:4326 Koordinatensystem sein.
+				Falls Sie weitere Karten hinzufügen wollen, können Sie diese hier als
+				Shapefile, GeoJSON oder WMS einbinden. Diese Daten werden dann
+				ausschließlich lokal auf Ihrem Rechner gespeichert, weshalb Sie auch
+				vertrauliche Daten einpflegen könnten. Akzeptierte Datenformate sind
+				Shapefile (in .zip format) oder GeoJSON. Hochgeladene Dateien müssen im
+				EPSG: 25833 oder EPSG:4326 Koordinatensystem sein.
 			</p>
 
 			<div className="flex w-full gap-2 py-4">
