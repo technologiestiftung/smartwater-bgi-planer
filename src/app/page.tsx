@@ -123,6 +123,18 @@ export default function Home() {
 							)}
 						</div>
 					)}
+					<p className="text-muted-foreground">
+						Der BGI-Planer ist ein Prototyp und noch in Entwicklung. Es können
+						vereinzelte inhaltliche Ungenauigkeiten und technische
+						Einschränkungen auftreten. Wir freuen uns über Ihr Feedback an{" "}
+						<a
+							href="mailto:smartwater@senstadt.berlin.de"
+							className="underline underline-offset-4"
+						>
+							smartwater@senstadt.berlin.de
+						</a>
+						.
+					</p>
 				</div>
 
 				<div className="Footer-root mt-40 flex flex-col gap-4 lg:mt-0">
