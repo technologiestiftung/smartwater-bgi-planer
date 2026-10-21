@@ -612,7 +612,8 @@
 		],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
-		"measurementSrc": "/legends/measures.svg"
+		"measurementSrc": "/legends/measures.svg",
+		"legendSrc": "/legends/3e2.svg"
 	},
 	{
 		"id": "3B1",
