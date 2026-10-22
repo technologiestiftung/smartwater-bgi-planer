@@ -330,8 +330,8 @@
 		"name": "Erstaufnehmendes Gewässer im Einzugsbereich der Trennkanalisation",
 		"question": "In welches Gewässer wird das Regenwasser eingeleitet?",
 		"description": [
-			"Nutzen Sie bitte die Notiz-Funktion. Falls sich das Untersuchungsgebiet im Einzugsbereich der Trennkanalisation befindet, kann die Information zum erstaufnehmenden Gewässer eingesehen werden. Ziel ist es durch Abkopplung die Belastung der Gewässer zu reduzieren (hydraulisch & stofflich).",
-			"In Einzugsgebieten von Fließgewässern (z.B. Spree, Landwehrkanal, Panke) ist eine Abkopplung geboten. Bei stehenden Gewässern (z.B. Seen, Teiche) ist zu prüfen, ob es einen Wasserbedarf gibt und daher keine Abkopplung forciert werden sollte. Durch eine frühzeitige Einbindung des bezirklichen Umwelt- und Naturschutzamtes kann abgefragt werden, ob umliegende Kleingewässer Bedarf an zusätzlichen Wassermengen haben. In einem solchen Fall kann geprüft werden, ob eine Zuleitung von Regenwasser realisierbar ist."
+			"Falls sich das Untersuchungsgebiet im Einzugsbereich der Trennkanalisation befindet, kann die Information zum erstaufnehmenden Gewässer durch Klick in die Karte abgerufen werden. Die Karte gibt Auskunft darüber, in welches Gewässer das in die Regenwasserkanalisation eingeleitete Regenwasser gelangt. Ziel ist es durch Abkopplung die Belastung der Gewässer zu reduzieren (hydraulisch & stofflich).",
+			"In Einzugsgebieten von Fließgewässern (z.B. Spree, Landwehrkanal, Panke) ist eine Abkopplung geboten. Bei stehenden Gewässern (z.B. Seen, Teiche) ist zu prüfen, ob es einen Wasserbedarf gibt und daher keine Abkopplung forciert werden sollte (siehe nächste Frage)."
 		],
 		"drawLayerId": "module_1_groundwater_hotspots_q2",
 		"canDrawPolygons": true,
