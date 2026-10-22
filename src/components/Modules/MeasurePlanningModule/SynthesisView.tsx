@@ -5,6 +5,7 @@ import WaterBalanceChart from "@/components/ResultCharts/WaterBalanceChart";
 import WaterQualityChart from "@/components/ResultCharts/WaterQualityChart";
 import { Tutorial } from "@/components/Tutorial/Tutorial";
 import { Button } from "@/components/ui/button";
+import { useCurrentResult } from "@/hooks/useCurrentResult";
 import { useRabimoPayload } from "@/hooks/useRabimoPayload";
 import { useResultLayer } from "@/hooks/useResultLayer";
 import { SectionId } from "@/lib/helpers/sectionIds";
@@ -67,11 +68,7 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 	const [plotState, setPlotState] = useState<RequestState>("idle");
 	const requestIdRef = useRef(0);
 
-	const result = useResultStore((storeState) =>
-		activeScenarioId
-			? storeState.resultsByScenarioId[activeScenarioId]
-			: undefined,
-	);
+	const result = useCurrentResult();
 	const stats = result?.data
 		? (result.data as { statistics: ResultStatistics }).statistics
 		: undefined;
@@ -234,7 +231,9 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 				)}
 
 				<div className="mt-4">
-					<WaterBalanceChart stats={stats} isLoading={state === "loading"} />
+					{state !== "error" && (
+						<WaterBalanceChart stats={stats} isLoading={state === "loading"} />
+					)}
 
 					<p className="mt-4">
 						Für den ausgewählten Projektbereich berechnet das Modell ABIMO die
@@ -255,12 +254,14 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 
 					<br />
 
-					<WaterQualityChart
-						stats={stats}
-						isLoading={state === "loading"}
-						plotUrls={plotUrls}
-						plotState={plotState}
-					/>
+					{state !== "error" && (
+						<WaterQualityChart
+							stats={stats}
+							isLoading={state === "loading"}
+							plotUrls={plotUrls}
+							plotState={plotState}
+						/>
+					)}
 
 					<div className="mt-4 flex flex-col gap-2">
 						<p>
