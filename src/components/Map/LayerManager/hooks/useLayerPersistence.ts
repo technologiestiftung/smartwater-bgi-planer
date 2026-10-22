@@ -524,7 +524,7 @@ export const useLayerPersistence = (
 			?.getExtent();
 
 		(async () => {
-			await ensureRabimoInputLoaded(map, boundaryExtent ?? null);
+			if (!(await ensureRabimoInputLoaded(map, boundaryExtent ?? null))) return;
 			performProjectBoundaryIntersection(map);
 			setInputFeatures(getInputFeatures(map));
 		})();

@@ -3,7 +3,11 @@
 import { useLayerPersistence } from "@/components/Map/LayerManager/hooks/useLayerPersistence";
 import { Separator } from "@/components/ui/separator";
 import { Slider } from "@/components/ui/slider";
-import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
 import viewLayerConfig from "@/config/layerConfig.json";
 import visibleLayerIdsModule3 from "@/config/visibleLayerIdsModule3.json";
 import { selectActiveLayerConfig, useLayersStore } from "@/store/layers";
@@ -52,26 +56,33 @@ const LayerCard: FC<LayerCardProps> = ({ layer, onToggle, onOpacity }) => {
 	return (
 		<div className="box-border flex min-h-12 w-full gap-2">
 			<div className="flex h-full flex-1 flex-col">
-				{sourceUrl ? (
-					<a
-						href={sourceUrl}
-						target="_blank"
-						rel="noopener noreferrer"
-						className={`line-clamp-2 text-sm hover:underline ${
-							layer.visibility ? "text-primary" : "text-muted-foreground"
-						}`}
-					>
+				<Tooltip delayDuration={300}>
+					<TooltipTrigger asChild>
+						{sourceUrl ? (
+							<a
+								href={sourceUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								className={`line-clamp-2 text-sm hover:underline ${
+									layer.visibility ? "text-primary" : "text-muted-foreground"
+								}`}
+							>
+								{name}
+							</a>
+						) : (
+							<p
+								className={`line-clamp-2 text-sm ${
+									layer.visibility ? "text-primary" : "text-muted-foreground"
+								}`}
+							>
+								{name}
+							</p>
+						)}
+					</TooltipTrigger>
+					<TooltipContent side="top" className="duration-300 ease-in-out">
 						{name}
-					</a>
-				) : (
-					<p
-						className={`line-clamp-2 text-sm ${
-							layer.visibility ? "text-primary" : "text-muted-foreground"
-						}`}
-					>
-						{name}
-					</p>
-				)}
+					</TooltipContent>
+				</Tooltip>
 				<Slider
 					min={0}
 					max={1}
@@ -227,63 +238,42 @@ export const LayerTree: FC = () => {
 	const noResults =
 		filteredUploaded.length === 0 && filteredSubject.length === 0;
 
-	const renderPlanningModuleLayerSections = () => {
-		const contentMaps = filterOutModuleLayers(filteredSubject);
-		const module1Maps = filterLayersAfterModule(filteredSubject, "module_1_");
-		const module2Maps = filterLayersAfterModule(filteredSubject, "module_2_");
-		const module3Maps = filterLayersAfterModule(filteredSubject, "module_3_");
-		const content: React.ReactNode[] = [];
-		const setLayerVisibilityInModule3 = (id: string, v: boolean) => {
-			if (activeLayersInModule3.includes(id)) {
-				setActiveLayersInModule3((prev) => prev.filter((f) => f !== id));
-			} else {
-				setActiveLayersInModule3((prev) => [...prev, id]);
-			}
-			setLayerVisibility(id, v);
-		};
-		if (contentMaps.length > 0)
-			content.push(
-				<LayerSection
-					key="contentMaps"
-					title="Inhaltskarten"
-					layers={contentMaps}
-					onToggle={(id, v) => setLayerVisibilityInModule3(id, !v)}
-					onOpacity={setLayerOpacity}
-				/>,
-			);
-		if (module1Maps.length > 0)
-			content.push(
-				<LayerSection
-					key="module1Maps"
-					title="Modul 1: Handlungsbedarfe"
-					layers={module1Maps}
-					onToggle={(id, v) => setLayerVisibilityInModule3(id, !v)}
-					onOpacity={setLayerOpacity}
-				/>,
-			);
-		if (module2Maps.length > 0)
-			content.push(
-				<LayerSection
-					key="module2Maps"
-					title="Modul 2: Machbarkeiten"
-					layers={module2Maps}
-					onToggle={(id, v) => setLayerVisibilityInModule3(id, !v)}
-					onOpacity={setLayerOpacity}
-				/>,
-			);
-		if (module3Maps.length > 0)
-			content.push(
-				<LayerSection
-					key="module3Maps"
-					title="Modul 3: Maßnahmen"
-					layers={module3Maps}
-					onToggle={(id, v) => setLayerVisibilityInModule3(id, !v)}
-					onOpacity={setLayerOpacity}
-				/>,
-			);
-
-		return content;
+	const setLayerVisibilityInModule3 = (id: string, v: boolean) => {
+		setActiveLayersInModule3((prev) =>
+			v ? [...prev.filter((f) => f !== id), id] : prev.filter((f) => f !== id),
+		);
+		setLayerVisibility(id, v);
 	};
+	const toggleSubjectLayer = (id: string, v: boolean) =>
+		isPlanningModule && id.startsWith("module_")
+			? setLayerVisibilityInModule3(id, !v)
+			: setLayerVisibility(id, !v);
+
+	const subjectSections = [
+		{
+			key: "contentMaps",
+			title: "Inhaltskarten",
+			// topmost map layer first; module sections keep step order from config
+			layers: filterOutModuleLayers(filteredSubject).sort(
+				(a, b) => b.zIndex - a.zIndex,
+			),
+		},
+		{
+			key: "module1Maps",
+			title: "Modul 1: Handlungsbedarfe",
+			layers: filterLayersAfterModule(filteredSubject, "module_1_"),
+		},
+		{
+			key: "module2Maps",
+			title: "Modul 2: Machbarkeiten",
+			layers: filterLayersAfterModule(filteredSubject, "module_2_"),
+		},
+		{
+			key: "module3Maps",
+			title: "Modul 3: Maßnahmen",
+			layers: filterLayersAfterModule(filteredSubject, "module_3_"),
+		},
+	].filter((section) => section.layers.length > 0);
 
 	useEffect(() => {
 		if (!isPlanningModule) return;
@@ -325,15 +315,15 @@ export const LayerTree: FC = () => {
 
 				<div className="max-h-80 overflow-y-auto">
 					<div className="flex flex-col gap-4 p-3">
-						{filteredSubject.length > 0 && !isPlanningModule && (
+						{subjectSections.map((section) => (
 							<LayerSection
-								title="Inhaltskarten"
-								layers={filteredSubject}
-								onToggle={(id, v) => setLayerVisibility(id, !v)}
+								key={section.key}
+								title={section.title}
+								layers={section.layers}
+								onToggle={toggleSubjectLayer}
 								onOpacity={setLayerOpacity}
 							/>
-						)}
-						{isPlanningModule && renderPlanningModuleLayerSections()}
+						))}
 						{filteredUploaded.length > 0 && filteredSubject.length > 0 && (
 							<Separator />
 						)}

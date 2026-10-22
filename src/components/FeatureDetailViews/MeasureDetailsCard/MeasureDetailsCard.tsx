@@ -155,7 +155,7 @@ export const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
 							)}
 						</div>
 						<Input
-							type={param.type === "string" ? "text" : "number"}
+							type="text"
 							value={formatMeasureValue(measureValues[param.key])}
 							readOnly
 							disabled

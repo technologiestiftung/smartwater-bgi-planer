@@ -147,6 +147,13 @@ config schema needs a new field instead.
 `EPSG:3857`) are registered in `src/config/config.ts` via `proj4`. Draw interactions
 (`src/components/DrawControls`) write into the `layers`/`project`/`scenario` stores depending on
 what's being drawn (project boundary, new development, measures, notes, measurements).
+`applyConfigLayers` always shows `project_boundary` + `project_btf_planning` for configs with
+`canDrawMeasures`/`canDrawTrees` — don't list them in those configs' `visibleLayerIds`.
+
+**Layer order**: position in `src/config/config.json` sets the zIndex (later entry = drawn on
+top, see `calculateZIndex` in `LayerInitializer`). The layer tree lists "Inhaltskarten" topmost
+first; the "Draw Layers" folder must stay in `modules.json` step order, since the module sections
+of the layer tree show it as-is.
 
 ## Conventions
 

@@ -5,6 +5,7 @@ import { useLayerReady } from "@/hooks/useLayerReady";
 import { getLayerById } from "@/lib/helpers/ol";
 import {
 	ensureRabimoInputLoaded,
+	RABIMO_LOAD_ERROR,
 	getInputFeatures,
 	performProjectBoundaryIntersection,
 } from "@/lib/helpers/projectBoundary";
@@ -26,6 +27,8 @@ export const DrawProjectBoundaryButton: FC = () => {
 	);
 	const drawRef = useRef<Draw | null>(null);
 	const modifyRef = useRef<Modify | null>(null);
+	// Incremented on cleanup so pending async draw handlers can detect they're stale
+	const opRef = useRef(0);
 	const [mode, setMode] = useState<"idle" | "drawing" | "modifying">("idle");
 	const isIntersecting = useUiStore((state) => state.isBoundaryIntersecting);
 	const setIsIntersecting = useUiStore(
@@ -37,6 +40,7 @@ export const DrawProjectBoundaryButton: FC = () => {
 		useLayerReady(LAYER_IDS.INPUT);
 
 	const removeInteractions = useCallback(() => {
+		opRef.current++;
 		if (drawRef.current) {
 			map?.removeInteraction(drawRef.current);
 			drawRef.current = null;
@@ -59,7 +63,10 @@ export const DrawProjectBoundaryButton: FC = () => {
 
 		setIsIntersecting(true);
 		try {
-			await ensureRabimoInputLoaded(map, boundaryExtent ?? null);
+			if (!(await ensureRabimoInputLoaded(map, boundaryExtent ?? null))) {
+				useUiStore.getState().setInputFeaturesError(RABIMO_LOAD_ERROR);
+				return;
+			}
 			performProjectBoundaryIntersection(map);
 			syncPlanningLayerFeatures();
 		} finally {
@@ -90,7 +97,9 @@ export const DrawProjectBoundaryButton: FC = () => {
 				modifyRef.current = null;
 			}
 
+			const op = opRef.current;
 			await performIntersection();
+			if (op !== opRef.current) return;
 
 			modifyRef.current = new Modify({ source });
 			modifyRef.current.on("modifyend", () => {

@@ -76,7 +76,11 @@
 					"type": "folder",
 					"elements": [
 						{
-							"id": "bgi-planer:Starkregengefaehrdungskarte_high_compression",
+							"id": "ua_versiegelung_2021:versieg2021",
+							"visibility": false
+						},
+						{
+							"id": "ua_versiegelung_2021:versieg2021_str",
 							"visibility": false
 						},
 						{
@@ -92,11 +96,7 @@
 							"visibility": false
 						},
 						{
-							"id": "ua_srgk:bb_fliessgeschwindigkeit_aussergewoehnlich",
-							"visibility": false
-						},
-						{
-							"id": "ua_srgk:cb_wasserstand_aussergewoehnlich",
+							"id": "bgi-planer:Starkregengefaehrdungskarte_high_compression",
 							"visibility": false
 						},
 						{
@@ -105,18 +105,6 @@
 						},
 						{
 							"id": "ua_srhk:b_srhk_feuerwehreinsaetze_pkt",
-							"visibility": false
-						},
-						{
-							"id": "ua_klimaanalyse_2022:q_ua_pet_raster_2022",
-							"visibility": false
-						},
-						{
-							"id": "ua_klimaanalyse_2022:g_ua_lufttemp_raster_t2m_04h_2022",
-							"visibility": false
-						},
-						{
-							"id": "ua_klimabewertung_2022:eb_ua_phk_vul_geb_demog_2022",
 							"visibility": false
 						},
 						{
@@ -152,23 +140,11 @@
 							"visibility": false
 						},
 						{
-							"id": "alkis_bezirke:bezirksgrenzen",
-							"visibility": false
-						},
-						{
-							"id": "alkis_flurstuecke:flurstuecke",
-							"visibility": false
-						},
-						{
 							"id": "rabimo_input_2025",
 							"visibility": false
 						},
 						{
-							"id": "bgi-planer:HA4_Kleingewaesser_trocken_pkt",
-							"visibility": false
-						},
-						{
-							"id": "bgi-planer:HA4_Kleingewaesser_trocken_topoEZG_pl",
+							"id": "bgi-planer:Gewaesser_gesamt",
 							"visibility": false
 						},
 						{
@@ -200,19 +176,11 @@
 							"visibility": false
 						},
 						{
+							"id": "ua_gruenvolumen_2020:a_gruenvol2020",
+							"visibility": false
+						},
+						{
 							"id": "ua_wasserhaushalt_2022:f_deltaw_2022",
-							"visibility": false
-						},
-						{
-							"id": "ua_wasserhaushalt_2022:e_verdunstung_2022",
-							"visibility": false
-						},
-						{
-							"id": "ua_wasserhaushalt_2022:b_versickerung_2022",
-							"visibility": false
-						},
-						{
-							"id": "ua_wasserhaushalt_2022:a_oberflaechenabfluss_2022",
 							"visibility": false
 						},
 						{
@@ -221,10 +189,6 @@
 						},
 						{
 							"id": "bgi-planer:dd_ua_phk_bioklim_str_nacht_2022",
-							"visibility": false
-						},
-						{
-							"id": "alkis_gebaeude:gebaeude",
 							"visibility": false
 						},
 						{
@@ -273,10 +237,6 @@
 						},
 						{
 							"id": "ua_gruendaecher_2020:c_begruente_dachteilfl_tief",
-							"visibility": false
-						},
-						{
-							"id": "ua_entsiegelung:b_entsieg_klasse_teil",
 							"visibility": false
 						},
 						{
@@ -390,6 +350,14 @@
 						{
 							"id": "bgi-planer:optimierter_Baumstandort",
 							"visibility": false
+						},
+						{
+							"id": "bgi-planer:Baumscheiben_kleiner_9qm",
+							"visibility": false
+						},
+						{
+							"id": "bgi-planer:leere_baumscheiben",
+							"visibility": false
 						}
 					]
 				},
@@ -434,10 +402,6 @@
 							"visibility": false
 						},
 						{
-							"id": "module_1_flooding_hotspots_q2",
-							"visibility": false
-						},
-						{
 							"id": "module_1_flooding_hotspots_q3",
 							"visibility": false
 						},
@@ -462,10 +426,6 @@
 							"visibility": false
 						},
 						{
-							"id": "module_1_temperature_hotspots_q6",
-							"visibility": false
-						},
-						{
 							"id": "module_1_impermeability_hotspots_q1",
 							"visibility": false
 						},
@@ -486,6 +446,10 @@
 							"visibility": false
 						},
 						{
+							"id": "module_1_groundwater_hotspots_q3",
+							"visibility": false
+						},
+						{
 							"id": "module_2_2V2_draw",
 							"visibility": false
 						},
@@ -498,11 +462,51 @@
 							"visibility": false
 						},
 						{
+							"id": "module_2_2V5_draw",
+							"visibility": false
+						},
+						{
 							"id": "module_2_2B1_draw",
 							"visibility": false
 						},
 						{
-							"id": "module_2_2V5_draw",
+							"id": "module_2_2V1_draw",
+							"visibility": false
+						},
+						{
+							"id": "module_2_2G1_draw",
+							"visibility": false
+						},
+						{
+							"id": "module_3_3G1_draw",
+							"visibility": false
+						},
+						{
+							"id": "module_3_3G2_draw",
+							"visibility": false
+						},
+						{
+							"id": "module_3_3G5_draw",
+							"visibility": false
+						},
+						{
+							"id": "module_3_3E1_draw",
+							"visibility": false
+						},
+						{
+							"id": "module_3_3E2_draw",
+							"visibility": false
+						},
+						{
+							"id": "module_3_3B1_draw",
+							"visibility": false
+						},
+						{
+							"id": "module_3_3B2_draw",
+							"visibility": false
+						},
+						{
+							"id": "module_3_connected_area_draw",
 							"visibility": false
 						},
 						{
@@ -530,34 +534,6 @@
 							"visibility": false
 						},
 						{
-							"id": "module_3_3E1_draw",
-							"visibility": false
-						},
-						{
-							"id": "module_3_3E2_draw",
-							"visibility": false
-						},
-						{
-							"id": "module_3_3B1_draw",
-							"visibility": false
-						},
-						{
-							"id": "module_3_3B2_draw",
-							"visibility": false
-						},
-						{
-							"id": "module_3_3G1_draw",
-							"visibility": false
-						},
-						{
-							"id": "module_3_3G2_draw",
-							"visibility": false
-						},
-						{
-							"id": "module_3_3G5_draw",
-							"visibility": false
-						},
-						{
 							"id": "module_3_3S1_draw",
 							"visibility": false
 						},
@@ -571,10 +547,6 @@
 						},
 						{
 							"id": "module_3_3S5_draw",
-							"visibility": false
-						},
-						{
-							"id": "module_3_connected_area_draw",
 							"visibility": false
 						},
 						{
