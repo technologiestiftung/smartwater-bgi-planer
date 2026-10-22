@@ -15,7 +15,7 @@ export async function getRabimo(payload: RabimoPayload) {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify(payload),
-		signal: AbortSignal.timeout(10_000),
+		signal: AbortSignal.timeout(60_000),
 	});
 
 	const text = await res.text();
