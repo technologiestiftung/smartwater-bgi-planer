@@ -32,6 +32,21 @@ const lastRequestByScenarioId = new Map<
 	{ payloadKey: string; runoffReduction: number | undefined }
 >();
 
+// The Rabimo service sleeps when idle; the first request after a pause can
+// time out while it wakes up, so retry server errors once.
+async function postRabimo(payload: unknown): Promise<Response> {
+	const send = () =>
+		fetch("/api/rabimo", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(payload),
+		});
+	const response = await send();
+	if (response.status < 500) return response;
+	await new Promise((resolve) => setTimeout(resolve, 3000));
+	return send();
+}
+
 interface SynthesisViewProps {
 	onBackToQuestions: () => void;
 	onBackToSpecificQuestion: (configId: string, sectionId: SectionId) => void;
@@ -75,49 +90,52 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 		applyConfigLayers("measure_planning_synthesis_view", true, true);
 	}, [applyConfigLayers]);
 
+	const fetchPlots = useCallback(
+		async (runoffReduction: number, isStale: () => boolean) => {
+			if (plotsCache.has(runoffReduction)) {
+				setPlotUrls(plotsCache.get(runoffReduction)!);
+				setPlotState("success");
+				return;
+			}
+			setPlotState("loading");
+			try {
+				const res = await fetch(
+					`/api/rabimo/plot-effect-of-disconnect?runoff_reduction=${runoffReduction}`,
+				);
+				if (!res.ok) throw new Error(`Plot request failed: ${res.status}`);
+				const data = (await res.json()) as Partial<Record<PlotType, string>>;
+				setWithSizeLimit(plotsCache, runoffReduction, data);
+				if (isStale()) return;
+				setPlotUrls(data);
+				setPlotState("success");
+			} catch {
+				if (!isStale()) setPlotState("error");
+			}
+		},
+		[],
+	);
+
 	const restoreFromCache = useCallback(
-		(scenarioId: string, payloadKey: string): boolean => {
+		(
+			scenarioId: string,
+			payloadKey: string,
+			isStale: () => boolean,
+		): boolean => {
 			const last = lastRequestByScenarioId.get(scenarioId);
 			if (last?.payloadKey !== payloadKey) return false;
 			const existingResult =
 				useResultStore.getState().resultsByScenarioId[scenarioId];
 			if (!existingResult) return false;
-			if (
-				last.runoffReduction !== undefined &&
-				plotsCache.has(last.runoffReduction)
-			) {
-				setPlotUrls(plotsCache.get(last.runoffReduction)!);
-				setPlotState("success");
-			}
+			setError("");
 			setState("success");
+			if (last.runoffReduction !== undefined) {
+				// Uses the plot cache, or retries plots that failed last time.
+				fetchPlots(last.runoffReduction, isStale);
+			}
 			return true;
 		},
-		[],
+		[fetchPlots],
 	);
-
-	const fetchPlots = useCallback(async (runoffReduction: number) => {
-		if (plotsCache.has(runoffReduction)) {
-			setPlotUrls(plotsCache.get(runoffReduction)!);
-			setPlotState("success");
-			return;
-		}
-		setPlotState("loading");
-		try {
-			const res = await fetch(
-				`/api/rabimo/plot-effect-of-disconnect?runoff_reduction=${runoffReduction}`,
-			);
-			if (!res.ok) {
-				setPlotState("error");
-				return;
-			}
-			const data = (await res.json()) as Partial<Record<PlotType, string>>;
-			setWithSizeLimit(plotsCache, runoffReduction, data);
-			setPlotUrls(data);
-			setPlotState("success");
-		} catch {
-			setPlotState("error");
-		}
-	}, []);
 
 	// eslint-disable-next-line complexity
 	const handleRequest = useCallback(async () => {
@@ -130,20 +148,16 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 			useScenarioStore.getState().activeScenarioId !== requestScenarioId;
 		const payloadKey = JSON.stringify(payload);
 
-		if (restoreFromCache(activeScenarioId, payloadKey)) return;
+		setPlotUrls({});
+		setPlotState("idle");
+		if (restoreFromCache(activeScenarioId, payloadKey, isStale)) return;
 
 		setState("loading");
 		setStatus(requestScenarioId, "loading");
 		setError("");
-		setPlotUrls({});
-		setPlotState("idle");
 
 		try {
-			const response = await fetch("/api/rabimo", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(payload),
-			});
+			const response = await postRabimo(payload);
 
 			const data: unknown = await response.json().catch(() => null);
 
@@ -175,12 +189,6 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 				? runoffReductionRaw[0]
 				: runoffReductionRaw;
 
-			if (typeof runoffReduction === "number") {
-				await fetchPlots(runoffReduction);
-			}
-
-			if (isStale()) return;
-
 			setWithSizeLimit(lastRequestByScenarioId, requestScenarioId, {
 				payloadKey,
 				runoffReduction:
@@ -188,6 +196,11 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 			});
 
 			setState("success");
+
+			// Plots load independently so they don't block or fail the evaluation.
+			if (typeof runoffReduction === "number") {
+				fetchPlots(runoffReduction, isStale);
+			}
 		} catch (error) {
 			if (isStale()) return;
 			setStatus(requestScenarioId, "error");
