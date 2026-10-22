@@ -94,6 +94,14 @@
 			"order": 3,
 			"title": "Modul 3: Maßnahmenplanung",
 			"description": "",
+			"introTitle": "Maßnahmenplanung",
+			"intro": [
+				{
+					"type": "bold",
+					"text": "In diesem Modul können Maßnahmen geplant werden. Dafür wählen Sie Maßnahmen aus und platzieren sie im Gebiet. Anschließend können Sie eine Effektbewertung für die Handlungsbedarfe “Wasserhaushalt” und “Gewässerbelastung” durchführen und die Ergebnisse in einem Bericht runterladen."
+				},
+				"Nutzen Sie die Steckbriefe, um sich eine Übersicht zu den einzelnen Maßnahmen zu machen. Für einige Maßnahmen liegen des Weiteren Modellierungen zu ihren Effekten auf das Stadtklima und die Überflutungsvorsorge, simuliert in einem Pilotgebiet in Friedrichshain-Kreuzberg."
+			],
 			"steps": [
 				{
 					"id": "greenRoof",
@@ -799,7 +807,10 @@
 							"title": "Mulde",
 							"metricIcons": ["Tree", "ThermometerHot", "Drop"],
 							"info": {
-								"description": "Eine Mulde ist eine naturnahe Versickerungsanlage mit einer maximalen Einstauhöhe von 30 cm. Niederschlagswasser von angeschlossenen Flächen wird kurzzeitig zwischengespeichert und versickert durch die bewachsene Bodenzone, in der es gereinigt wird.",
+								"description": [
+									"Eine Mulde ist eine naturnahe Versickerungsanlage mit einer maximalen Einstauhöhe von 30 cm. Niederschlagswasser von angeschlossenen Flächen wird kurzzeitig zwischengespeichert und versickert durch die bewachsene Bodenzone, in der es gereinigt wird.",
+									"Die blauen Flächen zeigen die Potenzialflächen der ausgewählten Versickerungsmaßnahme laut Versickerungspotenzialkarte an."
+								],
 								"scores": {
 									"CloudRain": 2,
 									"ThermometerHot": 2,
