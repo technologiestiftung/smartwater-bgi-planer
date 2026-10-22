@@ -2,6 +2,7 @@ import areaCalculations from "@/lib/simulation/calculations/areaCalculations";
 import { simulationEngine } from "@/lib/simulation/simulationEngine";
 import { useProjectStore } from "@/store/project";
 import { ComputedFeatures } from "@/store/project/types";
+import { useUiStore } from "@/store/ui";
 import { ConnectedArea, Measure, MeasureValue, ScenarioState } from "./types";
 
 type SetState = (fn: (state: ScenarioState) => Partial<ScenarioState>) => void;
@@ -20,10 +21,17 @@ const syncProjectDerivedSimulation = (measures: Measure[]) => {
 		useProjectStore.setState({ preprocessedStats: stats });
 	}
 
+	// Measures deleted but not yet confirmed must not use up capacity.
+	const { pendingDeleteMeasureIds } = useUiStore.getState();
+
 	const computedFeatures: ComputedFeatures[] = stats.features.map((item) => {
 		const result = simulationEngine.applyMeasures(
 			item.computedArea,
-			measures.filter((measure) => measure.code === item.code),
+			measures.filter(
+				(measure) =>
+					measure.code === item.code &&
+					!pendingDeleteMeasureIds.includes(measure.id),
+			),
 		);
 
 		return {

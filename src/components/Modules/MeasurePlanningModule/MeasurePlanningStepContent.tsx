@@ -8,6 +8,10 @@ import {
 	AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import {
+	cancelPendingDeletes,
+	confirmPendingDeletes,
+} from "@/lib/helpers/measures/pendingDeletes";
 import { getLayerById } from "@/lib/helpers/ol";
 import { LayerConfigItem } from "@/store/layers/types";
 import { useMapStore } from "@/store/map";
@@ -180,42 +184,17 @@ export function MeasurePlanningStepContent({
 	const handleConfirm = () => {
 		confirmedRef.current = true;
 
-		const {
-			pendingDeleteMeasureIds,
-			confirmDraftMeasures,
-			clearPendingDeleteMeasureIds,
-		} = useUiStore.getState();
-
-		if (pendingDeleteMeasureIds.length > 0) {
-			const { activeScenarioId, removeMeasure } = useScenarioStore.getState();
-			if (activeScenarioId) {
-				for (const measureId of pendingDeleteMeasureIds) {
-					removeMeasure(activeScenarioId, measureId);
-				}
-			}
-			clearPendingDeleteMeasureIds();
-		}
-
-		confirmDraftMeasures();
+		confirmPendingDeletes();
+		useUiStore.getState().confirmDraftMeasures();
 		onConfirm?.();
 	};
 
 	useEffect(() => {
 		return () => {
 			if (!confirmedRef.current) {
+				// Restore deleted features first, so deleted drafts get removed again below.
+				cancelPendingDeletes();
 				removeDraftMeasures();
-				const { pendingDeleteMeasureIds, clearPendingDeleteMeasureIds } =
-					useUiStore.getState();
-				if (pendingDeleteMeasureIds.length > 0) {
-					const { activeScenarioId, removeMeasure } =
-						useScenarioStore.getState();
-					if (activeScenarioId) {
-						for (const measureId of pendingDeleteMeasureIds) {
-							removeMeasure(activeScenarioId, measureId);
-						}
-					}
-					clearPendingDeleteMeasureIds();
-				}
 			}
 		};
 	}, [removeDraftMeasures]);
