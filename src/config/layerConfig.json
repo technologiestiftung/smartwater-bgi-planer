@@ -561,7 +561,6 @@
 		"id": "3G1",
 		"drawLayerId": "module_3_3G1_draw",
 		"visibleLayerIds": [
-			"project_boundary",
 			"potenziale_regenwasserbewirtschaftung:ca_dachbegruenungspotenzial",
 			"ua_gruendaecher_2020:b_begruente_dachteilfl_geb",
 			"ua_gruendaecher_2020:c_begruente_dachteilfl_tief"
@@ -576,7 +575,6 @@
 		"id": "3G2",
 		"drawLayerId": "module_3_3G2_draw",
 		"visibleLayerIds": [
-			"project_boundary",
 			"potenziale_regenwasserbewirtschaftung:ca_dachbegruenungspotenzial",
 			"ua_gruendaecher_2020:b_begruente_dachteilfl_geb",
 			"ua_gruendaecher_2020:c_begruente_dachteilfl_tief"
@@ -590,7 +588,7 @@
 	{
 		"id": "3G5",
 		"drawLayerId": "module_3_3G5_draw",
-		"visibleLayerIds": ["project_boundary"],
+		"visibleLayerIds": [],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
 		"measurementSrc": "/legends/measures.svg"
@@ -598,7 +596,7 @@
 	{
 		"id": "3E1",
 		"drawLayerId": "module_3_3E1_draw",
-		"visibleLayerIds": ["project_boundary"],
+		"visibleLayerIds": [],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
 		"measurementSrc": "/legends/measures.svg"
@@ -606,10 +604,7 @@
 	{
 		"id": "3E2",
 		"drawLayerId": "module_3_3E2_draw",
-		"visibleLayerIds": [
-			"project_boundary",
-			"bgi-planer:Baumscheiben_kleiner_9qm"
-		],
+		"visibleLayerIds": ["bgi-planer:Baumscheiben_kleiner_9qm"],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
 		"measurementSrc": "/legends/measures.svg",
@@ -618,7 +613,7 @@
 	{
 		"id": "3B1",
 		"drawLayerId": "module_3_3B1_draw",
-		"visibleLayerIds": ["project_boundary"],
+		"visibleLayerIds": [],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
 		"measurementSrc": "/legends/measures.svg"
@@ -627,7 +622,6 @@
 		"id": "3B2",
 		"drawLayerId": "module_3_3B2_draw",
 		"visibleLayerIds": [
-			"project_boundary",
 			"baumbestand:anlagenbaeume",
 			"baumbestand:strassenbaeume",
 			"bgi-planer:leere_baumscheiben"
@@ -641,7 +635,6 @@
 		"id": "3V1",
 		"drawLayerId": "module_3_3V1_draw",
 		"visibleLayerIds": [
-			"project_boundary",
 			"bgi-planer:versickerungspotenzial_gp_muldenversickerung",
 			"module_3_connected_area_draw"
 		],
@@ -654,7 +647,6 @@
 		"id": "3V2",
 		"drawLayerId": "module_3_3V2_draw",
 		"visibleLayerIds": [
-			"project_boundary",
 			"bgi-planer:versickerungspotenzial_gp_flaechenversickerung",
 			"module_3_connected_area_draw"
 		],
@@ -667,7 +659,6 @@
 		"id": "3V3",
 		"drawLayerId": "module_3_3V3_draw",
 		"visibleLayerIds": [
-			"project_boundary",
 			"bgi-planer:versickerungspotenzial_gp_mulden_rigolenelement",
 			"module_3_connected_area_draw"
 		],
@@ -680,7 +671,6 @@
 		"id": "3V4",
 		"drawLayerId": "module_3_3V4_draw",
 		"visibleLayerIds": [
-			"project_boundary",
 			"bgi-planer:versickerungspotenzial_gp_muldenversickerung",
 			"module_3_connected_area_draw"
 		],
@@ -693,7 +683,6 @@
 		"id": "3V5",
 		"drawLayerId": "module_3_3V5_draw",
 		"visibleLayerIds": [
-			"project_boundary",
 			"bgi-planer:optimierter_Baumstandort",
 			"module_3_connected_area_draw"
 		],
@@ -706,7 +695,6 @@
 		"id": "3V6",
 		"drawLayerId": "module_3_3V6_draw",
 		"visibleLayerIds": [
-			"project_boundary",
 			"bgi-planer:versickerungspotenzial_gp_rigolenanlage",
 			"module_3_connected_area_draw"
 		],
@@ -718,7 +706,7 @@
 	{
 		"id": "3S1",
 		"drawLayerId": "module_3_3S1_draw",
-		"visibleLayerIds": ["project_boundary"],
+		"visibleLayerIds": [],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
 		"measurementSrc": "/legends/measures.svg"
@@ -726,7 +714,7 @@
 	{
 		"id": "3S2",
 		"drawLayerId": "module_3_3S2_draw",
-		"visibleLayerIds": ["project_boundary"],
+		"visibleLayerIds": [],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
 		"measurementSrc": "/legends/measures.svg"
@@ -734,7 +722,7 @@
 	{
 		"id": "3S4",
 		"drawLayerId": "module_3_3S4_draw",
-		"visibleLayerIds": ["project_boundary"],
+		"visibleLayerIds": [],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
 		"measurementSrc": "/legends/measures.svg"
@@ -742,7 +730,7 @@
 	{
 		"id": "3S5",
 		"drawLayerId": "module_3_3S5_draw",
-		"visibleLayerIds": ["project_boundary"],
+		"visibleLayerIds": [],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
 		"measurementSrc": "/legends/measures.svg"
@@ -751,7 +739,7 @@
 		"id": "connected_area",
 		"name": "Angeschlossene Fläche",
 		"drawLayerId": "module_3_connected_area_draw",
-		"visibleLayerIds": ["project_boundary"],
+		"visibleLayerIds": [],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
 		"measurementSrc": "/legends/measures.svg"
