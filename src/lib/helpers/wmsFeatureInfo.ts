@@ -1,6 +1,9 @@
 import OLMap from "ol/Map";
 import ImageWMS from "ol/source/ImageWMS";
 import TileWMS from "ol/source/TileWMS";
+import WMTS from "ol/source/WMTS";
+
+const GWC_WMTS_PATH = "/gwc/service/wmts";
 
 export interface FeatureInfoOptions {
 	coordinate: [number, number];
@@ -14,13 +17,25 @@ export interface FeatureInfoResult {
 	error?: string;
 }
 
-const getBaseUrl = (source: any): string | null => {
+const getWmsTarget = (
+	source: any,
+): { baseUrl: string; layers: string } | null => {
 	if (source instanceof TileWMS) {
-		const urls = source.getUrls();
-		return urls?.[0] ?? null;
+		const baseUrl = source.getUrls()?.[0];
+		return baseUrl ? { baseUrl, layers: source.getParams().LAYERS } : null;
 	}
 	if (source instanceof ImageWMS) {
-		return source.getUrl() ?? null;
+		const baseUrl = source.getUrl();
+		return baseUrl ? { baseUrl, layers: source.getParams().LAYERS } : null;
+	}
+	// GeoServer serves the WMTS cache and the WMS from the same workspace
+	if (source instanceof WMTS) {
+		const wmtsUrl = source.getUrls()?.[0];
+		if (!wmtsUrl?.includes(GWC_WMTS_PATH)) return null;
+		return {
+			baseUrl: wmtsUrl.replace(GWC_WMTS_PATH, "/wms"),
+			layers: source.getLayer(),
+		};
 	}
 	return null;
 };
@@ -57,8 +72,8 @@ export const buildGetFeatureInfoUrl = (
 ): string | null => {
 	const layer = map.getAllLayers().find((l) => l.get("id") === layerId);
 	const source = layer?.getSource();
-	const baseUrl = source && getBaseUrl(source);
-	if (!baseUrl) return null;
+	const target = source && getWmsTarget(source);
+	if (!target) return null;
 
 	const view = map.getView();
 	const mapSize = map.getSize();
@@ -68,10 +83,10 @@ export const buildGetFeatureInfoUrl = (
 
 	if (!mapSize || !pixel || !resolution || !projection) return null;
 
-	const url = new URL(baseUrl);
+	const url = new URL(target.baseUrl);
 	const extent = view.calculateExtent(mapSize);
 	const params = buildWmsParams(
-		layerId,
+		target.layers ?? layerId,
 		extent,
 		pixel,
 		mapSize,

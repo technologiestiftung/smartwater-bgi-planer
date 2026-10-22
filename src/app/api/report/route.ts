@@ -5,6 +5,7 @@ import { NextResponse } from "next/server";
 import path from "path";
 import PizZip from "pizzip";
 import ImageModule from "docxtemplater-image-module-free";
+import { formatNumber } from "@/lib/helpers/common";
 
 // ---------- body types ----------
 interface ReportBody {
@@ -162,21 +163,21 @@ function buildStatsFields(stats: ReportBody["stats"]) {
 	const wqiOrig = stats.water_quality_indicators.status_quo;
 	const wqiSim = stats.water_quality_indicators.with_measures;
 	return {
-		delta_w_status_quo: original.delta_w.toFixed(2),
-		delta_w_with_measures: with_measures.delta_w.toFixed(2),
-		runoff_status_quo: original.runoff.toFixed(2),
-		runoff_with_measures: with_measures.runoff.toFixed(2),
-		infiltr_status_quo: original.infiltr.toFixed(2),
-		infiltr_with_measures: with_measures.infiltr.toFixed(2),
-		evapor_status_quo: original.evapor.toFixed(2),
-		evapor_with_measures: with_measures.evapor.toFixed(2),
-		runoffReduction: stats.runoff_reduction_percent[0].toFixed(2),
-		overflow_volume_status_quo: wqiOrig.overflow_volume[0].toFixed(2),
-		overflow_volume_simulation: wqiSim.overflow_volume[0].toFixed(2),
-		critical_hours_status_quo: wqiOrig.critical_hours[0].toFixed(2),
-		critical_hours_simulation: wqiSim.critical_hours[0].toFixed(2),
-		critical_events_status_quo: wqiOrig.critical_events[0].toFixed(2),
-		critical_events_simulation: wqiSim.critical_events[0].toFixed(2),
+		delta_w_status_quo: formatNumber(original.delta_w, 2, 2),
+		delta_w_with_measures: formatNumber(with_measures.delta_w, 2, 2),
+		runoff_status_quo: formatNumber(original.runoff, 2, 2),
+		runoff_with_measures: formatNumber(with_measures.runoff, 2, 2),
+		infiltr_status_quo: formatNumber(original.infiltr, 2, 2),
+		infiltr_with_measures: formatNumber(with_measures.infiltr, 2, 2),
+		evapor_status_quo: formatNumber(original.evapor, 2, 2),
+		evapor_with_measures: formatNumber(with_measures.evapor, 2, 2),
+		runoffReduction: formatNumber(stats.runoff_reduction_percent[0], 2, 2),
+		overflow_volume_status_quo: formatNumber(wqiOrig.overflow_volume[0], 2, 2),
+		overflow_volume_simulation: formatNumber(wqiSim.overflow_volume[0], 2, 2),
+		critical_hours_status_quo: formatNumber(wqiOrig.critical_hours[0], 2, 2),
+		critical_hours_simulation: formatNumber(wqiSim.critical_hours[0], 2, 2),
+		critical_events_status_quo: formatNumber(wqiOrig.critical_events[0], 2, 2),
+		critical_events_simulation: formatNumber(wqiSim.critical_events[0], 2, 2),
 	};
 }
 

@@ -1,4 +1,5 @@
 import { LineString, Polygon } from "ol/geom";
+import { formatNumber } from "@/lib/helpers/common";
 
 /**
  * Format area measurement for display.
@@ -7,8 +8,8 @@ import { LineString, Polygon } from "ol/geom";
 export const formatArea = (polygon: Polygon): string => {
 	const area = polygon.getArea();
 	return area > 10000
-		? Math.round((area / 1000000) * 100) / 100 + " km²"
-		: Math.round(area * 100) / 100 + " m²";
+		? formatNumber(area / 1000000) + " km²"
+		: formatNumber(area) + " m²";
 };
 
 /**
@@ -18,6 +19,6 @@ export const formatArea = (polygon: Polygon): string => {
 export const formatLength = (line: LineString): string => {
 	const length = line.getLength();
 	return length > 100
-		? Math.round((length / 1000) * 100) / 100 + " km"
-		: Math.round(length * 100) / 100 + " m";
+		? formatNumber(length / 1000) + " km"
+		: formatNumber(length) + " m";
 };

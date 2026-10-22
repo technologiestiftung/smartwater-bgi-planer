@@ -68,10 +68,10 @@
 		"canDrawBTF": true,
 		"canDrawNotes": true,
 		"visibleLayerIds": [
-			"ua_srhk:da_fr_aussergewoehnlich",
-			"ua_srhk:db_fliessgeschw_aussergew_kostra",
 			"bgi-planer:Starkregengefaehrdungskarte_high_compression",
-			"ua_srhk:dc_wasserstand_aussergew_kostra"
+			"ua_srhk:dc_wasserstand_aussergew_kostra",
+			"ua_srhk:da_fr_aussergewoehnlich",
+			"ua_srhk:db_fliessgeschw_aussergew_kostra"
 		],
 		"legendSrc": "/legends/1s1.svg"
 	},
@@ -230,7 +230,15 @@
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
 		"canDrawNotes": true,
-		"visibleLayerIds": ["bgi-planer:versiegelung_2021"],
+		"featureDisplay": "tooltip",
+		"canQueryFeatures": [
+			"bgi-planer:versiegelung_2021",
+			"ua_versiegelung_2021:versieg2021_str"
+		],
+		"visibleLayerIds": [
+			"bgi-planer:versiegelung_2021",
+			"ua_versiegelung_2021:versieg2021_str"
+		],
 		"legendSrc": "/legends/1v1.svg",
 		"legendTitle": "Versiegelungsgrad (%)"
 	},
@@ -245,6 +253,8 @@
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
 		"canDrawNotes": true,
+		"featureDisplay": "tooltip",
+		"canQueryFeatures": ["bgi-planer:a_gruenvol2020"],
 		"visibleLayerIds": ["bgi-planer:a_gruenvol2020"],
 		"legendSrc": "/legends/1v2.svg",
 		"legendTitle": "Grünvolumenzahl (m³/m²)"
@@ -273,6 +283,8 @@
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
 		"canDrawNotes": true,
+		"featureDisplay": "tooltip",
+		"canQueryFeatures": ["ua_wasserhaushalt_2022:f_deltaw_2022"],
 		"visibleLayerIds": ["ua_wasserhaushalt_2022:f_deltaw_2022"],
 		"legendSrc": "/legends/1w1.svg",
 		"legendTitle": "Delta W (Varianz vom natürlichen Wasserhaushalt)"
@@ -311,8 +323,24 @@
 		"canDrawPolygons": true,
 		"canDrawBTF": true,
 		"canDrawNotes": true,
+		"featureDisplay": "tooltip",
+		"canQueryFeatures": ["ua_kanalisation_2022:sp02_09kanalisation2022_2"],
 		"visibleLayerIds": ["ua_kanalisation_2022:sp02_09kanalisation2022_2"],
 		"legendSrc": "/legends/1g2.svg"
+	},
+	{
+		"id": "water_protection_small_waters_demand",
+		"name": "Kleingewässer",
+		"question": "Gibt es im Untersuchungsgebiet oder in der Umgebung Kleingewässer?",
+		"description": "Die Karte zeigt Kleingewässer und Feuchtbiotope. Durch eine frühzeitige Einbindung des bezirklichen Umwelt- und Naturschutzamtes kann abgefragt werden, ob umliegende Gewässer Bedarf an zusätzlichen Wassermengen haben. In einem solchen Fall kann geprüft werden, ob eine Zuleitung von Regenwasser realisierbar ist.",
+		"drawLayerId": "module_1_groundwater_hotspots_q3",
+		"canDrawPolygons": true,
+		"canDrawBTF": true,
+		"canDrawNotes": true,
+		"featureDisplay": "tooltip",
+		"canQueryFeatures": ["bgi-planer:Gewaesser_gesamt"],
+		"visibleLayerIds": ["bgi-planer:Gewaesser_gesamt"],
+		"legendSrc": "/legends/1g3.svg"
 	},
 	{
 		"id": "NOTE: MODULE 2"
@@ -365,8 +393,10 @@
 			"Die Karte kann zur groben Ersteinschätzung dienen, ist jedoch kein Ersatz für Vor-Ort Untersuchungen bzw. Fachplanungen. Es wurden z. B. keine Altlasten, Leitungen im Untergrund oder Flächennutzungen betrachtet.",
 			"Anforderungen an die schadfreie Versickerung regelt das [Hinweisblatt 2 zur Antragstellung: Versickerung von Niederschlagswasser](https://www.berlin.de/sen/uvk/_assets/umwelt/wasser-und-geologie/publikationen-und-merkblaetter/hinweisblatt2-versick.pdf) Je nach Art und Nutzung der befestigten Fläche können unterschiedliche Versickerungsanlagen und ggf. Vorbehandlungen zum Einsatz kommen. ([Siehe Hinweisblatt 2](https://www.berlin.de/sen/uvk/_assets/umwelt/wasser-und-geologie/publikationen-und-merkblaetter/hinweisblatt2-versick.pdf) ) I.d.R. ist ein Abstand von ca. 1 m von der Sohle der Versickerungsanlage bis zum Bemessungsgrundwasserstand einzuhalten. Als Bemessungsgrundwasserstand innerhalb von Wasserschutzgebieten ist der zu erwartende höchste Grundwasserstand (zeHGW) heranzuziehen, außerhalb von Wasserschutzgebieten der zu erwartende mittlere höchste Grundwasserstand (zeMHGW). Sollten keine Daten vorliegen, können Informationen bei der Wasserbehörde eingeholt werden (siehe Hinweisblatt 2). Informationen zur [Kartengrundlage](https://regenwasseragentur.berlin/planen-und-umsetzen/abkopplungspotenzialkarten/)."
 		],
-		"drawLayerId": "",
+		"drawLayerId": "module_2_2V1_draw",
 		"canDrawNotes": true,
+		"canDrawPolygons": true,
+		"canDrawBTF": true,
 		"featureDisplay": "tooltip",
 		"canQueryFeatures": [
 			"potenziale_regenwasserbewirtschaftung:aa_versickerungspotenzial_eu"
@@ -380,7 +410,10 @@
 	},
 	{
 		"id": "2V1.1",
+		"drawLayerId": "module_2_2V1_draw",
 		"canDrawNotes": true,
+		"canDrawPolygons": true,
+		"canDrawBTF": true,
 		"featureDisplay": "tooltip",
 		"canQueryFeatures": [
 			"potenziale_regenwasserbewirtschaftung:ab_versickerungspotenzial_gp"
@@ -392,7 +425,10 @@
 	},
 	{
 		"id": "2V1.2",
+		"drawLayerId": "module_2_2V1_draw",
 		"canDrawNotes": true,
+		"canDrawPolygons": true,
+		"canDrawBTF": true,
 		"featureDisplay": "tooltip",
 		"canQueryFeatures": [
 			"potenziale_regenwasserbewirtschaftung:ac_versickerungspotenzial_au"
@@ -493,7 +529,9 @@
 			"Gründächer können als intensiv begrüntes, extensiv begrüntes oder als Retentionsgründach mit Drossel ausgeführt werden. Intensive Begrünung oder ein Retentionsgründach sind nur auf einem Flachdach (mit einer Dachneigung < 5°) möglich. Zusätzlich können Gründächer mit Solaranlagen kombiniert oder als Biodiversitätsgründächer ausgeführt werden.",
 			"Die Machbarkeit und die Art der Dachbegrünung ist vor allem von der Statik des Gebäudes abhängig (einzuplanendes Gewicht eines extensiven Gründaches ab etwa 60 kg/m²; bei intensivem Gründach ab etwa 300 kg/m²). Eine extensive Dachbegrünung ist in der Regel möglich, wenn es eine Dachstuhlerneuerung mit ausreichender Lastreserve gab oder bereits ein Kiesdach vorhanden ist."
 		],
-		"drawLayerId": "",
+		"drawLayerId": "module_2_2G1_draw",
+		"canDrawPolygons": true,
+		"canDrawBTF": true,
 		"canDrawNotes": true,
 		"visibleLayerIds": [
 			"potenziale_regenwasserbewirtschaftung:ca_dachbegruenungspotenzial",
@@ -523,7 +561,6 @@
 		"id": "3G1",
 		"drawLayerId": "module_3_3G1_draw",
 		"visibleLayerIds": [
-			"project_boundary",
 			"potenziale_regenwasserbewirtschaftung:ca_dachbegruenungspotenzial",
 			"ua_gruendaecher_2020:b_begruente_dachteilfl_geb",
 			"ua_gruendaecher_2020:c_begruente_dachteilfl_tief"
@@ -538,7 +575,6 @@
 		"id": "3G2",
 		"drawLayerId": "module_3_3G2_draw",
 		"visibleLayerIds": [
-			"project_boundary",
 			"potenziale_regenwasserbewirtschaftung:ca_dachbegruenungspotenzial",
 			"ua_gruendaecher_2020:b_begruente_dachteilfl_geb",
 			"ua_gruendaecher_2020:c_begruente_dachteilfl_tief"
@@ -552,7 +588,7 @@
 	{
 		"id": "3G5",
 		"drawLayerId": "module_3_3G5_draw",
-		"visibleLayerIds": ["project_boundary"],
+		"visibleLayerIds": [],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
 		"measurementSrc": "/legends/measures.svg"
@@ -560,7 +596,7 @@
 	{
 		"id": "3E1",
 		"drawLayerId": "module_3_3E1_draw",
-		"visibleLayerIds": ["project_boundary"],
+		"visibleLayerIds": [],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
 		"measurementSrc": "/legends/measures.svg"
@@ -568,15 +604,16 @@
 	{
 		"id": "3E2",
 		"drawLayerId": "module_3_3E2_draw",
-		"visibleLayerIds": ["project_boundary"],
+		"visibleLayerIds": ["bgi-planer:Baumscheiben_kleiner_9qm"],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
-		"measurementSrc": "/legends/measures.svg"
+		"measurementSrc": "/legends/measures.svg",
+		"legendSrc": "/legends/3e2.svg"
 	},
 	{
 		"id": "3B1",
 		"drawLayerId": "module_3_3B1_draw",
-		"visibleLayerIds": ["project_boundary"],
+		"visibleLayerIds": [],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
 		"measurementSrc": "/legends/measures.svg"
@@ -584,16 +621,20 @@
 	{
 		"id": "3B2",
 		"drawLayerId": "module_3_3B2_draw",
-		"visibleLayerIds": ["project_boundary"],
+		"visibleLayerIds": [
+			"baumbestand:anlagenbaeume",
+			"baumbestand:strassenbaeume",
+			"bgi-planer:leere_baumscheiben"
+		],
 		"canDrawTrees": true,
 		"canDrawNotes": true,
-		"measurementSrc": "/legends/measures.svg"
+		"measurementSrc": "/legends/measures.svg",
+		"legendSrc": "/legends/3b2.svg"
 	},
 	{
 		"id": "3V1",
 		"drawLayerId": "module_3_3V1_draw",
 		"visibleLayerIds": [
-			"project_boundary",
 			"bgi-planer:versickerungspotenzial_gp_muldenversickerung",
 			"module_3_connected_area_draw"
 		],
@@ -606,7 +647,6 @@
 		"id": "3V2",
 		"drawLayerId": "module_3_3V2_draw",
 		"visibleLayerIds": [
-			"project_boundary",
 			"bgi-planer:versickerungspotenzial_gp_flaechenversickerung",
 			"module_3_connected_area_draw"
 		],
@@ -619,7 +659,6 @@
 		"id": "3V3",
 		"drawLayerId": "module_3_3V3_draw",
 		"visibleLayerIds": [
-			"project_boundary",
 			"bgi-planer:versickerungspotenzial_gp_mulden_rigolenelement",
 			"module_3_connected_area_draw"
 		],
@@ -632,7 +671,6 @@
 		"id": "3V4",
 		"drawLayerId": "module_3_3V4_draw",
 		"visibleLayerIds": [
-			"project_boundary",
 			"bgi-planer:versickerungspotenzial_gp_muldenversickerung",
 			"module_3_connected_area_draw"
 		],
@@ -645,7 +683,6 @@
 		"id": "3V5",
 		"drawLayerId": "module_3_3V5_draw",
 		"visibleLayerIds": [
-			"project_boundary",
 			"bgi-planer:optimierter_Baumstandort",
 			"module_3_connected_area_draw"
 		],
@@ -658,7 +695,6 @@
 		"id": "3V6",
 		"drawLayerId": "module_3_3V6_draw",
 		"visibleLayerIds": [
-			"project_boundary",
 			"bgi-planer:versickerungspotenzial_gp_rigolenanlage",
 			"module_3_connected_area_draw"
 		],
@@ -670,7 +706,7 @@
 	{
 		"id": "3S1",
 		"drawLayerId": "module_3_3S1_draw",
-		"visibleLayerIds": ["project_boundary"],
+		"visibleLayerIds": [],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
 		"measurementSrc": "/legends/measures.svg"
@@ -678,7 +714,7 @@
 	{
 		"id": "3S2",
 		"drawLayerId": "module_3_3S2_draw",
-		"visibleLayerIds": ["project_boundary"],
+		"visibleLayerIds": [],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
 		"measurementSrc": "/legends/measures.svg"
@@ -686,7 +722,7 @@
 	{
 		"id": "3S4",
 		"drawLayerId": "module_3_3S4_draw",
-		"visibleLayerIds": ["project_boundary"],
+		"visibleLayerIds": [],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
 		"measurementSrc": "/legends/measures.svg"
@@ -694,7 +730,7 @@
 	{
 		"id": "3S5",
 		"drawLayerId": "module_3_3S5_draw",
-		"visibleLayerIds": ["project_boundary"],
+		"visibleLayerIds": [],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
 		"measurementSrc": "/legends/measures.svg"
@@ -703,7 +739,7 @@
 		"id": "connected_area",
 		"name": "Angeschlossene Fläche",
 		"drawLayerId": "module_3_connected_area_draw",
-		"visibleLayerIds": ["project_boundary"],
+		"visibleLayerIds": [],
 		"canDrawMeasures": true,
 		"canDrawNotes": true,
 		"measurementSrc": "/legends/measures.svg"

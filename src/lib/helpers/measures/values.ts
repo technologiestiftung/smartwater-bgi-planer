@@ -3,6 +3,7 @@ import type { MeasureConfig, MeasureParameterConfig } from "@/types/measures";
 import type Feature from "ol/Feature";
 import type Geometry from "ol/geom/Geometry";
 import { LineString, Polygon } from "ol/geom";
+import { formatNumber } from "@/lib/helpers/common";
 
 const roundGeometryValue = (value: number) => Number(value.toFixed(2));
 
@@ -48,7 +49,7 @@ export const getInitialMeasureValues = (
 
 export const formatMeasureValue = (value: MeasureValue) => {
 	if (typeof value === "number") {
-		return Number.isInteger(value) ? String(value) : value.toFixed(2);
+		return formatNumber(value, 2, Number.isInteger(value) ? 0 : 2);
 	}
 
 	return value ?? "";

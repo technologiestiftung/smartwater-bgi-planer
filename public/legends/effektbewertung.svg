@@ -1,4 +1,10 @@
 <svg width="464" height="296" viewBox="0 0 464 296" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      @import url("https://fonts.cdnfonts.com/css/arthouse-owned");
+      text { font-family: "Arthouse Owned", Arial, sans-serif; }
+    </style>
+  </defs>
 <rect width="464" height="296" fill="white"/>
 <text fill="#0C4C38" style="white-space: pre" xml:space="preserve" font-family="Arthouse Owned" font-size="14" font-weight="500" letter-spacing="0em"><tspan x="16" y="26.887">Delta-W in %</tspan></text>
 <rect x="16" y="39" width="24" height="16" fill="#2243D0"/>

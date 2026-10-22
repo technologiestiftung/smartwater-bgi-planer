@@ -19,6 +19,7 @@ import { useMapReady } from "@/hooks/useMapReady";
 import { useFilesStore } from "@/store/files";
 import { useLayersStore } from "@/store/layers";
 import { useMapStore } from "@/store/map";
+import { useProjectStore } from "@/store/project";
 import { useUiStore } from "@/store/ui";
 import { LAYER_IDS } from "@/types/shared";
 import {
@@ -191,18 +192,34 @@ function ProjectBoundaryStep() {
 	const clearUploadStatus = useUiStore((state) => state.clearUploadStatus);
 	const { uploadError, uploadSuccess } = useUploadStatusAutoHide();
 	const inputFeaturesError = useUiStore((state) => state.inputFeaturesError);
+	const isBoundaryIntersecting = useUiStore(
+		(state) => state.isBoundaryIntersecting,
+	);
+	const hasInputFeatures = useProjectStore(
+		(state) => state.inputFeatures.length > 0,
+	);
 	const [mapError, setMapError] = useState("");
 
+	const isBoundaryComplete =
+		hasFeatures && hasInputFeatures && !isBoundaryIntersecting;
+
 	useEffect(() => {
-		setStepValidation("projectBoundary", () => hasFeatures);
-	}, [hasFeatures, setStepValidation]);
+		setStepValidation("projectBoundary", () => isBoundaryComplete);
+	}, [isBoundaryComplete, setStepValidation]);
 
 	const handleConfirm = (): boolean => {
 		if (!hasFeatures) {
 			setMapError("Bitte zeichnen Sie zuerst ein Projektgebiet ein.");
 			return false;
 		}
+		if (!isBoundaryComplete) {
+			setMapError(
+				"Die Blockteilflächen werden noch geladen. Bitte warten Sie einen Moment.",
+			);
+			return false;
+		}
 		if (uploadError || inputFeaturesError) return false;
+		setMapError("");
 		clearUploadStatus();
 		return true;
 	};
@@ -227,7 +244,12 @@ function ProjectBoundaryStep() {
 			<div className="mt-8">
 				<ConfirmButton
 					onConfirm={handleConfirm}
-					validate={() => hasFeatures && !uploadError && !inputFeaturesError}
+					validate={() =>
+						isBoundaryComplete && !uploadError && !inputFeaturesError
+					}
+					buttonText={
+						isBoundaryIntersecting ? "Blockteilflächen laden..." : "Bestätigen"
+					}
 					displayText={formattedArea}
 				/>
 			</div>

@@ -1,7 +1,12 @@
 import { getLayerIdsInFolder } from "@/lib/helpers/ol";
-import { LayersState, ManagedLayer } from "@/store/layers/types";
+import {
+	LayerConfigItem,
+	LayersState,
+	ManagedLayer,
+} from "@/store/layers/types";
 import { MapConfig } from "@/store/map/types";
 import { useScenarioStore } from "@/store/scenario";
+import { LAYER_IDS } from "@/types/shared";
 // import { LayerStatus } from "@/types/shared";
 
 type SetState = (fn: (state: LayersState) => Partial<LayersState>) => void;
@@ -38,6 +43,20 @@ export const createSetLayerVisibility =
 			);
 		}
 	};
+
+/**
+ * Drawing measures requires the project boundary and the BTF planning layer,
+ * so always show them for drawing configs (also when the same measure is
+ * re-activated and drawLayerId stays unchanged).
+ */
+const getVisibleLayerIds = (layerConfigItem: LayerConfigItem): string[] =>
+	layerConfigItem.canDrawMeasures || layerConfigItem.canDrawTrees
+		? [
+				LAYER_IDS.PROJECT_BOUNDARY,
+				LAYER_IDS.PROJECT_BTF_PLANNING,
+				...layerConfigItem.visibleLayerIds,
+			]
+		: layerConfigItem.visibleLayerIds;
 
 export const createApplyConfigLayers =
 	({
@@ -94,6 +113,8 @@ export const createApplyConfigLayers =
 			layerConfigId: layerConfigItem.id,
 		}));
 
+		const visibleLayerIds = getVisibleLayerIds(layerConfigItem);
+
 		const mapConfig = getMapConfig();
 
 		if (!mapConfig) {
@@ -101,7 +122,7 @@ export const createApplyConfigLayers =
 				"Map config not available. Applying basic layer visibility.",
 			);
 
-			layerConfigItem.visibleLayerIds.forEach(showLayer);
+			visibleLayerIds.forEach(showLayer);
 			set(() => ({ layers: newLayersMap }));
 			return;
 		}
@@ -165,7 +186,7 @@ export const createApplyConfigLayers =
 		/**
 		 * Turn on configured visible layers
 		 */
-		layerConfigItem.visibleLayerIds.forEach(showLayer);
+		visibleLayerIds.forEach(showLayer);
 
 		/**
 		 * Ensure current draw layer is visible (but not filtered versions)

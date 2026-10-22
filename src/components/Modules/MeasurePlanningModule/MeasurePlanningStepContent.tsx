@@ -14,14 +14,15 @@ import { useMapStore } from "@/store/map";
 import { useScenarioStore } from "@/store/scenario";
 import { useUiStore } from "@/store/ui";
 import { LAYER_IDS } from "@/types/shared";
+import { InfoIcon } from "@phosphor-icons/react";
 import Image from "next/image";
+import Link from "next/link";
 import VectorLayer from "ol/layer/Vector";
 import { Vector as VectorSource } from "ol/source";
 import { useCallback, useEffect, useRef } from "react";
-import { ConnectedAreaSelection } from "./ConnectedAreaSelection";
+import { preload } from "react-dom";
 import { MeasureCatalogScore } from "../MeasureCatalogModule/MeasureCatalogScore";
-import Link from "next/link";
-import { InfoIcon } from "@phosphor-icons/react";
+import { ConnectedAreaSelection } from "./ConnectedAreaSelection";
 
 interface MeasurePlanningStepContentProps {
 	layerConfig: LayerConfigItem;
@@ -33,6 +34,10 @@ interface MeasurePlanningLegendProps {
 }
 
 function MeasurePlanningLegend({ layerConfig }: MeasurePlanningLegendProps) {
+	if (layerConfig.legendSrc) preload(layerConfig.legendSrc, { as: "image" });
+	if (layerConfig.measurementSrc)
+		preload(layerConfig.measurementSrc, { as: "image" });
+
 	return (
 		<div className="mt-auto pt-6 pb-4">
 			<Accordion type="multiple">

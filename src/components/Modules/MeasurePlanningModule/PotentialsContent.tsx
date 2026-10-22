@@ -4,6 +4,7 @@ import { measureConfigById } from "@/config/measuresConfig";
 import { useProjectStore } from "@/store";
 import { LayerConfigItem } from "@/store/layers/types";
 import { FC } from "react";
+import { formatNumber } from "@/lib/helpers/common";
 
 interface PotentialsContentProps {
 	layerConfig: LayerConfigItem;
@@ -43,9 +44,9 @@ const PotentialsContent: FC<PotentialsContentProps> = ({ layerConfig }) => {
 
 	return (
 		<div className="PotentialsContent-root mt-4">
-			<p>Gesamt: {Number(remainingTotal.toFixed(2))} m²</p>
+			<p>Gesamt: {formatNumber(remainingTotal)} m²</p>
 			{activeRemaining !== null && (
-				<p>Potentialfläche: {Number(activeRemaining.toFixed(2))} m²</p>
+				<p>Potentialfläche: {formatNumber(activeRemaining)} m²</p>
 			)}
 		</div>
 	);
