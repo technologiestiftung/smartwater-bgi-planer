@@ -111,7 +111,18 @@ const WaterQualityChart: FC<WaterQualityChartProps> = ({
 				</div>
 			</div>
 			<div style={{ gridColumn: "1 / 3", gridRow: 3 }}>
-				<PlotsDisplay plotUrls={plotUrls} isLoading={plotState === "loading"} />
+				{plotState === "error" ? (
+					<div className="border-primary text-red m-4 flex cursor-pointer flex-col items-center justify-center gap-2 border-2 border-dashed p-4 text-center transition-colors">
+						<span>
+							Grafiken zur Gewässerbelastung konnten nicht geladen werden.
+						</span>
+					</div>
+				) : (
+					<PlotsDisplay
+						plotUrls={plotUrls}
+						isLoading={plotState === "loading"}
+					/>
+				)}
 			</div>
 		</div>
 	);
