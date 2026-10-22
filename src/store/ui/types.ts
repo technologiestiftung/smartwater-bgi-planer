@@ -11,6 +11,7 @@ export interface UiState {
 	uploadSuccess: string | null;
 	inputFeaturesError: string | null;
 	isDrawing: boolean;
+	isBoundaryIntersecting: boolean;
 	isBlockAreaSelecting: boolean;
 	isConnectedAreaSelecting: boolean;
 	isDrawingNote: boolean;
@@ -44,6 +45,7 @@ export interface UiActions {
 	clearUploadStatus: () => void;
 	setInputFeaturesError: (error: string | null) => void;
 	setIsDrawing: (isDrawing: boolean) => void;
+	setIsBoundaryIntersecting: (isIntersecting: boolean) => void;
 	setIsBlockAreaSelecting: (isSelecting: boolean) => void;
 	setIsConnectedAreaSelecting: (isSelecting: boolean) => void;
 	setIsDrawingNote: (isDrawing: boolean) => void;

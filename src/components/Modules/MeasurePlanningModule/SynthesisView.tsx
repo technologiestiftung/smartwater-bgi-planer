@@ -5,6 +5,7 @@ import WaterBalanceChart from "@/components/ResultCharts/WaterBalanceChart";
 import WaterQualityChart from "@/components/ResultCharts/WaterQualityChart";
 import { Tutorial } from "@/components/Tutorial/Tutorial";
 import { Button } from "@/components/ui/button";
+import { useCurrentResult } from "@/hooks/useCurrentResult";
 import { useRabimoPayload } from "@/hooks/useRabimoPayload";
 import { useResultLayer } from "@/hooks/useResultLayer";
 import { SectionId } from "@/lib/helpers/sectionIds";
@@ -14,7 +15,7 @@ import type { Result } from "@/store/result/types";
 import { ResultStatistics } from "@/types/result";
 import { XIcon } from "@phosphor-icons/react";
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const CACHE_MAX_SIZE = 20;
 
@@ -31,6 +32,21 @@ const lastRequestByScenarioId = new Map<
 	string,
 	{ payloadKey: string; runoffReduction: number | undefined }
 >();
+
+// The Rabimo service sleeps when idle; the first request after a pause can
+// time out while it wakes up, so retry server errors once.
+async function postRabimo(payload: unknown): Promise<Response> {
+	const send = () =>
+		fetch("/api/rabimo", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(payload),
+		});
+	const response = await send();
+	if (response.status < 500) return response;
+	await new Promise((resolve) => setTimeout(resolve, 3000));
+	return send();
+}
 
 interface SynthesisViewProps {
 	onBackToQuestions: () => void;
@@ -50,12 +66,9 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 		{},
 	);
 	const [plotState, setPlotState] = useState<RequestState>("idle");
+	const requestIdRef = useRef(0);
 
-	const result = useResultStore((storeState) =>
-		activeScenarioId
-			? storeState.resultsByScenarioId[activeScenarioId]
-			: undefined,
-	);
+	const result = useCurrentResult();
 	const stats = result?.data
 		? (result.data as { statistics: ResultStatistics }).statistics
 		: undefined;
@@ -74,80 +87,80 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 		applyConfigLayers("measure_planning_synthesis_view", true, true);
 	}, [applyConfigLayers]);
 
+	const fetchPlots = useCallback(
+		async (runoffReduction: number, isStale: () => boolean) => {
+			if (plotsCache.has(runoffReduction)) {
+				setPlotUrls(plotsCache.get(runoffReduction)!);
+				setPlotState("success");
+				return;
+			}
+			setPlotState("loading");
+			try {
+				const res = await fetch(
+					`/api/rabimo/plot-effect-of-disconnect?runoff_reduction=${runoffReduction}`,
+				);
+				if (!res.ok) throw new Error(`Plot request failed: ${res.status}`);
+				const data = (await res.json()) as Partial<Record<PlotType, string>>;
+				setWithSizeLimit(plotsCache, runoffReduction, data);
+				if (isStale()) return;
+				setPlotUrls(data);
+				setPlotState("success");
+			} catch {
+				if (!isStale()) setPlotState("error");
+			}
+		},
+		[],
+	);
+
 	const restoreFromCache = useCallback(
-		(scenarioId: string, payloadKey: string): boolean => {
+		(
+			scenarioId: string,
+			payloadKey: string,
+			isStale: () => boolean,
+		): boolean => {
 			const last = lastRequestByScenarioId.get(scenarioId);
 			if (last?.payloadKey !== payloadKey) return false;
 			const existingResult =
 				useResultStore.getState().resultsByScenarioId[scenarioId];
 			if (!existingResult) return false;
-			if (
-				last.runoffReduction !== undefined &&
-				plotsCache.has(last.runoffReduction)
-			) {
-				setPlotUrls(plotsCache.get(last.runoffReduction)!);
-				setPlotState("success");
-			}
+			setError("");
 			setState("success");
+			if (last.runoffReduction !== undefined) {
+				// Uses the plot cache, or retries plots that failed last time.
+				fetchPlots(last.runoffReduction, isStale);
+			}
 			return true;
 		},
-		[],
+		[fetchPlots],
 	);
-
-	const fetchPlots = useCallback(async (runoffReduction: number) => {
-		if (plotsCache.has(runoffReduction)) {
-			setPlotUrls(plotsCache.get(runoffReduction)!);
-			setPlotState("success");
-			return;
-		}
-		setPlotState("loading");
-		try {
-			const res = await fetch(
-				`/api/rabimo/plot-effect-of-disconnect?runoff_reduction=${runoffReduction}`,
-			);
-			if (!res.ok) {
-				setPlotState("error");
-				return;
-			}
-			const data = (await res.json()) as Partial<Record<PlotType, string>>;
-			setWithSizeLimit(plotsCache, runoffReduction, data);
-			setPlotUrls(data);
-			setPlotState("success");
-		} catch {
-			setPlotState("error");
-		}
-	}, []);
 
 	// eslint-disable-next-line complexity
 	const handleRequest = useCallback(async () => {
 		if (!activeScenarioId || !payload) return;
 
+		const requestId = ++requestIdRef.current;
+		const requestScenarioId = activeScenarioId;
+		const isStale = () =>
+			requestId !== requestIdRef.current ||
+			useScenarioStore.getState().activeScenarioId !== requestScenarioId;
 		const payloadKey = JSON.stringify(payload);
 
-		if (restoreFromCache(activeScenarioId, payloadKey)) return;
+		setPlotUrls({});
+		setPlotState("idle");
+		if (restoreFromCache(activeScenarioId, payloadKey, isStale)) return;
 
-		const requestScenarioId = activeScenarioId;
 		setState("loading");
 		setStatus(requestScenarioId, "loading");
 		setError("");
-		setPlotUrls({});
-		setPlotState("idle");
 
 		try {
-			const response = await fetch("/api/rabimo", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(payload),
-			});
+			const response = await postRabimo(payload);
 
-			const data: unknown = await response.json();
+			const data: unknown = await response.json().catch(() => null);
 
-			if (useScenarioStore.getState().activeScenarioId !== requestScenarioId) {
-				return;
-			}
+			if (isStale()) return;
 
 			if (!response.ok) {
-				setStatus(requestScenarioId, "error");
 				const message =
 					(data as { error?: string })?.error ?? "Rabimo request failed";
 				throw new Error(message);
@@ -173,14 +186,6 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 				? runoffReductionRaw[0]
 				: runoffReductionRaw;
 
-			if (typeof runoffReduction === "number") {
-				await fetchPlots(runoffReduction);
-			}
-
-			if (useScenarioStore.getState().activeScenarioId !== requestScenarioId) {
-				return;
-			}
-
 			setWithSizeLimit(lastRequestByScenarioId, requestScenarioId, {
 				payloadKey,
 				runoffReduction:
@@ -188,7 +193,14 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 			});
 
 			setState("success");
+
+			// Plots load independently so they don't block or fail the evaluation.
+			if (typeof runoffReduction === "number") {
+				fetchPlots(runoffReduction, isStale);
+			}
 		} catch (error) {
+			if (isStale()) return;
+			setStatus(requestScenarioId, "error");
 			setState("error");
 			setError(error instanceof Error ? error.message : "Unbekannter Fehler");
 		}
@@ -219,7 +231,9 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 				)}
 
 				<div className="mt-4">
-					<WaterBalanceChart stats={stats} isLoading={state === "loading"} />
+					{state !== "error" && (
+						<WaterBalanceChart stats={stats} isLoading={state === "loading"} />
+					)}
 
 					<p className="mt-4">
 						Für den ausgewählten Projektbereich berechnet das Modell ABIMO die
@@ -240,12 +254,14 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 
 					<br />
 
-					<WaterQualityChart
-						stats={stats}
-						isLoading={state === "loading"}
-						plotUrls={plotUrls}
-						plotState={plotState}
-					/>
+					{state !== "error" && (
+						<WaterQualityChart
+							stats={stats}
+							isLoading={state === "loading"}
+							plotUrls={plotUrls}
+							plotState={plotState}
+						/>
+					)}
 
 					<div className="mt-4 flex flex-col gap-2">
 						<p>

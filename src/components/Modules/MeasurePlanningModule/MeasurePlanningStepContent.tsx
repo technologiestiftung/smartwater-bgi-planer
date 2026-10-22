@@ -8,20 +8,25 @@ import {
 	AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import {
+	cancelPendingDeletes,
+	confirmPendingDeletes,
+} from "@/lib/helpers/measures/pendingDeletes";
 import { getLayerById } from "@/lib/helpers/ol";
 import { LayerConfigItem } from "@/store/layers/types";
 import { useMapStore } from "@/store/map";
 import { useScenarioStore } from "@/store/scenario";
 import { useUiStore } from "@/store/ui";
 import { LAYER_IDS } from "@/types/shared";
+import { InfoIcon } from "@phosphor-icons/react";
 import Image from "next/image";
+import Link from "next/link";
 import VectorLayer from "ol/layer/Vector";
 import { Vector as VectorSource } from "ol/source";
 import { useCallback, useEffect, useRef } from "react";
-import { ConnectedAreaSelection } from "./ConnectedAreaSelection";
+import { preload } from "react-dom";
 import { MeasureCatalogScore } from "../MeasureCatalogModule/MeasureCatalogScore";
-import Link from "next/link";
-import { InfoIcon } from "@phosphor-icons/react";
+import { ConnectedAreaSelection } from "./ConnectedAreaSelection";
 
 interface MeasurePlanningStepContentProps {
 	layerConfig: LayerConfigItem;
@@ -33,6 +38,10 @@ interface MeasurePlanningLegendProps {
 }
 
 function MeasurePlanningLegend({ layerConfig }: MeasurePlanningLegendProps) {
+	if (layerConfig.legendSrc) preload(layerConfig.legendSrc, { as: "image" });
+	if (layerConfig.measurementSrc)
+		preload(layerConfig.measurementSrc, { as: "image" });
+
 	return (
 		<div className="mt-auto pt-6 pb-4">
 			<Accordion type="multiple">
@@ -175,42 +184,17 @@ export function MeasurePlanningStepContent({
 	const handleConfirm = () => {
 		confirmedRef.current = true;
 
-		const {
-			pendingDeleteMeasureIds,
-			confirmDraftMeasures,
-			clearPendingDeleteMeasureIds,
-		} = useUiStore.getState();
-
-		if (pendingDeleteMeasureIds.length > 0) {
-			const { activeScenarioId, removeMeasure } = useScenarioStore.getState();
-			if (activeScenarioId) {
-				for (const measureId of pendingDeleteMeasureIds) {
-					removeMeasure(activeScenarioId, measureId);
-				}
-			}
-			clearPendingDeleteMeasureIds();
-		}
-
-		confirmDraftMeasures();
+		confirmPendingDeletes();
+		useUiStore.getState().confirmDraftMeasures();
 		onConfirm?.();
 	};
 
 	useEffect(() => {
 		return () => {
 			if (!confirmedRef.current) {
+				// Restore deleted features first, so deleted drafts get removed again below.
+				cancelPendingDeletes();
 				removeDraftMeasures();
-				const { pendingDeleteMeasureIds, clearPendingDeleteMeasureIds } =
-					useUiStore.getState();
-				if (pendingDeleteMeasureIds.length > 0) {
-					const { activeScenarioId, removeMeasure } =
-						useScenarioStore.getState();
-					if (activeScenarioId) {
-						for (const measureId of pendingDeleteMeasureIds) {
-							removeMeasure(activeScenarioId, measureId);
-						}
-					}
-					clearPendingDeleteMeasureIds();
-				}
 			}
 		};
 	}, [removeDraftMeasures]);

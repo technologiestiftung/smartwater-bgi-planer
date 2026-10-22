@@ -169,6 +169,10 @@ export const createSetInputFeatures = (set: SetState) => {
 
 		useUiStore.getState().setInputFeaturesError(null);
 
+		// Re-apply the active scenario's measures on top of the new baseline.
+		const { activeScenarioId, setActiveScenario } = useScenarioStore.getState();
+		if (activeScenarioId) setActiveScenario(activeScenarioId);
+
 		return true;
 	};
 };
