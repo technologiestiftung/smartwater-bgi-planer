@@ -1,0 +1,59 @@
+- generic [ref=f2e1]:
+  - generic [ref=f2e4]:
+    - generic [ref=f2e5]:
+      - generic [ref=f2e14]:
+        - heading "Herzlich willkommen beim BGI-Planer" [level=1] [ref=f2e15]
+        - button "Projektdatei hochladen" [active] [ref=f2e17] [cursor=pointer]:
+          - generic [ref=f2e18]:
+            - generic [ref=f2e20]:
+              - paragraph [ref=f2e21]: badge-test.zip
+              - paragraph [ref=f2e22]: 7.57 KB
+            - button [ref=f2e23]
+        - generic [ref=f2e24]:
+          - link [ref=f2e25] [cursor=pointer]:
+            - /url: /new
+            - paragraph [ref=f2e26]: Projekt anlegen
+          - button [ref=f2e27] [cursor=pointer]:
+            - paragraph [ref=f2e28]: Projekt importieren
+        - paragraph [ref=f2e29]:
+          - text: Der BGI-Planer ist ein Prototyp und noch in Entwicklung. Es können vereinzelte inhaltliche Ungenauigkeiten und technische Einschränkungen auftreten. Wir freuen uns über Ihr Feedback an
+          - link "smartwater@senstadt.berlin.de" [ref=f2e30] [cursor=pointer]:
+            - /url: mailto:smartwater@senstadt.berlin.de
+          - text: .
+      - generic [ref=f2e31]:
+        - paragraph [ref=f2e33]: Ein Teil des Projektes
+        - paragraph [ref=f2e37]: Gefördert im Rahmen von
+        - generic [ref=f2e53]:
+          - link "Impressum" [ref=f2e54] [cursor=pointer]:
+            - /url: https://www.technologiestiftung-berlin.de/impressum/
+          - link "Datenschutz" [ref=f2e55] [cursor=pointer]:
+            - /url: https://www.technologiestiftung-berlin.de/datenschutz/
+          - link "Projektpartner:innen" [ref=f2e56] [cursor=pointer]:
+            - /url: https://gemeinsamdigital.berlin.de/de/smart-water/projektpartnerinnen-smartwater/
+          - link "Github" [ref=f2e57] [cursor=pointer]:
+            - /url: https://github.com/technologiestiftung/smartwater-bgi-planer
+    - generic [ref=f2e62]:
+      - generic [ref=f2e63]:
+        - heading "Projekt" [level=2] [ref=f2e64]
+        - paragraph [ref=f2e65]: Legen Sie zunächst fest, um was für ein Projekt es sich handelt und wo dieses stattfinden soll.
+      - region [ref=f2e67]:
+        - generic [ref=f2e69]:
+          - group [ref=f2e70]:
+            - img "Projekt" [ref=f2e71]
+          - group [ref=f2e72]:
+            - img "Handlungsbedarfe" [ref=f2e73]
+          - group [ref=f2e74]:
+            - img "Machbarkeit von Maßnahmen" [ref=f2e75]
+          - group [ref=f2e76]:
+            - img "Maßnahmenplanung" [ref=f2e77]
+          - group [ref=f2e78]:
+            - img "Effektbewertung" [ref=f2e79]
+        - button "Previous slide" [ref=f2e80] [cursor=pointer]
+        - button "Next slide" [ref=f2e82] [cursor=pointer]
+      - generic [ref=f2e84]:
+        - button "Go to slide 1" [ref=f2e85] [cursor=pointer]
+        - button "Go to slide 2" [ref=f2e86] [cursor=pointer]
+        - button "Go to slide 3" [ref=f2e87] [cursor=pointer]
+        - button "Go to slide 4" [ref=f2e88] [cursor=pointer]
+        - button "Go to slide 5" [ref=f2e89] [cursor=pointer]
+  - alert [ref=f2e99]

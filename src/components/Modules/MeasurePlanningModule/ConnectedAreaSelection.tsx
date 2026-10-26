@@ -141,6 +141,7 @@ export function ConnectedAreaSelection({
 			removeCondition: singleClick,
 			toggleCondition: never,
 			multi: false,
+			style: (f) => withBadge(f, selectedConnectedAreaStyle),
 			filter: (feature) => {
 				const id = feature.get("connectedAreaId") as string | undefined;
 				return !!id && availableIds.has(id);
