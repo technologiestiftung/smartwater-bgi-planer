@@ -3,6 +3,7 @@
 import { useConnectedAreaSelection } from "@/hooks/useConnectedAreaSelection";
 import { isSwaleLayerConfigId } from "@/lib/helpers/measures/swale";
 import { getLayerById } from "@/lib/helpers/ol";
+import { withBadge } from "@/lib/helpers/ol/style";
 import { useMapStore } from "@/store/map";
 import { useUiStore } from "@/store/ui";
 import { LAYER_IDS } from "@/types/shared";
@@ -116,9 +117,9 @@ export function ConnectedAreaSelection({
 			.forEach((feature) => {
 				const id = feature.get("connectedAreaId") as string | undefined;
 				if (id && id === selectedConnectedAreaId) {
-					feature.setStyle(selectedConnectedAreaStyle);
+					feature.setStyle((f) => withBadge(f, selectedConnectedAreaStyle));
 				} else if (id && !availableIds.has(id)) {
-					feature.setStyle(usedConnectedAreaStyle);
+					feature.setStyle((f) => withBadge(f, usedConnectedAreaStyle));
 				} else {
 					feature.setStyle(undefined);
 				}
