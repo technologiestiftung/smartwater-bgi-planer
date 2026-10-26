@@ -238,6 +238,7 @@
 		"question": "Gibt es Blockteilflächen mit hohen Versiegelungsgraden (über 60-70 %)?",
 		"description": [
 			"Große versiegelte Bereiche können die thermische Belastung erhöhen und führen zu hohen Oberflächenabflüssen. Dadurch sind im urbanen Wasserhaushalt die Komponenten Versickerung und Verdunstung im Vergleich zum natürlichen Zustand stark reduziert.",
+			"Mit Klick in die Karte kann geprüft werden, ob der durchschnittliche Versiegelungsgrad des jeweiligen Flächentyps einer Blockteilfläche um mehr als 20 % überschritten wird. Dies gibt einen Hinweis auf eine untypisch hohe Versiegelung eines Flächentyps und zeigt den Entsiegelungsbedarf.",
 			"Hinweis: Die gesamte Landesfläche Berlins ist mit 52 Flächentypen gekennzeichnet. Die Kartenbeschreibung finden Sie [hier](https://www.berlin.de/umweltatlas/boden/versiegelung/2021/kartenbeschreibung/)."
 		],
 		"drawLayerId": "module_1_impermeability_hotspots_q1",
@@ -261,7 +262,9 @@
 		"name": "Grünvolumenzahl",
 		"question": "Gibt es Bereiche mit einer niedrigen Grünvolumenzahl?",
 		"description": [
-			"Die Grünvolumenzahl berechnet sich aus dem Grünvolumen [m³] pro Flächeneinheit [m²]."
+			"Die Grünvolumenzahl berechnet sich aus dem Grünvolumen [m³] pro Flächeneinheit [m²]. Aus klimatischer Sicht ist ein Zielwert von 30-40 % Grünvolumen sinnvoll und erstrebenswert.",
+			"Mit Klick in die Karte kann zudem geprüft werden, ob in einer Blockteilfläche die für den Flächentyp durchschnittliche Grünvolumenzahl um mehr als 20 % unterschritten wird. Dies gibt einen Hinweis darüber, welche Flächen priorisiert werden sollten.",
+			"Hinweis: Die gesamte Landesfläche Berlins ist mit 52 Flächentypen gekennzeichnet."
 		],
 		"drawLayerId": "module_1_impermeability_hotspots_q2",
 		"canDrawPolygons": true,
@@ -291,6 +294,7 @@
 			"- Verdunstung",
 			"- Versickerung",
 			"- Oberflächenabfluss",
+			"Durch Anklicken einer Blockteilfläche können die absoluten Werte dieser Komponenten sowohl für den natürlichen Zustand als auch für den Ist-Zustand eingesehen werden.",
 			"Gemäß EU-Wasserrahmenrichtlinie gilt eine Abweichung von mehr als 20 % vom natürlichen Wasserhaushalt als ökologisch schlecht und sollte vermieden werden. Die entsprechenden Anforderungen werden im Regelwerk DWA-M 102-4 weiter konkretisiert."
 		],
 		"drawLayerId": "module_1_waterbalance_hotspots_q1",
