@@ -1,0 +1,28 @@
+agent: claude
+
+commands:
+  prepare: "npm ci"
+  lint: "npm run lint"
+  format: "npm run format:fix"
+  # TODO: no test suite yet; build is the closest check (same as pre-push hook)
+  test: "npm run build"
+
+ignore_patterns:
+  - "package-lock.json"
+  - ".next/**"
+  - "tsconfig.tsbuildinfo"
+
+review:
+  path_instructions:
+    - path: "src/config/**"
+      instructions: |
+        User-facing text, layers and questions belong in these JSON configs, not hardcoded in components.
+    - path: "src/server/**"
+      instructions: |
+        Server-only code (Rabimo API via API_URL). Must never be imported from client components.
+
+pr:
+  base_branch: staging
+
+# No GitHub Actions in this repo.
+no_ci: true
