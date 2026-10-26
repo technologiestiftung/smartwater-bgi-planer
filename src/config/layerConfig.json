@@ -294,7 +294,7 @@
 			"- Verdunstung",
 			"- Versickerung",
 			"- Oberflächenabfluss",
-			"Durch Anklicken einer Blockteilfläche können die absoluten Werte dieser Komponenten sowohl für den natürlichen Zustand als auch für den Ist-Zustand eingesehen werden.",
+			"Durch Anklicken einer Blockteilfläche können die absoluten Werte dieser Komponenten für den Ist-Zustand sowie die Abweichung vom natürlichen Wasserhaushalt eingesehen werden.",
 			"Gemäß EU-Wasserrahmenrichtlinie gilt eine Abweichung von mehr als 20 % vom natürlichen Wasserhaushalt als ökologisch schlecht und sollte vermieden werden. Die entsprechenden Anforderungen werden im Regelwerk DWA-M 102-4 weiter konkretisiert."
 		],
 		"drawLayerId": "module_1_waterbalance_hotspots_q1",
