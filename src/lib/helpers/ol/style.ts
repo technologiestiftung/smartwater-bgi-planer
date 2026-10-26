@@ -1,5 +1,7 @@
 import { styleList } from "@/config/resources/style";
 import { formatLength } from "@/lib/helpers/ol/format";
+import { useScenarioStore } from "@/store/scenario";
+import type { ConnectedArea, Measure } from "@/store/scenario/types";
 import type { MeasureGeometryType } from "@/types/measures";
 import Feature, { FeatureLike } from "ol/Feature";
 import LineString from "ol/geom/LineString";
@@ -191,6 +193,15 @@ const createBadgeCanvas = (
 	return canvas;
 };
 
+let badgeFontLoad: Promise<void> | undefined;
+export const whenBadgeFontLoaded = () => {
+	badgeFontLoad ??= document.fonts
+		.load(getBadgeFont())
+		.then(() => BADGE_STYLE_CACHE.clear())
+		.catch(() => {});
+	return badgeFontLoad;
+};
+
 // Polygons: draw the badge at the interior point (circle images need a point)
 const badgeGeometry = (feature: FeatureLike) => {
 	const geometry = feature.getGeometry();
@@ -220,15 +231,57 @@ const getBadgeStyle = (
 			}),
 			zIndex: Infinity,
 		});
-		// Don't cache a badge drawn with the fallback font before Arthouse loaded
-		if (!document.fonts.check(font)) return style;
 		BADGE_STYLE_CACHE.set(key, style);
 	}
 	return BADGE_STYLE_CACHE.get(key)!;
 };
 
+const getBadges = (connectedAreas: ConnectedArea[], measures: Measure[]) => {
+	const caIds = new Set(connectedAreas.map((ca) => ca.id));
+	const caIdByMeasureId = new Map(
+		connectedAreas.map((ca) => [ca.usedByMeasureId, ca.id]),
+	);
+	const badges = new Map<string, string>();
+	let next = 1;
+
+	for (const measure of measures) {
+		const caId = measure.connectedAreaId ?? caIdByMeasureId.get(measure.id);
+		if (!caId || !caIds.has(caId)) continue;
+		if (!badges.has(caId)) badges.set(caId, String(next++));
+		badges.set(measure.id, badges.get(caId)!);
+	}
+
+	return badges;
+};
+
+let badgeMemo: {
+	connectedAreas?: ConnectedArea[];
+	measures?: Measure[];
+	badges: Map<string, string>;
+} = { badges: new Map() };
+
+const getScenarioBadges = () => {
+	const { scenarios, activeScenarioId } = useScenarioStore.getState();
+	const scenario = activeScenarioId ? scenarios[activeScenarioId] : undefined;
+	if (!scenario) return badgeMemo.badges;
+	const { connectedAreas, measures } = scenario;
+	if (
+		badgeMemo.connectedAreas !== connectedAreas ||
+		badgeMemo.measures !== measures
+	) {
+		badgeMemo = {
+			connectedAreas,
+			measures,
+			badges: getBadges(connectedAreas, measures),
+		};
+	}
+	return badgeMemo.badges;
+};
+
 export const withBadge = (feature: FeatureLike, style: Style | Style[]) => {
-	const badge = feature.get("badge") as string | undefined;
+	const id = (feature.get("connectedAreaId") ?? feature.get("measureId")) as
+		string | undefined;
+	const badge = id ? getScenarioBadges().get(id) : undefined;
 	if (!badge) return style;
 	const isPoint = feature.getGeometry()?.getType() === "Point";
 	const isConnectedArea = !!feature.get("connectedAreaId");
