@@ -13,7 +13,7 @@ export async function getPlotEffectOfDisconnect(
 	url.searchParams.set("runoff_reduction", String(runoffReduction));
 	url.searchParams.set("type", type);
 
-	const res = await fetch(url, { signal: AbortSignal.timeout(10_000) });
+	const res = await fetch(url, { signal: AbortSignal.timeout(60_000) });
 	if (!res.ok) {
 		const text = await res.text();
 		throw new Error(`BGI API error ${res.status}: ${text.slice(0, 500)}`);
