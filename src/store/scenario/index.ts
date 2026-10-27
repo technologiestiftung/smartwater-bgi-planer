@@ -9,7 +9,6 @@ import {
 	createRemoveConnectedArea,
 	createRemoveMeasure,
 	createSetActiveScenario,
-	createUpdateMeasureValues,
 	createUpdateScenarioName,
 } from "./actions";
 import { Scenario, ScenarioActions, ScenarioState } from "./types";
@@ -42,7 +41,6 @@ export const useScenarioStore = create<ScenarioState & ScenarioActions>()(
 					updateScenarioName: createUpdateScenarioName(set),
 					addMeasure: createAddMeasure(set, get),
 					removeMeasure: createRemoveMeasure(set, get),
-					updateMeasureValues: createUpdateMeasureValues(set, get),
 					addConnectedArea: createAddConnectedArea(set),
 					removeConnectedArea: createRemoveConnectedArea(set),
 					markConnectedAreaUsed: createMarkConnectedAreaUsed(set),
