@@ -6,6 +6,7 @@ import path from "path";
 import PizZip from "pizzip";
 import ImageModule from "docxtemplater-image-module-free";
 import { formatNumber } from "@/lib/helpers/common";
+import { countTreeGroupConnectedAreaOnce } from "@/lib/helpers/measures/trees";
 
 // ---------- body types ----------
 interface ReportBody {
@@ -24,7 +25,8 @@ interface ReportBody {
 			id: string;
 			name: string;
 			area: number;
-			connectedArea: number;
+			connectedArea?: number;
+			connectedAreaId?: string | null;
 			code: string | null;
 			configId: string;
 		}>;
@@ -66,6 +68,9 @@ function buildProjectFields(body: ReportBody) {
 	};
 }
 
+const sumAreas = (values: Array<number | undefined>) =>
+	Math.round(values.reduce<number>((sum, v) => sum + (v ?? 0), 0) * 100) / 100;
+
 function buildScenarioFields(scenario: ReportBody["activeScenario"]) {
 	const allMeasures: Array<{ name: string; configId?: string }> = [
 		{ name: "green_roof_ext" },
@@ -86,21 +91,19 @@ function buildScenarioFields(scenario: ReportBody["activeScenario"]) {
 	];
 	const measures = scenario?.measures ?? [];
 	const setMeasures: Record<string, string> = {};
-	allMeasures.forEach((measure) => {
-		const findMeasure = measures.find(
-			(findSingleMeasure) => findSingleMeasure.name === measure.name,
+	// Sum all measures of a type; configId separates types sharing a name (unpaving).
+	allMeasures.forEach(({ name, configId }) => {
+		const matching = measures.filter(
+			(m) => m.name === name && (!configId || m.configId === configId),
 		);
-		const configId = measure.configId ? `_${measure.configId}` : "";
-		if (!findMeasure) {
-			setMeasures[`p_${measure.name}${configId}`] = "0";
-			setMeasures[`ca_${measure.name}${configId}`] = "-";
-		} else {
-			setMeasures[`p_${findMeasure.name}${configId}`] = findMeasure.area
-				? findMeasure.area.toString()
-				: "0";
-			setMeasures[`ca_${findMeasure.name}${configId}`] =
-				findMeasure.connectedArea ? findMeasure.connectedArea.toString() : "-";
-		}
+		const suffix = configId ? `_${configId}` : "";
+		const connectedArea = sumAreas(matching.map((m) => m.connectedArea));
+		setMeasures[`p_${name}${suffix}`] = sumAreas(
+			matching.map((m) => m.area),
+		).toString();
+		setMeasures[`ca_${name}${suffix}`] = connectedArea
+			? connectedArea.toString()
+			: "-";
 	});
 	// Baumstandort
 	const numberOfTrees = measures.filter(
@@ -108,14 +111,17 @@ function buildScenarioFields(scenario: ReportBody["activeScenario"]) {
 	).length;
 	setMeasures["t_n"] = numberOfTrees.toString();
 	// Optimierter Baumstandort
-	const numberOfOptimizedTrees = measures.filter(
+	const optimizedTrees = measures.filter(
 		(m) => m.name.startsWith("trees") && m.configId === "3V5",
-	).length;
-	setMeasures["t_o"] = numberOfOptimizedTrees.toString();
-	setMeasures["ca_t_o"] =
-		measures
-			.find((m) => m.name.startsWith("trees") && m.configId === "3V5")
-			?.connectedArea.toString() ?? "-";
+	);
+	setMeasures["t_o"] = optimizedTrees.length.toString();
+
+	const treeConnectedArea = sumAreas(
+		countTreeGroupConnectedAreaOnce(optimizedTrees).map((m) => m.connectedArea),
+	);
+	setMeasures["ca_t_o"] = treeConnectedArea
+		? treeConnectedArea.toString()
+		: "-";
 	return setMeasures;
 }
 

@@ -2,9 +2,14 @@ import type { ConnectedArea, Measure } from "@/store/scenario/types";
 
 // Trees connected to the same area form one group; its connected area must only count once.
 // Groups by connectedAreaId, falling back to code for trees saved without one.
-export const countTreeGroupConnectedAreaOnce = (
-	measures: Measure[],
-): Measure[] => {
+export const countTreeGroupConnectedAreaOnce = <
+	T extends Pick<
+		Measure,
+		"id" | "name" | "code" | "connectedArea" | "connectedAreaId"
+	>,
+>(
+	measures: T[],
+): T[] => {
 	const countedGroups = new Set<string>();
 
 	return measures.map((measure) => {
