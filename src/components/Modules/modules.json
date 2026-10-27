@@ -916,7 +916,10 @@
 							"title": "Flächenversickerung",
 							"metricIcons": ["Tree", "ThermometerHot", "Drop"],
 							"info": {
-								"description": "Bei einer Flächenversickerung kann das Regenwasser breitflächig auf unbefestigten begrünten Randstreifen oder Grünflächen geleitet werden und dort durch die bewachsene Bodenzone versickern. Die Flächenversickerung kommt der natürlichen Versickerung am nächsten.",
+								"description": [
+									"Bei einer Flächenversickerung kann das Regenwasser breitflächig auf unbefestigten begrünten Randstreifen oder Grünflächen geleitet werden und dort durch die bewachsene Bodenzone versickern. Die Flächenversickerung kommt der natürlichen Versickerung am nächsten.",
+									"Die blauen Flächen zeigen die Potenzialflächen der ausgewählten Versickerungsmaßnahme laut Versickerungspotenzialkarte an."
+								],
 								"scores": {
 									"CloudRain": 2,
 									"ThermometerHot": 2,
@@ -1009,7 +1012,10 @@
 							"title": "Mulden-Rigolen-Element",
 							"metricIcons": ["Tree", "Drop"],
 							"info": {
-								"description": "Ein Mulden-Rigolen-Element kombiniert eine Versickerungsmulde mit einer Rigole. Die Kombination wird bei geringerer Wasserdurchlässigkeit des Bodens genutzt. Das Niederschlagswasser wird kurzzeitig oberirdisch in der Mulde, sowie unterirdisch in der Rigole zwischengespeichert. Anschließend versickert das Regenwasser, das zuvor durch die bewachsene Bodenzone gereinigt wurde, im angrenzenden Erdboden.",
+								"description": [
+									"Ein Mulden-Rigolen-Element kombiniert eine Versickerungsmulde mit einer Rigole. Die Kombination wird bei geringerer Wasserdurchlässigkeit des Bodens genutzt. Das Niederschlagswasser wird kurzzeitig oberirdisch in der Mulde, sowie unterirdisch in der Rigole zwischengespeichert. Anschließend versickert das Regenwasser, das zuvor durch die bewachsene Bodenzone gereinigt wurde, im angrenzenden Erdboden.",
+									"Die blauen Flächen zeigen die Potenzialflächen der ausgewählten Versickerungsmaßnahme laut Versickerungspotenzialkarte an."
+								],
 								"scores": {
 									"CloudRain": 2,
 									"ThermometerHot": 2,
@@ -1111,7 +1117,10 @@
 							"title": "Tiefbeet",
 							"metricIcons": ["Tree"],
 							"info": {
-								"description": "Tiefbeete sind eine Sonderform der Mulde und werden statt mit einer Erdböschung durch Betonrahmen oder Betonelementen eingefasst. Sie können mit Rigolen als Tiefbeet-Rigolen-Element kombiniert werden. Im öffentlichen Straßenraum bedarf es der Abstimmung zur Verkehrssicherung.",
+								"description": [
+									"Tiefbeete sind eine Sonderform der Mulde und werden statt mit einer Erdböschung durch Betonrahmen oder Betonelementen eingefasst. Sie können mit Rigolen als Tiefbeet-Rigolen-Element kombiniert werden. Im öffentlichen Straßenraum bedarf es der Abstimmung zur Verkehrssicherung.",
+									"Die blauen Flächen zeigen die Potenzialflächen der ausgewählten Versickerungsmaßnahme laut Versickerungspotenzialkarte an."
+								],
 								"scores": {
 									"CloudRain": 2,
 									"ThermometerHot": 2,
@@ -1287,7 +1296,10 @@
 							"title": "Rigole",
 							"metricIcons": ["Tree", "Drop"],
 							"info": {
-								"description": "Eine Rigole ist eine unterirdisch verbaute Versickerungsanlage. Sie bestehen aus Füllmaterialien wie gewaschenem Kies, Lavagranulat oder aus einem Kunststoff- oder auch Betonhohlkörper. Durch das geschaffene Speichervolumen kann das Niederschlagswasser der angeschlossenen Flächen auch bei geringerer Wasserdurchlässigkeit des Bodens zwischengespeichert und versickert werden.",
+								"description": [
+									"Eine Rigole ist eine unterirdisch verbaute Versickerungsanlage. Sie bestehen aus Füllmaterialien wie gewaschenem Kies, Lavagranulat oder aus einem Kunststoff- oder auch Betonhohlkörper. Durch das geschaffene Speichervolumen kann das Niederschlagswasser der angeschlossenen Flächen auch bei geringerer Wasserdurchlässigkeit des Bodens zwischengespeichert und versickert werden.",
+									"Die blauen Flächen zeigen die Potenzialflächen der ausgewählten Versickerungsmaßnahme laut Versickerungspotenzialkarte an."
+								],
 								"scores": {
 									"CloudRain": 2,
 									"ThermometerHot": 1,
