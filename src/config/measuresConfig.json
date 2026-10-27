@@ -185,6 +185,13 @@
 				"type": "number",
 				"unit": "m2",
 				"source": "drawn"
+			},
+			{
+				"key": "connectedArea",
+				"type": "number",
+				"unit": "m2",
+				"source": "input",
+				"required": true
 			}
 		]
 	},

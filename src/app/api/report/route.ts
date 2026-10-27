@@ -98,11 +98,13 @@ function buildScenarioFields(scenario: ReportBody["activeScenario"]) {
 		);
 		const suffix = configId ? `_${configId}` : "";
 		const connectedArea = sumAreas(matching.map((m) => m.connectedArea));
-		setMeasures[`p_${name}${suffix}`] = sumAreas(
-			matching.map((m) => m.area),
-		).toString();
+		setMeasures[`p_${name}${suffix}`] = formatNumber(
+			sumAreas(matching.map((m) => m.area)),
+			2,
+			2,
+		);
 		setMeasures[`ca_${name}${suffix}`] = connectedArea
-			? connectedArea.toString()
+			? formatNumber(connectedArea, 2, 2)
 			: "-";
 	});
 	// Baumstandort
@@ -120,7 +122,7 @@ function buildScenarioFields(scenario: ReportBody["activeScenario"]) {
 		countTreeGroupConnectedAreaOnce(optimizedTrees).map((m) => m.connectedArea),
 	);
 	setMeasures["ca_t_o"] = treeConnectedArea
-		? treeConnectedArea.toString()
+		? formatNumber(treeConnectedArea, 2, 2)
 		: "-";
 	return setMeasures;
 }
