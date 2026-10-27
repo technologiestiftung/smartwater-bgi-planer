@@ -1204,7 +1204,10 @@
 							"title": "Optimierter Baumstandort (Baum mit unterirdischer Versickerung kombiniert)",
 							"metricIcons": ["ThermometerHot", "RoadHorizon"],
 							"info": {
-								"description": "Der Begriff optimierter Baumstandort steht für die Kombination aus Baumstandort und Regenwasserbewirtschaftung. Das können Flächenversickerung oder Muldenversickerung mit Baumstandorten sein sowie Baumstandorte mit speicherfähigen Substraten oder gedichteten Bodenwannen z.B. aus Ton- oder  Bentonitabdichtungen zur Speicherung von Regenwasser. Im BGI-Planer ist der Begriff optimierter Baumstandort als Baumstandort mit Speicherraum und unterirdischer Versickerung definiert.",
+								"description": [
+									"Der Begriff optimierter Baumstandort steht für die Kombination aus Baumstandort und Regenwasserbewirtschaftung. Das können Flächenversickerung oder Muldenversickerung mit Baumstandorten sein sowie Baumstandorte mit speicherfähigen Substraten oder gedichteten Bodenwannen z.B. aus Ton- oder  Bentonitabdichtungen zur Speicherung von Regenwasser. Im BGI-Planer ist der Begriff optimierter Baumstandort als Baumstandort mit Speicherraum und unterirdischer Versickerung definiert.",
+									"Die blauen Flächen zeigen die Potenzialflächen der ausgewählten Versickerungsmaßnahme laut Versickerungspotenzialkarte an."
+								],
 								"scores": {
 									"CloudRain": 2,
 									"ThermometerHot": 3,
