@@ -22,21 +22,27 @@ export const countTreeGroupConnectedAreaOnce = (
 	});
 };
 
+// Trees saved without a connectedAreaId fall back to matching the code of a "trees" CA.
+export const isTreeOfConnectedArea = (
+	measure: Measure,
+	connectedArea: ConnectedArea,
+): boolean =>
+	measure.name.startsWith("trees_") &&
+	(measure.connectedAreaId
+		? measure.connectedAreaId === connectedArea.id
+		: connectedArea.usedByMeasureId === "trees" &&
+			measure.code === connectedArea.code);
+
+// A tree CA stays used while one of its trees isn't pending deletion.
 export const isConnectedAreaUsed = (
 	connectedArea: ConnectedArea,
 	measures: Measure[],
-	pendingDeleteMeasureIds: string[],
-): boolean => {
-	if (connectedArea.usedByMeasureId !== "trees") {
-		return Boolean(connectedArea.usedByMeasureId);
-	}
-
-	return measures.some(
-		(m) =>
-			m.name.startsWith("trees_") &&
-			!pendingDeleteMeasureIds.includes(m.id) &&
-			(m.connectedAreaId
-				? m.connectedAreaId === connectedArea.id
-				: m.code === connectedArea.code),
-	);
-};
+	pendingDeleteMeasureIds: string[] = [],
+): boolean =>
+	connectedArea.usedByMeasureId === "trees"
+		? measures.some(
+				(m) =>
+					!pendingDeleteMeasureIds.includes(m.id) &&
+					isTreeOfConnectedArea(m, connectedArea),
+			)
+		: Boolean(connectedArea.usedByMeasureId);

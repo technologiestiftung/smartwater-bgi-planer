@@ -3,6 +3,7 @@ import { simulationEngine } from "@/lib/simulation/simulationEngine";
 import { useProjectStore } from "@/store/project";
 import { ComputedFeatures } from "@/store/project/types";
 import { useUiStore } from "@/store/ui";
+import { isConnectedAreaUsed } from "@/lib/helpers/measures/trees";
 import { ConnectedArea, Measure, ScenarioState } from "./types";
 
 type SetState = (fn: (state: ScenarioState) => Partial<ScenarioState>) => void;
@@ -132,55 +133,24 @@ export const createAddMeasure = (set: SetState, get: GetState) => {
 	};
 };
 
-const freeTreeGroupConnectedArea = (
-	removedMeasure: Measure,
-	remainingMeasures: Measure[],
-	connectedAreas: ConnectedArea[],
-): ConnectedArea[] => {
-	const groupId = removedMeasure.connectedAreaId;
-	const { code } = removedMeasure;
-	if (!groupId && !code) return connectedAreas;
-
-	const hasRemainingTrees = remainingMeasures.some(
-		(m) =>
-			m.name.startsWith("trees_") &&
-			(groupId ? m.connectedAreaId === groupId : m.code === code),
-	);
-	if (hasRemainingTrees) return connectedAreas;
-
-	return connectedAreas.map((ca) =>
-		ca.usedByMeasureId === "trees" &&
-		(groupId ? ca.id === groupId : ca.code === code)
-			? { ...ca, usedByMeasureId: null }
-			: ca,
-	);
-};
-
 export const createRemoveMeasure = (set: SetState, get: GetState) => {
 	return (scenarioId: string, measureId: string) => {
 		set((state) => {
 			const scenario = state.scenarios[scenarioId];
 			if (!scenario) return state;
 
-			const removedMeasure = scenario.measures.find((m) => m.id === measureId);
 			const nextMeasures = scenario.measures.filter(
 				(measure) => measure.id !== measureId,
 			);
 
-			// Free any ConnectedArea that was used by this measure (polygon measures)
-			let nextConnectedAreas = scenario.connectedAreas.map((ca) =>
-				ca.usedByMeasureId === measureId
+			// Free the CA used by this measure, and tree CAs whose last tree is gone
+			const nextConnectedAreas = scenario.connectedAreas.map((ca) =>
+				ca.usedByMeasureId === measureId ||
+				(ca.usedByMeasureId === "trees" &&
+					!isConnectedAreaUsed(ca, nextMeasures))
 					? { ...ca, usedByMeasureId: null }
 					: ca,
 			);
-
-			if (removedMeasure?.name.startsWith("trees_")) {
-				nextConnectedAreas = freeTreeGroupConnectedArea(
-					removedMeasure,
-					nextMeasures,
-					nextConnectedAreas,
-				);
-			}
 
 			return {
 				scenarios: {

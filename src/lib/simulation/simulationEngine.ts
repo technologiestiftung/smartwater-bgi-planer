@@ -31,9 +31,8 @@ const applyMeasures = (
 	measures: Measure[],
 ): ApplyMeasuresResult => {
 	const computedArea = countTreeGroupConnectedAreaOnce(measures).reduce(
-		(currentArea, measure) => {
-			return measureCalculations.calculateApplyMeasure(currentArea, measure);
-		},
+		(currentArea, measure) =>
+			measureCalculations.calculateApplyMeasure(currentArea, measure),
 		baseComputedArea,
 	);
 

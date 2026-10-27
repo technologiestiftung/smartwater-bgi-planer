@@ -84,8 +84,7 @@ export function buildRabimoPayload(
 		const rabimoKey = MEASURE_KEY_TO_RABIMO[config.measureKey];
 		if (!rabimoKey) continue;
 
-		const added = measure.connectedArea ?? measure.area;
-		(entry[rabimoKey] as number) += added;
+		(entry[rabimoKey] as number) += measure.connectedArea ?? measure.area;
 	}
 
 	return {
