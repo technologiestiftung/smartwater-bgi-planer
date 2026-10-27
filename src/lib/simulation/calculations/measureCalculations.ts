@@ -1,3 +1,4 @@
+import { measureConfigById } from "@/config/measuresConfig";
 import { Measure } from "@/store/scenario/types";
 import type { ComputedArea } from "../types";
 import areaCalc from "./areaCalculations";
@@ -99,7 +100,7 @@ function calculateApplyMeasure(
 		return areaCalc.updateCalculatedFields(area);
 	}
 
-	if (isNoOpMeasure(measure.name)) {
+	if (isNoOpMeasure(measure)) {
 		return areaCalc.updateCalculatedFields(area);
 	}
 
@@ -117,8 +118,9 @@ function calculateApplyMeasure(
 }
 
 // R: is_no_op
-function isNoOpMeasure(name: string | null): boolean {
-	return name === null;
+// Measures without a Rabimo field (e.g. 3V4 Tiefbeet) don't change the area balance.
+function isNoOpMeasure(measure: Measure): boolean {
+	return !measureConfigById.get(measure.configId)?.measureKey;
 }
 
 function isTreeMeasure(name: string | null): boolean {

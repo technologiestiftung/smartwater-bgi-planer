@@ -1,3 +1,4 @@
+import { countTreeGroupConnectedAreaOnce } from "@/lib/helpers/measures/trees";
 import areaCalculations from "@/lib/simulation/calculations/areaCalculations";
 import measureCalculations from "@/lib/simulation/calculations/measureCalculations";
 import type { ComputedArea } from "@/lib/simulation/types";
@@ -29,9 +30,12 @@ const applyMeasures = (
 	baseComputedArea: ComputedArea,
 	measures: Measure[],
 ): ApplyMeasuresResult => {
-	const computedArea = measures.reduce((currentArea, measure) => {
-		return measureCalculations.calculateApplyMeasure(currentArea, measure);
-	}, baseComputedArea);
+	const computedArea = countTreeGroupConnectedAreaOnce(measures).reduce(
+		(currentArea, measure) => {
+			return measureCalculations.calculateApplyMeasure(currentArea, measure);
+		},
+		baseComputedArea,
+	);
 
 	const areaPotential = areaCalculations.toAreaPotential(computedArea);
 

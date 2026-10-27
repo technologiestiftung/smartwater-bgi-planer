@@ -1,4 +1,5 @@
 import { measureConfigById } from "@/config/measuresConfig";
+import { countTreeGroupConnectedAreaOnce } from "@/lib/helpers/measures/trees";
 import type {
 	RabimoFeature,
 	RabimoMeasure,
@@ -65,7 +66,7 @@ export function buildRabimoPayload(
 	}
 
 	// Accumulate measures into the corresponding rabimo keys
-	for (const measure of measures) {
+	for (const measure of countTreeGroupConnectedAreaOnce(measures)) {
 		if (!measure.code) continue;
 
 		const entry = measuresByCode.get(measure.code);
@@ -83,7 +84,8 @@ export function buildRabimoPayload(
 		const rabimoKey = MEASURE_KEY_TO_RABIMO[config.measureKey];
 		if (!rabimoKey) continue;
 
-		(entry[rabimoKey] as number) += measure.connectedArea ?? measure.area;
+		const added = measure.connectedArea ?? measure.area;
+		(entry[rabimoKey] as number) += added;
 	}
 
 	return {
