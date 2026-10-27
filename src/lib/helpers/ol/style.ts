@@ -1,6 +1,7 @@
 import { styleList } from "@/config/resources/style";
 import { formatLength } from "@/lib/helpers/ol/format";
 import { useScenarioStore } from "@/store/scenario";
+import { useUiStore } from "@/store/ui";
 import type { ConnectedArea, Measure } from "@/store/scenario/types";
 import type { MeasureGeometryType } from "@/types/measures";
 import Feature, { FeatureLike } from "ol/Feature";
@@ -236,7 +237,11 @@ const getBadgeStyle = (
 	return BADGE_STYLE_CACHE.get(key)!;
 };
 
-const getBadges = (connectedAreas: ConnectedArea[], measures: Measure[]) => {
+const getBadges = (
+	connectedAreas: ConnectedArea[],
+	measures: Measure[],
+	pendingDeleteMeasureIds: string[],
+) => {
 	const caIds = new Set(connectedAreas.map((ca) => ca.id));
 	const caIdByMeasureId = new Map(
 		connectedAreas.map((ca) => [ca.usedByMeasureId, ca.id]),
@@ -245,6 +250,8 @@ const getBadges = (connectedAreas: ConnectedArea[], measures: Measure[]) => {
 	let next = 1;
 
 	for (const measure of measures) {
+		// Measures pending deletion are already gone from the map; don't badge their CA.
+		if (pendingDeleteMeasureIds.includes(measure.id)) continue;
 		const caId = measure.connectedAreaId ?? caIdByMeasureId.get(measure.id);
 		if (!caId || !caIds.has(caId)) continue;
 		if (!badges.has(caId)) badges.set(caId, String(next++));
@@ -257,6 +264,7 @@ const getBadges = (connectedAreas: ConnectedArea[], measures: Measure[]) => {
 let badgeMemo: {
 	connectedAreas?: ConnectedArea[];
 	measures?: Measure[];
+	pendingDeleteMeasureIds?: string[];
 	badges: Map<string, string>;
 } = { badges: new Map() };
 
@@ -265,14 +273,17 @@ const getScenarioBadges = () => {
 	const scenario = activeScenarioId ? scenarios[activeScenarioId] : undefined;
 	if (!scenario) return badgeMemo.badges;
 	const { connectedAreas, measures } = scenario;
+	const { pendingDeleteMeasureIds } = useUiStore.getState();
 	if (
 		badgeMemo.connectedAreas !== connectedAreas ||
-		badgeMemo.measures !== measures
+		badgeMemo.measures !== measures ||
+		badgeMemo.pendingDeleteMeasureIds !== pendingDeleteMeasureIds
 	) {
 		badgeMemo = {
 			connectedAreas,
 			measures,
-			badges: getBadges(connectedAreas, measures),
+			pendingDeleteMeasureIds,
+			badges: getBadges(connectedAreas, measures, pendingDeleteMeasureIds),
 		};
 	}
 	return badgeMemo.badges;

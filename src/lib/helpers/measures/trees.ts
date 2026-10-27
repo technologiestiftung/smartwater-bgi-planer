@@ -1,4 +1,4 @@
-import type { Measure } from "@/store/scenario/types";
+import type { ConnectedArea, Measure } from "@/store/scenario/types";
 
 // Trees connected to the same area form one group; its connected area must only count once.
 // Groups by connectedAreaId, falling back to code for trees saved without one.
@@ -20,4 +20,23 @@ export const countTreeGroupConnectedAreaOnce = (
 
 		return { ...measure, connectedArea: 0 };
 	});
+};
+
+export const isConnectedAreaUsed = (
+	connectedArea: ConnectedArea,
+	measures: Measure[],
+	pendingDeleteMeasureIds: string[],
+): boolean => {
+	if (connectedArea.usedByMeasureId !== "trees") {
+		return Boolean(connectedArea.usedByMeasureId);
+	}
+
+	return measures.some(
+		(m) =>
+			m.name.startsWith("trees_") &&
+			!pendingDeleteMeasureIds.includes(m.id) &&
+			(m.connectedAreaId
+				? m.connectedAreaId === connectedArea.id
+				: m.code === connectedArea.code),
+	);
 };

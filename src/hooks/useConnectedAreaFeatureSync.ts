@@ -1,13 +1,15 @@
 "use client";
 
+import { isConnectedAreaUsed } from "@/lib/helpers/measures/trees";
 import { whenBadgeFontLoaded } from "@/lib/helpers/ol/style";
 import { useMapStore } from "@/store/map";
 import { useScenarioStore } from "@/store/scenario";
+import { useUiStore } from "@/store/ui";
 import type { ConnectedArea, Measure } from "@/store/scenario/types";
 import { LAYER_IDS } from "@/types/shared";
 import VectorLayer from "ol/layer/Vector";
 import { Vector as VectorSource } from "ol/source";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const EMPTY_CAS: ConnectedArea[] = [];
 const EMPTY_MEASURES: Measure[] = [];
@@ -25,18 +27,30 @@ export function useConnectedAreaFeatureSync() {
 			: EMPTY_MEASURES;
 	});
 
+	const pendingDeleteMeasureIds = useUiStore(
+		(state) => state.pendingDeleteMeasureIds,
+	);
+
 	const [badgeFontLoaded, setBadgeFontLoaded] = useState(false);
 
 	useEffect(() => {
 		whenBadgeFontLoaded().then(() => setBadgeFontLoaded(true));
 	}, []);
 
+	const usedIds = useMemo(
+		() =>
+			new Set(
+				connectedAreas
+					.filter((ca) =>
+						isConnectedAreaUsed(ca, measures, pendingDeleteMeasureIds),
+					)
+					.map((ca) => ca.id),
+			),
+		[connectedAreas, measures, pendingDeleteMeasureIds],
+	);
+
 	useEffect(() => {
 		if (!map) return;
-
-		const usedIds = new Set(
-			connectedAreas.filter((ca) => ca.usedByMeasureId).map((ca) => ca.id),
-		);
 
 		for (const layer of map.getAllLayers()) {
 			if (!(layer instanceof VectorLayer)) continue;
@@ -54,5 +68,5 @@ export function useConnectedAreaFeatureSync() {
 			}
 			source?.changed();
 		}
-	}, [map, connectedAreas, measures, badgeFontLoaded]);
+	}, [map, usedIds, measures, badgeFontLoaded]);
 }
