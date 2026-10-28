@@ -94,6 +94,14 @@
 			"order": 3,
 			"title": "Modul 3: Maßnahmenplanung",
 			"description": "",
+			"introTitle": "Maßnahmenplanung",
+			"intro": [
+				{
+					"type": "bold",
+					"text": "In diesem Modul können Maßnahmen geplant werden. Dafür wählen Sie Maßnahmen aus und platzieren sie im Gebiet. Anschließend können Sie eine Effektbewertung für die Handlungsbedarfe “Wasserhaushalt” und “Gewässerbelastung” durchführen und die Ergebnisse in einem Bericht runterladen."
+				},
+				"Nutzen Sie die Steckbriefe, um sich eine Übersicht zu den einzelnen Maßnahmen zu machen. Für einige Maßnahmen liegen des Weiteren Modellierungen zu ihren Effekten auf das Stadtklima und die Überflutungsvorsorge, simuliert in einem Pilotgebiet in Friedrichshain-Kreuzberg."
+			],
 			"steps": [
 				{
 					"id": "greenRoof",
@@ -799,7 +807,10 @@
 							"title": "Mulde",
 							"metricIcons": ["Tree", "ThermometerHot", "Drop"],
 							"info": {
-								"description": "Eine Mulde ist eine naturnahe Versickerungsanlage mit einer maximalen Einstauhöhe von 30 cm. Niederschlagswasser von angeschlossenen Flächen wird kurzzeitig zwischengespeichert und versickert durch die bewachsene Bodenzone, in der es gereinigt wird.",
+								"description": [
+									"Eine Mulde ist eine naturnahe Versickerungsanlage mit einer maximalen Einstauhöhe von 30 cm. Niederschlagswasser von angeschlossenen Flächen wird kurzzeitig zwischengespeichert und versickert durch die bewachsene Bodenzone, in der es gereinigt wird.",
+									"Die blauen Flächen zeigen die Potenzialflächen der ausgewählten Versickerungsmaßnahme laut Versickerungspotenzialkarte an."
+								],
 								"scores": {
 									"CloudRain": 2,
 									"ThermometerHot": 2,
@@ -905,7 +916,10 @@
 							"title": "Flächenversickerung",
 							"metricIcons": ["Tree", "ThermometerHot", "Drop"],
 							"info": {
-								"description": "Bei einer Flächenversickerung kann das Regenwasser breitflächig auf unbefestigten begrünten Randstreifen oder Grünflächen geleitet werden und dort durch die bewachsene Bodenzone versickern. Die Flächenversickerung kommt der natürlichen Versickerung am nächsten.",
+								"description": [
+									"Bei einer Flächenversickerung kann das Regenwasser breitflächig auf unbefestigten begrünten Randstreifen oder Grünflächen geleitet werden und dort durch die bewachsene Bodenzone versickern. Die Flächenversickerung kommt der natürlichen Versickerung am nächsten.",
+									"Die blauen Flächen zeigen die Potenzialflächen der ausgewählten Versickerungsmaßnahme laut Versickerungspotenzialkarte an."
+								],
 								"scores": {
 									"CloudRain": 2,
 									"ThermometerHot": 2,
@@ -998,7 +1012,10 @@
 							"title": "Mulden-Rigolen-Element",
 							"metricIcons": ["Tree", "Drop"],
 							"info": {
-								"description": "Ein Mulden-Rigolen-Element kombiniert eine Versickerungsmulde mit einer Rigole. Die Kombination wird bei geringerer Wasserdurchlässigkeit des Bodens genutzt. Das Niederschlagswasser wird kurzzeitig oberirdisch in der Mulde, sowie unterirdisch in der Rigole zwischengespeichert. Anschließend versickert das Regenwasser, das zuvor durch die bewachsene Bodenzone gereinigt wurde, im angrenzenden Erdboden.",
+								"description": [
+									"Ein Mulden-Rigolen-Element kombiniert eine Versickerungsmulde mit einer Rigole. Die Kombination wird bei geringerer Wasserdurchlässigkeit des Bodens genutzt. Das Niederschlagswasser wird kurzzeitig oberirdisch in der Mulde, sowie unterirdisch in der Rigole zwischengespeichert. Anschließend versickert das Regenwasser, das zuvor durch die bewachsene Bodenzone gereinigt wurde, im angrenzenden Erdboden.",
+									"Die blauen Flächen zeigen die Potenzialflächen der ausgewählten Versickerungsmaßnahme laut Versickerungspotenzialkarte an."
+								],
 								"scores": {
 									"CloudRain": 2,
 									"ThermometerHot": 2,
@@ -1100,7 +1117,10 @@
 							"title": "Tiefbeet",
 							"metricIcons": ["Tree"],
 							"info": {
-								"description": "Tiefbeete sind eine Sonderform der Mulde und werden statt mit einer Erdböschung durch Betonrahmen oder Betonelementen eingefasst. Sie können mit Rigolen als Tiefbeet-Rigolen-Element kombiniert werden. Im öffentlichen Straßenraum bedarf es der Abstimmung zur Verkehrssicherung.",
+								"description": [
+									"Tiefbeete sind eine Sonderform der Mulde und werden statt mit einer Erdböschung durch Betonrahmen oder Betonelementen eingefasst. Sie können mit Rigolen als Tiefbeet-Rigolen-Element kombiniert werden. Im öffentlichen Straßenraum bedarf es der Abstimmung zur Verkehrssicherung.",
+									"Die blauen Flächen zeigen die Potenzialflächen der ausgewählten Versickerungsmaßnahme laut Versickerungspotenzialkarte an."
+								],
 								"scores": {
 									"CloudRain": 2,
 									"ThermometerHot": 2,
@@ -1184,7 +1204,10 @@
 							"title": "Optimierter Baumstandort (Baum mit unterirdischer Versickerung kombiniert)",
 							"metricIcons": ["ThermometerHot", "RoadHorizon"],
 							"info": {
-								"description": "Der Begriff optimierter Baumstandort steht für die Kombination aus Baumstandort und Regenwasserbewirtschaftung. Das können Flächenversickerung oder Muldenversickerung mit Baumstandorten sein sowie Baumstandorte mit speicherfähigen Substraten oder gedichteten Bodenwannen z.B. aus Ton- oder  Bentonitabdichtungen zur Speicherung von Regenwasser. Im BGI-Planer ist der Begriff optimierter Baumstandort als Baumstandort mit Speicherraum und unterirdischer Versickerung definiert.",
+								"description": [
+									"Der Begriff optimierter Baumstandort steht für die Kombination aus Baumstandort und Regenwasserbewirtschaftung. Das können Flächenversickerung oder Muldenversickerung mit Baumstandorten sein sowie Baumstandorte mit speicherfähigen Substraten oder gedichteten Bodenwannen z.B. aus Ton- oder  Bentonitabdichtungen zur Speicherung von Regenwasser. Im BGI-Planer ist der Begriff optimierter Baumstandort als Baumstandort mit Speicherraum und unterirdischer Versickerung definiert.",
+									"Die blauen Flächen zeigen die Potenzialflächen der ausgewählten Versickerungsmaßnahme laut Versickerungspotenzialkarte an."
+								],
 								"scores": {
 									"CloudRain": 2,
 									"ThermometerHot": 3,
@@ -1276,7 +1299,10 @@
 							"title": "Rigole",
 							"metricIcons": ["Tree", "Drop"],
 							"info": {
-								"description": "Eine Rigole ist eine unterirdisch verbaute Versickerungsanlage. Sie bestehen aus Füllmaterialien wie gewaschenem Kies, Lavagranulat oder aus einem Kunststoff- oder auch Betonhohlkörper. Durch das geschaffene Speichervolumen kann das Niederschlagswasser der angeschlossenen Flächen auch bei geringerer Wasserdurchlässigkeit des Bodens zwischengespeichert und versickert werden.",
+								"description": [
+									"Eine Rigole ist eine unterirdisch verbaute Versickerungsanlage. Sie bestehen aus Füllmaterialien wie gewaschenem Kies, Lavagranulat oder aus einem Kunststoff- oder auch Betonhohlkörper. Durch das geschaffene Speichervolumen kann das Niederschlagswasser der angeschlossenen Flächen auch bei geringerer Wasserdurchlässigkeit des Bodens zwischengespeichert und versickert werden.",
+									"Die blauen Flächen zeigen die Potenzialflächen der ausgewählten Versickerungsmaßnahme laut Versickerungspotenzialkarte an."
+								],
 								"scores": {
 									"CloudRain": 2,
 									"ThermometerHot": 1,

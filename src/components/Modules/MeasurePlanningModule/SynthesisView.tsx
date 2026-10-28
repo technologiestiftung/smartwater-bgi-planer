@@ -15,7 +15,7 @@ import type { Result } from "@/store/result/types";
 import { ResultStatistics } from "@/types/result";
 import { XIcon } from "@phosphor-icons/react";
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const CACHE_MAX_SIZE = 20;
 
@@ -32,6 +32,9 @@ const lastRequestByScenarioId = new Map<
 	string,
 	{ payloadKey: string; runoffReduction: number | undefined }
 >();
+// Module-level so requests still in flight when SynthesisView unmounts are
+// superseded by requests from a later instance.
+let latestRequestId = 0;
 
 // The Rabimo service sleeps when idle; the first request after a pause can
 // time out while it wakes up, so retry server errors once.
@@ -66,7 +69,6 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 		{},
 	);
 	const [plotState, setPlotState] = useState<RequestState>("idle");
-	const requestIdRef = useRef(0);
 
 	const result = useCurrentResult();
 	const stats = result?.data
@@ -123,6 +125,8 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 			const existingResult =
 				useResultStore.getState().resultsByScenarioId[scenarioId];
 			if (!existingResult) return false;
+			// A superseded in-flight request may have left the status at "loading".
+			setStatus(scenarioId, "done");
 			setError("");
 			setState("success");
 			if (last.runoffReduction !== undefined) {
@@ -131,17 +135,17 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 			}
 			return true;
 		},
-		[fetchPlots],
+		[fetchPlots, setStatus],
 	);
 
 	// eslint-disable-next-line complexity
 	const handleRequest = useCallback(async () => {
 		if (!activeScenarioId || !payload) return;
 
-		const requestId = ++requestIdRef.current;
+		const requestId = ++latestRequestId;
 		const requestScenarioId = activeScenarioId;
 		const isStale = () =>
-			requestId !== requestIdRef.current ||
+			requestId !== latestRequestId ||
 			useScenarioStore.getState().activeScenarioId !== requestScenarioId;
 		const payloadKey = JSON.stringify(payload);
 
