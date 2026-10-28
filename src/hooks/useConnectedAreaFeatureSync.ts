@@ -1,50 +1,72 @@
 "use client";
 
+import { isConnectedAreaUsed } from "@/lib/helpers/measures/trees";
+import { whenBadgeFontLoaded } from "@/lib/helpers/ol/style";
 import { useMapStore } from "@/store/map";
 import { useScenarioStore } from "@/store/scenario";
+import { useUiStore } from "@/store/ui";
+import type { ConnectedArea, Measure } from "@/store/scenario/types";
 import { LAYER_IDS } from "@/types/shared";
 import VectorLayer from "ol/layer/Vector";
 import { Vector as VectorSource } from "ol/source";
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-/**
- * Keeps `isUsed` on every connected-area OL feature in sync with the
- * scenario store's `usedByMeasureId` field. This lets the `connectedArea`
- * OL style conditionally render used vs. available CAs without a second layer.
- */
+const EMPTY_CAS: ConnectedArea[] = [];
+const EMPTY_MEASURES: Measure[] = [];
+
 export function useConnectedAreaFeatureSync() {
 	const map = useMapStore((state) => state.map);
 	const connectedAreas = useScenarioStore((state) => {
 		const id = state.activeScenarioId;
-		return id ? (state.scenarios[id]?.connectedAreas ?? []) : [];
+		return id ? (state.scenarios[id]?.connectedAreas ?? EMPTY_CAS) : EMPTY_CAS;
 	});
+	const measures = useScenarioStore((state) => {
+		const id = state.activeScenarioId;
+		return id
+			? (state.scenarios[id]?.measures ?? EMPTY_MEASURES)
+			: EMPTY_MEASURES;
+	});
+
+	const pendingDeleteMeasureIds = useUiStore(
+		(state) => state.pendingDeleteMeasureIds,
+	);
+
+	const [badgeFontLoaded, setBadgeFontLoaded] = useState(false);
+
+	useEffect(() => {
+		whenBadgeFontLoaded().then(() => setBadgeFontLoaded(true));
+	}, []);
+
+	const usedIds = useMemo(
+		() =>
+			new Set(
+				connectedAreas
+					.filter((ca) =>
+						isConnectedAreaUsed(ca, measures, pendingDeleteMeasureIds),
+					)
+					.map((ca) => ca.id),
+			),
+		[connectedAreas, measures, pendingDeleteMeasureIds],
+	);
 
 	useEffect(() => {
 		if (!map) return;
 
-		const layer = map
-			.getAllLayers()
-			.find((l) => l.get("id") === LAYER_IDS.CONNECTED_AREA_DRAW) as
-			VectorLayer<VectorSource> | undefined;
-		const source = layer?.getSource();
-		if (!source) return;
+		for (const layer of map.getAllLayers()) {
+			if (!(layer instanceof VectorLayer)) continue;
+			const source = layer.getSource() as VectorSource | null;
+			const features = source?.getFeatures() ?? [];
+			if (!features.some((f) => f.get("connectedAreaId") || f.get("measureId")))
+				continue;
 
-		const usedIds = new Set(
-			connectedAreas.filter((ca) => ca.usedByMeasureId).map((ca) => ca.id),
-		);
-
-		let changed = false;
-		for (const feature of source.getFeatures()) {
-			const caId = feature.get("connectedAreaId") as string | undefined;
-			if (!caId) continue;
-
-			const isUsed = usedIds.has(caId);
-			if (feature.get("isUsed") !== isUsed) {
-				feature.set("isUsed", isUsed, /* silent= */ true);
-				changed = true;
+			if (layer.get("id") === LAYER_IDS.CONNECTED_AREA_DRAW) {
+				for (const feature of features) {
+					const caId = feature.get("connectedAreaId") as string | undefined;
+					if (caId)
+						feature.set("isUsed", usedIds.has(caId), /* silent= */ true);
+				}
 			}
+			source?.changed();
 		}
-
-		if (changed) source.changed();
-	}, [map, connectedAreas]);
+	}, [map, usedIds, measures, badgeFontLoaded]);
 }

@@ -3,7 +3,8 @@ import { simulationEngine } from "@/lib/simulation/simulationEngine";
 import { useProjectStore } from "@/store/project";
 import { ComputedFeatures } from "@/store/project/types";
 import { useUiStore } from "@/store/ui";
-import { ConnectedArea, Measure, MeasureValue, ScenarioState } from "./types";
+import { isConnectedAreaUsed } from "@/lib/helpers/measures/trees";
+import { ConnectedArea, Measure, ScenarioState } from "./types";
 
 type SetState = (fn: (state: ScenarioState) => Partial<ScenarioState>) => void;
 type GetState = () => ScenarioState;
@@ -138,31 +139,18 @@ export const createRemoveMeasure = (set: SetState, get: GetState) => {
 			const scenario = state.scenarios[scenarioId];
 			if (!scenario) return state;
 
-			const removedMeasure = scenario.measures.find((m) => m.id === measureId);
 			const nextMeasures = scenario.measures.filter(
 				(measure) => measure.id !== measureId,
 			);
 
-			// Free any ConnectedArea that was used by this measure (polygon measures)
-			let nextConnectedAreas = scenario.connectedAreas.map((ca) =>
-				ca.usedByMeasureId === measureId
+			// Free the CA used by this measure, and tree CAs whose last tree is gone
+			const nextConnectedAreas = scenario.connectedAreas.map((ca) =>
+				ca.usedByMeasureId === measureId ||
+				(ca.usedByMeasureId === "trees" &&
+					!isConnectedAreaUsed(ca, nextMeasures))
 					? { ...ca, usedByMeasureId: null }
 					: ca,
 			);
-
-			// For tree measures: free CA if no remaining trees share the same code
-			if (removedMeasure?.name.startsWith("trees_") && removedMeasure.code) {
-				const hasRemainingTrees = nextMeasures.some(
-					(m) => m.name.startsWith("trees_") && m.code === removedMeasure.code,
-				);
-				if (!hasRemainingTrees) {
-					nextConnectedAreas = nextConnectedAreas.map((ca) =>
-						ca.usedByMeasureId === "trees" && ca.code === removedMeasure.code
-							? { ...ca, usedByMeasureId: null }
-							: ca,
-					);
-				}
-			}
 
 			return {
 				scenarios: {
@@ -171,61 +159,6 @@ export const createRemoveMeasure = (set: SetState, get: GetState) => {
 						...scenario,
 						measures: nextMeasures,
 						connectedAreas: nextConnectedAreas,
-					},
-				},
-			};
-		});
-
-		const measures = get().scenarios[scenarioId]?.measures;
-		if (measures) {
-			syncProjectDerivedSimulation(measures);
-		}
-	};
-};
-
-export const createUpdateMeasureValues = (set: SetState, get: GetState) => {
-	return (
-		scenarioId: string,
-		measureId: string,
-		values: Record<string, MeasureValue>,
-	) => {
-		set((state) => {
-			const scenario = state.scenarios[scenarioId];
-			if (!scenario) return state;
-
-			const nextAreaValue = values.area ?? values.connectedArea;
-			let nextArea: number | undefined;
-			if (typeof nextAreaValue === "number") {
-				nextArea = nextAreaValue;
-			} else if (typeof nextAreaValue === "string") {
-				nextArea = Number(nextAreaValue) || 0;
-			}
-
-			let nextConnectedArea: number | undefined;
-			if (typeof values.connectedArea === "number") {
-				nextConnectedArea = values.connectedArea;
-			} else if (typeof values.connectedArea === "string") {
-				nextConnectedArea = Number(values.connectedArea) || undefined;
-			}
-
-			const nextMeasures = scenario.measures.map((measure) =>
-				measure.id === measureId
-					? {
-							...measure,
-							area: nextArea ?? measure.area,
-							...(nextConnectedArea !== undefined && {
-								connectedArea: nextConnectedArea,
-							}),
-						}
-					: measure,
-			);
-
-			return {
-				scenarios: {
-					...state.scenarios,
-					[scenarioId]: {
-						...scenario,
-						measures: nextMeasures,
 					},
 				},
 			};

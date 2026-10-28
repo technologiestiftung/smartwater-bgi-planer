@@ -21,7 +21,7 @@ This Next.js application is being developed as part of the [Smart Water project]
 
 ## Tech Stack
 
-- **Framework**: Next.js 15.2.2 with App Router
+- **Framework**: Next.js with App Router
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS v4 with custom design system
 - **Mapping**: OpenLayers (ol) with MapTiler integration
@@ -30,7 +30,7 @@ This Next.js application is being developed as part of the [Smart Water project]
 
 ## Prerequisites
 
-- Node.js >= 18
+- Node.js >= 24
 - npm or similar package manager
 - Docker (for containerized deployment)
 

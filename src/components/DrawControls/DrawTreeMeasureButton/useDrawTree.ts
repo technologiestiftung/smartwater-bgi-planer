@@ -95,23 +95,32 @@ export const useDrawTree = () => {
 			selectedConnectedAreaId &&
 			activeScenarioId
 		) {
-			useScenarioStore
-				.getState()
-				.markConnectedAreaUsed(
+			const { scenarios, markConnectedAreaUsed } = useScenarioStore.getState();
+			const hasTrees = scenarios[activeScenarioId]?.measures.some(
+				(m) => m.connectedAreaId === selectedConnectedAreaId,
+			);
+			if (hasTrees) {
+				markConnectedAreaUsed(
 					activeScenarioId,
 					selectedConnectedAreaId,
 					"trees",
 				);
+			}
 			hasDrawnOnCurrentCARef.current = false;
 		}
 	}, [isTreePit, selectedConnectedAreaId, activeScenarioId]);
+
+	const consumeCurrentCARef = useRef(consumeCurrentCA);
+	useEffect(() => {
+		consumeCurrentCARef.current = consumeCurrentCA;
+	}, [consumeCurrentCA]);
 
 	// Cleanup on unmount or layer change
 	useEffect(() => {
 		if (!map || !drawLayerId) return;
 		stopDraw();
 		return () => {
-			consumeCurrentCA();
+			consumeCurrentCARef.current();
 			stopDraw();
 			useUiStore.getState().setSelectedConnectedArea(null);
 		};

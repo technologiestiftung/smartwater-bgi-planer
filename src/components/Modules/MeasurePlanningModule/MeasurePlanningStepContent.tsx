@@ -150,13 +150,8 @@ export function MeasurePlanningStepContent({
 		if (draftMeasureIds.length === 0 && draftConnectedAreaIds.length === 0)
 			return;
 
-		const {
-			activeScenarioId,
-			scenarios,
-			removeMeasure,
-			removeConnectedArea,
-			markConnectedAreaUsed,
-		} = useScenarioStore.getState();
+		const { activeScenarioId, removeMeasure, removeConnectedArea } =
+			useScenarioStore.getState();
 		if (!activeScenarioId) return;
 
 		removeDraftFeaturesFromLayer(draftMeasureIds, draftConnectedAreaIds);
@@ -167,15 +162,6 @@ export function MeasurePlanningStepContent({
 
 		for (const connectedAreaId of draftConnectedAreaIds) {
 			removeConnectedArea(activeScenarioId, connectedAreaId);
-		}
-
-		const scenario = scenarios[activeScenarioId];
-		if (scenario) {
-			for (const ca of scenario.connectedAreas) {
-				if (ca.usedByMeasureId === "trees") {
-					markConnectedAreaUsed(activeScenarioId, ca.id, null);
-				}
-			}
 		}
 
 		clearDraftMeasures();

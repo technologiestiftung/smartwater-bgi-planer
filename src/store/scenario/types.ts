@@ -41,11 +41,6 @@ export interface ScenarioActions {
 	updateScenarioName: (id: string, name: string) => void;
 	addMeasure: (id: string, measure: Measure) => void;
 	removeMeasure: (scenarioId: string, measureId: string) => void;
-	updateMeasureValues: (
-		scenarioId: string,
-		measureId: string,
-		values: Partial<Record<MeasureParameterKey, MeasureValue>>,
-	) => void;
 	addConnectedArea: (scenarioId: string, connectedArea: ConnectedArea) => void;
 	removeConnectedArea: (scenarioId: string, connectedAreaId: string) => void;
 	markConnectedAreaUsed: (

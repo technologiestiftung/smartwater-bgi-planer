@@ -112,6 +112,7 @@ const ReportDownloadButton: FC<ReportDownloadButtonProps> = ({
 	const [error, setError] = useState<string | null>(null);
 
 	const project = useProjectStore((s) => s.project);
+	const inputFeatures = useProjectStore((s) => s.inputFeatures);
 	const activeScenarioId = useScenarioStore((s) => s.activeScenarioId);
 	const scenarios = useScenarioStore((s) => s.scenarios);
 
@@ -151,9 +152,16 @@ const ReportDownloadButton: FC<ReportDownloadButtonProps> = ({
 		setError(null);
 
 		try {
-			const activeScenario = activeScenarioId
+			const scenario = activeScenarioId
 				? (scenarios[activeScenarioId] ?? null)
 				: null;
+			const projectCodes = new Set(inputFeatures.map((f) => f.properties.code));
+			const activeScenario = scenario && {
+				...scenario,
+				measures: scenario.measures.filter(
+					(m) => m.code && projectCodes.has(m.code),
+				),
+			};
 
 			const allQuestionIDs = modulesData.modules
 				.filter((module) => module.id !== "measurePlanning")

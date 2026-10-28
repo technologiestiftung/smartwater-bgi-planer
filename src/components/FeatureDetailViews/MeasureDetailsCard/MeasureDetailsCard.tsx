@@ -9,6 +9,7 @@ import { measureConfigById } from "@/config/measuresConfig";
 import { markMeasureForDeletion } from "@/lib/helpers/measures/pendingDeletes";
 import { formatMeasureValue } from "@/lib/helpers/measures/values";
 import { getLayerById } from "@/lib/helpers/ol";
+import { withBadge } from "@/lib/helpers/ol/style";
 import { useMapStore } from "@/store/map";
 import { useScenarioStore } from "@/store/scenario";
 import type { MeasureValue } from "@/store/scenario/types";
@@ -85,7 +86,7 @@ export const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
 		if (!feature) return;
 
 		previousStyleRef.current = feature.getStyle();
-		feature.setStyle(highlightedConnectedAreaStyle);
+		feature.setStyle((f) => withBadge(f, highlightedConnectedAreaStyle));
 		return () => {
 			feature.setStyle(previousStyleRef.current);
 		};
