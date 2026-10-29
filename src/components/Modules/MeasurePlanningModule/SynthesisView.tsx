@@ -39,7 +39,6 @@ let latestRequestId = 0;
 // The Rabimo service sleeps when idle; the first request after a pause can
 // time out while it wakes up, so retry server errors once.
 async function postRabimo(payload: unknown): Promise<Response> {
-	console.log("[postRabimo] payload::", payload);
 
 	const send = () =>
 		fetch("/api/rabimo", {
@@ -271,39 +270,54 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 
 					<div className="mt-4 flex flex-col gap-2">
 						<p>
-							Die Auswirkungen geplanter BGI-Maßnahmen auf die Gewässerbelastung
-							werden mithilfe eines vereinfachten, datenbasierten Modells
-							abgeschätzt. Grundlage sind umfangreiche hydrodynamische
+							Die mögliche Verringerung der Gewässerbelastung durch
+							Mischwasserüberläufe nach Starkregen infolge geplanter
+							BGI-Maßnahmen wird mithilfe eines vereinfachten, datenbasierten
+							Modells abgeschätzt. Grundlage sind umfangreiche hydrodynamische
 							Simulationen des Berliner Mischwassersystems mit dem
 							Mischkanalnetzmodell (InfoWorks ICM) und dem gekoppelten
 							Gewässergütemodell (GERRIS/HYDRAX/QSim).
 						</p>
 						<p>
-							Aus den geplanten Maßnahmen wird zunächst die Verringerung des
-							Regenabflusses in die Mischkanalisation ermittelt. Für die
-							Wirkungsabschätzung wird diese Abflussreduktion auf die
-							angeschlossenen versiegelten Flächen aller 18 Berliner
+							Zunächst wird ermittelt, um welchen Betrag die geplanten Maßnahmen
+							den Regenabfluss in die Mischkanalisation reduzieren. Für die
+							Wirkungsabschätzung wird diese Abflussreduktion auf die gesamten
+							angeschlossenen, versiegelten Flächen aller 18 Berliner
 							Mischwassereinzugsgebiete hochgerechnet und über die aus den
 							Modellrechnungen abgeleiteten Wirkungszusammenhänge in
 							Veränderungen der Gewässerbelastung übersetzt.
 						</p>
 						<p>
-							Die Ergebnisse werden anhand der Kennwerte „Unterschreitungsdauer
-							in Stunden“ und „Anzahl kritischer O₂-Ereignisse“ dargestellt.
-							Beide Kennwerte beziehen sich auf Sauerstoffkonzentrationen unter
-							1,5 mg/L, die als fischkritisch gelten und zu Fischsterben führen
-							können. Je geringer die Unterschreitungsdauer und je weniger
-							kritische O₂-Ereignisse auftreten, desto geringer ist die
-							Belastung der Gewässer durch Mischwasserüberläufe.
+							Damit lässt sich abschätzen, wie sich die vorgenommene Planung mit
+							einer Abkopplung von x % auf die Gewässerbelastung auswirken
+							würde, wenn auf allen Flächen im Mischkanalisationsgebiet die
+							gleiche relative Abkopplung versiegelter Flächen umgesetzt werden
+							würde.
 						</p>
 						<p>
-							Für den berlinweiten Vorher-Nachher-Vergleich werden die
-							Ergebnisse aller Gewässerabschnitte zu einem Kennwert
-							zusammengefasst. Hierfür wird für die Unterschreitungsdauer der
-							Median und für die Anzahl kritischer O₂-Ereignisse der Mittelwert
-							über alle Gewässerabschnitte gebildet. Die Kartendarstellung zeigt
-							dagegen die berechneten Kennwerte für jeden Gewässerabschnitt
-							separat.
+							Die Berechnungsgrundlage bilden 14 reale Niederschlagsereignisse
+							aus den Jahren 2011 bis 2019, die zu Mischwasserüberläufen und
+							kritischen Sauerstoffverhältnissen in den aufnehmenden
+							Fließgewässern geführt haben. Die Ergebnisse werden anhand der
+							Kennwerte „Unterschreitungsdauer in Stunden“ und „Anzahl
+							kritischer O₂-Ereignisse“ dargestellt. Beide Kennwerte beziehen
+							sich auf Sauerstoffkonzentrationen unter 1,5 mg/L, die als
+							kritisch für die in Berliner Fließgewässern vorkommenden
+							Fischarten gelten und Fischsterben verursachen können. Je geringer
+							die Unterschreitungsdauer und je weniger kritische O₂-Ereignisse
+							auftreten, desto geringer ist die Belastung der Gewässer durch
+							Mischwasserüberläufe.
+						</p>
+						<p>
+							Für den Vorher-Nachher-Vergleich werden die Ergebnisse aller
+							Gewässerabschnitte zu einem Kennwert zusammengefasst. Für die
+							Unterschreitungsdauer wird der Median verwendet, um den Einfluss
+							einzelner besonders stark betroffener Gewässerabschnitte auf den
+							berlinweiten Vergleich zu begrenzen. Für die Anzahl kritischer
+							O₂-Ereignisse wird der Mittelwert über alle Gewässerabschnitte
+							berechnet. Die Kartendarstellung zeigt dagegen die Kennwerte für
+							die einzelnen Gewässerabschnitte und verdeutlicht, wo die
+							Maßnahmen die Gewässerbelastung besonders stark verringern.
 						</p>
 					</div>
 				</div>
