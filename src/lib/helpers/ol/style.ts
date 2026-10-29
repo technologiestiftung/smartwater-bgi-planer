@@ -1,8 +1,12 @@
 import { styleList } from "@/config/resources/style";
 import { formatLength } from "@/lib/helpers/ol/format";
+import { useScenarioStore } from "@/store/scenario";
+import { useUiStore } from "@/store/ui";
+import type { ConnectedArea, Measure } from "@/store/scenario/types";
 import type { MeasureGeometryType } from "@/types/measures";
 import Feature, { FeatureLike } from "ol/Feature";
 import LineString from "ol/geom/LineString";
+import MultiPolygon from "ol/geom/MultiPolygon";
 import Point from "ol/geom/Point";
 import Polygon from "ol/geom/Polygon";
 import VectorLayer from "ol/layer/Vector";
@@ -137,6 +141,164 @@ export const createOLStyle = (config: StyleConfig): Style | Style[] => {
 	return result;
 };
 
+const BADGE_PRIMARY = "#0c4c38";
+const BADGE_WHITE = "#ffffff";
+const BADGE_OFFSET = 22;
+const BADGE_STYLE_CACHE = new Map<string, Style>();
+
+let badgeFontFamily: string | undefined;
+const getBadgeFont = () => {
+	badgeFontFamily ??=
+		typeof document === "undefined"
+			? "sans-serif"
+			: getComputedStyle(document.body).fontFamily || "sans-serif";
+	return `500 12px ${badgeFontFamily}`;
+};
+
+const BADGE_RADIUS = 11;
+const BADGE_STROKE = 2;
+
+const createBadgeCanvas = (
+	badge: string,
+	font: string,
+	[fill, ring, ink]: string[],
+) => {
+	const dpr = window.devicePixelRatio || 1;
+	const size = BADGE_RADIUS * 2 + BADGE_STROKE;
+	const center = size / 2;
+	const canvas = document.createElement("canvas");
+	canvas.width = size * dpr;
+	canvas.height = size * dpr;
+	const ctx = canvas.getContext("2d");
+	if (!ctx) return canvas;
+
+	ctx.scale(dpr, dpr);
+	ctx.beginPath();
+	ctx.arc(center, center, BADGE_RADIUS, 0, 2 * Math.PI);
+	ctx.fillStyle = fill;
+	ctx.fill();
+	ctx.lineWidth = BADGE_STROKE;
+	ctx.strokeStyle = ring;
+	ctx.stroke();
+
+	ctx.font = font;
+	ctx.textAlign = "left";
+	ctx.textBaseline = "alphabetic";
+	const m = ctx.measureText(badge);
+	ctx.fillStyle = ink;
+	ctx.fillText(
+		badge,
+		center - (m.actualBoundingBoxRight - m.actualBoundingBoxLeft) / 2,
+		center + (m.actualBoundingBoxAscent - m.actualBoundingBoxDescent) / 2,
+	);
+	return canvas;
+};
+
+let badgeFontLoad: Promise<void> | undefined;
+export const whenBadgeFontLoaded = () => {
+	badgeFontLoad ??= document.fonts
+		.load(getBadgeFont())
+		.then(() => BADGE_STYLE_CACHE.clear())
+		.catch(() => {});
+	return badgeFontLoad;
+};
+
+// Polygons: draw the badge at the interior point (circle images need a point)
+const badgeGeometry = (feature: FeatureLike) => {
+	const geometry = feature.getGeometry();
+	if (geometry instanceof Polygon) return geometry.getInteriorPoint();
+	if (geometry instanceof MultiPolygon) return geometry.getInteriorPoints();
+	return geometry;
+};
+
+const getBadgeStyle = (
+	badge: string,
+	isPoint: boolean,
+	isConnectedArea: boolean,
+) => {
+	const key = `${badge}:${isPoint}:${isConnectedArea}`;
+	if (!BADGE_STYLE_CACHE.has(key)) {
+		const font = getBadgeFont();
+		const colors = isConnectedArea
+			? [BADGE_WHITE, BADGE_PRIMARY, BADGE_PRIMARY]
+			: [BADGE_PRIMARY, BADGE_WHITE, BADGE_WHITE];
+		const dpr = window.devicePixelRatio || 1;
+		const style = new Style({
+			geometry: badgeGeometry,
+			image: new Icon({
+				img: createBadgeCanvas(badge, font, colors),
+				scale: 1 / dpr,
+				displacement: [0, isPoint ? BADGE_OFFSET : 0],
+			}),
+			zIndex: Infinity,
+		});
+		BADGE_STYLE_CACHE.set(key, style);
+	}
+	return BADGE_STYLE_CACHE.get(key)!;
+};
+
+const getBadges = (
+	connectedAreas: ConnectedArea[],
+	measures: Measure[],
+	pendingDeleteMeasureIds: string[],
+) => {
+	const caIds = new Set(connectedAreas.map((ca) => ca.id));
+	const caIdByMeasureId = new Map(
+		connectedAreas.map((ca) => [ca.usedByMeasureId, ca.id]),
+	);
+	const badges = new Map<string, string>();
+	let next = 1;
+
+	for (const measure of measures) {
+		// Measures pending deletion are already gone from the map; don't badge their CA.
+		if (pendingDeleteMeasureIds.includes(measure.id)) continue;
+		const caId = measure.connectedAreaId ?? caIdByMeasureId.get(measure.id);
+		if (!caId || !caIds.has(caId)) continue;
+		if (!badges.has(caId)) badges.set(caId, String(next++));
+		badges.set(measure.id, badges.get(caId)!);
+	}
+
+	return badges;
+};
+
+let badgeMemo: {
+	connectedAreas?: ConnectedArea[];
+	measures?: Measure[];
+	pendingDeleteMeasureIds?: string[];
+	badges: Map<string, string>;
+} = { badges: new Map() };
+
+const getScenarioBadges = () => {
+	const { scenarios, activeScenarioId } = useScenarioStore.getState();
+	const scenario = activeScenarioId ? scenarios[activeScenarioId] : undefined;
+	if (!scenario) return badgeMemo.badges;
+	const { connectedAreas, measures } = scenario;
+	const { pendingDeleteMeasureIds } = useUiStore.getState();
+	if (
+		badgeMemo.connectedAreas !== connectedAreas ||
+		badgeMemo.measures !== measures ||
+		badgeMemo.pendingDeleteMeasureIds !== pendingDeleteMeasureIds
+	) {
+		badgeMemo = {
+			connectedAreas,
+			measures,
+			pendingDeleteMeasureIds,
+			badges: getBadges(connectedAreas, measures, pendingDeleteMeasureIds),
+		};
+	}
+	return badgeMemo.badges;
+};
+
+export const withBadge = (feature: FeatureLike, style: Style | Style[]) => {
+	const id = (feature.get("connectedAreaId") ?? feature.get("measureId")) as
+		string | undefined;
+	const badge = id ? getScenarioBadges().get(id) : undefined;
+	if (!badge) return style;
+	const isPoint = feature.getGeometry()?.getType() === "Point";
+	const isConnectedArea = !!feature.get("connectedAreaId");
+	return [style, getBadgeStyle(badge, isPoint, isConnectedArea)].flat();
+};
+
 /**
  * Automatically applies static or conditional styles.
  * Returns boolean to satisfy your layer factory.
@@ -153,10 +315,14 @@ export const applyStyleToLayer = (
 	if (isConditional) {
 		layer.setStyle((feature) => {
 			const rule = entry.rules.find((r: any) => matches(feature, r.conditions));
-			return rule ? createOLStyle(rule.style as StyleConfig) : DEFAULT_STYLE;
+			return withBadge(
+				feature,
+				rule ? createOLStyle(rule.style as StyleConfig) : DEFAULT_STYLE,
+			);
 		});
 	} else {
-		layer.setStyle(createOLStyle(entry.rules[0].style as StyleConfig));
+		const style = createOLStyle(entry.rules[0].style as StyleConfig);
+		layer.setStyle((feature) => withBadge(feature, style));
 	}
 
 	return true;

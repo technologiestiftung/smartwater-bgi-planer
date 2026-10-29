@@ -3,6 +3,7 @@
 import { useConnectedAreaSelection } from "@/hooks/useConnectedAreaSelection";
 import { isSwaleLayerConfigId } from "@/lib/helpers/measures/swale";
 import { getLayerById } from "@/lib/helpers/ol";
+import { withBadge } from "@/lib/helpers/ol/style";
 import { useMapStore } from "@/store/map";
 import { useUiStore } from "@/store/ui";
 import { LAYER_IDS } from "@/types/shared";
@@ -116,9 +117,9 @@ export function ConnectedAreaSelection({
 			.forEach((feature) => {
 				const id = feature.get("connectedAreaId") as string | undefined;
 				if (id && id === selectedConnectedAreaId) {
-					feature.setStyle(selectedConnectedAreaStyle);
+					feature.setStyle((f) => withBadge(f, selectedConnectedAreaStyle));
 				} else if (id && !availableIds.has(id)) {
-					feature.setStyle(usedConnectedAreaStyle);
+					feature.setStyle((f) => withBadge(f, usedConnectedAreaStyle));
 				} else {
 					feature.setStyle(undefined);
 				}
@@ -140,6 +141,7 @@ export function ConnectedAreaSelection({
 			removeCondition: singleClick,
 			toggleCondition: never,
 			multi: false,
+			style: (f) => withBadge(f, selectedConnectedAreaStyle),
 			filter: (feature) => {
 				const id = feature.get("connectedAreaId") as string | undefined;
 				return !!id && availableIds.has(id);
@@ -193,7 +195,7 @@ export function ConnectedAreaSelection({
 	if (!isSwaleMeasure) return null;
 
 	return (
-		<div className="border-muted mb-4 rounded-sm border p-3">
+		<div className="border-muted mt-4 mb-4 rounded-sm border p-3">
 			<p className="text-sm font-semibold">Anzuschließende Fläche auswählen</p>
 			<p className="text-muted-foreground mt-1 mb-2 text-xs">
 				Wähle eine anzuschließende Fläche direkt durch Klick auf die Karte. Die

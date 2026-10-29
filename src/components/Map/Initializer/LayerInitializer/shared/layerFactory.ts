@@ -5,6 +5,7 @@ import {
 } from "@/lib/helpers/ol";
 import { LayerService, ManagedLayer } from "@/store/layers/types";
 import { applyStyle } from "ol-mapbox-style";
+import { xhr } from "ol/featureloader";
 import GeoJSON from "ol/format/GeoJSON";
 import { Layer } from "ol/layer";
 import ImageLayer from "ol/layer/Image";
@@ -50,6 +51,7 @@ const createWMTSLayer = (
 			layer: serviceConfig.layers!,
 			matrixSet: serviceConfig.tileMatrixSet!,
 			format: serviceConfig.format,
+			style: serviceConfig.styles,
 		});
 
 		if (!options) {
@@ -193,12 +195,8 @@ const createWFSLayer = (
 			? helpers.config.portalConfig.map.mapView.epsg
 			: "EPSG:25833";
 
-		const vectorSource = new VectorSource({
-			format: new GeoJSON({
-				dataProjection: dataProjection,
-				featureProjection: featureProjection,
-			}),
-			url: (extent) => {
+		const loadXhr = xhr(
+			(extent) => {
 				const bbox = extent.join(",");
 				return `/api/wfs-cache?service=${encodeURIComponent(
 					serviceConfig.url!,
@@ -207,6 +205,20 @@ const createWFSLayer = (
 				}&bbox=${bbox}&dataProjection=${encodeURIComponent(
 					dataProjection,
 				)}&featureProjection=${encodeURIComponent(featureProjection)}`;
+			},
+			new GeoJSON({
+				dataProjection: dataProjection,
+				featureProjection: featureProjection,
+			}),
+		);
+
+		const vectorSource: VectorSource = new VectorSource({
+			// OL marks an extent as loaded even when the request fails; unmark it so it gets refetched
+			loader: function (extent, resolution, projection, success, failure) {
+				loadXhr.call(this, extent, resolution, projection, success, () => {
+					vectorSource.removeLoadedExtent(extent);
+					failure?.();
+				});
 			},
 			strategy: bboxStrategy,
 		});

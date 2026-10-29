@@ -1,24 +1,16 @@
 "use client";
 
 import { measureConfigById } from "@/config/measuresConfig";
+import { isConnectedAreaUsed } from "@/lib/helpers/measures/trees";
 import { useProjectStore } from "@/store/project";
 import { useScenarioStore } from "@/store/scenario";
+import type { ConnectedArea, Measure } from "@/store/scenario/types";
 import { useUiStore } from "@/store/ui";
 import { useMemo } from "react";
 
-const EMPTY_CONNECTED_AREAS: Array<{
-	usedByMeasureId: string;
-	id: string;
-	area: number;
-	code: string | null;
-}> = [];
+const EMPTY_CONNECTED_AREAS: ConnectedArea[] = [];
 
-const EMPTY_MEASURES: Array<{
-	area: number;
-	code: string | null;
-	configId: string;
-	drawLayerId: string | null;
-}> = [];
+const EMPTY_MEASURES: Measure[] = [];
 
 export function useConnectedAreaSelection(
 	layerConfigId: string,
@@ -35,15 +27,21 @@ export function useConnectedAreaSelection(
 			: EMPTY_CONNECTED_AREAS,
 	);
 
-	const connectedAreas = useMemo(
-		() => allConnectedAreas.filter((ca) => !ca.usedByMeasureId),
-		[allConnectedAreas],
-	);
-
 	const measures = useScenarioStore((state) =>
 		state.activeScenarioId
 			? (state.scenarios[state.activeScenarioId]?.measures ?? EMPTY_MEASURES)
 			: EMPTY_MEASURES,
+	);
+	const pendingDeleteMeasureIds = useUiStore(
+		(state) => state.pendingDeleteMeasureIds,
+	);
+
+	const connectedAreas = useMemo(
+		() =>
+			allConnectedAreas.filter(
+				(ca) => !isConnectedAreaUsed(ca, measures, pendingDeleteMeasureIds),
+			),
+		[allConnectedAreas, measures, pendingDeleteMeasureIds],
 	);
 
 	const computedFeatures = useProjectStore((state) => state.computedFeatures);

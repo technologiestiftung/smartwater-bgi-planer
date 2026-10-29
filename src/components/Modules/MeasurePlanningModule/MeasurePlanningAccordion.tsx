@@ -3,10 +3,15 @@
 import { MeasurePlanningStepContent } from "@/components/Modules/MeasurePlanningModule/MeasurePlanningStepContent";
 import { SynthesisView } from "@/components/Modules/MeasurePlanningModule/SynthesisView";
 import {
+	getModuleConfig,
 	getModuleSteps,
 	type ModuleStepViewConfig,
 } from "@/components/Modules/shared/moduleConfig";
+import { RichTextWithLinks } from "@/components/RichTextWithLinks/RichTextWithLinks";
 import { SideMenu } from "@/components/SideMenu";
+import { ClimateSimulation } from "@/components/Simulations/ClimateSimulation";
+import { ClimateSimulationModal } from "@/components/Simulations/ClimateSimulationModal";
+import { FloodRisk } from "@/components/Simulations/FloodRiskSimulation";
 import { Tutorial } from "@/components/Tutorial/Tutorial";
 import {
 	Accordion,
@@ -23,15 +28,18 @@ import { useLayersStore, useUiStore } from "@/store";
 import type { LayerConfigItem } from "@/store/layers/types";
 import type { ModuleMeasurementConfig } from "@/types/shared";
 import { LAYER_IDS } from "@/types/shared";
-import { ArrowLeftIcon, InfoIcon, ListChecksIcon } from "@phosphor-icons/react";
-import Link from "next/link";
+import {
+	ArrowLeftIcon,
+	ArrowRightIcon,
+	InfoIcon,
+	ListChecksIcon,
+	PlayIcon,
+} from "@phosphor-icons/react";
 import Image from "next/image";
+import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { MeasureCatalogModal } from "../MeasureCatalogModule/MeasureCatalogModal";
-import { ClimateSimulation } from "@/components/Simulations/ClimateSimulation";
-import { ClimateSimulationModal } from "@/components/Simulations/ClimateSimulationModal";
-import { FloodRisk } from "@/components/Simulations/FloodRiskSimulation";
 
 interface StepItem {
 	id: string;
@@ -117,6 +125,37 @@ function MeasurePlanningFooter({
 	);
 }
 
+function MeasurePlanningIntroFooter({
+	onClose,
+	onStart,
+}: {
+	onClose: () => void;
+	onStart: () => void;
+}) {
+	return (
+		<div className="border-muted flex h-full w-full border-t">
+			<Button
+				variant="ghost"
+				disabled
+				aria-label="Zusammenfassung anzeigen"
+				className="bg-secondary flex h-full w-18 items-center justify-center rounded-none"
+			>
+				<ListChecksIcon className="h-6 w-6 text-white" />
+			</Button>
+			<div className="flex w-full items-center justify-between p-2">
+				<Button variant="ghost" onClick={onClose}>
+					<ArrowLeftIcon />
+					Schließen
+				</Button>
+				<Button variant="ghost" onClick={onStart}>
+					Überspringen
+					<ArrowRightIcon />
+				</Button>
+			</div>
+		</div>
+	);
+}
+
 interface MeasureListItemProps {
 	item: StepItem;
 	label: string;
@@ -178,6 +217,8 @@ export function MeasurePlanningAccordion({
 	floodRisk,
 }: MeasurePlanningAccordionProps) {
 	const steps = getModuleSteps("measurePlanning");
+	const { intro, introTitle } = getModuleConfig("measurePlanning") ?? {};
+	const [showIntro, setShowIntro] = useState(Boolean(intro) && !info);
 	const { hasFeatures: hasConnectedArea } = useLayerFeatures(
 		LAYER_IDS.CONNECTED_AREA_DRAW,
 	);
@@ -258,6 +299,7 @@ export function MeasurePlanningAccordion({
 	);
 
 	const handleShowSynthesis = useCallback(() => {
+		setShowIntro(false);
 		setIsSynthesisMode(true);
 	}, [setIsSynthesisMode]);
 
@@ -306,6 +348,7 @@ export function MeasurePlanningAccordion({
 		};
 	}, [selectedQuestionConfig, selectedMeasurementInfo, noSimulationIsActive]);
 
+	const isIntroScreen = showIntro && noSimulationIsActive && !isSynthesisMode;
 	let content: React.ReactNode;
 
 	if (isSynthesisMode) {
@@ -331,6 +374,19 @@ export function MeasurePlanningAccordion({
 				}}
 				onConfirm={handleBackToQuestions}
 			/>
+		);
+	} else if (showIntro && noSimulationIsActive) {
+		content = (
+			<div className="flex h-full flex-col px-6 pb-6">
+				<h3 className="text-primary mt-4 mb-4">{introTitle}</h3>
+				<RichTextWithLinks text={intro} className="mb-6" />
+				<div>
+					<Button onClick={() => setShowIntro(false)}>
+						<PlayIcon />
+						Modul 3 anfangen
+					</Button>
+				</div>
+			</div>
 		);
 	} else if (noSimulationIsActive) {
 		content = (
@@ -400,26 +456,36 @@ export function MeasurePlanningAccordion({
 		);
 	}
 
+	let footer: React.ReactNode = null;
+	if (isIntroScreen) {
+		footer = (
+			<MeasurePlanningIntroFooter
+				onClose={() => handleOpenChange(false)}
+				onStart={() => setShowIntro(false)}
+			/>
+		);
+	} else if (!(isSynthesisMode || climateSimulation || floodRisk)) {
+		footer = (
+			<MeasurePlanningFooter
+				onShowSynthesis={handleShowSynthesis}
+				onBackToQuestions={handleBackToQuestions}
+				showBackToQuestions={Boolean(selectedQuestionConfig)}
+				isAddMeasure={Boolean(
+					selectedQuestionConfig &&
+					selectedMeasurementInfo &&
+					noSimulationIsActive,
+				)}
+			/>
+		);
+	}
+
 	return (
 		<SideMenu
 			open={open}
 			onOpenChange={handleOpenChange}
 			title={title}
 			description={description}
-			footer={
-				isSynthesisMode || climateSimulation || floodRisk ? null : (
-					<MeasurePlanningFooter
-						onShowSynthesis={handleShowSynthesis}
-						onBackToQuestions={handleBackToQuestions}
-						showBackToQuestions={Boolean(selectedQuestionConfig)}
-						isAddMeasure={Boolean(
-							selectedQuestionConfig &&
-							selectedMeasurementInfo &&
-							noSimulationIsActive,
-						)}
-					/>
-				)
-			}
+			footer={footer}
 			bodyClassName="p-0"
 		>
 			{info && (

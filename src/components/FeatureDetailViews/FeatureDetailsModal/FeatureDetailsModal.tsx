@@ -21,7 +21,7 @@ interface FeatureDetailsModalProps {
 }
 
 const LABELS = {
-	schlecht: "Aufschüttung vorhanden",
+	schlecht: "Auffüllung vorhanden",
 	gut: "Nicht vorhanden",
 };
 

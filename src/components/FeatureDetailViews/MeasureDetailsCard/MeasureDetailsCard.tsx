@@ -6,12 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import layerConfig from "@/config/layerConfig.json";
 import { measureConfigById } from "@/config/measuresConfig";
+import { markMeasureForDeletion } from "@/lib/helpers/measures/pendingDeletes";
 import { formatMeasureValue } from "@/lib/helpers/measures/values";
 import { getLayerById } from "@/lib/helpers/ol";
+import { withBadge } from "@/lib/helpers/ol/style";
 import { useMapStore } from "@/store/map";
 import { useScenarioStore } from "@/store/scenario";
 import type { MeasureValue } from "@/store/scenario/types";
-import { useUiStore } from "@/store/ui";
 import { LAYER_IDS } from "@/types/shared";
 import { TrashIcon, XCircleIcon } from "@phosphor-icons/react";
 import VectorLayer from "ol/layer/Vector";
@@ -57,9 +58,6 @@ export const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
 			) ?? null
 		);
 	});
-	const addPendingDeleteMeasureId = useUiStore(
-		(state) => state.addPendingDeleteMeasureId,
-	);
 	const map = useMapStore((state) => state.map);
 
 	const connectedAreas = useScenarioStore((state) =>
@@ -88,7 +86,7 @@ export const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
 		if (!feature) return;
 
 		previousStyleRef.current = feature.getStyle();
-		feature.setStyle(highlightedConnectedAreaStyle);
+		feature.setStyle((f) => withBadge(f, highlightedConnectedAreaStyle));
 		return () => {
 			feature.setStyle(previousStyleRef.current);
 		};
@@ -109,20 +107,14 @@ export const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
 	};
 
 	const handleDelete = () => {
-		if (map && measure.drawLayerId) {
-			const layer = map
-				.getAllLayers()
-				.find((item) => item.get("id") === measure.drawLayerId) as
-				VectorLayer<VectorSource> | undefined;
-			const source = layer?.getSource();
-			if (source) {
-				const feature = source
-					.getFeatures()
-					.find((f) => f.get("measureId") === measure.id);
-				if (feature) source.removeFeature(feature);
-			}
-		}
-		addPendingDeleteMeasureId(measure.id);
+		const layer =
+			map && measure.drawLayerId
+				? (map
+						.getAllLayers()
+						.find((item) => item.get("id") === measure.drawLayerId) as
+						VectorLayer<VectorSource> | undefined)
+				: undefined;
+		markMeasureForDeletion(measure.id, layer?.getSource() ?? undefined);
 		onClose?.();
 	};
 
@@ -155,7 +147,7 @@ export const MeasureDetailsCard: FC<MeasureDetailsCardProps> = ({
 							)}
 						</div>
 						<Input
-							type={param.type === "string" ? "text" : "number"}
+							type="text"
 							value={formatMeasureValue(measureValues[param.key])}
 							readOnly
 							disabled

@@ -5,6 +5,7 @@ import {
 	useScenarioStore,
 	useResultStore,
 } from "@/store";
+import { useCurrentResult } from "@/hooks/useCurrentResult";
 import Map from "ol/Map";
 import {
 	BookOpenTextIcon,
@@ -111,6 +112,7 @@ const ReportDownloadButton: FC<ReportDownloadButtonProps> = ({
 	const [error, setError] = useState<string | null>(null);
 
 	const project = useProjectStore((s) => s.project);
+	const inputFeatures = useProjectStore((s) => s.inputFeatures);
 	const activeScenarioId = useScenarioStore((s) => s.activeScenarioId);
 	const scenarios = useScenarioStore((s) => s.scenarios);
 
@@ -119,9 +121,11 @@ const ReportDownloadButton: FC<ReportDownloadButtonProps> = ({
 	const map = useMapStore((state) => state.map);
 	const notes = getAllNotes(map as Map);
 
-	const result = useResultStore((storeState) =>
-		activeScenarioId ? storeState.resultsByScenarioId[activeScenarioId] : null,
+	const result = useCurrentResult();
+	const resultStatus = useResultStore((storeState) =>
+		activeScenarioId ? storeState.statusByScenarioId[activeScenarioId] : null,
 	);
+	const isResultPending = resultStatus === "loading";
 	const stats = result?.data
 		? (result.data as { statistics: ResultStatistics }).statistics
 		: null;
@@ -148,9 +152,16 @@ const ReportDownloadButton: FC<ReportDownloadButtonProps> = ({
 		setError(null);
 
 		try {
-			const activeScenario = activeScenarioId
+			const scenario = activeScenarioId
 				? (scenarios[activeScenarioId] ?? null)
 				: null;
+			const projectCodes = new Set(inputFeatures.map((f) => f.properties.code));
+			const activeScenario = scenario && {
+				...scenario,
+				measures: scenario.measures.filter(
+					(m) => m.code && projectCodes.has(m.code),
+				),
+			};
 
 			const allQuestionIDs = modulesData.modules
 				.filter((module) => module.id !== "measurePlanning")
@@ -177,7 +188,10 @@ const ReportDownloadButton: FC<ReportDownloadButtonProps> = ({
 			});
 			Object.assign(notesByCheckfrage, notes);
 
-			const plots = await fetchPlots(stats?.runoff_reduction_percent[0] ?? 0);
+			// Without a current result there is nothing to plot.
+			const plots = stats
+				? await fetchPlots(stats.runoff_reduction_percent[0])
+				: null;
 
 			const body = {
 				project,
@@ -222,7 +236,7 @@ const ReportDownloadButton: FC<ReportDownloadButtonProps> = ({
 				size={size}
 				className={className ?? "min-w-[265px]"}
 				onClick={handleClick}
-				disabled={loading}
+				disabled={loading || isResultPending}
 			>
 				{loading && <SpinnerIcon className="animate-spin" />}
 				<BookOpenTextIcon />

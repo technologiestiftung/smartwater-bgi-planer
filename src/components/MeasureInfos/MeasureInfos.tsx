@@ -64,7 +64,7 @@ const MeasureInfos: FC<MeasureInfosProps> = ({ liveMeasureInfo }) => {
 					{liveMeasureInfo.isOverPotential && " – Kapazität überschritten"}
 				</p>
 				{activeRemaining !== null && (
-					<p>{Math.round(activeRemaining)} m² Kapazität</p>
+					<p>{Math.round(activeRemaining)} m² verfügbare Fläche</p>
 				)}
 				{isSwaleMeasure && selectedConnectedArea && (
 					<p>

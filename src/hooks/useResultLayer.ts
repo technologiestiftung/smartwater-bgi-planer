@@ -1,4 +1,5 @@
 import { getLayerSource, getVectorLayer } from "@/lib/helpers/ol";
+import { useCurrentResult } from "@/hooks/useCurrentResult";
 import { useMapStore, useResultStore, useScenarioStore } from "@/store";
 import Feature from "ol/Feature";
 import type OLMap from "ol/Map";
@@ -58,9 +59,7 @@ export function useResultLayer({
 }: UseResultLayerOptions) {
 	const map = useMapStore((state) => state.map);
 	const activeScenarioId = useScenarioStore((state) => state.activeScenarioId);
-	const result = useResultStore((state) =>
-		activeScenarioId ? state.resultsByScenarioId[activeScenarioId] : undefined,
-	);
+	const result = useCurrentResult();
 	const status = useResultStore((state) =>
 		activeScenarioId ? state.statusByScenarioId[activeScenarioId] : undefined,
 	);

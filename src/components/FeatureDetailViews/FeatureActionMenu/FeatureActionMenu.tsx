@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { isTreeOfConnectedArea } from "@/lib/helpers/measures/trees";
 import { removeMeasureFeatureFromLayer } from "@/lib/helpers/ol";
 import {
 	getInputFeatures,
@@ -76,19 +77,16 @@ export const FeatureActionMenu: FC<FeatureActionMenuProps> = ({
 						);
 						const usedByMeasureId = connectedArea?.usedByMeasureId;
 
-						if (usedByMeasureId === "trees") {
-							const treeMeasures = (scenario?.measures ?? []).filter(
-								(m) =>
-									m.name.startsWith("trees_") &&
-									(m.connectedAreaId !== null && m.connectedAreaId !== undefined
-										? m.connectedAreaId === connectedAreaId
-										: m.code === connectedArea?.code),
-							);
-							for (const m of treeMeasures) {
-								removeMeasureFeatureFromLayer(map, m.drawLayerId, m.id);
-								removeMeasure(activeScenarioId, m.id);
-							}
-						} else if (usedByMeasureId) {
+						const treeMeasures = connectedArea
+							? (scenario?.measures ?? []).filter((m) =>
+									isTreeOfConnectedArea(m, connectedArea),
+								)
+							: [];
+						for (const m of treeMeasures) {
+							removeMeasureFeatureFromLayer(map, m.drawLayerId, m.id);
+							removeMeasure(activeScenarioId, m.id);
+						}
+						if (usedByMeasureId && usedByMeasureId !== "trees") {
 							const connectedMeasure = scenario?.measures.find(
 								(m) => m.id === usedByMeasureId,
 							);
