@@ -39,7 +39,6 @@ let latestRequestId = 0;
 // The Rabimo service sleeps when idle; the first request after a pause can
 // time out while it wakes up, so retry server errors once.
 async function postRabimo(payload: unknown): Promise<Response> {
-
 	const send = () =>
 		fetch("/api/rabimo", {
 			method: "POST",
