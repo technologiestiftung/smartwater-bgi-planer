@@ -1613,14 +1613,14 @@
 		"sourceUrl": "https://daten.berlin.de/datensaetze/potenziale-der-dezentralen-regenwasserbewirtschaftung-wms-309141aa"
 	},
 	{
-		"id": "ua_srhk:da_fr_aussergewoehnlich",
+		"id": "ua_srhk:ca_fr_aussergewoehnlich",
 		"name": "Fließrichtung (außergewöhnliches Ereignis)",
 		"name_lang": "Fließrichtung (außergewöhnliches Ereignis) (Starkregenhinweiskarte)",
 		"crs": "EPSG:25833",
 		"url": "https://gdi.berlin.de/services/wms/ua_srhk",
 		"typ": "WMS",
 		"gfiAttributes": "showAll",
-		"layers": "da_fr_aussergewoehnlich",
+		"layers": "ca_fr_aussergewoehnlich",
 		"legend": true,
 		"datasets": [
 			{
@@ -1642,14 +1642,14 @@
 		"sourceUrl": "https://www.berlin.de/sen/uvk/umwelt/wasser-und-geologie/starkregen-und-ueberflutungen/gefahren/#Starkregenhinweiskarte"
 	},
 	{
-		"id": "ua_srhk:db_fliessgeschw_aussergew_kostra",
+		"id": "ua_srhk:cb_fliessgeschw_aussergew_kostra",
 		"name": "Fließgeschwindigkeit (außergewöhnliches Ereignis)",
 		"name_lang": "Fließgeschwindigkeit (außergewöhnliches Ereignis) (Starkregenhinweiskarte)",
 		"crs": "EPSG:25833",
 		"url": "https://gdi.berlin.de/services/wms/ua_srhk",
 		"typ": "WMS",
 		"gfiAttributes": "showAll",
-		"layers": "db_fliessgeschw_aussergew_kostra",
+		"layers": "cb_fliessgeschw_aussergew_kostra",
 		"legend": true,
 		"datasets": [
 			{
@@ -1671,14 +1671,14 @@
 		"sourceUrl": "https://www.berlin.de/sen/uvk/umwelt/wasser-und-geologie/starkregen-und-ueberflutungen/gefahren/#Starkregenhinweiskarte"
 	},
 	{
-		"id": "ua_srhk:dc_wasserstand_aussergew_kostra",
+		"id": "ua_srhk:cc_wasserstand_aussergew_kostra",
 		"name": "Wasserstand (außergewöhnliches Ereignis)",
 		"name_lang": "Wasserstand (außergewöhnliches Ereignis) (Starkregenhinweiskarte)",
 		"crs": "EPSG:25833",
 		"url": "https://gdi.berlin.de/services/wms/ua_srhk",
 		"typ": "WMS",
 		"gfiAttributes": "showAll",
-		"layers": "dc_wasserstand_aussergew_kostra",
+		"layers": "cc_wasserstand_aussergew_kostra",
 		"legend": true,
 		"datasets": [
 			{
@@ -1700,14 +1700,14 @@
 		"sourceUrl": "https://www.berlin.de/sen/uvk/umwelt/wasser-und-geologie/starkregen-und-ueberflutungen/gefahren/#Starkregenhinweiskarte"
 	},
 	{
-		"id": "ua_srhk:b_srhk_feuerwehreinsaetze_pkt",
+		"id": "ua_srhk:ba_srhk_feuerwehreinsaetze_pkt",
 		"name": "Feuerwehreinsätze (Punkte)",
 		"name_lang": "Feuerwehreinsätze (Punkte) (Starkregenhinweiskarte)",
 		"crs": "EPSG:25833",
 		"url": "https://gdi.berlin.de/services/wms/ua_srhk",
 		"typ": "WMS",
 		"gfiAttributes": "showAll",
-		"layers": "b_srhk_feuerwehreinsaetze_pkt",
+		"layers": "ba_srhk_feuerwehreinsaetze_pkt",
 		"legend": true,
 		"datasets": [
 			{
@@ -1728,14 +1728,14 @@
 		"layerAttribution": "Für die Nutzung der Daten ist die Datenlizenz Deutschland - Zero - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/zero-2-0 abrufbar."
 	},
 	{
-		"id": "ua_srhk:g_srhk_feuerwehreinsaetze",
+		"id": "ua_srhk:bb_srhk_feuerwehreinsaetze",
 		"name": "Feuerwehreinsätze",
 		"name_lang": "Feuerwehreinsätze (Starkregenhinweiskarte)",
 		"crs": "EPSG:25833",
 		"url": "https://gdi.berlin.de/services/wms/ua_srhk",
 		"typ": "WMS",
 		"gfiAttributes": "showAll",
-		"layers": "g_srhk_feuerwehreinsaetze",
+		"layers": "bb_srhk_feuerwehreinsaetze",
 		"legend": true,
 		"datasets": [
 			{
