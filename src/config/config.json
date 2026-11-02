@@ -84,15 +84,15 @@
 							"visibility": false
 						},
 						{
-							"id": "ua_srhk:db_fliessgeschw_aussergew_kostra",
+							"id": "ua_srhk:cb_fliessgeschw_aussergew_kostra",
 							"visibility": false
 						},
 						{
-							"id": "ua_srhk:dc_wasserstand_aussergew_kostra",
+							"id": "ua_srhk:cc_wasserstand_aussergew_kostra",
 							"visibility": false
 						},
 						{
-							"id": "ua_srhk:da_fr_aussergewoehnlich",
+							"id": "ua_srhk:ca_fr_aussergewoehnlich",
 							"visibility": false
 						},
 						{
@@ -100,11 +100,11 @@
 							"visibility": false
 						},
 						{
-							"id": "ua_srhk:g_srhk_feuerwehreinsaetze",
+							"id": "ua_srhk:bb_srhk_feuerwehreinsaetze",
 							"visibility": false
 						},
 						{
-							"id": "ua_srhk:b_srhk_feuerwehreinsaetze_pkt",
+							"id": "ua_srhk:ba_srhk_feuerwehreinsaetze_pkt",
 							"visibility": false
 						},
 						{
