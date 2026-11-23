@@ -268,6 +268,14 @@ export function SynthesisView({ onBackToQuestions }: SynthesisViewProps) {
 					)}
 
 					<div className="mt-4 flex flex-col gap-2">
+						<p className="font-bold">
+							Achtung: Die Berechnung der Gewässerbelastung durch
+							Mischwasserüberläufe und die dazugehörige Effektbewertung sind nur
+							für Planungsgebiete innerhalb der Mischkanalisation gültig. Liegt
+							Ihr Planungsgebiet im Bereich der Trennkanalisation, sind die
+							angezeigten Ergebnisse nicht aussagekräftig und dürfen nicht zur
+							Bewertung der Gewässerbelastung herangezogen werden.
+						</p>
 						<p>
 							Die mögliche Verringerung der Gewässerbelastung durch
 							Mischwasserüberläufe nach Starkregen infolge geplanter
